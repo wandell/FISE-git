@@ -13,7 +13,7 @@ The idea that the light field is everywhere is nicely described in Leonardo Da V
 
 It is useful to write the environmental light field as an explicit function so that we can keep track of its various parameters. At each point in the volume $(x,y,z)$, rays are emitted in multiple directions that we specify by two angles $(\alpha,\beta)$, the azimuth and elevation. The light rays have wavelength $\lambda$ and polarization $\rho$. The intensity of each ray in the environment light field function, $L_E$, depends on these seven parameters.
 
-$L_E(x,y,z,\alpha,\beta,\lambda,\rho)$
+$$L_E(x,y,z,\alpha,\beta,\lambda,\rho)$$
 
 People in many fields are familiar with the concept of the light field, but they use different terminology. Physicists often describe the environmental light field as the spectral radiance of the enviroment. The term *light field* was introduced into optical engineering by Gershun (1939) as part of his work in understanding how to design lighting environments, such as the lighting in school rooms and public places[^lightfields-2]. The use of the term and the importance of the light field in practice was greatly amplified in the field of computer graphics by Marc Levoy and Pat Hanrahan. A related concept, the plenoptic function, was introduced in vision science by Ted Adelson and Jim Bergen. The plenoptic function corresponds to the spectral irradiance at the image sensor.
 
@@ -27,7 +27,7 @@ A simple imaging system, say the eye or a pinhole, only records the portion of t
 
 The rays in the incident light field can be described with a function that is slightly simpler than the environmental light field: those rays arrive at at the entrance pupil of the optics, which is just a two-dimensional surface. Thus, rather than three dimensional position we can reduce the ray position parameters to two \$(u,v)\$ that must fall within the small spatial region of the entrance pupil
 
-$L_I(u,v,\alpha,\beta,\lambda,\rho)$
+$$L_I(u,v,\alpha,\beta,\lambda,\rho)$$
 
 If we wish to acquire information about more of the environmental light field we must measure at multiple locations. The human visual system makes two simultaneous measurements of the light field, one with each eye, and this information provides us with stereo vision. We acquire more information about the light field over time by rotating our eyes and moving our heads.
 
@@ -45,9 +45,9 @@ The optics of an image system, whether a pinhole, thin lens, or multi-element le
 
 For the first two light fields we specified a position and angle for each ray. For the optical light field, however, it is clear that the only rays that matter are those that arrive at the sensor (or film). It is common, therefore, to change the parameterization of this light field to account for the position in the exit pupil $(u,v)$ and the position on the sensor $(w,z)$. This parameterization of the optical light field is
 
-$L_O(u,v,w,z,\lambda,\rho)$
+$$L_O(u,v,w,z,\lambda,\rho)$$
 
-It is possible, of course, to convert this parameterization back to an angular representation with some simple algebra. But it will be useful, in the next chapter, to use the two spatial coordinates for the optical light field parameterization.
+It is possible, of course, to convert these parameters to angular parameters. But it will be useful, in the next chapter, to use the two spatial coordinates for the optical light field parameters.
 
 A perception system recovers information about the environmental light field from the information available in this optical light field. The optics is a key bottleneck in any image system. No optical system is perfect, and there is always some information that is lost or distorted by the optics. The sensing and perception systems that derive information from the light field must be designed to account for which information in the environmental light field makes it all the way through to the optical light field.
 
