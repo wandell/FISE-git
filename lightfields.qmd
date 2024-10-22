@@ -1,3 +1,116 @@
-## Lightfields
+# Light fields
 
-This is the lightfields chapter.
+Both creatures of flesh and bone and machines of metal and code achieve many goals by sensing and perceiving their environment. Animals move in search of food and to avoid predators by relying on their ability to sense and interpret. Machines identify and grasp objects and navigate their environments by sensing and interpreting. For both the electromagnetic radiation in the environment is a main source of information. Immobile life forms, such as trees and plants, mainly use the radiation as a source of energy; but mobile life forms - a hawk, a rabbit, or a person - encode and interpret the radiation to glean information about the environment.
+
+Not all electromagnetic radiation is equally informative. High energy radiation (e.g., X-ray and Gamma ray) passes through the objects. Low frequency radiation provides poor spatial resolution. Absorption and scattering of electromagnetic radiation in the wavelength range of a few hundred nanometers is useful for informing us about the environment.
+
+The human eye encodes electromagnetic radiation in the wavelength range from about 400 nm to 770 nm; the word light means that portion of the electromagnetic radiation that humans see. Many image systems are designed to measure the radiation in this visible band, and some are designed to measure electromagnetic radiation at wavelengths we do not see, thus extending our sensing. We refer to the electromagnetic radiation that surrounds us and that we see as the light field.
+
+The idea that the light field is everywhere is nicely described in Leonardo Da Vinci's 1509 notebook (Da Vinci, 1970). He described a pinhole camera (camera obscura) made by placing a small hole in a wall of a windowless room that is adjacent to a brightly illuminated piazza (\autoref{fig:Ayscough} ). He observed an image of the piazza (inverted) on the wall within the room. Leonardo further noted that an image is formed wherever the pinhole is placed, and from this observation he concluded that the rays must be present at all of these positions[^lightfields-1].
+
+[^lightfields-1]:
+    > "I say that if the front of a building—or any open piazza or field—which is illuminated by the sun has a dwelling opposite to it, and if, in the front which does not face the sun, you make a small round hole, all the illuminated objects will project their images through that hole and be visible inside the dwelling on the opposite wall which may be made white; and there, in fact, they will be upside down, and if you make similar openings in several places in the same wall you will have the same result from each. Hence the images of the illuminated objects are all everywhere on this wall and all in each minutest part of it. The reason, as we clearly know, is that this hole must admit some light to the said dwelling, and the light admitted by it is derived from one or many luminous bodies. If these bodies are of various colours and shapes the rays forming the images are of various colours and shapes, and so will the representations be on the wall. (From Leonardo's 1509 Notebook, curated by John Paul Richter. Section: PROVE HOW ALL OBJECTS, PLACED IN ONE POSITION, ARE ALL EVERYWHERE AND ALL IN EACH PART)"
+
+It is useful to write the environmental light field as an explicit function so that we can keep track of its various parameters. At each point in the volume $(x,y,z)$, rays are emitted in multiple directions that we specify by two angles $(\alpha,\beta)$, the azimuth and elevation. The light rays have wavelength $\lambda$ and polarization $\rho$. The intensity of each ray in the environment light field function, $L_E$, depends on these seven parameters.
+
+$L_E(x,y,z,\alpha,\beta,\lambda,\rho)$
+
+People in many fields are familiar with the concept of the light field, but they use different terminology. Physicists often describe the environmental light field as the spectral radiance of the enviroment. The term *light field* was introduced into optical engineering by Gershun (1939) as part of his work in understanding how to design lighting environments, such as the lighting in school rooms and public places[^lightfields-2]. The use of the term and the importance of the light field in practice was greatly amplified in the field of computer graphics by Marc Levoy and Pat Hanrahan. A related concept, the plenoptic function, was introduced in vision science by Ted Adelson and Jim Bergen. The plenoptic function corresponds to the spectral irradiance at the image sensor.
+
+[^lightfields-2]: I enjoyed the first sentence in the 1939 translation of Gershun's paper. The translators, Moon and Timoshenko, express frustration with the pace of advances in photometry. "Theoretical photometry constitutes a case of 'arrested development', and has remained basically unchanged since 1760 while the rest of physics has swept triumphantly ahead." Gershun himself writes "The problems of theoretical photometry were pushed aside from the main path of the development of physics."
+
+In the following sections we will continue to develop the light field terminology as we follow the signal from the environment, to the camera, and ultimately the sensor.
+
+## Incident light field
+
+A simple imaging system, say the eye or a pinhole, only records the portion of the environmental light field that arrives at the entrance pupil of the system (autoref{fig:incidentalLF}). It is worth distinguishing those rays - the *incident light field* - from the environmental light field.
+
+The rays in the incident light field can be described with a function that is slightly simpler than the environmental light field: those rays arrive at at the entrance pupil of the optics, which is just a two-dimensional surface. Thus, rather than three dimensional position we can reduce the ray position parameters to two \$(u,v)\$ that must fall within the small spatial region of the entrance pupil
+
+$L_I(u,v,\alpha,\beta,\lambda,\rho)$
+
+If we wish to acquire information about more of the environmental light field we must measure at multiple locations. The human visual system makes two simultaneous measurements of the light field, one with each eye, and this information provides us with stereo vision. We acquire more information about the light field over time by rotating our eyes and moving our heads.
+
+Various image systems have been built to extend how much of the environmental light field we measure. Acquiring this information enables us to reproduce a more complete experience of the environment in virtual reality environments, as a person changes position and direction of gaze. The cameras used in these image system arrays are more complex than pinholes. But the principle Leonardo identified holds: the light field is everywhere, and we can measure it by recording images at many different positions with cameras pointing in many different directions.
+
+A large, rectangular camera array to measure the light field was built by Levoy and colleagues at the Stanford Graphics Lab (\\autoref{fig:stanfordLFCamera}). The cameras in the rectangular array acquire rays from a large number of positions in the scene. In the figure, the cameras measure multiple views but all point in a similar direction. Arrays with different camera configurations (shown below) capture the 360 deg light field from a particular position. These camera arrays acquire enough information so that we can render images that match what a person would see if they look around. Camera arrays that acquire enough information for both 360 deg and slightly different positions have also been built (stacked omnistereo). These camera arrays acquire data that can be interpreted to estimate the light field. From this estimate, we calculate new images that from different points of view.
+
+A next step, that we describe in later sections of this book, is to acquire the light field data and then use it to model the three-dimensional shapes, material properties, and lights in the scene. This general idea is called *inverse rendering*, and it remains at the frontier of what is currently possible. Building an object and lighting model from the encoded light field seems rather like what people do: we see the objects and materials, not the light per se. Representing objects and lights is also valuable in graphics applications because it enables computer graphics to edit the scene by changing the shapes, materials, and lights. And it is essential in robotics and driving applications where deriving information about the environment from the light field is essential to guiding action.
+
+But to enable any of this, we must understand more about the light field itself and the instruments that measure it. Let's stick with the plan.
+
+## Optical light field
+
+The optics of an image system, whether a pinhole, thin lens, or multi-element lens, transforms the incident light field into a new light field within the camera itself. We call this light field, which exists between the exit pupil and the image, the optical ight field. The optical light field originates in the environment, is reduced to the incident light field whose rays are then transformed by the optics.
+
+For the first two light fields we specified a position and angle for each ray. For the optical light field, however, it is clear that the only rays that matter are those that arrive at the sensor (or film). It is common, therefore, to change the parameterization of this light field to account for the position in the exit pupil $(u,v)$ and the position on the sensor $(w,z)$. This parameterization of the optical light field is
+
+$L_O(u,v,w,z,\lambda,\rho)$
+
+It is possible, of course, to convert this parameterization back to an angular representation with some simple algebra. But it will be useful, in the next chapter, to use the two spatial coordinates for the optical light field parameterization.
+
+A perception system recovers information about the environmental light field from the information available in this optical light field. The optics is a key bottleneck in any image system. No optical system is perfect, and there is always some information that is lost or distorted by the optics. The sensing and perception systems that derive information from the light field must be designed to account for which information in the environmental light field makes it all the way through to the optical light field.
+
+The sensors we use to encode the optical light field, including film, the retina, and many imagers, record only partial information about the optical light field. The optical light field rays that arrive at a single point on the sensor are summed together. Those systems do not encode where a ray exited the optics; they add together all the rays that arrive at a point on the sensor.
+
+By capturing more information about the optical light field, it is possible to do some new things. Adelson and XXX pointed out that ... And the Ren Ng's innovative company Lytro developed a sensor and algorithms that captured a high resolution light field and then enabled users to refocus images or change the depth of field after capture.
+
+While the retina captures a limited version of the light field, and Lytro captured more information than could readily be supported in a commercial company, many camera vendors now use sensors that capture a bit more of the light field. Perhaps slowly heading towards the full light field some day. We will build up our understanding in this direction. But let's start with the pinhole.
+
+## Pinholes
+
+Treating light as rays, it is easy to understand why pinhole optics renders a reasonable image on Leonardo's wall (Figure \autoref{fig:Ayscough}). It is also straightforward to understand some of the basic properties of the pinhole camera from tracing the rays (Figure \autoref{fig:pinholePSF}). This type of reasoning is helpful in many optics calculations, so let's do a few analyses. Consider a point (A) relatively far from the pinhole. The rays at the point may radiate in a wide range of directions, but only a small portion of those rays will arrive at the pinhole aperture. These rays will be parallel to one another (collimated). Setting diffraction aside for the moment, the collection of rays will pass straight through and form an image on the recording surface (image plane, such as Leonardo's wall). The image is called the point spread function. For the on-axis point, a pinhole, and ignoring diffraction, the point spread size is equal to the size of the pinhole aperture.
+
+Consider an off-axis point (B). Again, its rays may spread in many directions but only a narrow, collimated subset of rays will arrive at the aperture. Because of the angle between the collimated rays of the incident light field a smaller fraction of the rays from (B) will pass through the pinhole aperture. Continuing to ignore diffraction, the point spread from (B) will be smaller and dimmer. If we can tolerate the reduced intensity and we do not mind the blurring from the pinhole, we will have a satisfactory image.
+
+We can simulate this geometry, again ignoring diffraction, using computer graphics (Figure \autoref{fig:pinholeChessset}). We render a scene of a chess set that is about 0.5 meters from the pinhole camera. Each chess piece is a few cm tall. We render four pictures, using different pinhole diameters. The upper left allows only one ray through from each location in the scene. The aperture diameters for the next three pictures are for increasing pinhole sizes. The images are brighter as the pinhole size increases, of course. For this scene geometry the image at the two smaller pinhole sizes are tolerable. Depending on your viewing distance from the screen or page, even the third pinhole image might be usable. But the image with image with the largests pinhole loses so much information that the individual pieces blur together. This loses much value of the image for many purposes.
+
+There are many ways to explore the impact of varying the pinhole size. We might also adjust the distance of the image plane from the pinhole, or we might change the field of view of the scene If you are new to reasoning about optics, some of the calculations in this ISETCam script may help you develop an intuition for these different parameters.
+
+## Diffraction
+
+The ray trace analysis of light passing through a pinhole is only half right. It is true that increasing the pinhole diameter blurs the image; but the ray tracing analysis fails dramatically in other ways. Consider the simple prediction in Figure \autoref{fig:rays-waves}A. Newton's ray model predicts that when a source is at a distance the rays that pass through a pinhole will continue along in a straight line. Thus, someone off to the side would look at the pinhole and see it as dark.
+
+In fact, as was known even in Newton's time, when we look at the pinhole from the side we see the light. This proves that the rays do not simply continue on a straight line.
+
+The Dutch scientist Christiaan Huygens, working at the same time as Newton, suggested an alternative model: he proposed that we model light as a wave. He specifically suggested that we consider the light emitted from a point source as a spherical wave expanding in all directions. At each moment in time the points on the wavefront emit a secondary wavelet, also expanding in all directions. This concept leads to various quantitative predictions, including how light will be reflected from a mirror and how the light direction will change as the wave passes from one medium (air) into a second medium (glass) (Figure \autoref{fig:huygens-wave}).
+
+A consequence of the wave theory is that as the pinhole diameter size decreases, the wave properties of light cause the image to blur. This effect, called diffraction by Grimaldi in 1655, is very small when the pinhole is much larger than the wavelength of the light. But when the pinhole diameter is small we effectively see the spherical wave from a point on the wavefront (Figure \autoref{fig:waves-rays}B). In that case the light spreads in many directions and the image is strongly blurred.
+
+Calculating the two blurs
+
+We can calculate the diameter and relative impact of these factors, and we shall do so shortly.
+
+The numbers are in one of those YouTube videos. I sure hope I saved it!
+
+The following might be a separate section about the history. For the main book we might simply build the calculation of blurring as per the YouTube video.
+
+## History: Rays, Diffraction, Waves
+
+Grimaldi's book Physico-Mathesis de Lumine, published in 1665, included multiple examples of light spreading as it passed through apertures or at edges. His work included the specific measurement that imaging a light source through a pinhole produced a spot, and the size of the spot grew larger as the pinhole became smaller. Grimaldi gave the phenomenon the name of diffraction, and his ideas spread across Europe. Its impact might have been somewhat limited because it was published in Latin and posthumously. These observations are incompatible with the idea that light is made up of a stream of particles traveling along a straight line, which we consider a ray.
+
+The Dutch physicist Christiaan Huygens as an active member of the European scientific community, and it is likely he knew of Grimaldi's work. Huygens proposed that light is a wave, not a ray, for several reasons. In his book, Traité de la lumière (1690), he explained both reflection and even the quantitative properties of refraction as light passed from one medium to another. It also explained Grimaldi's measurements of diffraction. His descriptions of a wave are based on a key idea: every point on a wavefront acts as a source of secondary spherical wavelets. Initiating a wave at one point, say a light source, creates a set of secondary wavelets at nearby points. The wave we observe is the sum of these small, secondary wavelets as they spread out in the direction the wave is traveling. These wavelets add constructively in the direction the wave is traveling, and they cancel at points behind the traveling wavefront.
+
+Isaac Newton, in his book Opticks (1704), had proposed that we consider light as consisting of a stream of particles (corpuscles) and treat them as rays. His wonderful experiments and thinking about the wavelength properties of light ray will be a focus of a later chapter. He relied on the idea of light as rays to explain properties such as reflection and abosrption and color.
+
+But prior to Newton's observations, others had observed compelling deviations from the theory that light comprises a set of rays.
+
+Huygens was an active member of the scientific community and would have been aware of contemporary developments in optics. Additionally, Huygens' treatise on light was published in 1690, long after Grimaldi's discoveries had become known.
+
+Grimaldi had observed were observed even at the Huygens most likely knew about Grimaldi's work. However, even though Huygens probably knew about Grimaldi’s experiments with diffraction, he did not integrate diffraction into his wave theory in a detailed way. It wasn't until the early 19th century, with the work of Thomas Young and Augustin-Jean Fresnel, that diffraction was fully explained within the framework of wave theory.
+
+For a century Newton's corpuscular theory was widely accepted because scientists held Newton in very high esteem. After all, scientists are people and they are moved by emotions like anyone else. Thomas Young's (1804) double slit experiments, demonstrating interference between two separated light sources and demonstrated at the Royal Society, brought the wave theory back into prominence. Young's demonstration started with a single point source that illuminated two different slits (Figure \autoref{fig:young-interference}). Because the two slits are illuminated by a common source, the wave theory would suggest that their wavefronts are coherent (in synchrony) with one another. The corpuscular theory, in contrast, would simply suggest that their are different particles headed to the two slits with no particular connection.
+
+Young measured the image formed by the two slits, and he showed that it had a distinct spatial structure of light and dark bands. We can understand these bands as arising from the spatial summation of the coherent waves arising from the two slits. He understood this well, and the wave concept is illustrated in his original publication for the Royal Society.
+
+As one might expect in science, there was resistance to the shift. It was the work of August Fresnel who provided a mathematical foundation for explaining Huygens' principle as well as additional experimental evidence (see Jenkins and White discussion on this point). Accepting the idea that light was a wave paved the way for Maxwell's unified theory of light, electric fields, and magnetic fields expressed in his famous equations describing the electromagnetic spectrum. These concepts and equations are the foundation of much physics and engineering. For more of the history, which is wonderful, click here.
+
+Hindsight is much clearer than foresight, and in a way it is surprising that the wave theory was ignored for so long. Consider the simple experiment illustrated in Figure \autoref{fig:rays-waves}. The image shows a collimated source, perhaps created by a point source at some distance from a pinhole. According to the Newton's corpuscular theory (rays), a person standing to the side would not see the light: the rays would continue straight and none would arrive to the viewer's eyes (panel A). Yet a simple experiment reveals that the the pinhole light can be seen from the side, or indeed from many positions. The light emerging from the pinhole must be spreading in many directions (panel B). The pinhole reveals 'secondary wave source', just as Huygens theory said.
+
+One of the most famous topics in along with the wave theory of light - was one of the very important contributions of scientists. General comments here. More of the story and background there. Describe the calculation of the Airy Disk in ISETCam. Maybe the Thomas Young double slit goes there, or does it stay here?
+
+Link to YouTube explanation of diffraction? Credit the image of the wave. Also transverse or longitudinal wave question about light. That has to do with polarization, I believe. Wavelength and polarization need to get introduced somewhere.
+
+Ray tracing is a useful computer graphics for making images, and in some conditions when the aperture is large and a lens is inserted, the role of diffraction may not be a big factor. But for these small entrance pupils diffraction is a large effect.
+
+The thin lens, thick lens and all that into Chapter 02 Optics.
