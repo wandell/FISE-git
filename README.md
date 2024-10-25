@@ -19,6 +19,7 @@ The _quarto.yml file has the supplemental files in 'appendices'.  I would rather
 I am putting the png files iin the images directory, organized by chapter.
 
 I will start putting the bib file in a references directory.  I plan to use Zotero as the bibtex data management tool.  I tried BibDesk, but it did not work well for me.  Not sure why.
+I am trying this better-bibtex plugin.  Download, go to Tools -> plugin, select the Gear and choose install from file. https://retorque.re/zotero-better-bibtex/installation/
 
 The model repository we are starting from is the one for Michael Frank's book.  He has been a resource.
 
