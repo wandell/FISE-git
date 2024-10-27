@@ -3,7 +3,7 @@ Draft of a book on Image Systems Engineering, based on my Stanford class with Jo
 
 We are writing this book in Quarto from POSIT.  Downloading Quarto for Mac was easy and good.  Downloading vscode, installing the Quarto extension, was good.  
 
-In addition to putting the book on GitHub pages at some point, we will probablyk deposit a PDF version on Stanford Digital Repository.
+In addition to putting the book on GitHub pages at some point, we will probably deposit a PDF version on Stanford Digital Repository.
 
 I installed the GitHub extension to vscode, but I preferred to use the GitHub Desktop to manage this repository.  Partly this is because I couldn't figure out how to use my GitHub passkey to connect from vscode.  Someday, though, I should make this work.
 
@@ -27,4 +27,11 @@ I then exported those references using the betterbibtex method into paperpile.bi
 The model repository we are starting from is the one for Michael Frank's book.  He has been a resource.
 
 
+To create a Quarto book in vscode, after installing the Quarto extension,
 
+    To create a new Quarto Book project in VS Code, you can:
+
+Open the Command Palette (Press Ctrl+Shift+P on Windows/Linux or Cmd+Shift+P on Mac)
+Type "Quarto: Create Project"
+Select "Book Project" from the options
+Choose a directory location for your new book project
