@@ -26,7 +26,7 @@ I then exported those references using the betterbibtex method into paperpile.bi
 
 The model repository we are starting from is the one for Michael Frank's book.  He has been a resource.
 
-
+## Quarto commands
 To create a Quarto book in vscode, after installing the Quarto extension,
 
     To create a new Quarto Book project in VS Code, you can:
@@ -35,3 +35,14 @@ Open the Command Palette (Press Ctrl+Shift+P on Windows/Linux or Cmd+Shift+P on 
 Type "Quarto: Create Project"
 Select "Book Project" from the options
 Choose a directory location for your new book project
+
+Inside VS Code, you can preview your Quarto book using either of these methods:
+
+Press Ctrl+Shift+P (Windows/Linux) or Cmd+Shift+P (Mac)
+Type "Quarto: Preview Project"
+Select it to start the preview
+
+Or the shortcut key:
+
+Press Ctrl+Shift+K (Windows/Linux) or Cmd+Shift+K (Mac)
+
