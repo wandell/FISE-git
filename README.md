@@ -10,12 +10,28 @@ For the moment, I commented out the pdf formatting option.  That and perhaps oth
 
 The model repository we are starting from is the one for Michael Frank's book.  He has been a resource.
 
+## Wordpress to Markdown:  pandoc
+
+To convert the Wordpress files I used Tools -> Export to create some XML data and then I downloaded pandoc.
+In process of converting the FOV pages.  There was no need to convert the FISE pages because there were only a few.
+This comment should probably be on the FOV-2024-git README.
+
+Here is the [Pandoc User's Guide])https://pandoc.org/MANUAL.html)
+
+Key command for HTML to Markdown is there.  Getting the HTML out of the XML download is
+
+For each WordPress page in the XML export, there should typically be just **one `<content:encoded>` tag** containing the full HTML content of that page or post. This tag encapsulates all the HTML needed for that specific piece of content, including any headings, paragraphs, images, and embedded media.
+
+However, there are a few exceptions:
+- **Shortcodes**: WordPress shortcodes may appear in the HTML content if you’ve used custom blocks or plugins (e.g., for galleries, forms). These shortcodes will export as plain text within the HTML and may need manual cleanup or processing.
+- **Custom Fields or Embeds**: Sometimes, additional fields or embeds might be stored outside `<content:encoded>` if they come from specific plugins or custom page templates. 
+
+So, while you'll likely have only one HTML block per page or post in `<content:encoded>`, it’s wise to inspect the XML for any additional embedded data or custom tags that might also be relevant to your Quarto setup.
+
 ## vscode
 I installed the GitHub extension to vscode, but I preferred to use the GitHub Desktop to manage this repository.  Partly this is because I couldn't figure out how to use my GitHub passkey to connect from vscode.  Someday, though, I should make this work.
 
 I have not been able to get text to wrap around figures yet.  Will look for example from online books.
-
-
 
 ## Quarto
 
