@@ -16,7 +16,7 @@ To convert the Wordpress files I used Tools -> Export to create some XML data an
 In process of converting the FOV pages.  There was no need to convert the FISE pages because there were only a few.
 This comment should probably be on the FOV-2024-git README.
 
-Here is the [Pandoc User's Guide])https://pandoc.org/MANUAL.html)
+Here is the [Pandoc User's Guide](https://pandoc.org/MANUAL.html)
 
 Key command for HTML to Markdown is there.  Getting the HTML out of the XML download is
 
