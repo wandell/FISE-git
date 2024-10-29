@@ -37,9 +37,7 @@ I have not been able to get text to wrap around figures yet.  Will look for exam
 
 We are writing this book in Quarto from POSIT.  Downloading Quarto for Mac was easy and good.  Downloading vscode, installing the Quarto extension, was good.  
 
-## Quarto commands
-
-To create a Quarto book in vscode, after installing the Quarto extension,
+## Quarto: book project
 
     To create a new Quarto Book project in VS Code, you can:
 
@@ -48,15 +46,28 @@ Type "Quarto: Create Project"
 Select "Book Project" from the options
 Choose a directory location for your new book project
 
+## Quarto:  Viewing
+
 Inside VS Code, you can preview your Quarto book using either of these methods:
 
-Press Ctrl+Shift+P (Windows/Linux) or Cmd+Shift+P (Mac)
-Type "Quarto: Preview Project"
-Select it to start the preview
+   Press Ctrl+Shift+P (Windows/Linux) or Cmd+Shift+P (Mac)
+   Type "Quarto: Preview Project"
+   Select it to start the preview
 
 Or the shortcut key:
 
-Press Ctrl+Shift+K (Windows/Linux) or Cmd+Shift+K (Mac)
+   Press Ctrl+Shift+K (Windows/Linux) or Cmd+Shift+K (Mac)
+
+To preview in a browser just use
+
+   quarto preview
+
+## Quarto: resources
+
+   quarto render resources/file.qmd --to html
+
+You will have to move the created _files directory into the _book directory by hand until we figure out the proper way.
+Also, the resources/files.qmd need to be in the _quart.yml file
 
 ## Quarto images
 
