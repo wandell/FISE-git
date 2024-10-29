@@ -62,12 +62,17 @@ To preview in a browser just use
 
    quarto preview
 
-## Quarto: resources
+## Quarto: resource files
 
    quarto render resources/file.qmd --to html
 
 You will have to move the created _files directory into the _book directory by hand until we figure out the proper way.
 Also, the resources/files.qmd need to be in the _quart.yml file
+
+## Quarto section labels
+
+This must be {#sec-XXXX} to work with the bibliography
+
 
 ## Quarto images
 
@@ -84,8 +89,6 @@ I then exported those references using the betterbibtex method into paperpile.bi
 I am trying this better-bibtex plugin.  Download, go to Tools -> plugin, select the Gear and choose install from file. https://retorque.re/zotero-better-bibtex/installation/
 
 ## Quarto problems
-
-The _quarto.yml file has the supplemental files in 'appendices'.  I would rather have them just be supplemental, and not show up in the TOC.
 
 I don't have wrapping around images or even scaling image sizes working yet.  I see it in other books, but not working yet for me.
 
