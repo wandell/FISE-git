@@ -1,20 +1,22 @@
 # Human visual system
+The purpose of consumer photography image systems is to record information about the light field and then render that information in an attractive format for human viewing. Because these systems deliver information to the human visual system, the components are designed with the key properties of the human visual system in mind.
 
-The purpose of many image systems is to record information about the light field and then render that information in print or on a display for viewing by a human. The components of these systems, typically for consumer photography, deliver information to the human visual system. For this reason, they must be designed with the key properties of the human visual system in mind.
+This chapter describes the key human visual system properties with the goal of helping people interested in engineering applications. I particularly emphasize human performance metrics that have been adopted by international standards bodies or that are in widespread use in industry.
 
-This chapter describes those key human visual system properties, formulating the measurements and principles for those interested in engineering applications. I describe the measurements of human performance and the human performance metrics that have been adopted by international standards bodies or that are in widespread use in industry.
-
-For those interested in the biological basis of these performance measurements, I provide brief call-outs within the text with some background. For a deeper dive into the biology, please consult the book Foundations of Vision [@wandellFoundationsVision1995]; that book is devoted to vision science and emphasizes neuroscience more than engineering.
-
-The software examples included in this chapter mainly rely on the combination of ISETBio and ISETCam.
+The scientific discoveries, and biological basis, of these standards is also important and fascinating.  In this book, I provide some call-outs within the pointers to the background. For a deeper dive into the science and biology, please consult my other book Foundations of Vision [@wandellFoundationsVision1995, @wandellFoundationsVision2024]; which is devoted to vision science and emphasizes the neuroscience of vision.
 
 <!--# The chapters with David have a lot of the material.  -->
 
 ## The eye
+The eye combines image formation (optics) and sensing (light absorption). The optics is divided into a fixed (cornea) and flexible (lens) component. The image encoding takes place in a thin layer of neural tissue, the retina, that lines the back of the eye.  Specialized cells in the retina convert light to a neural signal that is processed by multiple special circuits. The results of these circuits are transmitted to other parts of the brain via the optic nerve.
 
-Words about the whole eyeball. Separate out the physiological optics and the neural encoding in the retina.
+![Overview of the eye.](/images/human/retina-fovea-color.png){#fig-retina-color width="100%" fig-align="center" width="75%"}
 
-![The retina lines the back of the eye. It comprises several layers and about 80 different cell types. Say more later.](/images/human/retina-fovea-color.png){#fig-retina-color width="100%" fig-align="center" width="75%"}
+The properties of the physiological optics (cornea and lens) determine the optical light field that can be encoded by the photoreceptors.  The system is dynamic in the sense that the size of the aperture at the cornea and the optical power of the lens both vary with the ambient conditions and the viewer's intention. 
+
+The ability to measure certain properties of the optics was revolutionized by adpative optics - a method that makes real time measurements of the wavefront aberrations of the physiological optics using a Shack-Hartmann wavefront sensor. Just the measurement of the aberrations alone is useful.  In addition, it has proben possible to engineer systems that correct for these aberrations in real time, and thus visualize certain small (1-5 $\um$ diameter) cells in the retina. Further, using video tracking of the eye movements it has proven possible to deliver stimuli to specific, targeted photoreceptors.
+
+I will describe models and measurements of the optics in the section below.  Again, for a deeper dive into the scientific methods consult the other book [@wandellFoundationsVision2024]
 
 ## Physiological optics
 
@@ -45,6 +47,12 @@ Adaptive optics measurements of retinal sampling
 Rods, ipRGCs, too in here.
 
 ISETBio: Examples of simulation. David also has these new measurements.
+
+## The retina
+
+The retina is a 200-300 micron thick layered structure of neural tissue that lines the back of the eye (5 cm x 5 cm). There are about 80 different cell types that can be identified through their genetic expression.  Specific retinal cell types form stereotypical connections that make up specific, identifiable circuits. There are about 20 known circuits, and these are likely to account for nearly all of the circuits in the retina.  The output signals from these circuits are carried on axons in the optic nerve that project to a variety of locations in the brain.
+
+The vast majority of light-driven activity is initiated in the photoreceptors (rods and cones). The rods are the dominant source under very low light levels, and the cones are the dominant source under moderate to high light levels. The typical retinal circuit is driven by activity that starts in a local region of the photoreceptors. The same basic circuit will be present throughout the retina, tiling the photoreceptor mosaic, though the absolute size of the cells and their input regions generally vary as one measures across the retina.  The size of the region increases as one measures from the highly specialized central fovea into the periphery.
 
 ## Pattern, Time and Motion
 
@@ -80,7 +88,7 @@ S-CIELAB
 
 Mark Fairchild contributions. Others?
 
-### Computer vision metric ideas
+## Computer vision metrics
 
 They should be described elsewhere.
 
