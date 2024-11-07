@@ -1,32 +1,38 @@
+---
+bibliography: references.bib
+---
+
 # Human visual system
+
 The purpose of consumer photography image systems is to record information about the light field and then render that information in an attractive format for human viewing. Because these systems deliver information to the human visual system, the components are designed with the key properties of the human visual system in mind.
 
 This chapter describes the key human visual system properties with the goal of helping people interested in engineering applications. I particularly emphasize human performance metrics that have been adopted by international standards bodies or that are in widespread use in industry.
 
-The scientific discoveries, and biological basis, of these standards is also important and fascinating.  In this book, I provide some call-outs within the pointers to the background. For a deeper dive into the science and biology, please consult my other book, Foundations of Vision [@wandellFoundationsVision1995, @wandellFoundationsVision2024]; which is devoted to vision science and emphasizes the neuroscience of vision.
+cat The scientific discoveries, and biological basis, of these standards is also important and fascinating. In this book, I provide some call-outs within the pointers to the background. For a deeper dive into the science and biology, please consult my other book, Foundations of Vision [@wandellFoundationsVision2024], which is devoted to vision science and emphasizes the neuroscience of vision.
 
 <!--# The chapters with David have a lot of the material.  -->
 
 ## The eye
-The eye includes optics for image formation (optics) and neural tissue for sensing (light absorption). The physiological optics has a fixed (cornea) and flexible (lens) component. Together, their optical properties determine the optical light field. The optics are dynamic in at least two ways: the size of the entrance pupil and the optical power of the lens both vary. The pupil opens and closes depending on ambient light conditions and as well as some non-visual events in the brain.  The flexible lens changes its power, which enables (young) people to bring either close or far objects into focus on the retina. This flexibility is lost with age (presbyopia, CITATION NEEDED). The direction of gaze also varies as people move their head and eyes, depending on the viewer's intention.  
 
-The neural tissue of the retina lines the curved surface at the back of the eye. The image at the retina is converted from light into a neural signal by a special class of neurons, the photoreceptors. The retina contains additional specialized cells and circuits whose outputs, on the optic nerve, are transmitted to several brain regions. These circuits are also dynamic in the sense that the circuit response properties vary with changes in the mean and variance of the retinal image.  
+The eye has optics for image formation and neural tissue for encoding the image [@fig-retina-color]. The physiological optics is divided into two parts: a cornea and flexible lens. Together, their optical properties determine the transformation of the incident light field to the optical light field. The optics are dynamic in two ways: both the size of the entrance pupil and the optical power of the lens can vary. The pupil size changes depending on the ambient light conditions and as well as some non-visual events in the brain. The flexible lens changes its shape, and thus refractive power, enabling people to bring either close or far objects into focus on the retina. The lens flexibility is lost with age (presbyopia, CITATION NEEDED). The direction of gaze also varies as people move their head and eyes, depending on the viewer's intention.
 
-There are some similarities between the eye and a conventional camera.  For example, the optics and light sensing components are integrated into a single package, and the components are adaptive with respect to light level and focus. A major difference is that the retinal encoding does not sample the image uniformly; it is very inhomogeneous compared to modern cameras.  The central human retina is specialized for the cone photoreceptors, which are packed in at relatively high density [@fig-retina-color]. Further, the size of the photoreceptor apertures increases significantly from fovea to periphery.  This is quite unlike a typical image sensor whose pixels are all of the same size. Finally, the human visual system relies on eye movements to bring regions of interest into focus at the fovea. The keep integration of eye movements is very important for such a spatially inhomogeneous system.
+The neural tissue of the retina lines the curved surface at the back of the eye. The image at the retina is converted from light into a neural signal by a special class of neurons, the photoreceptors. The retina contains additional specialized cells and circuits whose outputs, on the optic nerve, are transmitted to several brain regions. These circuits are also dynamic in the sense that the circuit response properties vary with changes in the mean and variance of the retinal image.
+
+There are some similarities between the eye and a conventional camera. For example, the optics and light sensing components are integrated into a single package, and the components are adaptive with respect to light level and focus. A major difference is that the retinal encoding does not sample the image uniformly; it is very inhomogeneous compared to modern cameras. The central human retina is specialized for the cone photoreceptors, which have small (\~ 1.5 um) apertures and are tightly packed. The size of the photoreceptor apertures increases significantly from fovea to periphery, and the receptors for nighttime vision (rods) are inserted between the cones, further increasing their center-to-center spacing. This spatial sampling is quite unlike a typical image sensor whose pixels are all of the same size. Finally, the human visual system relies on eye movements to bring regions of interest into focus at the fovea. The keep integration of eye movements is very important for such a spatially inhomogeneous system.
 
 ![Overview of the eye.](/images/human/retina-fovea-color.png){#fig-retina-color width="100%" fig-align="center" width="75%"}
 
 I will describe measurements of the optics and encoding in several sections below. These are selected to support calculations of image quality and engineering design. For more about the biology and the scientific methods used to derive these measurements, consult [@wandellFoundationsVision2024]
 
 ### Adaptive optics
-The ability to measure certain properties of the optics was revolutionized by adpative optics - a method that makes real time measurements of the wavefront aberrations of the physiological optics using a Shack-Hartmann wavefront sensor. Just the measurement of the aberrations alone is useful.  In addition, it has proben possible to engineer systems that correct for these aberrations in real time, and thus visualize the apertures of the photoreceptors (1-5 $\um$ diameter) cells in the retina. Further, using video tracking of the eye movements it has proven possible to deliver stimuli to specific, targeted photoreceptors.
 
-First order approximations of the human optics. Simulations with ISETBio of maybe the Westheimer or Ijspeert functions.  Eye models?
+The ability to measure certain properties of the optics was revolutionized by adpative optics - a method that makes real time measurements of the wavefront aberrations of the physiological optics using a Shack-Hartmann wavefront sensor. Just the measurement of the aberrations alone is useful. In addition, it has proben possible to engineer systems that correct for these aberrations in real time, and thus visualize the apertures of the photoreceptors (1-5 $\um$ diameter) cells in the retina. Further, using video tracking of the eye movements it has proven possible to deliver stimuli to specific, targeted photoreceptors.
+
+First order approximations of the human optics. Simulations with ISETBio of maybe the Westheimer or Ijspeert functions. Eye models?
 
 ### Pointspread functions
-Where should the adaptive optics measurement method be? Here or FOV?
-Adaptive optics measurements of wavefront aberrations, expressed as point spread functions.
-Thibos and Artal data.
+
+Where should the adaptive optics measurement method be? Here or FOV? Adaptive optics measurements of wavefront aberrations, expressed as point spread functions. Thibos and Artal data.
 
 ### Chromatic aberrations
 
@@ -37,18 +43,14 @@ Wavelength dependence (chromatic aberration)
 Artal data. Point to ISETBio and maybe the other book.
 
 ## The retina
-The retina is a 200-300 micron thick layered structure of neural tissue that lines the back of the eye (5 cm x 5 cm). There are about 80 different cell types that can be identified through their genetic expression.  Specific retinal cell types form stereotypical connections that make up specific, identifiable circuits. There are about 20 known circuits, and these are likely to account for nearly all of the circuits in the retina.  The output signals from these circuits are carried on axons in the optic nerve that project to a variety of locations in the brain.
 
-The vast majority of light-driven activity is initiated in the photoreceptors (rods and cones). The rods are the dominant source under very low light levels, and the cones are the dominant source under moderate to high light levels. The typical retinal circuit is driven by activity that starts in a local region of the photoreceptors. The same basic circuit will be present throughout the retina, tiling the photoreceptor mosaic, though the absolute size of the cells and their input regions generally vary as one measures across the retina.  The size of the region increases as one measures from the highly specialized central fovea into the periphery.
+The retina is a 200-300 micron thick layered structure of neural tissue that lines the back of the eye (5 cm x 5 cm). There are about 80 different cell types that can be identified through their genetic expression. Specific retinal cell types form stereotypical connections that make up specific, identifiable circuits. There are about 20 known circuits, and these are likely to account for nearly all of the circuits in the retina. The output signals from these circuits are carried on axons in the optic nerve that project to a variety of locations in the brain.
+
+The vast majority of light-driven activity is initiated in the photoreceptors (rods and cones). The rods are the dominant source under very low light levels, and the cones are the dominant source under moderate to high light levels. The typical retinal circuit is driven by activity that starts in a local region of the photoreceptors. The same basic circuit will be present throughout the retina, tiling the photoreceptor mosaic, though the absolute size of the cells and their input regions generally vary as one measures across the retina. The size of the region increases as one measures from the highly specialized central fovea into the periphery.
 
 ### Photoreceptor sampling
-Maybe point mainly to the other book.
-Image showing the fovea and inhomogeneous sampling of the photoreceptor mosaics. 
-Maybe Curcio.
-Maybe the S-cone image sampling mosaic.
-Adaptive optics measurements of retinal sampling
-Rods, ipRGCs, too in here.
-Other book - ISETBio: Examples of simulation. David also has these new measurements.
+
+Maybe point mainly to the other book. Image showing the fovea and inhomogeneous sampling of the photoreceptor mosaics. Maybe Curcio. Maybe the S-cone image sampling mosaic. Adaptive optics measurements of retinal sampling Rods, ipRGCs, too in here. Other book - ISETBio: Examples of simulation. David also has these new measurements.
 
 ## Pattern, Time and Motion
 
