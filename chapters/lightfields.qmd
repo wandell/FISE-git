@@ -1,6 +1,11 @@
 # Light fields {#sec-lightfields}
+Why do organisms sense and interpret their surroundings? From a biological perspective, sensory perception is fundamental for guiding movement, enabling animals to locate resources, avoid threats, and navigate their environments. Ambient electromagnetic radiation provides a rich and reliable stream of information, which mobile organisms—whether a hawk, a rabbit, or a human—analyze to make decisions and interact with their surroundings. For immobile life forms, such as trees and plants, this radiation serves primarily as a source of energy, rather than information. 
 
-Why do we sense and perceive the environment around us? For biology, the explanation is that animals rely on sensing to guide movements for food and to avoid predators. The ambient electromagnetic radiation is the best available source of information. Immobile life forms and machines that do not move or reach, such as trees and plants, use this radiation as a source of energy; but mobile life forms - a hawk, a rabbit, or a person - encode and interpret the radiation to glean information and interact with the environment. A main motivation for sensing in robotics, too, is to enable movement.  We endow robots and cars with image systems to enable them to identify and grasp objects, or to navigate from place to place.
+In robotics, sensing serves a similar fundamental purpose: to enable movement and interaction within complex environments. By equipping robots and autonomous vehicles with imaging systems, we allow them to recognize objects, assess spatial relationships, and navigate with precision. The capability to capture and interpret visual data empowers these systems to identify, reach, and respond to targets in their surroundings, closely paralleling the biological role of sensory systems in guiding adaptive, goal-oriented actions.
+
+Not all electromagnetic radiation is equally informative. High energy radiation (e.g., X-ray and Gamma ray bands) passes through most objects undisturbed. Low frequency radiation provides limited spatial resolution. The human eye detects electromagnetic radiation in the wavelength range from about 380 nm to 770 nm. We call this waveband "light", which is defined as "electromagnetic radiation that can be detected by the human eye."  Electromagnetic radiation in this wavelength range is strongly absorbed and reflected by objects of interest, making it a very useful band for informing us about the environment. 
+
+Some image systems are designed to measure light because we want them to reproduce the signals that we might see. Others measure light because the signal is useful for their own function.  And finally, some image systems measure electromagnetic radiation at wavelengths we do not see, exploring domains within the environment that are beyond our senses[^lightfields-1]. 
 
 ::: {.callout-note collapse="true" title="Who needs a brain?"}
 ### Movement requires a brain {.unnumbered}
@@ -13,10 +18,9 @@ Here are some [nice images of sea squirts!](https://goodheartextremescience.word
 <!-- Irv Weissmann has lots of neurodegeneration papers on this -->
 :::
 
-Not all electromagnetic radiation is equally informative. High energy radiation (e.g., X-ray and Gamma ray bands) passes through most objects undisturbed. Low frequency radiation provides limited spatial resolution. Absorption and scattering of electromagnetic radiation in the wavelength range of a few hundred nanometers is useful for informing us about the environment because it is heavily absorbed and reflected by objects of interest. Specifically, the human eye detects electromagnetic radiation in the wavelength range from about 380 nm to 770 nm. We call this waveband "light", which is defined as "electromagnetic radiation that can be detected by the human eye."  Many image systems are designed to measure light; some measure electromagnetic radiation at wavelengths we do not see, thus extending our senses[^lightfields-1]. 
-
 [^lightfields-1]: See [more about wavebands here.](../supplemental/lightfields-wavebands.html){target="_blank"}.
 
+## The environmental light field
 The electromagnetic radiation fills the environment, traveling in many directions and and interacting with most materials. We call the ambient radiation in the visible band the *light field*. Leonardo Da Vinci's notebook [@davinciNotebooksLeonardoVinci1970] describes how we know that this field is everywhere. In a section of his notebook he describes placing a small hole in a wall of a windowless room.  The room  is adjacent to a brightly illuminated piazza (@fig-ayscough). The camera produces an image of the piazza (inverted) on the wall within the room. Leonardo further noted that an image is formed wherever the pinhole is placed. From this observation he concluded that the light field is "all everywhere"[^lightfields-2].
 
 [^lightfields-2]: **PROVE HOW ALL OBJECTS, PLACED IN ONE POSITION, ARE ALL EVERYWHERE AND ALL IN EACH PART** <br> "I say that if the front of a building—or any open piazza or field—which is illuminated by the sun has a dwelling opposite to it, and if, in the front which does not face the sun, you make a small round hole, all the illuminated objects will project their images through that hole and be visible inside the dwelling on the opposite wall which may be made white; and there, in fact, they will be upside down, and if you make similar openings in several places in the same wall you will have the same result from each. Hence the images of the illuminated objects are all everywhere on this wall and all in each minutest part of it. The reason, as we clearly know, is that this hole must admit some light to the said dwelling, and the light admitted by it is derived from one or many luminous bodies. If these bodies are of various colours and shapes the rays forming the images are of various colours and shapes, and so will the representations be on the wall. (Leonardo's 1509 Notebook, curated by John Paul Richter)"
@@ -129,7 +133,7 @@ I find it useful to rembmer the [the history of these ideas.](../supplemental/op
 Some fields that I have worked in adopted a different philosophy: they rely on hypothesis testing and aim to prove ideas true or false.  In this spirit, the phrase 'all models are wrong, some are useful', is widely quoted @box-science-1976. In physics and engineering hypotheses that are half full are still considered valuable, as long as one understands the scope over which the hypotheses can be reasonably applied.
 :::
 
-### Which blur dominates?
+### Which blur is bigger?
 The image is blurred by two effects: the pinhole size and diffraction. We can do a calculation to compare the size of these two blur effects. 
 
 <!--#  Perfect for explaining which is larger, diffraction or the size of the hole. Short and clear. Robert Cruikshank. He has a direct calculation for when diffraction dominates the aperture size, and so forth. YouTube video on diffraction -->
@@ -150,8 +154,10 @@ Here, I should include a script that calculates these using ISETCam and wvfApert
 
 :::
 
-## Light field units
-There are many applications that require us to specify the intensity of the light field.  The widely used units are not specified with respect to individual rays or waves; they are all specified with respect to averages over a solid angle (steradian) or a surface ($m^2$). We describe the most common measures of spectral radiance and spectral irradiance here.  The parallel measures for luminance and illuminance can be found in the Chapter @sec-human, that introduces concepts from human vision that are at the foundation of those measures.
+## Light field measurement
+There are many applications that require us to specify the energy of the light field.  The units used to specify light field intensities are not defined with respect to individual rays or waves; they are specified as average values over a solid angle (steradian) or a surface ($m^2$). The physical units are also described independently for each wavelength, which is reasonable because the energy at different wavelengths do not interact.  In typical conditions we can measure at each wavelength separately, mix the two lights, and find that the result is simply the sum of the individual measurements.
+
+Here, we describe the most common measures of spectral radiance and spectral irradiance here.  The parallel measures for luminance and illuminance can be found in the Chapter @sec-human, that introduces concepts from human vision that are at the foundation of those measures.
 
 ### Radiance
 
