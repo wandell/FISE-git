@@ -83,17 +83,11 @@ The environment and incident light fields use parameters of position and angle f
 
 $$L_O(u,v,w,z,\lambda,\rho)$$
 
-The data recorded by the sensor is used to create a reproduction of the image, or as the basis for interpreting the image contents. The sensing and perception systems that derive information from the light field are designed to account for which information in the environmental light field makes it all the way through to the optical light field.
+The data recorded by the sensor is used to create a reproduction of the image, or as the basis for interpreting the image contents. The sensing and perception systems that derive information from the light field are designed to account for which information in the environmental light field makes it all the way through to the optical light field [^lightfields-4].
 
-A related term, the *plenoptic* function, has been widely used in describing light fields @adelsonPlenopticFunctionElements1991. The plenoptic function is defined for a pinhole camera and a sensor. This removes the two parameters $(u,v)$. In practice, the plenoptic function is equivalent to another familiar term, the spectral irradiance at the image sensor [@Wandell2021-Principles-Ashby].
+[^lightfields-4]: The *plenoptic* function, has been widely used to describe light fields [@adelson-plenoptic-1991]. The plenoptic function is defined for a pinhole camera and a sensor, removing two parameters $(u,v)$. In practice, the plenoptic function is equivalent to another familiar term, the spectral irradiance at the image sensor [@Wandell2021-Principles-Ashby].
 
-::: {.callout-note collapse="true" title="Measuring a light field"}
-### Light field sensors {.unnumbered}
-
-The most common sensors in our cameras record only partial information about the optical light field. They rays at a single point on the sensor are summed together, no matter where the ray exited the optics. Rays with different wavelengths are also summed.
-
-By capturing more information about the optical light field, it is possible to do more. This Adelson and XXX pointed out that ... And the Ren Ng's innovative company Lytro developed a sensor and algorithms that captured a high resolution light field and then enabled users to refocus images or change the depth of field after capture. In the chapter on sensors, we will describe ways in which sensors capture a more complete version of the light field.
-:::
+For many years, the most common sensors in cameras record partial information about the optical light field. The rays arriving at a point on the sensor surface are summed together, no matter where the ray exited the optics. Measuring more information about the optical light field enables us to know and do more. For example, @adelson-wang-1992 demonstrated how to use this information to estimate depth. Ren Ng's innovative company, Lytro, developed a light field sensor and algorithms to enable users to refocus images or change the depth of field after capture. In @sec-sensors we describe how sensors capture a more complete version of the optical light field, and we will describe how modern sensors are now using this information for camera autofocus. 
 
 ## Pinholes
 
@@ -112,11 +106,13 @@ It is common to simulate light as rays in computer graphics. In @fig-pinhole-che
 ![A simulated scene imaged with a pinhole camera. The size of the pinhole diameter increases, with the smallest in the upper left, and increasing (upper left to lower right). The relative intensity is preserved in the renderings so that the scene becomes brighter as the pinhole diameter increases. Rendered with [@pharrPBRTVersion4] and [@iset3d2022].](../images/lightfields/01-pinhole-chessset.png){#fig-pinhole-chessset width="80%" fig-align="center"}
 
 ## Diffraction
+
 Useful as the ray model has been, for more than 300 years scientists have known that describing light as rays is only half right. It is true that increasing the pinhole diameter blurs the image; but the ray tracing analysis fails dramatically in other ways. Consider the simple prediction of the ray model in @fig-ray-wave (A). The rays from a point source at a distance will be nearly parallel. They will pass through a pinhole, continuing along in a straight line. An image cast on a surface behind the pinhole should have the diameter of the pinhole; a person to the side of the pinhole would see it as dark because no rays are heading to his eyes. The Jesuit scientist, Grimaldi, demonstrated that the predictions of the ray model are violated [@Grimaldi1665-physico].
 
 ![@Grimaldi1665-physico introduced a pencil of light into a dark room through a hole. According to the ray theory of light, the image on the wall should be the same size as the pinhole, and the rays should not be visible to an observer looking from the side. Grimaldi found that under some conditions the image on the image plane was larger than the pinhole itself, inconsistent with the ray theory of light. Newton confirmed the experiment but continued to use the ray theory because it remained useful for many purposes (A History of Physics, Cajori, p. 88-89). In modern times, we accept the wave theory but often use the ray theory because it works well in many circumstances.](../images/lightfields/01-ray-wave.png){#fig-ray-wave width="80%" fig-align="center"}
 
 ### Huygens wave model
+
 The Dutch scientist Christiaan Huygens, working at the same time as Newton, suggested an alternative model: he proposed modeling light as waves that expand to fill space rather than rays made up of particles that travel in a straight line. On Huygen's theory, the light emitted from a point expands as a spherical wave in all directions. At each moment in time the expansion, called the wavefront, could be considered as an array of points that each emitted a secondary wave. This model leads to many quantitative predictions, including how light will be reflected from a mirror and how the light direction will change as the wave passes from one medium (air) into a second medium (glass) (@fig-huygens-waves). We would think of a ray as being a plane wave, spread across space.
 
 ![Light modeled as a wavefront. (A) A point source is shown emitting a circular (or 3D, spherical) wave. Each point on the expanding wavefront emits a new spherical wave. The leading edge of these waves reinforce one another to form the expanding wavefront. (B) At a large distance from the source, the small part of the wavefront appears to be a plane wave. Again, each point on the plane emits a spherical wavefront. These are aligned and the wavefront remains planar. (C) When the wavefront arrives at a small aperture only a small part of the wave passes through. This is like the original source, revealing the spherical wavefront from that point.](../images/lightfields/01-huygens-wave.png){#fig-huygens-waves fig-cap-location="bottom" width="80%" fig-align="center"}
@@ -134,6 +130,7 @@ Some fields that I have worked in adopted a different philosophy: they rely on h
 :::
 
 ### Which effect blurs more?
+
 The image is blurred by two effects: the pinhole size and diffraction. We can compare the size of these two effects numerically.
 
 <!--#  Perfect for explaining which is larger, diffraction or the size of the hole. Short and clear. Robert Cruikshank. He has a direct calculation for when diffraction dominates the aperture size, and so forth. YouTube video on diffraction -->
@@ -148,9 +145,10 @@ Suppose we calculate the size of the diffraction diameter when the image plane i
 
 ::: {.callout-note collapse="true" title="Airy disk size formula"}
 ### Airy disk formula {.unnumbered}
+
 In his paper entitled "On the Diffraction of an Object-glass with Circular Aperture", George Airy provided the mathematical description of the diffraction pattern [@airy-1835-diffraction], which includes the central bright spot (the Airy disk) surrounded by a series of concentric rings. The modern derivation of the full point spread function for both the circular aperture and other shapes can be found @goodman2022 (pages 88-94). The computation is implemented and frequently used in ISETCam. It is explained in this tutorial XXX.
 
-In the main text, we expressed the formula for a particular distance from the pinhole to an image plane.  For a pinhole, the formula is usually given in terms of the angle of the bundle of rays emerging from the pinhole. 
+In the main text, we expressed the formula for a particular distance from the pinhole to an image plane. For a pinhole, the formula is usually given in terms of the angle of the bundle of rays emerging from the pinhole.
 
 $$sin(\theta) = 1.22 \lambda / D$$
 
@@ -158,23 +156,44 @@ When the angle is small, $\theta < 10 \deg$, the formula is very accurately appr
 
 $$\theta = 1.22 \lambda / D$$
 
-The size of the spot on the image plane depends on the distance how far away the pinhole is from the pinhole, as you can see in [@eq-airy1].  In @sec-optics we provide a formula for the Airy disk size for an ideal lens. 
+The size of the spot on the image plane depends on the distance how far away the pinhole is from the pinhole, as you can see in [@eq-airy1]. In @sec-optics we provide a formula for the Airy disk size for an ideal lens.
 :::
 
 ## Light field measurement
+
 There are many applications that require us to quantify the light field. In this section we introduce the fundamental concepts of light field quantification.
 
-The quantification are based on the amount of energy, or equivalently the number of photons, in the light field. In the case of energy the basic unit is joules/sec, which is also called watts.  In the case of photons the measure is photons per second.  For radiometry, the measurements are always made with separately for each wavelength.  For research areas working with light, wavelength is commonly expressed with respect to nanometers [^lightfields-4]. Thus, one expect to find watts per nanometer or photons/sec per nanometer. Additional types of units are incorporated as we define the geometry of the measurement.
+The quantification are based on the amount of energy, or equivalently the number of photons, in the light field. In the case of energy the basic unit is joules/sec, which is also called watts. In the case of photons the measure is photons per second. For radiometry, the measurements are always made with separately for each wavelength. For research areas working with light, wavelength is commonly expressed with respect to nanometers [^lightfields-5]. Thus, one expect to find watts per nanometer or photons/sec per nanometer. Additional types of units are incorporated as we define the geometry of the measurement.
 
-[^lightfields-4]: Units of micrometers (microns) are commonly used by people working in the infrared studies, units of angstroms in atomic and x-ray studies, and electron volts in high-energy photon research.
+[^lightfields-5]: Units of micrometers (microns) are commonly used by people working in the infrared studies, units of angstroms in atomic and x-ray studies, and electron volts in high-energy photon research.
 
 Light field measurements can be divided into two main types, with a large number of subtypes. The main division concerns whether we are measuring a light field that is radiating from a source (radiance), or we are measuring a light field that is arriving at a surface (irradiance). We will introduce the most common measures of spectral radiance and irradiance here.
 
-The first division is whether we are measuring the light field at every separate wavelength (radiometry), or whether we are specifying the weighted sum across multiple wavelengths (photometry). In this section, we will describe the radiometric quantities that specify each wavelength.\
-The photometric terms corresponding to radiance and irradiance are luminance and illuminance. In @sec-human we explain the experimental basis for how we sum across wavelengths to convert radiometric into photometric quantities.
+Finally, there is a parallel set of light field measurements whose purpose is to summarize the impact of the light field on the human visual system. These measurements, called photometry, take a weighted sum across wavelength of the radiometric units. The weighting with respect to wavelength is determined by the relative impact of each wavelength on the human visual system, as measured in an experimental paradigm called 'flicker photometry'. The photometric terms that parallel radiance and irradiance are luminance and illuminance. In this section, we will describe the radiometric quantities that specify each wavelength. In @sec-human we explain the experimental basis for summing across wavelengths to convert radiometric into photometric quantities.
 
-The units used to specify light field intensities are not defined with respect to individual rays or waves; they are specified as average values over a solid angle (steradian) or a surface ($m^2$). The physical units are also described independently for each wavelength, which is reasonable because the energy at different wavelengths do not interact. In typical conditions we can measure at each wavelength separately, mix the two lights, and find that the result is simply the sum of the individual measurements. \### Radiance
+The units used to specify light field energy are specified as the mean values over a solid angle (steradian, $sr$) or a surface ($m^2$). The physical units are also described independently for each wavelength, which is reasonable because the energy at different wavelengths do not interact. In typical conditions we can measure at each wavelength separately, mix the two lights, and find that the result is simply the sum of the individual measurements.
+
+### Radiance from a point
+@fig-radiometry illustrates the critical geometric differences between the various radiometric measures. One important distinction is whether we are considering the light emitted from a location (radiance) or light arriving to a location (irradiance).
+
+There are three principal measures of emitted light. When we consider a point source (upper left), we might measure the energy emitted in all directions, the *radiant flux*. In this case we are summing the energy across all emission directions.  The units are watts measured separately for each small band of wavelengths (watts/nm).  
+
+![The geometry of light field measurements.](../images/lightfields/01-radiometry.png){#fig-radiometry fig-cap-location="bottom" width="100%" fig-align="center"}
+
+We may decide to measure the light emitted from a location in a particular direction.  In that case, we specify the energy of per unit cone of rays in a particular direction.  The steradian measures angles in three-dimensions, just as the radian measures angles in two-dimensions. It measures how wide or narrow a directional spread is from a central point. When we measure the light emitted in a direction, we may be measuring a larger or smaller bundle.  The radiant intensity normalizes the angle we measure to the unit steradian. 
+
+::: {.callout-note collapse="false" title="Steradians"}
+
+![Three-dimensional angle units are called steradians.  One steradian is defined as angle of the cone whose surface area on a sphere of radius $r$ is equal to $r^2$. Because the surface area of a sphere with radius $r$ is $4 \pi r^2$, it follows that the complete sphere surrounding a point is $4 \pi$ steradians.](../images/lightfields/01-radiometry-steradian.png){#fig-steradian width="60%" fig-cap-location="bottom"}
+:::
+
+### Radiance from a surface
+In many applications, the light we are interested in arises from an extended surface - such as a wall or the side of a large object.  In that case, many points contribute energy to the measurement.  The unit we create is normalized by the surface area of the extended surface and by the angle that surface forms with the measurement instrument.  The unit is called 
 
 ### Irradiance
+
+
+### Radiometric units
+![The radiometric measurement units.](../images/lightfields/01-radiometry-units.png){#fig-radiometry-units fig-cap-location="bottom" width="100%" fig-align="center"}
 
 ## Footnotes
