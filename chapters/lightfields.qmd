@@ -1,11 +1,14 @@
 # Light fields {#sec-lightfields}
-Why do organisms sense and interpret their surroundings? From a biological perspective, sensory perception is fundamental for guiding movement, enabling animals to locate resources, avoid threats, and navigate their environments. Ambient electromagnetic radiation provides a rich and reliable stream of information, which mobile organisms—whether a hawk, a rabbit, or a human—analyze to make decisions and interact with their surroundings. For immobile life forms, such as trees and plants, this radiation serves primarily as a source of energy, rather than information. 
+
+Why do organisms sense and interpret their surroundings? From a biological perspective, sensory perception is fundamental for guiding movement, enabling animals to locate resources, avoid threats, and navigate their environments. Ambient electromagnetic radiation provides a rich and reliable stream of information, which mobile organisms—whether a hawk, a rabbit, or a human—analyze to make decisions and interact with their surroundings. For immobile life forms, such as trees and plants, this radiation serves primarily as a source of energy, rather than information.
 
 In robotics, sensing serves a similar fundamental purpose: to enable movement and interaction within complex environments. By equipping robots and autonomous vehicles with imaging systems, we allow them to recognize objects, assess spatial relationships, and navigate with precision. The capability to capture and interpret visual data empowers these systems to identify, reach, and respond to targets in their surroundings, closely paralleling the biological role of sensory systems in guiding adaptive, goal-oriented actions.
 
-Not all electromagnetic radiation is equally informative. High energy radiation (e.g., X-ray and Gamma ray bands) passes through most objects undisturbed. Low frequency radiation provides limited spatial resolution. The human eye detects electromagnetic radiation in the wavelength range from about 380 nm to 770 nm. We call this waveband "light", which is defined as "electromagnetic radiation that can be detected by the human eye."  Electromagnetic radiation in this wavelength range is strongly absorbed and reflected by objects of interest, making it a very useful band for informing us about the environment. 
+Not all electromagnetic radiation is equally informative. High energy radiation (e.g., X-ray and Gamma ray bands) passes through most objects undisturbed. Low frequency radiation provides limited spatial resolution. The human eye detects electromagnetic radiation in the wavelength range from about 380 nm to 770 nm. We call this waveband "light", which is defined as "electromagnetic radiation that can be detected by the human eye." Electromagnetic radiation in this wavelength range is strongly absorbed and reflected by objects of interest, making it a very useful band for informing us about the environment.
 
-Some image systems are designed to measure light because we want them to reproduce the signals that we might see. Others measure light because the signal is useful for their own function.  And finally, some image systems measure electromagnetic radiation at wavelengths we do not see, exploring domains within the environment that are beyond our senses[^lightfields-1]. 
+Some image systems are designed to measure light because we want them to reproduce the signals that we might see. Others measure light because the signal is useful for their own function. And finally, some image systems measure electromagnetic radiation at wavelengths we do not see, exploring domains within the environment that are beyond our senses[^lightfields-1].
+
+[^lightfields-1]: See [more about wavebands here.](../supplemental/lightfields-wavebands.html){target="_blank"}.
 
 ::: {.callout-note collapse="true" title="Who needs a brain?"}
 ### Movement requires a brain {.unnumbered}
@@ -18,10 +21,9 @@ Here are some [nice images of sea squirts!](https://goodheartextremescience.word
 <!-- Irv Weissmann has lots of neurodegeneration papers on this -->
 :::
 
-[^lightfields-1]: See [more about wavebands here.](../supplemental/lightfields-wavebands.html){target="_blank"}.
-
 ## The environmental light field
-The electromagnetic radiation fills the environment, traveling in many directions and and interacting with most materials. We call the ambient radiation in the visible band the *light field*. Leonardo Da Vinci's notebook [@davinciNotebooksLeonardoVinci1970] describes how we know that this field is everywhere. In a section of his notebook he describes placing a small hole in a wall of a windowless room.  The room  is adjacent to a brightly illuminated piazza (@fig-ayscough). The camera produces an image of the piazza (inverted) on the wall within the room. Leonardo further noted that an image is formed wherever the pinhole is placed. From this observation he concluded that the light field is "all everywhere"[^lightfields-2].
+
+Electromagnetic radiation fills the environment, traveling in many directions and interacting with most materials. We call the ambient radiation in the visible band the *light field*. Leonardo Da Vinci's notebook [@davinciNotebooksLeonardoVinci1970] describes how we know that this field is everywhere. In a section of his notebook he describes placing a small hole in a wall of a windowless room. The room is adjacent to a brightly illuminated piazza (@fig-ayscough). The camera produces an image of the piazza (inverted) on the wall within the room. Leonardo further noted that an image is formed wherever the pinhole is placed. From this observation he concluded that the light field is "all everywhere"[^lightfields-2].
 
 [^lightfields-2]: **PROVE HOW ALL OBJECTS, PLACED IN ONE POSITION, ARE ALL EVERYWHERE AND ALL IN EACH PART** <br> "I say that if the front of a building—or any open piazza or field—which is illuminated by the sun has a dwelling opposite to it, and if, in the front which does not face the sun, you make a small round hole, all the illuminated objects will project their images through that hole and be visible inside the dwelling on the opposite wall which may be made white; and there, in fact, they will be upside down, and if you make similar openings in several places in the same wall you will have the same result from each. Hence the images of the illuminated objects are all everywhere on this wall and all in each minutest part of it. The reason, as we clearly know, is that this hole must admit some light to the said dwelling, and the light admitted by it is derived from one or many luminous bodies. If these bodies are of various colours and shapes the rays forming the images are of various colours and shapes, and so will the representations be on the wall. (Leonardo's 1509 Notebook, curated by John Paul Richter)"
 
@@ -31,7 +33,7 @@ It is useful to write the environmental light field as an explicit function so t
 
 $$L_E(x,y,z,\alpha,\beta,\lambda,\rho)$$
 
-People in many fields are familiar with the concept of the light field, but they use different terminology. Physicists often describe the environmental light field as the spectral radiance of the enviroment. The term *light field* was introduced into optical engineering by @gershunLightField1939 as part of his work in understanding how to design lighting environments, such as the lighting in school rooms and public places[^lightfields-3]. The use of the term and the importance of the light field in practice was greatly amplified in the field of computer graphics by Marc Levoy and Pat Hanrahan @Levoy-1996-light-field. I will continue to use the light field terminology to follow the signal from the environment, to the entrance pupil of the camera, and then to the sensor.  I find the term "light" to be more familiar and engaging than spectral radiance or electromagnetic radiation.  Perhaps this is because I am a psychologist at heart.
+People in many fields are familiar with the concept of the light field, but they use different terminology. Physicists often describe the environmental light field as the spectral radiance of the enviroment. The term *light field* was introduced into optical engineering by @gershunLightField1939 as part of his work in understanding how to design lighting environments, such as the lighting in school rooms and public places[^lightfields-3]. The use of the term and the importance of the light field in practice was greatly amplified in the field of computer graphics by Marc Levoy and Pat Hanrahan @Levoy-1996-light-field. I will continue to use the light field terminology to follow the signal from the environment, to the entrance pupil of the camera, and then to the sensor. I find the term "light" to be more familiar and engaging than spectral radiance or electromagnetic radiation. Perhaps this is because I am a psychologist at heart.
 
 [^lightfields-3]: I enjoyed the first sentence in the 1939 translation of Gershun's paper, from the translators, Moon and Timoshenko. They express frustration with the pace of advances in photometry. "Theoretical photometry constitutes a case of 'arrested development', and has remained basically unchanged since 1760 while the rest of physics has swept triumphantly ahead." Gershun himself writes "The problems of theoretical photometry were pushed aside from the main path of the development of physics."
 
@@ -43,7 +45,7 @@ An imaging system, say the eye or a pinhole, records only the portion of the env
 ![The incident light field is the subset of environmental light field rays that arrive at the image systems’ entrance pupil.](../images/lightfields/01-incident-lightfield.png){#fig-incident-lightfield width="80%" fig-align="center"}
 :::
 
-The rays of the incident light field can be described with one fewer parameter than the environmental light field because the entrance pupil is just a two-dimensional surface. Thus, the three dimensional position is replaced by the two-dimensional position in the entrance pupil, $(u,v)$.  There are, however,  additional parameters that define the sensing system, not the light field. The aperture has a position in space $\mathbf{p}$ and and a viewing direction $\mathbf{n}$.  We 
+The rays of the incident light field can be described with one fewer parameter than the environmental light field because the entrance pupil is just a two-dimensional surface. Thus, the three dimensional position is replaced by the two-dimensional position in the entrance pupil, $(u,v)$. There are, however, additional parameters that define the sensing system, not the light field. The aperture has a position in space $\mathbf{p}$ and and a viewing direction $\mathbf{n}$. We
 
 $$L_I(u,v,\alpha,\beta,\lambda,\rho; ~\mathbf{p},\mathbf{n})$$
 
@@ -72,6 +74,7 @@ This book is written with the belief that achieving this goal will benefit signi
 :::
 
 ## Optical light field
+
 The image system optics, whether a pinhole, thin lens, or multi-element lens, transforms the incident light field into a new light field within the camera. This *optical light field* is between the exit pupil of the optics and the sensor. It originates in the environment, is reduced to the incident light field, and then transformed by the optics. The camera sensor, or the retina, measures the optical light field.
 
 ![The rays emerging from the exit pupil of the optics are captured by the sensor (or film). These rays form a light field within the camera, the optical light field $L_O$. The rays of this light field that matter for the image system are those that are captured by sensor.](/images/lightfields/01-optical-lightfield.png){#fig-optical-lightfield .margin-caption width="80%"}
@@ -102,73 +105,73 @@ For example, consider a point (A) relatively far from the pinhole (@fig-pinhole-
 
 Consider an off-axis point, (B). Again, its rays will spread in many directions but only a narrow, collimated subset of rays will arrive at the aperture. Because of the angle between the collimated rays and the pinhole, a smaller fraction of the rays will pass through the pinhole aperture. The point spread from (B) will be smaller and dimmer. If we can tolerate the reduced intensity and we do not mind the blurring from the pinhole, we will have a satisfactory image.
 
-It is common to simulate light as rays in computer graphics. In @fig-pinhole-chessset I rendered a chess set scene with the pieces, each a few cm tall, positioned about 0.5 meters from the pinhole camera. The four pictures were rendered using different pinhole diameters. The upper left allows only one ray through from each location in the scene. The aperture diameters for the next three pictures are for increasing pinhole sizes. The images are brighter as the pinhole size increases, of course. For this scene geometry the image at the two smaller pinhole sizes are tolerable. Depending on your viewing distance from the screen or page, even the third pinhole image might be usable. But the image with image with the largests pinhole loses so much information that the individual pieces blur together.
+It is common to simulate light as rays in computer graphics. In @fig-pinhole-chessset I rendered a chess set scene with the pieces, each a few cm tall, positioned about 0.5 meters from the pinhole camera. The four pictures were rendered using different pinhole diameters. The upper left allows only one ray through from each location in the scene. The aperture diameters for the next three pictures are for increasing pinhole sizes. The images are brighter as the pinhole size increases, of course. For this scene geometry the image at the two smaller pinhole sizes are tolerable. Depending on your viewing distance from the screen or page, even the third pinhole image might be usable. But the largest pinhole, which lets in the most light, also loses so much spatial information that the individual pieces blur together.
+
+<!--# Maybe we do some simple geometric calculations in a script and callout here.  Possible ideas are showing how the distance of the image surface from the pinhole and the size of the image surface matter.  Also that the same light is spread over a smaller region when the surface is closer, and a wider region when the surface is further away.  These ideas will reappear below when we measure light levels and also in the optics chapter when we talk about magnification. -->
 
 ![A simulated scene imaged with a pinhole camera. The size of the pinhole diameter increases, with the smallest in the upper left, and increasing (upper left to lower right). The relative intensity is preserved in the renderings so that the scene becomes brighter as the pinhole diameter increases. Rendered with [@pharrPBRTVersion4] and [@iset3d2022].](../images/lightfields/01-pinhole-chessset.png){#fig-pinhole-chessset width="80%" fig-align="center"}
-
-There are many ways to explore the impact of varying the pinhole size. We might adjust the distance of the image plane from the pinhole, or we might change the field of view of the scene. If you are new to reasoning about optics, some of the calculations in this ISETCam script may help you develop an intuition for these parameters.
-
-::: text-center
-Some code here?
-:::
 
 ## Diffraction
 Useful as the ray model has been, for more than 300 years scientists have known that describing light as rays is only half right. It is true that increasing the pinhole diameter blurs the image; but the ray tracing analysis fails dramatically in other ways. Consider the simple prediction of the ray model in @fig-ray-wave (A). The rays from a point source at a distance will be nearly parallel. They will pass through a pinhole, continuing along in a straight line. An image cast on a surface behind the pinhole should have the diameter of the pinhole; a person to the side of the pinhole would see it as dark because no rays are heading to his eyes. The Jesuit scientist, Grimaldi, demonstrated that the predictions of the ray model are violated [@Grimaldi1665-physico].
 
 ![@Grimaldi1665-physico introduced a pencil of light into a dark room through a hole. According to the ray theory of light, the image on the wall should be the same size as the pinhole, and the rays should not be visible to an observer looking from the side. Grimaldi found that under some conditions the image on the image plane was larger than the pinhole itself, inconsistent with the ray theory of light. Newton confirmed the experiment but continued to use the ray theory because it remained useful for many purposes (A History of Physics, Cajori, p. 88-89). In modern times, we accept the wave theory but often use the ray theory because it works well in many circumstances.](../images/lightfields/01-ray-wave.png){#fig-ray-wave width="80%" fig-align="center"}
 
-### Huygens wave model 
+### Huygens wave model
 The Dutch scientist Christiaan Huygens, working at the same time as Newton, suggested an alternative model: he proposed modeling light as waves that expand to fill space rather than rays made up of particles that travel in a straight line. On Huygen's theory, the light emitted from a point expands as a spherical wave in all directions. At each moment in time the expansion, called the wavefront, could be considered as an array of points that each emitted a secondary wave. This model leads to many quantitative predictions, including how light will be reflected from a mirror and how the light direction will change as the wave passes from one medium (air) into a second medium (glass) (@fig-huygens-waves). We would think of a ray as being a plane wave, spread across space.
 
 ![Light modeled as a wavefront. (A) A point source is shown emitting a circular (or 3D, spherical) wave. Each point on the expanding wavefront emits a new spherical wave. The leading edge of these waves reinforce one another to form the expanding wavefront. (B) At a large distance from the source, the small part of the wavefront appears to be a plane wave. Again, each point on the plane emits a spherical wavefront. These are aligned and the wavefront remains planar. (C) When the wavefront arrives at a small aperture only a small part of the wave passes through. This is like the original source, revealing the spherical wavefront from that point.](../images/lightfields/01-huygens-wave.png){#fig-huygens-waves fig-cap-location="bottom" width="80%" fig-align="center"}
 
-A consequence of the wave theory is that as light passes through a pinhole, or near an edge, the spherical waves from each point on the wavefront are revealed. The aperture limits the region of the plane wave that continues on to a much smaller number of points. When restricted in this way, the resulting wavefront is no longer a plane; instead, the sum of the spherical waves from the points sum to a new wavefront that spreads in multiple directions. This phenomenon was called diffraction by Grimaldi. When the pinhole diameter is small, and only a small portion of the plane wave compared to the wavelength of light enters the pinhole, the spherical wavefront becomes quite large and this blurs the image (@fig-huygens-waves). 
+A consequence of the wave theory is that as light passes through a pinhole, or near an edge, the spherical waves from each point on the wavefront are revealed. The aperture limits the region of the plane wave that continues on to a much smaller number of points. When restricted in this way, the resulting wavefront is no longer a plane; instead, the sum of the spherical waves from the points sum to a new wavefront that spreads in multiple directions. This phenomenon was called diffraction by Grimaldi. When the pinhole diameter is small, and only a small portion of the plane wave compared to the wavelength of light enters the pinhole, the spherical wavefront becomes quite large and this blurs the image (@fig-huygens-waves).
 
 ::: {.callout-note collapse="true" title="What took us so long?"}
 ### Rays and waves
+
 Although the two theories were proposed at about the same time, Newton's ray theory from 1704 was accepted for roughly a century. Widespread recognition of the value of Huygen's wave theory followed Thomas Young's 1804 demonstration, in England to the Royal Society, of the interference pattern created by light passing through two, coherent, nearby sources.
 
-I find it useful to rembmer the [the history of these ideas.](../supplemental/optics-diffraction.html) There is real value in the ray model which remains widely used for many purposes: even though we know it is not correct in all cases.  This very pragmatic approach - use the tool that is accurate enough for the problem at hand - is deeply ingrained in some fields. Approach practical measurements and theories with a toolbox of methods.
+I find it useful to rembmer the [the history of these ideas.](../supplemental/optics-diffraction.html) There is real value in the ray model which remains widely used for many purposes: even though we know it is not correct in all cases. This very pragmatic approach - use the tool that is accurate enough for the problem at hand - is deeply ingrained in some fields. Approach practical measurements and theories with a toolbox of methods.
 
-Some fields that I have worked in adopted a different philosophy: they rely on hypothesis testing and aim to prove ideas true or false.  In this spirit, the phrase 'all models are wrong, some are useful', is widely quoted @box-science-1976. In physics and engineering hypotheses that are half full are still considered valuable, as long as one understands the scope over which the hypotheses can be reasonably applied.
+Some fields that I have worked in adopted a different philosophy: they rely on hypothesis testing and aim to prove ideas true or false. In this spirit, the phrase 'all models are wrong, some are useful', is widely quoted @box-science-1976. In physics and engineering hypotheses that are half full are still considered valuable, as long as one understands the scope over which the hypotheses can be reasonably applied.
 :::
 
-### Which blur is bigger?
-The image is blurred by two effects: the pinhole size and diffraction. We can do a calculation to compare the size of these two blur effects. 
+### Which effect blurs more?
+The image is blurred by two effects: the pinhole size and diffraction. We can compare the size of these two effects numerically.
 
 <!--#  Perfect for explaining which is larger, diffraction or the size of the hole. Short and clear. Robert Cruikshank. He has a direct calculation for when diffraction dominates the aperture size, and so forth. YouTube video on diffraction -->
- First, suppose the pinhole diameter is $D$. For a far-away point, with the rays coming in parallel, we expect the blur size in the image to be $D$. This pinhole-blur, treating the light as rays, is the same no matter how far the image plane is from the pinhole.
 
-Second, the blur we expect for a wave passing through an aperture can be calculated using a formula that was first derived by Lord Airy in 1835 @airy-1835-diffraction. He computed the light pattern that we expect for waves passing through a circular pinhole  depend on the wavelength of the light $\lambda$, the diameter of the pinhole, and the distance from the pinhole to the image plane, $L$. Notice that the image of the point through the circular pinhole is radially symmetric with a bright spot in the center, surrounded by a set of concentric rings of decreasing intensity. The central region is called the Airy disk, and it contains about 85% of the total energy. The diameter of the disk on the image plane, $d$, is given by the formula
+First, suppose the pinhole diameter is $D$. For a far-away point, with the rays coming in parallel, we expect the blur size in the image to be $D$. This pinhole-blur, treating the light as rays, is the same no matter how far the image plane is from the pinhole.
 
-$$d= 2.44~L~(\lambda / D)$$
+Second, the light pattern we expect for a wave passing through a pinhole aperture can be calculated using a formula that was derived by George B. Airy [@airy-1835-diffraction]. The light pattern depends on the wavelength of the light $\lambda$, the diameter of the pinhole, and the distance from the pinhole to the image plane, $L$. The image is radially symmetric with a bright spot in the center, surrounded by a set of concentric rings of decreasing intensity. The central region is called the Airy disk, and it contains about 85% of the total energy. The mathematical notation for that formula is a bit complex, but the diameter of the disk, $d$, is given by a relatively simple formula
 
-<!--#  The Airy Disk formula, say how the formula was developed, says the light needs to spread out because it is a wave. Cruikshank makes the Airy Disk formula in terms of the angle that the rays come out of the pinhole: theta = 1.22 * wavelength (m) / Diameter (m) The true formula is $sin(\theta) = 1.22 \lambda / D$, but for $\theta < 10 \deg$ there is no practical difference. So the size of the spot will depend on how far away the pinhole is from the pinhole.  -->
+$$d= 2.44~L~(\lambda / D)$$ {#eq-airy1}
 
-Suppose we calculate the size of the diffraction diameter when the image plane is 1 m away, so $L=1$, and for a wavelength of light is 550 nm. The diameter of the Airy disk, $d$, in meters will be $2.44 \times (550*10^{-9} / D)$. The diffraction spread dominates the pinhole spread when $d$ exceeds $D$. We do the calculation in the scripts in this [ISETCam script](https://htmlpreview.github.io/?https://github.com/wandell/FISE-git/blob/main/code/fise_diffraction.html). 
+Suppose we calculate the size of the diffraction diameter when the image plane is 1 m away, so $L=1$, and for a wavelength of light is 550 nm. The diameter of the Airy disk, $d$, in meters will be $2.44 \times (550*10^{-9} / D)$. The diffraction spread dominates the pinhole spread when $d$ exceeds $D$. We do the calculation in the scripts in this [ISETCam script](https://htmlpreview.github.io/?https://github.com/wandell/FISE-git/blob/main/code/fise_diffraction.html).
 
-::: {.callout-note collapse="true" title="Matlab: blur calculations"}
-The complete mathematical derivation of the point spread function for different aerptures is described in @goodman2022 (pages 88-94). 
+::: {.callout-note collapse="true" title="Airy disk size formula"}
+### Airy disk formula {.unnumbered}
+In his paper entitled "On the Diffraction of an Object-glass with Circular Aperture", George Airy provided the mathematical description of the diffraction pattern [@airy-1835-diffraction], which includes the central bright spot (the Airy disk) surrounded by a series of concentric rings. The modern derivation of the full point spread function for both the circular aperture and other shapes can be found @goodman2022 (pages 88-94). The computation is implemented and frequently used in ISETCam. It is explained in this tutorial XXX.
 
-Here, I should include a script that calculates these using ISETCam and wvfAperture method.  There is a Psych 221 project on this is happening in 2024.  That project also relates to animal vision, which could fit in here.
+In the main text, we expressed the formula for a particular distance from the pinhole to an image plane.  For a pinhole, the formula is usually given in terms of the angle of the bundle of rays emerging from the pinhole. 
 
+$$sin(\theta) = 1.22 \lambda / D$$
+
+When the angle is small, $\theta < 10 \deg$, the formula is very accurately approximated as
+
+$$\theta = 1.22 \lambda / D$$
+
+The size of the spot on the image plane depends on the distance how far away the pinhole is from the pinhole, as you can see in [@eq-airy1].  In @sec-optics we provide a formula for the Airy disk size for an ideal lens. 
 :::
 
 ## Light field measurement
-There are many applications that require us to quantify the light field.  In this section we introduce the fundamental concepts.
 
-The measurement can be divided into four different general types, with a large number of subtypes. The first division is whether we are measuring the light field at every separate wavelength (radiometry), or whether we are specifying the weighted sum across multiple wavelengths (photometry). In this section, we will describe the radiometric quantities that specify each wavelength.  
-The second division concerns whether we are measuring a light field that is radiating from a light source or a surface (radiance), or we are measuring a light field that is arriving at a surface (irradiance).  We will introduce the most common measures of spectral radiance and irradiance here.  
+There are many applications that require us to quantify the light field. In this section we introduce the fundamental concepts.
 
-In the Chapter @sec-human we will introduce the experimental principles that were used to define how we sum across wavelength and convert radiometric quantities into photometric quantities.
-The parallel measures for luminance and illuminance can be found in the Chapter @sec-human, that introduces concepts from human vision that are at the foundation of those measures.
+The measurement can be divided into four different general types, with a large number of subtypes. The first division is whether we are measuring the light field at every separate wavelength (radiometry), or whether we are specifying the weighted sum across multiple wavelengths (photometry). In this section, we will describe the radiometric quantities that specify each wavelength.\
+The second division concerns whether we are measuring a light field that is radiating from a light source or a surface (radiance), or we are measuring a light field that is arriving at a surface (irradiance). We will introduce the most common measures of spectral radiance and irradiance here.
 
-There are 
+The photometric terms corresponding to radiance and irradiance are luminance and illuminance. In @sec-human we explain the experimental basis for how we sum across wavelengths to convert radiometric into photometric quantities.
 
-The units used to specify light field intensities are not defined with respect to individual rays or waves; they are specified as average values over a solid angle (steradian) or a surface ($m^2$). The physical units are also described independently for each wavelength, which is reasonable because the energy at different wavelengths do not interact.  In typical conditions we can measure at each wavelength separately, mix the two lights, and find that the result is simply the sum of the individual measurements.
-### Radiance
+The units used to specify light field intensities are not defined with respect to individual rays or waves; they are specified as average values over a solid angle (steradian) or a surface ($m^2$). The physical units are also described independently for each wavelength, which is reasonable because the energy at different wavelengths do not interact. In typical conditions we can measure at each wavelength separately, mix the two lights, and find that the result is simply the sum of the individual measurements. \### Radiance
 
 ### Irradiance
-
 
 ## Footnotes
