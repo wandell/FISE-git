@@ -176,10 +176,9 @@ Radiometry defines standard units that depend on the geometry of the measurement
 
 Finally, there is a set of light units that summarize the impact of the light on the human visual system. These measurements begin with the spectral radiometry units and form a weighted sum across wavelengths. The weights are selected to represent the relative visibility of each wavelength; the weights were measured in an experimental paradigm called 'flicker photometry'. The photometric terms that parallel radiance and irradiance are luminance and illuminance. In this section, we will describe the radiometric quantities. In @sec-human we explain the experimental basis for summing across wavelengths and how to convert the spectral radiometric quantities into photometric quantities.
 
-![The geometry of radiometric measures.](../images/lightfields/01-radiometry.png){#fig-radiometry fig-cap-location="bottom" width="100%" fig-align="center"}
+![The geometry of four basic radiometric measures.](../images/lightfields/01-radiometry.png){#fig-radiometry fig-cap-location="bottom" width="100%" fig-align="center"}
 
 ### Radiance from a point
-
 @fig-radiometry illustrates the geometry for four radiometric measures. At the upper left, we consider a point source. The *radiant flux* measures the total energy emitted from the point in all directions. As for all radiometric measurements, the energy (watts) is specified separately with respect to wavelength (watts/nm).
 
 Often, we would like to measure the light emitted by a point source in a particular direction, the *radiant intensity*. In that case we measure the energy within a cone of rays in a particular direction. We measure the cone angle in terms of steradians, the standard unit for angles in three-dimensions just as the radian is the standard unit for angles in two-dimensions. The radiant intensity measures watts per steradian per nanometer (watts/sr/nm). Thus, if the measurement instrument picks up light over an angle of 0.5 steradians, we divide our measurement by 0.5. If it measures average 10 nm bands, we divide the energy by 10. In this way, the radiant intensity normalizes the angle we measure to the unit steradian and per nanometer. The standard symbol for radiant intensity is $I(\lambda)$.
@@ -189,14 +188,15 @@ Often, we would like to measure the light emitted by a point source in a particu
 :::
 
 ### Radiance from a surface
+In many applications we must measure light from a patch on an extended, flat surface - such as a large light fixture with a diffuser, a wall, or a large display screen. The geometry of thee measurement accounts for two main factors [@fig-foreshortening-sketch]. First, we must account for the area of the surface patch, as seen from the detector. For example, if the measured surface patch is a square $0.1$ meters on a side its area is $A_s = (0.1)^2~m^2$. The area, as seen from the detector, can be foreshortened. We calculate this from the angle between the viewing direction and the surface normal, $\theta$. The foreshortened surface area is $A_s \cos(\theta) ~ m^2$. Second, we account for the size of the bundle of rays captured by the detector. We measure this size using the three-dimensional angle, $\omega ~ sr$, of the cone of rays from a surface point that are captured by the detector.
 
-In many applications we must measure light from a patch on an extended, flat surface - such as a large light fixture with a diffuser, a wall, or a large display screen. The geometry of thee measurement accounts for two factors. First, we must account for the area of the surface patch, as seen from the detector. For example, if the measured surface patch is a square $0.1$ meters on a side its area is $A_s = (0.1)^2~m^2$. The area, as seen from the detector, can be foreshortened. We calculate this from the angle between the viewing direction and the surface normal, $\theta$. The foreshortened surface area is $A_s \cos(\theta) m^2$. Second, we account for the size of the bundle of rays captured by the detector. We measure this size using the three-dimensional angle, $\omega sr$, of the cone of rays from a surface point that are captured by the detector.
+![Geometric factors for measuring radiance from an extended surface to a detector.](../images/lightfields/01-foreshortening-sketch.png){#fig-foreshortening-sketch width=60%}
 
 ::: {.callout-note collapse="true" title="Foreshortening"}
 ![The rows contain circles of the same size.  The paper curves so that the circles are at different angles from the camera. As the angle increases, the circles are smaller in the image plane.](../images/lightfields/01-foreshortening.jpg){#fig-foreshortening width="80%" fig-cap-location="bottom"}
 :::
 
-The *radiance* $L$, combines the energy ($watts/nm$) with these geometric factors. The standard symbol for spectral radiance is $L(\lambda)$. It has units of watts per nanometer per unit foreshortened area per steradian: \$ \frac{Watts}{nm ~ \cos(\theta) m^2 ~ sr}\$.
+The *radiance* $L$, combines the energy measured at the sensor ($watts/nm$) with these geometric factors. The standard symbol for spectral radiance is $L(\lambda)$, and it has units of watts per nanometer per unit foreshortened-area per steradian: \$ \frac{Watts}{nm ~ \cos(\theta) m^2 ~ sr}\$.
 
 ### Irradiance
 
