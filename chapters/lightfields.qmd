@@ -2,7 +2,7 @@
 
 Why do organisms sense and interpret their surroundings? From a biological perspective, sensory perception is fundamental for guiding movement, enabling animals to locate resources, avoid threats, and navigate their environments. Ambient electromagnetic radiation provides a rich and reliable stream of information, which mobile organisms—whether a hawk, a rabbit, or a human—analyze to make decisions and interact with their surroundings. For immobile life forms, such as trees and plants, this radiation serves primarily as a source of energy, rather than information.
 
-In robotics, sensing serves a similar fundamental purpose: to enable movement and interaction within complex environments. By equipping robots and autonomous vehicles with imaging systems, we allow them to recognize objects, assess spatial relationships, and navigate with precision. The capability to capture and interpret visual data empowers these systems to identify, reach, and respond to targets in their surroundings, closely paralleling the biological role of sensory systems in guiding adaptive, goal-oriented actions.
+In robotics, visual sensing serves a similar fundamental purpose: to enable movement and interaction within complex environments. By equipping robots and autonomous vehicles with imaging systems, we allow their computer programs  to interpret visual data so they can identify, reach, and navigate through their surroundings, closely paralleling the biological role of sensory systems in guiding adaptive, goal-oriented actions.
 
 Not all electromagnetic radiation is equally informative. High energy radiation (e.g., X-ray and Gamma ray bands) passes through most objects undisturbed. Low frequency radiation provides limited spatial resolution. The human eye detects electromagnetic radiation in the wavelength range from about 380 nm to 770 nm. We call this waveband "light", which is defined as "electromagnetic radiation that can be detected by the human eye." Electromagnetic radiation in this wavelength range is strongly absorbed and reflected by objects of interest, making it a very useful band for informing us about the environment.
 
@@ -185,15 +185,32 @@ Often, we would like to measure the light emitted by a point source in a particu
 :::
 
 ### Radiance from a surface
-In many applications we want to measure light from an extended, flat surface - such as a wall, the side of a large object, or perhaps a projector screen.  In that case, many individual points contribute energy to the measured light. To normalize the measurement, we divide by the area of the surface that is contributing to our measurement.  Thus, if the surface we are measuring is a square 0.1 meters on a side, we normalize the energy by $0.1^2 m^2$.  There is one additional geometric factor to consider: the extended surface may be at an angle to the measurement instrument.  To see why this is important consider looking at a surface that is fully facing you, and then start to turn it away.   In this case, we are measuring the *radiance*, which is watts per nanometer per unit area of the surface corrected by the angle of the surface with respect to the measurement instrument. 
+In many applications we want to measure light from an extended, flat surface - such as a wall, the surface of a table, or even a large screen. To normalize an extended surface measurement, we make two corrections.  
+
+First, we divide the energy (watts/nm) by the area of the surface as seen from the detector. For example, suppose the surface element we measure is a square $0.1$ meters on a side.  Then the surface area is $A_s = (0.1)^2~m^2$. Next, suppose the angle between the direction from the detector to the surface and the surface normal is $\theta$.  In that case, the foreshortened surface area is $A_s \cos(\theta) m^2$. 
+
+The second geometric correction accounts for the three-dimensional angle of the cone of rays from the surface to the detector $\omega sr$. (This angle is not shown in @fig-radiometery.) This measurement, called the *radiance* $L$, has units of watts per nanometer per unit foreshortened area per steradian 
+
+$$ L = \frac{Watts}{nm ~m^2 ~ sr} $$
 
 ### Irradiance
-
-
-
-How do we know we are measuring from a point or a surface?
+Finally, 
 
 ### Radiometric units
-![The radiometric measurement units.](../images/lightfields/01-radiometry-units.png){#fig-radiometry-units fig-cap-location="bottom" width="100%" fig-align="center"}
+
+A guide to help you remember the four fundamental radiometric measurements.  We will list the photometric measurements in @sec-human.
+
+![The four fundamental radiometric measurement quantities. The table lists the name of the measurement, how it is used, and the International System of Units (SI) definition for each.](../images/lightfields/01-radiometry-units.png){#fig-radiometry-units fig-cap-location="bottom" width="100%" fig-align="center"}
+
+::: {.callout-note collapse="true" title="Surface or point?"}
+The difference between radiant intensity and radiance is a question of whether we are measuring from a point or a surface.  But as a surface patch becomes smaller and smaller, how do we know when it should be considered a point?  In many real-world situations, the distinction between a surface and a point source is not always clear-cut. It often requires careful consideration of the specific circumstances and the desired level of accuracy.Here are a few tips.
+
+(Check with perplexity and chatgpt.  This from Gemini.)
+
+* Distance: If the distance to the source is significantly larger than the dimensions of the source itself, it can be approximated as a point source.
+* Solid Angle: If the solid angle subtended by the source at the detector is very small, it can be approximated as a point source.
+* High Accuracy: If high accuracy is required, it's generally better to use the radiance formula, even for small surfaces. This allows you to account for the angular distribution of the emitted radiation.
+* Lower Accuracy: If lower accuracy is sufficient, and the source can be reasonably approximated as a point source, the radiant intensity formula can be used.
+:::
 
 ## Footnotes
