@@ -12,29 +12,35 @@ Finally, a note for image systems engineers: while the quantitative properties d
 
 ## The eye
 
-We can distinguish image systems components that acquire information about the light field (cameras) from components that recreate a light field (displays). The properties of the human visual system are important for many aspects of display systems. Some features of the human visual system are also important for the design of cameras. In this section, we describe basic anatomical and functional properties of the eye, the human visual system component whose properties have strong implications for the design of image systems.
+Some image systems components are designed mainly to acquire information about the light field (cameras), and others are designed to reproduce the light field (displays). Because display systems deliver their output to the human visual system, their design is particularly dependent on human vision. There are also certain features of the human visual system can be important for camera design. For example, if the system is intended to capture a signal that will be displayed to people, then the camera should capture the same portion of the electromagnetic spectrum that we see. In this section, we review the anatomical and functional properties of the eye. Many properties of the eye have clear and strong implications for the design of image systems.
 
-The eye includes two systems [@fig-retina-color]. The optics converts the incident light field into the optical light field, forming an image at the retina. The retina converts the optical light field into a neural signal that is transmitted to the brain. There is no feedback from the brain to the retina itself. Rather, the feedback from the brain is made by body, head and eye movements that enable us to acquire the light field from different positions and directions. The importance of these movements for the human visual system, but not for cameras, is one reason why direct comparisons between the eye and a camera are not great.
+### Physiological optics
 
-The physiological optics is divided into two parts: a cornea and flexible lens. Together, their optical properties determine the transformation of the incident light field to the optical light field. The optics are dynamic in two ways: both the size of the entrance pupil and the optical power of the lens can vary. The pupil size changes depending on the ambient light conditions and as well as some non-visual events in the brain. The flexible lens changes its shape, and thus refractive power, enabling people to bring either close or far objects into focus on the retina. The lens flexibility is lost with age (presbyopia, CITATION NEEDED). The direction of gaze also varies as people move their head and eyes, depending on the viewer's intention.
+The eye includes two functional systems [@fig-retina-color]. The physiological optics (cornea and lens) converts the incident light field into the optical light field, forming an image at the retina. The light sensitive cells in the retina (principally cones and rods) convert the optical light field into a neural signal that is transmitted via the optic nerve to multiple locations in the brain. There is no feedback from the brain to the retina. But there is feedback from the brain that controls body, head and eye movements, which guide how we acquire the light field. The importance of eye and head movements for the human visual system is one reason why direct comparisons between the eye and a camera are not great.
 
-The neural tissue of the retina lines the curved surface at the back of the eye. The image at the retina is converted from light into a neural signal by a special class of neurons, the photoreceptors. The retina contains additional specialized cells and circuits whose outputs, on the optic nerve, are transmitted to several brain regions. These circuits are also dynamic in the sense that the circuit response properties vary with changes in the mean and variance of the retinal image.
+The cornea and flexible lens, together, control the transformation of the incident light field to the optical light field. Even for a fixed head and eye position, the physiological optics are dynamic: the size of the entrance pupil can change and the shape of the lens, and thus its optical power, can vary. The pupil size is not controlled willfully; it changes depending on the ambient light conditions and as well as some non-visual events in the brain. Just as the direction of gaze depends on the viewer's intention, so too does the shape of the lens. Signals sent to the ciliary muscles cause them to relax to make the lens thinner and thus focus on objects at a distance. Signals that cause the muscles to contract result in a thicker lens, enabling focus on nearby objects. The system for bringing objects into focus at the retina is called *accommodation*. As I recall from a younger age, this is a wonderful system when it works. Unfortunately, lens flexibility is lost with age - for everybody. The gradual loss of your eyes' ability to focus on nearby objects is called *presbyopia*. It's a natural, often annoying part of aging. Presbyopia usually becomes noticeable in your early to mid-40s and continues to worsen until around age 65. To compensate for this reduced flexibility, we use reading glasses. And it will happen to you.
 
-There are some similarities between the eye and a conventional camera. For example, the optics and light sensing components are integrated into a single package, and the components are adaptive with respect to light level and focus. A major difference is that the retinal encoding does not sample the image uniformly; it is very inhomogeneous compared to modern cameras. The central human retina is specialized for the cone photoreceptors, which have small (\~ 1.5 um) apertures and are tightly packed. The size of the photoreceptor apertures increases significantly from fovea to periphery, and the receptors for nighttime vision (rods) are inserted between the cones, further increasing their center-to-center spacing. This spatial sampling is quite unlike a typical image sensor whose pixels are all of the same size. Finally, the human visual system relies on eye movements to bring regions of interest into focus at the fovea. The keep integration of eye movements is very important for such a spatially inhomogeneous system.
+We now have many measurements of the quality of the physiological optics. In the sections below, I will summarize these measurements and explain how to simulate how the incident light field is transformed into the retinal image by ISETBio.
+
+### Retina
+
+The neural tissue of the retina lines the curved surface at the back of the eye. The retina is about 5 x 5 cm, and its properties vary considerably across space. The retinal image is converted into a neural signal by a special class of neurons, the photoreceptors. The retina contains many types of specialized cells that combine into stereotypical local circuits. Multiple copies of these local circuits, but usually with different parameters, are present throughout the retina. The circuit outputs leave the retina via the optic nerve. One of the ways we can identify these circuits is that their outputs are transmitted to multiple brain regions. The circuit properties are dynamic in the sense that the circuit response to a simple stimulus, say a small flashed spot, varies with changes in the mean and variance of the retinal image.
+
+There are some similarities between the eye and a conventional camera. For example, the optics and light sensing components are integrated into a single package, and the components are adaptive with respect to light level and focus. But there are lots of differences, as well. One major difference is that the retinal encoding does not sample the image uniformly; it is very inhomogeneous compared to modern cameras. The central human retina is specialized for the cone photoreceptors, which have small (\~ 1.5 um) apertures and are tightly packed. The size of the photoreceptor apertures increases significantly from fovea to periphery, and the receptors for nighttime vision (rods) are inserted between the cones, further increasing their center-to-center spacing. This spatial sampling is quite unlike a typical image sensor whose pixels are all of the same size. Finally, the human visual system relies on eye movements to bring regions of interest into focus at the fovea. The keep integration of eye movements is very important for such a spatially inhomogeneous system.
 
 ![Overview of the eye.](/images/human/retina-fovea-color.png){#fig-retina-color width="100%" fig-align="center" width="75%"}
 
 I will describe measurements of the optics and encoding in several sections below. These are selected to support calculations of image quality and engineering design. For more about the biology and the scientific methods used to derive these measurements, consult [@wandellFoundationsVision2024]
+
+## Pointspread functions
+
+Where should the adaptive optics measurement method be? Here or FOV? Adaptive optics measurements of wavefront aberrations, expressed as point spread functions. Thibos and Artal data.
 
 ### Adaptive optics
 
 The ability to measure certain properties of the optics was revolutionized by adpative optics - a method that makes real time measurements of the wavefront aberrations of the physiological optics using a Shack-Hartmann wavefront sensor. Just the measurement of the aberrations alone is useful. In addition, it has proben possible to engineer systems that correct for these aberrations in real time, and thus visualize the apertures of the photoreceptors (1-5 $\um$ diameter) cells in the retina. Further, using video tracking of the eye movements it has proven possible to deliver stimuli to specific, targeted photoreceptors.
 
 First order approximations of the human optics. Simulations with ISETBio of maybe the Westheimer or Ijspeert functions. Eye models?
-
-### Pointspread functions
-
-Where should the adaptive optics measurement method be? Here or FOV? Adaptive optics measurements of wavefront aberrations, expressed as point spread functions. Thibos and Artal data.
 
 ### Chromatic aberrations
 
@@ -50,17 +56,23 @@ The retina is a 200-300 micron thick layered structure of neural tissue that lin
 
 The vast majority of light-driven activity is initiated in the photoreceptors (rods and cones). The rods are the dominant source under very low light levels, and the cones are the dominant source under moderate to high light levels. The typical retinal circuit is driven by activity that starts in a local region of the photoreceptors. The same basic circuit will be present throughout the retina, tiling the photoreceptor mosaic, though the absolute size of the cells and their input regions generally vary as one measures across the retina. The size of the region increases as one measures from the highly specialized central fovea into the periphery.
 
-### Photoreceptor sampling
+### Photoreceptor spatial sampling
 
 Maybe point mainly to the other book. Image showing the fovea and inhomogeneous sampling of the photoreceptor mosaics. Maybe Curcio. Maybe the S-cone image sampling mosaic. Adaptive optics measurements of retinal sampling Rods, ipRGCs, too in here. Other book - ISETBio: Examples of simulation. David also has these new measurements.
 
-## Pattern, Time and Motion
+### Photoreceptor wavelength encoding
+
+## Overall human sensitivity
+
+### Pattern
 
 spatial MTF - Look through modern measurements of the spatial MTF.
 
+### Time and Motion
+
 temporal MTF
 
-### Image pattern metrics
+## Image quality metrics
 
 SSIM. Simpler ones. Pyramid from Beau? But earlier single channel, multiple channel.
 
@@ -68,9 +80,9 @@ SSIM and MS-SSIM
 
 Sharpness metrics
 
-I forget the guy
+I forget the guy with a B, I think
 
-temporal MTF. Flicker. Luminance.
+temporal MTF. Flicker.
 
 ## Color
 
