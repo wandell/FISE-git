@@ -1,0 +1,61 @@
+## Light field measurement
+
+Many applicationsrequire quantifying the light field. We may wish to know whether a display is too bright, or not bright enough. We may need to know the level of light to expect when we take a picture. In this section we introduce the fundamental concepts of light field quantification. Tracking the light levels and the signal levels is an important part of the ISETCam simulation software.
+
+The engineering discipline of light field measurement, radiometry, the measurements are always made with separately for each wavelength. Light field quantification describes the amount of energy, or equivalently the number of photons, present in a portion of the light field. In the case of energy the basic unit is joules/sec, which is also called watts. In the case of photons the measure is photons per second.
+
+For people working with light, wavelength is commonly expressed with respect to nanometers [^lightfields-5]. Thus, in radiometry one typically finds the units watts per nanometer or photons/sec per nanometer as part of the measurement. We can described the energy for each wavelength because in most cases the energy at different wavelengths are independent: we can measure the energy at two wavelengths separately, mix the two lights, and the result is simply the sum of the individual measurements. This additivity property is a critical feature of light.
+
+[^lightfields-5]: Units of micrometers (microns, $\mu$) are commonly used by people working in the infrared studies, units of angstroms in atomic and x-ray studies, and electron volts in high-energy photon research.
+
+Radiometry defines standard units that depend on the geometry of the measurement. They are divided based on whether we are measuring light radiating from a source (radiance), or we are measuring a light field that is arriving at a surface (irradiance). Radiance is further divided depending on whether we are measuring from a small (point) source, or from an extended surface.
+
+Finally, there is a set of light units that summarize the impact of the light on the human visual system. These measurements begin with the spectral radiometry units and form a weighted sum across wavelengths. The weights are selected to represent the relative visibility of each wavelength; the weights were measured in an experimental paradigm called 'flicker photometry'. The photometric terms that parallel radiance and irradiance are luminance and illuminance. In this section, we will describe the radiometric quantities. In @sec-human we explain the experimental basis for summing across wavelengths and how to convert the spectral radiometric quantities into photometric quantities.
+
+![The geometry of four basic radiometric measures.](../images/lightfields/01-radiometry.png){#fig-radiometry fig-cap-location="bottom" width="100%" fig-align="center"}
+
+### Radiance from a point
+@fig-radiometry illustrates the geometry for four radiometric measures. At the upper left, we consider a point source. The *radiant flux* measures the total energy emitted from the point in all directions. As for all radiometric measurements, the energy (watts) is specified separately with respect to wavelength (watts/nm).
+
+Often, we would like to measure the light emitted by a point source in a particular direction, the *radiant intensity*. In that case we measure the energy within a cone of rays in a particular direction. We measure the cone angle in terms of steradians, the standard unit for angles in three-dimensions just as the radian is the standard unit for angles in two-dimensions. The radiant intensity measures watts per steradian per nanometer (watts/sr/nm). Thus, if the measurement instrument picks up light over an angle of 0.5 steradians, we divide our measurement by 0.5. If it measures average 10 nm bands, we divide the energy by 10. In this way, the radiant intensity normalizes the angle we measure to the unit steradian and per nanometer. The standard symbol for radiant intensity is $I(\lambda)$.
+
+::: {.callout-note collapse="true" title="Steradians"}
+![Three-dimensional angle units are called steradians. One steradian is defined as angle of the cone whose surface area on a sphere of radius $r$ is equal to $r^2$. Because the surface area of a sphere with radius $r$ is $4 \pi r^2$, it follows that the complete sphere surrounding a point is $4 \pi$ steradians.](../images/lightfields/01-radiometry-steradian.png){#fig-steradian width="40%" fig-cap-location="bottom"}
+:::
+
+### Radiance from a surface
+In many applications we must measure light from a patch on an extended, flat surface - such as a large light fixture with a diffuser, a wall, or a large display screen. The geometry of thee measurement accounts for two main factors [@fig-foreshortening-sketch]. First, we must account for the area of the surface patch, as seen from the detector. For example, if the measured surface patch is a square $0.1$ meters on a side its area is $A_s = (0.1)^2~m^2$. The area, as seen from the detector, can be foreshortened. We calculate this from the angle between the viewing direction and the surface normal, $\theta$. The foreshortened surface area is $A_s \cos(\theta) ~ m^2$. Second, we account for the size of the bundle of rays captured by the detector. We measure this size using the three-dimensional angle, $\omega ~ sr$, of the cone of rays from a surface point that are captured by the detector.
+
+![Geometric factors for measuring radiance from an extended surface to a detector.](../images/lightfields/01-foreshortening-sketch.png){#fig-foreshortening-sketch width=60%}
+
+::: {.callout-note collapse="true" title="Foreshortening"}
+![The rows contain circles of the same size.  The paper curves so that the circles are at different angles from the camera. As the angle increases, the circles are smaller in the image plane.](../images/lightfields/01-foreshortening.jpg){#fig-foreshortening width="80%" fig-cap-location="bottom"}
+:::
+
+The *radiance* $L$, combines the energy measured at the sensor ($watts/nm$) with these geometric factors. The standard symbol for spectral radiance is $L(\lambda)$, and it has units of watts per nanometer per unit foreshortened-area per steradian: \$ \frac{Watts}{nm ~ \cos(\theta) m^2 ~ sr}\$.
+
+### Irradiance
+
+Finally, a very important measurement concerns how much energy is incident upon a surface. This quantity, the *irradiance* is important to calculate the light available to an image sensor or the retina. It is also a practical measure in assessing room lighting, say to know how much light will be arriving at a desk top. The irradiance is normalized with respect to the area of the portion of the surface being measured. The irradiance sums all the energy, no matter which direction the light is coming from. The standard symbol for irradiance is $E(\lambda)$, which has units $watts/nm/m^2$.
+
+No three-dimensional angles (steradians) are specified for irradiance because it is a measure that sums across all possible incidence angles.
+
+### Radiometric units
+
+This table is a guide to help you remember the four fundamental spectral radiometric measurements. We will list the corresponding photometric measurements in @sec-human. Please note that people will sometimes report a measure of any of these radiometric quantities by summing the energy across all wavelengths. This would be called, for example, the *total radiance* or *total irradiance,* rather than the spectral radiance. The photometric values are also a sum across wavelengths, but weighted by the relative visual significance of the different wavelengths.
+
+![The four fundamental radiometric measurement quantities. The table lists the name of the measurement, how it is used, and the International System of Units (SI) definition for each.](../images/lightfields/01-radiometry-units.png){#fig-radiometry-units fig-cap-location="bottom" width="100%" fig-align="center"}
+
+As we developed these four fundamental radiometric measurements, it probably occurred to you that there is additional information we could represent. For example, it would be possible to measure the radiance of a patch of an extended surface at many different viewing angles. This would produce a function whose value depends on the two parameters, azimuth ($\alpha$) and elevation ($\beta$) that define the viewing angle. Similarly, we might decide to measure the irradiance as a function of these incident angles.
+
+::: {.callout-note collapse="true" title="Surface or point?"}
+<!--# The difference between radiant intensity and radiance is a question of whether we are measuring from a point or a surface.  But as a surface patch becomes smaller and smaller, how do we know when it should be considered a point?   -->
+
+How do we determine whether we are measuring a part of a surface or a point? The distinction between measuring a surface and a point source is not always clear-cut.  Here are some principles, though none is definitive.
+
+-   **Distance:** If the distance to the source is significantly larger than the dimensions of the source itself, it can be approximated as a point source.
+-   **Solid Angle:** If the solid angle subtended by the source at the detector is very small, it can be approximated as a point source.
+-   **Precision:** If high accuracy is required, it's generally better to use the radiance formula, even for small surfaces. This allows you to account for the angular distribution of the emitted radiation. If lower accuracy is sufficient, and the source can be reasonably approximated as a point source, the radiant intensity formula can be used.
+
+These recommendations are filled with imprecision that I always try to remove.  They contain words, like 'small', 'large', 'high', and 'low' because there is no fixed threshold at which a surface definitively becomes a point source. It is your decision whether to treat the source as a point. What is important is to tell people exactly what you did. If they don't like your choice, they can do it their own way.  Or ask you - nicely - to try it another way.
+:::
