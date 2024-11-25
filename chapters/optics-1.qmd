@@ -1,20 +1,22 @@
 # Optics {#sec-optics}
 
-We can create a perfectly good image using a pinhole. Why do we need the additional complexity of optics? While there are some animals with a visual system based on pinholes, the vast majority have evolved visual systems with a lens. Let's consider the advantages.
+A small enough pinhole renders a perfectly good image. Why do we need the additional complexity of optics? Further, while some animals have a visual system based on pinholes, the vast majority have evolved visual systems with a lens. Let's consider the advantages.
 
 <!--# https://www.perplexity.ai/search/there-are-many-animals-that-ha-QJcp0_O_Ru6a0nVWEFkkmw  About tradeoffs between pinhole optics and lenses, particularly concerning biological systems. -->
 
-The first limitation of the pinhole is that, by definition, it lets in a very small amount of light. A 1 mm pinhole lets in only 1/25^th^ as much light as a 5 mm lens. In general, having a larger level of light is better for detecting contrast. Under many conditions, the light level available is a significant limit to capturing and rendering a high quality image. A larger pinhole aperture would blur the image greatly. A lens permits us to increase the area of the entrance aperture greatly.
+The critical limitation of the pinhole is that it only lets in a **small** amount of electromagnetic radiation. I should tell you what I mean by small. I calculated how many photons per area per time are available through the pinhole[^optics-1-1]. Suppose we have a typical cell phone camera - pixel with a 1 micron pixel and a focal length of 3.9mm, and exposure duration of 50 milliseconds. In a dim room illuminated with a broad wavelength spectrum, only about 35 photons arrive at each pixel. Because of unavoidable photon noise, which I describe later, this signal permits us to reliably detect a 20% contrast edge. If we further divide up the wavelength range, because we want to measure in color, the situation worsens. A lens permits us to use a larger aperture to sense more photons from the same scene, and it does so while solving the problem of blur. No wonder so many species decided it was a good idea.
 
-Having more light energy is valuable, but only if the lens creates a sharp image that accurately reflects the position and edges of the objects in the scene.
+[^optics-1-1]: The script *s_sensorCountingPhotons.m in ISETCam* implements the calculation.
 
-## Notes
+For the next few sections, we are going to stick with Newton and consider light as rays. This will help with the understanding, and it will also be approximately correct. We will fix up the calculations, accounting for the fact that the wave description really is more accurate, later.
 
-I downloaded these slides. Some good concepts for this book. Overlaps a lot with my class, but additions. Link to PDF http://graphics.cs.cmu.edu/courses/15-463/2020_fall/lectures/lecture3.pdf
+## Refraction and Snell's Law
 
-## Thin lenses
+The pinhole doesn't change the ray paths. It achieves a sharp image formation by only letting through a small subset of the rays. When there is a lot of radiation, that's fine. But we can't use a purely rejectionist approach when the radiation is weak. In that case, we must find a way to use the rays that the pinhole would reject.
 
-Snell’s Law,
+**FIGURE: Bending the rays**
+
+## Thin lens approximations
 
 How do you make a thin lens?
 
@@ -24,13 +26,17 @@ lensmaker’s equation derivation
 
 Calculations with thin lenses
 
-## Multielement lenses and ABCD ray transfer matrix
+## Thick lens approximations
+
+## Multielement lenses and the ABCD ray transfer matrix
 
 Ray Transfer Function concept returns to the optical light field in previous
 
 Double Gauss lens. Fish eye lens.
 
-## Wavefront examples from ISETCam. Apodization function.
+## Wavefront calculations
+
+ISETCam. Apodization function.
 
 Scratches and HDR rendering.
 
@@ -41,3 +47,7 @@ Scratches and HDR rendering.
 ### Chromatic aberration
 
 ### Optical Transfer Function
+
+## Notes
+
+I downloaded these slides. Some good concepts for this book. Overlaps a lot with my class, but additions. Link to PDF http://graphics.cs.cmu.edu/courses/15-463/2020_fall/lectures/lecture3.pdf
