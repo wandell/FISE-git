@@ -1,20 +1,41 @@
 # Optics {#sec-optics}
 
-A small enough pinhole renders a perfectly good image. Why do we need the additional complexity of optics? Further, while some animals have a visual system based on pinholes, the vast majority have evolved visual systems with a lens. Let's consider the advantages.
+A small enough pinhole renders a perfectly good image. Why do we need to add any optics? 
+The critical limitation of the pinhole is that it only lets in a small amount of electromagnetic radiation. 
 
-<!--# https://www.perplexity.ai/search/there-are-many-animals-that-ha-QJcp0_O_Ru6a0nVWEFkkmw  About tradeoffs between pinhole optics and lenses, particularly concerning biological systems. -->
+Let me tell you what I mean by **small**. I calculated how many photons are available through a 1 mm pinhole[^optics-1-1]. Suppose we have a cell phone camera with a 1 micron pixel, a focal length of 3.9mm, and an exposure duration of 50 milliseconds. In a dim room illuminated with a broad wavelength spectrum (10 $cd/m^2$), only about 35 photons arrive at each pixel. That's not a lot.  Worse yet, because of the unavoidable photon noise which I describe later, this signal only permits us to reliably detect an edge with a contrast difference of 20% (one edge is 20% brighter than the other).  If we want to see in color, we must further divide up the wavelength range and the situation worsens!
 
-The critical limitation of the pinhole is that it only lets in a **small** amount of electromagnetic radiation. I should tell you what I mean by small. I calculated how many photons per area per time are available through the pinhole[^optics-1-1]. Suppose we have a typical cell phone camera - pixel with a 1 micron pixel and a focal length of 3.9mm, and exposure duration of 50 milliseconds. In a dim room illuminated with a broad wavelength spectrum, only about 35 photons arrive at each pixel. Because of unavoidable photon noise, which I describe later, this signal permits us to reliably detect a 20% contrast edge. If we further divide up the wavelength range, because we want to measure in color, the situation worsens. A lens permits us to use a larger aperture to sense more photons from the same scene, and it does so while solving the problem of blur. No wonder so many species decided it was a good idea.
+A lens is a way to enlarge the entrance aperture and acquire more photons. It does so without paying a big penalty in blur. This must be the reason why it evolved in so many different species.
 
-[^optics-1-1]: The script *s_sensorCountingPhotons.m in ISETCam* implements the calculation.
+::: {.callout-note collapse="true" title="Optics in animals"}
+### Animals with pinhole optics {.unnumbered}
+The most primitive are called 'pigment cup' eyes.  These animals have a small receptor surface is only about 0.1mm in diameter, and it is simply open.  The opening is a bit large to be considered a pinhole.  
 
-For the next few sections, we are going to stick with Newton and consider light as rays. This will help with the understanding, and it will also be approximately correct. We will fix up the calculations, accounting for the fact that the wave description really is more accurate, later.
+The eyes of some animals, in particular mollusks, have more plausible pinhole architectures.  The receptor surface itself is 10 mm in diameter, and the opening is 0.4 - 2.8mm. These eyes evolved about 500 million years ago and have little changed.
+
+A few animals species have a visual system based on pinholes. But the vast majority have evolved visual systems with a lens. 
+
+<!--# https://www.perplexity.ai/search/there-are-many-animals-that-ha-QJcp0_O_Ru6a0nVWEFkkmw  Perplexity search about tradeoffs between pinhole optics and lenses, particularly concerning biological systems. -->
+
+<!-- Details https://www.britannica.com/science/photoreception/Single-chambered-eyes Authored by Michael Land.  Detailed on optics and different species.  -->
+:::
+
+[^optics-1-1]: The script [fise_opticsCountingPhotons.mlx](https://htmlpreview.github.io/?https://github.com/wandell/FISE-git/blob/main/tutorials/oi/t_oiIntroduction.html))* implements the calculation. Use htmlpreview to link to it.
+
+For the next few sections, we are going to stick with Newton and treat light as rays. This will help with the explanations, and is approximately correct. We will fix up the calculations, accounting for the fact that the wave description is more accurate, later.  The ISETCam calculations are based on waves.
 
 ## Refraction and Snell's Law
+The blur we encounter as the pinhole size increases is because the rays are heading in different directions.  The pinhole achieves a sharp image formation by letting through a small subset of the rays. When there is a lot of radiation, that's fine. But we can't use a purely rejectionist approach when the radiation is weak; we must find a way to use the rays that the pinhole would reject.
 
-The pinhole doesn't change the ray paths. It achieves a sharp image formation by only letting through a small subset of the rays. When there is a lot of radiation, that's fine. But we can't use a purely rejectionist approach when the radiation is weak. In that case, we must find a way to use the rays that the pinhole would reject.
+How do we redirect the rays? Willebord Snellius () Get to the Snell's law here.
 
-How do we redirect the rays to converge? A prism.
+The simplest way is to have the rays pass from one medium to another. 
+
+If the front surface is a sphere, we can't get the rays to converge properly with a single index of refraction.  Clerk Maxwell recognized this and he proposed that fish eyes, which are rather spherical, must have a different index of refraction as we march from on axis to the edge.  These types of lenses are called GRIN lenses for gradient index of refraction.  And it is true of fish eyes (and ours?)
+
+Another way is to have the shape differ from a sphere.  That's what we do.
+
+Calculations are easiest with a sphere, though.  To explain the principles we are going to do spherical lenses and single index of refraction for a while.
 
 **FIGURE: Bending the rays**
 
