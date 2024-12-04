@@ -1,5 +1,5 @@
 
-# <span style="color:rgb(213,80,0)">Comparing two sources of blur: Pinholes and Diffraction</span>
+# <span style="color:rgb(213,80,0)">Comparing pinhole and diffraction blur</span>
 
 We can summarize image system blur by measuring how light from a point source is spread on the image.  The image of a point is called the *point spread function*.  We will see many point spread functions in this book.
 
