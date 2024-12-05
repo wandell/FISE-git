@@ -103,7 +103,7 @@ ylabel(sprintf('Blur diameter (%s)',unit));
 grid on; legend({'Diffraction','Pinhole'});
 ```
 
-<center><img src="fise_diffraction_media/figure_2.png" width="720" alt="figure_2.png"></center>
+<center><img src="fise_diffraction_media/figure_2.png" width="480" alt="figure_2.png"></center>
 
 
 # How does this depend on the distance to the wall?
@@ -133,5 +133,5 @@ ylabel(sprintf('Blur diameter (%s)',unit)); grid on
 legend({'pinhole','0.001 m','0.01 m','0.1 m'})
 ```
 
-<center><img src="fise_diffraction_media/figure_3.png" width="720" alt="figure_3.png"></center>
+<center><img src="fise_diffraction_media/figure_3.png" width="480" alt="figure_3.png"></center>
 
