@@ -3,11 +3,15 @@
 
 We can summarize image system blur by measuring how light from a point source is spread on the image.  The image of a point is called the *point spread function*.  We will see many point spread functions in this book.
 
+
 For a pinhole camera, two factors contribute to the blur: the pinhole diameter and the diffraction.
+
 
 The larger the pinhole the larger the blur. Consider a distant point, so that the rays arrive at the pinhole and they are parallel. As the diameter of the pinhole diameter increases, the rays will be spread over an area that roughly matches the pinhole size.  
 
+
 <img src="fise_diffraction_media/image_0.png" width="302" alt="image_0.png">         
+
 
 Second, consider the light from a distant point as a wave.  In this case the light is 'collimated', which is to say the wave appears as a set of parallel peaks and troughs.  As the wave enters the pinhole, particularly for a small pinhole diameter compared to the wavelength, the rays will spread over a larger angle.  
 
@@ -103,7 +107,7 @@ ylabel(sprintf('Blur diameter (%s)',unit));
 grid on; legend({'Diffraction','Pinhole'});
 ```
 
-<center><img src="fise_diffraction_media/figure_2.png" width="480" alt="figure_2.png"></center>
+<center><img src="fise_diffraction_media/figure_2.png" width="720" alt="figure_2.png"></center>
 
 
 # How does this depend on the distance to the wall?
@@ -133,5 +137,5 @@ ylabel(sprintf('Blur diameter (%s)',unit)); grid on
 legend({'pinhole','0.001 m','0.01 m','0.1 m'})
 ```
 
-<center><img src="fise_diffraction_media/figure_3.png" width="480" alt="figure_3.png"></center>
+<center><img src="fise_diffraction_media/figure_3.png" width="720" alt="figure_3.png"></center>
 

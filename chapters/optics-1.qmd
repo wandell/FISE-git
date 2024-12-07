@@ -1,10 +1,10 @@
 # Optics {#sec-optics}
 
-A small pinhole can create a clear image, so why do we need additional optics? The key reason is that pinhole cameras capture only a limited amount of electromagnetic radiation.
+A small pinhole renders a perfectly good image. Why do we need to add any optics? The critical reason is that pinhole cameras only measure a small amount of electromagnetic radiation. 
 
-Let's clarify what "small" means in this context. Imagine you're in a dimly lit room with a broad wavelength spectrum, providing an illumination of 10 cd/m². If you use a camera with a 1 mm pinhole, a sensor with 1-micron pixels, a focal length of 4 mm, and an exposure time of 50 milliseconds, only about 35 photons will reach each pixel. For color imaging, the situation becomes even more challenging because the light must be divided into different wavelengths. Due to unavoidable photon noise, which we'll discuss later, this limited signal allows reliable intensity discrimination only when there is more than a 20% difference in brightness between two pixels.
+Let me tell you what I mean by **small**. Suppose we are in a dim room illuminated with a broad wavelength spectrum (10 $cd/m^2$). Consider a camera with a 1 mm pinhole, a sensor with 1 micron pixels, a focal length of 4mm, and an exposure duration of 50 milliseconds. In that case only about 35 photons arrive at each pixel. If we want to see in color, we must further divide up the wavelength range and the situation worsens. Because of the inescapable photon noise, which I describe later, this signal only permits a reliable intensity discrimination when two pixels differ by more than 20% (i.e., one edge is 20% brighter than the other, see [fise_opticsCountingPhotons](../code/fise_opticsCountingPhotons.html)).
 
-Lenses offer a solution by enlarging the entrance aperture to capture more photons. They can use larger apertures to gather more light without increasing image blur. This ability is likely why lenses have evolved across many species.
+A lens is a way to enlarge the entrance aperture and acquire more photons. The lens can uses a larger aperture, and thus acquires more photons, without paying a penalty in blur. This capability must be the reason why lenses have evolved in so many different species.
 
 ::: {.callout-note collapse="true" title="Optics in animals"}
 ### Animals with pinhole optics {.unnumbered}
@@ -19,9 +19,7 @@ A few animals species have a visual system based on pinholes. But the vast major
 <!-- Details https://www.britannica.com/science/photoreception/Single-chambered-eyes Authored by Michael Land.  Detailed on optics and different species.  -->
 :::
 
-[^optics-1-1]: The script [fise_opticsCountingPhotons.mlx](https://htmlpreview.github.io/?https://github.com/wandell/FISE-git/blob/main/code/fise_opticsCountingPhotons.html)* implements the calculation. Use htmlpreview to link to it.
-
-For the next few sections, we are going to stick with Newton and treat light as rays. This will help with the explanations, and is approximately correct. We will fix up the calculations, accounting for the fact that the wave description is more accurate, later.  The ISETCam calculations are based on waves.
+Much of the explanation that follows sticks with Newton to treat light as rays. The reader may find this odd, given my explanation in This will help with the explanations, and is approximately correct. We will fix up the calculations, accounting for the fact that the wave description is more accurate, later.  The ISETCam calculations are based on waves.
 
 ## Refraction and Snell's Law
 The blur we encounter as the pinhole size increases is because the rays are heading in different directions.  The pinhole achieves a sharp image formation by letting through a small subset of the rays. When there is a lot of radiation, that's fine. But we can't use a purely rejectionist approach when the radiation is weak; we must find a way to use the rays that the pinhole would reject.
