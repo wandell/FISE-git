@@ -1,3 +1,19 @@
+# Light field measurements {#sec-lfmeasurement}
+
+![The geometry of four basic radiometric measures.](../images/lightfields/01-radiometry.png){#fig-radiometry fig-cap-location="bottom" width="100%" fig-align="center"}
+
+Many applications require quantifying the light field. We may need to know the level of energy to expect when we take a picture. We may wish to know whether a display is too bright, or not bright enough.  In this section we introduce the basic concepts of light field quantification. Keeping track of the energy levels in the light field is an important part of the ISETCam simulation software.
+
+The discipline of light field measurement is called Radiometry. The measurements in radiometry are made separately for each wavelength. For people working with light, wavelength is commonly expressed with respect to nanometers [^lightfields-5]. Light field quantification describes the amount of energy, or equivalently the number of photons, present in a portion of the light field. In the case of energy the basic unit is joules per second, (also called watts). In the case of photons the measure is photons per second. Thus, in radiometry one typically finds the units such as (watts per nanometer) or (photons per sec per nanometer). We can describe the energy separately for each wavelength because, in most cases, the energy at different wavelengths are independent: we can measure the energy at two wavelengths separately, mix the two lights, and the result is simply the sum of the individual measurements. This additivity is a critical feature of light behavior in most cases[^lightfields-6].  
+
+[^lightfields-5]: Units of micrometers (microns, $\mu$) are commonly used by people working in the infrared studies, units of angstroms in atomic and x-ray studies, and electron volts in high-energy photon research.
+
+[^lightfields-6] There are important and useful cases light at one wavelength can evoke an emission at other wavelengths (fluorescence). There are also important cases of non-linear behavior (e.g., two-photon imaging).  We discuss these when we review special instrumentation.
+
+Radiometry defines standard units that depend on the geometry of the measurement. They are divided based on whether we are measuring light radiating from a source (radiance), or we are measuring a light field that is arriving at a surface (irradiance). Radiance is further divided depending on whether we are measuring from a small (point) source, or from an extended surface.
+
+Finally, there is a set of light units that summarize the impact of the light on the human visual system. These measurements begin with the spectral radiometry units and form a weighted sum across wavelengths. The weights are selected to represent the relative visibility of each wavelength; the weights were measured in an experimental paradigm called 'flicker photometry'. The photometric terms that parallel radiance and irradiance are luminance and illuminance. In this section, we will describe the radiometric quantities. In @sec-human we explain the experimental basis for summing across wavelengths and how to convert the spectral radiometric quantities into photometric quantities.
+
 ## Radiance from a point
 @fig-radiometry illustrates the geometry for four radiometric measures. At the upper left, we consider a point source. The *radiant flux* measures the total energy emitted from the point in all directions. As for all radiometric measurements, the energy (watts) is specified separately with respect to wavelength (watts/nm).
 
@@ -43,3 +59,4 @@ How do we determine whether we are measuring a part of a surface or a point? The
 
 These recommendations are filled with imprecision that I always try to remove.  They contain words, like 'small', 'large', 'high', and 'low' because there is no fixed threshold at which a surface definitively becomes a point source. It is your decision whether to treat the source as a point. What is important is to tell people exactly what you did. If they don't like your choice, they can do it their own way.  Or ask you - nicely - to try it another way.
 :::
+

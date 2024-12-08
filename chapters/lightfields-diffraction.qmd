@@ -1,6 +1,6 @@
-## Pinholes and diffraction {#sec-lightfields-diffraction}
+# Pinholes and diffraction {#sec-lightfields-diffraction}
 
-If we imagine light as a collection of ray, it is easy to understand why pinhole optics renders a reasonable image (@fig-ayscough). Some of the properties of the pinhole camera, such as why the image is inverted or how it is blurred, are also well-explained by tracing the rays. The formulation of light as rays, which was proposed by Isaac Newton, is a helpful approximation for many optics calculations.
+If we imagine light as a collection of ray, it is easy to understand why pinhole optics renders a reasonable image (@fig-ayscough). Some of the properties of the pinhole camera, such as why the image is inverted or how it is blurred, are also well-explained by tracing the rays. Newton's formulation of light as rays is a useful and widely used approximation for many calculations.
 
 ![Pinhole camera geometry. (A) The rays from a distant, on-axis point arrive at in parallel at the pinhole. Were there no diffraction, they would simply continue on to form an image the size of the pinhole. (B) An off-axis point's rays also arrive in parallel, but they are at an angle to the pinhole aperture. Hence, fewer rays pass through the aperture so the image would be dimmer and smaller. If we can tolerate a relatively large point spread, this design is workable. But if we require a small point spread, diffraction makes this design unworkable.](../images/lightfields/pinholePSF.png){#fig-pinhole-basic fig-align="center" width="70%"}
 
@@ -14,7 +14,7 @@ It is common to simulate light as rays in computer graphics. In @fig-pinhole-che
 
 ![A simulated scene imaged with a pinhole camera. The size of the pinhole diameter increases, with the smallest in the upper left, and increasing (upper left to lower right). The relative intensity is preserved in the renderings so that the scene becomes brighter as the pinhole diameter increases. Rendered with [@pharrPBRTVersion4] and [@iset3d2022].](../images/lightfields/01-pinhole-chessset.png){#fig-pinhole-chessset width="80%" fig-align="center"}
 
-### Huygens wave model
+## Huygens wave model
 Useful as the ray model has been, for more than 300 years scientists have known that describing light as rays is only half right. It is true that increasing the pinhole diameter blurs the image; but the ray tracing analysis fails dramatically in other ways. Consider the simple prediction of the ray model in @fig-ray-wave (A). The rays from a point source at a distance will be nearly parallel. They will pass through a pinhole, continuing along in a straight line. An image cast on a surface behind the pinhole should have the diameter of the pinhole; a person to the side of the pinhole would see it as dark because no rays are heading to his eyes. The Jesuit scientist, Grimaldi, demonstrated that the predictions of the ray model are violated [@Grimaldi1665-physico].
 
 ![@Grimaldi1665-physico introduced a pencil of light into a dark room through a hole. According to the ray theory of light, the image on the wall should be the same size as the pinhole, and the rays should not be visible to an observer looking from the side. Grimaldi found that under some conditions the image on the image plane was larger than the pinhole itself, inconsistent with the ray theory of light. Newton confirmed the experiment but continued to use the ray theory because it remained useful for many purposes (A History of Physics, Cajori, p. 88-89). In modern times, we accept the wave theory but often use the ray theory because it works well in many circumstances.](../images/lightfields/01-ray-wave.png){#fig-ray-wave width="80%" fig-align="center"}
@@ -27,7 +27,7 @@ A consequence of the wave theory is that as light passes through a pinhole, or n
 
 ::: {.callout-note collapse="true" title="Rays and waves"}
 
-### Why choose?
+## Why choose?
 Although the ray and wave theories were proposed at about the same time, Newton's 1704 framing of light as rays was widely accepted for roughly a century. Widespread recognition of the accuracy of Huygen's wave theory was delayed until Thomas Young's 1804 demonstration of the interference pattern created by light from two coherent, nearby sources. I find it interesting to learn about the [the history of these ideas.](../resources/optics-diffraction.html). 
 
 I have worked in fields where scientists rely mainly on hypothesis testing: they perform experiments to see if a theory is provably wrong. Surely Newton's theory of light as a ray is provably wrong, and it was so proved nearly 400 years ago!  And yet, we use rays to describe light routinely. This is because in many cases the ray theory is an excellent approximation, and we use it as a simple way to reason about radiation - approximately.
@@ -40,7 +40,7 @@ Some scientific fields rely strongly on hypothesis testing - asking whether a th
 Gemini puts basic sciences into hypothesis and engineering into tools.
 https://g.co/gemini/share/9013b83cc4f6 -->
 :::
-### Which effect blurs more?
+## Which effect blurs more?
 The image is blurred by two effects: the pinhole size and diffraction. We can compare the size of these two effects numerically.
 
 ![The Airy pattern of a pinhole camera.  The aperture is on the ](../images/lightfields/01-blur-comparison.png){#fig-blur-comparison fig-cap-location='margin' width=80%}
@@ -62,7 +62,7 @@ The diffraction spread is larger than the pinhole spread when $d$ exceeds $D$. W
 The diffraction spread is larger than the pinhole spread when $d$ exceeds $D$. We do the calculation in the scripts in this [ISETCam script](/code/fise_diffraction.html).  For $L = 1m$ the pinhole blur is larger than the diffraction blur for a diameter of about $1 mm$.  When $L$ is much closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
 
 ::: {.callout-note collapse="true" title="Airy disk size formula"}
-### Airy disk formula {.unnumbered}
+## Airy disk formula {.unnumbered}
 
 In a paper entitled "On the Diffraction of an Object-glass with Circular Aperture", George Airy provided the mathematical description of the diffraction pattern [@airy-1835-diffraction].   A modern derivation of the full point spread function for both the circular aperture and other shapes is in @goodman2022 (pages 88-94). The computation is implemented and frequently used in ISETCam. It is explained [in this tutorial](https://htmlpreview.github.io/?https://github.com/ISET/isetcam/blob/main/tutorials/optics/t_opticsAiryDisk.html).
 
