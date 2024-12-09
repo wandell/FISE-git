@@ -1,6 +1,6 @@
 # Optics definitions {#sec-optics}
 
-A small pinhole renders a perfectly good image. Why do we need to add any optics? The critical reason is that pinhole cameras only measure a small amount of electromagnetic radiation. 
+A small pinhole renders a perfectly good image. Why do we need to add any optics? The critical reason is that pinhole cameras only measure a small amount of electromagnetic radiation.
 
 Let me tell you what I mean by **small**. Suppose we are in a dim room illuminated with a broad wavelength spectrum (10 $cd/m^2$). Consider a camera with a 1 mm pinhole, a sensor with 1 micron pixels, a focal length of 4mm, and an exposure duration of 50 milliseconds. In that case only about 35 photons arrive at each pixel. If we want to see in color, we must further divide up the wavelength range and the situation worsens. Because of the inescapable photon noise, which I describe later, this signal only permits a reliable intensity discrimination when two pixels differ by more than 20% (i.e., one edge is 20% brighter than the other, see [fise_opticsCountingPhotons](../code/fise_opticsCountingPhotons.html)).
 
@@ -8,48 +8,60 @@ A lens is a way to enlarge the entrance aperture and acquire more photons. The l
 
 ::: {.callout-note collapse="true" title="Optics in animals"}
 ### Animals with pinhole optics {.unnumbered}
-The most primitive are called 'pigment cup' eyes.  These animals have a small receptor surface is only about 0.1mm in diameter, and it is simply open.  The opening is a bit large to be considered a pinhole.  
 
-The eyes of some animals, in particular mollusks, have more plausible pinhole architectures.  The receptor surface itself is 10 mm in diameter, and the opening is 0.4 - 2.8mm. These eyes evolved about 500 million years ago and have little changed.
+The most primitive are called 'pigment cup' eyes. These animals have a small receptor surface is only about 0.1mm in diameter, and it is simply open. The opening is a bit large to be considered a pinhole.
 
-A few animals species have a visual system based on pinholes. But the vast majority have evolved visual systems with a lens. 
+The eyes of some animals, in particular mollusks, have more plausible pinhole architectures. The receptor surface itself is 10 mm in diameter, and the opening is 0.4 - 2.8mm. These eyes evolved about 500 million years ago and have little changed.
+
+A few animals species have a visual system based on pinholes. But the vast majority have evolved visual systems with a lens.
 
 <!--# https://www.perplexity.ai/search/there-are-many-animals-that-ha-QJcp0_O_Ru6a0nVWEFkkmw  Perplexity search about tradeoffs between pinhole optics and lenses, particularly concerning biological systems. -->
 
 <!-- Details https://www.britannica.com/science/photoreception/Single-chambered-eyes Authored by Michael Land.  Detailed on optics and different species.  -->
 :::
 
-In the next section, we describe lenses and treat light as rays. The reader may find this odd, given the clear demonstration of light as waves [@sec-lightfields-diffraction].  But for the principles of refraction that we explain in the following, the ray model is highly accurate. It is useful to know that a collection of rays traveling in different directions can define a wavefront, and a single ray can be considered to be a plane wave; the direction and wavelength of the plane wave and ray are the same. We will account for the wave description properties later, as we model apertures and certain devices, such as spatial light modulators and metalenses [^optics-1]. 
+In the next section, we describe lenses and treat light as rays. The reader may find this odd, given the clear demonstration of light as waves [@sec-lightfields-diffraction]. But for the principles of refraction that we explain in the following, the ray model is highly accurate. It is useful to know that a collection of rays traveling in different directions can define a wavefront, and a single ray can be considered to be a plane wave; the direction and wavelength of the plane wave and ray are the same. We will account for the wave description properties later, as we model apertures and certain devices, such as spatial light modulators and metalenses [^optics-intro-1].
 
-[^optics-1]: The ISETCam optics calculations uses the wave model.  The ISET3d graphics calculations use the ray model.
+[^optics-intro-1]: The ISETCam optics calculations uses the wave model. The ISET3d graphics calculations use the ray model.
 
 ## Refraction: Controlling ray direction
-Consider the image of a nearby point that will be formed through a pinhole. The image of the point is not sharp because the rays that pass through the pinhole are traveliong in different directions. Narrowing the pinhole achieves a sharp image formation by selecting only a small subset of the rays.  We can create a sharp image of the point if we can redirect the rays so that they converge on the image plane. One way to think about optical devices is that they are built to control the direction of the environmental light field rays at the image system entrance aperture. When forming a sharp image is the goal, we evaluate the optics by asking whether they adjust the ray directions so that the image of a point in the scene is also a point. A useful fact to remember is that diffraction means the best (sharpest)  we can do for a circular aperture is defined by the diameter of the Airy disk.
 
+::: margin
+![Pinhole rays diverging.](../images/optics/pinhole-rays.png){#fig-pinhole-rays fig-align="center" width="75%"}
+:::
+Consider the image of a nearby point that will be formed through a pinhole. The image of the point is not sharp because the rays that pass through the pinhole are traveliong in different directions. Narrowing the pinhole achieves a sharp image formation by selecting only a small subset of the rays. We can create a sharp image of the point if we can redirect the rays so that they converge on the image plane. One way to think about optical devices is that they are built to control the direction of the environmental light field rays at the image system entrance aperture. When forming a sharp image is the goal, we evaluate the optics by asking whether they adjust the ray directions so that the image of a point in the scene is also a point. A useful fact to remember is that diffraction means the best (sharpest) we can do for a circular aperture is defined by the diameter of the Airy disk.
+
+```{=html}
 <!-- Wikipedia:  Snell's Law.  "The law was eventually named after Snell, although it was first discovered by the Persian scientist Ibn Sahl, at Baghdad court in 984.[6][7][8] In the manuscript On Burning Mirrors and Lenses, Sahl used the law to derive lens shapes that focus light with no geometric aberration.[9]" 
 Also https://en.wikipedia.org/wiki/Willebrord_Snellius
 -->
+```
 
-As early as Ptolemy, in about the year 150, it was known that the direction of light passing through a medium was changed, a phenomenon we call **refraction**.  We do not name the refraction calculation for him because he got the values wrong.  These were subsequently computed by Ibn Sahl in Persia, around 934, who used his measurements to design lenses. The Dutch astronomer Willebrord Snellius also got the principle and the numbers right in work that was published after his death. In the modern age and the West, we refer to formula for refraction as Snell's Law.  Huygens derived the law based on the assumption that light is a wave.  The number of mis-steps in establishing the law and the basis for the law makes for interesting reading [^optics-snell].
+As early as Ptolemy, in about the year 150, it was known that the direction of light passing through a medium was changed, a phenomenon we call **refraction**. We do not name the refraction calculation for him because he got the values wrong. These were subsequently computed by Ibn Sahl in Persia, around 934, who used his measurements to design lenses. The Dutch astronomer Willebrord Snellius also got the principle and the numbers right in work that was published after his death. In the modern age and the West, we refer to formula for refraction as Snell's Law. The law is illustrated in [#fig-snells-law].
 
-[^optics-snell]:  https://en.wikipedia.org/wiki/Snell%27s_law
+Huygens derived the law based on the assumption that light is a wave. The number of mis-steps in establishing the law and the basis for the law makes for interesting reading [^optics-intro-2].
 
-The simplest way to change the direction of a ray is to use refraction by having the light rays pass from one medium to another, usually from air to some type of glass. 
+[^optics-intro-2]: https://en.wikipedia.org/wiki/Snell%27s_law
+
+The simplest way to change the direction of a ray is to pass the ray from one medium to another, usually from air to some type of glass.
 
 <!--# This link describes the issues in making a diffraction limited thin lens.  I think the problem is a flat sensor surfacewill not work with a spherical lens surface.  You need a aspheric.  It has other interesting facts.  To get close to diffraciton limited you need to use a multicomponent lens to correct for different aberrations.https://chatgpt.com/share/6748e5dc-267c-8002-844c-a83ee0cdb144 -->
 
+Note: If the front surface is a sphere, we can't get the rays to converge properly with a single index of refraction. Clerk Maxwell recognized this and he proposed that fish eyes, which are rather spherical, must have a different index of refraction as we march from on axis to the edge. These types of lenses are called GRIN lenses for gradient index of refraction. And it is true of fish eyes (and ours?)
 
-Note:  If the front surface is a sphere, we can't get the rays to converge properly with a single index of refraction.  Clerk Maxwell recognized this and he proposed that fish eyes, which are rather spherical, must have a different index of refraction as we march from on axis to the edge.  These types of lenses are called GRIN lenses for gradient index of refraction.  And it is true of fish eyes (and ours?)
+Another way is to have the shape differ from a sphere. That's what we do.
 
-Another way is to have the shape differ from a sphere.  That's what we do.
-
-Calculations are easiest with a sphere, though.  To explain the principles we are going to do spherical lenses and single index of refraction for a while.
+Calculations are easiest with a sphere, though. To explain the principles we are going to do spherical lenses and single index of refraction for a while.
 
 **FIGURE: Bending the rays**
 
-## Thin lens
+## Snell's law of refraction
 
-How do you make a thin lens? Stack the prisms together, as in FOV.
+In which we explain Snell's Law.
+
+::: margin
+![Snell's Law.](../images/optics/snell-law.png){#fig-snell-law fig-align="center" width="50%"}
+:::
 
 F-number importance for thin lenses. Why it is the single, key parameter.
 
