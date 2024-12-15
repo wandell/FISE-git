@@ -29,9 +29,9 @@ It is useful to reason back and forth between the ray and wavefront representati
 
 <!-- **Notes about wavefront representations** (https://www.rp-photonics.com/wavefronts.html).  -->
 
-![Relationship between ray (arrows) and wavefront (dashed) representations. (a) A collimated set of rays is a plane wave. (b) A point source emits rays in all directions and forms a spherical wavefront. This image shows just a slice through the sphere. (c) Wavefronts with arbitrary shapes are common, and these curved shapes can be due to imperfections (aberrations) in the optics.  These wavefronts are generally smoothly varying. We can reason about them as a collection of rays, with the direction of each ray being perpendicular to the tangent of the wavefront. ](../images/optics/rays-wave.png){#fig-waves-rays fig-align="center" width="75%"}
+![Relationship between the ray (arrows) and wavefront (dashed) representations. (a) A collimated set of rays is a planar wavefront. (b) Rays from a point source form a spherical wavefront. (The image shows a slice through the sphere). (c) Smoothly varying wavefronts with many different shapes are common. Often these shapes are due to imperfections (aberrations) in the optics.  We reason about them as a collection of rays; the direction of each ray is drawn perpendicular to the tangent of the wavefront. (d) Only a narrow section of the rays from a distant point are incident at the entrance aperture of the imaging device. Hence, the incident light field from the point is close to a planar wavefront.](../images/optics/rays-wave.png){#fig-waves-rays fig-cap-location="bottom" fig-align="center" width="75%"}
 
-It is uncommon for tutorials to represent the amplitude of the wavefront across space, but the amplitude may vary. For example, a typical laser emits a set of parallel (collimated) rays with a Gaussian amplitude profile. 
+It is uncommon for tutorials to represent the amplitude of the wavefront across space; but in reality the amplitude may vary. For example, a typical laser emits a set of parallel (collimated) rays with a Gaussian amplitude profile. 
 
 In recent years, image systems engineers have had access to **spatial light modulators (SLMs)**.  These are devices that modulate the local amplitude and phase of the wavefront.  
 
@@ -39,17 +39,17 @@ The software calculations that accompany this book use both wavefront and ray me
 
 [^optics-intro-1]: The ISETCam optics calculations uses the wave model. The ISET3d graphics calculations use the ray model.
 
-## Refraction: Controlling ray direction
+## Lenses: Controlling ray direction
 
 ::: margin
-![When a pinhole is relatively large, the rays from a point may diverge forming a large spot, rather than a point, on the image plane. ](../images/optics/pinhole-rays.png){#fig-pinhole-rays fig-align="center" width="75%"}
+![The rays from a nearby point that pass through a relatively large pinhole diverge.  They form an image of the point that is larger than the pinhole.](../images/optics/pinhole-rays.png){#fig-pinhole-rays fig-align="center" width="75%"}
 :::
 Consider the rays from a point as they pass through a pinhole. The image they form will not be sharp because the ray directions are diverging. Narrowing the pinhole sharpend the image formation by selecting a small subset of the rays. 
 
 We can sharpen the image by redirecting some the rays to converge at the image plane. One way to think about optical devices is that they are built to control the direction of the environmental light field rays at the image system entrance aperture. When forming a sharp image is the goal, we evaluate the optics by asking whether they adjust the ray directions so that the image of a point in the scene is also a point. A useful fact to remember is that diffraction means the best (sharpest) we can do for a circular aperture is defined by the diameter of the Airy disk.
 
 ::: margin
-![Lenses transform the incident light field to an optical light field. The image shows the transform that brings a single point to focus on the image plane.](../images/optics/pinhole-lens.png){#fig-pinhole-rays fig-align="center" width="75%"}
+![Lenses transform the direction of the rays in the incident light field. In this example, the diverging rays from a nearby point are transformed to converge on the image plane. Diffraction imposes a limit on precision of the convergence. ](../images/optics/pinhole-lens.png){#fig-pinhole-rays fig-align="center" width="75%"}
 :::
 
 ```{=html}
@@ -57,20 +57,22 @@ We can sharpen the image by redirecting some the rays to converge at the image p
 Also https://en.wikipedia.org/wiki/Willebrord_Snellius
 -->
 ```
+## Refraction: Electromagnetic material interactions
 
-In about the year 150, the Greek astronomer Ptolemy described experiments with light and optics. He observed that a ray of light passing from one medium (e.g., air) to the next (e.g., water or glass) changed direction. We call this effect **refraction**. The relationship between the direction entering and exiting the medium were measured by Ibn Sahl in Persia, around 934, who used his measurements to design lenses. In 1621 the Dutch astronomer Willebrord Snellius discovered the formulae for refraction, and independently published by Renee Descartes in 1637. Snell's discovery was published only after his death. Many now refer to formula for refraction as Snell's Law, though in France it is often called le loi de Snell-Descartes. Huygens was aware of Snell's work, and he derived the law based on the assumption that light is a wave [^optics-intro-2].
+In about the year 150, the Greek astronomer Ptolemy described experiments with light and optics. He observed that a ray of light passing from one medium (e.g., air) to the next (e.g., water or glass) changed direction. We call this effect **refraction**. The relationship between the direction entering and exiting the medium were measured by Ibn Sahl in Persia, around 934, who used his measurements to design lenses. In 1621 the Dutch astronomer Willebrord Snellius discovered the formulae for refraction, and independently published by Renee Descartes in 1637. Snell's discovery was published only after his death. Many refer to formula for refraction as Snell's Law, though in France it is can called le "loi de Snell-Descartes". Huygens was aware of Snell's work, and he derived Snell's law based on the assumption that light is a wave [^optics-intro-2].  I think that is cool.
 
 [^optics-intro-2]: The number of mis-steps in establishing the law and the basis for the law makes for interesting reading. https://en.wikipedia.org/wiki/Snell%27s_law
 
 <!--# This link describes the issues in making a diffraction limited thin lens.  I think the problem is a flat sensor surfacewill not work with a spherical lens surface.  You need a aspheric.  It has other interesting facts.  To get close to diffraciton limited you need to use a multicomponent lens to correct for different aberrations.https://chatgpt.com/share/6748e5dc-267c-8002-844c-a83ee0cdb144 -->
 
-
-## Snell's law of refraction
-
-In which we explain Snell's Law.
+Snell's Law is based on the geometry and terms in @fig-snell-law. We consider a light ray (the Incident ray) heading from one medium (say, air) towards a material (say, glass).  As the ray reaches the material boundary one several things might happen.  The ray might (a) be absorbed by the material, (b) enter the material, bounce around and then emerge, (c) reflect at the material boundary, or (d) enter the material and continue along its way (refracted).  We will discuss (a), (b) and (c) later.  For optics, however, the main component of interest is the refraction.
 
 ::: margin
 ![Snell's Law.](../images/optics/snell-law.png){#fig-snell-law fig-align="center" width="50%"}
 :::
 
+@fig-snell-law shows the material with a planar surface.  We can thus define the angle between the incident ray and a line perpendicular to the surface (the surface normal).  Snell's Law quantifies the relationship between the angle of the ray in the first medium $\phi$ and second medium $\phi '$
 
+$$\frac{sin(\phi)}{sin(\phi')} = \frac{n'}{n}$$
+
+The two terms, $n$ and $n'$ are properties of the medium.
