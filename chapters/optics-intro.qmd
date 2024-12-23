@@ -27,7 +27,9 @@ In the next section, we describe lenses and treat light as rays. The reader may 
 
 It is useful to reason back and forth between the ray and wavefront representations. We can think of a ray as a traveling transverse wave. A collection of nearby rays traveling in the same direction, and of the same wavelength, and phase, form a plane wave.  We can visualize this as drawing a dashed line through the peaks of their (in-phase, common amplitude) waves. This is the wavefront.
 
-<!-- **Notes about wavefront representations** (https://www.rp-photonics.com/wavefronts.html).  -->
+<!-- **Notes about wavefront representations** 
+(https://www.rp-photonics.com/wavefronts.html).  
+-->
 
 ![Relationship between the ray (arrows) and wavefront (dashed) representations. (a) A collimated set of rays is a planar wavefront. (b) Rays from a point source form a spherical wavefront. (The image shows a slice through the sphere). (c) Smoothly varying wavefronts with many different shapes are common. Often these shapes are due to imperfections (aberrations) in the optics.  We reason about them as a collection of rays; the direction of each ray is drawn perpendicular to the tangent of the wavefront. (d) Only a narrow section of the rays from a distant point are incident at the entrance aperture of the imaging device. Hence, the incident light field from the point is close to a planar wavefront.](../images/optics/rays-wave.png){#fig-waves-rays fig-cap-location="bottom" fig-align="center" width="75%"}
 
@@ -57,22 +59,36 @@ We can sharpen the image by redirecting some the rays to converge at the image p
 Also https://en.wikipedia.org/wiki/Willebrord_Snellius
 -->
 ```
-## Refraction: Electromagnetic material interactions
+## Material interactions
+When a ray of light crosses from one medium into a second, several things can happen (@fig-reflected-scattered).  The ray might be reflected back, as in a mirror.  Or, the ray might enter into the material, interact with the material in a series of internal reflections, and emerge back in one of many different directions.  Also, the ray might enter the material and be absorbed, giving up its energy to the atoms in the material.
 
-In about the year 150, the Greek astronomer Ptolemy described experiments with light and optics. He observed that a ray of light passing from one medium (e.g., air) to the next (e.g., water or glass) changed direction. We call this effect **refraction**. The relationship between the direction entering and exiting the medium were measured by Ibn Sahl in Persia, around 934, who used his measurements to design lenses. In 1621 the Dutch astronomer Willebrord Snellius discovered the formulae for refraction, and independently published by Renee Descartes in 1637. Snell's discovery was published only after his death. Many refer to formula for refraction as Snell's Law, though in France it is can called le "loi de Snell-Descartes". Huygens was aware of Snell's work, and he derived Snell's law based on the assumption that light is a wave [^optics-intro-2].  I think that is cool.
+
+![Several things can happen when rays arrive at the boundary of two mediums. (a) The rays might be reflected. (b) The rays may enter the medium, be internally reflected multiple times, and emerge in one of many different directions (scattering). (Not shown) The ray may might enter the medium and be absorbed.](../images/optics/snell-reflected-scattered.png){#fig-reflected-scattered fig-cap-location="bottom" fig-align="center" width="90%"}
+
+<!-- 
+::: margin
+:::
+-->
+
+The important case for controlling the rays, and thus for optical design, is a different case: the ray enters the new medium and continues on its way. Thios interaction was studied by the Greek astronomer Ptolemy in about the year 150. He documented that a ray that passes from air into, say water or glass, changes direction. We call this effect **refraction**. 
+
+Ibn Sahl in Persia, around 930, quantified the change in direction as light  crossed the boundary between the mediums, and he used this knowledge to design lenses. In 1621 the Dutch astronomer Willebrord Snellius discovered a mathematical formulae for refraction, as did Renee Descartes who published the finding in 1637. Snell's discovery was published later, long after his death. To recognize his priority, the formula for refraction is widely called Snell's Law, though in France it is can called le "loi de Snell-Descartes". Huygens was aware of Snell's law, and he derived derived it based on the assumption that light is a wave [^optics-intro-2].  I think that is cool.
 
 [^optics-intro-2]: The number of mis-steps in establishing the law and the basis for the law makes for interesting reading. https://en.wikipedia.org/wiki/Snell%27s_law
 
-<!--# This link describes the issues in making a diffraction limited thin lens.  I think the problem is a flat sensor surfacewill not work with a spherical lens surface.  You need a aspheric.  It has other interesting facts.  To get close to diffraciton limited you need to use a multicomponent lens to correct for different aberrations.https://chatgpt.com/share/6748e5dc-267c-8002-844c-a83ee0cdb144 -->
+<!--# This link describes the issues in making a diffraction limited thin lens.  I think the problem is a flat sensor surface will not work with a spherical lens surface. You need a aspheric. It has other interesting facts. To get close to diffraction limited you need to use a multicomponent lens to correct for different aberrations. 
+https://chatgpt.com/share/6748e5dc-267c-8002-844c-a83ee0cdb144 
+-->
 
-Snell's Law is based on the geometry and terms in @fig-snell-law. We consider a light ray (the Incident ray) heading from one medium (say, air) towards a material (say, glass).  As the ray reaches the material boundary one several things might happen.  The ray might (a) be absorbed by the material, (b) enter the material, bounce around and then emerge, (c) reflect at the material boundary, or (d) enter the material and continue along its way (refracted).  We will discuss (a), (b) and (c) later.  For optics, however, the main component of interest is the refraction.
+The mathematical formulation of Snell's Law is defined using the quantities in @fig-snell-law. A light ray (Incident ray) is shown crossing a planar boundary between one medium (say, air) in a second medium (say, glass). We  define the angle $\phi$ between the incident ray and a line perpendicular to the surface (the surface normal). The refracted ray has a different angle with the surface normal, $\phi '$
 
-::: margin
-![When a ray travels between two different materials, it changes direction at the boundary. This occurs because light travels at different speeds in different materials. We describe this material property as the index of refraction ($n$ and $n'$). Snell's Law relates the angle of the incoming ray (measured from a line perpendicular to the surface) to the angle of the outgoing ray.](../images/optics/snell-law2.png){#fig-snell-law fig-align="center" width="50%"}
-:::
+![When a ray crosses the boundary between two materials, it may change direction. This occurs because the light wave travels at different speeds in different materials. The material property that describes the speed is the *index of refraction* ($n$ and $n'$). Snell's Law relates the angle of the incident ray (measured from a line perpendicular to the surface) to the angle of the refracted ray.](../images/optics/snell-refraction.png){#fig-snell-law fig-align="center" fig-cap-location="bottom" width="50%"}
 
-@fig-snell-law shows the material with a planar surface.  We can thus define the angle between the incident ray and a line perpendicular to the surface (the surface normal).  Snell's Law quantifies the relationship between the angle of the ray in the first medium $\phi$ and second medium $\phi '$
+For two different media and a wide range of incident ray angles, $phi$, the relationship this simple formula holds:  
 
 $$n~sin(\phi) = n'~sin(\phi')$$
 
-The two terms, $n$ and $n'$ are properties of the medium.
+The two terms, $n$ and $n'$ define a property of the medium that is called the index of refraction.  The value of a medium's index of refraction measures the speed of the electromagnetic radiation as it travels in the medium. In a vacuum, $n$ is $1.0$ and it is essentially $1.0$ in air.  In different mediums, such as glass, the index might be $1.3$ or even $1.5$, because the radiation travels much more slowly. The reason for the slow down has to do with the electromagnetic properties of the medium and can be predicted by Maxwell's equations.  There are some materials, such as liquid crystals, whose interactions produce interesting and useful effects that we will describe in the Display chapters.
+
+## Making a lens
+
