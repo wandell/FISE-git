@@ -62,18 +62,32 @@ When a light rays arrive at the boundary between regions with different optical 
 
 The most important case for controlling the rays, and thus for optical design, is this other possibility: the ray enters the new material and continues on its way. We call this change in direction **refraction**. 
 
-![When a ray crosses the boundary between two materials, it may continue but change direction. This occurs because the speed of electromagnetic radiation differs in different materials. The material parameter that describes the speed is the *index of refraction* ($n$ and $n'$).](../images/optics/snell-refraction.png){#fig-snell-law fig-align="center" fig-cap-location="bottom" width="50%"}
+![A ray crossing the boundary between two materials may continue but change direction. The change occurs because the speed of electromagnetic waves differs between the regions. The *index of refraction* ($n$ and $n'$) is the material parameter that describes the speed.](../images/optics/snell-refraction.png){#fig-snell-law fig-align="center" fig-cap-location="bottom" width="50%"}
 
 ### Snell's Law
 Snell's Law quantifies how light changes direction when passing between regions with different optical properties. The mathematical formulation of Snell's Law is defined using the variables shown in @fig-snell-law. A light ray (Incident ray) is shown crossing a planar boundary between one medium (say, air) in a second medium (say, glass). The angle between the incident ray and a line perpendicular to the surface (the surface normal) is $\phi$. The refracted ray changes direction and thus has a different angle, $\phi '$, with respect to the surface normal. Snell's Law captures the relationship between these two ray angles 
 
 $$ n \sin(\phi) = n' \sin(\phi') $$ {#eq-snell}
 
-The variables $n$ and $n'$ are the *index of refraction* of the materials. The value is related to the speed of the electromagnetic radiation in the material. In a vacuum, $n$ is $1.0$, and it is very close to $1.0$ in air.  In some materials, such as glass, the radiation travels more slowly and the index might be $1.3$ or even $1.5$. In many common materials the radiation slows down because the light induces an opposing electromagnetic signal (predicted by Maxwell's equations).  There are some materials, such as liquid crystals, whose material interactions produce interesting and useful effects that we will describe in @sec-displays.
+The variables $n$ and $n'$ are the *index of refraction* of the materials, which is related to the speed of the electromagnetic radiation in the material.
+
+$$ n = \frac{c/v}$$ {#eq-indexofrefraction}
+
+where $c$ is the speed of light in a vacuum, $v$ is the speed in the material. Thus, in a vacuum, $n$ is $1.0$, and it is very close to $1.0$ in air.  In some materials, such as glass, the velocity is much slower, so that the index might be $1.3$ or even $1.5$. 
+
+In many common materials the velocity is reduced because the light, which is electromagnetic radiation, induces an opposing electromagnetic signal in the material. This signal is predicted by Maxwell's equations.  There are some materials, such as liquid crystals, whose material interactions produce interesting and useful effects (birefringence) that we will describe in @sec-displays.
 
 ### Wavelength dependence
-[Abbe Number](https://chatgpt.com/share/676a2564-e72c-8002-923a-d865491f30ed)
-The index of refraction is wavelength dependent.  
+<!-- [Abbe Number](https://chatgpt.com/share/676a2564-e72c-8002-923a-d865491f30ed) -->
+For many materials that index of refraction is wavelength dependent. Following Snell's Law, the each wavelengths changes direction by different amount. This can cause unwanted artifacts in imaging systems, called chromatic aberration. 
+
+For most materials the change of the index of refraction over the visible wavelength is roughly linear, just varying in extent.  It is common to summarize the dispersion using the *Abbe number*, $V_d$, which is computed by comparing the index of refraction at three different wavelengths.
+
+$$ V_d = \frac{n_{489.3} - 1}{n_{486.1} - n_{653.3}}$$ {#eq-abbe}
+
+Conventionally, an Abbe number greater than 50 implies very little dispersion and a number less than 30 implies significant dispersion that will impact image quality.  The human eye has very significant chromatic aberration, with an Abbe number of about 15. 
+
+When possible, it is my preference in computation to provide numerical values describing the index of refraction as function of wavelength and to measure the impact by computing the line spread or point spread function. We will perform analyses of chromatic aberration several times in this book, including in @sec-human.
 
 ::: {.callout-note collapse="true" title="Historical note:  Refraction"}
 
