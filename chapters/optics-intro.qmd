@@ -54,41 +54,59 @@ We can sharpen the image by redirecting some the rays to converge at the image p
 ![Lenses transform the direction of the rays in the incident light field. In this example, the diverging rays from a nearby point are transformed to converge on the image plane. Diffraction imposes a limit on precision of the convergence. ](../images/optics/pinhole-lens.png){#fig-pinhole-rays fig-align="center" width="75%"}
 :::
 
+
+## Material interactions
+When a light rays arrive at the boundary between regions with different optical properties - whether those regions contain matter (like glass or water), air or vacuum - several things can happen (@fig-reflected-scattered).  The rays might be reflected back, as in a mirror.  Or, the rays might enter into the material, undergo a series of internal reflections, and emerge back in one of many different directions.  Also, the rays might enter the material and be absorbed, giving up their energy to the atoms in the material. (Maybe reference the dichromatic reflection model here?)
+
+![When rays arrive at the boundary of two regions, The rays (a) might be reflected, (b) might enter the medium, be internally reflected multiple times, and emerge in one of many different directions (scattering). (Not shown) The ray may might enter the medium and be absorbed.](../images/optics/snell-reflected-scattered.png){#fig-reflected-scattered fig-align="center" width="100%"}
+
+The most important case for controlling the rays, and thus for optical design, is this other possibility: the ray enters the new material and continues on its way. We call this change in direction **refraction**. 
+
+![When a ray crosses the boundary between two materials, it may continue but change direction. This occurs because the speed of electromagnetic radiation differs in different materials. The material parameter that describes the speed is the *index of refraction* ($n$ and $n'$).](../images/optics/snell-refraction.png){#fig-snell-law fig-align="center" fig-cap-location="bottom" width="50%"}
+
+### Snell's Law
+Snell's Law quantifies how light changes direction when passing between regions with different optical properties. The mathematical formulation of Snell's Law is defined using the variables shown in @fig-snell-law. A light ray (Incident ray) is shown crossing a planar boundary between one medium (say, air) in a second medium (say, glass). The angle between the incident ray and a line perpendicular to the surface (the surface normal) is $\phi$. The refracted ray changes direction and thus has a different angle, $\phi '$, with respect to the surface normal. Snell's Law captures the relationship between these two ray angles 
+
+$$ n \sin(\phi) = n' \sin(\phi') $$ {#eq-snell}
+
+The variables $n$ and $n'$ are the *index of refraction* of the materials. The value is related to the speed of the electromagnetic radiation in the material. In a vacuum, $n$ is $1.0$, and it is very close to $1.0$ in air.  In some materials, such as glass, the radiation travels more slowly and the index might be $1.3$ or even $1.5$. In many common materials the radiation slows down because the light induces an opposing electromagnetic signal (predicted by Maxwell's equations).  There are some materials, such as liquid crystals, whose material interactions produce interesting and useful effects that we will describe in @sec-displays.
+
+### Wavelength dependence
+[Abbe Number](https://chatgpt.com/share/676a2564-e72c-8002-923a-d865491f30ed)
+The index of refraction is wavelength dependent.  
+
+::: {.callout-note collapse="true" title="Historical note:  Refraction"}
+
+Refraction was studied by the Greek astronomer Ptolemy in about the year 150. He documented that rays passing from air into, say water or glass, change direction. Ibn Sahl in Persia, around 930, quantified the change in direction as light crossed the boundary between certain materials, and he used this knowledge to design lenses.
+
+The formula for refraction was discovered independently by two scientists in the 17th century. Willebrord Snellius (also known as Snell) first found the mathematical relationship in 1621, but his work wasn't published during his lifetime. Renée Descartes independently made the same discovery and published it in 1637. Although Descartes published first, the formula became known as Snell's Law to acknowledge Snellius's earlier discovery. Later, physicist Christiaan Huygens showed that Snell's Law could be explained by treating light as a wave that travels at different speeds in different materials. The number of mis-steps in establishing the law and the basis for the law makes for [interesting reading](https://en.wikipedia.org/wiki/Snell%27s_law).  
+
 ```{=html}
 <!-- Wikipedia:  Snell's Law.  "The law was eventually named after Snell, although it was first discovered by the Persian scientist Ibn Sahl, at Baghdad court in 984.[6][7][8] In the manuscript On Burning Mirrors and Lenses, Sahl used the law to derive lens shapes that focus light with no geometric aberration.[9]" 
 Also https://en.wikipedia.org/wiki/Willebrord_Snellius
 -->
 ```
-## Material interactions
-When a ray of light crosses from one medium into a second, several things can happen (@fig-reflected-scattered).  The ray might be reflected back, as in a mirror.  Or, the ray might enter into the material, interact with the material in a series of internal reflections, and emerge back in one of many different directions.  Also, the ray might enter the material and be absorbed, giving up its energy to the atoms in the material.
-
-
-![Several things can happen when rays arrive at the boundary of two mediums. (a) The rays might be reflected. (b) The rays may enter the medium, be internally reflected multiple times, and emerge in one of many different directions (scattering). (Not shown) The ray may might enter the medium and be absorbed.](../images/optics/snell-reflected-scattered.png){#fig-reflected-scattered fig-cap-location="bottom" fig-align="center" width="90%"}
-
-<!-- 
-::: margin
 :::
--->
 
-The important case for controlling the rays, and thus for optical design, is a different case: the ray enters the new medium and continues on its way. Thios interaction was studied by the Greek astronomer Ptolemy in about the year 150. He documented that a ray that passes from air into, say water or glass, changes direction. We call this effect **refraction**. 
+## Making a lens
+To make a lens that focuses a light field into an image requires bending a lot of rays.  How this might work for a simple case, is easy to see.  Imagine that the rays are diverging from a point located at the left.  Were they passing through a pinhole, they would continue to diverge.
 
-Ibn Sahl in Persia, around 930, quantified the change in direction as light  crossed the boundary between the mediums, and he used this knowledge to design lenses. In 1621 the Dutch astronomer Willebrord Snellius discovered a mathematical formulae for refraction, as did Renee Descartes who published the finding in 1637. Snell's discovery was published later, long after his death. To recognize his priority, the formula for refraction is widely called Snell's Law, though in France it is can called le "loi de Snell-Descartes". Huygens was aware of Snell's law, and he derived derived it based on the assumption that light is a wave [^optics-intro-2].  I think that is cool.
+![Refraction transforms the rays diverging from an object point (left) to converging to an image point (right).](../images/optics/thinlens-prism.png){#fig-thinlens-prism fig-align="center" width="50%"}
 
-[^optics-intro-2]: The number of mis-steps in establishing the law and the basis for the law makes for interesting reading. https://en.wikipedia.org/wiki/Snell%27s_law
+Refraction by the prism changes the direction of the rays at the  from upward to downward (upper prism). Similarly, refraction changes the ray directions from downward to upward (lower prism). These two prisms act to converge the rays from the object point onto a point on a properly positioned image plane.
 
 <!--# This link describes the issues in making a diffraction limited thin lens.  I think the problem is a flat sensor surface will not work with a spherical lens surface. You need a aspheric. It has other interesting facts. To get close to diffraction limited you need to use a multicomponent lens to correct for different aberrations. 
 https://chatgpt.com/share/6748e5dc-267c-8002-844c-a83ee0cdb144 
 -->
 
-The mathematical formulation of Snell's Law is defined using the quantities in @fig-snell-law. A light ray (Incident ray) is shown crossing a planar boundary between one medium (say, air) in a second medium (say, glass). We  define the angle $\phi$ between the incident ray and a line perpendicular to the surface (the surface normal). The refracted ray has a different angle with the surface normal, $\phi '$
+![The  diverging ray directions from an object point are redirected by refraction to converge on an image plane at the appropriate distance.](../images/optics/thinlens-assembled.png){#fig-thinlens-prism fig-align="center" width="50%"}
 
-![When a ray crosses the boundary between two materials, it may change direction. This occurs because the light wave travels at different speeds in different materials. The material property that describes the speed is the *index of refraction* ($n$ and $n'$). Snell's Law relates the angle of the incident ray (measured from a line perpendicular to the surface) to the angle of the refracted ray.](../images/optics/snell-refraction.png){#fig-snell-law fig-align="center" fig-cap-location="bottom" width="50%"}
+An image could be formed by stacking a collection of prisms, or more likely by polishing a glass surface to have two smooth, spherical surfaces. The entrance aperture of such a spherical lens can be much larger than a pinhole and thus capture much more light. 
 
-For two different media and a wide range of incident ray angles, $phi$, the relationship this simple formula holds:  
+Using Snell's Law, it is possible to calculate the convergence of the rays and thus the distance to the plane where an image would be formed. In 1854 James Clerk Maxwell noted that a spherical lens made with one material would change the ray directions at the edge too much, blurring the image. He suggested that biological eyes might have an index of refraction that varies from the center to the edge, reducing the refraction. This is true of many biological eyes. Lenses engineered to have a variable gradient index of refraction are valuable in optical design and called *GRIN* lens. 
+<!-- https://www.britannica.com/science/photoreception/Single-chambered-eyes Michael Land's Brittanic article has the story. Lenses made of homogeneous material (e.g., glass or dry protein) suffer from a defect known as spherical aberration, in which peripheral rays are focused too strongly, resulting in a poor image. 
+-->
 
-$$n~sin(\phi) = n'~sin(\phi')$$
+It is also possible to build a lens from one material with an aspherical shape.  [See this page for the shape formula and other issues.](https://chatgpt.com/c/6748e492-0310-8002-8da3-89a1517a6062).
 
-The two terms, $n$ and $n'$ define a property of the medium that is called the index of refraction.  The value of a medium's index of refraction measures the speed of the electromagnetic radiation as it travels in the medium. In a vacuum, $n$ is $1.0$ and it is essentially $1.0$ in air.  In different mediums, such as glass, the index might be $1.3$ or even $1.5$, because the radiation travels much more slowly. The reason for the slow down has to do with the electromagnetic properties of the medium and can be predicted by Maxwell's equations.  There are some materials, such as liquid crystals, whose interactions produce interesting and useful effects that we will describe in the Display chapters.
-
-## Making a lens
-
+It wonderful if such a lens could be diffraction limited, forming an Airy point spread function of an object point. Creating lenses from different types of glass 
