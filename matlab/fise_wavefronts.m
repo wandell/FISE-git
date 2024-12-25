@@ -10,3 +10,4 @@
 nPeriods = 3;
 nSamples = 256;
 x = linspace(0,nPeriods*(2*pi),nSamples);
+edit 
