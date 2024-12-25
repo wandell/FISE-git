@@ -103,24 +103,50 @@ Also https://en.wikipedia.org/wiki/Willebrord_Snellius
 :::
 
 ## Making a lens
-To make a lens that focuses a light field into an image requires bending a lot of rays.  How this might work for a simple case, is easy to see.  Imagine that the rays are diverging from a point located at the left.  Were they passing through a pinhole, they would continue to diverge.
+To make a lens that focuses a light field into an image plane requires changing the direction of many rays. The simple case of rays from one point is easy to see.  
 
 ![Refraction transforms the rays diverging from an object point (left) to converging to an image point (right).](../images/optics/thinlens-prism.png){#fig-thinlens-prism fig-align="center" width="50%"}
 
-Refraction by the prism changes the direction of the rays at the  from upward to downward (upper prism). Similarly, refraction changes the ray directions from downward to upward (lower prism). These two prisms act to converge the rays from the object point onto a point on a properly positioned image plane.
+Imagine that the rays are diverging from an object point at the left. Were the rays passing through a pinhole, they would continue to diverge. Refraction by the prism changes the direction of the rays at the  from upward to downward (upper prism). Similarly, refraction changes the ray directions from downward to upward (lower prism). These two prisms converge the rays from the object point onto a point on a properly positioned image plane.
 
 <!--# This link describes the issues in making a diffraction limited thin lens.  I think the problem is a flat sensor surface will not work with a spherical lens surface. You need a aspheric. It has other interesting facts. To get close to diffraction limited you need to use a multicomponent lens to correct for different aberrations. 
 https://chatgpt.com/share/6748e5dc-267c-8002-844c-a83ee0cdb144 
 -->
 
-![The  diverging ray directions from an object point are redirected by refraction to converge on an image plane at the appropriate distance.](../images/optics/thinlens-assembled.png){#fig-thinlens-prism fig-align="center" width="50%"}
+![A simple lens,  approximated as many small prisms.  The outline shows a spherical surface on the entrance and exit side.](../images/optics/thinlens-assembled.png){#fig-thinlens-prism fig-align="center" width="80%"}
 
-An image could be formed by stacking a collection of prisms, or more likely by polishing a glass surface to have two smooth, spherical surfaces. The entrance aperture of such a spherical lens can be much larger than a pinhole and thus capture much more light. 
+Expanding on this idea, we can stack a collection of prisms to gather more of the rays.  Or, more likely, we might polish a glass surface to have two spherical surfaces, forming a continuous form of the stacked prisms. The entrance aperture of this lens can capture much more light than a pinhole, and it guides the rays to converge. Spherical lenses are quite popular because they are easy to manufacture. Using Snell's Law it is relatively straightforward to calculate the refraction for a ray arriving at any location on the sphere [^optics-intro-2].
 
-Using Snell's Law, it is possible to calculate the convergence of the rays and thus the distance to the plane where an image would be formed. In 1854 James Clerk Maxwell noted that a spherical lens made with one material would change the ray directions at the edge too much, blurring the image. He suggested that biological eyes might have an index of refraction that varies from the center to the edge, reducing the refraction. This is true of many biological eyes. Lenses engineered to have a variable gradient index of refraction are valuable in optical design and called *GRIN* lens. 
+[^optics-intro-2]:  Put the formula for refraction of a ray at a spherical lens in here.
+
+The diagram makes it clear that there are many lens design choices. For example, we might change the shape of the lens surfaces. Also, we might use different materials in the prisms. What considerations would guide such choices?
+ 
+### Spherical aberration
+In his influential work in the 11th century, "Kitāb al-Manāẓir" (Book of Optics), the Alhazen observed that a spherical lens produced a blurry image on a planar surface. The reason is that the change in ray direction at the sphere edge is too large compared to the change near the center of the lens. Thus the rays do not arrive at the same place at the image plane. We refer to this as a spherical aberration.
+
+It is possible to create an image without spherical aberration in several ways.  In 1854 James Clerk Maxwell,noticing that biological eyes are often spherical, suggested that a way to correct this would be by creating lenses with an index of refraction that varies from the center to the edge. This turned out to be true of many biological eyes. Lenses engineered to have a variable gradient index of refraction are valuable in optical design and called *GRIN* lens. 
+
 <!-- https://www.britannica.com/science/photoreception/Single-chambered-eyes Michael Land's Brittanic article has the story. Lenses made of homogeneous material (e.g., glass or dry protein) suffer from a defect known as spherical aberration, in which peripheral rays are focused too strongly, resulting in a poor image. 
 -->
+Another way to reduce spherical aberration, even when the lens is made from one material, is to use a different shape.  There is a class of aspherical lenses that designers frequently use to reduce the spherical aberration. Lens design software searches through the parameters of these shapes, given the materials and other design constraints, to create circularly symmetric aspherical lenses.
 
-It is also possible to build a lens from one material with an aspherical shape.  [See this page for the shape formula and other issues.](https://chatgpt.com/c/6748e492-0310-8002-8da3-89a1517a6062).
+\begin{equation*}
+z(\rho) = \frac{\rho^2 / R}{1 + \sqrt{1 - (1 + k)(\rho/R)^2}} + A_4 \rho^4 + A_6 \rho^6 + A_8 \rho^8 + \cdots
+\end{equation*}
 
-It wonderful if such a lens could be diffraction limited, forming an Airy point spread function of an object point. Creating lenses from different types of glass 
+The parameter $\rho$ is the radial distance from the optical axis. The value $z(ρ)$ is called the sag of the surface at a radial distance $\rho$ from the optical axis.   $R$ is the radius of curvature at the vertex of the lens.  $k$ is called the  conic constant, and it determines the overall deviation from the sphere.  The parameter $A_i$ are called higher-order aspheric coefficients that can be adjusted to reduce different types of lens imperfections.
+
+<!--
+[See this page and fise_aspherics.m for the shape formula of aspherical lenses.](https://chatgpt.com/c/6748e492-0310-8002-8da3-89a1517a6062).[Also this page.](https://g.co/gemini/share/a89a3d193d26)
+-->
+
+Finally, it is possible to change the imaging surface from a plane to a different shape.  If the spherical lens and sensor curvature match appropriately, the spherical aberration will be greatly reduced. This idea is partly inspired by the fact that the retina in many animals lines the interior of the eyeball, forming a curved sensor. Several groups have created sensors on bendable materials, including some very expensive research projects. The idea is to build these sensors for cameras with very large field of view and very high resolution at all angles.
+
+<!-- 
+Curved sensor projects
+[HRL](https://www.hrl.com/news/2024/03/11/hrl-advances-to-camera-build-phase-of-curved-sensor-technology?t)
+[Sony](https://www.dpreview.com/articles/2279255612/sony-s-curved-sensors-may-allow-for-simpler-lenses-and-better-images?comment=5515068691)
+[John Rogers](https://thefutureofthings.com/6161-a-spherical-camera-sensor/)
+-->
+
+
