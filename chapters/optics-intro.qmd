@@ -41,20 +41,6 @@ The software calculations that accompany this book use both wavefront and ray me
 
 [^optics-intro-1]: The ISETCam optics calculations uses the wave model. The ISET3d graphics calculations use the ray model.
 
-## Lenses: Controlling ray direction
-
-::: margin
-![The rays from a nearby point that pass through a relatively large pinhole diverge.  They form an image of the point that is larger than the pinhole.](../images/optics/pinhole-rays.png){#fig-pinhole-rays fig-align="center" width="75%"}
-:::
-Consider the rays from a point as they pass through a pinhole. The image they form will not be sharp because the ray directions are diverging. Narrowing the pinhole sharpend the image formation by selecting a small subset of the rays. 
-
-We can sharpen the image by redirecting some the rays to converge at the image plane. One way to think about optical devices is that they are built to control the direction of the environmental light field rays at the image system entrance aperture. When forming a sharp image is the goal, we evaluate the optics by asking whether they adjust the ray directions so that the image of a point in the scene is also a point. A useful fact to remember is that diffraction means the best (sharpest) we can do for a circular aperture is defined by the diameter of the Airy disk.
-
-::: margin
-![Lenses transform the direction of the rays in the incident light field. In this example, the diverging rays from a nearby point are transformed to converge on the image plane. Diffraction imposes a limit on precision of the convergence. ](../images/optics/pinhole-lens.png){#fig-pinhole-rays fig-align="center" width="75%"}
-:::
-
-
 ## Material interactions
 When a light rays arrive at the boundary between regions with different optical properties - whether those regions contain matter (like glass or water), air or vacuum - several things can happen (@fig-reflected-scattered).  The rays might be reflected back, as in a mirror.  Or, the rays might enter into the material, undergo a series of internal reflections, and emerge back in one of many different directions.  Also, the rays might enter the material and be absorbed, giving up their energy to the atoms in the material. (Maybe reference the dichromatic reflection model here?)
 
@@ -100,6 +86,19 @@ Renée Descartes independently discovered the relationship as well, and he publi
 The physicist Christiaan Huygens showed that Snell's Law could be explained by treating light as a wave that travels at different speeds in different materials. More about the history of the discovery and quantification, including the references, [makes for interesting reading](https://en.wikipedia.org/wiki/Snell%27s_law#History).  
 :::
 
+## Lenses control ray directions
+
+::: margin
+![The rays from a nearby point that pass through a relatively large pinhole diverge.  They form an image of the point that is larger than the pinhole.](../images/optics/pinhole-rays.png){#fig-pinhole-rays fig-align="center" width="75%"}
+:::
+Consider the rays from a point as they pass through a pinhole. The image they form will not be sharp because the ray directions are diverging. Narrowing the pinhole sharpend the image formation by selecting a small subset of the rays. 
+
+We can sharpen the image by redirecting some the rays to converge at the image plane. One way to think about optical devices is that they are built to control the direction of the environmental light field rays at the image system entrance aperture. When forming a sharp image is the goal, we evaluate the optics by asking whether they adjust the ray directions so that the image of a point in the scene is also a point. A useful fact to remember is that diffraction means the best (sharpest) we can do for a circular aperture is defined by the diameter of the Airy disk.
+
+::: margin
+![Lenses transform the direction of the rays in the incident light field. In this example, the diverging rays from a nearby point are transformed to converge on the image plane. Diffraction imposes a limit on precision of the convergence. ](../images/optics/pinhole-lens.png){#fig-pinhole-rays fig-align="center" width="75%"}
+:::
+
 ## Making a lens
 To make a lens that focuses a light field into an image plane requires changing the direction of many rays. The simple case of rays from one point is easy to see.  
 
@@ -109,6 +108,9 @@ Imagine that the rays are diverging from an object point at the left. Were the r
 
 <!--# This link describes the issues in making a diffraction limited thin lens.  I think the problem is a flat sensor surface will not work with a spherical lens surface. You need a aspheric. It has other interesting facts. To get close to diffraction limited spherical you need to use a multi element optics to correct for different aberrations.  It is possible to change the materials (GRIN) or shape (aspherics) as well.
 https://chatgpt.com/share/6748e5dc-267c-8002-844c-a83ee0cdb144 
+
+Diffraction limited thin lens issues.  Roughly same as the one above.
+https://chatgpt.com/c/6748e492-0310-8002-8da3-89a1517a6062 
 -->
 
 ![A lens can be approximated as many small prisms.  The outline shows a spherical surface on the entrance and exit side.](../images/optics/thinlens-assembled.png){#fig-thinlens-prism fig-align="center" width="80%"}
@@ -119,38 +121,47 @@ Expanding on this idea, we can stack a collection of prisms to gather more of th
 
 The diagram makes it clear that there are many lens design choices. For example, we might change the shape of the lens surfaces. Also, we might use different materials in the prisms. What considerations would guide such choices?
  
-## Spherical aberration
-In his influential work in the 11th century, "Kitāb al-Manāẓir" (Book of Optics), the Alhazen observed that a spherical lens produced a blurry image on a planar surface. The reason is that the change in ray direction at the sphere edge is too large compared to the change near the center of the lens. Thus the rays do not arrive at the same place at the image plane. We refer to this as a spherical aberration.  The amount of blur of a spherical lens design depends on a number of factors, such as the lens aperture, curvature and the distance to the objects.
+## Lens limitations
+Spherical surfaces are relatively easy to manufacture and thus cost-effective. But spherical lenses have a noticeable defect. In the 11th century book, "Kitāb al-Manāẓir" (Book of Optics), Alhazen observed that spherical lenses often produce a blurry image. The reason is that at increasing distance from the optical axis, the refraction is too large. Thus, the rays passing through the edge of the sphere do not converge precisely with those passing near the optical axis. The amount of this *spherical aberration* depends on a number of factors, such as the size of the lens aperture, the curvature, and the distance to the objects.
 
-To reduce the spherical aberration, designers often create multi-element optics.  The additional lenses reduce the spherical aberration and others.  There are other methods to reduce spherical aberration.
+### Multi-element optics
+To reduce the spherical aberration and improve image sharpness, designers have created multi-element optics. Often, these are additional spherical lenses added to the light path whose purpose is to reduce spherical and other aberrations of the whole system. THere are several famous multi-element optics designs, such as the *double Gauss* and *Petzval* systems. Very high quality multi-element optics can be fairly large. 
 
-### Grin lenses
-In 1854 James Clerk Maxwell, noticing that biological eyes are often spherical, suggested that this aberration could be fixed using lenses with refraction index that varies from the optical axis to the edge (Maxwell reference here). It was later discovered that various biological eyes have this property (Reference here). Manufactured lenses with a variable gradient refraction index (*GRIN* lenses) are valuable in optical design. 
-
-<!-- https://www.britannica.com/science/photoreception/Single-chambered-eyes Michael Land's Brittanic article has the story. Lenses made of homogeneous material (e.g., glass or dry protein) suffer from a defect known as spherical aberration, in which peripheral rays are focused too strongly, resulting in a poor image. 
--->
+Spherical lenses remain in use in devices that must be low cost, do not require  high spatial resolution, or that can use relatively large optics.  In recent years, other optics have been implemented.
 
 ### Aspherics
-A second way to reduce spherical aberration, even when the lens is made from one material, is to use a different shape. Designers frequently use a class of aspherical lenses to reduce the spherical aberration. The formula for the surface is parameterized this way: 
+To reduce spherical aberration, we can use a different shape. This was difficult to manufacture, but advances in computer-controlled polishing and the ability to create molded plastics and glass permit designers to implement aspherical lenses.  The use of aspherics accelerated in multiple industries after 2010.  
+<!--
+From Perplexity search
+
+https://www.perplexity.ai/search/when-did-it-become-cost-effect-bqLBLfjZTRuYA.uF6hOvnA#2
+
+https://www.laserfocusworld.com/directory/finished-optics-coatings-components/lenses/blog/14310615/avantier-inc-replacing-spherical-lens-with-aspheric-lens?t
+
+https://www.shanghai-optics.com/about-us/resources/technical-articles/optical-revolution-aspheric-lenses-advances-and-solutions/?t
+
+https://avantierinc.com/resources/technical-article/aspheric-lens-breakthroughs/?t
+ -->
+
+Designers frequently use a particular class of aspherical lenses.  These are described by a lens surface position, $z$, that is specified as a function of radial distance $\rho$, from the optical axis.
 
 \begin{equation*}
 z(\rho) = \frac{\rho^2 / R}{1 + \sqrt{1 - (1 + k)(\rho/R)^2}} + A_4 \rho^4 + A_6 \rho^6 + A_8 \rho^8 + \cdots
 \end{equation*}
 
-The parameter $\rho$ is the radial distance from the optical axis. The value $z(ρ)$ is called the sag of the surface at a radial distance $\rho$ from the optical axis.   $R$ is the radius of curvature at the vertex of the lens.  $k$ is called the  conic constant, and it determines the overall deviation from the sphere.  The parameter $A_i$ are called higher-order aspheric coefficients that can be adjusted to reduce different types of lens imperfections. Lens design software is used to search through the parameters, given the materials and other design constraints, to create circularly symmetric aspherical lenses with minimal spherical aberration.
+$z(\rho)$ is called the sag of the lens surface.  $R$ is the radius of curvature of the lens at the vertex of the lens.  $k$ is called the  conic constant; it determines the deviation from the spherical shape. The parameters $A_i$ are called higher-order aspheric coefficients; they are adjusted to reduce different types of lens imperfections. Lens design software is used to search through the parameters, given the materials and other design constraints, to create circularly symmetric aspherical lenses with minimal spherical aberration.
 
 <!--
 [See this page and fise_aspherics.m for the shape formula of aspherical lenses.](https://chatgpt.com/c/6748e492-0310-8002-8da3-89a1517a6062).[Also this page.](https://g.co/gemini/share/a89a3d193d26)
 -->
 
-### Curved sensors
-Finally, it is possible to reduce spherical aberration by changing the imaging surface. An image system that couples a spherical lens with an appropriately curved sensor can have very small spherical aberration. This idea is partly inspired by the fact that the retina in many animals lines the interior of the eyeball, forming a curved sensor surface. While this is not widely used, there have been several projects to create sensors on bendable materials, including some very expensive research projects. The idea is to build these sensors for cameras with very large field of view and very high resolution across the field of view.
+### Grin lenses
+In 1854 James Clerk Maxwell, noticing that biological eyes are often spherical, suggested that the spherical aberration could be reduced by using lenses with a refraction index that varies from the optical axis to the edge (Maxwell reference here). It was later discovered that some biological eyes have this property (Reference here). Manufactured lenses with a variable gradient refraction index (*GRIN* lenses) are valuable in optical design, although they are more difficult to manufacture than aspherics. 
 
-<!-- 
-Curved sensor projects
-[HRL](https://www.hrl.com/news/2024/03/11/hrl-advances-to-camera-build-phase-of-curved-sensor-technology?t)
-[Sony](https://www.dpreview.com/articles/2279255612/sony-s-curved-sensors-may-allow-for-simpler-lenses-and-better-images?comment=5515068691)
-[John Rogers](https://thefutureofthings.com/6161-a-spherical-camera-sensor/)
+<!-- https://www.britannica.com/science/photoreception/Single-chambered-eyes Michael Land's Brittanic article has the story. Lenses made of homogeneous material (e.g., glass or dry protein) suffer from a defect known as spherical aberration, in which peripheral rays are focused too strongly, resulting in a poor image. 
 -->
 
+### Metalenses
+The purpose of the lens is to redirect the rays in the incident light field. Suppose we can specify how we would like to redirect the rays.  We would call this specification a *ray transfer function* (Goossens reference).  It would be ideal if we could manufacture a very thin surface whose optical properties implement that function. 
 
+Advances in material science, optics, and computation are making progress on this goal. They are creating *metalenses*, which are very thin surfaces made up of small elements - smaller even than the wavelengths of light - with different refractive indices. The placement of these elements can produce many different ray transfer functions. Using advanced computational methods and hardware (e.g., GPU clusters), groups are learning how to define these surfaces and build metalenses that implement specific functions.  (References.)
