@@ -1,6 +1,6 @@
-# Thin lens formulae {#chapter-optics-thinlens}
+# Thin lens formulae {#sec-optics-thinlens}
 
-The thin lens model is an important conceptual tool in optics. It provides a clear framework for understasnding key concepts like, focal length, magnification, and in general image formation. Moreover, practical systems are often made from components that include - or at least are well approximated by - a collection thin spherical lenses. We can describe these systems by understanding how multiple thin spherical lenses combine to form an optical system.
+The thin lens model is an important conceptual tool in optics. It provides a clear framework for understasnding key concepts like, focal length, magnification, and in general image formation. Moreover, practical systems are often made from components that include - or at least are well approximated by - a collection thin lenses. We can describe these systems by understanding how multiple thin lenses combine to form an optical system.
 
 ::: {.callout-note collapse="true" title="What is a thin lens?"}
 
@@ -17,12 +17,20 @@ Consider the convex lens on the left side of @fig-thinlens-focalpoints.  In the 
 
 Now, look at the concave lens at the right @fig-thinlens-focalpoints.  The top right shows the primary focal point.  The incident rays that produce a collection of parallel rays exiting have a range of divergent angles. The dashed lines extending these incident rays, which converge at F, on the right of the lens. To calculate the secondary focal point, suppose the incident rays are parallel (bottom, right). These will diverge after refraction by the lens. We extend them with the dashed lines to see that they converge on the left side of the lens, at F'.
 
-These thin lenses, like most of the examples in this book, are symmetric.  Thus, the two focal lengths are equal. The principles we introduce also apply even if the two surfaces differ, but we would have to pay more attention to the details and that would distract from the main idea.  To see those details, and many other ideas from optics, I commend the reader to some of the excellent textbooks on optics (References here.  Usually Goodman; Born and Wolf; I like Jenkins and White.)
+The lenses in @fig-thinlens-focalpoints, like most of the examples in this book, are symmetric.  Thus, the two focal lengths are equal. The principles we introduce would apply even if the two surfaces of the lens differ, but we would have to pay more attention to the details and that would distract from the main ideas. To see those details, and many other ideas from optics, I commend the reader to some of the excellent textbooks on optics (References here.  Usually Goodman; Born and Wolf; I like Jenkins and White.)
 
-The calculations implemented in ISETCam refer to all of these ideas. But the implementation is based on different principles, treating light as a wavefront, that we will describe later.  The calculations in graphics code of ISET3d refer to all of these ideas and are based on rays.
+The ISET3d calculations make use of all of the principles below and are based on rays. The ISETCam calculations make use of the principles below, as well. But the image formation calculation treats the lens as modifying the wavefront of the light. We describe this approach in [@sec-optics-wavefront].
 
-## f-number
-Define the F-number and its importance for thin lenses. Why it is the single, key parameter.
+## F number
+The "F number" (f/#) is the ratio of the focal length and entrance aperture (@fig-fnumber).  It is an important parameter for all thin lenses, and it is the only free parameter of a diffraction-limited thin lens. 
+
+![Graphic of the f/#.](../images/optics/lensparameters-fnumber.png){#fig-fnumber fig-align="center" width="50%"}
+
+The f/# will appear in many formulae that we define below. For example, for a circular, diffraction limited, the Airy disk diameter (meters) on the focal plane lens depends on the wavelength of light and the f/# of the lens.  If the wavelength is $\lambda$ and f/# is $F$, the formula for the diameter is simply
+
+$$ d = 2.44 ~ \lambda ~ F$$ {#eq-airy2}
+
+If you revisit the first calculation of the Airy Disk, in @sec-lightfields-diffraction, you will see that the formula is implicit in [@eq-airy1].
 
 ## Lensmaker's equation
 Lensmaker’s equation derivation which is from Gauss and I think I teach as Psych 221 slides.
@@ -35,6 +43,6 @@ Graph of focal distance to image plane as a function of object distance.  Notice
 ## Depth of field formula. 
 The sequence from class slides.
 
-## f-number and radiometry.  
+## f/# and radiometry.  
 Question of distance trading off with magnification for constant intensity per unit area with distance to the wall.
 
