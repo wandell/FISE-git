@@ -41,7 +41,56 @@ The software calculations that accompany this book use both wavefront and ray me
 
 [^optics-intro-1]: The ISETCam optics calculations uses the wave model. The ISET3d graphics calculations use the ray model.
 
-## Lenses: Controlling ray direction
+## Material interactions
+When a light rays arrive at the boundary between regions with different optical properties - whether those regions contain matter (like glass or water), air or vacuum - several things can happen (@fig-reflected-scattered).  The rays might be reflected back, as in a mirror.  Or, the rays might enter into the material, undergo a series of internal reflections, and emerge back in one of many different directions.  Also, the rays might enter the material and be absorbed, giving up their energy to the atoms in the material. (Maybe reference the dichromatic reflection model here?)
+
+![When rays arrive at the boundary of two regions, The rays (a) might be reflected, (b) might enter the medium, be internally reflected multiple times, and emerge in one of many different directions (scattering). (Not shown) The ray may might enter the medium and be absorbed.](../images/optics/snell-reflected-scattered.png){#fig-reflected-scattered fig-align="center" width="100%"}
+
+The most important case for controlling the rays, and thus for optical design, is this other possibility: the ray enters the new material and continues on its way. We call this change in direction **refraction**. 
+
+![A ray crossing the boundary between two materials may continue but change direction. The change occurs because the speed of electromagnetic waves differs between the regions. The *refraction index* ($n$ and $n'$) is the material parameter that describes the speed.](../images/optics/snell-refraction.png){#fig-snell-law fig-align="center" fig-cap-location="bottom" width="50%"}
+
+### Snell's Law
+Snell's Law quantifies how light changes direction when passing between regions with different optical properties. The mathematical formulation of Snell's Law is defined using the variables shown in @fig-snell-law. A light ray (Incident ray) is shown crossing a planar boundary between one medium (say, air) in a second medium (say, glass). The angle between the incident ray and a line perpendicular to the surface (the surface normal) is $\phi$. The refracted ray changes direction and thus has a different angle, $\phi '$, with respect to the surface normal. Snell's Law captures the relationship between these two ray angles 
+
+$$ n \sin(\phi) = n' \sin(\phi') $$ {#eq-snell}
+
+The variables $n$ and $n'$ are the *refraction index* of the materials, which is related to the speed of the electromagnetic radiation in the material.
+
+$$ n = \frac{c}{v} $$ {#eq-indexofrefraction}
+
+where $c$ is the speed of light in a vacuum, $v$ is the speed in the material. By definition, $n=1$ in a vacuum. It is very close to $1.0$ in air. In some materials, such as glass, the velocity of light is much slower, so that the index might be $1.3$ or even $1.5$. 
+
+In many common materials the velocity is reduced because the light, which is electromagnetic radiation, induces an electrical signal in the electrons of the material. The specific properties of this signal depend on the material. The induced electrical signal sums with the electrical field of the light. The combined signal is predicted to travel slower and in a different direction, with the exact change in speed and direction dependent on the electrical properties of the material[^optics-intro-2]. 
+
+[^optics-intro-2]:  This excellent pair of (nicely snarky) Fermilab videos from Don Lincoln explain the change in [velocity](https://www.youtube.com/watch?v=CUjt36SD3h8) and [direction.](https://www.youtube.com/watch?v=NLmpNM0sgYk).  We can thank James Clerk Maxwell for providing the basis of this understanding.
+
+Interestingly, there are less common materials (e.g.,liquid crystals) that have more complex interactions with the electrical field of light. These materials create interesting and useful effects (birefringence) that we will describe in @sec-displays.
+
+### Wavelength dependence
+<!-- [Abbe Number](https://chatgpt.com/share/676a2564-e72c-8002-923a-d865491f30ed) -->
+For many materials that index of refraction is wavelength dependent. Following Snell's Law, the each wavelengths changes direction by different amount. This can cause unwanted artifacts in imaging systems, called chromatic aberration. 
+
+For most materials the change of the refraction index over the visible wavelength is roughly linear, just varying in extent.  It is common to summarize the dispersion using the *Abbe number*, $V_d$, which is computed by comparing the refraction index at three different wavelengths.
+
+$$ V_d = \frac{n_{489.3} - 1}{n_{486.1} - n_{653.3}}$$ {#eq-abbe}
+
+Conventionally, an Abbe number greater than 50 implies very little dispersion and a number less than 30 implies significant dispersion that will impact image quality.  The human eye has very significant chromatic aberration, with an Abbe number of about 15. 
+
+When possible, it is my preference in computation to provide numerical values describing the index of refraction as function of wavelength and to measure the impact by computing the line spread or point spread function. We will perform analyses of chromatic aberration several times in this book, including in @sec-human.
+
+::: {.callout-note collapse="true" title="Historical note:  Refraction"}
+
+Refraction was studied by the Greek astronomer Ptolemy in about the year 150. He documented that rays passing from air into, say water or glass, change direction. Ibn Sahl in Persia, around 930, quantified the change in direction as light crossed the boundary between certain materials, and he used this knowledge to design lenses.
+
+The formula for refraction was discovered independently by two scientists in the 17th century. Willebrord Snellius (also known as Snell) first found the mathematical relationship in 1621, but his work wasn't published during his lifetime. He was an astronomer, and in 1617 he determined the size of the earth based on measurements of its curvature between Alkmaar and Bergen-op-Zoom.
+
+Renée Descartes independently discovered the relationship as well, and he published it in 1637. Although Descartes published first, the formula became known as Snell's Law to acknowledge Snell's earlier discovery. In modern times, the French still frequently refer to Snell’s Law as “la loi de Descartes” or “la loi de Snell-Descartes”. 
+
+The physicist Christiaan Huygens showed that Snell's Law could be explained by treating light as a wave that travels at different speeds in different materials. More about the history of the discovery and quantification, including the references, [makes for interesting reading](https://en.wikipedia.org/wiki/Snell%27s_law#History).  
+:::
+
+## Lenses control ray directions
 
 ::: margin
 ![The rays from a nearby point that pass through a relatively large pinhole diverge.  They form an image of the point that is larger than the pinhole.](../images/optics/pinhole-rays.png){#fig-pinhole-rays fig-align="center" width="75%"}
@@ -54,54 +103,6 @@ We can sharpen the image by redirecting some the rays to converge at the image p
 ![Lenses transform the direction of the rays in the incident light field. In this example, the diverging rays from a nearby point are transformed to converge on the image plane. Diffraction imposes a limit on precision of the convergence. ](../images/optics/pinhole-lens.png){#fig-pinhole-rays fig-align="center" width="75%"}
 :::
 
-
-## Material interactions
-When a light rays arrive at the boundary between regions with different optical properties - whether those regions contain matter (like glass or water), air or vacuum - several things can happen (@fig-reflected-scattered).  The rays might be reflected back, as in a mirror.  Or, the rays might enter into the material, undergo a series of internal reflections, and emerge back in one of many different directions.  Also, the rays might enter the material and be absorbed, giving up their energy to the atoms in the material. (Maybe reference the dichromatic reflection model here?)
-
-![When rays arrive at the boundary of two regions, The rays (a) might be reflected, (b) might enter the medium, be internally reflected multiple times, and emerge in one of many different directions (scattering). (Not shown) The ray may might enter the medium and be absorbed.](../images/optics/snell-reflected-scattered.png){#fig-reflected-scattered fig-align="center" width="100%"}
-
-The most important case for controlling the rays, and thus for optical design, is this other possibility: the ray enters the new material and continues on its way. We call this change in direction **refraction**. 
-
-![A ray crossing the boundary between two materials may continue but change direction. The change occurs because the speed of electromagnetic waves differs between the regions. The *index of refraction* ($n$ and $n'$) is the material parameter that describes the speed.](../images/optics/snell-refraction.png){#fig-snell-law fig-align="center" fig-cap-location="bottom" width="50%"}
-
-### Snell's Law
-Snell's Law quantifies how light changes direction when passing between regions with different optical properties. The mathematical formulation of Snell's Law is defined using the variables shown in @fig-snell-law. A light ray (Incident ray) is shown crossing a planar boundary between one medium (say, air) in a second medium (say, glass). The angle between the incident ray and a line perpendicular to the surface (the surface normal) is $\phi$. The refracted ray changes direction and thus has a different angle, $\phi '$, with respect to the surface normal. Snell's Law captures the relationship between these two ray angles 
-
-$$ n \sin(\phi) = n' \sin(\phi') $$ {#eq-snell}
-
-The variables $n$ and $n'$ are the *index of refraction* of the materials, which is related to the speed of the electromagnetic radiation in the material.
-
-$$ n = \frac{c}{v} $$ {#eq-indexofrefraction}
-
-where $c$ is the speed of light in a vacuum, $v$ is the speed in the material. By definition, $n=1$ in a vacuum. It is very close to $1.0$ in air. In some materials, such as glass, the velocity of light is much slower, so that the index might be $1.3$ or even $1.5$. 
-
-In many common materials the velocity is reduced because the light, which is electromagnetic radiation, induces an opposing electromagnetic signal in the material. This induced electromagnetic signal, which is predicted by Maxwell's equations, combines with the original signal in a way that [slows it down](https://chatgpt.com/share/676a2564-e72c-8002-923a-d865491f30ed).  In addition, materials such as liquid crystals have more complex interactions that produce interesting and useful effects (birefringence) that we will describe in @sec-displays.
-
-### Wavelength dependence
-<!-- [Abbe Number](https://chatgpt.com/share/676a2564-e72c-8002-923a-d865491f30ed) -->
-For many materials that index of refraction is wavelength dependent. Following Snell's Law, the each wavelengths changes direction by different amount. This can cause unwanted artifacts in imaging systems, called chromatic aberration. 
-
-For most materials the change of the index of refraction over the visible wavelength is roughly linear, just varying in extent.  It is common to summarize the dispersion using the *Abbe number*, $V_d$, which is computed by comparing the index of refraction at three different wavelengths.
-
-$$ V_d = \frac{n_{489.3} - 1}{n_{486.1} - n_{653.3}}$$ {#eq-abbe}
-
-Conventionally, an Abbe number greater than 50 implies very little dispersion and a number less than 30 implies significant dispersion that will impact image quality.  The human eye has very significant chromatic aberration, with an Abbe number of about 15. 
-
-When possible, it is my preference in computation to provide numerical values describing the index of refraction as function of wavelength and to measure the impact by computing the line spread or point spread function. We will perform analyses of chromatic aberration several times in this book, including in @sec-human.
-
-::: {.callout-note collapse="true" title="Historical note:  Refraction"}
-
-Refraction was studied by the Greek astronomer Ptolemy in about the year 150. He documented that rays passing from air into, say water or glass, change direction. Ibn Sahl in Persia, around 930, quantified the change in direction as light crossed the boundary between certain materials, and he used this knowledge to design lenses.
-
-The formula for refraction was discovered independently by two scientists in the 17th century. Willebrord Snellius (also known as Snell) first found the mathematical relationship in 1621, but his work wasn't published during his lifetime. Renée Descartes independently made the same discovery and published it in 1637. Although Descartes published first, the formula became known as Snell's Law to acknowledge Snellius's earlier discovery. Later, physicist Christiaan Huygens showed that Snell's Law could be explained by treating light as a wave that travels at different speeds in different materials. The number of mis-steps in establishing the law and the basis for the law makes for [interesting reading](https://en.wikipedia.org/wiki/Snell%27s_law).  
-
-```{=html}
-<!-- Wikipedia:  Snell's Law.  "The law was eventually named after Snell, although it was first discovered by the Persian scientist Ibn Sahl, at Baghdad court in 984.[6][7][8] In the manuscript On Burning Mirrors and Lenses, Sahl used the law to derive lens shapes that focus light with no geometric aberration.[9]" 
-Also https://en.wikipedia.org/wiki/Willebrord_Snellius
--->
-```
-:::
-
 ## Making a lens
 To make a lens that focuses a light field into an image plane requires changing the direction of many rays. The simple case of rays from one point is easy to see.  
 
@@ -109,44 +110,62 @@ To make a lens that focuses a light field into an image plane requires changing 
 
 Imagine that the rays are diverging from an object point at the left. Were the rays passing through a pinhole, they would continue to diverge. Refraction by the prism changes the direction of the rays at the  from upward to downward (upper prism). Similarly, refraction changes the ray directions from downward to upward (lower prism). These two prisms converge the rays from the object point onto a point on a properly positioned image plane.
 
-<!--# This link describes the issues in making a diffraction limited thin lens.  I think the problem is a flat sensor surface will not work with a spherical lens surface. You need a aspheric. It has other interesting facts. To get close to diffraction limited you need to use a multicomponent lens to correct for different aberrations. 
+<!--# This link describes the issues in making a diffraction limited thin lens.  I think the problem is a flat sensor surface will not work with a spherical lens surface. You need a aspheric. It has other interesting facts. To get close to diffraction limited spherical you need to use a multi element optics to correct for different aberrations.  It is possible to change the materials (GRIN) or shape (aspherics) as well.
 https://chatgpt.com/share/6748e5dc-267c-8002-844c-a83ee0cdb144 
+
+Diffraction limited thin lens issues.  Roughly same as the one above.
+https://chatgpt.com/c/6748e492-0310-8002-8da3-89a1517a6062 
 -->
 
-![A simple lens,  approximated as many small prisms.  The outline shows a spherical surface on the entrance and exit side.](../images/optics/thinlens-assembled.png){#fig-thinlens-prism fig-align="center" width="80%"}
+![A lens can be approximated as many small prisms.  The outline shows a spherical surface on the entrance and exit side.](../images/optics/thinlens-assembled.png){#fig-thinlens-prism fig-align="center" width="80%"}
 
-Expanding on this idea, we can stack a collection of prisms to gather more of the rays.  Or, more likely, we might polish a glass surface to have two spherical surfaces, forming a continuous form of the stacked prisms. The entrance aperture of this lens can capture much more light than a pinhole, and it guides the rays to converge. Spherical lenses are quite popular because they are easy to manufacture. Using Snell's Law it is relatively straightforward to calculate the refraction for a ray arriving at any location on the sphere [^optics-intro-2].
+Expanding on this idea, we can stack a collection of prisms to gather more of the rays.  Or, more likely, we might polish a glass surface to have two spherical surfaces, forming a continuous form of the stacked prisms. The entrance aperture of this lens can capture much more light than a pinhole, and it guides the rays to converge. Spherical lenses are quite popular because they are easy to manufacture. Using Snell's Law it is relatively straightforward to calculate the refraction for a ray arriving at any location on the sphere [^optics-intro-3].
 
-[^optics-intro-2]:  Put the formula for refraction of a ray at a spherical lens in here.
+[^optics-intro-3]:  Put the formula for refraction of a ray at a spherical lens in here.
 
 The diagram makes it clear that there are many lens design choices. For example, we might change the shape of the lens surfaces. Also, we might use different materials in the prisms. What considerations would guide such choices?
  
-### Spherical aberration
-In his influential work in the 11th century, "Kitāb al-Manāẓir" (Book of Optics), the Alhazen observed that a spherical lens produced a blurry image on a planar surface. The reason is that the change in ray direction at the sphere edge is too large compared to the change near the center of the lens. Thus the rays do not arrive at the same place at the image plane. We refer to this as a spherical aberration.
+## Lens limitations
+Spherical surfaces are relatively easy to manufacture and thus cost-effective. But spherical lenses have a noticeable defect. In the 11th century book, "Kitāb al-Manāẓir" (Book of Optics), Alhazen observed that spherical lenses often produce a blurry image. The reason is that at increasing distance from the optical axis, the refraction is too large. Thus, the rays passing through the edge of the sphere do not converge precisely with those passing near the optical axis. The amount of this *spherical aberration* depends on a number of factors, such as the size of the lens aperture, the curvature, and the distance to the objects.
 
-It is possible to create an image without spherical aberration in several ways.  In 1854 James Clerk Maxwell,noticing that biological eyes are often spherical, suggested that a way to correct this would be by creating lenses with an index of refraction that varies from the center to the edge. This turned out to be true of many biological eyes. Lenses engineered to have a variable gradient index of refraction are valuable in optical design and called *GRIN* lens. 
+### Multi-element optics
+To reduce the spherical aberration and improve image sharpness, designers have created multi-element optics. Often, these are additional spherical lenses added to the light path whose purpose is to reduce spherical and other aberrations of the whole system. THere are several famous multi-element optics designs, such as the *double Gauss* and *Petzval* systems. Very high quality multi-element optics can be fairly large. 
 
-<!-- https://www.britannica.com/science/photoreception/Single-chambered-eyes Michael Land's Brittanic article has the story. Lenses made of homogeneous material (e.g., glass or dry protein) suffer from a defect known as spherical aberration, in which peripheral rays are focused too strongly, resulting in a poor image. 
--->
-Another way to reduce spherical aberration, even when the lens is made from one material, is to use a different shape.  There is a class of aspherical lenses that designers frequently use to reduce the spherical aberration. Lens design software searches through the parameters of these shapes, given the materials and other design constraints, to create circularly symmetric aspherical lenses.
+Spherical lenses remain in use in devices that must be low cost, do not require  high spatial resolution, or that can use relatively large optics.  In recent years, other optics have been implemented.
+
+### Aspherics
+To reduce spherical aberration, we can use a different shape. This was difficult to manufacture, but advances in computer-controlled polishing and the ability to create molded plastics and glass permit designers to implement aspherical lenses.  The use of aspherics accelerated in multiple industries after 2010.  
+<!--
+From Perplexity search
+
+https://www.perplexity.ai/search/when-did-it-become-cost-effect-bqLBLfjZTRuYA.uF6hOvnA#2
+
+https://www.laserfocusworld.com/directory/finished-optics-coatings-components/lenses/blog/14310615/avantier-inc-replacing-spherical-lens-with-aspheric-lens?t
+
+https://www.shanghai-optics.com/about-us/resources/technical-articles/optical-revolution-aspheric-lenses-advances-and-solutions/?t
+
+https://avantierinc.com/resources/technical-article/aspheric-lens-breakthroughs/?t
+ -->
+
+Designers frequently use a particular class of aspherical lenses.  These are described by a lens surface position, $z$, that is specified as a function of radial distance $\rho$, from the optical axis.
 
 \begin{equation*}
 z(\rho) = \frac{\rho^2 / R}{1 + \sqrt{1 - (1 + k)(\rho/R)^2}} + A_4 \rho^4 + A_6 \rho^6 + A_8 \rho^8 + \cdots
 \end{equation*}
 
-The parameter $\rho$ is the radial distance from the optical axis. The value $z(ρ)$ is called the sag of the surface at a radial distance $\rho$ from the optical axis.   $R$ is the radius of curvature at the vertex of the lens.  $k$ is called the  conic constant, and it determines the overall deviation from the sphere.  The parameter $A_i$ are called higher-order aspheric coefficients that can be adjusted to reduce different types of lens imperfections.
+$z(\rho)$ is called the sag of the lens surface.  $R$ is the radius of curvature of the lens at the vertex of the lens.  $k$ is called the  conic constant; it determines the deviation from the spherical shape. The parameters $A_i$ are called higher-order aspheric coefficients; they are adjusted to reduce different types of lens imperfections. Lens design software is used to search through the parameters, given the materials and other design constraints, to create circularly symmetric aspherical lenses with minimal spherical aberration.
 
 <!--
 [See this page and fise_aspherics.m for the shape formula of aspherical lenses.](https://chatgpt.com/c/6748e492-0310-8002-8da3-89a1517a6062).[Also this page.](https://g.co/gemini/share/a89a3d193d26)
 -->
 
-Finally, it is possible to change the imaging surface from a plane to a different shape.  If the spherical lens and sensor curvature match appropriately, the spherical aberration will be greatly reduced. This idea is partly inspired by the fact that the retina in many animals lines the interior of the eyeball, forming a curved sensor. Several groups have created sensors on bendable materials, including some very expensive research projects. The idea is to build these sensors for cameras with very large field of view and very high resolution at all angles.
+### Grin lenses
+In 1854 James Clerk Maxwell, noticing that biological eyes are often spherical, suggested that the spherical aberration could be reduced by using lenses with a refraction index that varies from the optical axis to the edge (Maxwell reference here). It was later discovered that some biological eyes have this property (Reference here). Manufactured lenses with a variable gradient refraction index (*GRIN* lenses) are valuable in optical design, although they are more difficult to manufacture than aspherics. 
 
-<!-- 
-Curved sensor projects
-[HRL](https://www.hrl.com/news/2024/03/11/hrl-advances-to-camera-build-phase-of-curved-sensor-technology?t)
-[Sony](https://www.dpreview.com/articles/2279255612/sony-s-curved-sensors-may-allow-for-simpler-lenses-and-better-images?comment=5515068691)
-[John Rogers](https://thefutureofthings.com/6161-a-spherical-camera-sensor/)
+<!-- https://www.britannica.com/science/photoreception/Single-chambered-eyes Michael Land's Brittanic article has the story. Lenses made of homogeneous material (e.g., glass or dry protein) suffer from a defect known as spherical aberration, in which peripheral rays are focused too strongly, resulting in a poor image. 
 -->
 
+### Metalenses
+The purpose of the lens is to redirect the rays in the incident light field. Suppose we can specify how we would like to redirect the rays.  We would call this specification a *ray transfer function* (Goossens reference).  It would be ideal if we could manufacture a very thin surface whose optical properties implement that function. 
 
+Advances in material science, optics, and computation are making progress on this goal. They are creating *metalenses*, which are very thin surfaces made up of small elements - smaller even than the wavelengths of light - with different refractive indices. The placement of these elements can produce many different ray transfer functions. Using advanced computational methods and hardware (e.g., GPU clusters), groups are learning how to define these surfaces and build metalenses that implement specific functions.  (References.)
