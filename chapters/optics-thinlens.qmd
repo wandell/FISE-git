@@ -31,7 +31,9 @@ The *power* of a lens is the inverse of the focal length, in meters.  The unit f
 
 To measure the focal length of a lens we use a light source that produces parallel rays at the entrance aperture of the lens. We then slide the image plane back and forth, searching for the distance where the spot is smallest.  We can create parallel rays using many methods. Perhaps the simplest is to use a small point source (e.g., an LED) at a distance from the lens. The rays arriving at the lens will be a small angular sliver of the emitted rays, and if the source is far from the lens the rays will be very close to parallel (e.g., @fig-pinhole-basic).  An alternative, is to go outside on a sunny day and use the sun as a source.  The sun isn't small, but it is really far away.  By the time the rays from the disk of the sun arrive at your lens, the rays will be parallel.
 
-The optics in the human eye has multiple elements.  Even so, we can measure its focal length, which is about 0.016 m, thus power of the human eye is about 60 diopters. When the optics cannot adjust to be in this range, we wear additional lenses (glasses, contact lenses) that increase or decrease the optical power, say by 1-8 diopters.  Young people can change the focal length at will, a process called *accommodation*.  As people age, they lose the ability to change the optical power in their eye, a condition called *presbyopia*.  This loss of ability is universal.  These considerations matter for the design of near field displays (@sec-displays).
+The optics in the human eye has multiple elements.  Even so, we can measure its focal length, which is about 0.016 m (~60 diopters). To bring objects at different distances into focus the optics adjusts its power, a process called *accommodation*.  If it cannot adjust adequately, we wear lenses (glasses, contact lenses) that increase or decrease the optical power, say by 1-8 diopters, so that a good image can be focused on the retina.  
+
+Young people can accommodate easily. As people age, we lose the ability to change the optical power of the optics, a condition called *presbyopia*.  This happens to everyone. This biological fact is a consideration for the design of near field displays (@sec-displays).
 
 ## F number
 The "F number" (f/#) of a thin lens is the ratio of its focal length and entrance aperture diameter (@fig-fnumber).  For example, when we write f/4, it means that the focal length is 4x the aperture diameter.
@@ -45,7 +47,15 @@ $$ d = 2.44 ~ \lambda ~ F$$ {#eq-airy2}
 If you revisit the first calculation of the Airy Disk, in @sec-lightfields-diffraction, you will see that this formula is implicit in how we modeled the image from a diffraction limited pinhole [@eq-airy1].
 
 ## Lensmaker's equation
+When an object is far away, the rays arriving at the lens are parallel.  The image of the object will be in focus at the focal length. When the object is closer, we can use the *Lensmaker's equation* to find the plane where the object will be in focus. The equation, which was derived by Halley in 1693, relies on a few facts about symmetric thin lenses.
 
+![Tracing an object through the lens to an image.](../images/optics/lensmaker-center.png){#fig-lensmaker-center fig-align="center" width="70%"}
+
+Consider the vector object on the left of @fig-lensmaker-center.  A ray from the arrowhead that is parallel to the axis will be refracted through the focal point. A ray from origin of the vector, which is on the optical axis, will also pass through the focal point.  Finally, a ray from the arrowhead - and this is new - that passes through the center of the lens will continue on a straight path. From these facts, we can locate where the object at a distance $d_o$ will be in focused on the image side; call that distance $d_i$.  Notice that the image is inverted.
+
+The rays drawn in the image form two pairs of similar triangles that we can use to draw some inferences about the relationship between $f$, $d_o$ and $d_i$.
+
+![Similar triangles for the lensmaker formula.](../images/optics/lensmaker-similartriangles.png){#fig-lensmaker-similartriangles fig-align="center" width="95%"}
 
 ## Focal distance
 Graph of focal distance to image plane as a function of object distance.  Notice that the object focal plane approaches a constant and stays near that level for a very large distance range.
