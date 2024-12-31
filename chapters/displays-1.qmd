@@ -2,7 +2,7 @@
 
 Display chapter with Joyce
 
-Devices
+## Devices
 
 ## System overview issues
 
@@ -12,4 +12,292 @@ Devices
 
 ## Lightfield displays
 
+## Artal chapter text
 
+## Characterization of Visual Stimuli using the Standard Display Model
+
+Joyce E. Farrell 1  
+Haomiao Jiang 1  
+Brian A. Wandell 1,2
+
+1 Department of Electrical Engineering   
+2 Psychology Department  
+Stanford University, Stanford, CA 94305
+
+**Corresponding author:**  J.E. Farrell, [joyce\_farrell@stanford.edu](mailto:joyce_farrell@stanford.edu)
+
+**Key Words:**  Display technology, calibration, modeling, simulation, visual stimuli, psychophysics, pixel pointspread function, spectral power distribution
+
+## Introduction
+
+Visual psychophysics advances by experiments that measure how sensations and perceptions arise from carefully controlled visual stimuli.  Progress depends in large part on the type of display technology that is available to generate stimuli. In this chapter, we first describe the strengths and limitations of the display technologies that are currently used to study human vision. We then describe a standard display model that guides the calibration and characterization of visual stimuli on these displays (Brainard et al, 2002; Post, 1992).  We illustrate how to use the standard display model to specify the spatial-spectral radiance of any stimulus rendered on a calibrated display.  This model can be used by engineers to assess the tradeoffs in display design, and by scientists to specify stimuli so that others can replicate experimental measurements and develop computational models that begin with a physically accurate description of the experimental stimulus.
+
+## Display technologies for vision science
+
+An ideal display system for science and commerce would deliver the complete spectral, spatial, directional, and temporal distribution of light rays, as if these rays arose from a real three-dimensional scene.  The full radiometric description of light rays in the three-dimensional scene is called the “light field” (Gershun, 1936).  For vision science, the simplified and related representation is the irradiance the scene produces at the cornea \- this is the only part of the scene radiance that the retina encodes. The complete radiometric description of the rays at the cornea, sometimes referred to as the plenoptic function  (Adelson and Bergen, 1991),  specifies the rate of incident photons from every direction at each point in the pupil plane.  To achieve an accurate dynamic reproduction of a scene, the plenoptic function must change as the head and eyes move.
+
+Commonly used scientific displays do not approach this ideal.  Instead, most displays emit light rays from a planar surface in a wide range of directions, and the spectral radiance is invariant as the subject changes head and eye position. The displays themselves are limited in various ways; for example, the pixels produce a limited range of spectral power distributions, typically being formed as the weighted sum of three spectral primaries.  Despite these limitations, modern displays create a very compelling perceptual experience that captures many important elements of the original scene.  The ability to program these displays with computers and digital frame buffers has greatly enlarged the range of stimuli used in visual psychophysics compared to the optical benches and tachistoscopes used by previous generations.
+
+The vast majority of modern displays comprise a two-dimensional matrix of picture elements (pixels) at a density of 100-400 pixels per inch (4-16 pixels per mm).  Each pixel typically contains three different light sources (subpixels, Figure 1).  The pixels are intended to be identical across the display surface (spatial homogeneity).
+
+Most displays are designed with three types of subpixels with spectral power distributions (SPD) that peak in the long-, middle- and short-wavelength regions of the visible spectrum (Figure 2).  Each type of subpixel is called a display primary.  The relative SPD of each primary is designed to be invariant as its intensity is varied (spectral homogeneity).  In normal operation, the three subpixel intensities are controlled to match the color appearance of an experimental stimulus.  Three primaries are used because experiments show that subjects can match the color appearance of a wide range of spectral power distributions using the mixture of just three independent light sources (Wandell 1995, Chapter 4; Wyszecki and Stiles, 1967).  Modern displays effectively comprise a very large number of color-matching experiments, one for each pixel on every frame. 
+
+Display architectures are distinguished by (a) the physical process that produces the light, and (b) the spatial arrangement of the pixels and subpixels.  Key design parameters of commercial displays are energy efficiency, brightness, spatial resolution, darkness, color range, temporal refresh and update rates. The relative importance of these parameters depends on the application.
+
+The three main display technologies used in vision experiments today are CRTs (cathode ray tubes), LCDs (liquid-crystal displays) and OLEDs (organic light emitting diodes).  Color CRTs were developed by RCA in the 1950s  (Law, 1976\) and were the nearly universal display technology for several decades. They remain an important display technology for vision researchers, although now they are rarely sold as consumer products.  Invented at RCA labs in the 1970s (Kawamoto, 2002), LCDs were introduced as small mobile displays in digital watches, calculators and other handheld devices; later they enabled the widespread adoption of laptop computers.  OLEDs were invented at Kodak in the 1980s (Tang and Van Slyke, 1987\) and were first introduced as displays for digital cameras. Large OLED displays are expensive, but they have some advantages over LCDs: they achieve a deeper black and they have better temporal resolution. 
+
+Since CRTs are no longer mass produced, researchers are increasingly using LCD and OLED monitors for stimulus creation. Several companies have developed software to control LCD monitors specifically for vision research (e.g ViewPixx and Display++). OLED displays have higher contrast and refresh rates than LCDs, making them particularly well-suited for experiments requiring highly accurate and temporally precise visual stimuli. Even so, CRTs continue to be used in multiple scientific labs.  Thus, we begin with an overview of how to control and calibrate the light from a CRT display.  Despite the fact that LCDs have displaced CRTs in the market, CRTs are still widely used in vision science.  A recent sampling from the Journal of Vision suggests that scientists mainly use CRTs and with some use of LCDs, while the OLEDs are not yet common. One reason CRTs are preferred is that the intensity of each primary can be accurately controlled beyond 10 bits (Brainard et al, 2002). As show by simulation later, this intensity precision is valuable for visual psychophysical experiments that measure detection or discrimination thresholds.
+
+### **Cathode Ray Tubes (CRT)**
+
+CRTs  create light by directing an electron beam onto one of three different types of phosphors (Castellano, 1992). When irradiated by electrons, each of the three phosphors emits light with a spectral radiance distribution that is unique to that phosphor. CRT phosphors are painted on a transparent glass surface in a pattern of alternating dots or stripes, and they are selected to emit predominantly in the long (red), middle (green) and short (blue) wavebands (Figures 1A and 2A).  The amount of light from each type of phosphor is controlled by the intensity of the electron beam that is incident on the phosphor.  The spatial properties of the display are determined by the size and spacing of the phosphor dots or stripes.  
+
+The temporal properties of the display are determined by the frequency with which each phosphor is stimulated by electrons and the rate at which the phosphorescence decays (see Figure 3B). The refresh rate is determined by how fast an electron beam can scan across the many rows of pixels in a display.  The more rows there are, the more time it takes for the electron beam to return to the same phosphor dot.  When the refresh rate is slow and the phosphor decay is fast,  the display appears to flicker. Longer phosphor decay times reduce the visibility of flicker, but increase the visibility of motion blur (Farrell, 1986; Zhang et al, 2007). 
+
+In addition to scanning through many rows of pixels, the electron beam intensity modulates as the beam traverses phosphors within each row. The electron beam modulation rate, referred to as slew rate, is not fast enough to change perfectly as the beam moves between adjacent pixels. Consequently, the ability to control the light from adjacent pixels within a row is not perfectly independent (Lyons and Farrell, 1987).  We will explain the consequence of this slew rate limitation later in this chapter. 
+
+### **Liquid Crystal Displays**
+
+LCD displays are a large array of light valves that control the amount of light that passes from a backlight, that is constantly on, to the viewer (Figure 4, Silverstein and Wandell Handbook Chapter).  The backlight is usually a fluorescent tube or sometimes a row of LEDs positioned at the edge of the LC array (edge-lit), or finally a matrix of LEDs covering most of the back of the LCD panel (direct-lit).  The photons from the backlight are spread uniformly across the back of the display using diffusing filters. The backlight passes through a polarization filter, a layer of liquid crystal material, a second polarization filter, and then a color filter. The ability of photons to traverse this path is controlled by the alignment of the liquid crystals which determines the polarization of the photons and thus how much light passes between the two polarization filters. The state of the liquid crystal is determined by an electric field that is controlled by digital values in a frame-buffer, under software control. Even when the liquid crystal is in a state that permits transmission (open), only a small fraction (about 3 percent) of the backlight photons pass through the two polarizers, color filter, and electronics. 
+
+The spectral radiance of an LCD pixel is determined by the SPD of the backlight and the transmissivity of the optical elements (polarizers, LC, and color filters).   The spatial properties of an LCD are determined by the dimensions of a panel of thin film transistors (TFT) that controls the voltage for each pixel component and the size and arrangement of each individual filter in the color filter array.  The temporal properties of an LCD are determined by the modulation rate of the backlight and the temporal response of the liquid crystal (Yang and Wu 2006). LCDs use sample and hold circuitry that keep the liquid crystals in their “open” or “closed” state (see Figure 4B).   This means that flicker is not visible, but a negative consequence of the slow dynamics is that LCDs can produce visible motion blur.  Furthermore,  liquid crystals respond faster to an increase in voltage (changing the alignment of the liquid crystals) than they do to a decrease in voltage (returning towards its natural state).  Consequently, a change from white to black is faster than a change from black to white.  Some LCD manufacturers have introduced circuitry to “overdrive” and “undershoot” the voltage delivered to each pixel.  This additional circuitry reduces the visible motion blur, but it makes it impossible to separately control the spatial and temporal properties of the display.   The slow and asymmetric changes in the state of liquid crystals also makes it difficult to have precise control in the timing of visual stimuli (Elze and Tanner, 2012).   
+
+Another limitation of LCDs is that in the “off” state, photons from the backlight find their way through the filters to the viewer.  Consequently,  LCDs do not achieve a complete black background.  Manufacturers introduced LED backlit panels that can be locally dimmed in different regions. In this way, one portion of the image can be much brighter than another, and a portion of the display can be nearly black. This design extends the image dynamic range. Such LCD displays are difficult to use in calibrated experiments because of the proprietary software and control circuitry that can vary with the displayed image.
+
+### **Organic Light emitting diodes (OLED)**
+
+OLEDs are a much simpler display technology.  Rather than being a light valve, each pixel in an OLED display is a light source.  Each OLED pixel consists of two layers of organic molecules that are sandwiched between a cathode and an anode (Figure 5).    OLED pixels emit light when an electric current is applied to the electroluminescent layer of organic molecules. There are several ways to produce the different primaries: (1) Each diode can be made from a different substance that emits light in a distinct wavelength band, (2) color filters  can be placed in front of a single type of diode, or (3) the emissions from a single type of OLED can be used to excite different types of phosphors (Tsujimura, 2012).  OLEDs do not require a backlight.  Because each pixel can be black, emitting only light that is scattered from nearby pixels,  these displays can achieve a very high dynamic range.
+
+The spatial properties of an OLED display are determined by the arrangement of OLEDs that are deposited onto glass. Some types of OLEDs (polymer OLEDs or PLEDs) can be printed onto plastic using a modified inkjet printer (Carter et al, 2006), or a 3D printer with a spray nozzle (Su et al 2022). 
+
+The temporal properties of an OLED display are determined by the rate at which the pixel intensities can be changed (update rate) and the rate at which the screen is refreshed (refresh rate).  OLEDs can be turned on and off extremely rapidly (update rate).  Hence, the refresh rate limits the motion velocities that can be represented (Watson et al, 1986).  To reduce the visibility of flicker and motion blur, OLEDs can be refreshed at a rate that exceeds the update rate (see Figure 5B).  
+
+### **Digital light projectors**
+
+The digital light projector (DLP) display technology is a micro-electro-mechanical system (MEMS) consisting of an array of microscopically small mirrors arranged in a matrix on a semiconductor chip- one mirror for each pixel (Younse, 1993, Florence and Yoder, 1996).  Each mirror is on the order of 15 microns in size, and the deformable mirror arrays can have many different formats (e.g., 4K, 1080p, etc.).  The system includes a constant backlight, and each mirror can be in one of two states:  it either reflects the backlight photons towards or away from the viewer. 
+
+The mirrors can alternate states very rapidly (kilohertz), and the light intensity at each pixel is controlled by varying the percentage of time the mirror is directing light towards the viewer.  In the single-chip DLP, color is controlled using a rapidly spinning color wheel that interposes different color filters between the light source. The single-chip DLP design uses a color wheel whose rotation is synchronized with the control signals sent to the chip. While most display technologies use subpixel primaries that are adjacent in space, the DLP color primaries are adjacent in time \- a technique called field-sequential color.  Some DLP devices include only three (red, green and blue) primaries, while others include a fourth (white or clear) primary.  The white primary increases the maximum display brightness, but at the highest brightness levels the display has a vanishingly small color gamut (Kelley et al, 2009). 
+
+A problem with the single-chip DLP design is that field-sequential color can produce visible color artifacts when the eye moves rapidly across the image.  High speed eye movements cause the sequential red, green and blue images to project to different retinal positions (Zhang and Farrell, 2003 ). A more expensive three-chip DLP design is often used in home and movie theatres.  The three-chip design simultaneously projects red, green and blue images that are co-registered; hence, these DLPs do not produce the sequential color artifacts.  
+
+While DLP displays are not used widely in visual psychophysics, they have been adapted for use in studies of color constancy (Brainard et al 1997), in vitro primate retina intracellular recordings (Packer et al, 2001), and functional magnetic resonance imaging (Engel et al, 1997). 
+
+### **MicroLEDs**
+
+MicroLED displays are constructed by precisely positioning tiny light-emitting diodes (LEDs). Unlike OLEDs, the miniature LEDs are made from inorganic semiconducting materials, such as gallium nitride (GaN). Light is emitted when an electric current causes electrons and holes to recombine within the semiconductor material. Each MicroLED pixel is independently controlled by a thin-film transistor (TFT) in the display's backplane, which regulates the current applied to specific coordinates on the semiconductor layer.
+
+To produce full-color images, MicroLED displays typically use one of two methods. The first method involves arranging distinct red, green, and blue MicroLEDs side-by-side for direct color emission. The second method utilizes blue MicroLEDs in combination with a quantum dot layer, which converts some of the blue light into red and green through fluorescence. This latter approach can simplify manufacturing while still achieving a wide color gamut.
+
+MicroLEDs offer several advantages over OLEDs. They have a significantly longer lifespan, lasting much longer than OLEDs. Additionally, MicroLEDs are much brighter and faster than their OLED counterparts. They also feature much smaller pixel sizes compared to OLED pixels, allowing for more compact displays.
+
+Although MicroLED technology is not yet widely available in consumer products, several display manufacturers have demonstrated the capability to produce large displays using this technology. MicroLEDs are also being utilized in prototypes for small displays in smartphones and head-mounted devices. Current efforts are focused on reducing manufacturing costs to make these displays more accessible to consumers and vision researchers alike.
+
+## The standard display model and stimulus characterization
+
+### **Overview**
+
+Displays emit light in different ways.  Nonetheless, it is possible to characterize a few general principles that describe the relationship between the electronic control signals  and the display spectral radiance. These widely adopted principles are the basis of a standard display model (Post 1992; Brainard-Pelli-Robson, 2003). To calibrate a display effectively means establishing the parameters of the standard display model and using the model and calibration data to control the display spectral radiance.
+
+A model is necessary because there are far too many images to calibrate individually (Brainard, 1989).   For example, a static image on an 8-bit display has 2^(24) different (RGB) settings.  A 1024x1024 (2^20 pixels) display can render 2^(480) images. The standard display model defines a relatively small set of calibration measurements that can be used to calculate the expected spectral radiance for many of these images. 
+
+Several key measurements are necessary to specify a model for any particular display.  First, each subpixel type has a characteristic spectral power distribution (SPD, Figure 2). The model assumes that the SPD is the same for all subpixels of a given type and is invariant when normalized for intensity level.  Thus, the normalized SPD can be measured using a spectroradiometer that averages the spectral radiance emitted from a region of the display surface.
+
+Second, the absolute level (peak radiance) of the SPD is set by the frame buffer value. The relationship between the frame buffer value and the SPD level is referred to as the gamma-curve. The gamma-curve is assumed to be the same for all subpixels of a given type (shift-invariant),  independent of the image content, and monotone increasing.  
+
+Third, the standard display model describes the spatial distribution of light emitted by each type of subpixel, called the point spread function (PSF).  The standard display model assumes that the PSF is the same for subpixels of a given type (shift-invariant) and independent of the image content. 
+
+Finally, most displays refresh the image (frame) at a rate between 30 and 240 times per second. Within each frame, the subpixel  intensity can rise and fall, and the frame repetitions and pixel dynamics influence the visibility of motion and flicker.  The standard display model assumes that each subpixel has a simple time-invariant impulse response function that is independent of image content.  This assumption is frequently violated because of the extensive engineering to control the dynamics of displays (see previous sections on LCDs and CRTs). Characterizing the display dynamics is particularly important for experiments involving rapidly changing high contrast targets (e.g. random dots).
+
+The standard display model clarifies the measurements needed to calibrate a display. The first two are to measure (a) the normalized spectral radiance distributions for each of the display primaries, and (b) the gamma-curve that specifies the absolute level of the spectral radiance given a particular frame buffer value. It is less common for scientists to measure the subpixel PSFs.  These can be measured using a macro-lens and the linear output of a calibrated digital camera (Farrell et al, 2008), but in most cases the function is treated as a single point (impulse).  Characterizing the PSF can be meaningful for measurements of fine spatial resolution (e.g., quality of fonts, vernier resolution) where there are significant effects of human optics on retinal image formation. In the next, section, we offer specific advice about making these calibration measurements and combining them into a computational implementation of the standard display model.
+
+### **Spectral radiance and gamma curves** 
+
+It is common to use a spectral radiometer to measure the spectral radiance emitted by each of the three types of primaries.  The standard display model assumes that for each primary the spectral power distribution takes the form I(F) P(), where P()is the spectral power distribution of the display when the frame buffer is set to its maximum value and 0 \< I(F) \< 1 is the relative intensity for a frame buffer value of f.
+
+To estimate I(F)and P(), we measure the spectral radiance for a series of different frame buffer levels.  An important detail is this:  In most displays there is some stray light present even when F=0.  This light is usually treated as a fixed offset, B()and subtracted from the calibration data (Brainard et al, 2002). Hence, the measured spectral radiance curves have the form
+
+R(,F)=I(F)P() \+ B()
+
+The term I is the relative intensity of the primary and F is the frame buffer value.  When F is set to the maximum value, the value of I is equal to 1\.   If one subtracts the background spectral power distribution, then when I(0)=0 and the relative intensity is typically modeled as a simple power law (Poynton,2013) which gives the curve its name.
+
+I=F  							\[1\]
+
+For most displays B()is difficult to measure because it is small and negligible compared to the experimental stimuli.  In such cases, the radiance is modeled by including a small, wavelength-independent, offset in the gamma curve
+
+R(,F)=I(F)P()  						\[2\]  
+I=F+B0							\[3\]
+
+Historically, the value of ɣ in manufactured displays been between 1.8 and 2.4, which is quite significant.  If one changes the ɣ of a display from 1.8 to 2.4, the same frame buffer values will produce very different spectral radiance distributions.  Pixels set to the same frame buffer (R,G,B) produce spectral radiances that differ by as much as 10 CIELAB ΔE units (median \~ 6 ΔE).  In recent years, manufacturers have converged to a function that is linear at small values, close to ɣ \= 2.4 at high values, and overall similar to ɣ \= 2.2 (sRGB 2015).
+
+The analytical gamma function is an approximation to the true I(F). In modern computers, this approximation can be avoided by building a lookup table that stores the nonlinear relationship between the digital control values and the display output, I(F).  
+
+This nonlinearity will continue across technologies because programmers prefer that equal spacing of the digital frame buffer values correspond to equal perceptual spacing (Poynton, 1993; Poynton and Funt, 2014). To maintain this relationship, the display intensity must be nonlinearly related to the frame buffer value (Stevens 1957;  Wandell, 1995). 
+
+### **The subpixel point spread functions**
+
+The spatial distribution of light from each subpixel is described by a point spread function, P(x,y,). The spatial spread of the light from each subpixel can be measured using a high resolution digital camera with a close-up lens (Figure 1, Farrell et al, 2008 ). Furthermore, the spectral and spatial parts of the point spread function are separable.
+
+P(x,y,)=s(x,y)w()					\[4\]
+
+The subpixel point spread is assumed to have the same form across display positions, that is the subpixel point spread function at pixel (u,v) is s(x-u,y-v)w().  And finally, the shape scales with intensity I s(x-u,y-v)w().
+
+The standard display model assumes that point spread functions from adjacent pixels sum.  This linearity is an ideal \- no display is precisely linear.  But display designs generally aim to satisfy these principles and implementations are close enough so that these principles are a good basis for display characterization and simulation.  
+
+### **Linearity**
+
+Apart from the static, nonlinear gamma curve, the standard display model is a shift-invariant linear system.  That is, given the intensity of each subpixel we compute the expected display spectral radiance as the weighted sum of the subpixel point spread functions.  If the subpixel intensities for one image are I1with corresponding spectral radiance R1(x,y,), and  a second image is I2with corresponding spectral radiance R2(x,y,), then the radiance when the image is I1 \+ I2 will be R1(x,y,) \+ R2(x,y,).
+
+The calibration process should test the additivity assumption. Simple tests include checking that the light emitted from the *i*th subpixel does not depend on the intensity of other subpixels (Lyons and Farrell, 1989; Pelli, 1997, Farrell et al, 2008). 
+
+### **Model summary**
+
+The standard display model for a steady-state image can be expressed as a simple formula that maps the frame buffer values, F, to the display spatial-spectral radiance R(x,y,).
+
+Suppose the gamma function, point spread function, and spectral power distribution of the jth subpixel type are Ij (v), pj (x,y), and wj ().  Suppose the frame buffer values for the jth subpixel type is Fj(u,v). Then the display spectral radiance across space is predicted to be
+
+R(x,y,)=u,vj Ij(Fj(u,v)) sj(x-u,y-v) wj()				\[5\]
+
+## Display calibration 
+
+If the standard display model describes the device under test, then calibration requires a very small set of display measurements \- gamma, spd, psf and temporal response \- to fully describe the physical radiance of displayed stimuli.  Display calibration can be conceived as (a) measuring how well the key model assumptions hold (spectral homogeneity, pixel independence, spatial homogeneity), and (b) using the measurements to estimate the model parameters.
+
+### **Pixel independence**
+
+The radiance emitted by a subpixel should depend only on the digital frame buffer value controlling that subpixel.  Equivalently, the radiance emitted by a collection of pixels must not change as the digital values of other pixels change. Displays often satisfy this pixel independence principle for a large range of stimuli (Farrell et al, 2008, Cooper et al, 2013), but there are displays and certain types of stimuli that fail this test (Lyons and Farrell, 1989; Else and Tanner, 2012).  
+
+For example, CRTs  must sweep the intensity of the electron beam very rapidly across each row of pixels.  There are limits to how rapidly the beam intensity can change (a maximum “slew rate”). If a very different intensity is required for a pair of adjacent row pixels, the beam may not be able to adjust in time and independence is violated, and the standard display model will not be useful for characterizing the spatial-spectral radiance of such stimuli (Lyons and Farrell, 1989; Naiman and Makous, 1992).  
+
+LCDs are limited by the rate at which liquid crystals can change their state in response to a change in voltage polarity, as well as the asymmetry in their response to  the “on” or “off” states. LCDs typically combine sample and hold circuitry to switch between different LC states and a flickering backlight to minimize the visibility of both motion blur.   LCDs with these features (sample and hold circuitry with flickering LED or fluorescent backlights) can be modeled as a linear system (Farrell et al, 2008).    Departure from display linearity occurs, however,  when LCD manufacturers introduce “overdrive” and  “undershoot” circuitry to minimize the visibility of motion blur or when they locally dim LED backlight panels to increase dynamic range.  These new features make it very difficult to control and calibrate visual stimuli, particularly for studies that require precise control of timing  (Elze and Tanner, 2012).  
+
+There are several ways to test pixel independence (Lyons and Farrell, 1989; Pelli, 1997; Farrell et al, 2008), but the general principle is simple. Separately measure the radiance from the middle of a large patch of pixels.  Make the measurement with a few different digital values. Then create spatial patterns that are made up with half the pixels at one digital value and half at the other.  The radiance from these mixed patches should be the average of the radiance from the large patches, measured individually.  
+
+A key assessment is to evaluate how well independence is satisfied for the planned experimental stimuli.  For example, CRTs often fail pixel independence for high spatial frequency stimuli because of the finite slew rate of the electron beam.  Nonetheless, CRTs are very useful for visual experiments that use low frequency stimuli, such as studies of human color vision. The standard display model, like any useful model, will have some compliance range, and the practical question is whether the model can be used given a specific experimental plan.
+
+OLEDs are excellent devices for vision research because they can meet the requirements of the standard display model (Cooper et al, 2013).  Display electronics control the rate at which the pixel intensities can be changed (the update rate), but OLED pixels can be rapidly turned on and off.   Thus while the update rate limits  the motion velocities that can be represented,  the higher refresh rates minimize the visibility of motion blur and flicker.  And, unlike the LCDs that modulate the intensity of a backlight, OLED pixels can be turned off, creating a very dark background.    
+Given these benefits, and the fact that the cost of manufacturing OLED displays is decreasing, one might consider these displays to be ideal devices for vision research. There is, however, one potentially problematic aspect of OLED development for vision research.  OLED display manufacturers are experimenting with different types of color pixel patterns and developing proprietary methods for rendering images on these new displays.  Unless it is possible to turn off  or at least control the proprietary display rendering, which may vary depending on the presented image, it may be difficult to know the spatial distribution of the spectral energy in displayed stimuli. 
+
+Head-mounted displays that use graphics engines for display rendering also pose challenges for vision researchers. ….
+
+### **Spectral homogeneity**
+
+The relative spectral radiance from a subpixel should be the same as its intensity is varied.  Any change in the relative spectral radiance will be manifest as an unwanted color shift, and the display will be difficult to calibrate.  Recall that the intensity of the light from an LC display depends on the rotation of the polarization angle caused by the birefringent liquid crystal.  In some displays, the polarization effect is wavelength dependent and this violates the spectral homogeneity assumption  (Wandell and Silverstein, 2003).  These failure occurs because the LC polarization is not precisely  
+the same for all wavelengths and also as a result of spectral variations in polarizer extinction.
+
+A second deviation from the standard display model occurs when the display emission is angle-dependent.  In fact, the first-generation of LCDs had a very large angle-dependence so that even small changes in the viewing position had a large impact on the spectral radiance at the cornea. The reason for this strong dependence is that the path followed by a ray through the LC and the polarizers has an influence on the likelihood of transmission, and this function is wavelength dependent (Silverstein and Fiske, 1993). Manufacturers have reduced these viewing angle dependencies by placing retardation films in the optical path (Yakovlev et al, 2015}.  
+
+For visual psychophysics experiments, it is typical to fix the subject’s head position relative to the screen, typically by using a chin-rest or a bite bar placed on-axis facing the middle of the display. Instruments used for  display calibration should be placed at this position.  If the spectrophotometer and the eye are located at any other angle, the spectral radiance from the display may different. 
+
+### **Spatial homogeneity (shift invariance)**
+
+When a subject is close to the display surface, the angle-dependence of the spectral radiance appears as a spatial inhomogeneity:  the spectral radiance at the cornea differs between on-axis (center) and off-axis (edge) pixels.  At further distances, say 1m away, the angle between the center and edge is smaller and the spatial homogeneity is better. 
+
+A second source of spatial inhomogeneity arises from the fact that it is difficult to maintain perfect uniformity of the pixels across the relatively large display surfaces.  Such non-uniformities are referred to as “mura”, which is a Japanese word for “unevenness”.  For LCDs, there are several sources of mura, including non-uniformity in the  TFT thickness,  LC material density, color filter variations, backlight illumination, and variations in the optical filters.  Additional possible sources are impurities in the LC material, non-uniform gap between substrates and warped light guides. 
+
+On LCDs, mura appears as blemishes and dark spots; manufacturers attempt to eliminate these sources during the manufacturing process. For OLEDs,  mura is mainly due to non-uniformity in the currents in spatially adjacent diodes that appear as black lines, blotches, dots, and faint stains that are more visible in the dark areas of an image. This can be mitigated during the manufacturing process by introducing feedback circuitry that adjusts the pixel transistor current during a calibration procedure (McCreary, 2014).  
+
+## Display simulations 
+
+The standard display model serves as a foundation for the display simulation technology. The model is implemented in the open-source ISETBIO distribution[^1]. In this section, we present two examples that couple simulation with standard color image metrics. The examples illustrate the use of display simulation to answer questions about the appropriate use of display technology in vision research.
+
+### **Color discriminations: the impact of bit-depth**
+
+First, we consider how the number of digital steps (frame buffer levels) limits the ability to make threshold color and luminance discrimination measurements. Using the simulator, we calculated the CIE XYZ values for each of 27 different RGB levels, and we then calculated the CIELAB ΔE  value between each of these 27 points and all of its neighbors within 2 digital steps.  We repeated this calculation simulation assuming a frame buffer with 10-bits (1024 levels), the actual display resolution, and a coarser step size of 8-bits (256 levels) but equivalent gamma.
+
+The distributions of CIELAB ΔE differences for the 10-bit and 8-bit displays are shown in the upper and lower histograms of Figure 6, respectively.  For a 10-bit display, the signals within two digital steps are below ΔE=1.  In this case, the visual discriminability is small enough  to measure a psychophysical discrimination curve.  If the display has only 8-bits of intensity resolution, the two digital steps frequently exceed ΔE=1.  This explains why threshold measurements are impractical on 8-bit displays.  For commercial purposes, however, one step is about ΔE=1, which explains why 8-bits renders a reasonable reproduction.  
+
+### **Spatial-spectral discriminations**
+
+Next, we analyzed the visual impact of changing the subpixel point spread function (see Figure 1). In this example, we compared two displays with the same primaries and spatial resolution (96 dots per inch), but with different pixel point spread functions.  In one case, the point spread function is the conventional set of three parallel stripes (Dell LCD Display Model 1905FP), while in the second case the point spread is three adjacent chevrons (Dell LCD Display Model 1907FPc).  We used the standard display model to calculate the spatial-spectral radiance of the 52 upper and lower case letters on both displays.  The spatial-spectral radiance image data are represented as 3D matrices or hypercubes where each plane in the hypercube contains the stimulus intensity for points sampled across the display (x,y) for each of the sampled wavelengths (ƛ).  To visualize the data, we map the vector describing the spectral radiance for each pixel into CIE XYZ values and convert these into sRGB display values (see inset in Figure 7). 
+
+We used the spatial-spectral radiance data to calculate the Spatial CIELAB (SCIELAB) ΔE difference (Zhang and Wandell, 1997\) between each letter simulated on the two displays and viewed from different distances.  Figure 7  plots the median SCIELAB ΔE value as a function of viewing distance.  The analysis predicts no visible differences between pairs of letters rendered on the two displays at any of the viewing distances.  And indeed, we did not find significant differences between subject’s judgments about the quality of letters rendered on the two different displays   (Farrell et al, 2009).
+
+## Summary
+
+### **Applications of the standard display model**
+
+The standard display model guides both the calibration and simulation of visual stimuli. The model can be used to characterize visual stimuli so that others can replicate vision experiments. It can be used to simulate different types of displays and rendering algorithms and, in this way, makes it possible to evaluate the capabilities of displays during the engineering design process (Farrell et al, 2008).  Finally, the standard display model  supports the development of computational models for human vision by making it possible to calculate the irradiance incident at the eye (Farrell et al, 2014). 
+
+The standard display model assumes that the light generated by each subpixel is additive, independent and shift invariant.   These assumptions, referred to as spectral homogeneity, pixel independence and spatial homogeneity, can be tested in the calibration process.   A particular display may not meet these conditions for all stimuli, yet the model may still be used to predict the spatial-spectral radiance of a restricted class of visual stimuli.  As an example, the standard display model does not predict the spectral radiance of high frequency gratings presented on a CRT (Lyons and Farrell, 1989; Pelli, 1997, Farrell et al, 2008\), but the model does predict the spectral-spectral radiance of large uniform colors (Brainard et al, 2002; Post, 1992\).  The standard display model can predict the the steady-state spatial-spectral radiance of high frequency gratings and text rendered on many LCD displays (Farrell et al, 2008), particularly in the absence of  complex circuitry to overdrive or undershoot pixel intensity   
+(Lee et al 2001, Lee et al, 2006\)  and  locally dim LED backlights (Seetzen et al, 2004\) .
+
+We present two examples that illustrate how to analyze display capabilities by coupling the standard model with color discrimination metrics.  The first example shows why 10-bit intensity resolution is necessary to measure a psychophysical discrimination function.  The second example analyzes the effect that different subpixel PSFs have on font discriminations.  These examples illustrate how the standard display model can be used to analyze display capabilities in specific experimental conditions.  
+
+A further benefit of the standard model is to support reproducible research.  Scientists can communicate about experimental stimuli by sharing the calibration parameters and a simulation of the standard display model. For the data and simulation, other scientists can reproduce and analyze experimental measurements by beginning with a complete spatial-spectral radiance of the experimental stimulus.  
+
+### **Future display technologies**
+
+Advances in display technology transformed vision science over the past two decades.  The growth in computing power continues to drive the development of display technologies that will influence visual psychophysics by broadening the scope of what we can control and study.  Perhaps the most exciting new developments are methods that expand the display from a passive device that emits a pre-determined set of images to an interactive device that displays images that depend on continuous measurements of the viewer’s head position.  A number of companies are developing head-mounted displays that are coupled with computer vision systems that sense the position and orientation of the head (Kress and Starner, 2013\).  These systems comprise a pair of high quality displays, one for each eye, and a set of external cameras and algorithms that monitor the viewer’s head position. The images presented to the two displays are approximations of what the viewer would see at each eye in a three-dimensional environment. When the images are rapidly updated, and the computer graphics representation of the environment is detailed, the user has a compelling experience of being immersed within a virtual world. These systems \- which include the displays, computer graphics programs, and head position-sensing systems \- provide a “virtual reality” experience.  A number of companies have developed products based on this technology and one hopes that these systems will be commercially viable products that can be controlled for scientific applications.
+
+Virtual Reality (VR), Augmented Reality (AR), and Mixed Reality (MR) represent different approaches to blending digital content with the real world. VR fully immerses users in a computer-generated environment, completely replacing their real-world view. AR overlays digital information onto the user's direct view of the physical world. MR combines real-time video capture of the environment with digital content. Currently, the best examples of these technologies on the market are: for VR, the Meta Quest series (formerly Oculus); for AR, the Microsoft HoloLens; and for MR, the Apple Vision Pro.   Significant research and development efforts are underway to minimize both the size of head-mounted displays (HMDs) and enhance the experience of augmented reality (AR). Two promising approaches in this field are light field projection and wavefront holography.
+
+Near-eye light field projection displays simulate the way light emanates from objects in our environment by modulating light ray angles, using microlenses (references), multilayer liquid crystal displays (references), or mirror scanners (references). The success of these different methods hinges on advancements in key areas such as high-resolution microdisplays, microlens array fabrication, optical design, and the development of sophisticated computational algorithms and hardware.
+
+Near-eye wavefront holography displays take a different approach by recreating the entire wavefront of light from a 3D scene. These displays typically utilize spatial light modulators (SLMs) and coherent light sources, such as lasers, to generate computer-generated holograms (references). The evolution of this technology relies heavily on improvements in spatial light modulators, more efficient algorithms for hologram generation, the development of miniaturized coherent light sources, and advancements in optical materials for waveguides and diffractive elements.
+
+There are also new ideas about how to build displays that provide a relatively complete approximation of a full light field without using head-mounted displays (Liu and Li, 2014). The goal of these “light field displays” is to control the intensity and color in each direction.  The ability to control the rays in all directions generates a signal that is much closer to the physical reality.  With light field displays, as one moves back and forth or side-to-side, the rays incident at the cornea change and match the experience of seeing through the window into a real three-dimensional world, similar to looking at the scene through a window.  Two viewers can stand next to one another and both see the same world, each from their own point of view.  This type of display eliminates the need for head-tracking and computationally intensive methods for rapidly updating the displayed image based on the viewer’s head-position.  Such light field displays exist in early prototype form, and there is the hope that further engineering technology will produce viable commercial ventures.
+
+To take advantage of these technologies in scientific applications will require further development of display calibration and simulation.  The standard display model we explained here is woefully inadequate to characterize the stimuli delivered by head-mounted displays or free-standing light field displays.  The opportunities for using these systems for new scientific discovery is very great, and we are sure that scientists will develop principled approaches to calibration and simulation that will incorporate these new technologies into scientific practice and produce new insights about vision and the mind.
+
+## References
+
+Adelson, E.H. and Bergen, J. R. (1991) ‘The Plenoptic Function and the Elements of Early Vision’, in Computational Models of Image Processing, (ed. M. L. a J. A. Movshon) MIT Press: Cambridge, MA. pp. 3 \- 20\.
+
+Bale, M. , Carter, J. C., Creighton, C. J., Gregory, H. J.,  Lyon, P. H., Ng, P. , Webb, L.,  Wehrum, A. (2006), “Ink-Jet Printing: The Route to Production of Full-Color P-OLED Displays”. Journal of the Society for Information Display 14.5, pp 453-459.
+
+Brainard, D.  H. (1989) "Calibration of a Computer Controlled Color Monitor", Color Research & Application 14.1, pp. 23-34
+
+Brainard, D.  H., and B.  A. Wandell (1990) "Calibrated Processing of Image Color" , Color Research & Application, 15.5, pp. 266-71
+
+Brainard, D. H., Brunt, W. A., and Speigle, J.M. (1997). “Color constancy in the nearly natural image. 1\. Asymmetric matches”,  Journal of the Optical Society of America A, 14, pp. 2091-2110.  
+Brainard, David H., Wendy A. Brunt, and Jon M. Speigle (1997) “Color Constancy in the Nearly Natural Image. 1\. Asymmetric Matches.” J. Opt. Soc. Am. A Journal of the Optical Society of America A, 14.9 2091..  
+Brainard, David H. (1997),  “The Psychophysics Toolbox.” Spatial Vision 10.4,  pp. 433–436  
+Brainard, D. H., Pelli, D. G., & Robson, T. (2002) Display characterization. In: J. Hornak (Ed.) Encyclopedia of Imaging Science and Technology , pp. 172-188,  Wiley  
+Castellano, Joseph A. (1992),  Handbook Of Display Technology. San Diego: Academic Press  
+Cooper, E. A., H. Jiang, V. Vildavski, J. E. Farrell, and A. M. Norcia. (2013),  "Assessment of OLED Displays for Vision Research." Journal of Vision, 13.12. \#16.  
+Engel, S. (1997)  “Retinotopic Organization in Human Visual Cortex and the Spatial Precision of Functional MRI.” Cerebral Cortex 7.2, pp. 181–192  
+Farrell, J. E. (1986) An analytical method for predicting perceived flicker, Behavior and Information Technology, vol 5, no 4, pp. 349-358  
+Farrell, J., G. Ng, Xiaowei Ding, K. Larson, and B. Wandell. (2008),  "A Display Simulation Toolbox for Image Quality Evaluation." Journal of Display Technology, Vol 4, No. 2, pp. 262-70  
+Florence, James M., and Lars A. Yoder. (1996), “Display System Architectures for Digital Micromirror Device (DMD)-Based Projectors” , Proceedings of the SPIE, Vol. 2650, pp. 193-208.  
+Gershun, A. (1939), “The Light Field” Translated by P. Moon and G. Timoshenko in Journal of Mathematics and Physics  **18**, pp. 55 \- 151,  p. 51-151.
+
+Holliman, Nicolas S. et al. (2011), “Three-Dimensional Displays: A Review And Applications Analysis.” IEEE Trans. on Broadcast. IEEE Transactions on Broadcasting 57.2 ,  pp. 362–371.
+
+Kawamoto, H. (2002), "The History of Liquid-crystal Displays." Proceedings of the IEEE , Vol. 90, No. 4, pp.  460-500  
+Kelley, E. F., Lang, K., Silverstein, L. D. , Brill, M. H. (2009).  “Projector Flux from Color Primaries”,  SID Symposium Digest of Technical Papers, Volume 40, Issue 1, pages 224–227.  
+Kress, B., and Starner, T. (2013) "A review of head-mounted displays (HMD) technologies and applications for consumer electronics." Proceedings of the SPIE, Vol, 8720, Photonic Applications for Aerospace, Commercial, and Harsh Environments IV, 87200A (May 31, 2013); doi:10.1117/12.2015654.  
+Law, H.B. (1976) "The Shadow Mask Color Picture Tube: How It Began: An Eyewitness Account of Its Early History." IEEE Transactions on Electron Devices, Vol  23, No. 7 , pp. 752-59  
+Lee, B-W., Park, C., Kim, S., Jeon, M., Heo, J., Sagong, D., Kim, J. and Souk, J. (2001)  “Reducing gray-level response to one frame: dynamic capacitance compensation,” SID Symposium Digest Tech Papers Vol. 32, pp. 1260–1263.  
+Lee, S-W., Kim, M., Souk, J. H. and Kim, S. S. (2006). “Motion artifact elimination technology for liquid-crystal-display monitors: Advanced dynamic capacitance compensation method”. Journal of the Society for Information Display, Vol. 14, No. 4, pp 387-394.  
+Liu, X. and Li, H. (2014)  “The Progress of Light-Field 3-D Displays”, Information Display, June, 2014, pp. 6-13  
+Lyons, N. P and Farrell, J. E. (1989) *Linear systems analysis of CRT displays*, SID Digest, Vol. 10, pp. 220-223.   
+McCreary, J. L.(2014).  “Correction of TFT Non-uniformity in AMOLED Display”, Siliconfile Technologies Inc, assignee US Patent  8624805, Jan 7, 2014  
+Naiman, Avi C., and Walter Makous. (1992). “Spatial nonlinearities of gray-scale CRT pixels”, Proceedings of the SPIE, Vol 1666 , pp.  41-56.  
+Packer, O. , Diller, L.  C. , Verweij, J. , Lee, B. B., Pokorny,J. ,  Williams, D. R. , Dacey, D. M., and Brainard,D. H.. (2001) "Characterization and Use of a Digital Light Projector for Vision Research." Vision Research Vol. 41, No.4 , pp. 427-39.  
+Pelli, D. G. (1997) “Pixel independence: measuring spatial interactions on a CRT display”, Spatial Vision, Vol. 10, No. 4, pp. 443-336.  
+Post, D. L. (1992). “Colorimetric measurement, calibration and characterization of self-luminous displays”, in H. Widdel and D. L. Post , eds. Color in Electronic Displays, Plenum, NY,  pp. 299 \- 312\.  
+Poynton, C. A.  (1993) “Gamma’ And Its Disguises: The Nonlinear Mappings of Intensity in Perception, CRTs, Film, and Video.” SMPTE Motion Imaging Journal, Vol.102 , No.12, pp. 1099–1108  
+Poynton, Charles.  (2003) “Digital Video Interfaces.” Digital Video and HDTV, pp.  127–138.   
+Poynton, Charles, and Brian Funt. (2013)  “Perceptual Uniformity in Digital Image Representation and Display.” Color Res. Appl Color Research & Application Vol. 39, No. 1, pp. 6–15.   
+Seetzen, H., Heidrich, W.,  Stuerzlinger, W., Ward, G.,  Whitehead, L., Trentacoste, M., Ghosh, A.  and Vorozcovs,A. (2004). High dynamic range display systems. In ACM SIGGRAPH 2004 , ACM, New York, NY, USA, pp. 760-768.   
+Silverstein, L. D., and Thomas G. Fiske. (1993) "Colorimetric and photometric modeling of liquid crystal displays." Color and Imaging Conference. Vol. 1993\. No. 1\. Society for Imaging Science and Technology, 1993\.  
+Stevens, S. S. (1957)  “On The Psychophysical Law.” Psychological Review 64.3, pp. 153–181.   
+Tang, C. W., and S. A. Vanslyke.(1987)  "Organic Electroluminescent Diodes." Applied Physics Letters, Vol. 51, 913
+
+Tobias, E. and Tanner. T. G. (2012)  "Temporal Properties of Liquid Crystal Displays: Implications for Vision Science Experiments." Ed. Bart Krekelberg. PLoS ONE 7.9, E44048  
+Tsujimura, Takatoshi. (2012). OLED Display: Fundamentals and Applications. Hoboken, NJ: Wiley  
+Wandell and Silverstein [(2003), Digital Color Reproduction](http://white.stanford.edu/~brian/papers/pdc/OsaHandBookChapter.pdf)   in The Science of Color 2nd edition, Ed. S. Shevell, published by the Optical Society of America.  
+Watson, A. B., Jr. A. J. Ahumada, and J. E. Farrell. (1986) "Window of Visibility: A Psychophysical Theory of Fidelity in Time-sampled Visual Motion Displays." Journal of the Optical Society of America A ,Vol 2., No. 2, pp 300-307  
+Wyszecki G., and Stiles,W. S. (1969) .Color Science: Concepts and Methods, Quantitative Data and Formulas. New York: Wiley, 1967  
+Yakovlev, D. A., Vladimir G. C.  and Kwok, H-S. (2015)  Modeling and Optimization of LCD Optical Performance. John Wiley & Sons  
+Yang, Deng-Ke, and Shin-Tson Wu. (2006)  Fundamentals Of Liquid Crystal Devices. Chichester: John Wiley, 2006\.  
+Younse, J.M.  (1993) “Mirrors On a Chip.” IEEE Spectrum 30.11 (1993): pp. 27–31.  
+Zhang, X., and Wandell, B. A. (1997).  "A Spatial Extension of CIELAB for Digital Color-image Reproduction." Journal of the Society for Information Display,  Vol. 5, No. 1 61  
+Zhang, X., and Wandell, B. A.  (1998). "Color Image Fidelity Metrics Evaluated Using Image Distortion Maps." Signal Processing, Vol. 70., No. 3, pp. 201-14.  
+ Zhang. X.  and Farrell, J. E. (2003)  “Sequential color breakup measured with induced saccades,” Proceedings of the ISET/SPIE 15th Annual Symposium on Electronic Imaging, Volume 5007, pp. 210–217   
+Zhang, Y., Song,W., and Kees ,K., (2008)  “A tradeoff between motion blur and flicker visibility of electronic display devices**”,**  International Symposium on Photoelectronic Detection and Imaging 2007: Related Technologies and Applications, edited by Liwei Zhou, Proc. of SPIE Vol. 6625, 662503  
+ “SRGB.” *sRGB*. N.p., n.d. Web. 24 May 2015\. \<http://web.archive.org/web/20030124233043/http://www.srgb.com/\>
+
+   
+
+
+[^1]:  [https://github.com/isetbio/isetbio](https://github.com/isetbio/isetbio): Tools for modeling image systems engineering in the human visual system front end
