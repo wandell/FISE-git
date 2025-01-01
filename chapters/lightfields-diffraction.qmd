@@ -1,10 +1,10 @@
 # Pinholes and diffraction {#sec-lightfields-diffraction}
 
-If we imagine light as a collection of ray, it is easy to understand why pinhole optics renders a reasonable image (@fig-ayscough). Some of the properties of the pinhole camera, such as why the image is inverted or how it is blurred, are also well-explained by tracing the rays. Newton's formulation of light as rays is a useful and widely used approximation for many calculations.
+If we imagine light as a collection of rays, it is easy to understand why pinhole optics renders a reasonable image (@fig-ayscough). Some of the properties of the pinhole camera, such as why the image is inverted or how it is blurred, are also well-explained by tracing the rays. Newton's formulation of light as rays is a useful and widely used approximation for many calculations.
 
 ![Pinhole camera geometry. (A) The rays from a distant, on-axis point arrive at in parallel at the pinhole. Were there no diffraction, they would simply continue on to form an image the size of the pinhole. (B) An off-axis point's rays also arrive in parallel, but they are at an angle to the pinhole aperture. Hence, fewer rays pass through the aperture so the image would be dimmer and smaller. If we can tolerate a relatively large point spread, this design is workable. But if we require a small point spread, diffraction makes this design unworkable.](../images/lightfields/pinholePSF.png){#fig-pinhole-basic fig-align="center" width="70%"}
 
-For example, consider a point (A) relatively far from the pinhole (@fig-pinhole-basic). The rays at A radiate in a wide range of directions, but only a small portion of those rays arrive at the pinhole aperture. Because the pinhole forms a very narrow angle from the point the rays in the incident light field will be parallel to one another (collimated). According to the ray model of light, this collection of rays will pass straight through the pinhole and form an image on the recording surface (e.g., Leonardo's wall). The image formed by such a point is called the *point spread function*. For the on-axis point A, the point spread size is equal to the size of the pinhole aperture.
+For example, consider a point (A) relatively far from the pinhole (@fig-pinhole-basic). The rays at A radiate in a wide range of directions, but only a small portion of those rays arrive at the pinhole aperture. Because the pinhole forms a very narrow angle from the point the rays in the incident light field will be parallel to one another (collimated). According to the ray model of light, this collection of rays will pass straight through the pinhole and form an image on the recording surface (e.g., Leonardo's wall). The image formed by such a point is called the *point spread function*.
 
 Consider an off-axis point, (B). Again, its rays will spread in many directions but only a narrow, collimated subset of rays will arrive at the aperture. Because of the angle between the collimated rays and the pinhole, a smaller fraction of the rays will pass through the pinhole aperture. The point spread from (B) will be smaller and dimmer. If we can tolerate the reduced intensity and we do not mind the blurring from the pinhole, we will have a satisfactory image.
 
@@ -41,7 +41,7 @@ Gemini puts basic sciences into hypothesis and engineering into tools.
 https://g.co/gemini/share/9013b83cc4f6 -->
 :::
 ## Which effect blurs more?
-The image is blurred by two effects: the pinhole size and diffraction. We can compare the size of these two effects numerically.
+We have seen that the image is blurred by two effects: the pinhole size and diffraction. We can compare the size of these two effects numerically.
 
 ![The Airy pattern of a pinhole camera.  The aperture is on the ](../images/lightfields/01-blur-comparison.png){#fig-blur-comparison fig-cap-location='margin' width=80%}
 
@@ -53,7 +53,7 @@ $$d= 2.44~L~(\lambda / D)$$ {#eq-airy1}
 
 Suppose we calculate the size of the diffraction diameter when the image plane is 1 m away, so $L=1$, and for a wavelength of light is 550 nm. Suppose the pinhole diameter is $D = 10^{-4} m$. The diameter of the Airy disk, $d$,  will be 
 
-$$2.44 \times (1 m) (550 \times 10^{-9} m )/ 1 \times 10^{-4}m) = 0.0134 m$$ 
+$$2.44 \times (1 m) (550 \times 10^{-9} m )/ 1 \times 10^{-4}m) = 0.0134 m$$ {#eq-airydisk1}
 
 <!-- 
 The diffraction spread is larger than the pinhole spread when $d$ exceeds $D$. We do the calculation in the scripts in this [ISETCam script](https://htmlpreview.github.io/?https://github.com/wandell/FISE-git/blob/main/code/fise_diffraction.html).  For $L = 1m$ the pinhole blur is larger than the diffraction blur for a diameter of about $1 mm$.  When $L$ is much closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
@@ -74,6 +74,6 @@ When the angle is small, $\theta < 10 \deg$, the formula is very accurately appr
 
 $$\theta = 1.22 \lambda / D$$
 
-The size of the spot on the image plane depends on the distance how far away the pinhole is from the pinhole, as you can see in [@eq-airy1]. In @sec-optics we provide a formula for the Airy disk size for ideal lenses.
+The size of the spot on the image plane depends on the distance how far away the pinhole is from the pinhole, as you can see in [@eq-airy2]. In @sec-optics-thinlens we provide a formula for the Airy disk size for ideal lenses.
 :::
 
