@@ -104,5 +104,11 @@ I have been trying to use pandoc to convert some of my published review papers i
   I then copied the md file into the repository so I could copy and paste the text easily into the book.
   I will probably copy the figures in, too, at some point.
   
+I also managed to download an Overleaf LaTeX project and run (20250102 in the Ashby Book Chapter)
+
+  pandoc Chapter1Master.tex -t markdown -o PCC.md
+
+That produced an md file that I renamed 'qmd' and put in vscode.  
+It came up well, with the equations and figure captions.  I did not insert the images, though that should be possible.
 
 
