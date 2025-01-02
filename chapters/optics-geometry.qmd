@@ -69,18 +69,6 @@ The optics in the human eye has multiple elements. Even so, we can measure its f
 
 Young people can accommodate easily. As people age, we lose the ability to change the optical power of the optics, a condition called *presbyopia*. This happens to everyone. This biological fact is a consideration for the design of near field displays (@sec-displays).
 
-## F number
-
-The "F number" (f/#) of a thin lens is the ratio of its focal length and entrance aperture diameter (@fig-fnumber). For example, when we write f/4, it means that the focal length is 4x the aperture diameter.
-
-![Graphic of the f/#.](../images/optics/lensparameters-fnumber.png){#fig-fnumber fig-align="center" width="50%"}
-
-The f/# is an important parameter for all thin lenses, and it appears in many formulae. It is the only free parameter of a circular, diffraction-limited thin lens. For example, the Airy disk diameter (meters) on the focal plane of a diffraction limited lens depends only on the wavelength of light and the f/# of the lens. If the wavelength is $\lambda$ and f/# is $F$, the formula for the Airy Disk diameter is
-
-$$ d = 2.44 ~ \lambda ~ F$$ {#eq-airy2}
-
-If you revisit the first calculation of the Airy Disk, in @sec-lightfields-diffraction, you will see that this formula is implicit in how we modeled the image from a diffraction limited pinhole [@eq-airy1].
-
 ## The lens formula
 When an object is far away, the rays arriving at the lens are parallel. The image of the object will be in focus at the focal length. When the object is closer, we can use the *Lens formula* to find the plane where the object will be in focus. The equation, which was derived by Halley in 1693, relies on the three ray tracing properties of symmetric thin lenses (@sec-3principles). Using these principles, we can locate where the object at a distance $d_o$ will be in focused on the image side; call that distance $d_i$. 
 
@@ -97,11 +85,18 @@ and dividing by $d_i$ we have the lens formula
 
 $$ \frac{1}{f}    = \frac{1}{d_i} + \frac{1}{d_o} $$   {#eq-lensequation}
 
-Notice that when $d_o = \infty$, then $d_i = f$.  More generally, if we know the focal length, $f$, and the distance to an object, $d_o$, we can calculate the distance to the focal plane, $d_i$ as
+## Focal distance
+The location of the image plane, where an object is represented in best focus, depends on the distance from the lens to the object. This is the **focal distance.  Notice that when $d_o = \infty$, then $d_i = f$.  We can re-write the lens formula to calculate this distance. Thus, if we know the focal length, $f$, and the distance to an object, $d_o$, we can calculate the distance to the focal plane, $d_i$ as
 
 $$\frac{-1}{d_i} = \frac{1}{d_o} - \frac{1}{f}$$
 $$ d_i =  \frac{1}{\frac{1}{f} - \frac{1}{d_o}}$$
-$$ d_i = \frac{f~d_o}{d_o - f} $$
+$$ d_i = \frac{f~d_o}{d_o - f} $$  {#eq-focaldistance}
+
+You can see from [@eq-focaldistance] that as $d_o$ becomes much larger than $f$, $d_i$ becomes approximately $f$. Specifically, if we express $d_o$ in terms of the focal length of the lens, $k f$, we have 
+
+$$d_i = \frac{f k f}{(k-1) f} = f \frac{k}{k-1}$$
+
+This script plots the focal distance as a function of object distance for lenses with different focal lengths. Notice that the focal plane approaches a constant and stays near that level as relatively large distances. 
 
 ## Lensmaker equation
 <!-- 
@@ -120,10 +115,17 @@ As you can see from the formula, if we flip the lens so that $R_2$ and $R_1$ exc
 
 Here is a link to a very nice [video derivation of the formula](https://www.khanacademy.org/science/in-in-class-12th-physics-india/in-in-ray-optics-and-optical-instruments/in-in-refraction-in-thin-lenses/v/lens-makers-formula).
 
-## Distance to the image plane (focal distance)
-The location of the image plane, where an object is represented in best focus, depends on the distance from the lens to the object. The lensmaker's equation lets us
+## The f-number (f/#)
 
- Notice that the object focal plane approaches a constant and stays near that level for a very large distance range.
+The f-number (f/#) of a thin lens is the ratio of its focal length and entrance aperture diameter (@fig-fnumber). For example, when we write f/4, it means that the focal length is 4x the aperture diameter.
+
+![Graphic of the f/#.](../images/optics/lensparameters-fnumber.png){#fig-fnumber fig-align="center" width="50%"}
+
+The f/# is an important parameter for all thin lenses, and it appears in many formulae. It is the only free parameter of a circular, diffraction-limited thin lens. For example, the Airy disk diameter (meters) on the focal plane of a diffraction limited lens depends only on the wavelength of light and the f/# of the lens. If the wavelength is $\lambda$ and f/# is $F$, the formula for the Airy Disk diameter is
+
+$$ d = 2.44 ~ \lambda ~ F$$ {#eq-airy2}
+
+If you revisit the first calculation of the Airy Disk, in @sec-lightfields-diffraction, you will see that this formula is implicit in how we modeled the image from a diffraction limited pinhole [@eq-airy1].
 
 ## Magnification and Zoom.
 
