@@ -11,11 +11,12 @@ For the moment, I commented out the pdf formatting option.  That and perhaps oth
 The model repository we are starting from is the one for Michael Frank's book.  He has been a resource.
 
 ## Wordpress to Markdown
-
-I usewd the Jekyll Export Tool that is a plugin.  I simply installed the plugin and waited a few minutes.  It then exported all of the markdown pages from FOV.  They aren't quite right, but they were close enough to get me well launched.
+I used the Jekyll Export Tool that is a Wordpress plugin.  I simply installed the plugin and waited a few minutes.  It then exported all of the markdown pages from FOV.  They aren't quite right, but they were close enough to get me well launched.
 
 ## vscode
-I installed the GitHub extension to vscode, but I preferred to use the GitHub Desktop to manage this repository.  Partly this is because I couldn't figure out how to use my GitHub passkey to connect from vscode.  Someday, though, I should make this work.
+I downloaded vscode.  There are some quarto extensions to install.
+
+I also installed the GitHub extension to vscode, but I preferred to use the GitHub Desktop to manage this repository.  Partly this is because I couldn't figure out how to use my GitHub passkey to connect from vscode.  Someday, though, I should make this work.
 
 I have not been able to get text to wrap around figures yet.  Will look for example from online books.
 
@@ -44,7 +45,7 @@ Or the shortcut key:
 
    Press Ctrl+Shift+K (Windows/Linux) or Cmd+Shift+K (Mac)
 
-To preview in a browser just use
+To preview in a browser just type into the command panel
 
    quarto preview
 
@@ -72,8 +73,7 @@ Also, the resources/files.qmd need to be in the _quarto.yml file
 
 ## Quarto section labels
 
-This must be {#sec-XXXX} to work with the bibliography
-
+This must be in the format {#sec-XXXX} to work with the bibliography (?).  I am not yet sure if this works only for chapters or for arbitrary sections.
 
 ## Quarto images
 
@@ -93,5 +93,16 @@ I am trying this better-bibtex plugin.  Download, go to Tools -> plugin, select 
 
 I don't have wrapping around images or even scaling image sizes working yet.  I see it in other books, but not working yet for me.
 
+# Pandoc
+I have been trying to use pandoc to convert some of my published review papers into markdown from pdf.  On the mac this involved 
+
+  (a) installing pandoc from their github repository, (https://github.com/jgm/pandoc/releases/tag/3.6.1)
+  (b) installing poppler using "brew install poppler".  This gets you pdf2text.
+  (c) Convert the pdf to text using (e.g., pdftotext -layout Principles_and_Consequences_Color.pdf PCC.txt)
+  (d) Convert the text to markdown (e.g., pandoc PCC.txt -t markdown -o PCC.md)
+
+  I then copied the md file into the repository so I could copy and paste the text easily into the book.
+  I will probably copy the figures in, too, at some point.
+  
 
 
