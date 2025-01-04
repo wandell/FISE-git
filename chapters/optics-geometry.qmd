@@ -127,35 +127,34 @@ $$ d = 2.44 ~ \lambda ~ F$$ {#eq-airy2}
 
 If you revisit the first calculation of the Airy disk, in @sec-lightfields-diffraction, you will see that this formula is implicit in how we modeled the image from a diffraction limited pinhole [@eq-airy1].
 
-## Magnification
-The top and bottom lenses have the same diameter but different focal lengths. Ray tracing for an object of the same height, $h_o$ and distance, $d_o$, we see that the image distance, $d_i$ increases with focal length, as does the image height $h_{iL}$.
+## Magnification and zoom
+Consider the simple thin lens in @fig-optics-magnification1 with a focal distance of $f = 0.1m$. We draw the rays to the image plane for an object at a distance of $d_o = 0.3m$. 
 
-![Increasing the focal length magnifies the image.](../images/optics/lensmaker-magnification.png){#fig-optics-magnification1 fig-align="center" width="90%"}
+![Ray tracing lenses with different focal lengths.  Suppose focal length of the lens in the bluish box is $0.1 m$ and the distance to the object as $0.3m$.  And suppose the focal length in the greenish box is $0.2 m$.](../images/optics/lensparameters-magnification.png){#fig-optics-magnification fig-align="center" width="90%"}
 
-We drew both cases with the distance to the object assumed to be $d_o = 0.3m$. The bluish lens has a focal length of $0.1 m$, and the greenish one as a focal length of $0.2 m$. Using the lens formula, the image distance for the top is 
+Using the lens formula, the image distance for the lens in the bluish box is 
 
-$$d_i = \frac{f*d_o}{d_o - f} = \frac{0.1~0.3}{0.3 - 0.1} = 0.15 m$$
+$$d_i = \frac{f \times d_o}{d_o - f} = \frac{0.1 \times 0.3}{0.3 - 0.1} = 0.15 m$$
 
-and the bottom as
+The image distance for the lens in the greenish box, with twice the focal length, $f' = 0.2m$, is 
 
-$$d_{iL} = \frac{0.2~0.3}{0.3 - 0.2} = 0.60 m$$.
+$$d_{iL} = \frac{0.2 \times 0.3}{0.3 - 0.2} = 0.60 m$$.
 
-The image distance has increased by a factor of $4$. Comparing the similar triangles, we see that the image size also increased by a factor of $4$. Both lenses capture the same rays, but the image in the greenish case is spread out over a larger area. To equate the intensity of the two images, we must capture $4$ times as much of the light field.  We can do this by doubling the diameter of the lens, much increases its area by $4$.
+The image distance and image size both increase by a factor of $4$. The two lenses have the same entrance aperture, so they capture the same amount of light. Because the longer focal length lens spreads the image over a larger area, the amount of light per unit area (irradiance) in the image is reduced.
 
-## F-number and radiometry
-In @fig-optics-magnification1 the two lenses have the same diameter and thus they capture the same amount of the light field.  The lens with higher magnification spreads the image data over a larger area, and the callout "Magnification calculation" shows that doubling the focal length reduces the intensity by $4$. We can compensate for this by increasing the diameter of the lens by a factor of $2$, which doubles the area of the lens. 
+Some camera optics with an adjustable focal length, and this enables the user to adjust the image magnification. The image sensor size, however, is usually fixed. Thus, if we increase the image magnification, the fixed sensor captures a smaller portion of the image, but with the same sensor spatial resolution.  The effect is to produce an image that appears to zoom into a portion of the image.  This technique, called **optical zoom** is very effective as long as there is no loss of spatial resolution in the magnified image.
 
-Notice that these two changes, together, preserve the ratio of the focal length and the aperture diameter, which is the f/# of the lens.  The conclusion is that lenses with the same f/# will produce images with the same local intensity.  The larger focal length will be compensated for by the increase in lens diameter.
+![Optical zoom.  (a) A small image that just fits onto the sensor (dashed lines).  (b) If we magnify the image, say by increasing the focal length and image distance, the sensor measures a smaller portion of the image. This is optical zoom. ](../images/optics/lensparameters-zoom.png){#fig-optics-zoom fig-align="center" width="80%"}
 
-## Zoom
-Some cameras have optics with adjustable focal length. The image sensor, however, is usually a fixed size. Suppose that the sensor has 1000 samples.  We have seen that increasing the focal length enlarges the image.  This means the sensor samples will be measuring a smaller amount of whole image. Thus, we will have 1000 samples over a smaller portion of the object.
+## F-number and image intensity
+Suppose we wish to magnify the image, but we want to maintain the image irradiance level. In that case, we must capture $4$ times as much light. We do this by increasing the lens diameter, $D$. The formula for the area of the aperture is $\pi (D/2)^2$; thus, doubling the $D$ increases the area by a factor of $4$.  
 
-Maybe this needs an image from Powerpoint.
+The size of the lens with the larger diameter is sketched by the dashed ellipse in the green section of @fig-optics-magnification. Increasing the focal length expands the image size and reduces the image intensity. Increasing the lens diameter compensates for the reduced intensity. Doubling the focal length and entrance diameter preserves the f/# (ratio of the focal length and the aperture diameter). This example illustrates that lenses with the same f/# produce images with the same image intensity.  
 
-## Circle of confusion
+## Circle of confusion {#sec-optics-coc}
 Figure showing it and the formula.
 
-## Depth of field
+## Depth of field {#sec-optics-dof}
 The sequence from class slides.
 
 ## Multi-element lenses 
@@ -166,7 +165,7 @@ Introduce the idea that the second surface 'sees' the image that would have been
 ## Thick lens {#sec-optics-thicklens}
 Jensen and White has good text on this. I will look for text from other sources, such as Goodman. But there are some simplifications that should be mentioned, including the two focal lengths and two nodal points.  Propagation.
 
-## ABCD ray transfer matrix
+## ABCD ray transfer matrix {#sec-optics-abcd}
 Maybe write a new ISETCam script with the ABCD implementation?
 
 Leads nicely into the Ray Transfer Function concept returns to the optical light field in previous
