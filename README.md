@@ -93,7 +93,31 @@ I am trying this better-bibtex plugin.  Download, go to Tools -> plugin, select 
 
 I don't have wrapping around images or even scaling image sizes working yet.  I see it in other books, but not working yet for me.
 
-# Pandoc
+# Converting files: Google doc
+I saved a Google doc chapter (Artal handbook chapter on displays) as an HTML zip file.  Google produced both the HTML and the images directory for the HTML, within the zip file.
+I then used pandoc to convert the HTML to markdown.
+
+    pandoc CharacterizationofVisualStimuli_Version2_.html -o characterization.md
+
+I then moved the md file to qmd.  And I added the YAML header
+
+```
+---
+title: "My Report"
+format: html
+---
+```
+
+The figures appeared in the subdirectory.  The math and images rendered in vscode from the md file with the quarto preview command.
+
+# Converting files: Overleaf
+I also managed to download an Overleaf LaTeX project  (20250102 in the Ashby Book Chapter) and then run on the master tex file
+
+  pandoc Chapter1Master.tex -t markdown -o PCC.md
+
+That produced an md file. I renamed 'qmd' and put in vscode.  It came up well, with the equations and figure captions.  I don't remember how I created the directory with the image files.
+
+# Converting files: PDF
 I have been trying to use pandoc to convert some of my published review papers into markdown from pdf.  On the mac this involved 
 
 * installing pandoc from their github repository, (https://github.com/jgm/pandoc/releases/tag/3.6.1)
@@ -103,11 +127,5 @@ I have been trying to use pandoc to convert some of my published review papers i
 
 I then copied the md file into the repository so I could copy and paste the text easily into the book.
 I will probably copy the figures in, too, at some point.
-  
-I also managed to download an Overleaf LaTeX project and run (20250102 in the Ashby Book Chapter)
-
-  pandoc Chapter1Master.tex -t markdown -o PCC.md
-
-That produced an md file that I renamed 'qmd' and put in vscode.  It came up well, with the equations and figure captions.  I did not insert the images, though that should be possible. 
 
 
