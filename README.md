@@ -96,19 +96,18 @@ I don't have wrapping around images or even scaling image sizes working yet.  I 
 # Pandoc
 I have been trying to use pandoc to convert some of my published review papers into markdown from pdf.  On the mac this involved 
 
-  (a) installing pandoc from their github repository, (https://github.com/jgm/pandoc/releases/tag/3.6.1)
-  (b) installing poppler using "brew install poppler".  This gets you pdf2text.
-  (c) Convert the pdf to text using (e.g., pdftotext -layout Principles_and_Consequences_Color.pdf PCC.txt)
-  (d) Convert the text to markdown (e.g., pandoc PCC.txt -t markdown -o PCC.md)
+* installing pandoc from their github repository, (https://github.com/jgm/pandoc/releases/tag/3.6.1)
+* installing poppler using "brew install poppler".  This gets you pdf2text.
+* Convert the pdf to text using (e.g., pdftotext -layout Principles_and_Consequences_Color.pdf PCC.txt)
+* Convert the text to markdown (e.g., pandoc PCC.txt -t markdown -o PCC.md)
 
-  I then copied the md file into the repository so I could copy and paste the text easily into the book.
-  I will probably copy the figures in, too, at some point.
+I then copied the md file into the repository so I could copy and paste the text easily into the book.
+I will probably copy the figures in, too, at some point.
   
 I also managed to download an Overleaf LaTeX project and run (20250102 in the Ashby Book Chapter)
 
   pandoc Chapter1Master.tex -t markdown -o PCC.md
 
-That produced an md file that I renamed 'qmd' and put in vscode.  
-It came up well, with the equations and figure captions.  I did not insert the images, though that should be possible.
+That produced an md file that I renamed 'qmd' and put in vscode.  It came up well, with the equations and figure captions.  I did not insert the images, though that should be possible. 
 
 
