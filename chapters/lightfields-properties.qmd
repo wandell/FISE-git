@@ -1,13 +1,16 @@
 # Light field properties {#sec-lightfield-properties}
+
 Many image systems are designed to extract quantitative information about the scene. These systems might be designed to identify an object and its properties, such as its size, distance, and material. These systems are fundamental to applications like industrial inspection, autonomous vehicles, and medical imaging. Even in consumer photography applications, whose primary mission is to reproduce the light field, estimating scene physical characteristics - such as the ambient lighting - can be useful.
 
-In many image systems applications, the information obtained by the camera (or eye) is insufficient to determine a unique solution of size, distance, or material. The measurement is under constrained, so that many different scenes or objects might have produced the measured image. There is a general principle that applies to these situations, often attributed to Thomas Bayes, is quite simple. If many potential solutions exist to a problem, Bayes' Rule tells us to select the most likely one.  Seems pretty obvious, no?
+In many image systems applications, the information obtained by the camera (or eye) is insufficient to determine a unique solution of size, distance, or material. The measurement is under constrained, so that many different scenes or objects might have produced the measured image. There is a general principle that applies to these situations, often attributed to Thomas Bayes, is quite simple. If many potential solutions exist to a problem, Bayes' Rule tells us to select the most likely one. Seems pretty obvious, no?
 
-The hard part, of course, is how to know which answer is the most likely one.  We do not always have this information, but sometimes we do.  For example, we might know that there are some regularities in the world that make some spectral light fields far more likely than others. In this section we describe some regularities about the spectral (wavelength) and spatial properties in natural images. In certain circumstances, such as medical imaging or industrial inspection conditions, the regularities may be very significant. How to specify the regularities and take advantage of them will be a recurring theme as we describe various image systems.
+The hard part, of course, is how to know which answer is the most likely one. We do not always have this information, but sometimes we do. For example, we might know that there are some regularities in the world that make some spectral light fields far more likely than others. In this section we describe some regularities about the spectral (wavelength) and spatial properties in natural images. In certain circumstances, such as medical imaging or industrial inspection conditions, the regularities may be very significant. How to specify the regularities and take advantage of them will be a recurring theme as we describe various image systems.
 
 ## Spectral regularities in natural scenes
 
 ### The sky
+
+```{=html}
 <!-- [https://chatgpt.com/share/679ebc49-5a7c-8002-a282-598e7f1bbb30 ]
 Solar spectrum. Fraunhofer lines.  Stability of the solar spectrum 
 
@@ -17,32 +20,37 @@ CIE Data downloaded to ISETCam from here.  Placed in data/lights/daylight and da
 
 https://cie.co.at/datatable/components-relative-spectral-distribution-daylight
 -->
+```
 
-The Sun is the Earth's main source of radiation. The solar radiation itself is relatively stable over time in the visible range. But as the radiation passes through the Earth's atmosphere, it is substantially altered by particles and moisture.  Further, depending on the time of day the radiation may have to travel longer distance through the atmosphere, which also changes the spectral nature of the radiation at the Earth's surface.
+The Sun is the Earth's main source of radiation. In the visible range, radiation emitted from the Sun's surface is relatively stable over time. But as the radiation passes through the Earth's atmosphere, it is substantially altered by particles and moisture. Further, depending on the time of day the radiation may have to travel longer distance through the atmosphere. This path length difference also changes the spectral composition of the radiation arriving at the Earth's surface.
 
-The importance of skylight made it an early object of study.  Physicists noticed that sun light arriving at the Earth's surface has several distinct features.  In 1814 Fraunhofer noted several particularly dark lines in the solar spectrum.  As light from the Sun's hot, dense interior (photosphere) passes through its cooler outer layers (chromosphere and corona), atoms and ions absorb specific wavelengths of light corresponding to their electronic transitions.  Several spectral absorption lines in the spectrum measured at the Earth's surface are caused by water vapor (H₂O) and other molecules. These lines originate from the interaction of sunlight with molecules in the air rather than from the Sun itself. The solar lines are sufficiently dependable that scientists could use the presence of these lines in their laboratory data to calibrate their instruments for spectral measurements.  The water vapor lines depend, of course, on the weather.
+The importance of skylight made it an early object of study, and physicists noticed that sun light arriving at the Earth's surface has several distinctive features. In 1814 Fraunhofer noted several particularly dark lines in the solar spectrum. These arise because as light from the Sun's hot, dense interior (photosphere) passes through its cooler outer layers (chromosphere and corona), atoms and ions absorb specific wavelengths of light corresponding to their electronic transitions. The solar lines are sufficiently dependable that scientists could use the presence of these lines in their laboratory data to calibrate their instruments for spectral measurements.
+
+![The mean solar radiation is quite stable over time. The perfectly smooth curve that we might expect is interrupted by many lines. These are caused by absorptions by atoms and ions in the Sun's chromosphere.](/images/lightfields/01-Solar.png){fig-align="center"}
+
+Additionally, several spectral absorption lines in the spectrum measured at the Earth's surface are caused by water vapor (H₂O) and other molecules on the atmosphere, rather than from the Sun itself. The variation from atmospheric properties can change relatively quickly and with the weather.
 
 ### Linear models of daylight spectra
 
-Judd Macadam and Wyszecki.  Other references
+Judd Macadam and Wyszecki. Other references
 
 <!--# Moonlight regularities.  Used for space travel.https://chatgpt.com/share/67410dd0-ff54-8002-9b73-65294a849fe6  “The Potential of Moonlight Remote Sensing: A Systematic Assessment” explores the potential of using moonlight in remote sensing for nighttime Earth observation. The study uses data from VIIRS, the ISS, and UAV systems to evaluate moonlight’s capabilities.“Simulation Study of the Lunar Spectral Irradiances and the Earth-Based Moon Observation Geometry” focuses on modeling the spectral irradiance of moonlight using the Hapke model and its applications in satellite radiometric calibration.-->
 
 ### Surface reflectance
-Maloney dissertation and the Russian guy.  What was his name and story?
+
+Maloney dissertation and the Russian guy. What was his name and story?
 
 ## Spatial regularities in natural scenes
 
 ### 1/f spatial frequency fall
-Who first pointed this out?  Relationship to the scale invariant idea of fractals, and the fractal nature of many things.
+
+Who first pointed this out? Relationship to the scale invariant idea of fractals, and the fractal nature of many things.
 
 Ruderman and Bialek paper on natural image statistics.
 
 Field, Olshausen
 
 David M - famous mathematician guy
-
-
 
 ### Dead leaves model
 
