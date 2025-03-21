@@ -1,12 +1,45 @@
 # Light field properties {#sec-lightfield-properties}
 
-Many image systems are designed to extract quantitative information about the scene. These systems might be designed to identify an object and its properties, such as its size, distance, and material. These systems are fundamental to applications like industrial inspection, autonomous vehicles, and medical imaging. Even in consumer photography applications, whose primary mission is to reproduce the light field, estimating scene physical characteristics - such as the ambient lighting - can be useful.
+Many image systems are designed to measure the scene. These measurements might be used to identify an object and its properties, such as its size, distance, and material. These systems are fundamental to applications like industrial inspection, autonomous vehicles, and medical imaging. Even in consumer photography applications, whose primary mission is to reproduce the light field, estimating scene physical characteristics - such as the ambient lighting - can be useful.
 
-In many image systems applications, the information obtained by the camera (or eye) is insufficient to determine a unique solution of size, distance, or material. The measurement is under constrained, so that many different scenes or objects might have produced the measured image. There is a general principle that applies to these situations, often attributed to Thomas Bayes, is quite simple. If many potential solutions exist to a problem, Bayes' Rule tells us to select the most likely one. Seems pretty obvious, no?
+In many image systems applications the problem is under constrained, by which I mean that many different scenes or objects might have produced the measured image. There is a useful principle that applies to these situations, often attributed to Thomas Bayes, is quite simple. If many potential solutions exist to a problem, Bayes' Rule tells us to select the most likely one. The general principle seems pretty obvious, no? The hard part, of course, is how to know which answer is the most likely one.
 
-The hard part, of course, is how to know which answer is the most likely one. We do not always have this information, but sometimes we do. For example, we might know that there are some regularities in the world that make some spectral light fields far more likely than others. In this section we describe some regularities about the spectral (wavelength) and spatial properties in natural images. In certain circumstances, such as medical imaging or industrial inspection conditions, the regularities may be very significant. How to specify the regularities and take advantage of them will be a recurring theme as we describe various image systems.
+We do not always have information about the relative likelihood of different solutions, but sometimes we do. One way to make better guesses is to learn about regularities in the world. In this section we describe some regularities about the spectral (wavelength) and spatial properties of natural images. In certain specific applications, such as medical imaging or industrial inspection conditions, the regularities may narrow the set of possible answers greatly.
 
-## Spectral regularities in natural scenes
+## Expressing regularities
+
+### Bayes Rules
+
+How to specify regularities in the scene, and how to take advantage of them, will be a recurring theme as we describe various image systems. There are two classical mathematical tools that are widely used to specify regularities throughout science and engineering, and both will come up in this book. I just mentioned Bayes' Rule, which is extremely famous and simple. If we know the probability of a specific condition, $C$, being true given a measurement, $d$, we use the laws of probability to write
+
+$$
+P(C | d) = \frac{P(d \cap C)}{P(d)} = \frac{P(d \cap C) P(C)}{P(d) P(C)}= \frac{P(d | C) P(C)}{P(d)}
+$$
+
+::: {#Bays-terms .callout-note style="color: gray" appearance="simple"}
+## The terms in Bayes' Rule
+
+-   $P(C | d)$ - **posterior probability** of C given d.
+-   $P(d|C)$ - likelihood of d given C.
+-   $P(C)$ - **prior probability** of C.
+-   $P(d)$ - marginal probability of d.
+:::
+
+The challenge in using Bayes' Rule is also obvious. In many cases we have very little idea about the prior, and for many applications we do not know how to even compute the likelihood of $d$ given $C$.
+
+### Linear models
+
+Linear models are a second way to capture the regularity in the data. These are the standard methodology of linear algebra, in which we express the data - which is usually a vector of measurements - as the weighted sum of a known, fixed, set of possible vectors. To connect the idea to the case at hand, suppose we consider the data to be a spectrum, $d(\lambda)$, where we measure over the visible range from 380 nm to 780 nm in 1 nm steps (hence, \$d\$ is 401 dimensions). After making a few thousand (or million) measurements we might discover that we can closely approximate the $j^{th}$ measurement as the weighted sum of $N$ basis functions.
+
+$$d_j(\lambda) = \sum_{i=1,N} B_i(\lambda) w_{ij}$$ {#eq-linearmodel}
+
+This representation also captures a regularity in the measurements, particularly when the value of $N$ is small (say, 5, 10, 20) compared to the dimension of $d$, in this case 401. We are representing each observation by just $N$ numbers, as long as we have the side condition of knowing the basis functions.
+
+By now, some of you will notice that we can use matrix notation to express the linear model. The linear model simply expresses the data, $\mathbf{d_j}$ vector as the product of a weight vector, $\mathbf{w_j}$ and the basis vectors placed in the columns of the matrix $\mathbf{B}$.
+
+$$\mathbf{d_j} = \mathbf{B} \mathbf{w_j}$$
+
+## Spectral regularities
 
 ### The sky
 
@@ -22,13 +55,13 @@ https://cie.co.at/datatable/components-relative-spectral-distribution-daylight
 -->
 ```
 
-The Sun is the Earth's main source of radiation. In the visible range, radiation emitted from the Sun's surface is relatively stable over time. But as the radiation passes through the Earth's atmosphere, it is substantially altered by particles and moisture. Further, depending on the time of day the radiation may have to travel longer distance through the atmosphere. This path length difference also changes the spectral composition of the radiation arriving at the Earth's surface.
+The Sun is the Earth's main source of radiation. In the visible range, radiation emitted from the Sun's surface is relatively stable over time. The importance of skylight made it an early object of study, and physicists noticed that sun light arriving at the Earth's surface has several distinctive features. In 1814 Fraunhofer noted several particularly dark lines in the solar spectrum. These arise because as light from the Sun's hot, dense interior (photosphere) passes through its cooler outer layers (chromosphere and corona), atoms and ions absorb specific wavelengths of light corresponding to their electronic transitions. The solar lines are sufficiently dependable that scientists could use the presence of these lines in their laboratory data to calibrate their instruments for spectral measurements.
 
-The importance of skylight made it an early object of study, and physicists noticed that sun light arriving at the Earth's surface has several distinctive features. In 1814 Fraunhofer noted several particularly dark lines in the solar spectrum. These arise because as light from the Sun's hot, dense interior (photosphere) passes through its cooler outer layers (chromosphere and corona), atoms and ions absorb specific wavelengths of light corresponding to their electronic transitions. The solar lines are sufficiently dependable that scientists could use the presence of these lines in their laboratory data to calibrate their instruments for spectral measurements.
+![The black curve shows the relative solar spectrum, which is relatively stable over time. The red lines show wavelengths where the spectrum has narrow reductions in intensity (lines). These are the wavelengths where the intensity is reduced caused by ions and atoms in the Sun's surface (Fraunhofer lines). The blue dotted lines, particularly 718 nm, 820 nm, 912 nm and 960 nm are atmospheric absorptions due to water vapor.](../images/lightfields/01-solarspectrum.png){#fig-solarspectrum fig-align="center" width="60%"}
 
-![The mean solar radiation is quite stable over time. The perfectly smooth curve that we might expect is interrupted by many lines. These are caused by absorptions by atoms and ions in the Sun's chromosphere.](/images/lightfields/01-Solar.png){fig-align="center"}
+Several spectral absorption lines measured at the Earth's surface are caused by water vapor (H₂O) and other molecules, rather than from substances in the Sun. The variation in these atmospheric absorptions can change relatively quickly, with the weather. In general, as the radiation passes through the Earth's atmosphere, it is substantially altered by these particles and moisture. Also, depending on the time of day the radiation may have to travel longer distance through the atmosphere. Path length differences also change the spectral composition of the radiation arriving at the Earth's surface.
 
-Additionally, several spectral absorption lines in the spectrum measured at the Earth's surface are caused by water vapor (H₂O) and other molecules on the atmosphere, rather than from the Sun itself. The variation from atmospheric properties can change relatively quickly and with the weather.
+The average skylight incident at the Earth's surface is
 
 ### Linear models of daylight spectra
 
