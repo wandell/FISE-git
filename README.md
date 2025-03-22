@@ -51,11 +51,15 @@ To preview in a browser just type into the command panel
 
 ## Quarto: resource files
 
-One way to make sure you have the html files is to do this
+I seem to have to make sure the resource files are created as html files. To do this, I run
 
-   quarto render resources/file.qmd --to html
+   quarto render chapters/resources/file.qmd --to html
 
-For the Matlab code in code/*, I use fise_exportMD(liveScript) to generate a markdown file.  Then I let quarto render it because I followed some instructions to put this into the main_quarto.yml file 
+For some period of time, the resources files were in the root directory.  I moved them into the chapters/ directory.  Claude says I should be able to keep them in root, but it just wasn't working for me.  
+
+Also, perhaps I should be adding a pre-render command for these files (see below for the code/ files).
+
+For the Matlab code in code/*, I use "fise_exportMD" (liveScript) to generate a markdown file.  Then I let quarto render the Markdown? Apparently, I followed some instructions to put the command below into the main _quarto.yml file 
 
 ```
 project:
@@ -66,7 +70,7 @@ project:
      - "code/*.md"
 ```
   
-and inside of code/ there is an additional _quarto.yml file and an index.qmd. Not sure why those are needed, but Claude told me to do it and I haven't really debugged to see what I can get rid of. It appears that Quarto renders the markdown file when I preview and it brings up the livescript in a window nicely enough for now.
+and inside of code/ there is an additional _quarto.yml file and an index.qmd. Not sure why those are needed, but Claude told me to do it and I haven't really debugged to see what I can get rid of. It appears that Quarto renders the markdown file when I preview and it brings up the livescript in a window nicely enough for now.  
 
 For the resources, I have to move the created _files directory into the _book directory by hand until we figure out the proper way.  Maybe what I did for 'code' should work for these additional files?
 Also, the resources/files.qmd need to be in the _quarto.yml file
