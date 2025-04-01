@@ -62,110 +62,60 @@ In 1814, [Joseph Fraunhofer](https://en.wikipedia.org/wiki/Joseph_von_Fraunhofer
 ![The black curve displays the relative solar spectrum, which is stable over time. The red lines indicate are drawn at wavelengths where the spectrum exhibits narrow intensity reductions, known as Fraunhofer lines, that originate from ions and atoms in the Sun's outer layers. The blue dotted lines mark intensity reductions caused by atmospheric water vapor.](images/lightfields/01-solar-lines.png){#fig-solarspectrum fig-align="center" width="70%"}
 
 ### Atmospheric Effects on Solar Radiation
+
 Some of the spectral absorption lines observed at Earth's surface originate from a different source: water vapor (H₂O) and other molecules in Earth's atmosphere. Unlike the stable solar absorption lines, these atmospheric absorptions fluctuate relatively quickly with changing weather conditions. There is also atmospheric variation in the skylight spectral power with the time of day, as the radiation's path length through the atmosphere varies. Longer path lengths — such as during sunrise or sunset — modify the spectral composition of radiation reaching Earth's surface.
 
 A number of different groups have reported measurements of solar radiation at the Earth's surface at varying times of day and weather conditions [@Judd1964-daylight]. Figure #fig-daylights shows examples of typical variation in the shape of the spectral power distribution in Granada, Spain [@Hernandez2001-daylight] and Stanford, California [@DiCarlo2000-daylight].
 
 ![The spectral power distribution of daylights sampled at the Earth's surface in Granada, Spain (left) and Stanford, California (right) at different times of day and weather conditions. The spectra have been scaled to be equal at 450nm. Notice that they have different slopes and shapes as weather and times of day change. Also notice that the Fraunhofer lines and white vapor lines are prominent in most of the measurements.](images/lightfields/01-solar-samples.png){#fig-daylights fig-align="center" width="90%"}
 
-These combined factors—atmospheric composition and path length variations—create a complex and dynamic radiation environment at Earth's surface. To account for these complexities, scientists and engineers have created linear models that can represent the natural variations of skylight incident upon Earth's surface.  The original model was introduced by Judd, Macadam and Wyszecki [@Judd1964-daylight]. They analyzed skylight at the Earth's surface from about 650 different conditions.  They found that the spectral power distributions, normalized to remove absolute radiance, could be modeled as the weighted sum of three terms: a mean and two basis functions (Figure @fig-ciedaylight).  Such a model is useful because it enables us to represent any particular sample using just three numbers, the two weights and an overall scalar to match the level. The model is also useful for applications in which a scene is acquired under full sky illumination, and we would like to estimate the spectral power distribution of the skylight.  We only need to estimate the weights, and from those we can make a good estimate of the full spectrum.
+These combined factors—atmospheric composition and path length variations—create a complex and dynamic radiation environment at Earth's surface. To account for these complexities, scientists and engineers have created linear models that can represent the natural variations of skylight incident upon Earth's surface. The original model was introduced by Judd, Macadam and Wyszecki [@Judd1964-daylight]. They analyzed skylight at the Earth's surface from about 650 different conditions. They found that the spectral power distributions, normalized to remove absolute radiance, could be modeled as the weighted sum of three terms: a mean and two basis functions (Figure @fig-ciedaylight). Such a model is useful because it enables us to represent any particular sample using just three numbers, the two weights and an overall scalar to match the level. The model is also useful for applications in which a scene is acquired under full sky illumination, and we would like to estimate the spectral power distribution of the skylight. We only need to estimate the weights, and from those we can make a good estimate of the full spectrum.
 
 ![The solid curve shows the mean daylight spectrum measured by Judd, Macadam and Wyszecki [@Judd1964-daylight] which became a CIE standard linear model for daylights. The solid circles are placed at the wavelengths of the Fraunhofer and atmospheric water vapor lines. The additional two curves are basis functions that, together with the mean, form a linear model of daylight spectral power distributions. Most daylights can be modeled as proportional to the mean plus weighted sums of these two bases.](images/lightfields/01-solar-basis.png){#fig-ciedaylight fig-align="center" width="60%"}
 
+```{=html}
 <!--
 Moonlight regularities. Used for space travel.https://chatgpt.com/share/67410dd0-ff54-8002-9b73-65294a849fe6 “The Potential of Moonlight Remote Sensing: A Systematic Assessment” explores the potential of using moonlight in remote sensing for nighttime Earth observation. The study uses data from VIIRS, the ISS, and UAV systems to evaluate moonlight’s capabilities.“Simulation Study of the Lunar Spectral Irradiances and the Earth-Based Moon Observation Geometry” focuses on modeling the spectral irradiance of moonlight using the Hapke model and its applications in satellite radiometric calibration.
 -->
+```
 
 ::: {#california-sun .callout-note collapse="true" appearance="simple"}
 ## Do it yourself daylight spectra
 
 When he was a student at Stanford, Jeff DiCarlo decided to measure the daylight outside his office for himself [@DiCarlo2000-daylight]. Checking things for himself is in his nature. Jeff pointed a spectral radiometer at a calibrated surface outside his window and configured a computer to make about ten thousand measurements, one a minute, during the course of a rainy rew weeks in California, from January 28, 2000 to February 16, 2000. I have included a sample of 1000 of these measurements in ISETCam. Figure #fig-stanfordsun shows the mean spectral power distribution of these measurements.
 
-You can see that the instrument recorded several 'notches' the spectrum at wavelengths corresponding to the Fraunhofer and water vapor lines. We also asked whether these data could be fit by the CIE linear model - and the least-squares fit is shown by the dotted line.  I suspect there is an instrument calibration error of a few nanometers at wavelengths above 700nm, and were I to write a research paper based on these data, I would probably introduce the correction because I believe the physics on the locations of these wavelengths is secure. This analysis might provide you with a sense of the relative accuracy of measuring and approximating spectra with conventional lab equipment.
+You can see that the instrument recorded several 'notches' the spectrum at wavelengths corresponding to the Fraunhofer and water vapor lines. We also asked whether these data could be fit by the CIE linear model - and the least-squares fit is shown by the dotted line. I suspect there is an instrument calibration error of a few nanometers at wavelengths above 700nm, and were I to write a research paper based on these data, I would probably introduce the correction because I believe the physics on the locations of these wavelengths is secure. This analysis might provide you with a sense of the relative accuracy of measuring and approximating spectra with conventional lab equipment.
 
 ![Average daylight measurements on the Stanford campus (solid) and CIE daylight basis fit to the measured average (dotted). The solid circles are placed at the locations of Fraunhofer and water vapor wavelengths.](images/lightfields/01-solar-stanford.png){#fig-stanfordsun fig-align="center" width="60%"}
 :::
 
 ### Surface reflectance regularities
 
-Vision is a remarkable invention that enables us to interpret the environment by recording the how the ambient illumination interacts with it.  In an early and insightful paper, Ted Adelson usefully divided these interpretations into two categories: *things and stuff*" [@Adelson2001-stuff]. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). 
+Vision is a remarkable invention that enables us to interpret the environment by recording the how the ambient illumination interacts with it. In an early and insightful paper, Ted Adelson usefully divided these interpretations into two categories: *things and stuff*" [@Adelson2001-stuff]. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand).
 
-Dividing the environment into these separate categories helps us set computational goals. For example, segmentation applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties.  An important challenge in both computer and human vision is how we might define the relationship between the encoding and the perceptual judgments of material and texture [@Schmid2023-materialperception].
+Dividing the environment into these separate categories helps us set computational goals. For example, segmentation applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties. An important challenge in both computer and human vision is how measuring the inference that maps from the encoding to a perceptual judgment of material and texture [@Schmid2023-materialperception].
 
-```{=html}
-<!--
-In computer vision and perceptual science, the division between *things* and *stuff* is a foundational classification for scene understanding:
+Four things can happen when electromagnetic radiation interacts with a surface. The radiation arriving at a surface might be (a) reflected, (b) absorbed, (c) pass through, or (d) interact with the material and generate new radiation (fluorescence). We will consider each of these interactions in different places within this book. Here, we describe some regularities in the surface spectral reflectance of many common materials.
 
-**Things**  
-- Refer to countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals).  
-- Recognition relies on structural cues like shape, contours, and spatial arrangement[1][4].  
+A full description of surface spectral reflectance can be include many parameters. Consider that the radiation incident on a small, planar patch of material can come from many different angles (two dimensions). The radiation may be reflected in many different directions (two more dimensions). The reflected light might be measured with respect to both wavelength and polarization (two more dimensions). We will set aside fluorescence for the present, returning to it later.
 
-**Stuff**  
-- Encompasses amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand).  
-- Identified primarily through local appearance features such as color, texture, and reflectance properties[1][8].  
+Despite this potential complexity, there are many relatively simple cases that are easier to describe. These are useful to know and obey statistical regularities that that can be expressed using a linear model.
 
-**Key Differences**  
-| Aspect          | Things                          | Stuff                          |  
-|-----------------|---------------------------------|--------------------------------|  
-| **Boundaries**  | Well-defined (countable)        | Indistinct (uncountable)       |  
-| **Recognition** | Shape, structure                | Texture, color, reflectance[2][8] |  
-| **Examples**    | Cars, buildings                 | Water, sky, foliage[1][4]      |  
+First, many materials reflect light incident from any direction equally in all directions. That is why illuminating a planar surface patch with a narrow laser beam, incident from one direction, is visible even as we move about and view the surface from positions. Such materials have *diffuse reflectance*, also called *Lambertian reflectance*.
 
-This distinction simplifies computational tasks like segmentation, where *things* require instance-level detection, while *stuff* is segmented regionally based on texture or material properties[4][8]. Human vision similarly leverages these categories, with *stuff* often processed holistically for material properties (e.g., gloss, roughness)[2][9], and *things* analyzed for object identity and function[1].  
+::: {#Lambert .callout-note collapse="true" appearance="simple"}
+## Lambert's contributions
 
-The interplay between the two is critical for panoptic segmentation, where unified models jointly label *things* (as instances) and *stuff* (as semantic regions)[4].
+The term Lambertian honors the Swiss physicist, [Johan Lambert](https://en.wikipedia.org/wiki/Johann_Heinrich_Lambert) (1728-1777) who formalized the mathematical description. Many surfaces are modeled as Lambertian in computer graphics, or assumed to be Lambertian in computer vision estimates of the environment. Adding additional details about the surface reflectance properties can improve the system performance, but it is common to start with a Lambertian approximation.
 
-Citations:
-[1] https://cacm.acm.org/research/scene-understanding-by-labeling-pixels/
-[2] https://www.microsoft.com/en-us/research/video/on-seeing-stuff-the-perception-of-materials-and-surfaces/
-[3] https://www.waterfootprint.org/resources/Report12.pdf
-[4] https://openaccess.thecvf.com/content/CVPR2021/papers/Shen_Toward_Joint_Thing-and-Stuff_Mining_for_Weakly_Supervised_Panoptic_Segmentation_CVPR_2021_paper.pdf
-[5] https://pmc.ncbi.nlm.nih.gov/articles/PMC7768321/
-[6] https://catalogue.unccd.int/1659_Dasgupta_Review_-_Full_Report.pdf
-[7] https://www.mindbodyevolution.info/the-science-of-seeing/
-[8] https://www.annualreviews.org/doi/10.1146/annurev-vision-102016-061429
-[9] https://www.nature.com/articles/s41562-023-01601-0
+Lambert worked on many topics concerning geometric optics, and he contributed an important book **Photometria** that incorporated many important geometric ideas, explaining the relative brightness of objects as seen from different points of view. Using his excellent mathematics, and the assumption that light travels in straight lines, he showed that illumination is - proportional to the strength of the source, - inversely proportional to - the square of the distance of the illuminated surface, and - the [sine of the angle](https://en.wikipedia.org/wiki/Lambert%27s_cosine_law "Lambert's cosine law") of inclination of the light's direction to that of the surface. He also wrote a classic work on [perspective](https://en.wikipedia.org/wiki/Perspective_(visual) "Perspective (visual)") and contributed to [geometrical optics](https://en.wikipedia.org/wiki/Geometrical_optics "Geometrical optics").
 
----
-Answer from Perplexity: pplx.ai/share
--->
-```
-Surface reflectance is a fundamental property of the interaction between illumination and the environment that applies to both things and stuff.  A full description of reflectance can be complex and difficult to measure. Consider that the radiation incident on a small, planar patch of material can come from many different incident angles (two dimensions). This radiation may be reflected in many different directions (two more dimensions). The division into reflected light, absorbed light, and transmitted light may depend on the wavelength and polarization of the incident light (two more dimensions). Finally, although the wavelength of the incident and reflected light are most often the same, there are fluorescent materials that convert incident radiation at one wavelength into exitant radiation at different wavelengths. Fluorescent materials are widespread in biology, and such molecules are widely used in biomedical applications. They are also used by people who manufacture clothing detergent and want a washing to result in a brighter white.
+I am particularly interested in the fact that he was the first to show that $\pi$ is an irrational number, a claim that the great Euler sought to prove as well.
+:::
 
-While a full consideration is sometimes complex, there are also many simple cases in which the surface reflectance is straightforward. These are useful to know, and they also have some regularities that can be expressed using linear model. 
+The spectral characteristics of the surfaces in our environment, over the visible range, are fairly regular as well. There are many different surfaces, so that unlike the solar radiation and we cannot assess the whole world. But for many applications, say walking in a forest, or working inside of a commercial office building, or driving on the road, the collection of likely surfaces can be sampled. It is generally agreed that the surface spectral reflectance functions - the fraction of incident light that is reflected by the surface - is a relatively smooth function of wavelength. Joseph Cohen (REF) and E.L. Krinov [@Krinov1953-reflectance] collected a few hundred surface reflectance samples over the visible range.  
 
-First, many materials reflect light incident from any direction equally in all directions. That is why illuminating a planar surface patch with a narrow laser beam, incident from one direction, is visible even as we move about and view the surface from positions. Such materials have *diffuse reflectance*, also called *Lambertian reflectance* to honor the Swiss physicist, Johan Lambert (1728-1888) who formalized the mathematical description. In addition to characterizing diffuse reflectance, Lambert observed that the apparent brightness changes as we move around. He explained this by noting that the projected area seen by the observer depends on the angle between the normal of the planar patch and the observer. Many surfaces are modeled as Lambertian in computer graphics, or assumed to be Lambertian in computer vision. Adding additional surface properties can improve the system performance, but it is common to start with a Lambertian approximation. <!--
-https://chatgpt.com/c/67e2fe34-d268-8002-92d9-b6be5cf568e5
-
-The term **"Lambertian reflectance"** originates from the work of the Swiss mathematician, physicist, and astronomer **Johann Heinrich Lambert (1728–1777)**. It is named after him because he was the first to formalize the mathematical description of **diffuse reflection** in his 1760 treatise *Photometria*, where he laid the foundations of modern photometry.
-
-### **Scientific Background**
-1. **Lambert's Cosine Law (1760)**  
-   Lambert’s key insight was that an ideal **diffuse surface** (later called a Lambertian surface) reflects light **equally in all directions** regardless of the viewing angle. However, the perceived brightness (radiance) of the surface follows a cosine relationship relative to the surface normal and the incident light direction. Mathematically, this is expressed as:
-
-   \[
-   L = L_0 \cos\theta
-   \]
-
-   where:
-   - \( L \) is the radiance observed in a particular direction,
-   - \( L_0 \) is the radiance when viewed normal to the surface,
-   - \( \theta \) is the angle between the surface normal and the viewing direction.
-
-   This means that even though light is scattered uniformly, the intensity decreases with increasing angle from the normal because the projected area exposed to the observer diminishes.
-
-2. **Diffuse vs. Specular Reflection**  
-   - In contrast to **specular reflection** (e.g., mirror-like surfaces), where light is reflected in a single direction, **Lambertian surfaces** scatter incident light uniformly in all directions.  
-   - Common examples include **matte surfaces, paper, and frosted glass**, which approximate Lambertian reflectance.
-
-3. **Applications in Science and Engineering**  
-   - Lambertian reflectance is widely used in **computer graphics**, **computer vision**, **remote sensing**, and **optics** to model realistic surface appearance.
-   - Many real-world materials exhibit approximately Lambertian properties, making it a useful approximation in radiative transfer and reflectance modeling.
-
-Thus, the name "Lambertian reflectance" honors **Johann Heinrich Lambert**, whose work in photometry provided the mathematical framework for understanding **diffuse reflection**.
--->
-
-The spectral characteristics of the surfaces in our environment, over the visible range, are fairly regular as well. There are many different surfaces, so that unlike the solar radiation and we cannot assess the whole world. But for many applications, say walking in a forest, or working inside of a commercial office building, or driving on the road, the collection of likely surfaces can be sampled. It is generally agreed that the surface spectral reflectance functions - the fraction of incident light that is reflected by the surface - is a relatively smooth function of wavelength. Joseph Cohen () and E.L. Krinov collected a few hundred surface reflectance samples over the visible range. a number of investigators \## Spatial regularities in natural scenes
+# Spatial regularities in natural scenes
 
 ### 1/f spatial frequency fall
 
