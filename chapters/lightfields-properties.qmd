@@ -35,6 +35,8 @@ $$d_j(\lambda) = \sum_{i=1,N} B_i(\lambda) w_{ij}$$ {#eq-linearmodel}
 
 This representation efficiently captures a regularity in the measurements, particularly when the value of $N$ is small (say, 5, 10, 20) compared to the dimension of $d$, in this case 401. We are representing each observation by just $N$ numbers, along with the values in the (fixed) number of basis functions.
 
+Most commonly, though not universally, the basis functions $B_i$ are chosen to be orthogonal to one another in the high dimensional space.  This means ...
+
 By now, some of you will notice that we can use matrix notation to express the linear model. The linear model simply expresses the data, $\mathbf{d_j}$ vector as the product of a weight vector, $\mathbf{w_j}$ and the basis vectors placed in the columns of the matrix $\mathbf{B}$.
 
 $$\mathbf{d_j} = \mathbf{B} \mathbf{w_j}$$
@@ -68,7 +70,7 @@ Fraunhofer was a brilliant applied researcher who worked on the physical propert
 
 The Fraunhofer lines, which he discovered while building a device to measure the spectral transmissivity of glass, are reported in a paper reviewing the properties of glass. These relative intensity of these lines are determined by the material composition of the stars, and these measurements are stilled used in astronomy to determine the composition of celestial bodies. Fraunhofer died at the age of 39, poisoned by heavy metal vapors used in his material research. Europe's largest body for the advancement of applied research, the Fraunhofer Society, is named to honor him.
 
-![](images/paste-1.png){fig-align="center" width="391"}
+![](images/people/Fraunhofer.png){fig-align="center" width="391"}
 
 This is a good historical review of the [Fraunhofer lines](https://joachimweise.github.io/post/2020-10-20-fraunhofer-lines/) and subsequent work.
 :::
@@ -106,6 +108,12 @@ Figure @fig-stanfordsun shows the mean spectral power distribution of these meas
 -->
 ```
 
+### Orthogonal bases, but correlated weights
+
+![](images/paste-5.png){width="512"}
+
+![](images/paste-6.png){width="512"}
+
 ### Surface spectral reflectance
 
 Vision is a remarkable invention that enables us to interpret the environment by recording the how the ambient illumination interacts with it. In an early and insightful paper, Ted Adelson usefully divided these interpretations into two categories: *things and stuff*" [@Adelson2001-stuff]. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand).
@@ -125,16 +133,20 @@ First, many materials reflect light incident from any direction equally in all d
 
 The term Lambertian surface honors the Swiss physicist, [Johan Lambert](https://en.wikipedia.org/wiki/Johann_Heinrich_Lambert) (1728-1777) who formalized the mathematical description. Many surfaces are modeled as Lambertian in computer graphics, or assumed to be Lambertian in computer vision estimates of the environment. Adding additional details about the surface reflectance properties can improve the system performance, but it is common to start with a Lambertian approximation.
 
-![](images/paste-3.png){fig-align="center" width="333"}
+![](images/people/Lambert.png){fig-align="center" width="333"}
 
 Lambert worked on many topics concerning geometric optics, and he contributed an important book **Photometria** that incorporated many important geometric ideas, explaining the relative brightness of objects as seen from different points of view. Using his excellent mathematics, and the assumption that light travels in straight lines, he showed that illumination is - proportional to the strength of the source, - inversely proportional to - the square of the distance of the illuminated surface, and - the [sine of the angle](https://en.wikipedia.org/wiki/Lambert%27s_cosine_law "Lambert's cosine law") of inclination of the light's direction to that of the surface. He also wrote a classic work on [perspective](https://en.wikipedia.org/wiki/Perspective_(visual) "Perspective (visual)") and contributed to [geometrical optics](https://en.wikipedia.org/wiki/Geometrical_optics "Geometrical optics").
 
 I was interested to learn that Lambert was the first to show that $\pi$ is an irrational number, a claim that the great Euler sought to prove as well.
 :::
 
-The spectral characteristics of the surfaces in our environment, over the visible range, are fairly regular as well. There are many different surfaces, so that unlike the solar radiation and we cannot assess the whole world. But for many applications, say walking in a forest, or working inside of a commercial office building, or driving on the road, the collection of likely surfaces can be sampled. It is generally agreed that the surface spectral reflectance functions - the fraction of incident light that is reflected by the surface - is a relatively smooth function of wavelength. Jozef Cohen [@Cohen1964-linearmodel] analyzed a few hundred surface reflectance samples over the visible range of a standard set of color swatches measured by Doroth Nickerson (Ref from Cohen article). L. T. Maloney [@Maloney1986-linearmodels-surface] analyzed a few hundred surface reflectance samples of a few hundred natural objects collected by E.L. Krinov [@Krinov1953-reflectance].
+The spectral reflectance characteristics of many surfaces Lambertian surfaces are fairly regular. If we consider the surfaces from a particular context (e.g, walking in a forest, the interior of a commercial office building, driving on a highway, or medical images of the body), the most likely surfaces can be sampled and usefully summarized with a linear model [@Cohen1964-linearmodel, @Maloney1986-linearmodels-surface, @Hardeberg2002-reflectancedimensionaltiy]. The best basis functions will depend on the context, of course, and the number of basis functions will depend on the task requirements. The generaly usefulness of the linear model approximation as a computational tool is not in doubt.
 
-scripts to look over: s_surfaceMunsell, s_reflectanceBasis, s_sceneReflectanceChartBasisFunctions
+A few hundred surface reflectance samples of a few hundred natural objects collected by E.L. Krinov [@Krinov1953-reflectance,@Parkkinen1989-munsellspectra]
+
+Scripts to look over: s_surfaceMunsell, s_reflectanceBasis, s_sceneReflectanceChartBasisFunctions
+
+It is generally agreed that the surface spectral reflectance functions - the fraction of incident light that is reflected by the surface - is a relatively smooth function of wavelength. Jozef Cohen
 
 ## Bidrectional reflectance distribution function (BRDF)
 
