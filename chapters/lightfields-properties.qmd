@@ -33,13 +33,19 @@ Linear models are a second way to capture the regularity in the data. These are 
 
 $$d_j(\lambda) = \sum_{i=1,N} B_i(\lambda) w_{ij}$$ {#eq-linearmodel}
 
-This representation efficiently captures a regularity in the measurements, particularly when the value of $N$ is small (say, 5, 10, 20) compared to the dimension of $d$, in this case 401. We are representing each observation by just $N$ numbers, along with the values in the (fixed) number of basis functions.
+This linear model representation can efficiently capture many types of regularities in the data. As an example, it is common to make measurements at a large number of samples, so that the vector $d_j(\lambda)$ may be large, in this example 401. We may find that over the collection of measurements we can approximate all the data with a relatively small number of basis functions ($N$ is 5, 10, 20). We might then representing each observation using only $N << 401$ values (along with the values in the $N$ basis functions).
 
-Most commonly, though not universally, the basis functions $B_i$ are chosen to be orthogonal to one another in the high dimensional space.  This means ...
+Most commonly the basis functions $B_i$ are chosen to be orthogonal to one another. For example, this is the choice when people use the principal components method. Basis vector orthogonality means that the inner product[^1] of any pair of basis vectors is zero. The formula for the inner product, in this example is,
 
-By now, some of you will notice that we can use matrix notation to express the linear model. The linear model simply expresses the data, $\mathbf{d_j}$ vector as the product of a weight vector, $\mathbf{w_j}$ and the basis vectors placed in the columns of the matrix $\mathbf{B}$.
+[^1]: Widely used synonyms for the term inner product are *dot product* and *scalar product*.
+
+$$0 = \sum_{\lambda} B_i(\lambda) B_j(\lambda)$$
+
+Some of you will notice that we can use matrix notation to express the linear model. The linear model simply expresses the data, $\mathbf{d_j}$ vector as the product of a weight vector, $\mathbf{w_j}$ and the basis vectors placed in the columns of the matrix $\mathbf{B}$.
 
 $$\mathbf{d_j} = \mathbf{B} \mathbf{w_j}$$
+
+Linear models appear in many places in this book, with many different applications. When you are ready to read more about them as a general mathematical tool, go to the Appendix chapter on linear models. It has a chatty discussion that can help you find your way into the more advanced literature.
 
 ## Spectral regularities
 
@@ -108,7 +114,14 @@ Figure @fig-stanfordsun shows the mean spectral power distribution of these meas
 -->
 ```
 
-### Orthogonal bases, but correlated weights
+In which we say something about the weights can be correlated, even though the basis functions are orthogonal.  Non-negativity constraint, for example.  See what I put in the DiCarlo article illuminating bases.  Also, there are plots of the tight relationship that will show up in the human vision part for the Granada data.
+
+::: {#daylight-weights .callout-note collapse="true" appearance="simple"}
+
+## Correlated weights
+![The daylight basis weights from the Granada and Stanford data sets.  As a gif.  ](images/lightfields/01-dayweights.gif){fig-align="center" width="372"}
+
+:::
 
 ### Surface spectral reflectance
 
