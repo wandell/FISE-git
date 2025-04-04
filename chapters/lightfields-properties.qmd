@@ -17,7 +17,7 @@ P(C | d) = \frac{P(d \cap C)}{P(d)} = \frac{P(d \cap C) P(C)}{P(d) P(C)}= \frac{
 $$
 
 ::: {#Bays-terms .callout-note style="color: gray" appearance="simple"}
-## The terms in Bayes' Rule
+### The terms in Bayes' Rule
 
 -   $P(C | d)$ - **posterior probability** of C given d.
 -   $P(d|C)$ - likelihood of d given C.
@@ -27,7 +27,7 @@ $$
 
 The challenge in using Bayes' Rule is also obvious. In many cases we have very little idea about the prior, and for many applications we do not know how to even compute the likelihood of $d$ given $C$.
 
-### Linear models
+## Linear models
 
 Linear models are a second way to capture the regularity in the data. These are a standard linear algebra tool, in which we express the data - which is usually a large collection of vector measurements - as the weighted sum of a known, fixed, set of possible vectors called the *basis* vectors. To connect the idea to the case at hand, suppose we consider the data to be a spectrum, $d(\lambda)$, where we measure over the visible range from 380 nm to 780 nm in 1 nm steps (hence, \$d\$ is 401 dimensions). After making a few thousand (or million) measurements we might discover that we can closely approximate the $j^{th}$ measurement as the weighted sum of $N$ basis functions.
 
@@ -35,9 +35,9 @@ $$d_j(\lambda) = \sum_{i=1,N} B_i(\lambda) w_{ij}$$ {#eq-linearmodel}
 
 This linear model representation can efficiently capture many types of regularities in the data. As an example, it is common to make measurements at a large number of samples, so that the vector $d_j(\lambda)$ may be large, in this example 401. We may find that over the collection of measurements we can approximate all the data with a relatively small number of basis functions ($N$ is 5, 10, 20). We might then representing each observation using only $N << 401$ values (along with the values in the $N$ basis functions).
 
-Most commonly the basis functions $B_i$ are chosen to be orthogonal to one another. For example, this is the choice when people use the principal components method. Basis vector orthogonality means that the inner product[^1] of any pair of basis vectors is zero. The formula for the inner product, in this example is,
+Most commonly the basis functions $B_i$ are chosen to be orthogonal to one another. For example, this is the choice when people use the principal components method. Basis vector orthogonality means that the inner product[^lightfields-properties-1] of any pair of basis vectors is zero. The formula for the inner product, in this example is,
 
-[^1]: Widely used synonyms for the term inner product are *dot product* and *scalar product*.
+[^lightfields-properties-1]: Widely used synonyms for the term inner product are *dot product* and *scalar product*.
 
 $$0 = \sum_{\lambda} B_i(\lambda) B_j(\lambda)$$
 
@@ -61,7 +61,7 @@ https://cie.co.at/datatable/components-relative-spectral-distribution-daylight
 -->
 ```
 
-### Solar Radiation and Fraunhofer Lines
+### Solar Radiation
 
 The Sun serves as Earth's primary radiation source. The radiation emitted from the Sun's surface in the visible spectrum remains relatively consistent over time. Due to its significance for imaging and human vision, skylight became an early subject of scientific investigation.
 
@@ -81,7 +81,7 @@ The Fraunhofer lines, which he discovered while building a device to measure the
 This is a good historical review of the [Fraunhofer lines](https://joachimweise.github.io/post/2020-10-20-fraunhofer-lines/) and subsequent work.
 :::
 
-### Atmospheric Effects on Solar Radiation
+### Atmospheric Effects
 
 Some of the spectral absorption lines observed at Earth's surface originate from a different source: water vapor (H₂O) and other molecules in Earth's atmosphere. Unlike the stable solar absorption lines, these atmospheric absorptions fluctuate relatively quickly with changing weather conditions. There is also atmospheric variation in the skylight spectral power with the time of day, as the radiation's path length through the atmosphere varies. Longer path lengths — such as during sunrise or sunset — modify the spectral composition of radiation reaching Earth's surface.
 
@@ -114,22 +114,17 @@ When he was a student at Stanford, Jeff DiCarlo decided to measure the daylight 
 -->
 ```
 
-In which we say something about the weights can be correlated, even though the basis functions are orthogonal.  Non-negativity constraint, for example.  See what I put in the DiCarlo article illuminating bases.  Also, there are plots of the tight relationship that will show up in the human vision part for the Granada data.
+In which we say something about the weights can be correlated, even though the basis functions are orthogonal. Non-negativity constraint, for example. See what I put in the DiCarlo article illuminating bases. Also, there are plots of the tight relationship that will show up in the human vision part for the Granada data.
 
 ::: {#daylight-weights .callout-note collapse="true" appearance="simple"}
+### Correlated weights
 
-## Correlated weights
-![The daylight basis weights from the Granada and Stanford data sets.  The weights are clustered within a plane, although there are occasional outliers. The orthogonality of the basis functions does not imply independence or orthogonality of the measured basis weights.](images/lightfields/01-dayweights3d.gif){#fig-dayweights  fig-align="center" width="372"}
-
+![The daylight basis weights from the Granada and Stanford data sets. The weights are clustered within a plane, although there are occasional outliers. The orthogonality of the basis functions does not imply independence or orthogonality of the measured basis weights.](images/lightfields/01-dayweights3d.gif){#fig-dayweights fig-align="center" width="372"}
 :::
 
-### Surface spectral reflectance
+## Surface spectral reflectance
 
-Vision is a remarkable invention that enables us to interpret the environment by recording the how the ambient illumination interacts with it. In an early and insightful paper, Ted Adelson usefully divided these interpretations into two categories: *things and stuff*" [@Adelson2001-stuff]. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand).
-
-Dividing the environment into these separate categories helps us set computational goals. For example, segmentation applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties. An important challenge in both computer and human vision is how measuring the inference that maps from the encoding to a perceptual judgment of material and texture [@Schmid2023-materialperception].
-
-Four things can happen when electromagnetic radiation interacts with a surface. The radiation arriving at a surface might be (a) reflected, (b) absorbed, (c) pass through, or (d) interact with the material and generate new radiation (fluorescence). We will consider each of these interactions in different places within this book. Here, we describe some regularities in the surface spectral reflectance of many common materials.
+Vision is a remarkable invention that enables us to interpret the environment by recording the how the ambient illumination interacts with it. Four things can happen when electromagnetic radiation interacts with a surface. The radiation arriving at a surface might be (a) reflected, (b) absorbed, (c) pass through, or (d) interact with the material and generate new radiation (fluorescence). We will consider each of these interactions in different sections of this book. Here, we describe some regularities in the surface spectral reflectance of many common materials.
 
 A full description of surface spectral reflectance can be include many parameters. Consider that the radiation incident on a small, planar patch of material can come from many different angles (two dimensions). The radiation may be reflected in many different directions (two more dimensions). The reflected light might be measured with respect to both wavelength and polarization (two more dimensions). We will set aside fluorescence for the present, returning to it later.
 
@@ -140,7 +135,9 @@ First, many materials reflect light incident from any direction equally in all d
 ::: {#Lambert .callout-note collapse="true" appearance="simple"}
 ## Johan Lambert
 
-The term Lambertian surface honors the Swiss physicist, [Johann Lambert](https://en.wikipedia.org/wiki/Johann_Heinrich_Lambert) (1728-1777) who formalized the mathematical description. Many surfaces are modeled as Lambertian in computer graphics, or assumed to be Lambertian in computer vision estimates of the environment. Adding additional details about the surface reflectance properties can improve the system performance, but it is common to start with a Lambertian approximation.
+The term Lambertian surface honors the Swiss physicist, [Johann Lambert](https://en.wikipedia.org/wiki/Johann_Heinrich_Lambert) (1728-1777) who formalized the mathematical description. Many surfaces are modeled as Lambertian in computer graphics, or assumed to be Lambertian in computer vision estimates of the environment. Examples of materials with Lambertian reflectance include chalk, plaster, uncoated paper, matte paints made from pigments.
+
+Adding additional details about the surface reflectance can improve the system performance, but it is common to start with a Lambertian approximation.
 
 ![Johann Lambert. His ideas were spread widely.](images/people/Lambert.png){#fig-lambert fig-align="center" width="180"}
 
@@ -149,7 +146,11 @@ Lambert worked on many topics concerning geometric optics, and he contributed an
 I was interested to learn that Lambert was the first to show that $\pi$ is an irrational number, a claim that the great Euler sought to prove as well.
 :::
 
-The spectral reflectance characteristics of many surfaces Lambertian surfaces are fairly regular. If we consider the surfaces from a particular context (e.g, walking in a forest, the interior of a commercial office building, driving on a highway, or medical images of the body), the most likely surfaces can be sampled and usefully summarized with a linear model [@Cohen1964-linearmodel, @Maloney1986-linearmodels-surface, @Hardeberg2002-reflectancedimensionaltiy]. The best basis functions will depend on the context, of course, and the number of basis functions will depend on the task requirements. The generaly usefulness of the linear model approximation as a computational tool is not in doubt.
+The spectral reflectance function measures the fraction of light incident at the surface that is reflected. For a diffusely reflecting (Lambertian) surface, incident light is reflected in all directions. Tbese surfaces typically have rough microscopic facets, oriented in many directions, which is why the incident light is reflected in many different directions.
+
+The spectral reflectance is measured wavelength-by-wavelength, that is they are functions of wavelength. In the visible band, these functions are typically quite smooth, and it is possible to summarize them using only a few parameters. It is not realistic to obtain a sample of all surfaces, but we might consider the surfaces in a particular context (e.g, walking in a forest, the interior of a commercial office building, driving on a highway, or medical images of the body). The likely surfaces in some context can be sampled and usefully summarized with a linear model [@Cohen1964-linearmodel, @Maloney1986-linearmodels-surface, @Hardeberg2002-reflectancedimensionaltiy]. The best basis functions may depend on the context, and the number of basis functions will depend on the task requirements. But the generaly usefulness of the linear model approximation as a computational tool is not in doubt.
+
+![Sample spectral reflectance functions of clothing. The fraction of reflected light, wavelength-by-wavelength, is between 0 and 1. Such smooth spectral reflectance curves are typical of many surfaces. Surfaces that are not diffuse can be modeled as having a diffuse component with a smooth spectral reflectance.](images/lightfields/01-reflectance-clothes.png){#fig-reflectance-cloths fig-align="center" width="70%"}
 
 A few hundred surface reflectance samples of a few hundred natural objects collected by E.L. Krinov [@Krinov1953-reflectance,@Parkkinen1989-munsellspectra]
 
@@ -157,7 +158,17 @@ Scripts to look over: s_surfaceMunsell, s_reflectanceBasis, s_sceneReflectanceCh
 
 It is generally agreed that the surface spectral reflectance functions - the fraction of incident light that is reflected by the surface - is a relatively smooth function of wavelength. Jozef Cohen
 
-## Bidrectional reflectance distribution function (BRDF)
+::: {#Things-stuff .callout-note collapse="true" appearance="simple"}
+## Things and Stuff
+
+In an insightful paper, Ted Adelson usefully divided the environment into *things and stuff*" @Adelson2001-stuff. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these separate categories helps us set computational goals.
+
+For example, segmentation applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. A vision system must also be able to understand a sandy beach, a cloudy sky, a grassy hillside.
+
+An important challenge in both computer and human vision is quantifying the appearance of things and stuff. Surface reflectance, texture, and context (e.g., ambient illumination, or what is nearby) all play a role in determining appearance to a human @Schmid2023-materialperception. Whether there is value in the corresponding notion - appearance for a computer vision system - is little studied.
+:::
+
+### Bidrectional reflectance distribution function (BRDF)
 
 Maybe we need a bit about dichromatic reflectance model here to open up.
 
@@ -165,7 +176,7 @@ There are many papers measuring BRDFs for remote sensing applications.
 
 Sand, reasonable figures. - https://opg.optica.org/ao/fulltext.cfm?uri=ao-54-31-F243&id=330097
 
-# Spatial regularities in natural scenes
+## Spatial regularities in natural scenes
 
 ### 1/f spatial frequency fall
 
@@ -177,7 +188,7 @@ Field, Olshausen
 
 David M - famous mathematician guy
 
-### Dead leaves model
+### Dead leaves
 
 Jon's Matlab script as a basis for discussing this.
 
