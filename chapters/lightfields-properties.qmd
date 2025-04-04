@@ -148,25 +148,26 @@ I was interested to learn that Lambert was the first to show that $\pi$ is an ir
 
 The spectral reflectance function measures the fraction of light incident at the surface that is reflected. For a diffusely reflecting (Lambertian) surface, incident light is reflected in all directions. Tbese surfaces typically have rough microscopic facets, oriented in many directions, which is why the incident light is reflected in many different directions.
 
-The spectral reflectance is measured wavelength-by-wavelength, that is they are functions of wavelength. In the visible band, these functions are typically quite smooth, and it is possible to summarize them using only a few parameters. It is not realistic to obtain a sample of all surfaces, but we might consider the surfaces in a particular context (e.g, walking in a forest, the interior of a commercial office building, driving on a highway, or medical images of the body). The likely surfaces in some context can be sampled and usefully summarized with a linear model [@Cohen1964-linearmodel, @Maloney1986-linearmodels-surface, @Hardeberg2002-reflectancedimensionaltiy]. The best basis functions may depend on the context, and the number of basis functions will depend on the task requirements. But the generaly usefulness of the linear model approximation as a computational tool is not in doubt.
+The spectral reflectance is measured wavelength-by-wavelength, that is they are functions of wavelength. In the visible band, these functions are typically quite smooth, and it is possible to summarize them using only a few parameters @fig-reflectance-cloths. It is not realistic to obtain a sample of all surfaces, but we might consider the surfaces in a particular context (e.g, walking in a forest, the interior of a commercial office building, driving on a highway, or medical images of the body). The likely surfaces in some context can be sampled and usefully summarized with a linear model [@Cohen1964-linearmodel, @Maloney1986-linearmodels-surface, @Hardeberg2002-reflectancedimensionalty]. The best basis functions will depend, somewhat, on the context; and, the number of basis functions will depend on the task requirements. But the general usefulness of a linear model approximation as a computational tool is not in doubt.
 
 ![Sample spectral reflectance functions of clothing. The fraction of reflected light, wavelength-by-wavelength, is between 0 and 1. Such smooth spectral reflectance curves are typical of many surfaces. Surfaces that are not diffuse can be modeled as having a diffuse component with a smooth spectral reflectance.](images/lightfields/01-reflectance-clothes.png){#fig-reflectance-cloths fig-align="center" width="70%"}
-
-A few hundred surface reflectance samples of a few hundred natural objects collected by E.L. Krinov [@Krinov1953-reflectance,@Parkkinen1989-munsellspectra]
-
-Scripts to look over: s_surfaceMunsell, s_reflectanceBasis, s_sceneReflectanceChartBasisFunctions
-
-It is generally agreed that the surface spectral reflectance functions - the fraction of incident light that is reflected by the surface - is a relatively smooth function of wavelength. Jozef Cohen
 
 ::: {#Things-stuff .callout-note collapse="true" appearance="simple"}
 ## Things and Stuff
 
-In an insightful paper, Ted Adelson usefully divided the environment into *things and stuff*" @Adelson2001-stuff. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these separate categories helps us set computational goals.
+We introduce the notion of surface reflectance as a general property, allowing that it depends on context. In an insightful paper, Ted Adelson further divided the environment into *things and stuff*" @Adelson2001-stuff. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these categories also helps us set computational goals.
 
-For example, segmentation applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. A vision system must also be able to understand a sandy beach, a cloudy sky, a grassy hillside.
+![Illustration of *things* and *stuff*. I am not sure how to count the grass - the collection of stuff or the blades of grass. Is the ocean stuff but a wave a thing? The sky, and beach (globally) seem like stuff. The rabbit and birds are definitely things, but their coats might be considered stuff. It is worth thinking about the difference. It is also worth noticing how Imagen3 produced some pretty odd animal faces.](images/paste-1.png){#fig-things-stuff fig-align="center" width="70%"}
 
-An important challenge in both computer and human vision is quantifying the appearance of things and stuff. Surface reflectance, texture, and context (e.g., ambient illumination, or what is nearby) all play a role in determining appearance to a human @Schmid2023-materialperception. Whether there is value in the corresponding notion - appearance for a computer vision system - is little studied.
+For example, segmentation applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. We wish to be able to recognize such things whatever their material might be. A vision system must also be able to make judgments about a sandy beach, a cloudy sky, a grassy hillside. We wish to be able to recognize such stuff whatever its shape might be.
+
+A related challenge in human vision is quantifying the appearance of things and stuff. Surface reflectance, texture, and context (e.g., ambient illumination, or what is nearby) all play a role in determining appearance to a human @Schmid2023-materialperception. Whether there is value in the corresponding notion - appearance for a computer vision system - is little studied. One notion of the meaning of appearance for a computer vision system is how well it estimates the reflectance and texture of the material.
 :::
+
+Over the years a number of groups have 
+A few hundred surface reflectance samples of a few hundred natural objects collected by E.L. Krinov [@Krinov1953-reflectance,@Parkkinen1989-munsellspectra]
+
+Scripts to look over: s_surfaceMunsell, s_reflectanceBasis, s_sceneReflectanceChartBasisFunctions
 
 ### Bidrectional reflectance distribution function (BRDF)
 
