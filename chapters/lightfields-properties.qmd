@@ -31,7 +31,7 @@ The challenge in using Bayes' Rule is also obvious. In many cases we have very l
 
 Linear models are a second way to capture the regularity in the data. These are a standard linear algebra tool, in which we express the data - which is usually a large collection of vector measurements - as the weighted sum of a known, fixed, set of possible vectors called the *basis* vectors. To connect the idea to the case at hand, suppose we consider the data to be a spectrum, $d(\lambda)$, where we measure over the visible range from 380 nm to 780 nm in 1 nm steps (hence, \$d\$ is 401 dimensions). After making a few thousand (or million) measurements we might discover that we can closely approximate the $j^{th}$ measurement as the weighted sum of $N$ basis functions.
 
-$$d_j(\lambda) = \sum_{i=1,N} B_i(\lambda) w_{ij}$$ {#eq-linearmodel}
+$$d_j(\lambda) = \sum_{i=1,N} B_i(\lambda) w_{ij}$$ {#eq-linearmodel}$$
 
 This linear model representation can efficiently capture many types of regularities in the data. As an example, it is common to make measurements at a large number of samples, so that the vector $d_j(\lambda)$ may be large, in this example 401. We may find that over the collection of measurements we can approximate all the data with a relatively small number of basis functions ($N$ is 5, 10, 20). We might then representing each observation using only $N << 401$ values (along with the values in the $N$ basis functions).
 
@@ -122,7 +122,7 @@ In which we say something about the weights can be correlated, even though the b
 ![The daylight basis weights from the Granada and Stanford data sets. The weights are clustered within a plane, although there are occasional outliers. The orthogonality of the basis functions does not imply independence or orthogonality of the measured basis weights.](images/lightfields/01-dayweights3d.gif){#fig-dayweights fig-align="center" width="372"}
 :::
 
-## Surface spectral reflectance
+## Surface spectral reflectance regularities
 
 Vision is a remarkable invention that enables us to interpret the environment by recording the how the ambient illumination interacts with it. Four things can happen when electromagnetic radiation interacts with a surface. The radiation arriving at a surface might be (a) reflected, (b) absorbed, (c) pass through, or (d) interact with the material and generate new radiation (fluorescence). We will consider each of these interactions in different sections of this book. Here, we describe some regularities in the surface spectral reflectance of many common materials.
 
@@ -197,36 +197,49 @@ Where, $E(\lambda)$, is the spectral power distribution of the light, $I(\lambda
 
 The DRM finds application in topics such as illuminant estimation, specular highlight identification and removal, and material classification. It is, however, limited in various ways because it does not accurately model complex surfaces, and it does not apply well to scenes with multiple light sources or very large light sources, say spanning the sky.
 
-### Bidrectional reflectance distribution function (Data driven)
+### Bidrectional reflectance distribution function (BRDF)
 
-An empirical description of the surface reflectance is called the *bidirectional reflectance distribution function* (BRDF). This characterizes how a light ray of wavelength $\lambda$ arriving at a point on the surface is reflected. The function characterizes the amount of reflected light from an incident ray at an angle $\omega_i$ the surface normal. The intensity of the reflected (outgoing) light is also specified in these directions $\omega_o$. The input and output angles are 2-vectors that define the azimuth $\phi_i, \phi_o$ and elevation $\theta_i, \theta_o$ of the rays. Thus the BRDF is a scalar function. Given a light ray of unit intensity, incident at $\omega_i$, the output intensity at different angles $\omega_o$ will be given by
+An empirical description of the surface reflectance is called the *bidirectional reflectance distribution function* (BRDF). This characterizes how a light ray of wavelength $\lambda$ arriving at a point on the surface is reflected. The function specifies the intensity of reflected light from an incident ray at an angle $\omega_i$ with respect to the surface normal. The intensity of the reflected light is also specified at all angles $\omega_o$, with respect to the surface normal. These two directions (input and reflected) are why the measurement is bidirectional.
+
+The input and output angles are 2-vectors that define the angle around the surface normal in the tangent plane (azimuth) $\phi_i, \phi_o$ and the angle elevation $\theta_i, \theta_o$ of the rays. Thus the BRDF is a scalar function. Given a light ray of unit intensity, incident at $\omega_i$, the output intensity at different angles $\omega_o$ will be given by
 
 $$
 f_r(\phi_i,\theta_i,\phi_o,\theta_o,\lambda) = f_r(\omega_i, \omega_o, \lambda)
 $$
 
-[Document on data-driven BRDFs](https://docs.google.com/document/d/1Wy2ygwu30i5quFX21kgz34OGSszNwUXn39Dfh4ypavA/edit?usp=sharing)
 
 ```{=html}
 <!-- 
+ ![The azimuth and elevation of a ray.](images/lightfields/01-azimuthelevation-1.png){#fig-azimuth-elevation fig-align="center" width="60%"}
+
 I created a Gemini document about data driven papers 
+
+[Document on data-driven BRDFs](https://docs.google.com/document/d/1Wy2ygwu30i5quFX21kgz34OGSszNwUXn39Dfh4ypavA/edit?usp=sharing)
+
+[Source for azimuth and elevation and zenity.](https://www.researchgate.net/publication/334197029_A_new_model_for_reduction_of_Azimuth_asymmetry_biases_of_tropospheric_delay/figures?lo=1)
+
  -->
 ```
+#### Data driven
 
 There are papers measuring BRDFs and modeling them using linear models and nonlinear models. Data driven approach.
 
-@MatsuMatusik2003-datadrivenBRDF @Tongbuasirilai2020-BRDF
+@Matusik2003-datadrivenBRDF @Tongbuasirilai2020-BRDF
 
 There is a MERL database.
 
 @MERL-BRDF-Brand
 
-### Bidrectional reflectance distribution function (Theory)
+#### Theoretical
+
+Cook Torrance mainly here.
 
 ```{=html}
 <!--
 
-Sand, reasonable figures. Tongbuasirilai2020-BRDF
+Sand, reasonable figures. 
+
+Tongbuasirilai2020-BRDF
  - https://opg.optica.org/ao/fulltext.cfm?uri=ao-54-31-F243&id=330097
 
 Excellent source for material models and some simple formula of reflection.  Introduces dielectrics (Plastic, Stone, Wood, Leather, Glass, Water, Air), and conductors (metals)
