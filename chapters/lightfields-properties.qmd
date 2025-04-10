@@ -123,6 +123,7 @@ In which we say something about the weights can be correlated, even though the b
 :::
 
 ## Surface spectral reflectance
+
 Vision is a remarkable invention that enables us to interpret the environment by recording the how the ambient illumination interacts with it. Four things can happen when electromagnetic radiation interacts with a surface. The radiation arriving at a surface might be (a) reflected, (b) absorbed, (c) pass through, or (d) interact with the material and generate new radiation (fluorescence). We will consider each of these interactions in different sections of this book. Here, we describe some regularities in the surface spectral reflectance of many common materials.
 
 A full description of surface spectral reflectance can include many parameters. The radiation incident on a small, planar patch of material can come from many different angles (two dimensions). The radiation may be reflected in many different directions (two more dimensions). The reflected light might be measured with respect to both wavelength and polarization (two more dimensions). We will set aside fluorescence for the present, returning to it later.
@@ -173,30 +174,42 @@ The linear models calculated for several types of common materials are often sim
 
 ![Three basis functions comparing the basis functions derived from the @Parkkinen1989-munsellspectra Munsell Color Book data (upper left) and three different categories measured by @Vrhel1994-MeasurementAnalysisObject. The basis functions are not identical, but they have many similarities, including the zero-crossings of the 2nd and 3rd basis functions.](images/lightfields/01-reflectance-bases.png){#fig-reflectance-bases fig-align="center" width="80%"}
 
+```{=html}
 <!-- 
 Scripts to look over: s_surfaceMunsell, s_reflectanceBasis, s_sceneReflectanceChartBasisFunctions 
 Maybe illustrate the visual size of the errors, as I have in other scripts.\
 -->
+```
 
 ### Dichromatic reflectance model (DRM)
+
 The DRM is a useful surface reflectance model that is somewhat more complex than diffuse (Lambertian) materials, but simpler than a full reflectance model. This model is still used in computer vision applications where the user would like to identify specular reflections. The DRM is a good approximation for light reflected from **inhomogeneous dielectric materials** (non-conductors like plastics, paints, wood, skin, etc.). The model approximates reflectance as a weighted sum of a diffuse term and a mirror-like (specular) term.
 
-The physical idea is that light is reflected by two paths. Some light is reflected at the material's **interface** with air, without engaging with the material itself. The spectral power distribution of this light is the same as the light source. A second term describes light where the wavefront enters into the material (**subsurface**) interacts with the material's pigments or colorants through scattering and absorption, and then emerges from the surface. This component is responsible for the object's inherent color. Its spectral composition is modified by the material's properties and is generally considered to be Lambertian, meaning it reflects equally in all directions. 
+The idea is that light is reflected by two mechanisms. Some of the light is reflected at the material's **interface** with air. This light does not interact with the material, and thus its spectral power is the approximately the same as the light source. Another portion of the light enters into the material (**subsurface**). In the subsurface it interacts with the material's pigments, both by scattering and absorption. The light that emerges from the subsurface determines the object's spectral reflectance. The subsurface portion is approximately Lambertian, as the subsurface pigments are randomly positioned and oriented.
+
+The DRM represents the reflected light, $C(\lambda)$ as the sum of the interface and subsurface terms
 
 $$
 C(\lambda) = m_s(g) I(\lambda) E(\lambda) + m_d(g) D(\lambda) E(\lambda)
 $$
 
-Where, $E(\lambda)$, is the spectral power distribution of the incident light, $I(\lambda)$ is the spectral reflectance of the interface reflection (often assumed to be constant across wavelengths for dielectrics. The term $D(\lambda)$ is the diffuse reflectance of the body, which is characteristic of the material. The terms $m_s(g)$ and $m_d(g)$ are geometric scaling factors. Their values depend on the viewing and illumination angles with respect to the surface normal at the point $g$. The total reflection, $C(\lambda)$ is sometimes called the *color signal* because this is the spectral radiance that drives the visual system's color response.
+Where, $E(\lambda)$, is the spectral power distribution of the light, $I(\lambda)$ is the interface spectral reflectance (often assumed to be constant across wavelengths). $D(\lambda)$ is the diffuse subsurface reflectance, which is characteristic of the material. The terms $m_s(g)$ and $m_d(g)$ are geometric scaling factors whose values depend on the viewing and illumination angles with respect to the surface normal at the surface point $g$. The reflected light, $C(\lambda)$ is sometimes called the *color signal* because this spectral radiance is an important contributor to the visual system's color judgment.
 
-The DRM is more complex than the diffuse model and it finds application in topics such as illuminant estimation, specular highlight identification and removal, and material classification. It is, however, limited in various ways because it does not accurately model complex surfaces, and it does not apply well to scenes with multiple light sources or very large (sky map) light sources.
+The DRM finds application in topics such as illuminant estimation, specular highlight identification and removal, and material classification. It is, however, limited in various ways because it does not accurately model complex surfaces, and it does not apply well to scenes with multiple light sources or very large light sources, say spanning the sky.
 
 ### Bidrectional reflectance distribution function (Data driven)
+
+An empirical description of the surface reflectance is called the *bidirectional reflectance distribution function* (BRDF). This characterizes how a light ray of wavelength $\lambda$ arriving at a point on the surface is reflected. The function characterizes the amount of reflected light from an incident ray at an angle $\omega_i$ the surface normal. The intensity of the reflected (outgoing) light is also specified in these directions $\omega_o$. The input and output angles are 2-vectors that define the azimuth $\phi_i, \phi_o$ and elevation $\theta_i, \theta_o$ of the rays. Thus the BRDF is a scalar function. Given a light ray of unit intensity, incident at $\omega_i$, the output intensity at different angles $\omega_o$ will be given by
+
+$$
+f_r(\phi_i,\theta_i,\phi_o,\theta_o,\lambda) = f_r(\omega_i, \omega_o, \lambda)
+$$
 
 [Document on data-driven BRDFs](https://docs.google.com/document/d/1Wy2ygwu30i5quFX21kgz34OGSszNwUXn39Dfh4ypavA/edit?usp=sharing)
 
 ```{=html}
-<!-- I created a Gemini document about data driven papers 
+<!-- 
+I created a Gemini document about data driven papers 
  -->
 ```
 
@@ -213,10 +226,10 @@ There is a MERL database.
 ```{=html}
 <!--
 
-Sand, reasonable figures.Tongbuasirilai2020-BRDFTongbuasirilai2020-BRDFTongbuasirilai2020-BRDFTongbuasirilai2020-BRDFTongbuasirilai2020-BRDF - https://opg.optica.org/ao/fulltext.cfm?uri=ao-54-31-F243&id=330097
+Sand, reasonable figures. Tongbuasirilai2020-BRDF
+ - https://opg.optica.org/ao/fulltext.cfm?uri=ao-54-31-F243&id=330097
 
 Excellent source for material models and some simple formula of reflection.  Introduces dielectrics (Plastic, Stone, Wood, Leather, Glass, Water, Air), and conductors (metals)
-
 https://leeyngdo.github.io/blog/computer-graphics/2024-03-22-reflection-model/?utm_source=chatgpt.com
 
 Fermat's principle: light will follow the path that requires the least amount of time, as compared to other nearby paths, to pass between two points.
