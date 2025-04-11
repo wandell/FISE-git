@@ -25,25 +25,31 @@ $$
 -   $P(d)$ - marginal probability of d.
 :::
 
-The challenge in using Bayes' Rule is also obvious. In many cases we have very little idea about the prior, and for many applications we do not know how to even compute the likelihood of $d$ given $C$.
+The challenge in using Bayes' Rule is that in many cases we have very little idea about the prior; and, for many applications we do not know how to even compute the likelihood of $d$ given $C$.
 
 ## Linear models
 
-Linear models are a second way to capture the regularity in the data. These are a standard linear algebra tool, in which we express the data - which is usually a large collection of vector measurements - as the weighted sum of a known, fixed, set of possible vectors called the *basis* vectors. To connect the idea to the case at hand, suppose we consider the data to be a spectrum, $d(\lambda)$, where we measure over the visible range from 380 nm to 780 nm in 1 nm steps (hence, \$d\$ is 401 dimensions). After making a few thousand (or million) measurements we might discover that we can closely approximate the $j^{th}$ measurement as the weighted sum of $N$ basis functions.
+Linear models are a second way to capture the regularity in the data. These are a standard linear algebra tool, in which we express the data - which is usually a large collection of vector measurements - as the weighted sum of a known, fixed, set of possible vectors called the *basis* vectors. To connect the idea to the case at hand, suppose we consider the data to be a spectrum, $d(\lambda)$, where we measure over the visible range from 380 nm to 780 nm in 1 nm steps (hence, \$d\$ is 401 dimensions). After making a few thousand (or million) measurements we might discover that we can closely approximate the $j^{th}$ measurement as the weighted sum of $N$ basis functions.  We write that approximation this way:
 
-$$ d_j(\lambda) = \sum_{i=1}^{N} B_i(\lambda) w_{ij}$$
+$$
+d_j(\lambda) \approx \sum_{i=1}^{N} B_i(\lambda) w_{ij}
+$$ {#eq-linear1}
 
 This linear model representation can efficiently capture many types of regularities in the data. As an example, it is common to make measurements at a large number of samples, so that the vector $d_j(\lambda)$ may be large, in this example 401. We may find that over the collection of measurements we can approximate all the data with a relatively small number of basis functions ($N$ is 5, 10, 20). We might then representing each observation using only $N << 401$ values (along with the values in the $N$ basis functions).
 
 Most commonly the basis functions $B_i$ are chosen to be orthogonal to one another. For example, this is the choice when people use the principal components method. Basis vector orthogonality means that the inner product[^lightfields-properties-1] of any pair of basis vectors is zero. The formula for the inner product, in this example is,
 
 [^lightfields-properties-1]: Widely used synonyms for the term inner product are *dot product* and *scalar product*.
-
-$$ 0 = \sum_{\lambda} B_i(\lambda) B_j(\lambda)$$
+$$
+0 = \sum_{\lambda} B_i(\lambda) B_j(\lambda)
+$$
 
 Some of you will notice that we can use matrix notation to express the linear model. The linear model simply expresses the data, $\mathbf{d_j}$ vector as the product of a weight vector, $\mathbf{w_j}$ and the basis vectors placed in the columns of the matrix $\mathbf{B}$.
 
-$$\mathbf{d_j} = \mathbf{B} \mathbf{w_j}$$
+$$
+\mathbf{d_j} = \mathbf{B} \mathbf{w_j}
+$$
+{#eq-linearmatrix}
 
 Linear models appear in many places in this book, with many different applications. When you are ready to read more about them as a general mathematical tool, go to the Appendix chapter on linear models. It has a chatty discussion that can help you find your way into the more advanced literature, as well as a guide to learn about nonlinear methods that - in some circumstances - can be very helpful @DiCarlo2003-spectralestimationtheory also ISOMAP.
 
@@ -168,7 +174,7 @@ Over the decades a number of imaging groups have measured the reflectance of man
 
 A Finnish group, for example, measured 1269 different color swatches from the Munsell Book of Colors. This widely used book spans a wide range of color samples that provides designers with a method for identifying, selecting, matching, and communicating about color. @Parkkinen1989-munsellspectra made their spectral measurements at 1 nm resolution. A linear model using three basis functions fits all the measurements with an error of about 2.5%. A linear model with 5 basis functions fits the data to within about 1%. This accuracy is usually often enough for image systems applications.
 
-![Three basis functions for the Munsell Book of Color, from measurements by @Parkkinen1989-munsellspectra. The first linear model function is very close to the mean and is all positive. The 2nd and 3rd functions capture the principal variation in the samples. The three basis functions, calculated using the singular value decomposition, are orthogonal to one another. Notice the location of the zero-crossing of the 2nd function, which is near 560 nm, and the two zero-crossings of the 3rd function which are near 490 nm and 600 nm.](images/lightfields/01-munsell-basis.png){#fig-munsell-basis fig-align="center" width="60%"}
+![Three basis functions for the Munsell Book of Color, from measurements by @Parkkinen1989-munsellspectra. The first linear model function is very close to the mean and is all positive. The 2nd and 3rd functions capture the principal variation in the samples. The three basis functions, calculated using the singular value decomposition, are orthogonal to one another. Notice the location of the zero-crossing of the 2nd function, which is near 560 nm, and the two zero-crossings of the 3rd function which are near 490 nm and 600 nm.](images/lightfields/01-munsell-basis.png){#fig-munsell-basis fig-align="center" width="60%" fig-cap-location="bottom"}
 
 The linear models calculated for several types of common materials are often similar. This is illustrated in a set of measurements Vrhel and colleagues @Vrhel1994-MeasurementAnalysisObject. Their data, also included ISETCam, measures a few dozen surfaces from several different groups (paint, natural objects, man-made objects, food). It is likely the authors chose the samples to have similar means by insisting on a broad representation of color appearances. Had they chosen only the leaves in a forest, or only the rocks in the desert, the means might have differed. The properties of the 2nd and 3rd basis functions are also similar, and this is not likely to be a selection artifact. The measured spectral reflectance functions are relatively smooth with respect to wavelength, and thus the basis functions are smooth. The zero-crossings of these basis functions fall at locations that divide the visible spectrum into three, similar sections - bluish, greenish, and reddish.
 
@@ -201,7 +207,7 @@ The DRM finds application in topics such as illuminant estimation, specular high
 
 An empirical description of the surface reflectance is called the *bidirectional reflectance distribution function* (BRDF). This characterizes how a light ray of wavelength $\lambda$ arriving at a point on the surface is reflected. The function specifies the intensity of reflected light from an incident ray at an angle $\omega_i$ with respect to the surface normal. The intensity of the reflected light is also specified at all angles $\omega_o$, with respect to the surface normal. These two directions (input and reflected) are why the measurement is bidirectional.
 
-![Illustration of the two BRDF angle parameters. These are used to define both the angle of the incident light ray and the angle of the reflected light rays. If we fix the wavelength and angle of the incident light ray, we can specify the relative intensity of the reflected ray as an image that spans the two angle parameters.](images/lightfields/01-azimuthelevation-0.png){#fig-azimuth-elevation fig-align="center" width="50%"}
+![Redraw, but like this:  Illustration of the two BRDF angle parameters. These are used to define both the angle of the incident light ray and the angle of the reflected light rays. If we fix the wavelength and angle of the incident light ray, we can specify the relative intensity of the reflected ray as an image that spans the two angle parameters.](images/lightfields/01-azimuthelevation-1.png){#fig-azimuth-elevation fig-align="center" width="50%"}
 
 The input and output angles are 2-vectors that define the angle around the surface normal in the tangent plane (azimuth) $\phi_i, \phi_o$ and the angle elevation $\theta_i, \theta_o$ of the rays. Thus the BRDF is a scalar function. Given a light ray of unit intensity, incident at $\omega_i$, the output intensity at different angles $\omega_o$ will be given by
 
@@ -211,13 +217,10 @@ $$
 
 ```{=html}
 <!-- 
- ![The azimuth and elevation of a ray.](images/lightfields/01-azimuthelevation-1.png){#fig-azimuth-elevation fig-align="center" width="60%"}
-
 I created a Gemini document about data driven papers 
-
 [Document on data-driven BRDFs](https://docs.google.com/document/d/1Wy2ygwu30i5quFX21kgz34OGSszNwUXn39Dfh4ypavA/edit?usp=sharing)
 
-[Source for azimuth and elevation and zenity.](https://www.researchgate.net/publication/334197029_A_new_model_for_reduction_of_Azimuth_asymmetry_biases_of_tropospheric_delay/figures?lo=1)
+[Source for spherical azimuth and elevation and zenity.](https://www.researchgate.net/publication/334197029_A_new_model_for_reduction_of_Azimuth_asymmetry_biases_of_tropospheric_delay/figures?lo=1)
 
  -->
 ```
