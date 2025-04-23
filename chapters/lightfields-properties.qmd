@@ -1,16 +1,18 @@
 # Light field properties {#sec-lightfield-properties}
 
-Many image systems are designed to measure the scene. These measurements might be used to identify an object and its properties, such as its size, distance, and material. These systems are fundamental to applications like industrial inspection, autonomous vehicles, and medical imaging. Even in consumer photography applications, whose primary mission is to reproduce the light field, estimating scene physical characteristics - such as the ambient lighting - can be useful.
+Many image systems are designed to measure properties of a scene, such as the size of an object, its distance from the camera, or the properties of the material it is made of. Image systems that measure these quantitites are fundamental to applications like industrial inspection, autonomous vehicles, and medical imaging. Even in consumer photography applications, whose primary mission is to capture and display the visual impression of the scene, estimating scene physical characteristics - such as the ambient lighting - can be useful.  And in the Preface, I quoted Helmholtz who wrote that inferring scene properties is the core function of human vision [@fig-helmoltz].
 
-In many image systems applications the problem is under constrained, by which I mean that many different scenes or objects might have produced the measured image. There is a useful principle that applies to these situations, often attributed to Thomas Bayes, is quite simple. If many potential solutions exist to a problem, Bayes' Rule tells us to select the most likely one. The general principle seems pretty obvious, no? The hard part, of course, is how to know which answer is the most likely one.
+In many image systems applications the measurement is under constrained, by which I mean that multiple object properties might produce the same measurement. There is a useful principle that applies to these situations, often attributed to Thomas Bayes. If many potential solutions exist to a problem, Bayes' Rule says select the most likely one. The general principle seems great; the hard part is knowing which answer is the most likely one.
 
-We do not always have information about the relative likelihood of different solutions, but sometimes we do. One way to make better guesses is to learn about regularities in the world. In this section we describe some regularities about the spectral (wavelength) and spatial properties of natural images. In certain specific applications, such as medical imaging or industrial inspection conditions, the regularities may narrow the set of possible answers greatly.
+We do not always have information about the likelihood of different solutions, but sometimes we do. One way to make better guesses is to learn about regularities in the world. In this section we describe some regularities about the spectral (wavelength) and spatial properties of natural images. In certain specific applications, such as medical imaging or industrial inspection conditions, the regularities may narrow the set of possible answers greatly and provide a very valuable and precise guide.
 
 ## Representing regularities
+How to specify regularities in the scene, and how to take advantage of them, will be a recurring theme as we describe various image systems. There are two classical mathematical tools that are widely used to specify regularities throughout science and engineering, and both will come up in this book. I just mentioned Bayes' Rule, which is famous and simple.  A second mathematical tool, dimensionality reduction using linear models or techniques from compression, is also very widely used.  
+
+More recently, training neural networks has proven to be a very useful way to infer the statistical regularities of a large training set. Here, I describe the classical techniques; I will introduce some neural network training applications in later chapters.
 
 ### Bayes Rules
-
-How to specify regularities in the scene, and how to take advantage of them, will be a recurring theme as we describe various image systems. There are two classical mathematical tools that are widely used to specify regularities throughout science and engineering, and both will come up in this book. I just mentioned Bayes' Rule, which is extremely famous and simple. If we know the probability of a specific condition, $C$, being true given a measurement, $d$, we use the laws of probability to write
+ If we know the probability of a specific condition, $C$, being true given measured data, $d$, we use the laws of probability to write
 
 $$
 P(C | d) = \frac{P(d \cap C)}{P(d)} = \frac{P(d \cap C) P(C)}{P(d) P(C)}= \frac{P(d | C) P(C)}{P(d)}
@@ -20,24 +22,25 @@ $$
 ### The terms in Bayes' Rule
 
 -   $P(C | d)$ - **posterior probability** of C given d.
--   $P(d|C)$ - likelihood of d given C.
+-   $P(d|C)$ - **likelihood** of d given C.
 -   $P(C)$ - **prior probability** of C.
--   $P(d)$ - marginal probability of d.
+-   $P(d)$ - **marginal likelihood** of d.
 :::
 
-The challenge in using Bayes' Rule is that in many cases we have very little idea about the prior; and, for many applications we do not know how to even compute the likelihood of $d$ given $C$.
+The application of Bayes' Rule requires that we know the prior and the likelihood of the data, $d$, given the condition, $C$. In many applications, this knowledge comes from a simulation of the process.  If we know the condition, then we can simulate the data. Being able to work out this probability is a fundamental task for the scientist or engineer.
+
+A more difficult challenge in using Bayes' Rule is that we often have little idea about the prior, $P(C)$. The cases in which we do have this world knowledge can be very valuable. How we represent this knowledge can also be important. That is where linear models can be quite useful.
 
 ## Linear models
+Linear models have many uses in science and engineering.  In this section, we will use them to represent certain types of regularity in the data. Specifically, suppose we have a large collection of vector measurements, with each vector represented by $D$ samples.  We can use express each of the measurements as the weighted sum of a small, set of $M$ vectors, which we call the *basis* vectors. If the $N$ is much smaller than $D$, the basis set captures an essential regularity about the original data set.
 
-Linear models are a second way to capture the regularity in the data. These are a standard linear algebra tool, in which we express the data - which is usually a large collection of vector measurements - as the weighted sum of a known, fixed, set of possible vectors called the *basis* vectors. To connect the idea to the case at hand, suppose we consider the data to be a spectrum, $d(\lambda)$, where we measure over the visible range from 380 nm to 780 nm in 1 nm steps (hence, \$d\$ is 401 dimensions). After making a few thousand (or million) measurements we might discover that we can closely approximate the $j^{th}$ measurement as the weighted sum of $N$ basis functions. We write that approximation this way:
+To connect the linear model idea to the case at hand, suppose we the data are a set of radiance spectra, $d(\lambda)$. We might have measured these spectra over the visible range from 380 nm to 780 nm in 1 nm steps (hence, \$d\$ is 401 dimensions). After making a few thousand (or million) measurements, we might discover that we can closely approximate any of the measurement, $d_j$, as the weighted sum of $N$ basis functions. We write the approximation this way:
 
 $$
 d_j(\lambda) \approx \sum_{i=1}^{N} B_i(\lambda) w_{ij}
 $$ {#eq-linear1}
 
-This linear model representation can efficiently capture many types of regularities in the data. As an example, it is common to make measurements at a large number of samples, so that the vector $d_j(\lambda)$ may be large, in this example 401. We may find that over the collection of measurements we can approximate all the data with a relatively small number of basis functions ($N$ is 5, 10, 20). We might then representing each observation using only $N << 401$ values (along with the values in the $N$ basis functions).
-
-Most commonly the basis functions $B_i$ are chosen to be orthogonal to one another. For example, this is the choice when people use the principal components method. Basis vector orthogonality means that the inner product[^lightfields-properties-1] of any pair of basis vectors is zero. The formula for the inner product, in this example is,
+There are a large number of tools to find the basis vectors, $B_i$ .  Sometimes, they arise naturally from physical principles.  This is the case for the Fourier basis functions, which comprise the harmonic functions at different frequencies.  It is common to select $N$ basis functions that explain the most variance in the data. This is the choice we make when using Principal Components Analysis (PCA). In both of these cases, Fourier and PCA, the basis vectors are orthogonal.  This means that the inner product[^lightfields-properties-1] of any pair of basis vectors is zero. The formula for the inner product, in this example is,
 
 [^lightfields-properties-1]: Widely used synonyms for the term inner product are *dot product* and *scalar product*. $$
     0 = \sum_{\lambda} B_i(\lambda) B_j(\lambda)
