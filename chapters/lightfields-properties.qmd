@@ -7,9 +7,21 @@ In many image systems applications the measurement is under constrained, by whic
 We do not always have information about the likelihood of different solutions, but sometimes we do. One way to make better guesses is to learn about regularities in the world. In this section we describe some regularities about the spectral (wavelength) and spatial properties of natural images. In certain specific applications, such as medical imaging or industrial inspection conditions, the regularities may narrow the set of possible answers greatly and provide a very valuable and precise guide.
 
 ## Representing regularities
-How to specify regularities in the scene, and how to take advantage of them, will be a recurring theme as we describe various image systems. There are two classical mathematical tools that are widely used to specify regularities throughout science and engineering, and both will come up in this book. I just mentioned Bayes' Rule, which is famous and simple.  A second mathematical tool, dimensionality reduction using linear models or techniques from compression, is also very widely used.  
+How to specify and use regularities in the scene radiance is a recurring theme in this book.  The issue comes up when we  design image acquisition systems, and when we design image representations (e.g., compression). It will come up as well when we want to make inferences about the scene itself, such as estimating the spectral reflectance of a surface, or the health status of biological tissue.
 
-More recently, training neural networks has proven to be a very useful way to infer the statistical regularities of a large training set. Here, I describe the classical techniques; I will introduce some neural network training applications in later chapters.
+There are two related issues that we must manage when we consider scene radiance regularities. The first is how we learn about the regularities.  Sometimes we learn about them because we can build physical models of the signals; the regularities often follow naturally. This is the case when I describe solar radiation. In other cases, we learn about regularities because we have experience with a many examples, and we use computational tools to quantify the regularities. This is the case when I describe surface reflectances and the typical spatial structure of natural images.
+
+<!--
+Eero's statistical work surely gets in here somewhere.  Not obviously in this section, but perhaps in the spatial regularity part.
+-->
+
+There are two classical tools that are widely used to specify regularities throughout science and engineering, and both will come up in this book. I just mentioned Bayes' Rule, which is famous and simple.  Probability distributions are a very general way to represent the likelihood of making an observation.  In certain cases it is possible to perform simulations using these probability distributions, but often incorporating these distributions in a simulation is hard or impossible to achieve.
+
+A second mathematical tool, dimensionality reduction, is also widely used. Dimensionality reduction, particularly based on linear models, is an extremely practical computational approach.  Usually, however, this approach is a coarse way to capture the statistical regularities of the data. 
+
+More recently, training neural networks has proven to be a very useful way to infer statistical regularities from a large data set, and it also provides a computable model. This approach is proving to be quite practical in many contexts.  
+
+In this section, I describe the two classical techniques.  They remain quite useful and often provide good insight into the physics of the system. I then apply them to important descriptions of the scene spectral radiance. As we move through different sections of the book, I will introduce examples of how neural network training is increasingly finding application in image systems engineering.
 
 ### Bayes Rules
  If we know the probability of a specific condition, $C$, being true given measured data, $d$, we use the laws of probability to write
@@ -31,28 +43,32 @@ The application of Bayes' Rule requires that we know the prior and the likelihoo
 
 A more difficult challenge in using Bayes' Rule is that we often have little idea about the prior, $P(C)$. The cases in which we do have this world knowledge can be very valuable. How we represent this knowledge can also be important. That is where linear models can be quite useful.
 
-## Linear models
+*PUT IN AN EXAMPLE.  THE FREEMAN/BRAINARD is the one I know.  Maybe there is a better one?*
+
+### Linear models
 Linear models have many uses in science and engineering.  In this section, we will use them to represent certain types of regularity in the data. Specifically, suppose we have a large collection of vector measurements, with each vector represented by $D$ samples.  We can use express each of the measurements as the weighted sum of a small, set of $M$ vectors, which we call the *basis* vectors. If the $N$ is much smaller than $D$, the basis set captures an essential regularity about the original data set.
 
 To connect the linear model idea to the case at hand, suppose we the data are a set of radiance spectra, $d(\lambda)$. We might have measured these spectra over the visible range from 380 nm to 780 nm in 1 nm steps (hence, \$d\$ is 401 dimensions). After making a few thousand (or million) measurements, we might discover that we can closely approximate any of the measurement, $d_j$, as the weighted sum of $N$ basis functions. We write the approximation this way:
-
 $$
 d_j(\lambda) \approx \sum_{i=1}^{N} B_i(\lambda) w_{ij}
 $$ {#eq-linear1}
 
-There are a large number of tools to find the basis vectors, $B_i$ .  Sometimes, they arise naturally from physical principles.  This is the case for the Fourier basis functions, which comprise the harmonic functions at different frequencies.  It is common to select $N$ basis functions that explain the most variance in the data. This is the choice we make when using Principal Components Analysis (PCA). In both of these cases, Fourier and PCA, the basis vectors are orthogonal.  This means that the inner product[^lightfields-properties-1] of any pair of basis vectors is zero. The formula for the inner product, in this example is,
+There are a many tools to find basis vectors, $B_i$, and these tools rely on different objectives. Sometimes, the choice of basis vectors arise from physical principles. This is the case for the Fourier basis functions, which are the harmonic functions, and are a natural part of magnetic resonance imaging, sound, and heat transfer. It is also common to select $N$ basis functions that explain the most variance in the data, which is the choice we make when using Principal Components Analysis (PCA) that relies on the important matrix decomposition the singular value decomposition (SVD). In both of these cases, Fourier and PCA, the basis vectors are orthogonal, which means that the inner product[^lightfields-properties-1] of any pair of basis vectors is zero. The mathematical expression for the inner product and orthogonality is
 
-[^lightfields-properties-1]: Widely used synonyms for the term inner product are *dot product* and *scalar product*. $$
+[^lightfields-properties-1]: Widely used synonyms for the term inner product are *dot product* and *scalar product*.
+ $$
     0 = \sum_{\lambda} B_i(\lambda) B_j(\lambda)
-    $$
+$$
 
-Some of you will notice that we can use matrix notation to express the linear model. The linear model simply expresses the data, $\mathbf{d_j}$ vector as the product of a weight vector, $\mathbf{w_j}$ and the basis vectors placed in the columns of the matrix $\mathbf{B}$.
+It is quite common to use matrix notation to express the linear model. With this notation, the linear model places the basis vectors into the columns of a matrix, $\mathbf{B}$.  Each data vector, $\mathbf{d_j}$, is the product of a weight vector, $\mathbf{w_j}$ times the matrix of basis vectors.
 
 $$
 \mathbf{d_j} = \mathbf{B} \mathbf{w_j}
 $$ {#eq-linearmatrix}
 
-Linear models appear in many places in this book, with many different applications. When you are ready to read more about them as a general mathematical tool, go to the Appendix chapter on linear models. It has a chatty discussion that can help you find your way into the more advanced literature, as well as a guide to learn about nonlinear methods that - in some circumstances - can be very helpful @DiCarlo2003-spectralestimationtheory also ISOMAP.
+Linear models appear in many places in this book, with many different applications. When you are ready to read more about them as a general mathematical tool, go to Appendix @sec-linearmodels, which has a chatty discussion.  From there you can find your way to more advanced and authoritative literature. The Appendix also contains pointers to important nonlinear methods that - in some circumstances - can be very helpful @DiCarlo2003-spectralestimationtheory also ISOMAP.
+
+In the next two sections we describe some of the regularities that have emerged from studying and measuring radiance.  We begin with regularities concerning the spectral properties in the visible band.  We then turn to regularities concerning the spatial properties of natural images, again in the visible band.
 
 ## Spectral regularities
 
