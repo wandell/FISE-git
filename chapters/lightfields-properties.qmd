@@ -8,9 +8,17 @@ We do not always have information about the likelihood of different solutions, b
 
 ## Representing regularities
 
-How to specify and use regularities in the scene radiance is a recurring theme in this book. The issue comes up when we design image acquisition systems, and when we design image representations (e.g., compression). It will come up as well when we want to make inferences about the scene itself, such as estimating the spectral reflectance of a surface, or the health status of biological tissue.
+Identifying and leveraging regularities within scene radiance is a central theme we will revisit throughout this book. This concept arises in diverse contexts, from the design of image acquisition systems and image representations (such as compression algorithms) to making inferences about the scene itself, like estimating surface spectral reflectance or assessing biological tissue health.
 
-There are two related issues that we must manage when we consider scene radiance regularities. The first is how we learn about the regularities. Sometimes we learn about them because we can build physical models of the signals; the regularities often follow naturally. This is the case when I describe solar radiation. In other cases, we learn about regularities because we have experience with a many examples, and we use computational tools to quantify the regularities. This is the case when I describe surface reflectances and the typical spatial structure of natural images.
+When considering these regularities, we face two interconnected challenges. First, how do we come to understand these underlying patterns? In some instances, our knowledge stems from building physical models of the signals, where regularities emerge as a natural consequence of the model. The description of solar radiation provides a good example of this. In other cases, we learn about regularities through empirical observation of numerous examples, employing computational tools to quantify these patterns. Our discussions on surface reflectances and the characteristic spatial structure of natural images will illustrate this approach.
+
+Two classical mathematical frameworks are fundamental for specifying regularities across various scientific and engineering disciplines, and both will feature prominently in this book. Bayes' Rule offers a powerful yet straightforward way to reason about probabilities. More generally, probability distributions provide a versatile language for representing the likelihood of observations. While these distributions can sometimes be directly used in simulations, their incorporation can often present significant computational hurdles.
+
+A second widely employed mathematical tool is dimensionality reduction, particularly techniques based on linear models. Dimensionality reduction offers a highly practical computational approach for simplifying complex datasets. However, it often provides only an approximate representation of the underlying statistical regularities.
+
+More recently, neural network training has emerged as a potent method for inferring statistical regularities from large datasets, simultaneously yielding a computationally tractable model. This data-driven approach is proving increasingly valuable across numerous applications.
+
+In this section, we will delve into the two classical techniques. They remain indispensable tools, often providing crucial insights into the physical principles governing the system. We will then apply them to key descriptions of scene spectral radiance. As we progress through subsequent sections of the book, we will also explore how neural network training is increasingly being integrated into image systems engineering.
 
 ```{=html}
 <!--
@@ -18,13 +26,6 @@ Eero's statistical work surely gets in here somewhere.  Not obviously in this se
 -->
 ```
 
-There are two classical tools that are widely used to specify regularities throughout science and engineering, and both will come up in this book. I just mentioned Bayes' Rule, which is famous and simple. Probability distributions are a very general way to represent the likelihood of making an observation. In certain cases it is possible to perform simulations using these probability distributions, but often incorporating these distributions in a simulation is hard or impossible to achieve.
-
-A second mathematical tool, dimensionality reduction, is also widely used. Dimensionality reduction, particularly based on linear models, is an extremely practical computational approach. Usually, however, this approach is a coarse way to capture the statistical regularities of the data.
-
-More recently, training neural networks has proven to be a very useful way to infer statistical regularities from a large data set, and it also provides a computable model. This approach is proving to be quite practical in many contexts.
-
-In this section, I describe the two classical techniques. They remain quite useful and often provide good insight into the physics of the system. I then apply them to important descriptions of the scene spectral radiance. As we move through different sections of the book, I will introduce examples of how neural network training is increasingly finding application in image systems engineering.
 
 ### Bayes Rules
 
