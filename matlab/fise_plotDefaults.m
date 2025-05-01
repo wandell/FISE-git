@@ -1,8 +1,11 @@
 %% FISE Defaults
-
+%
 % See the bottom for some code that creates a nice looking plot and
 % was the inspiration for this setup.  This is still a work in
 % progress.
+%
+% See also
+%   nicePlot.m
 
 % Maybe I should try 'Helvetica'
 
