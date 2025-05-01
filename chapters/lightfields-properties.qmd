@@ -4,9 +4,9 @@ Many image systems are engineered to quantify scene properties, such as an objec
 
 A common challenge in many image system applications is that the measurement process is often underdetermined. This means that multiple distinct scene properties could potentially lead to the same observed measurement. In such situations, a powerful principle, often attributed to Thomas Bayes, becomes invaluable. Bayes' Rule suggests that when faced with multiple plausible solutions, we should select the one that is most probable. While the general principle is conceptually elegant, the practical challenge lies in accurately determining the likelihood of each potential solution.
 
-While we may not always possess explicit knowledge about the probabilities of different solutions, we can often leverage prior information or learn from experience. One effective strategy for making more informed inferences is to understand the inherent regularities present in the world. In this section, we will explore some fundamental regularities concerning the spectral (wavelength-dependent) and spatial characteristics of natural images. 
+While we may not always possess explicit knowledge about the probabilities of different solutions, we can often leverage prior information or learn from experience. One effective strategy for making more informed inferences is to understand the inherent regularities present in the world. In this section, we will explore some fundamental regularities concerning the spectral (wavelength-dependent) and spatial characteristics of natural images.
 
-Identifying and leveraging regularities within scene radiance is a central theme we will revisit throughout this book In specific, well-defined applications, such as medical imaging or controlled industrial inspection environments, these regularities can significantly constrain the set of plausible interpretations, providing a valuable and precise guide for analysis. 
+Identifying and leveraging regularities within scene radiance is a central theme we will revisit throughout this book In specific, well-defined applications, such as medical imaging or controlled industrial inspection environments, these regularities can significantly constrain the set of plausible interpretations, providing a valuable and precise guide for analysis.
 
 ## Representing regularities
 
@@ -48,10 +48,10 @@ Implementing Bayes' Rule through this formula requires knowing the likelihood of
 There are many cases, often in the applied sciences and engineering, when enough is known to apply Bayes' Rule. A good example is a medical image diagnostic, say the chance of having a dark spot on of contrast $d$ on the lung to detect a cancerous lesion. We may have measurements from many people, and in retrospect they either will have the disease or not. We can use these data to estimate the likelihood of $P(d \mid C)$ and $P(d \mid \neg C)$. We may further have historical data of the percentage of people in the population who have the disease, $P(C)$. The marginal probability is
 
 $$
-P(d) = P(d \\mid \\neg C) P(\\neg C) + P(d \\mid C) P(C)
+P(d) = P(d \mid C) P(C) + P(d \mid \neg C) P(\neg C)
 $$
 
-From these terms, we can compute the probability of having the posterior probability, \$P(C \\mid d)\$. There are many cases in which we do not have the data to estimate all of the needed likelihoods.  In those cases, we can use other tools.
+From these terms, we can compute the probability of having the posterior probability, \$P(C \mid d)\$. There are many cases in which we do not have the data to estimate all of the needed likelihoods. In those cases, we can use other tools.
 
 ### Linear models
 
@@ -62,15 +62,15 @@ $$
 d_j(\lambda) \approx \sum_{i=1}^{M} B_i(\lambda) w_{ij}
 $$ {#eq-linear1}
 
-There are a many tools to find basis vectors, $\mathbf{B_i}$, and these tools rely on different objectives. Sometimes, the basis vectors are selected from physical or computational principles. This is the case for the Fourier basis functions, which are the harmonic functions, and are a natural part of magnetic resonance imaging, sound, and heat transfer. It is also common to select $M$ basis functions that explain the most variance in the data, which is the choice we make when using Principal Components Analysis (PCA) that relies on the important matrix decomposition the singular value decomposition (SVD). 
+There are a many tools to find basis vectors, $\mathbf{B_i}$, and these tools rely on different objectives. Sometimes, the basis vectors are selected from physical or computational principles. This is the case for the Fourier basis functions, which are the harmonic functions, and are a natural part of magnetic resonance imaging, sound, and heat transfer. It is also common to select $M$ basis functions that explain the most variance in the data, which is the choice we make when using Principal Components Analysis (PCA) that relies on the important matrix decomposition the singular value decomposition (SVD).
 
 In both of these cases, Fourier and PCA, the basis vectors are orthogonal, which means that the inner product[^lightfields-properties-1] of any pair of basis vectors is zero. The mathematical expression for the inner product and orthogonality is
+
+[^lightfields-properties-1]: Widely used synonyms for the term inner product are *dot product* and *scalar product*.
 
 $$
 0 = \sum_{\lambda} B_i(\lambda) B_j(\lambda)
 $$
-
-[^lightfields-properties-1]: Widely used synonyms for the term inner product are *dot product* and *scalar product*. 
 
 It is quite common to use matrix notation to express the linear model. With this notation, the linear model places the basis vectors into the columns of a matrix, $\mathbf{B}$. Each data vector, $\mathbf{d_j}$, is the product of a weight vector, $\mathbf{w_j}$ times the matrix of basis vectors.
 
@@ -78,7 +78,7 @@ $$
 \mathbf{d_j} = \mathbf{B} \mathbf{w_j}
 $$ {#eq-linearmatrix}
 
-This regularity is often called dimension-reduction.  It is a helpful regularity, but quite different from knowing the full probability distribution. The regularity allows us to take the high dimensional data, say with 401-vectors, and represent them with many fewer numbers, say the 10 or 20 weights.  In that sense, the reduction informs us about the likelihood of certain data sets.  But there remains a much more that can be learned about the data because not all of the different weights are likely, or in some cases physically realizable. Thus, the dimensionality gets you part of the way there, but studying the properties of thew weights can provide even more information (@DiCarlo2003-spectralestimationtheory)
+This regularity is often called dimension-reduction. It is a helpful regularity, but quite different from knowing the full probability distribution. The regularity allows us to take the high dimensional data, say with 401-vectors, and represent them with many fewer numbers, say the 10 or 20 weights. In that sense, the reduction informs us about the likelihood of certain data sets. But there remains a much more that can be learned about the data because not all of the different weights are likely, or in some cases physically realizable. Thus, the dimensionality gets you part of the way there, but studying the properties of thew weights can provide even more information (@DiCarlo2003-spectralestimationtheory)
 
 Linear models appear in many places in this book, with many different applications. If you would like to read more about them, have a look at the chatty discussion in Appendix @sec-linearmodels. From there you can find your way to more advanced and authoritative literature. The Appendix also contains pointers to important nonlinear methods that - in some circumstances - can be very helpful (@Maaten2008-dimensionalityreduction).
 
@@ -151,7 +151,7 @@ When he was a student at Stanford, Jeff DiCarlo decided to measure the daylight 
 -->
 ```
 
-The regularities in the sky radiance are even more constrained than the linear model.  First, the weights are correlated: When you know one of the weights, you can make a reasonable guess about the other weight. Also, some weights are impossible because they would produce negative values in the spectrum @DiCarlo2000-daylight. Thus, the linear model gets us part of the way to establishing the regularities, but there is even more to be measured.
+The regularities in the sky radiance are even more constrained than the linear model. First, the weights are correlated: When you know one of the weights, you can make a reasonable guess about the other weight. Also, some weights are impossible because they would produce negative values in the spectrum @DiCarlo2000-daylight. Thus, the linear model gets us part of the way to establishing the regularities, but there is even more to be measured.
 
 ::: {#daylight-weights .callout-note collapse="true" appearance="simple"}
 ### Correlated weights
@@ -236,7 +236,9 @@ The DRM finds application in topics such as illuminant estimation, specular high
 
 ### Bidrectional reflectance distribution function (BRDF) {#sec-properties-brdf}
 
-The complete description of surface reflectance is called the *bidirectional reflectance distribution function* (BRDF). The measurement characterizes how light rays of wavelength $\lambda$, arriving at a point on the surface at an angle $\omega_i$, are reflected. The reflected light intensity is specified at all angles $\omega_o$. Both $\omega_i$ and $\omega_o$ are conventionally measured with respect to the surface normal. We can write the BRDF as $B(\omega_i,\omega_o,\lambda)$. The reciprocity of principle of light, often attributed to Helmholtz in his Handbook of Optics, implies that the BRDFs for most materials, with only a few exceptions, obey this symmetry relationship.
+The *bidirectional reflectance distribution function* (BRDF) characterizes how light rays of wavelength $\lambda$, incident at the surface at an angle $\omega_i$, are reflected. The reflected, outgoing light is specified at all angles $\omega_o$. Both $\omega_i$ and $\omega_o$ are measured with respect to the surface normal. We can write the intensity as a function of input and output angles as the function $B(\omega_i,\omega_o,\lambda)$. The reciprocity of principle of light[^lightfields-properties-2] implies that the BRDFs, with only a few exceptions, obey this symmetry relationship.
+
+[^lightfields-properties-2]: The principle states that if a ray of light travels from point A to point B through any optical system, then the same ray can travel in the reverse direction from B to A, following the same path. This remains true regardless of the complexity of the optical system, including reflections, refractions, and scattering. The concept is often attributed to Hermann von Helmholtz, who formally stated it in his 1856 book Handbook of Physiological Optics @helmholtz1896.
 
 $$
 B(\omega_i,\omega_o,\lambda) = B(\omega_o,\omega_i,\lambda)
@@ -244,27 +246,16 @@ $$
 
 Each of the direction vectors is specified by two parameters, typically defined with respect to the surface normal. One parameter is the angle around the surface normal (azimuth) $\phi_i, \phi_o$, and the second is the elevation $\theta_i, \theta_o$ of the ray. We conventionally describe the BRDF with three parameters, but there are really five parameters in there. That makes the BRDF tedious to measure.
 
-The instrument used to measure the BRDF is called a gonioreflectometer. The instrument has a light source that can be positioned to illuminate the surface at many different angles (typically on a sphere), and a detector that can be positioned at many locations on the sphere. There are many different designs for *gonioreflectometers*. The one in @fig-gonioreflectometer shows a surface is placed on a stage that can be rotated. The light is on a second curved stage that can be rotated. The detector position is fixed.
+The instrument used to measure the BRDF is called a gonioreflectometer. The instrument has a light source that can be positioned to illuminate the surface at many different angles (typically on a sphere), and a detector that can be positioned at many locations on the sphere. There are many different designs for *gonioreflectometers*. The one in @fig-gonioreflectometer shows a surface is placed on a stage that can be rotated. The light and camera are on two arms whose positions can be controlled, sweeping out the possible angles for the incident and reflected light.  To measure the reflectance of a surface requires calibrating the amount of incident light, say by making a measurement with a perfect, white diffusing surface, and then making a second measurement with the material of interest.  The ratio of the responses is the reflectance.  The same calibration measurement can be re-used for multiple materials of interest.
 
-::::: {#fig-gonioreflectometer fig-cap="Illustration of a gonioreflectometer. The light source and detector are on robot arms that can be positioned around the surface. If we fix the wavelength and angle of the incident light ray, we can specify the relative intensity of the reflected ray as an image that spans the two angle parameters."}
-:::: column-page
-::: {layout-ncol="2"}
-![](images/lightfields/01-gonioreflectometer.png){#fig-gonio-1 width="45%"}
+![Example of a **gonioreflectometer**. The light source and detector are on robot arms that can be positioned around the surface. If we fix the wavelength and angle of the incident light ray, we can specify the relative intensity of the reflected light as an image that spans the two angle parameters](images/lightfields/01-gonioreflectometer.png){#fig-gonioreflectometer width="75%"}
 
-![](images/lightfields/01-gonioreflectometer.png){#fig-gonio-2 width="45%"}
-:::
-::::
-
-Illustration of a gonioreflectometer. The light source and detector are on robot arms that can be positioned around the surface. If we fix the wavelength and angle of the incident light ray, we can specify the relative intensity of the reflected ray as an image that spans the two angle parameters.
-:::::
-
-The input and output angles are 2-vectors that define . Thus the BRDF is a scalar function. Given a light ray of unit intensity, incident at $\omega_i$, the output intensity at different angles $\omega_o$ will be given by
+The input and output angles are 2-vectors and the BRDF is a scalar function. We can make all of the angles explicit this way.
 
 $$
-f_r(\phi_i,\theta_i,\phi_o,\theta_o,\lambda) = f_r(\omega_i, \omega_o, \lambda)
+B(\omega_i, \omega_o, \lambda) = f_r(\phi_i,\theta_i,\phi_o,\theta_o,\lambda)
 $$
 
-```{=html}
 <!-- 
 I created a Gemini document about data driven papers 
 [Document on data-driven BRDFs](https://docs.google.com/document/d/1Wy2ygwu30i5quFX21kgz34OGSszNwUXn39Dfh4ypavA/edit?usp=sharing)
@@ -272,7 +263,6 @@ I created a Gemini document about data driven papers
 [Source for spherical azimuth and elevation and zenity.](https://www.researchgate.net/publication/334197029_A_new_model_for_reduction_of_Azimuth_asymmetry_biases_of_tropospheric_delay/figures?lo=1)
 
  -->
-```
 
 #### Data driven
 
@@ -310,6 +300,68 @@ This web page has no graphs illustrating the microfacet theory from Ken Torrance
 
 Something about fractals. Textures. Other stuff.
 
+### Fractals and Power Spectra scale invariance
+
+The scale invariance of natural images arises from their power-law spectral decay, which mathematically ensures statistical consistency across spatial scales. The connection between 1/f\^α spectra and scale invariance can be expressed through:
+
+The power spectrum of natural images follows:
+
+$$
+P(\omega) \propto \frac{1}{|\omega|^{2-\eta}} \quad \text{where } \eta \approx 0.8\text{--}1.5
+$$
+
+Here, $\omega$ represents spatial frequency magnitude, and $\eta$ controls the decay rate[^lightfields-properties-3][^lightfields-properties-4][^lightfields-properties-5].
+
+[^lightfields-properties-3]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
+
+[^lightfields-properties-4]: https://web.mit.edu/torralba/www/ne3302.pdf
+
+[^lightfields-properties-5]: https://www.sciencedirect.com/science/article/pii/0042698996000028
+
+For scale invariance under spatial scaling $x \to \lambda x$, the power spectrum must satisfy:
+
+$$
+P(\lambda\omega) = \lambda^{-\kappa}P(\omega)
+$$
+
+Substituting the power-law form:
+
+$$
+P(\lambda\omega) = \frac{1}{|\lambda\omega|^{2-\eta}} = \lambda^{-(2-\eta)}P(\omega)
+$$
+
+This matches the scale-invariance condition with $\kappa = 2-\eta$, demonstrating that statistical properties remain consistent across scales[^lightfields-properties-6][^lightfields-properties-7][^lightfields-properties-8].
+
+[^lightfields-properties-6]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
+
+[^lightfields-properties-7]: https://web.mit.edu/torralba/www/ne3302.pdf
+
+[^lightfields-properties-8]: http://vigir.missouri.edu/\~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf
+
+**Fractal connection** The power-law exponent relates to fractal dimension $D$ through:
+
+$$
+D = 3 - \frac{\eta}{2}
+$$
+
+where $D$ quantifies space-filling characteristics. Natural images typically exhibit $D \approx 2.2\text{--}2.6$, consistent with their 1/f\^α spectra[^lightfields-properties-9][^lightfields-properties-10].
+
+[^lightfields-properties-9]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
+
+[^lightfields-properties-10]: https://www.nature.com/articles/srep46672
+
+This mathematical framework shows that 1/f\^α spectra inherently encode fractal, scale-invariant structure - the same statistical regularities appear whether analyzing fine details or coarse features of natural scenes[^lightfields-properties-11][^lightfields-properties-12][^lightfields-properties-13].
+
+[^lightfields-properties-11]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
+
+[^lightfields-properties-12]: https://web.mit.edu/torralba/www/ne3302.pdf
+
+[^lightfields-properties-13]: http://vigir.missouri.edu/\~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf
+
+::: {style="text-align: center"}
+⁂
+:::
+
 ### Natural scenes and the 1/f spatial frequency falloff
 
 Who first pointed this out? Relationship to the scale invariant idea of fractals, and the fractal nature of many things.
@@ -318,14 +370,10 @@ Ruderman and Bialek paper on natural image statistics.
 
 Field, Olshausen
 
-David Mumford - famous mathematician guy.  I added some recent papers into paperpile Vision natural images.  Deal with them here, in addition to Lee.
-
-Occlusion Models for Natural Images: A Statistical Study of a Scale-Invariant Dead Leaves Model
-%     Lee, Mumford and Huang, IJCV 2003.
+@lee2001-deadleaves
 
 ### Natural scenes: The dead leaves model
 
-Jon's Matlab script as a basis for discussing this.
-[Software from Jon showing 1/f issues.](https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m)
+Jon's Matlab script as a basis for discussing this. [Software from Jon showing 1/f issues.](https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m)
 
 Also, the deadleaves function in ISETCam.
