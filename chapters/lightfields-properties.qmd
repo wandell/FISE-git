@@ -181,9 +181,9 @@ Despite this potential complexity, there are many relatively simple cases that a
 
 ### Diffuse reflectance
 
-Perhaps the simplest and most important are materials that reflected light equally in all directions, no matter what direction the light is coming from. Such materials have *diffuse reflectance*, also called *Lambertian reflectance*.
+An important type of reflectance, *diffuse reflectance*, or *Lambertian reflectance*.  The incident light is reflected with roughly equal intensity in all directions within the hemisphere above the surface. This occurs when the surface is rough at a microscopic level, comprising many little facets. When the incident light arrives, it will be reflected by one of the facets which are oriented equally in all different directions. Importantly, not all of the incident light is scattered; some of it is absorbed.  The fraction that is absorbed varies with wavelength. The fraction that is scattered is called the diffuse spectral reflectance function.
 
-You can judge to what extent a material is diffuse if you checking what the reflected light looks like as you view the patch from different positions. For diffuse materials the reflected light will be about the same. These materials reflect diffusely because their surfaces have rough microscopic facets, oriented in many directions. When the incident light arrives, it may be reflected by facets oriented randomly, in many different directions. Other materials, such as the highlights reflected from a car, vary in intensity and color appearance as you move around, appearing bright from some positions but not others. Such materials are not diffuse.
+Many objects, like paper, clothing, and walls, are mainly diffuse reflectors, and the spectral reflectance function is a dominant factor in how we perceive surface color.  You can judge to what extent a material is a diffuse reflectance by viewing it from different positions, say by moving your head or walking around the room. For diffuse materials the reflected light will be about the same. Other materials, such as the highlights reflected from a car, vary in intensity and color appearance as you move around, appearing bright from some positions but not others. Such materials are not diffuse.
 
 ::: {#Lambert .callout-note collapse="true" appearance="simple"}
 ## Johan Lambert
@@ -218,11 +218,8 @@ Maybe illustrate the visual size of the errors, as I have in other scripts.\
 -->
 ```
 
-### Dichromatic reflectance model (DRM)
-
-The dichromatic reflectance model (DRM) is another simplified but useful surface reflectance model. It is a good approximation for light reflected from **inhomogeneous dielectric materials** (non-conductors like plastics, paints, wood, skin, etc.). The model approximates reflectance as a weighted sum of a diffuse term and a mirror-like (specular) term. This model is used in computer vision applications where the user would like to identify specular reflections.
-
-The DRM models light as reflected by two processes. A portion of the light is reflected at the material's **interface** with air.  Suppose that the incident light comes from a direction represented by the unit vector $\mathbf{i}$, and the surface normal vector is $\mathbf{n}$. The direction of the reflected ray, $\mathbf{r}$ is calculated this way:
+### Specular reflection (mirror)
+Suppose that the incident light comes from a direction represented by the unit vector $\mathbf{i}$, and the surface normal vector is $\mathbf{n}$. The direction of the reflected ray, $\mathbf{r}$ is calculated this way:
 
 $$
 \mathbf{r} = \mathbf{i} − 2 (\mathbf{i} \cdot \mathbf{n}) \mathbf{n}
@@ -232,15 +229,35 @@ The term ($\mathbf{i} \cdot \mathbf{n}$) is the projection of the incident ray o
 
 ![Geometry of mirror reflection.  The incident (blue) and reflected (red) ray have a component parallel to the surface normal and a component in the surface plane. The  component in the surface plane is the same; but the component in the normal direction is sign-reversed (points in the opposite direction). The ray angles with respect to the surface normal of the two rays is matched $\theta_i$ = $\theta_r$.](images/lightfields/mirror-reflection.png){#fig-mirror-reflection}
 
-A portion of the light enters into the material (**subsurface**) where it interacts with the material's pigments, both by scattering and absorption. The light that emerges from the subsurface determines the object's spectral reflectance. The subsurface reflectance is approximately Lambertian, as the subsurface pigments are randomly positioned and oriented. The DRM represents the reflected light, $C(\lambda)$ as the sum of the interface and subsurface terms
+Common mirrors are very close to perfect specular reflectors, and for scientific applications it is possible to make them increasingly perfect. There are many materials that are rather specular, but not perfectly so.  In these materials an incident ray is reflected mainly in the specular direction, but there is some randomness 
+
+![Comparisons of specular, diffuse and retroreflective materials.](images/lightfields/specular-diffuse-retro.png){#fig-specular-diffuse-retro}
+
+<!--
+Good start for DRM and mirror and diffuse reflectance.  
+https://commons.wikimedia.org/wiki/File:Specular_v_Diffuse_reflection.png
+
+Also, note the specular-diffuse-retro.png file.  From the Korean kid's blog and also PBR book.
+
+-->
+
+### Dichromatic reflectance model (DRM)
+<!--
+The DRM model and related images come from the nice Korean MS student blog
+https://leeyngdo.github.io/blog/computer-graphics/2024-03-22-reflection-model/?utm_source=chatgpt.com
+-->
+
+The dichromatic reflectance model (DRM) is another simplified but useful surface reflectance model. It is a good approximation for light reflected from **inhomogeneous dielectric materials** (non-conductors like plastics, paints, wood, skin, etc.). The model approximates the material reflectance as a weighted sum of a diffuse term and a specular (mirror) reflectance. This model is used in computer vision applications where the user would like to identify specular reflections.
+
+A portion of the incident light is reflected at the surface (**interface reflectance**).  This light has a mirror-like reflectance that preserves the spectral power distribution. Another portion of the light enters into the material (**subsurface scattering**) where it interacts with the material's pigments, both by scattering and absorption. This portion of the incident light is a diffuse reflectance. The subsurface reflectance is usually assumed to be Lambertian, as the subsurface pigments are randomly positioned and oriented. The DRM represents the reflected light, $C(\lambda)$ as the sum of the interface and subsurface terms
 
 $$
 C(\lambda) = m_s(g) I(\lambda) E(\lambda) + m_d(g) D(\lambda) E(\lambda)
 $$ {#eq-DRM}
 
-$E(\lambda)$ is the spectral power distribution of the light; $I(\lambda)$ is the interface spectral reflectance (often assumed to be constant across wavelengths); $D(\lambda)$ is the diffuse subsurface reflectance, which is characteristic of the material. The terms $m_s(g)$ and $m_d(g)$ are geometric scaling factors whose values depend on the illumination and viewing angle. These angles are ordinarily represented with respect to the surface normal at the surface point $g$. The reflected light, $C(\lambda)$ is sometimes called the *color signal* because this spectral radiance is an important contributor to the visual system's color judgment. (Though, I have friends who object to this term).
+$E(\lambda)$ is the spectral power distribution of the light; $I(\lambda)$ is the interface spectral reflectance (often assumed to be constant across wavelengths); $D(\lambda)$ is the diffuse subsurface reflectance, which is characteristic of the material. The terms $m_s(g)$ and $m_d(g)$ are geometric scaling factors whose values depend on the illumination and viewing angles. These angles are ordinarily represented with respect to the surface normal at the surface point $g$. The reflected light, $C(\lambda)$ is sometimes called the *color signal* because this spectral radiance is an important contributor to the visual system's color judgment. (Though, I have friends who object to this term).
 
-The DRM finds application in topics such as illuminant estimation, specular highlight identification and removal, and material classification. It is, however, limited because it does not accurately model complex surfaces. Also, it is difficult to apply to scenes with multiple light sources or very large light sources, such as scenes with light sources that span the sky.
+The DRM is used in computer vision algorithms such as illuminant estimation, specular highlight identification and removal, and material classification. It is, however, limited because it does not accurately model complex surfaces. Also, it is difficult to apply to scenes with multiple light sources or very large light sources, such as scenes with light sources that span the sky.
 
 ### Bidrectional reflectance distribution function (BRDF) {#sec-properties-brdf}
 
@@ -272,17 +289,6 @@ $$ {#eq-BRDF2}
 
  -->
 ```
-
-#### Data driven
-
-There are papers measuring BRDFs and modeling them using linear models and nonlinear models. Data driven approach.
-
-@Matusik2003-datadrivenBRDF @Tongbuasirilai2020-BRDF
-
-There is a MERL database.
-
-@MERL-BRDF-Brand
-
 #### Theoretical
 
 Cook Torrance mainly here.
@@ -304,6 +310,17 @@ This web page has no graphs illustrating the microfacet theory from Ken Torrance
 
 -->
 ```
+#### Data driven
+
+There are papers measuring BRDFs and modeling them using linear models and nonlinear models. Data driven approach.
+
+@Matusik2003-datadrivenBRDF @Tongbuasirilai2020-BRDF
+
+There is a MERL database.
+
+@MERL-BRDF-Brand
+
+
 
 ## Spatial regularities
 
