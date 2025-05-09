@@ -58,6 +58,7 @@ From these terms, we can compute the probability of having the posterior probabi
 Linear models have many uses in science and engineering. One application is representing certain regularities in the data. Specifically, suppose we have a collection of measurement vectors, each with $D$ values. We can express each of the vectors as the weighted sum of a set of $M$ vectors, which we call the *basis* vectors. If $M$ is much smaller than $D$, the basis set captures a regularity that is present in the original data set.
 
 As an example, suppose the data are a set of radiance spectra, $d(\lambda)$, we measured over the visible range from 380 nm to 780 nm in 1 nm steps; hence, each vector, $d$, has 401 values. After making a few thousand (or million) measurements, we discover that we can closely approximate any of the measurements, $d_j$, as the weighted sum of $M$ basis functions, $B_i$. We write the approximation this way: 
+
 $$
 d_j(\lambda) \approx \sum_{i=1}^{M} B_i(\lambda) w_{ij}
 $$ {#eq-linear1}
@@ -181,9 +182,9 @@ Despite this potential complexity, there are many relatively simple cases that a
 
 ### Diffuse reflectance
 
-An important type of reflectance, *diffuse reflectance*, or *Lambertian reflectance*.  The incident light is reflected with roughly equal intensity in all directions within the hemisphere above the surface. This occurs when the surface is rough at a microscopic level, comprising many little facets. When the incident light arrives, it will be reflected by one of the facets which are oriented equally in all different directions. Importantly, not all of the incident light is scattered; some of it is absorbed.  The fraction that is absorbed varies with wavelength. The fraction that is scattered is called the diffuse spectral reflectance function.
+An important type of reflectance, *diffuse reflectance*, or *Lambertian reflectance*. The incident light is reflected with roughly equal intensity in all directions within the hemisphere above the surface. This occurs when the surface is rough at a microscopic level, comprising many little facets. When the incident light arrives, it will be reflected by one of the facets which are oriented equally in all different directions. Importantly, not all of the incident light is scattered; some of it is absorbed. The fraction that is absorbed varies with wavelength. The fraction that is scattered is called the diffuse spectral reflectance function.
 
-Many objects, like paper, clothing, and walls, are mainly diffuse reflectors, and the spectral reflectance function is a dominant factor in how we perceive surface color.  You can judge to what extent a material is a diffuse reflectance by viewing it from different positions, say by moving your head or walking around the room. For diffuse materials the reflected light will be about the same. Other materials, such as the highlights reflected from a car, vary in intensity and color appearance as you move around, appearing bright from some positions but not others. Such materials are not diffuse.
+Many objects, like paper, clothing, and walls, are mainly diffuse reflectors, and the spectral reflectance function is a dominant factor in how we perceive surface color. You can judge to what extent a material is a diffuse reflectance by viewing it from different positions, say by moving your head or walking around the room. For diffuse materials the reflected light will be about the same. Other materials, such as the highlights reflected from a car, vary in intensity and color appearance as you move around, appearing bright from some positions but not others. Such materials are not diffuse.
 
 ::: {#Lambert .callout-note collapse="true" appearance="simple"}
 ## Johan Lambert
@@ -207,9 +208,9 @@ Over the decades a number of imaging groups have measured the reflectance of man
 
 A Finnish group, for example, measured 1269 different color swatches from the Munsell Book of Colors. This widely used book spans a wide range of color samples that provides designers with a method for identifying, selecting, matching, and communicating about color. @Parkkinen1989-munsellspectra made their spectral measurements at 1 nm resolution. A linear model using three basis functions fits all the measurements with an error of about 2.5%. A linear model with 5 basis functions fits the data to within about 1%. This accuracy is usually often enough for image systems applications (@fig-reflectance-bases A).
 
-The linear models calculated for several types of common materials are often similar. This is illustrated in a set of measurements Vrhel and colleagues @Vrhel1994-MeasurementAnalysisObject. Their data, also included ISETCam, measures a few dozen surfaces from several different groups (paint, natural objects, man-made objects, food). It is likely the authors chose the samples to have similar means by insisting on a broad representation of color appearances. Had they chosen only the leaves in a forest, or only the rocks in the desert, the means might have differed. The properties of the 2nd and 3rd basis functions are also similar, and this is not likely to be a selection artifact. The measured spectral reflectance functions are relatively smooth with respect to wavelength, and thus the basis functions are smooth. The zero-crossings of these basis functions fall at locations that divide the visible spectrum into three, similar sections - bluish, greenish, and reddish.
+The linear models for diffuse surface reflectance of several types of common materials are similar (@fig-reflectancebases). The data from Vrhel and colleagues @Vrhel1994-MeasurementAnalysisObject, included in ISETCam, measures a few dozen surfaces from several different groups (paint, natural objects, man-made objects, food). It is likely the authors chose the samples to have similar means and a broad representation of color appearances. For this sampling strategy, the first component will necessarily be similar. BUt the 2nd and 3rd basis functions are also similar, and this is less likely to be a selection artifact. Rather, the similarity arises because the diffuse spectral reflectance functions are very smooth functions wavelength @Maloney1986-linearmodels-surface.
 
-![Three basis functions comparing the basis functions derived from the @Parkkinen1989-munsellspectra Munsell Color Book data (upper left) and three different categories measured by @Vrhel1994-MeasurementAnalysisObject. The basis functions are not identical, but they have many similarities, including the zero-crossings of the 2nd and 3rd basis functions.](images/lightfields/01-reflectance-bases.png){#fig-reflectance-bases fig-align="center" width="80%"}
+![Three basis functions comparing the basis functions derived from the @Parkkinen1989-munsellspectra Munsell Color Book data (upper left) and three different categories of materials. The basis functions are not identical, but they have many similarities, including the wavelengths of the zero-crossings of the 2nd and 3rd basis functions. Data from @Vrhel1994-MeasurementAnalysisObject and distributed in ISETCam.](images/lightfields/01-reflectance-bases.png){#fig-reflectance-bases fig-align="center" width="80%"}
 
 ```{=html}
 <!-- 
@@ -219,49 +220,77 @@ Maybe illustrate the visual size of the errors, as I have in other scripts.\
 ```
 
 ### Specular reflection (mirror)
-Suppose that the incident light comes from a direction represented by the unit vector $\mathbf{i}$, and the surface normal vector is $\mathbf{n}$. The direction of the reflected ray, $\mathbf{r}$ is calculated this way:
+
+The conceptual opposite of diffuse reflection is mirror reflection. In this case, an incident light ray from one direction reflects from the surface in just one direction. The geometry of mirror reflection is shown in @fig-fig-mirror-reflection. The incident ray, reflected ray, and surface normal all lie in the same plane (the **plane of incidence**). The angle of incidence is equal to the angle of reflection, and the surface normal acts as a line of symmetry in the plane of incidence.
+
+![Geometry of mirror reflection. The incident (blue) and reflected (red) ray have a component parallel to the surface normal and a component in the surface plane. The component in the surface plane is the same; but the component in the normal direction is sign-reversed (points in the opposite direction). The ray angles with respect to the surface normal of the two rays is matched $\theta_i$ = $\theta_r$.](images/lightfields/mirror-reflection.png){#fig-mirror-reflection}
+
+It is useful to consider vector components of the incident and reflected ray separately. Suppose that the incident light comes from a direction represented by the unit vector $\mathbf{i}$, and the surface normal vector is $\mathbf{n}$. The direction of the reflected ray, $\mathbf{r}$ is calculated this way:
 
 $$
 \mathbf{r} = \mathbf{i} − 2 (\mathbf{i} \cdot \mathbf{n}) \mathbf{n}
-$$  {#eq-mirror}
+$$ {#eq-mirror}
 
-The term ($\mathbf{i} \cdot \mathbf{n}$) is the projection of the incident ray onto the normal direction. We subtract twice that amount from the incident ray, which flips this component of the incident ray. That is, the reflected ray has the same component length in the normal as the incident ray, but its direction is reverse. It has exactly the same vector component in the surface plane. The light reflected at the interface does not interact with the molecules in the material, and thus its spectral power distribution is the approximately equal to the light source.
+The term ($\mathbf{i} \cdot \mathbf{n}$) is the projection of the incident ray onto the normal ray. We subtract twice that amount from the incident ray, which flips this component. The component of the incident and reflected rays that is parallel to the surface are the same. The net effect is that the incident and reflected rays form equal angles on opposite sides of the surface normal.
 
-![Geometry of mirror reflection.  The incident (blue) and reflected (red) ray have a component parallel to the surface normal and a component in the surface plane. The  component in the surface plane is the same; but the component in the normal direction is sign-reversed (points in the opposite direction). The ray angles with respect to the surface normal of the two rays is matched $\theta_i$ = $\theta_r$.](images/lightfields/mirror-reflection.png){#fig-mirror-reflection}
+The light reflected at the interface of the surface does not interact with the material. Thus the spectral power distribution of a mirror reflection is approximately equal to the spectral power distribution of the incident radiance.
 
-Common mirrors are very to perfect specular reflectors in the sense that a very small set of collimated rays is reflected over a very small angle of output rays. For scientific applications it is possible to polish mirrors, making them increasingly perfect. Typically, however, materials are approximately specular, but not perfectly so. In these materials a small group of incident rays is reflected mainly in the specular direction, but there is some spread of the output rays compared to the spread in the incident rays.  @fig-specular-diffuse-retro compares different conditions, including a diffuse reflectance, nearly perfect specular, and mostly specular case.
+Common mirrors are close to perfect specular reflectors in the sense that a very small set of collimated rays is reflected over a very small angle of output rays. There are only small deviations from slight surface imperfections. For scientific applications this approximation may not be adequate, and additional steps are taken to polish mirrors, making them increasingly perfect.
+
+Many materials are approximately specular, but not perfectly so. In these materials a narrow bundle of incident rays is reflected mainly in the specular direction, but there is some spread of the reflected rays. @fig-specular-diffuse-retro compares different conditions, including a diffuse reflectance, nearly perfect specular, and mostly specular case.
 
 ![Comparisons of (a) diffuse, (b) glossy specular, (c) perfect specular, and (d) retroreflective materials. Figure 9.1 from PBR book. https://www.pbr-book.org/4ed/Reflection_Models](images/lightfields/specular-diffuse-retro.png){#fig-specular-diffuse-retro}
 
-There is fourth case that is quite interesting and used in practical applications:  retroreflective.  Some materials have the property that the incident ray is sent back in the same direction as the incident ray - either quite precisely or at least approximately.  
+The figure includes a fourth interesting case: retroreflective materials. For these materials the reflected ray is sent back in the same direction as the incident ray. These materials can be created by embedding small, spherical, glass beads with a metallic back surface into the material @fig-retroreflective-glass-beads. The glass beads refract the incident ray, the metallic surface returns the ray, which is again refracted, so that the net effect effect is the reflected ray is returned in the direction of the incident ray. Glass beads with a metallic backing are often built into road markings and road signs. Light from a car's headlight is scattered back towards the driver, increasing the visibility of the road marking or sign during nighttime driving.
+
+<!--
+    https://roadmarkingsupplies.com/reflective-glass-beads-wholesale-for-road-marking-paints/
+
+    To apply reflective beads for road markings, follow these steps:
+
+    Prepare the surface: Clean and dry the road surface.
+    Apply road marking material: Use the chosen material according to instructions.
+    Apply beads with glass beads dispenser: Sprinkle or broadcast the beads onto the wet paint or heated thermoplastic.
+    Embed the beads: Use an embedder or apply a thin layer of material over the beads.
+    Allow drying/curing: Follow the manufacturer’s instructions for sufficient drying or curing time.
+    Clear excess beads: Remove loose beads using brooms or sweepers.
+-->
+
+![Comparisons of (a) diffuse, (b) glossy specular, (c) perfect specular, and (d) retroreflective materials. Figure 9.1 from PBR book. https://www.pbr-book.org/4ed/Reflection_Models. https://tccfcct.com/blogs/equipment/all-you-need-to-know-about-reflective-materials-in-high-visibility-safety-apparel](images/lightfields/01-retroreflective-glass-beads.png){#fig-retroreflective-glass-beads}
 
 https://docs.google.com/document/d/1BtxldFF14EY4eC9x6KI9cy1RF4GJAy-e7UAgdJ5YsfI/edit?usp=sharing
 
-<!--
-Good start for DRM and mirror and diffuse reflectance.  
-https://commons.wikimedia.org/wiki/File:Specular_v_Diffuse_reflection.png
-
-Also, note the specular-diffuse-retro.png file.  From the Korean kid's blog and also PBR book.
-
--->
 
 ### Dichromatic reflectance model (DRM)
+
 <!--
 The DRM model and related images come from the nice Korean MS student blog
 https://leeyngdo.github.io/blog/computer-graphics/2024-03-22-reflection-model/?utm_source=chatgpt.com
 -->
 
-The dichromatic reflectance model (DRM) is another simplified but useful surface reflectance model. It is a good approximation for light reflected from **inhomogeneous dielectric materials** (non-conductors like plastics, paints, wood, skin, etc.). The model approximates the material reflectance as a weighted sum of a diffuse term and a specular (mirror) reflectance. This model is used in computer vision applications where the user would like to identify specular reflections.
+The dichromatic reflectance model (DRM) is another useful surface reflectance model that serves as an approximation for light reflected from **inhomogeneous dielectric materials** (non-conductors like plastics, paints, wood, skin, etc.). The model approximates reflectance as a weighted sum of a diffuse term and a glossy specular term. This model is used in computer vision applications where the user would like to identify specular reflections.
 
-A portion of the incident light is reflected at the surface (**interface reflectance**).  This light has a mirror-like reflectance that preserves the spectral power distribution. Another portion of the light enters into the material (**subsurface scattering**) where it interacts with the material's pigments, both by scattering and absorption. This portion of the incident light is a diffuse reflectance. The subsurface reflectance is usually assumed to be Lambertian, as the subsurface pigments are randomly positioned and oriented. The DRM represents the reflected light, $C(\lambda)$ as the sum of the interface and subsurface terms
+A fraction of the incident light is reflected at the surface (**interface**). This light has a mirror-like reflectance that preserves the spectral power distribution and glossy specular spatial distribution. The remaining fraction of the light passes through the interface into the (**subsurface**) where it interacts with the material's pigments, both by diffuse scattering and absorption. The subsurface reflectance is usually assumed to be Lambertian, as the subsurface pigments are randomly positioned and oriented. The reflected light, $C(\lambda)$ is the sum of the interface and subsurface terms
 
 $$
 C(\lambda) = m_s(g) I(\lambda) E(\lambda) + m_d(g) D(\lambda) E(\lambda)
 $$ {#eq-DRM}
 
-$E(\lambda)$ is the spectral power distribution of the light; $I(\lambda)$ is the interface spectral reflectance (often assumed to be constant across wavelengths); $D(\lambda)$ is the diffuse subsurface reflectance, which is characteristic of the material. The terms $m_s(g)$ and $m_d(g)$ are geometric scaling factors whose values depend on the illumination and viewing angles. These angles are ordinarily represented with respect to the surface normal at the surface point $g$. The reflected light, $C(\lambda)$ is sometimes called the *color signal* because this spectral radiance is an important contributor to the visual system's color judgment. (Though, I have friends who object to this term).
+$E(\lambda)$ is the spectral power distribution of the light; $D(\lambda)$ is the diffuse subsurface reflectance, which is characteristic of the material. The terms $m_s(g)$ and $m_d(g)$ are geometric scaling factors whose values depend on the illumination and viewing angles. These angles are ordinarily represented with respect to the surface normal at the surface point $g$. The reflected light, $C(\lambda)$ is sometimes called the *color signal* because this spectral radiance is an important contributor to the visual system's color judgment. (Though, I have friends who object to this term).  $I(\lambda)$ is the interface spectral reflectance is often assumed to be constant across wavelengths, which further simplifies the formula
+
+$$
+C(\lambda) = m_s(g) E(\lambda) + m_d(g) D(\lambda) E(\lambda)
+$$ {#eq-DRM-simplified}
 
 The DRM is used in computer vision algorithms such as illuminant estimation, specular highlight identification and removal, and material classification. It is, however, limited because it does not accurately model complex surfaces. Also, it is difficult to apply to scenes with multiple light sources or very large light sources, such as scenes with light sources that span the sky.
+
+::: {#DRM-illuminant-estimation .callout-note collapse="true" appearance="simple"}
+## DRM Illuminant estimation 
+
+Suppose  the interface reflectance, $I(\lambda)$ is approximately constant so that we accept @eq-DRM-simplified. If we measure the reflected light from a DRM material at a few angles, we will obtain values that differ because of the geometric terms, $m_s$ and $m_d$.  These different estimates can be represented as a two-dimensional linear model. 
+
+The linear terms we estimate from any single surface, say using principal components, may not be precisely aligned with $E(\lambda)$ and $D(\lambda) E(\lambda)$. But if there are two or more different dichromatic reflectance type materials near one another, their linear models must have a shared dimension, $E(\lambda)$.  Thus, we can estimate the principal components of both surfaces, and then find the vector equal to the intersection of these linear models, we will recover the local spectral power distribution of the illuminant.
+:::
 
 ### Bidrectional reflectance distribution function (BRDF) {#sec-properties-brdf}
 
@@ -293,6 +322,7 @@ $$ {#eq-BRDF2}
 
  -->
 ```
+
 #### Theoretical
 
 Cook Torrance mainly here.
@@ -314,6 +344,7 @@ This web page has no graphs illustrating the microfacet theory from Ken Torrance
 
 -->
 ```
+
 #### Data driven
 
 There are papers measuring BRDFs and modeling them using linear models and nonlinear models. Data driven approach.
@@ -323,8 +354,6 @@ There are papers measuring BRDFs and modeling them using linear models and nonli
 There is a MERL database.
 
 @MERL-BRDF-Brand
-
-
 
 ## Spatial regularities
 
