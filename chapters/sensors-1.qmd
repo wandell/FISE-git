@@ -1,30 +1,41 @@
 # Sensors {#sec-sensors}
 
-## History
+The [Preface](../index.qmd#sec-preface) provides a very brief discussion of the history of image sensor technologies, from film to charge-coupled devices (CCD), and to the invention of CMOS image sensors (CIS). 
 
-### Film
-
-Film was the first major commercial technology for capturing and storing image irradiance; the film industry relied heavily on chemistry for creating the recording medium and then transforming the recorded image into a print.
-
-![Film was the dominant image sensor and recording material for a hundred years. The chemistry of film for both encoding and developing into images was the core scientific discipline. Film could not be reused, producing a steady commercial profit for large companies, such as Kodak, Fuji, Polaroid and Agfa.](../images/sensors/film.png){#fig-film width="60%"}
-
+Film, the first major commercial technology for capturing and storing image irradiance, relied heavily on chemistry.
 Light-sensitive molecules were placed in multiple layers onto flexible rolls of plastic, and the roll was loaded into the darkened body of the camera. With the body closed, the film was mechanically advanced, placing a small flat section of film in the focal plane behind the lens. To take a picture, shutter was opened and the spectral irradiance from the lens formed an image on the film. The light changed the structure of molecules in the layers with molecules that were designed to encode the image. For color film, there were multiple layers that differed in their wavelength sensitivity. These molecular changes represented the local brightness of the captured image in different wavebands. Using chemical processes, the density of changes to the light-sensitive molecules could be measured and transferred to other media, such as prints. This process required a variety of chemical consumables, and the film could not be reused. Specialized labs were needed to create the film and to develop and printing the image. Some home hobbyists could develop the film, but mainly the processes were carried out by large commercial organizations.
 
-### Semiconductors
+![Film was the dominant image sensor and recording material for a hundred years. The chemistry of film for both encoding and developing into images was the core scientific discipline. Film could not be reused, producing a steady commercial profit for large companies, such as Kodak, Fuji, Polaroid and Agfa.](images/sensors/film.png){#fig-film width="60%"}
 
-A completely different approach to capturing radiance emerged with the discovery by Willard S. Boyle and George E. Smith at Bell Labs that semiconductor technology could also be used to record irradiance. Light striking silicon releases electrons (photoelectric effect), and the spatial pattern of these electrons could be stored and measured. This breakthrough was first implemented in 1970 by Michael Tompsett, who developed the image sensor known as the charge-coupled device (CCD).
+The transition to electronics emerged with the discovery that semiconductor technology could also be used to record irradiance @boyle1970-ccd-first. Light incident on the silicon releases electrons (photoelectric effect), and the spatial pattern of these electrons can be stored and measured. This breakthrough was first implemented in 1970 by Michael Tompsett, who developed the image sensor known as the charge-coupled device (CCD). The semiconductor based sensor revolutionized imaging, moving it from a field based on chemistry to electrical engineering. Importantly, the digital readout from these electrical devices could be immediately integrated with computers. Images could be stored, shared, edited and analyzed directly from the camera output. 
 
-The semiconductor based sensor revolutionized imaging, moving it from a field based on chemistry to electrical engineering. This method required no consumables (chemicals). Importantly, the digital readout from these electrical devices could be immediately integrated with computers. Images could be stored, shared, edited and analyzed directly from the camera output. The step from the CCD sensor to the CMOS sensor was another major advance that unleashed a massive adoption of electronic image sensors around the world.
+The first successful implementation of this principle in an image sensor was the charge-coupled device (CCD), developed in 1970 by Michael Tompsett, building on earlier work by George Smith and Willard Boyle [@boyle1970-ccd-first]. This innovation marked a fundamental shift in imaging, transitioning from a field rooted in chemistry (like photographic film) to one based on electrical engineering. A key advantage was the digital nature of the readout, allowing immediate integration with computers for storage, sharing, editing, and analysis of images directly from the camera.
 
-![Image sensors include many different subsystems and features.](../images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
+While both CCD and modern CMOS (Complementary Metal-Oxide-Semiconductor) imagers utilize the photoelectric effect to detect light, they are built using distinct semiconductor technologies. These differences typically necessitate separate fabrication facilities or specialized process flows within a general CMOS facility. A pivotal development was Eric Fossum's approach, which demonstrated that image sensors could be successfully fabricated using standard, mainstream CMOS microelectronics processes (@Fossum2023-invention).
 
-This chapter is about the properties of the CMOS image sensors used to measure radiance. In later sections we will also describe how semiconductor sensor can be used to estimate depth, as well. Because there are significant differences in these technologies and the information they acquire, we treat them in separate sections.
+![CMOS image sensors incorporate circuitry, comprising multiple subsystems and enabling many different image processing features.](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
 
-### CMOS imagers
+Fossum's breakthrough was enormously significant both as a technology and for its impact on society. By leveraging standard CMOS technology, it became possible to integrate not only the light-sensing pixels but also the timing, control, and signal processing circuitry onto the same sensor chip. This integration enabled new functionalities directly at the sensor level (@fig-olympus-overview). Furthermore, this shift dramatically reduced power consumption, a crucial factor that opened the door to the widespread adoption of image sensors in mobile devices. This accessibility and miniaturization enabled the massive global adoption of electronic image sensors.
 
-A typical CMOS image sensor, just on its own, is a complex system. The star actor of the image sensor is the photodiode array. The photodiodes convert the irradiance at the sensor into an array of electrons that are stored in local capacitors. The actions of these photodiodes are controlled by local circuitry built on the sensor. This circuitry manages the timing of the acquisition and the transmission of the electrons to the analog to digital converters that deliver the sensor output. For many years, the digital read out from the sensor was a one-to-one match with the signals measured at individual photodiodes.
+Considering the pervasive nature and technological advantages of CMOS image sensors, this section of the book will primarily focus on their properties and operation. We will dedicate separate sections to explore the characteristics of CCD imagers and single-photon avalanche detectors (SPADs).
 
-Over time, as technology has scaled, more complex electrical circuitry could be fit onto the sensor. In modern CMOS image sensors the circuitry can perform various types of local processing, and the output is no longer a one-to-one match with the number of electrons at each photodiode. The processing is adaptive, so that the same sensor can produce different types of outputs depending upon control parameters delivered to the sensor from other image system components.
+<!-- Fossum says: power reduced (100×) as well as avoid many of the charge‐transfer degradation issues associated with exposure to radiation in space [11] (see Figure 23.6).  (From the Book chapter https://onlinelibrary.wiley.com/doi/chapter-epub/10.1002/9781394202478.ch23)-->
+
+## Transduction:  The photoelectric effect
+The energy in the incident light field is encoded by the photodiodes in the image sensor array. Each photodiode converts the irradiance at its aperture electrons.  These are stored in a capacitor, and the voltage in the capacitor is readout by the circuitry. The initial transduction from light to electrons, the photoelectric effect, is linear over a large range: the number of electrons is proportional to the number of incident photons. A basic understanding of CIS principles begins with this linear formulation.
+
+### Electronic circuitry
+In the real device, nonlinearities do arise. Some of these are caused by the circuitry that manages the acquisition, storage, and readout of the data. These basic circuit functions introduce nonlinearities of a few percent @Wang2017-CMOSLinearity, and hardware design choices can influence the degree of nonlinearity. For example, the capacitance of the storage element and the characteristics of the amplifiers used in the readout process can both contribute to deviations from linearity.
+
+Another source of nonlinearity arises from the photodiode itself. At high irradiance levels, the photodiode can saturate, meaning that it cannot generate additional electrons regardless of the incoming light. This saturation effect imposes a hard limit on the dynamic range of the sensor.
+
+Temperature variations can also affect the linearity of the sensor. Changes in temperature can alter the behavior of the photodiode and the associated circuitry, leading to temperature-dependent nonlinearities. Modern sensors often include compensation mechanisms to mitigate these effects, but residual nonlinearities may still remain.
+
+Understanding and modeling these nonlinearities is critical for applications that require high precision, such as scientific imaging or computational photography. Calibration techniques, such as measuring the sensor response under controlled conditions, can help correct for these nonlinearities in post-processing.
+
+Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.  
+
+### Optical components
 
 There are also other non-electrical components of most image sensors. These are small lens (lenslet) arrays and small color filter arrays that influence which part of the irradiance is capable of producing electrons from each photodiode.
 

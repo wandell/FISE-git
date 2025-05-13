@@ -1,106 +1,86 @@
 # Light field properties {#sec-lightfield-properties}
 
-Many image systems are designed to measure the scene. These measurements might be used to identify an object and its properties, such as its size, distance, and material. These systems are fundamental to applications like industrial inspection, autonomous vehicles, and medical imaging. Even in consumer photography applications, whose primary mission is to reproduce the light field, estimating scene physical characteristics - such as the ambient lighting - can be useful.
+Many image systems are engineered to quantify scene properties, such as an object's size, its distance to the sensor, or its material. These measurement-oriented systems have many applications, including industrial quality control, autonomous navigation, and medical diagnostics. Even in consumer photography, where the primary goal is often to capture and render a visually compelling representation of a scene, estimating underlying physical characteristics — like the ambient illumination — can significantly enhance performance. As highlighted in the Preface with the quote from Helmholtz [@fig-helmoltz], inferring scene properties is arguably the fundamental task of visual perception.
 
-In many image systems applications the problem is under constrained, by which I mean that many different scenes or objects might have produced the measured image. There is a useful principle that applies to these situations, often attributed to Thomas Bayes, is quite simple. If many potential solutions exist to a problem, Bayes' Rule tells us to select the most likely one. The general principle seems pretty obvious, no? The hard part, of course, is how to know which answer is the most likely one.
+A common challenge in many image system applications is that the measurement process is often underdetermined. This means that multiple distinct scene properties could potentially lead to the same observed measurement. In such situations, a powerful principle, often attributed to Thomas Bayes, becomes invaluable. Bayes' Rule suggests that when faced with multiple plausible solutions, we should select the one that is most probable. While the general principle is conceptually elegant, the practical challenge lies in accurately determining the likelihood of each potential solution.
 
-We do not always have information about the relative likelihood of different solutions, but sometimes we do. One way to make better guesses is to learn about regularities in the world. In this section we describe some regularities about the spectral (wavelength) and spatial properties of natural images. In certain specific applications, such as medical imaging or industrial inspection conditions, the regularities may narrow the set of possible answers greatly.
+While we may not always possess explicit knowledge about the probabilities of different solutions, we can often leverage prior information or learn from experience. One effective strategy for making more informed inferences is to understand the inherent regularities present in the world. In this section, we will explore some fundamental regularities concerning the spectral (wavelength-dependent) and spatial characteristics of natural images.
+
+Identifying and leveraging regularities within scene radiance is a central theme we will revisit throughout this book In specific, well-defined applications, such as medical imaging or controlled industrial inspection environments, these regularities can significantly constrain the set of plausible interpretations, providing a valuable and precise guide for analysis.
 
 ## Representing regularities
 
+When considering the scene regularities, we face two interconnected challenges. First, how do we come to understand these underlying patterns? In some instances, our knowledge stems from building physical models of the signals, where regularities emerge as a natural consequence of our understanding. The solar radiation analysis below provides a good example of this. In other cases, we learn about regularities through empirical observation of numerous examples, employing computational tools to quantify these patterns. Our discussions on surface reflectances and the characteristic spatial structure of natural images will illustrate this approach.
+
+Two classical mathematical frameworks are fundamental for specifying regularities across various scientific and engineering disciplines, and both will feature prominently in this book. Bayes' Rule offers a powerful yet straightforward way to reason about probabilities. More generally, probability distributions provide a versatile language for representing the likelihood of observations. While these distributions can sometimes be directly used in simulations, their incorporation can often present significant computational hurdles.
+
+A second widely employed mathematical tool is dimensionality reduction, particularly techniques based on linear models. Dimensionality reduction offers a highly practical computational approach for simplifying complex datasets. However, it often provides only an approximate representation of the underlying statistical regularities.
+
+More recently, neural network training has emerged as a potent method for inferring statistical regularities from large datasets, simultaneously yielding a computationally tractable model. This data-driven approach is proving increasingly valuable across numerous applications.
+
+In this section, we will delve into the two classical techniques. They remain indispensable tools, often providing crucial insights into the physical principles governing the system. We will then apply them to key descriptions of scene spectral radiance. As we progress through subsequent sections of the book, we will explore how neural network training is increasingly being integrated into image systems engineering.
+
+```{=html}
+<!--
+Eero's statistical work surely gets in here somewhere.  Not obviously in this section, but perhaps in the spatial regularity part.
+-->
+```
+
 ### Bayes Rules
 
-How to specify regularities in the scene, and how to take advantage of them, will be a recurring theme as we describe various image systems. There are two classical mathematical tools that are widely used to specify regularities throughout science and engineering, and both will come up in this book. I just mentioned Bayes' Rule, which is extremely famous and simple. If we know the probability of a specific condition, $C$, being true given a measurement, $d$, we use the laws of probability to write
+If we wish to know the probability of a specific condition, $C$, being true given measured data, $d$, we can use the laws of probability to write
 
 $$
 P(C | d) = \frac{P(d \cap C)}{P(d)} = \frac{P(d \cap C) P(C)}{P(d) P(C)}= \frac{P(d | C) P(C)}{P(d)}
 $$
 
 ::: {#Bays-terms .callout-note style="color: gray" appearance="simple"}
-## The terms in Bayes' Rule
+### The terms in Bayes' Rule
 
 -   $P(C | d)$ - **posterior probability** of C given d.
--   $P(d|C)$ - likelihood of d given C.
+-   $P(d|C)$ - **likelihood** of d given C.
 -   $P(C)$ - **prior probability** of C.
--   $P(d)$ - marginal probability of d.
+-   $P(d)$ - **marginal likelihood** of d.
 :::
 
-The challenge in using Bayes' Rule is also obvious. In many cases we have very little idea about the prior, and for many applications we do not know how to even compute the likelihood of $d$ given $C$.
+Implementing Bayes' Rule through this formula requires knowing the likelihood of the data given the condition, $P(d|C)$. This knowledge can come from a model of the process that enables us to simulate the data. Being able to work out this probability is a fundamental task for the scientist or engineer. A more difficult challenge in using Bayes' Rule is that we often have little idea about the prior, $P(C)$. The cases in which we do have this world knowledge can be very valuable.
+
+There are many cases, often in the applied sciences and engineering, when enough is known to apply Bayes' Rule. A good example is a medical image diagnostic, say the chance of having a dark spot on of contrast $d$ on the lung to detect a cancerous lesion. We may have measurements from many people, and in retrospect they either will have the disease or not. We can use these data to estimate the likelihood of $P(d \mid C)$ and $P(d \mid \neg C)$. We may further have historical data of the percentage of people in the population who have the disease, $P(C)$. The marginal probability is
+
+$$
+P(d) = P(d \mid C) P(C) + P(d \mid \neg C) P(\neg C)
+$$
+
+From these terms, we can compute the probability of having the posterior probability, \$P(C \mid d)\$. There are many cases in which we do not have the data to estimate all of the needed likelihoods. In those cases, we can use other tools.
 
 ### Linear models
 
-Linear models are a second way to capture the regularity in the data. These are the standard methodology of linear algebra, in which we express the data - which is usually a vector of measurements - as the weighted sum of a known, fixed, set of possible vectors. To connect the idea to the case at hand, suppose we consider the data to be a spectrum, $d(\lambda)$, where we measure over the visible range from 380 nm to 780 nm in 1 nm steps (hence, \$d\$ is 401 dimensions). After making a few thousand (or million) measurements we might discover that we can closely approximate the $j^{th}$ measurement as the weighted sum of $N$ basis functions.
+Linear models have many uses in science and engineering. One application is representing certain regularities in the data. Specifically, suppose we have a collection of measurement vectors, each with $D$ values. We can express each of the vectors as the weighted sum of a set of $M$ vectors, which we call the *basis* vectors. If $M$ is much smaller than $D$, the basis set captures a regularity that is present in the original data set.
 
-$$d_j(\lambda) = \sum_{i=1,N} B_i(\lambda) w_{ij}$$ {#eq-linearmodel}
+As an example, suppose the data are a set of radiance spectra, $d(\lambda)$, we measured over the visible range from 380 nm to 780 nm in 1 nm steps; hence, each vector, $d$, has 401 values. After making a few thousand (or million) measurements, we discover that we can closely approximate any of the measurements, $d_j$, as the weighted sum of $M$ basis functions, $B_i$. We write the approximation this way: 
 
-This representation also captures a regularity in the measurements, particularly when the value of $N$ is small (say, 5, 10, 20) compared to the dimension of $d$, in this case 401. We are representing each observation by just $N$ numbers, as long as we have the side condition of knowing the basis functions.
+$$
+d_j(\lambda) \approx \sum_{i=1}^{M} B_i(\lambda) w_{ij}
+$$ {#eq-linear1}
 
-By now, some of you will notice that we can use matrix notation to express the linear model. The linear model simply expresses the data, $\mathbf{d_j}$ vector as the product of a weight vector, $\mathbf{w_j}$ and the basis vectors placed in the columns of the matrix $\mathbf{B}$.
+There are a many tools to find basis vectors, $\mathbf{B_i}$, and these tools rely on different objectives. Sometimes, the basis vectors are selected from physical or computational principles. This is the case for the Fourier basis functions, which are the harmonic functions, and are a natural part of magnetic resonance imaging, sound, and heat transfer. It is also common to select $M$ basis functions that explain the most variance in the data, which is the choice we make when using Principal Components Analysis (PCA) that relies on the important matrix decomposition the singular value decomposition (SVD).
 
-$$\mathbf{d_j} = \mathbf{B} \mathbf{w_j}$$
+In both of these cases, Fourier and PCA, the basis vectors are orthogonal, which means that the inner product[^lightfields-properties-1] of any pair of basis vectors is zero. The mathematical expression for the inner product and orthogonality is
 
-## Spectral regularities
+[^lightfields-properties-1]: Widely used synonyms for the term inner product are *dot product* and *scalar product*.
 
-### The sky
+$$
+0 = \sum_{\lambda} B_i(\lambda) B_j(\lambda)
+$$
 
-```{=html}
-<!-- [https://chatgpt.com/share/679ebc49-5a7c-8002-a282-598e7f1bbb30 ]
-Solar spectrum. Fraunhofer lines.  Stability of the solar spectrum 
+It is quite common to use matrix notation to express the linear model. With this notation, the linear model places the basis vectors into the columns of a matrix, $\mathbf{B}$. Each data vector, $\mathbf{d_j}$, is the product of a weight vector, $\mathbf{w_j}$ times the matrix of basis vectors.
 
-https://chatgpt.com/c/679ebbfc-b510-8002-b372-489cd173d5d0
+$$
+\mathbf{d_j} = \mathbf{B} \mathbf{w_j}
+$$ {#eq-linearmatrix}
 
-CIE Data downloaded to ISETCam from here.  Placed in data/lights/daylight and data/lights/solar  These appear to be distinguished, for now, based on Earth's surface or Sun's surface.
+This regularity is often called dimension-reduction. It is a helpful regularity, but quite different from knowing the full probability distribution. The regularity allows us to take the high dimensional data, say with 401-vectors, and represent them with many fewer numbers, say the 10 or 20 weights. In that sense, the reduction informs us about the likelihood of certain data sets. But there remains a much more that can be learned about the data because not all of the different weights are likely, or in some cases physically realizable. Thus, the dimensionality gets you part of the way there, but studying the properties of thew weights can provide even more information (@DiCarlo2003-spectralestimationtheory)
 
-https://cie.co.at/datatable/components-relative-spectral-distribution-daylight
--->
-```
+Linear models appear in many places in this book, with many different applications. If you would like to read more about them, have a look at the chatty discussion in Appendix @sec-linearmodels. From there you can find your way to more advanced and authoritative literature. The Appendix also contains pointers to important nonlinear methods that - in some circumstances - can be very helpful (@Maaten2008-dimensionalityreduction).
 
-### Solar Radiation and Fraunhofer Lines
-
-The Sun serves as Earth's primary radiation source. The radiation emitted from the Sun's surface in the visible spectrum remains relatively consistent over time. Due to the significance of skylight, it became an early subject of scientific investigation, with physicists identifying several distinctive characteristics of sunlight reaching Earth's surface.
-
-In 1814, Joseph Fraunhofer observed numerous dark lines in the solar spectrum, now known as Fraunhofer lines. These lines form when light generated in the Sun's hot, dense interior (photosphere) travels through its cooler outer layers (chromosphere and corona). During this passage, atoms and ions absorb specific wavelengths of light that correspond precisely to their electronic transitions. The reliability of these solar absorption lines allowed scientists to use them as reference points to calibrate laboratory instruments for spectral measurements. For example, James Clerk Maxwell used these lines to calibrate the first experimental rig for human color-matching.
-
-![The black curve displays the relative solar spectrum, which maintains remarkable stability over time. The red lines indicate specific wavelengths where the spectrum exhibits narrow intensity reductions, known as Fraunhofer lines. These absorption features originate from ions and atoms in the Sun's outer layers. The blue dotted lines mark atmospheric absorption bands caused by water vapor, with particularly prominent features between 700-850 nm.](../images/lightfields/01-solarspectrum.png){#fig-solarspectrum fig-align="center" width="60%"}
-
-### Atmospheric Effects on Solar Radiation
-
-Several spectral absorption lines observed at Earth's surface originate not from the Sun itself but from water vapor (H₂O) and other molecules in Earth's atmosphere. Unlike the stable solar absorption lines, these atmospheric absorptions can fluctuate relatively quickly with changing weather conditions.
-
-As solar radiation traverses Earth's atmosphere, it undergoes substantial alteration by atmospheric particles and moisture. Additionally, the radiation's path length through the atmosphere varies with the time of day. Longer path lengths—such as during sunrise or sunset—further modify the spectral composition of radiation reaching Earth's surface.
-
-These combined factors—atmospheric composition and path length variations—create a complex and dynamic radiation environment at Earth's surface. To account for these complexities, scientists employ models that represent both the mean characteristics and the natural variations of skylight incident upon Earth's surface.
-
-![The solid curve shows the mean daylight spectrum measured by Judd, Macadam and Wyszecki and adopted as a standard by the CIE. The \* symbols are placed at the locations of the Fraunhofer lines and the atmospheric water vapor lines. The additional two curves are basis functions. Most daylights can be modeled as the mean plus weighted sums from these two bases.](../images/lightfields/01-ciedaylightbasis.png){#fig-ciedaylight fig-align="center" width="60%"}
-
-<!--# Moonlight regularities.  Used for space travel.https://chatgpt.com/share/67410dd0-ff54-8002-9b73-65294a849fe6  “The Potential of Moonlight Remote Sensing: A Systematic Assessment” explores the potential of using moonlight in remote sensing for nighttime Earth observation. The study uses data from VIIRS, the ISS, and UAV systems to evaluate moonlight’s capabilities.“Simulation Study of the Lunar Spectral Irradiances and the Earth-Based Moon Observation Geometry” focuses on modeling the spectral irradiance of moonlight using the Hapke model and its applications in satellite radiometric calibration.-->
-
-::: {#california-sun .callout-note collapse="true" appearance="simple"}
-## Do it yourself daylight spectra
-
-When he was a student at Stanford, Jeff DiCarlo decided to measure the daylight outside his office for himself. He took a spectral radiometer, pointed it at a calibrated surface outside his window, and automatically made a thousand daylight measurements during the course of a year. These measurements were made at times that spanned what passes for different weather conditions in California. This figure shows that the mean spectrum he measured picked up the spectral lines and could be well approximated by the weighted sum of the CIE daylight bases.
-
-![Average daylight measurements on the Stanford campus (solid) and CIE daylight basis fit to the average (dotted). The points with \* are the Fraunhofer and water vapor wavelengths. The fit is close, but I suspect there is an instrument calibration error of a few nanometers at wavelengths from 700nm and above. ](images/01-stanfordsun.png){#fig-stanfordsun fig-align="center" width="60%"}
-:::
-
-### Surface reflectance regularities
-
-Maloney dissertation and the Russian guy. What was his name and story?
-
-## Spatial regularities in natural scenes
-
-### 1/f spatial frequency fall
-
-Who first pointed this out? Relationship to the scale invariant idea of fractals, and the fractal nature of many things.
-
-Ruderman and Bialek paper on natural image statistics.
-
-Field, Olshausen
-
-David M - famous mathematician guy
-
-### Dead leaves model
-
-Jon's Matlab script as a basis for discussing this.
-
-Also, the deadleaves function in ISETCam.
+In the following sections I describe regularities that have been discovered about various spectral measures. We begin with regularities concerning the spectral properties in the visible band. We then turn to regularities concerning the spatial properties of natural images, again in the visible band.

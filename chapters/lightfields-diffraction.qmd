@@ -6,15 +6,15 @@ Difference between Fresnel and Fraunhofer diffraction calculations.  One of the 
 -->
 ```
 
-If we imagine light as a collection of rays, it is easy to understand Leonardo's explanation of why pinhole produces an image. @fig-pinhole-basic explores some of the basic properties. The rays from the point **A**, which is far away, radiate in a wide range of directions, but only a small portion of those rays arrive at the pinhole aperture. The rays from **A** rays will be parallel to one another (collimated). According to the ray model of light, this collection of rays will pass straight through the pinhole and form an image of the point on the recording surface (e.g., Leonardo's wall).
+If we imagine light as a collection of rays, it is easy to understand Leonardo's explanation of why imaging through a pinhole produces an image  (@fig-pinhole-basic). The rays from the point **A**, which is far away, radiate in a wide range of directions, but only a small portion of those rays arrive at the pinhole aperture. The rays from **A** rays will be parallel to one another (collimated). According to the ray model of light, this collection of rays will pass straight through the pinhole aperture and form an image of the point on the recording surface (e.g., Leonardo's wall).
 
 ![Pinhole camera geometry. (A) The rays from a distant, on-axis point arrive at in parallel at the pinhole. Were there no diffraction, they would simply continue on to form an image the size of the pinhole. (B) An off-axis point's rays also arrive in parallel, but they are at an angle to the pinhole aperture. Hence, fewer rays pass through the aperture so the image would be dimmer and smaller. If we can tolerate a relatively large point spread, this design is workable. But if we require a small point spread, diffraction makes this design unworkable.](../images/lightfields/pinholePSF.png){#fig-pinhole-basic fig-align="center" width="70%"}
 
-Consider a distant but off-axis point, **B**. Its rays, too, will start in many directions but only a narrow, collimated subset of rays will arrive at the aperture. Because of the angle between the collimated rays and the pinhole, a smaller fraction of the rays will pass through the pinhole aperture. The point spread from **B** will be smaller and dimmer. Its location on the image surface will be displaced from **A** by an amount that depends on their positions in the scene. Also, why the image is inverted is well-explained by rat tracing.
+Consider a distant but off-axis point, **B**. Its rays, too, will start in many directions but only a narrow, collimated subset of rays will arrive at the pinhole aperture. Because of the angle between the collimated rays and the pinhole, a smaller fraction of the rays will pass through the pinhole aperture. The point spread from **B** will be smaller and dimmer. Its location on the image surface will be displaced from **A** by an amount that depends on their positions in the scene. Thus, the wall records the relative intensity and spectrum from the different points in the scene at different locations on the wall.  Also, why the image is inverted is well-explained by ray-tracing.
 
 @fig-ayscough illustrates an image formed by a great many points. Each point in the scene is blurred and rendered at a unique position. If the image intensity through the pinhole is adequate, and we do not mind the blurring, we will have a satisfactory image.
 
-Ray optics, also called **geometric optics**, is a useful and widely used approximation for many calculations. For example, it is common to use geometric optics in computer graphics. In @fig-pinhole-chessset I rendered a chess set scene with the pieces, each a few cm tall, positioned about 0.5 meters from the pinhole camera. The four pictures were rendered using different pinhole diameters. The upper left allows only one ray through from each location in the scene. The aperture diameters for the next three pictures are for three different pinhole sizes. The images are brighter as the pinhole size increases. For this example, the image at the two smaller pinhole sizes are tolerable. Depending on your viewing distance from the screen or page, the third pinhole image might be usable. But the largest pinhole, which lets in the most light, loses so much spatial information that the individual pieces blur together in the image.
+Ray optics, also called **geometric optics**, is a useful and widely used approximation for many calculations, including computer graphics. In @fig-pinhole-chessset I rendered a chess set scene with the pieces, each a few cm tall, positioned about 0.5 meters from the pinhole camera. The four pictures were rendered using different pinhole diameters. The upper left allows only one ray through from each location in the scene. The aperture diameters for the next three pictures are for three different pinhole sizes. The images are brighter as the pinhole size increases. For this example, the image at the two smaller pinhole sizes are tolerable. Depending on your viewing distance from the screen or page, the third pinhole image might be usable. But the largest pinhole, which lets in the most light, loses so much spatial information that the individual pieces blur together in the image.
 
 ![A simulated scene imaged with a pinhole camera. The size of the pinhole diameter increases, with the smallest in the upper left, and increasing (upper left to lower right). The relative intensity is preserved in the renderings so that the scene becomes brighter as the pinhole diameter increases. Rendered with [@pharrPBRTVersion4] and [@iset3d2022].](../images/lightfields/01-pinhole-chessset.png){#fig-pinhole-chessset width="80%" fig-align="center"}
 
@@ -24,11 +24,11 @@ Useful as the ray model has been, for more than 300 years scientists have known 
 
 ![@Grimaldi1665-physico introduced a pencil of light into a dark room through a hole. According to the ray theory of light, the image on the wall should be the same size as the pinhole, and the rays should not be visible to an observer looking from the side. Grimaldi found that under some conditions the image on the image plane was larger than the pinhole itself, inconsistent with the ray theory of light. Newton confirmed the experiment but continued to use the ray theory because it remained useful for many purposes (A History of Physics, Cajori, p. 88-89). In modern times, we accept the wave theory but often use the ray theory because it works well in many circumstances.](../images/lightfields/01-ray-wave.png){#fig-ray-wave width="80%" fig-align="center"}
 
-The Dutch scientist Christiaan Huygens, also working at the same time as Newton, suggested an alternative to the ray model: he proposed modeling light as waves that expand to fill space. On Huygen's theory, the light emitted from a point expands as a spherical wave in all directions. At each moment in time the expansion, called the wavefront, could be considered as an array of points that each emitted a secondary wave. This model leads to many quantitative predictions, including how light will be reflected from a mirror and how the light direction will change as the wave passes from one medium (air) into a second medium (glass) (@fig-huygens-waves).
+The Dutch scientist Christiaan Huygens, also working at the same time as Newton, suggested an alternative to the ray model: he proposed modeling light as waves that expand to fill space. On Huygen's theory, the light emitted from a point expands as a spherical wave in all directions. At each moment in time the expansion, called the wavefront, can be considered as an array of points that each emits a secondary wave. This model leads to many quantitative predictions, including how light will be reflected from a mirror and how the light direction will change as the wave passes from one medium (air) into a second medium (glass) (@fig-huygens-waves).
 
 ![Light modeled as a wavefront. (A) A point source is shown emitting a circular (or 3D, spherical) wave. Each point on the expanding wavefront emits a new spherical wave. The leading edge of these waves reinforce one another to form the expanding wavefront. (B) At a large distance from the source, the small part of the wavefront appears to be a plane wave. Again, each point on the plane emits a spherical wavefront. These are aligned and the wavefront remains planar. (C) When the wavefront arrives at a small aperture only a small part of the wave passes through. This is like the original source, revealing the spherical wavefront from that point.](../images/lightfields/01-huygens-wave.png){#fig-huygens-waves fig-cap-location="bottom" width="80%" fig-align="center"}
 
-A consequence of the wave theory is that as light passes through a pinhole, or near an edge, the spherical waves from each point on the wavefront are revealed. The aperture limits the region of the plane wave that continues on to a much smaller number of points. When restricted in this way, the resulting wavefront is no longer a plane; instead, the sum of the spherical waves from the points sum to a new wavefront that spreads in multiple directions. When the pinhole diameter is small, and only a small portion of the plane wave compared to the wavelength of light enters the pinhole, the spherical wavefront becomes quite large and this blurs the image (@fig-huygens-waves).
+A consequence of the wave theory is that as light passes through a pinhole, or near an edge, the spherical waves from each point on the wavefront are revealed. This is because the aperture limits the region of the plane wave that continues on. If there is a small number of points passing through the aperture, each emitting a spherical wave, the result will be closer to spherical but certainly no longer planar. Instead, the sum of the spherical waves from the few points will sum to a new wavefront that spreads in multiple directions. When the pinhole diameter is small, and only a small portion of the plane wave compared to the wavelength of light enters the pinhole, the spherical wavefront becomes quite large and this blurs the image (@fig-huygens-waves). Were there only a single point, a spherical wave would be revealed. 
 
 ::: {.callout-note collapse="true" title="Rays and waves"}
 ## Why choose?
@@ -49,19 +49,23 @@ https://g.co/gemini/share/9013b83cc4f6 -->
 
 ## Which effect blurs the image more?
 
-The image is blurred by two effects: the pinhole size and diffraction. We can compare the size of these two effects numerically.
+From these simple considerations, we have seen that the image is blurred by two effects: the pinhole size and diffraction. Increasing the pinhole would create a larger spot on the wall, but decreasing the pinhole size reveals the spherical nature of the wavefront and also increases the size of the spot on the wall.  We can compare the size of these two effects numerically.
 
 ![The Airy pattern of a pinhole camera. The aperture is on the](../images/lightfields/01-blur-comparison.png){#fig-blur-comparison fig-cap-location="margin" width="80%"}
 
-First, consider what we expect from the ray model. Suppose the pinhole diameter is $D$. For a far-away point, with the rays coming in parallel, we expect the blur size in the image to be $D$. This pinhole-blur expected by the ray model is the same no matter how far the image plane is from the pinhole.
+First, consider what we expect from the ray model. If the pinhole diameter is $D$, a far-away point on the main axis will produce a blurred spot in the image of size $D$. Also, the pinhole-blur predicted by the ray model is the same no matter how far the image plane is from the pinhole.
 
-Second, consider the light pattern we expect for a wave passing through a pinhole aperture. This pattern can be calculated using a formula derived by the astronomer, George B. Airy [@airy-1835-diffraction] and is shown in @fig-blur-comparison. The Airy pattern has a central bright spot (the Airy disk), which is surrounded by a series of concentric rings. The size of the pattern depends on the wavelength of the light $\lambda$, the diameter of the pinhole $D$, and the distance from the pinhole to the image plane, $L$. The image is radially symmetric with a bright spot in the center, surrounded by a set of concentric rings of decreasing intensity. The Airy disk contains about 85% of the total energy. The mathematical notation for the Airy pattern is a bit complex, but the diameter of the Airy disk, $d$, has a simple formula
+Second, consider the light pattern we expect for a wave passing through a pinhole aperture. This pattern can be calculated using a formula derived by the astronomer, George B. Airy [@airy-1835-diffraction] and is shown in @fig-blur-comparison. The Airy pattern has a central bright spot (the Airy disk), which is surrounded by a series of concentric rings. The size of the pattern depends on the wavelength of the light $\lambda$, the diameter of the pinhole $D$.  Unlike the ray model, for the diffraction case the rays are expanding so that the distance $L$ from the pinhole to the image plane matters. The image is radially symmetric with a bright spot in the center, surrounded by a set of concentric rings of decreasing intensity. The Airy disk contains about 85% of the total energy. The mathematical notation for the Airy pattern is a bit complex, but the diameter of the Airy disk, $d$, has a simple formula
 
-$$d= 2.44~L~(\lambda / D)$$ {#eq-airy1}
+$$
+d = 2.44~L~(\lambda / D)
+$$ {#eq-airy1}
 
 Suppose we calculate the size of the diffraction diameter when the image plane is 1 m away, so $L=1$, and for a wavelength of light is 550 nm. Suppose the pinhole diameter is $D = 10^{-4} m$. The diameter of the Airy disk, $d$, will be
 
-$$2.44 \times (1 m) (550 \times 10^{-9} m )/ 1 \times 10^{-4}m) = 0.0134 m$$ {#eq-airydisk1}
+$$
+d = 2.44 \times (1 m) (550 \times 10^{-9} m )/ 1 \times 10^{-4}m) = 0.0134 m
+$$ {#eq-airydisk1}
 
 ```{=html}
 <!-- 
@@ -69,7 +73,7 @@ The diffraction spread is larger than the pinhole spread when $d$ exceeds $D$. W
 -->
 ```
 
-The diffraction spread exceeds the pinhole spread when $d$ exceeds $D$. We do the calculation in this [ISETCam script](/code/fise_diffraction.html). As an example, we find that when the distance to the image plane is $L = 1m$, the pinhole blur is larger than the diffraction blur for a pinhole diameter of about $1 mm$. When the image plane distance, $L$, is closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
+The diffraction spread exceeds the pinhole spread when $d$ exceeds $D$. We do the calculation for different assumptions about the distance to the image plane [ISETCam script](/code/fise_diffraction.html). As an example, we find that when the distance to the image plane is $L = 1m$, the pinhole blur is larger than the diffraction blur for a pinhole diameter of about $1 mm$. When the image plane distance, $L$, is closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
 
 ::: {.callout-note collapse="true" title="The size of the diffraction point spread"}
 ## Airy disk formula {.unnumbered}
@@ -82,11 +86,13 @@ $$sin(\theta) = 1.22 \lambda / D$$
 
 When the angle is small, $\theta < 10 \deg$, the formula is very accurately approximated as
 
-$$\theta = 1.22 \lambda / D$$
+$$
+\theta = 1.22 \lambda / D
+$$
 
 The size of the spot on the image plane depends on the distance how far away the pinhole is from the pinhole, as you can see in [@eq-airy2]. In @sec-optics-thinlens we provide a formula for the Airy disk size for ideal lenses.
 :::
 
 The diffraction for a point at a distance, when the wave can be considered planar, is named for Fraunhofer and called [far-field diffraction](https://en.wikipedia.org/wiki/Fraunhofer_diffraction). This is the simple case in which the Airy point spread applies.
 
-The diffraction for a point close to the pinhole is more complex. In that case we must account for the spherical shape of the wavefront. This calculation is named for Fresnel and called [near-field diffraction](https://en.wikipedia.org/wiki/Fresnel_diffraction). In the near-field case, the point spread depends on the point's distance from the aperture.
+The diffraction for a point close to the pinhole is more complex. In that case we must account for the spherical shape of the wavefront from the nearby point. This calculation is named for Fresnel and called [near-field diffraction](https://en.wikipedia.org/wiki/Fresnel_diffraction). In the near-field case, the point spread depends on the point's distance from the aperture.

@@ -14,11 +14,11 @@ The Feynman lectures have a lot of great stuff about optics.  And color!
 https://www.feynmanlectures.caltech.edu/
 -->
 
-A small pinhole renders a perfectly good image. Why do we need to add any optics? The critical reason is that pinhole cameras only measure a small amount of electromagnetic radiation.
+A small pinhole renders a perfectly good image. Why do we need to add any optics? The critical reason is that pinhole apertures, by definition, only measure a small amount of electromagnetic radiation.  We often find ourselves in conditions where the amount of radiation passing through the aperture is a limiting factor.  We need more signal!
 
 Let me tell you what I mean by **small**. Suppose we are in a dim room illuminated with a broad wavelength spectrum (10 $cd/m^2$). Consider a camera with a 1 mm pinhole, a sensor with 1 micron pixels, a focal length of 4mm, and an exposure duration of 50 milliseconds. In that case only about 35 photons arrive at each pixel. If we want to see in color, we must further divide up the wavelength range and the situation worsens. Because of the inescapable photon noise, which I describe later, this signal only permits a reliable intensity discrimination when two pixels differ by more than 20% (i.e., one edge is 20% brighter than the other, see [fise_opticsCountingPhotons](../code/fise_opticsCountingPhotons.html)).
 
-A lens is a way to enlarge the entrance aperture and acquire more photons. The lens can uses a larger aperture, and thus acquires more photons, without paying a penalty in blur. This capability must be the reason why lenses have evolved in so many different species.
+A lens (i.e., optics) is a way to enlarge the entrance aperture to acquire more photons, without paying a penalty in spatial blur. This capability must have great value because the solution has been used by many different animal species.
 
 ::: {.callout-note collapse="true" title="Optics in animals"}
 ### Animals with pinhole optics {.unnumbered}
@@ -35,9 +35,9 @@ A few animals species have a visual system based on pinholes. But the vast major
 :::
 
 ## Rays and wavefronts
-In the next section, we describe lenses and treat light as rays. This treatment is called **geometric optics**. The reader may find this odd, given the clear demonstration of light as waves [@sec-lightfields-diffraction] and the obvious failure of the ray model. But to model refraction, and many other optics characteristics,the ray model is both intuitive and accurate. Thus, geometric optics models remain widely used. 
+In the next section, we describe lenses and treat light as rays. This treatment is called **geometric optics**. The reader may find this odd, given the clear demonstration of light as waves [@sec-lightfields-diffraction] and the obvious failure of the ray model. But to model refraction, and many other optics characteristics,the ray model is both intuitive and accurate. Thus, geometric optics models remain widely used.  We will return to calculations using waves later, when we consider more advanced calculations.
 
-It is useful to connect the geometric and wave representations. In **wave optics** a collection of rays headed in the same direction, and of the same wavelength and phase, are represented as a plane wave. We can visualize the wave by drawing a  line through the peaks of their (in-phase, common amplitude) waves. We call this line the **wavefront**.  The wavefront diagrams do not show the amplitude of the wave.  Various ray-wavefront combinations are illustrated in @fig-waves-rays.
+It is useful to draw the connection between geometric and wave representations. In **wave optics** a collection of rays headed in the same direction, and of the same wavelength and phase, are represented as a plane wave (@fig-waves-rays). We can visualize the wave by drawing a  line through the peaks of their (in-phase, common amplitude) waves. We call this line the **wavefront**.  The wavefront diagrams do not show the amplitude of the wave.  Various ray-wavefront combinations are illustrated in the different panels of @fig-waves-rays.
 
 <!-- **Notes about wavefront representations** 
 (https://www.rp-photonics.com/wavefronts.html).  
@@ -45,9 +45,7 @@ It is useful to connect the geometric and wave representations. In **wave optics
 
 ![Relationship between the ray (arrows) and wavefront (dashed) representations. (a) A collimated set of rays is a planar wavefront. (b) Rays from a point source form a spherical wavefront. (The image shows a slice through the sphere). (c) Smoothly varying wavefronts with many different shapes are common. Often these shapes are due to imperfections (aberrations) in the optics.  We reason about them as a collection of rays; the direction of each ray is drawn perpendicular to the tangent of the wavefront. (d) Only a narrow section of the rays from a distant point are incident at the entrance aperture of the imaging device. Hence, the incident light field from the point is close to a planar wavefront.](../images/optics/rays-wave.png){#fig-waves-rays fig-cap-location="bottom" fig-align="center" width="75%"}
 
-It is uncommon for tutorials to represent the amplitude of the wavefront across space; but in reality the amplitude may vary. For example, a typical laser emits a set of parallel (collimated) rays with a Gaussian amplitude profile. 
-
-In recent years, image systems engineers have had access to **spatial light modulators (SLMs)**.  These are devices that modulate the local amplitude and phase of the wavefront.  
+It is common for optics tutorials to represent wavefront directions as extended in space, but it is uncommon to represent the amplitude of the wavefront across space. In reality the amplitude of the wavefront will vary across space. For example, a typical laser emits a set of parallel (collimated) rays.  The amplitude of these rays has a Gaussian profile that limits the wavefront in space.  That's why the spot a laser pointer produces is limited in space. In recent years, image systems engineers have had access to **spatial light modulators (SLMs)**.  These devices modulate either the local amplitude or phase of the wavefront at different positions in space, controlling the light field. 
 
 The software calculations that accompany this book use both wavefront and ray methods[^optics-intro-1].
 
