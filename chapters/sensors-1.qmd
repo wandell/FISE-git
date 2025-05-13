@@ -1,13 +1,12 @@
 # Sensors {#sec-sensors}
 
-The [Preface](../index.qmd#sec-preface) provides a very brief discussion of the history of image sensor technologies, from film to charge-coupled devices (CCD), and to the invention of CMOS image sensors (CIS). 
+The [Preface](../index.qmd#sec-preface) provides a very brief discussion of the history of image sensor technologies, from film to charge-coupled devices (CCD), and to the invention of CMOS image sensors (CIS).
 
-Film, the first major commercial technology for capturing and storing image irradiance, relied heavily on chemistry.
-Light-sensitive molecules were placed in multiple layers onto flexible rolls of plastic, and the roll was loaded into the darkened body of the camera. With the body closed, the film was mechanically advanced, placing a small flat section of film in the focal plane behind the lens. To take a picture, shutter was opened and the spectral irradiance from the lens formed an image on the film. The light changed the structure of molecules in the layers with molecules that were designed to encode the image. For color film, there were multiple layers that differed in their wavelength sensitivity. These molecular changes represented the local brightness of the captured image in different wavebands. Using chemical processes, the density of changes to the light-sensitive molecules could be measured and transferred to other media, such as prints. This process required a variety of chemical consumables, and the film could not be reused. Specialized labs were needed to create the film and to develop and printing the image. Some home hobbyists could develop the film, but mainly the processes were carried out by large commercial organizations.
+Film, the first major commercial technology for capturing and storing image irradiance, relied heavily on chemistry. Light-sensitive molecules were placed in multiple layers onto flexible rolls of plastic, and the roll was loaded into the darkened body of the camera. With the body closed, the film was mechanically advanced, placing a small flat section of film in the focal plane behind the lens. To take a picture, shutter was opened and the spectral irradiance from the lens formed an image on the film. The light changed the structure of molecules in the layers with molecules that were designed to encode the image. For color film, there were multiple layers that differed in their wavelength sensitivity. These molecular changes represented the local brightness of the captured image in different wavebands. Using chemical processes, the density of changes to the light-sensitive molecules could be measured and transferred to other media, such as prints. This process required a variety of chemical consumables, and the film could not be reused. Specialized labs were needed to create the film and to develop and printing the image. Some home hobbyists could develop the film, but mainly the processes were carried out by large commercial organizations.
 
 ![Film was the dominant image sensor and recording material for a hundred years. The chemistry of film for both encoding and developing into images was the core scientific discipline. Film could not be reused, producing a steady commercial profit for large companies, such as Kodak, Fuji, Polaroid and Agfa.](images/sensors/film.png){#fig-film width="60%"}
 
-The transition to electronics emerged with the discovery that semiconductor technology could also be used to record irradiance @boyle1970-ccd-first. Light incident on the silicon releases electrons (photoelectric effect), and the spatial pattern of these electrons can be stored and measured. This breakthrough was first implemented in 1970 by Michael Tompsett, who developed the image sensor known as the charge-coupled device (CCD). The semiconductor based sensor revolutionized imaging, moving it from a field based on chemistry to electrical engineering. Importantly, the digital readout from these electrical devices could be immediately integrated with computers. Images could be stored, shared, edited and analyzed directly from the camera output. 
+The transition to electronics emerged with the discovery that semiconductor technology could also be used to record irradiance @boyle1970-ccd-first. Light incident on the silicon releases electrons (photoelectric effect), and the spatial pattern of these electrons can be stored and measured. This breakthrough was first implemented in 1970 by Michael Tompsett, who developed the image sensor known as the charge-coupled device (CCD). The semiconductor based sensor revolutionized imaging, moving it from a field based on chemistry to electrical engineering. Importantly, the digital readout from these electrical devices could be immediately integrated with computers. Images could be stored, shared, edited and analyzed directly from the camera output.
 
 The first successful implementation of this principle in an image sensor was the charge-coupled device (CCD), developed in 1970 by Michael Tompsett, building on earlier work by George Smith and Willard Boyle [@boyle1970-ccd-first]. This innovation marked a fundamental shift in imaging, transitioning from a field rooted in chemistry (like photographic film) to one based on electrical engineering. A key advantage was the digital nature of the readout, allowing immediate integration with computers for storage, sharing, editing, and analysis of images directly from the camera.
 
@@ -21,21 +20,40 @@ Considering the pervasive nature and technological advantages of CMOS image sens
 
 <!-- Fossum says: power reduced (100×) as well as avoid many of the charge‐transfer degradation issues associated with exposure to radiation in space [11] (see Figure 23.6).  (From the Book chapter https://onlinelibrary.wiley.com/doi/chapter-epub/10.1002/9781394202478.ch23)-->
 
-## Transduction:  The photoelectric effect
+## Transduction: The photoelectric effect
+
 The incident light field is encoded by the light-sensitive photodiodes in the image sensor array. Each photodiode converts the energy in the irradiance at its aperture into some number of electrons. The number of electrons depends on the intensity and wavelength composition of the light field. The conversion of light to electrons first reported by Heinrich Hertz (@Hertz1887-photoelectric1, @Hertz1887-photoelectric2) is called the **photoelectric** effect.
 
 The effect is linear over a large range, in the sense that doubling the light intensity will double the number of electrons generated. This proportionality holds until the material saturates (there are no more free electrons). Thus, within the linear range, the number of electrons is a direct and reliable measure of the incident light intensity.
 
-
 ::: {#photoelectric .callout-note collapse="true" appearance="simple"}
-## Lenard and Einstein
-Philipp Lenard's experiments in the late 19th century provided crucial evidence about the nature of the photoelectric effect. He found that increasing the intensity of the incident light increased the number of electrons emitted from a metal surface but did not increase the energy of the individual electrons.  On the other hand, the energy of the emitted electrons did depend on the wavelength of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also discovered a threshold wavelength — if the light was too long in wavelength (too low in frequency), no electrons were emitted, no matter how intense the light. Lenard's observations could not be explained by classical wave theories of light, which predicted that increasing intensity should increase the energy of emitted electrons. 
+## The Photoelectric Effect and the Birth of the Photon**
+Physicists in the late 19th century sought to understand the spectrum of light emitted by a blackbody — a perfect emitter and absorber of radiation. In 1900, Max Planck tried to match the observed blackbody spectrum with a formula. After some trial and error, he arrived at an expression that fit the data perfectly—but only if he assumed that energy exchange between matter and radiation was quantized. He thought that, perhaps, the energy of oscillators in the cavity walls of the radiator could only take on discrete values and thus the measured absorptions and emissions needed to match these discrete levels.
 
-In 1905, Albert Einstein resolved this paradox by proposing that light is quantized into discrete packets of energy (later named photons). He suggested that the energy of each photon is proportional to its frequency, as described by the equation $E = h \nu$, where $h$ is Planck's constant and $\nu$ is the frequency (inverse to wavelength) of the light. Einstein's theory explained Lenard's observations and established the quantum nature of light during absorption, a foundational result for modern physics.  
+$$
+E = n h ν
+$$
+where 
+𝑛 is an integer, 
+𝜈 is the frequency (inverse to wavelength) of the light, and 
+ℎ is the constant he introduced—now known as Planck’s constant.
 
-Einstein's 1905 photoelectric paper went further than Planck's original discovery: he proposed that light, even in free space, consists of localized energy quanta before any interaction with matter. This was a bold departure from Planck, who had noted that the exchange of energy between matter and radiation was quantized. Einstein's view was controversial because it directly challenged the prevailing wave theory of light. Throughout his life, Einstein was uneasy with the wave-particle duality. He believed in an underlying deterministic reality and hoped that a more complete theory would eventually resolve the contradiction. Famously, he objected to the indeterminism of quantum mechanics, remarking that “God does not play dice.” Niels Bohr, a leading proponent of quantum theory, responded, "Einstein, don't tell God what to do." The tension between wave and particle descriptions of light remains a central theme in physics and is revisited each year in this course.
+In 1902, Philipp Lenard published a series of experiments that revealed surprising features of the **photoelectric effect**—the emission of electrons from a metal surface exposed to light. He observed that increasing the intensity of the incident light increased the number of emitted electrons but **did not** increase their kinetic energy. Instead, the energy of the emitted electrons depended on the **wavelength** of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also identified a **threshold wavelength**—if the light’s wavelength was too long (i.e., its frequency too low), no electrons were emitted, regardless of how intense the light was. These results posed a serious challenge to classical wave theory, which predicted that energy should increase smoothly with intensity, not depend on frequency.
 
-In that same year — Einstein's *annus mirabilis* — he published four groundbreaking papers that transformed physics, including his work on Special Relativity, which revealed that simultaneity is not absolute but depends on the observer's frame of reference. Walter Isaacson's biography of Einstein provides a vivid account of these discoveries and the context in which they occurred. Isaacson also describes how Lenard, despite winning the Nobel Prize for the research that Einstein admired and built upon, became an outspoken anti-Semite and actively worked to prevent Einstein from receiving the Nobel Prize for several years.
+In 1905, Albert Einstein offered a revolutionary explanation. He proposed that light is not just a continuous wave but is **quantized** into discrete packets of energy—later called **photons**. The energy of each photon is proportional to its frequency, given by:
+
+$$
+E = h \nu
+$$
+
+where $h$ is Planck’s constant and $\nu$ is the frequency of the light. This bold hypothesis went beyond Max Planck’s earlier work, which had only assumed quantized energy exchange between matter and radiation—not that light itself came in packets. Einstein suggested that **light in free space** behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained all of Lenard’s observations and laid the groundwork for quantum physics.
+
+![Lenard/Einstein image created by ChatGPT, 2025](images/sensors/03-Lenard-Einstein.png){#lenard-einstein width="60%" fig-align="center"}
+
+Einstein’s proposal was met with skepticism. The wave theory of light, supported by extensive experimental evidence like interference and diffraction, remained central to physics. Even Einstein himself was uneasy with the resulting **wave-particle duality**. He believed that this duality hinted at an incomplete understanding of nature, and he famously rejected the probabilistic foundations of quantum mechanics, remarking that “God does not play dice.” Niels Bohr, a champion of the new quantum theory and Einstein’s intellectual foil, is said to have replied, “Einstein, don’t tell God what to do.” The tension between wave and particle descriptions remains a central—and still puzzling—theme in physics.
+
+That same year—Einstein’s *annus mirabilis*—he published four groundbreaking papers that reshaped modern physics. Alongside the photoelectric effect, his work on Special Relativity showed that **simultaneity is relative**, depending on the observer’s frame of reference. Walter Isaacson’s biography of Einstein provides an accessible account of these discoveries and the broader scientific context. Isaacson also details how Lenard, despite receiving the Nobel Prize for research that Einstein had admired and extended, became an outspoken anti-Semite who actively opposed Einstein’s recognition by the Nobel committee.
+
 <!--
 Photoelectric effect and Lenard
 https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF728iVpg 
@@ -46,9 +64,8 @@ CMOS image sensors store the electrons released during an image exposure in a ca
 
 The voltage in the capacitor is readout by the circuitry. The initial transduction from light to electrons, the photoelectric effect, is linear over a large range: the number of electrons is proportional to the number of incident photons. A basic understanding of CIS principles begins with this linear formulation.
 
-
-
 ### Electronic circuitry
+
 In the real device, nonlinearities do arise. Some of these are caused by the circuitry that manages the acquisition, storage, and readout of the data. These basic circuit functions introduce nonlinearities of a few percent @Wang2017-CMOSLinearity, and hardware design choices can influence the degree of nonlinearity. For example, the capacitance of the storage element and the characteristics of the amplifiers used in the readout process can both contribute to deviations from linearity.
 
 Another source of nonlinearity arises from the photodiode itself. At high irradiance levels, the photodiode can saturate, meaning that it cannot generate additional electrons regardless of the incoming light. This saturation effect imposes a hard limit on the dynamic range of the sensor.
@@ -57,7 +74,7 @@ Temperature variations can also affect the linearity of the sensor. Changes in t
 
 Understanding and modeling these nonlinearities is critical for applications that require high precision, such as scientific imaging or computational photography. Calibration techniques, such as measuring the sensor response under controlled conditions, can help correct for these nonlinearities in post-processing.
 
-Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.  
+Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
 
 ### Optical components
 
@@ -95,14 +112,15 @@ Probably some of this stuff is true, some is false, but the whole article doesn'
 
 3.2.7. Tone mapping. A tone map is a 1D LUT that is applied per color channel to adjust the tonal values of the image. Figure 10 shows an example. Tone mapping serves two purposes. First, combined with color manipulation, it adjusts the image’s aesthetic appeal, often by increasing the contrast. Second, the final output image is usually only 8 to 10 bits per channel (i.e., 256 or 1,024 tonal values), while the raw-RGB sensor represents a pixel’s digital value using 10–14 bits (i.e., 1,024 up to 16,384 tonal values). As a result, it is necessary to compress the tonal values from the wider tonal range to a tighter range via tone mapping. This adjustment is reminiscent of the human eye’s adaptation to scene brightness (Land 1974). Figure 11 shows a typical 1D LUT used for tone mapping.
 
-
-
 ### Curved sensors
+
 Finally, it is possible to reduce spherical aberration by changing the imaging surface. An image system that couples a spherical lens with an appropriately curved sensor can have very small spherical aberration. This idea is partly inspired by the fact that the retina in many animals lines the interior of the eyeball, forming a curved sensor surface. While this is not widely used, there have been several projects to create sensors on bendable materials, including some very expensive research projects. The idea is to build these sensors for cameras with very large field of view and very high resolution across the field of view.
 
+```{=html}
 <!-- 
 Curved sensor projects
 [HRL](https://www.hrl.com/news/2024/03/11/hrl-advances-to-camera-build-phase-of-curved-sensor-technology?t)
 [Sony](https://www.dpreview.com/articles/2279255612/sony-s-curved-sensors-may-allow-for-simpler-lenses-and-better-images?comment=5515068691)
 [John Rogers](https://thefutureofthings.com/6161-a-spherical-camera-sensor/)
 -->
+```
