@@ -22,7 +22,31 @@ Considering the pervasive nature and technological advantages of CMOS image sens
 <!-- Fossum says: power reduced (100×) as well as avoid many of the charge‐transfer degradation issues associated with exposure to radiation in space [11] (see Figure 23.6).  (From the Book chapter https://onlinelibrary.wiley.com/doi/chapter-epub/10.1002/9781394202478.ch23)-->
 
 ## Transduction:  The photoelectric effect
-The energy in the incident light field is encoded by the photodiodes in the image sensor array. Each photodiode converts the irradiance at its aperture electrons.  These are stored in a capacitor, and the voltage in the capacitor is readout by the circuitry. The initial transduction from light to electrons, the photoelectric effect, is linear over a large range: the number of electrons is proportional to the number of incident photons. A basic understanding of CIS principles begins with this linear formulation.
+The incident light field is encoded by the light-sensitive photodiodes in the image sensor array. Each photodiode converts the energy in the irradiance at its aperture into some number of electrons. The number of electrons depends on the intensity and wavelength composition of the light field. The conversion of light to electrons first reported by Heinrich Hertz (@Hertz1887-photoelectric1, @Hertz1887-photoelectric2) is called the **photoelectric** effect.
+
+The effect is linear over a large range, in the sense that doubling the light intensity will double the number of electrons generated. This proportionality holds until the material saturates (there are no more free electrons). Thus, within the linear range, the number of electrons is a direct and reliable measure of the incident light intensity.
+
+
+::: {#photoelectric .callout-note collapse="true" appearance="simple"}
+## Lenard and Einstein
+Philipp Lenard's experiments in the late 19th century provided crucial evidence about the nature of the photoelectric effect. He found that increasing the intensity of the incident light increased the number of electrons emitted from a metal surface but did not increase the energy of the individual electrons.  On the other hand, the energy of the emitted electrons did depend on the wavelength of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also discovered a threshold wavelength — if the light was too long in wavelength (too low in frequency), no electrons were emitted, no matter how intense the light. Lenard's observations could not be explained by classical wave theories of light, which predicted that increasing intensity should increase the energy of emitted electrons. 
+
+In 1905, Albert Einstein resolved this paradox by proposing that light is quantized into discrete packets of energy (later named photons). He suggested that the energy of each photon is proportional to its frequency, as described by the equation $E = h \nu$, where $h$ is Planck's constant and $\nu$ is the frequency (inverse to wavelength) of the light. Einstein's theory explained Lenard's observations and established the quantum nature of light during absorption, a foundational result for modern physics.  
+
+Einstein's 1905 photoelectric paper went further than Planck's original discovery: he proposed that light, even in free space, consists of localized energy quanta before any interaction with matter. This was a bold departure from Planck, who had noted that the exchange of energy between matter and radiation was quantized. Einstein's view was controversial because it directly challenged the prevailing wave theory of light. Throughout his life, Einstein was uneasy with the wave-particle duality. He believed in an underlying deterministic reality and hoped that a more complete theory would eventually resolve the contradiction. Famously, he objected to the indeterminism of quantum mechanics, remarking that “God does not play dice.” Niels Bohr, a leading proponent of quantum theory, responded, "Einstein, don't tell God what to do." The tension between wave and particle descriptions of light remains a central theme in physics and is revisited each year in this course.
+
+In that same year — Einstein's *annus mirabilis* — he published four groundbreaking papers that transformed physics, including his work on Special Relativity, which revealed that simultaneity is not absolute but depends on the observer's frame of reference. Walter Isaacson's biography of Einstein provides a vivid account of these discoveries and the context in which they occurred. Isaacson also describes how Lenard, despite winning the Nobel Prize for the research that Einstein admired and built upon, became an outspoken anti-Semite and actively worked to prevent Einstein from receiving the Nobel Prize for several years.
+<!--
+Photoelectric effect and Lenard
+https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF728iVpg 
+-->
+:::
+
+CMOS image sensors store the electrons released during an image exposure in a capacitor, one capacitor for each photodiode. The capacitor has a finite storage capacity, which is called the **well capacity** or **full-well capacity**. This term refers to the maximum number of electrons that can be stored in the capacitor before it saturates. When the number of photo-generated electrons exceeds the well capacity, additional electrons cannot be stored, and the sensor output no longer increases with increasing light intensity. This saturation effect limits the dynamic range of the sensor and is an important consideration in sensor design and performance evaluation.
+
+The voltage in the capacitor is readout by the circuitry. The initial transduction from light to electrons, the photoelectric effect, is linear over a large range: the number of electrons is proportional to the number of incident photons. A basic understanding of CIS principles begins with this linear formulation.
+
+
 
 ### Electronic circuitry
 In the real device, nonlinearities do arise. Some of these are caused by the circuitry that manages the acquisition, storage, and readout of the data. These basic circuit functions introduce nonlinearities of a few percent @Wang2017-CMOSLinearity, and hardware design choices can influence the degree of nonlinearity. For example, the capacitance of the storage element and the characteristics of the amplifiers used in the readout process can both contribute to deviations from linearity.
