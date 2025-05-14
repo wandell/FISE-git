@@ -14,17 +14,27 @@ While both CCD and modern CMOS (Complementary Metal-Oxide-Semiconductor) imagers
 
 ![CMOS image sensors incorporate circuitry, comprising multiple subsystems and enabling many different image processing features.](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
 
-Fossum's breakthrough was enormously significant both as a technology and for its impact on society. By leveraging standard CMOS technology, it became possible to integrate not only the light-sensing pixels but also the timing, control, and signal processing circuitry onto the same sensor chip. This integration enabled new functionalities directly at the sensor level (@fig-olympus-overview). Furthermore, this shift dramatically reduced power consumption, a crucial factor that opened the door to the widespread adoption of image sensors in mobile devices. This accessibility and miniaturization enabled the massive global adoption of electronic image sensors.
+Fossum's breakthrough was very significant as a technology. By leveraging standard CMOS technology, it became possible to integrate not only the light-sensing pixels but also the timing, control, and signal processing circuitry onto the same sensor chip. This integration enabled new functionalities directly at the sensor level (@fig-olympus-overview). Furthermore, this shift dramatically reduced power consumption, a crucial factor that opened the door to the widespread adoption of image sensors in mobile devices. Thus, the technology enabled the massive global adoption of electronic image sensors which continues to impact societies across the globe.
 
-Considering the pervasive nature and technological advantages of CMOS image sensors, this section of the book will primarily focus on their properties and operation. We will dedicate separate sections to explore the characteristics of CCD imagers and single-photon avalanche detectors (SPADs).
+Considering the technological advantages and widespread adoption of CMOS image sensors, we primarily focus on their properties and operation. We will dedicate separate sections to explore the characteristics of CCD imagers and single-photon avalanche detectors (SPADs).
 
 <!-- Fossum says: power reduced (100×) as well as avoid many of the charge‐transfer degradation issues associated with exposure to radiation in space [11] (see Figure 23.6).  (From the Book chapter https://onlinelibrary.wiley.com/doi/chapter-epub/10.1002/9781394202478.ch23)-->
 
 ## Transduction: The photoelectric effect
 
-The incident light field is encoded by the light-sensitive photodiodes in the image sensor array. Each photodiode converts the energy in the irradiance at its aperture into some number of electrons. The number of electrons depends on the intensity and wavelength composition of the light field. The conversion of light to electrons first reported by Heinrich Hertz (@Hertz1887-photoelectric1, @Hertz1887-photoelectric2) is called the **photoelectric** effect.
+The incident light field is encoded by the light-sensitive photodiodes in the image sensor array. Each photodiode converts the energy in the irradiance at its aperture into some number of electrons. The conversion of photons to electrons is called **transduction**. The conversion of light to electrons first reported by Heinrich Hertz (@Hertz1887-photoelectric1, @Hertz1887-photoelectric2) is called the **photoelectric** effect.
 
-The effect is linear over a large range, in the sense that doubling the light intensity will double the number of electrons generated. This proportionality holds until the material saturates (there are no more free electrons). Thus, within the linear range, the number of electrons is a direct and reliable measure of the incident light intensity.
+The effect is linear over a large range, in the sense that doubling the light intensity will double the number of electrons generated, and the initial capture of light is usually modeled as a linear function (@Preece2022-photontransfer). The linearity holds until the material saturates (there are no more free electrons). Thus, within the linear range, the number of electrons is a direct and reliable measure of the incident light intensity.  
+
+The ratio between the number of incident photons and the number of generated electrons is called the **quantum efficiency (QE)** of the device. The QE is a wavelength-dependent function. The QE is the slope of the line relating number of incident photons (x-axis) to the number of generated electrons (y-axis),
+
+$$
+\mathrm{QE}(\lambda) = \frac{\text{number of electrons generated}}{\text{number of incident photons at wavelength } \lambda}
+$$
+
+A QE of 1 (or 100%) means that every incident photon generates an electron, while a lower QE indicates that some photons do not result in electron generation. In practice, QE varies with wavelength due to the physical properties of the sensor material and the design of the device. Manufacturers often provide QE curves that show the efficiency as a function of wavelength for a given sensor.
+
+As we describe later, when the photodiode is embedded within sensor circuitry, some nonlinearities arise in the full transduction. But the initial transduction from light to electrons, the photoelectric effect, is linear over a large range. A basic understanding of CIS principles begins with this linear formulation.  The nonlinearities are important to understand, but can be set aside until we specify more about the pixel circuitry.
 
 ::: {#photoelectric .callout-note collapse="true" appearance="simple"}
 ## The Photoelectric Effect and the Birth of the Photon**
@@ -60,9 +70,12 @@ https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF7
 -->
 :::
 
-CMOS image sensors store the electrons released during an image exposure in a capacitor, one capacitor for each photodiode. The capacitor has a finite storage capacity, which is called the **well capacity** or **full-well capacity**. This term refers to the maximum number of electrons that can be stored in the capacitor before it saturates. When the number of photo-generated electrons exceeds the well capacity, additional electrons cannot be stored, and the sensor output no longer increases with increasing light intensity. This saturation effect limits the dynamic range of the sensor and is an important consideration in sensor design and performance evaluation.
+## Storing the electrons: Well capacity
+To create an image, we must record the number of electrons generated at each of the photodiodes during the exposure duration. To make this measurement CMOS image sensors must store the electrons. They do so in a capacitor, one capacitor for each photodiode. These capacitors have a finite capacity, which is called the **well capacity** or **full-well capacity**. The well capacity is simply the maximum number of electrons that can be stored in the capacitor before it saturates. When the number of photo-generated electrons exceeds the well capacity, the photodiode is saturated and its output no longer increases with increasing light intensity. This limits the dynamic range of the sensor and is an important consideration in sensor design and performance evaluation.
 
-The voltage in the capacitor is readout by the circuitry. The initial transduction from light to electrons, the photoelectric effect, is linear over a large range: the number of electrons is proportional to the number of incident photons. A basic understanding of CIS principles begins with this linear formulation.
+## Reading the array of electrons
+
+The electrons stored in the photodiode capacitors are readout by the CMOS circuitry. 
 
 ### Electronic circuitry
 
