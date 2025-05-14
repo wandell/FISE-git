@@ -1,4 +1,4 @@
-# Sensors {#sec-sensors}
+# Sensor encoding {#sec-sensors}
 
 The [Preface](../index.qmd#sec-preface) provides a very brief discussion of the history of image sensor technologies, from film to charge-coupled devices (CCD), and to the invention of CMOS image sensors (CIS).
 
@@ -36,6 +36,8 @@ A QE of 1 (or 100%) means that every incident photon generates an electron, whil
 
 As we describe later, when the photodiode is embedded within sensor circuitry, some nonlinearities arise in the full transduction. But the initial transduction from light to electrons, the photoelectric effect, is linear over a large range. A basic understanding of CIS principles begins with this linear formulation.  The nonlinearities are important to understand, but can be set aside until we specify more about the pixel circuitry.
 
+## Poisson statistics of transduction
+
 ::: {#photoelectric .callout-note collapse="true" appearance="simple"}
 ## The Photoelectric Effect and the Birth of the Photon**
 Physicists in the late 19th century sought to understand the spectrum of light emitted by a blackbody — a perfect emitter and absorber of radiation. In 1900, Max Planck tried to match the observed blackbody spectrum with a formula. After some trial and error, he arrived at an expression that fit the data perfectly—but only if he assumed that energy exchange between matter and radiation was quantized. He thought that, perhaps, the energy of oscillators in the cavity walls of the radiator could only take on discrete values and thus the measured absorptions and emissions needed to match these discrete levels.
@@ -70,70 +72,4 @@ https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF7
 -->
 :::
 
-## Storing the electrons: Well capacity
-To create an image, we must record the number of electrons generated at each of the photodiodes during the exposure duration. To make this measurement CMOS image sensors must store the electrons. They do so in a capacitor, one capacitor for each photodiode. These capacitors have a finite capacity, which is called the **well capacity** or **full-well capacity**. The well capacity is simply the maximum number of electrons that can be stored in the capacitor before it saturates. When the number of photo-generated electrons exceeds the well capacity, the photodiode is saturated and its output no longer increases with increasing light intensity. This limits the dynamic range of the sensor and is an important consideration in sensor design and performance evaluation.
 
-## Reading the array of electrons
-
-The electrons stored in the photodiode capacitors are readout by the CMOS circuitry. 
-
-### Electronic circuitry
-
-In the real device, nonlinearities do arise. Some of these are caused by the circuitry that manages the acquisition, storage, and readout of the data. These basic circuit functions introduce nonlinearities of a few percent @Wang2017-CMOSLinearity, and hardware design choices can influence the degree of nonlinearity. For example, the capacitance of the storage element and the characteristics of the amplifiers used in the readout process can both contribute to deviations from linearity.
-
-Another source of nonlinearity arises from the photodiode itself. At high irradiance levels, the photodiode can saturate, meaning that it cannot generate additional electrons regardless of the incoming light. This saturation effect imposes a hard limit on the dynamic range of the sensor.
-
-Temperature variations can also affect the linearity of the sensor. Changes in temperature can alter the behavior of the photodiode and the associated circuitry, leading to temperature-dependent nonlinearities. Modern sensors often include compensation mechanisms to mitigate these effects, but residual nonlinearities may still remain.
-
-Understanding and modeling these nonlinearities is critical for applications that require high precision, such as scientific imaging or computational photography. Calibration techniques, such as measuring the sensor response under controlled conditions, can help correct for these nonlinearities in post-processing.
-
-Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
-
-### Optical components
-
-There are also other non-electrical components of most image sensors. These are small lens (lenslet) arrays and small color filter arrays that influence which part of the irradiance is capable of producing electrons from each photodiode.
-
-The sensor records the light that exits from the back of the imaging optics. The photodiodes are small and they are located at the bottom of small holes in the sensor. It is necessary to guide the irradiance from the camera lens with an array of microlenses that account for the position of the pixel with respect to the center of the lens. The original role of the microlens array was to compensate for the challenges inherent in this geometry. Overtime, the microlens array has been designed to achieve additional objectives including determining how to focus the image and estimate the scene light field.
-
-To make a color image, the sensor must measure some information about the relative intensity of different wavelengths. To make this measurement small color filters are placed in front of each pixel, so that different pixels are sensitive to different wavelengths. These spectral encoding differences enable the system to reconstruct a color image that is convincing to the human visual system.
-
-## Sensor physics
-
-### Photoelectric effect is linear
-
-Conduction band and valence band.
-
-Linearity of the absorption, up to and including saturation. When you run out of space to store the free electrons.
-
-### Poisson statistics
-
-### Wavelength information
-
-Examples of the wavelength dependency of the silicon, as a function of depth.
-
-Color filter arrays.
-
-### Microlens arrays
-
-Light field possibility.
-
-## ARVS mobile photography article
-
-I was reading @delbracio-mobile-2021 and it surprised me how it glossed over various claims. For example, a small sensor was deemed to be worse than a big sensor without reference to pixel size. The notion that one had to apply gain and thus multiply the noise without considering the light level or pixel size. No mention of well capacity.
-
-Probably some of this stuff is true, some is false, but the whole article doesn't explain the way we should do here. Also, this kind of vague stuff:
-
-3.2.7. Tone mapping. A tone map is a 1D LUT that is applied per color channel to adjust the tonal values of the image. Figure 10 shows an example. Tone mapping serves two purposes. First, combined with color manipulation, it adjusts the image’s aesthetic appeal, often by increasing the contrast. Second, the final output image is usually only 8 to 10 bits per channel (i.e., 256 or 1,024 tonal values), while the raw-RGB sensor represents a pixel’s digital value using 10–14 bits (i.e., 1,024 up to 16,384 tonal values). As a result, it is necessary to compress the tonal values from the wider tonal range to a tighter range via tone mapping. This adjustment is reminiscent of the human eye’s adaptation to scene brightness (Land 1974). Figure 11 shows a typical 1D LUT used for tone mapping.
-
-### Curved sensors
-
-Finally, it is possible to reduce spherical aberration by changing the imaging surface. An image system that couples a spherical lens with an appropriately curved sensor can have very small spherical aberration. This idea is partly inspired by the fact that the retina in many animals lines the interior of the eyeball, forming a curved sensor surface. While this is not widely used, there have been several projects to create sensors on bendable materials, including some very expensive research projects. The idea is to build these sensors for cameras with very large field of view and very high resolution across the field of view.
-
-```{=html}
-<!-- 
-Curved sensor projects
-[HRL](https://www.hrl.com/news/2024/03/11/hrl-advances-to-camera-build-phase-of-curved-sensor-technology?t)
-[Sony](https://www.dpreview.com/articles/2279255612/sony-s-curved-sensors-may-allow-for-simpler-lenses-and-better-images?comment=5515068691)
-[John Rogers](https://thefutureofthings.com/6161-a-spherical-camera-sensor/)
--->
-```
