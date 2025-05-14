@@ -10,11 +10,11 @@ The transition to electronics emerged with the discovery that semiconductor tech
 
 The first successful implementation of this principle in an image sensor was the charge-coupled device (CCD), developed in 1970 by Michael Tompsett, building on earlier work by George Smith and Willard Boyle [@boyle1970-ccd-first]. This innovation marked a fundamental shift in imaging, transitioning from a field rooted in chemistry (like photographic film) to one based on electrical engineering. A key advantage was the digital nature of the readout, allowing immediate integration with computers for storage, sharing, editing, and analysis of images directly from the camera.
 
-While both CCD and modern CMOS (Complementary Metal-Oxide-Semiconductor) imagers utilize the photoelectric effect to detect light, they are built using distinct semiconductor technologies. These differences typically necessitate separate fabrication facilities or specialized process flows within a general CMOS facility. A pivotal development was Eric Fossum's approach, which demonstrated that image sensors could be successfully fabricated using standard, mainstream CMOS microelectronics processes (@Fossum2023-invention).
+While both CCD and modern CMOS (Complementary Metal-Oxide-Semiconductor) imagers utilize the photoelectric effect to detect light, they are built using distinct semiconductor technologies. These differences typically necessitate separate fabrication facilities or specialized process flows within a general CMOS facility. A pivotal development was Eric Fossum's circuit design - the active pixel sensor (APS) - which demonstrated that image sensors could be successfully implemented using mainstream CMOS microelectronics processes (@Fossum2023-invention).
 
-![CMOS image sensors incorporate circuitry, comprising multiple subsystems and enabling many different image processing features.](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
+![CMOS image sensors incorporate circuitry, comprising multiple subsystems and enabling many different image processing features. Maybe get a figure from one of Eric's earlier papers.](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
 
-Fossum's breakthrough was very significant as a technology. By leveraging standard CMOS technology, it became possible to integrate not only the light-sensing pixels but also the timing, control, and signal processing circuitry onto the same sensor chip. This integration enabled new functionalities directly at the sensor level (@fig-olympus-overview). Furthermore, this shift dramatically reduced power consumption, a crucial factor that opened the door to the widespread adoption of image sensors in mobile devices. Thus, the technology enabled the massive global adoption of electronic image sensors which continues to impact societies across the globe.
+Fossum's CMOS imager breakthrough was very significant. By leveraging standard CMOS technology, it became possible to integrate not only the light-sensing pixels but also the timing, control, and signal processing circuitry onto the same sensor chip. This integration enabled new functionalities directly at the sensor level (@fig-olympus-overview). Furthermore, this shift dramatically reduced power consumption, a crucial factor that opened the door to the widespread adoption of image sensors in mobile devices. Thus, beyond the technology itself, the breakthrough enabled the massive global adoption of electronic image sensors.  Their widespread use continues to impact many aspects of societies across the globe.
 
 Considering the technological advantages and widespread adoption of CMOS image sensors, we primarily focus on their properties and operation. We will dedicate separate sections to explore the characteristics of CCD imagers and single-photon avalanche detectors (SPADs).
 
@@ -34,9 +34,15 @@ $$
 
 A QE of 1 (or 100%) means that every incident photon generates an electron, while a lower QE indicates that some photons do not result in electron generation. In practice, QE varies with wavelength due to the physical properties of the sensor material and the design of the device. Manufacturers often provide QE curves that show the efficiency as a function of wavelength for a given sensor.
 
-As we describe later, when the photodiode is embedded within sensor circuitry, some nonlinearities arise in the full transduction. But the initial transduction from light to electrons, the photoelectric effect, is linear over a large range. A basic understanding of CIS principles begins with this linear formulation.  The nonlinearities are important to understand, but can be set aside until we specify more about the pixel circuitry.
+As we describe later, the photodiode is embedded within sensor circuitry for storing and reading out the electrons.  This processing introduces some nonlinearities and noise when we measure the whole system transduction, not just the photoelectric effect portion (@Bohndiek2008-sensorlinearity). But the initial transduction from light to electrons, the photoelectric effect, is linear over a large range, and a basic understanding of CIS principles begins with this linear formulation.  We discuss the limitations later, after we specify the pixel circuitry.
+
+<!--
+Bohndiek2008-sensorlinearity paper has figures.  Notice how nonlinear Figures 7 and 17 are.  But earlier figures (e.g., I probably have class data with response linearity and nonlinearity.  The Thieuwissen paper has an analysis of the impact of floating diffusion.
+-->
 
 ## Poisson statistics of transduction
+
+
 
 ::: {#photoelectric .callout-note collapse="true" appearance="simple"}
 ## The Photoelectric Effect and the Birth of the Photon**
