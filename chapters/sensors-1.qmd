@@ -14,7 +14,7 @@ While both CCD and modern CMOS (Complementary Metal-Oxide-Semiconductor) imagers
 
 ![CMOS image sensors incorporate circuitry, comprising multiple subsystems and enabling many different image processing features. Maybe get a figure from one of Eric's earlier papers.](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
 
-Fossum's CMOS imager breakthrough was very significant. By leveraging standard CMOS technology, it became possible to integrate not only the light-sensing pixels but also the timing, control, and signal processing circuitry onto the same sensor chip. This integration enabled new functionalities directly at the sensor level (@fig-olympus-overview). Furthermore, this shift dramatically reduced power consumption, a crucial factor that opened the door to the widespread adoption of image sensors in mobile devices. Thus, beyond the technology itself, the breakthrough enabled the massive global adoption of electronic image sensors.  Their widespread use continues to impact many aspects of societies across the globe.
+Fossum's CMOS imager breakthrough was very significant. By leveraging standard CMOS technology, it became possible to integrate not only the light-sensing pixels but also the timing, control, and signal processing circuitry onto the same sensor chip. This integration enabled new functionalities directly at the sensor level (@fig-olympus-overview). Furthermore, this shift dramatically reduced power consumption, a crucial factor that opened the door to the widespread adoption of image sensors in mobile devices. Thus, beyond the technology itself, the breakthrough enabled the massive global adoption of electronic image sensors. Their widespread use continues to impact many aspects of societies across the globe.
 
 Considering the technological advantages and widespread adoption of CMOS image sensors, we primarily focus on their properties and operation. We will dedicate separate sections to explore the characteristics of CCD imagers and single-photon avalanche detectors (SPADs).
 
@@ -24,7 +24,7 @@ Considering the technological advantages and widespread adoption of CMOS image s
 
 The incident light field is encoded by the light-sensitive photodiodes in the image sensor array. Each photodiode converts the energy in the irradiance at its aperture into some number of electrons. The conversion of photons to electrons is called **transduction**. The conversion of light to electrons first reported by Heinrich Hertz (@Hertz1887-photoelectric1, @Hertz1887-photoelectric2) is called the **photoelectric** effect.
 
-The effect is linear over a large range, in the sense that doubling the light intensity will double the number of electrons generated, and the initial capture of light is usually modeled as a linear function (@Preece2022-photontransfer). The linearity holds until the material saturates (there are no more free electrons). Thus, within the linear range, the number of electrons is a direct and reliable measure of the incident light intensity.  
+The effect is linear over a large range, in the sense that doubling the light intensity will double the number of electrons generated, and the initial capture of light is usually modeled as a linear function (@Preece2022-photontransfer). The linearity holds until the material saturates (there are no more free electrons). Thus, within the linear range, the number of electrons is a direct and reliable measure of the incident light intensity.
 
 The ratio between the number of incident photons and the number of generated electrons is called the **quantum efficiency (QE)** of the device. The QE is a wavelength-dependent function. The QE is the slope of the line relating number of incident photons (x-axis) to the number of generated electrons (y-axis),
 
@@ -34,27 +34,34 @@ $$
 
 A QE of 1 (or 100%) means that every incident photon generates an electron, while a lower QE indicates that some photons do not result in electron generation. In practice, QE varies with wavelength due to the physical properties of the sensor material and the design of the device. Manufacturers often provide QE curves that show the efficiency as a function of wavelength for a given sensor.
 
-As we describe later, the photodiode is embedded within sensor circuitry for storing and reading out the electrons.  This processing introduces some nonlinearities and noise when we measure the whole system transduction, not just the photoelectric effect portion (@Bohndiek2008-sensorlinearity). But the initial transduction from light to electrons, the photoelectric effect, is linear over a large range, and a basic understanding of CIS principles begins with this linear formulation.  We discuss the limitations later, after we specify the pixel circuitry.
+As we describe later, the photodiode is embedded within sensor circuitry for storing and reading out the electrons. This processing introduces some nonlinearities and noise when we measure the whole system transduction, not just the photoelectric effect portion (@Bohndiek2008-sensorlinearity). But the initial transduction from light to electrons, the photoelectric effect, is linear over a large range, and a basic understanding of CIS principles begins with this linear formulation. We discuss the limitations later, after we specify the pixel circuitry.
 
+```{=html}
 <!--
 Bohndiek2008-sensorlinearity paper has figures.  Notice how nonlinear Figures 7 and 17 are.  But earlier figures (e.g., I probably have class data with response linearity and nonlinearity.  The Thieuwissen paper has an analysis of the impact of floating diffusion.
 -->
+```
 
-## Poisson statistics of transduction
+## Transduction: statistics
 
+Explain the Poisson statistics of light. Explain that when the light is Poisson the absorptions QE < 1, the electric shot noise will also be Poisson.
 
+Show a graph of the Poisson distribution first. Some examples.
+
+![Poisson distribution examples](images/sensors/03-Poisson.png){#fig-sensor-poisson width=70%}
+
+Maybe a link to the [ISETCam script](https://htmlpreview.github.io/?https://github.com/ISET/psych221/blob/master/slides/slidesPhotonsElectrons.html). Or maybe make a separate version that is part of the FISE distribution.
 
 ::: {#photoelectric .callout-note collapse="true" appearance="simple"}
-## The Photoelectric Effect and the Birth of the Photon**
-Physicists in the late 19th century sought to understand the spectrum of light emitted by a blackbody — a perfect emitter and absorber of radiation. In 1900, Max Planck tried to match the observed blackbody spectrum with a formula. After some trial and error, he arrived at an expression that fit the data perfectly—but only if he assumed that energy exchange between matter and radiation was quantized. He thought that, perhaps, the energy of oscillators in the cavity walls of the radiator could only take on discrete values and thus the measured absorptions and emissions needed to match these discrete levels.
+## The Photoelectric Effect and the Birth of the Photon
+
+Physicists in the late 19th century sought to understand the spectrum of light emitted by a blackbody — a perfect emitter and absorber of radiation. In 1900, **Max Planck** tried to match the observed blackbody spectrum with a formula. After some trial and error, he arrived at an expression that fit the data perfectly—but only if he assumed that energy exchange between matter and radiation was quantized. He thought that, perhaps, the energy of oscillators in the cavity walls of the radiator could only take on discrete values and thus the measured absorptions and emissions needed to match these discrete levels.
 
 $$
 E = n h ν
-$$
-where 
-𝑛 is an integer, 
-𝜈 is the frequency (inverse to wavelength) of the light, and 
-ℎ is the constant he introduced—now known as Planck’s constant.
+$$ 
+
+where 𝑛 is an integer, 𝜈 is the frequency (inverse to wavelength) of the light, and ℎ is the constant he introduced—now known as Planck’s constant.
 
 In 1902, Philipp Lenard published a series of experiments that revealed surprising features of the **photoelectric effect**—the emission of electrons from a metal surface exposed to light. He observed that increasing the intensity of the incident light increased the number of emitted electrons but **did not** increase their kinetic energy. Instead, the energy of the emitted electrons depended on the **wavelength** of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also identified a **threshold wavelength**—if the light’s wavelength was too long (i.e., its frequency too low), no electrons were emitted, regardless of how intense the light was. These results posed a serious challenge to classical wave theory, which predicted that energy should increase smoothly with intensity, not depend on frequency.
 
@@ -66,16 +73,16 @@ $$
 
 where $h$ is Planck’s constant and $\nu$ is the frequency of the light. This bold hypothesis went beyond Max Planck’s earlier work, which had only assumed quantized energy exchange between matter and radiation—not that light itself came in packets. Einstein suggested that **light in free space** behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained all of Lenard’s observations and laid the groundwork for quantum physics.
 
-![Lenard/Einstein image created by ChatGPT, 2025](images/sensors/03-Lenard-Einstein.png){#lenard-einstein width="60%" fig-align="center"}
+![Lenard made measurements that defined important properties of the photoelectric effect. Einstein offered a bold theoretical idea, what we now call the photon, that explained Lenard's and Planck's measurements. Einstein, who was Jewish, had a complex personal relationship with Planck, as they navigated Hitler's rise to power. Lenard became strongly anti-Semitic.](images/people/03-Lenard-Einstein.png){#lenard-einstein width="50%" fig-align="center"}
 
 Einstein’s proposal was met with skepticism. The wave theory of light, supported by extensive experimental evidence like interference and diffraction, remained central to physics. Even Einstein himself was uneasy with the resulting **wave-particle duality**. He believed that this duality hinted at an incomplete understanding of nature, and he famously rejected the probabilistic foundations of quantum mechanics, remarking that “God does not play dice.” Niels Bohr, a champion of the new quantum theory and Einstein’s intellectual foil, is said to have replied, “Einstein, don’t tell God what to do.” The tension between wave and particle descriptions remains a central—and still puzzling—theme in physics.
 
 That same year—Einstein’s *annus mirabilis*—he published four groundbreaking papers that reshaped modern physics. Alongside the photoelectric effect, his work on Special Relativity showed that **simultaneity is relative**, depending on the observer’s frame of reference. Walter Isaacson’s biography of Einstein provides an accessible account of these discoveries and the broader scientific context. Isaacson also details how Lenard, despite receiving the Nobel Prize for research that Einstein had admired and extended, became an outspoken anti-Semite who actively opposed Einstein’s recognition by the Nobel committee.
 
+```{=html}
 <!--
 Photoelectric effect and Lenard
 https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF728iVpg 
 -->
+```
 :::
-
-
