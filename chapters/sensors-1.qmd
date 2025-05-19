@@ -20,21 +20,32 @@ Considering the technological advantages and widespread adoption of CMOS image s
 
 <!-- Fossum says: power reduced (100×) as well as avoid many of the charge‐transfer degradation issues associated with exposure to radiation in space [11] (see Figure 23.6).  (From the Book chapter https://onlinelibrary.wiley.com/doi/chapter-epub/10.1002/9781394202478.ch23)-->
 
-## Transduction: The photoelectric effect
+## The photoelectric effect
+Image sensors encode the optical light field using an array of light-sensitive photodiodes. Each photodiode converts the light field energy at its aperture, usually on the order of 1 micron in diameter, into electrons. That certain materials convert light to electrons was first reported by Heinrich Hertz (@Hertz1887-photoelectric1, @Hertz1887-photoelectric2) and is called the **photoelectric** effect.  His measurements of the photoelectric effect in 1887 used a simple apparatus: a loop of wire with a small gap. When exposed to a strong electromagnetic wave at the right frequency, a current is induced in the loop, and if the current is sufficient, a spark jumps across the gap. 
 
-The incident light field is encoded by the light-sensitive photodiodes in the image sensor array. Each photodiode converts the energy in the irradiance at its aperture into some number of electrons. The conversion of photons to electrons is called **transduction**. The conversion of light to electrons first reported by Heinrich Hertz (@Hertz1887-photoelectric1, @Hertz1887-photoelectric2) is called the **photoelectric** effect.
+The photoelectric effect was discovered when Hertz observed that illuminating the wire loop with ultraviolet (UV) light made the spark easier to produce—the spark length increased. He concluded that the UV light was generating additional current in the wire and that light produces electrical signals. 
 
-The effect is linear over a large range, in the sense that doubling the light intensity will double the number of electrons generated, and the initial capture of light is usually modeled as a linear function (@Preece2022-photontransfer). The linearity holds until the material saturates (there are no more free electrons). Thus, within the linear range, the number of electrons is a direct and reliable measure of the incident light intensity.
+<!--
+He also noticed that glass, which blocks UV light, eliminated the effect. Quartz (which transmits UV light) did not.
+-->
 
-The ratio between the number of incident photons and the number of generated electrons is called the **quantum efficiency (QE)** of the device. The QE is a wavelength-dependent function. The QE is the slope of the line relating number of incident photons (x-axis) to the number of generated electrons (y-axis),
+Hertz' experiments photoelectric demonstration was in 1887. In 1897 JJ Thomson conclusively demonstrated that electrons are discrete, countable particles. His experiments revealed that cathode rays are composed of negatively charged particles with a specific mass and charge, much smaller than that of an atom. This was the first evidence for the existence of the electron as a fundamental, discrete constituent of matter. Later, Robert Millikan's oil drop experiment (1909-1913) precisely measured the elementary charge of the electron, further solidifying the understanding of its discrete nature. The problem we now have is to characterize how light generates electrons.
+
+## Quantifying the photoelectric effect
+Over time, we learned that the conversion is inescapably noisy: even a perfectly stable light source will generate a variable number of electrons that follows the Poisson probability distribution. This is part of the statistical quantum theory.
+
+The photoelectric effect is linear over a large range, in the sense that doubling the light intensity doubles the **mean** number of electrons generated. Thus, the initial capture of light is usually modeled as a linear function (@Preece2022-photontransfer). The linearity holds until the material saturates (there are no more free electrons). Within this linear range, the number of electrons is a noisy estimate of the incident light intensity.
+
+The ratio between the number of incident photons and the number of generated electrons is called the photodiode's **quantum efficiency (QE)**. 
+You can measure the QE from the slope of the line relating number of incident photons (x-axis) to the number of generated electrons (y-axis).  A QE of 1 (or 100%) means that every incident photon generates one electron; a lower QE indicates that some photons do not generate an electron. So, a QE of 0.5 means that half of the photons - again randomly - produce an electron.  
+
+In practice, QE varies with wavelength due to the physical properties of the sensor material and the design of the device. Manufacturers often provide QE curves that show the efficiency as a function of wavelength for a given sensor, and we will see examples later when we analyze specific sensors.
 
 $$
 \mathrm{QE}(\lambda) = \frac{\text{number of electrons generated}}{\text{number of incident photons at wavelength } \lambda}
 $$
 
-A QE of 1 (or 100%) means that every incident photon generates an electron, while a lower QE indicates that some photons do not result in electron generation. In practice, QE varies with wavelength due to the physical properties of the sensor material and the design of the device. Manufacturers often provide QE curves that show the efficiency as a function of wavelength for a given sensor.
-
-As we describe later, the photodiode is embedded within sensor circuitry for storing and reading out the electrons. This processing introduces some nonlinearities and noise when we measure the whole system transduction, not just the photoelectric effect portion (@Bohndiek2008-sensorlinearity). But the initial transduction from light to electrons, the photoelectric effect, is linear over a large range, and a basic understanding of CIS principles begins with this linear formulation. We discuss the limitations later, after we specify the pixel circuitry.
+The photoelectric effect is the initial stage of the CMOS circuit. But as we describe later, the photodiode is integrated within circuitry that stores and then reads out the voltage associated with the electrons. The circuitry can introduce some nonlinearities and noise that are part of the whole system response (@Bohndiek2008-sensorlinearity). But the initial transduction from light to electrons, the photoelectric effect, is linear with respect to the mean number of electrons over a large range. A basic understanding of CIS principles begins with this linear formulation. We discuss the limitations later, after we specify the pixel circuitry.
 
 ```{=html}
 <!--
@@ -42,44 +53,29 @@ Bohndiek2008-sensorlinearity paper has figures.  Notice how nonlinear Figures 7 
 -->
 ```
 
-## Transduction: statistics
-The statistics of the photoelectric effect describe how the likelihood that the photons incident at a surface generate electrons. The principles of the effect are simply stated.  Suppose we have a steady source of photons, all with the same wavelength. 
+## Statistics of the photoelectric effect
+The statistics of the photoelectric effect describe the likelihood that the photons incident at a surface generate electrons. The principles of the effect are simply stated.  Suppose we have a **steady source** of photons, all with the same wavelength. 
 
-1. The likelihood of a photon in any given time interval is the same
+1. The likelihood of a photon in any given time interval, $\delta t$ is the same
 2. The probability that a photon generates an electron is constant (equal to the quantum efficiency, QE)
 
-These principles meet the definition of the Poisson distribution. In that case the photon arrivals are considered 'events', and all the events are the same, and the chance of an event in any small interval of time is also the same.
+These principles meet the definition of the **Poisson** distribution. Siméon Denis Poisson described the probability distribution in his 1837 work "Recherches sur la probabilité des jugements en matière criminelle et en matière civile (Researches on the Probability of Judgments in Criminal and Civil Matters)". He developed the distribution to describe the number of discrete events occurring in a fixed interval of time or space if these events occur with a known constant mean rate and independently of the time since the last event. 
 
-Siméon Denis Poisson described the probability distribution that bears his name in his 1837 work "Recherches sur la probabilité des jugements en matière criminelle et en matière civile (Researches on the Probability of Judgments in Criminal and Civil Matters)". He developed the distribution to describe the number of discrete events occurring in a fixed interval of time or space if these events occur with a known constant mean rate and independently of the time since the last event.
+Poisson's original applications were in areas like jurisprudence and the number of soldiers killed by horse kicks in the Prussian army. But the mathematical framework he established directly applies to the arrival of photons from a constant light source. In our application, the photon arrivals are considered 'events', all the events are the same, and the chance of an event in any small interval of time is the same.
 
-While Poisson's original applications were in areas like jurisprudence and the number of soldiers killed by horse kicks in the Prussian army, the mathematical framework he established directly applies to the arrival of photons from a constant light source.
-
-::: {#particle-wave .callout-note collapse="true" appearance="simple"}
-## Particle-wave duality
-The explicit modern view — that the number of photons arriving at a detector from a steady, coherent source follows a Poisson distribution — was formalized in the 20th century, particularly in the development of quantum optics (@Mandel1958-photoncounting). I am genuinely surprised that the Poisson statistics of photon counting was not widely appreciated until about 1960.
-
-There is an even earlier, although implicit, historical precedent. In 1909, Albert Einstein extended his quantum theory of light by analyzing energy fluctuations in thermal equilibrium of blackbody radiation. He considered a small subvolume of a cavity at thermal equilibrium and calculated how much the energy in that subvolume fluctuated around its mean value. Starting from thermodynamic considerations, he derived the variance in energy and found that it contained two distinct contributions. 
-
+The formula for $n$ events with a Poisson parameter $\lambda$ is 
 $$
-\langle (\Delta E)^2 \rangle = h \nu \langle n \rangle + \left( h \nu \langle n \rangle \right)^2
+P(n; \lambda) = \frac{\lambda^n e^{-\lambda}}{n!}
 $$
-where $\langle n \rangle$ is the average number of photons with frequency $\nu$ , and $h$ is Planck’s constant. 
 
-The first term, proportional to the number of photons, $n$, reflects the statistical fluctuations expected from independent particles—like molecules in a gas or photons in a beam. This corresponds to a Poisson distribution in photon number.
+The parameter $\lambda$ is the expected (mean) number of events, and the variance of the Poisson distribution is also $\lambda$.  The shape of the Poisson distribution is very much like the Normal distribution for mean greater than 15 or 20.  The main differences between the Poisson and Normal distribution are that the Poisson only takes integer values and asymmetric (skewed) for small values of $\lambda$.  The Poisson becomes more symmetric as $\lambda$ increases, and the chance of a negative value becomes very small. In fact, for large $\lambda$, the Poisson distribution approaches the Normal distribution. But for small $\lambda$ the Poisson is noticeably skewed to the right .
 
-The second term, proportional to $n^2$, arises from wave interference effects, similar to intensity fluctuations in classical wave optics (e.g., speckle or diffraction patterns).
+In the context of image sensors, this means that when the mean number of detected photons (or electrons) is low, the noise is dominated by the discrete, asymmetric nature of the Poisson statistics. As the mean increases, the distribution of detected electrons becomes well-approximated by a symmetric, continuous Normal (Gaussian) distribution. A fact that we will use later, however, is that the distribution is not just any Gaussian - the electron noise Gaussian approximation must have a mean equal to the variance. 
 
-Einstein interpreted this result as evidence that light cannot be described purely as a wave or purely as a particle—it exhibits features of both, depending on the observable in question. This was an early and striking hint of wave-particle duality, decades before the full development of quantum electrodynamics. This is an interesting historical point, but by accounting for the energy variation in the volume, rather than just the absorptions, it is more complex than the modern explanation of photon counting and the photoelectric effect.
-:::
+![Poisson distribution examples.  The Poisson formula (red lines) and simulations of Poisson counts (bars) are shown for three mean levels.](images/sensors/03-Poisson.png){#fig-sensor-poisson width=70%}
 
-The Poisson distribution is particularly simple because it has only one parameter.
-
-![Poisson distribution examples](images/sensors/03-Poisson.png){#fig-sensor-poisson width=70%}
-
-Maybe a link to the [ISETCam script](https://htmlpreview.github.io/?https://github.com/ISET/psych221/blob/master/slides/slidesPhotonsElectrons.html). Or maybe make a separate version that is part of the FISE distribution.
-
-::: {#photoelectric .callout-note collapse="true" appearance="simple"}
-## The Photoelectric Effect and the Birth of the Photon
+## The birth of the photon
+How can we explain the properties of the photoelectric effect?  This came about somewhat indirectly.
 
 Physicists in the late 19th century sought to understand the spectrum of light emitted by a blackbody — a perfect emitter and absorber of radiation. In 1900, **Max Planck** tried to match the observed blackbody spectrum with a formula. After some trial and error, he arrived at an expression that fit the data perfectly—but only if he assumed that energy exchange between matter and radiation was quantized. He thought that, perhaps, the energy of oscillators in the cavity walls of the radiator could only take on discrete values and thus the measured absorptions and emissions needed to match these discrete levels.
 
@@ -99,16 +95,40 @@ $$
 
 where $h$ is Planck’s constant and $\nu$ is the frequency of the light. This bold hypothesis went beyond Max Planck’s earlier work, which had only assumed quantized energy exchange between matter and radiation—not that light itself came in packets. Einstein suggested that **light in free space** behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained all of Lenard’s observations and laid the groundwork for quantum physics.
 
+::: {#lenard-einstein-bohr .callout-note collapse="true" appearance="simple"}
+## Scientists are human beings
+
 ![Lenard made measurements that defined important properties of the photoelectric effect. Einstein offered a bold theoretical idea, what we now call the photon, that explained Lenard's and Planck's measurements. Einstein, who was Jewish, had a complex personal relationship with Planck, as they navigated Hitler's rise to power. Lenard became strongly anti-Semitic.](images/people/03-Lenard-Einstein.png){#lenard-einstein width="50%" fig-align="center"}
 
 Einstein’s proposal was met with skepticism. The wave theory of light, supported by extensive experimental evidence like interference and diffraction, remained central to physics. Even Einstein himself was uneasy with the resulting **wave-particle duality**. He believed that this duality hinted at an incomplete understanding of nature, and he famously rejected the probabilistic foundations of quantum mechanics, remarking that “God does not play dice.” Niels Bohr, a champion of the new quantum theory and Einstein’s intellectual foil, is said to have replied, “Einstein, don’t tell God what to do.” The tension between wave and particle descriptions remains a central—and still puzzling—theme in physics.
 
 That same year—Einstein’s *annus mirabilis*—he published four groundbreaking papers that reshaped modern physics. Alongside the photoelectric effect, his work on Special Relativity showed that **simultaneity is relative**, depending on the observer’s frame of reference. Walter Isaacson’s biography of Einstein provides an accessible account of these discoveries and the broader scientific context. Isaacson also details how Lenard, despite receiving the Nobel Prize for research that Einstein had admired and extended, became an outspoken anti-Semite who actively opposed Einstein’s recognition by the Nobel committee.
 
-```{=html}
 <!--
 Photoelectric effect and Lenard
 https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF728iVpg 
 -->
-```
+:::
+
+This [ISETCam script](../code/fise_photonsElectrons.html) illustrates how to simulate the absorption events and how the count of events matches the Poisson distribution. 
+<!-- https://htmlpreview.github.io/?https://github.com/ISET/psych221/blob/master/slides/slidesPhotonsElectrons.html). Or maybe make a separate version that is part of the FISE distribution.
+-->
+
+
+::: {#particle-wave .callout-note collapse="true" appearance="simple"}
+## Particle-wave duality
+The explicit modern view — that the number of photons arriving at a detector from a steady, coherent source follows a Poisson distribution — was formalized in the 20th century, particularly in the development of quantum optics (@Mandel1958-photoncounting). I am genuinely surprised that the Poisson statistics of photon counting was not widely appreciated until about 1960. But, as a friend pointed out, the devices that could measure electrons were only developed around that era.  Perhaps once the electron counting devices were invented, the theory had a purpose.
+
+There is an earlier, although implicit, historical precedent. In 1909, Albert Einstein extended his quantum theory of light by analyzing energy fluctuations in thermal equilibrium of blackbody radiation. He considered a small subvolume of a cavity at thermal equilibrium and calculated how much the energy in that subvolume fluctuated around its mean value. Starting from thermodynamic considerations, he derived the variance in energy and found that it contained two distinct contributions. 
+
+$$
+\langle (\Delta E)^2 \rangle = h \nu \langle n \rangle + \left( h \nu \langle n \rangle \right)^2
+$$
+where $\langle n \rangle$ is the average number of photons with frequency $\nu$ , and $h$ is Planck’s constant. 
+
+The first term, proportional to the number of photons, $n$, reflects the statistical fluctuations expected from independent particles—like molecules in a gas or photons in a beam. This corresponds to a Poisson distribution in photon number.
+
+The second term, proportional to $n^2$, arises from wave interference effects, similar to intensity fluctuations in classical wave optics (e.g., speckle or diffraction patterns).
+
+Einstein interpreted this result as evidence that light cannot be described purely as a wave or purely as a particle—it exhibits features of both, depending on the observable in question. This was an early and striking hint of wave-particle duality, decades before the full development of quantum electrodynamics. This is an interesting historical point, but by accounting for the energy variation in the volume, rather than just the absorptions, it is more complex than the modern explanation of photon counting and the photoelectric effect.
 :::
