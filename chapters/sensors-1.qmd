@@ -29,9 +29,7 @@ The photoelectric effect was discovered when Hertz observed that illuminating th
 He also noticed that glass, which blocks UV light, eliminated the effect. Quartz (which transmits UV light) did not.
 -->
 
-Hertz' experiments photoelectric demonstration was in 1887. In 1897 JJ Thomson conclusively demonstrated that electrons are discrete, countable particles. His experiments revealed that cathode rays are composed of negatively charged particles with a specific mass and charge, much smaller than that of an atom. This was the first evidence for the existence of the electron as a fundamental, discrete constituent of matter. Later, Robert Millikan's oil drop experiment (1909-1913) precisely measured the elementary charge of the electron, further solidifying the understanding of its discrete nature. 
-
-The problem of the photoelectric effect, therefore becomes this: how can we model how light generates electrons.
+The problem of the photoelectric effect, therefore becomes this: how can we model how light generates an electrical signal.
 
 ## Quantifying the photoelectric effect
 Over time, we learned that the conversion is inescapably noisy: even a perfectly stable light source will generate a variable number of electrons that follows the Poisson probability distribution. This is part of the statistical quantum theory.
@@ -56,6 +54,8 @@ Bohndiek2008-sensorlinearity paper has figures.  Notice how nonlinear Figures 7 
 ```
 
 ## Statistics of the photoelectric effect
+The explicit modern view — that the number of photons arriving at a detector from a steady, coherent source follows a Poisson distribution — was formalized in the 20th century, particularly in the development of quantum optics (@Mandel1958-photoncounting). I am genuinely surprised that the Poisson statistics of photon counting was not widely appreciated until about 1960. But - as a friend pointed out - practical devices to measure electrons were only developed around that era. Once counting electrons became widespread, a theory of the randomness of photons had a practical purpose and the theory followed.
+
 The statistics of the photoelectric effect describe the likelihood that the photons incident at a surface generate electrons. The principles of the effect are simply stated.  Suppose we have a **steady source** of photons, all with the same wavelength. 
 
 1. The likelihood of a photon in any given time interval, $\delta t$ is the same
@@ -77,9 +77,9 @@ In the context of image sensors, this means that when the mean number of detecte
 ![Poisson distribution examples.  The Poisson formula (red lines) and simulations of Poisson counts (bars) are shown for three mean levels.](images/sensors/03-Poisson.png){#fig-sensor-poisson width=70%}
 
 ## The birth of the photon
-How can we explain the properties of the photoelectric effect?  This came about somewhat indirectly.
+How do we explain the photoelectric effect?  There were two key experimental insights that led to our modern theory.
 
-Physicists in the late 19th century sought to understand the spectrum of light emitted by a blackbody — a perfect emitter and absorber of radiation. In 1900, **Max Planck** tried to match the observed blackbody spectrum with a formula. After some trial and error, he arrived at an expression that fit the data perfectly—but only if he assumed that energy exchange between matter and radiation was quantized. He thought that, perhaps, the energy of oscillators in the cavity walls of the radiator could only take on discrete values and thus the measured absorptions and emissions needed to match these discrete levels.
+First, physicists in the late 19th century sought to understand the spectrum of light emitted by a blackbody — a perfect emitter and absorber of radiation. In 1900, **Max Planck** tried to match the observed blackbody spectrum with a formula. After some trial and error, he arrived at an expression that fit the data perfectly—but only if he assumed that energy exchange between matter and radiation was quantized. He thought that, perhaps, the energy of oscillators in the cavity walls of the radiator could only take on discrete values and thus the measured absorptions and emissions needed to match these discrete levels.
 
 $$
 E = n h ν
@@ -87,15 +87,15 @@ $$
 
 where 𝑛 is an integer, 𝜈 is the frequency (inverse to wavelength) of the light, and ℎ is the constant he introduced—now known as Planck’s constant.
 
-In 1902, Philipp Lenard published a series of experiments that revealed surprising features of the **photoelectric effect**—the emission of electrons from a metal surface exposed to light. He observed that increasing the intensity of the incident light increased the number of emitted electrons but **did not** increase their kinetic energy. Instead, the energy of the emitted electrons depended on the **wavelength** of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also identified a **threshold wavelength**—if the light’s wavelength was too long (i.e., its frequency too low), no electrons were emitted, regardless of how intense the light was. These results posed a serious challenge to classical wave theory, which predicted that energy should increase smoothly with intensity, not depend on frequency.
+Hertz' initial photoelectric demonstration was in 1887, and it was not until 1897 that JJ Thomson conclusively demonstrated that electrons are discrete, countable particles. Thomson's experiments revealed that cathode rays are composed of negatively charged particles with a specific mass and charge, much smaller than that of an atom. In 1902, armed with this knowledge, Philipp Lenard carried out a series of revealing experiments. He observed that increasing the intensity of the incident light increased the number of emitted electrons but **did not** increase their kinetic energy. Instead, the energy of the emitted electrons depended on the **wavelength** of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also identified a **threshold wavelength**—if the light’s wavelength was too long (i.e., its frequency too low), no electrons were emitted, regardless of how intense the light was. These results posed a serious challenge to classical wave theory, which predicted that energy should increase smoothly with intensity, not depend on frequency.
 
-In 1905, Albert Einstein offered a revolutionary explanation. He proposed that light is not just a continuous wave but is **quantized** into discrete packets of energy—later called **photons**. The energy of each photon is proportional to its frequency, given by:
+In 1905, Albert Einstein offered a revolutionary explanation. He proposed that light is not just a continuous wave but is **quantized** into discrete packets of energy—later called **photons**. The energy of each photon is proportional to its frequency,
 
 $$
 E = h \nu
 $$
 
-where $h$ is Planck’s constant and $\nu$ is the frequency of the light. This bold hypothesis went beyond Max Planck’s earlier work, which had only assumed quantized energy exchange between matter and radiation—not that light itself came in packets. Einstein suggested that **light in free space** behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained all of Lenard’s observations and laid the groundwork for quantum physics.
+where $h$ is Planck’s constant and $\nu$ is the frequency of the light. This hypothesis went beyond Max Planck’s earlier work, which had only assumed quantized energy exchange between matter and radiation — not that light itself came in packets. Einstein suggested that **light in free space** behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained both Planck's observations and all of Lenard’s experiments.  His photoelectric theory laid the groundwork for the next generation's work in quantum physics.
 
 ::: {#lenard-einstein-bohr .callout-note collapse="true" appearance="simple"}
 ## Scientists are human beings
@@ -112,6 +112,11 @@ https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF7
 -->
 :::
 
+## Statistics of photons generating electrons
+
+
+We call the ra
+
 This [ISETCam script](../code/fise_photonsElectrons.html) illustrates how to simulate the absorption events and how the count of events matches the Poisson distribution. 
 <!-- https://htmlpreview.github.io/?https://github.com/ISET/psych221/blob/master/slides/slidesPhotonsElectrons.html). Or maybe make a separate version that is part of the FISE distribution.
 -->
@@ -119,8 +124,6 @@ This [ISETCam script](../code/fise_photonsElectrons.html) illustrates how to sim
 
 ::: {#particle-wave .callout-note collapse="true" appearance="simple"}
 ## Particle-wave duality
-The explicit modern view — that the number of photons arriving at a detector from a steady, coherent source follows a Poisson distribution — was formalized in the 20th century, particularly in the development of quantum optics (@Mandel1958-photoncounting). I am genuinely surprised that the Poisson statistics of photon counting was not widely appreciated until about 1960. But, as a friend pointed out, the devices that could measure electrons were only developed around that era.  Perhaps once the electron counting devices were invented, the theory had a purpose.
-
 There is an earlier, although implicit, historical precedent. In 1909, Albert Einstein extended his quantum theory of light by analyzing energy fluctuations in thermal equilibrium of blackbody radiation. He considered a small subvolume of a cavity at thermal equilibrium and calculated how much the energy in that subvolume fluctuated around its mean value. Starting from thermodynamic considerations, he derived the variance in energy and found that it contained two distinct contributions. 
 
 $$
