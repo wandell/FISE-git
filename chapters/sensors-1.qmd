@@ -1,84 +1,123 @@
-# Sensors {#sec-sensors}
+# Sensor encoding {#sec-sensors}
 
-The [Preface](../index.qmd#sec-preface) provides a very brief discussion of the history of image sensor technologies, from film to charge-coupled devices (CCD), and to the invention of CMOS image sensors (CIS). 
+The [Preface](../index.qmd#sec-preface) provides a very brief discussion of the history of image sensor technologies, from film to charge-coupled devices (CCD), and to the invention of CMOS image sensors (CIS).  Here is a bit more.
 
-Film, the first major commercial technology for capturing and storing image irradiance, relied heavily on chemistry.
-Light-sensitive molecules were placed in multiple layers onto flexible rolls of plastic, and the roll was loaded into the darkened body of the camera. With the body closed, the film was mechanically advanced, placing a small flat section of film in the focal plane behind the lens. To take a picture, shutter was opened and the spectral irradiance from the lens formed an image on the film. The light changed the structure of molecules in the layers with molecules that were designed to encode the image. For color film, there were multiple layers that differed in their wavelength sensitivity. These molecular changes represented the local brightness of the captured image in different wavebands. Using chemical processes, the density of changes to the light-sensitive molecules could be measured and transferred to other media, such as prints. This process required a variety of chemical consumables, and the film could not be reused. Specialized labs were needed to create the film and to develop and printing the image. Some home hobbyists could develop the film, but mainly the processes were carried out by large commercial organizations.
+Film, the first major commercial technology for capturing and storing image irradiance, relied heavily on chemistry. Light-sensitive molecules were placed in multiple layers onto flexible rolls of plastic, and the roll was loaded into the darkened body of the camera. With the body closed, the film was mechanically advanced, placing a small flat section of film in the focal plane behind the lens. 
 
 ![Film was the dominant image sensor and recording material for a hundred years. The chemistry of film for both encoding and developing into images was the core scientific discipline. Film could not be reused, producing a steady commercial profit for large companies, such as Kodak, Fuji, Polaroid and Agfa.](images/sensors/film.png){#fig-film width="60%"}
 
-The transition to electronics emerged with the discovery that semiconductor technology could also be used to record irradiance @boyle1970-ccd-first. Light incident on the silicon releases electrons (photoelectric effect), and the spatial pattern of these electrons can be stored and measured. This breakthrough was first implemented in 1970 by Michael Tompsett, who developed the image sensor known as the charge-coupled device (CCD). The semiconductor based sensor revolutionized imaging, moving it from a field based on chemistry to electrical engineering. Importantly, the digital readout from these electrical devices could be immediately integrated with computers. Images could be stored, shared, edited and analyzed directly from the camera output. 
+To take a picture, shutter was opened and the spectral irradiance from the lens (optical light field) formed an image on the film. The light changed the structure of molecules in the film layers that were designed to encode the image. For color film, there were multiple layers that differed in their wavelength sensitivity. These molecular changes represented the local brightness of the captured image in different wavebands. Using chemical processes, the density of changes to the light-sensitive molecules could be measured and transferred to other media, such as prints. This process required a variety of chemical consumables, and the film could not be reused. Specialized labs were needed to create the film and to develop and printing the image. Some home hobbyists could develop the film, but mainly the processes were carried out by large commercial organizations.
+
+The transition to electronics emerged with the discovery that semiconductor technology could also be used to record irradiance @boyle1970-ccd-first. Light incident on the silicon releases electrons (photoelectric effect), and the spatial pattern of these electrons can be stored and measured. This breakthrough was first implemented in 1970 by Michael Tompsett, who developed the image sensor known as the charge-coupled device (CCD). The semiconductor based sensor revolutionized imaging, moving it from a field based on chemistry to electrical engineering. Importantly, the digital readout from these electrical devices could be immediately integrated with computers. Images could be stored, shared, edited and analyzed directly from the camera output.
 
 The first successful implementation of this principle in an image sensor was the charge-coupled device (CCD), developed in 1970 by Michael Tompsett, building on earlier work by George Smith and Willard Boyle [@boyle1970-ccd-first]. This innovation marked a fundamental shift in imaging, transitioning from a field rooted in chemistry (like photographic film) to one based on electrical engineering. A key advantage was the digital nature of the readout, allowing immediate integration with computers for storage, sharing, editing, and analysis of images directly from the camera.
 
-While both CCD and modern CMOS (Complementary Metal-Oxide-Semiconductor) imagers utilize the photoelectric effect to detect light, they are built using distinct semiconductor technologies. These differences typically necessitate separate fabrication facilities or specialized process flows within a general CMOS facility. A pivotal development was Eric Fossum's approach, which demonstrated that image sensors could be successfully fabricated using standard, mainstream CMOS microelectronics processes (@Fossum2023-invention).
+While both CCD and modern CMOS (Complementary Metal-Oxide-Semiconductor) imagers utilize the photoelectric effect to detect light, they are built using distinct semiconductor technologies. These differences typically necessitate separate fabrication facilities or specialized process flows within a general CMOS facility. A pivotal development was Eric Fossum's circuit design - the active pixel sensor (APS) - which demonstrated that image sensors could be successfully implemented using mainstream CMOS microelectronics processes (@Fossum2023-invention).
 
-![CMOS image sensors incorporate circuitry, comprising multiple subsystems and enabling many different image processing features.](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
+![CMOS image sensors incorporate circuitry, comprising multiple subsystems and enabling many different image processing features. Maybe get a figure from one of Eric's earlier papers.](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
 
-Fossum's breakthrough was enormously significant both as a technology and for its impact on society. By leveraging standard CMOS technology, it became possible to integrate not only the light-sensing pixels but also the timing, control, and signal processing circuitry onto the same sensor chip. This integration enabled new functionalities directly at the sensor level (@fig-olympus-overview). Furthermore, this shift dramatically reduced power consumption, a crucial factor that opened the door to the widespread adoption of image sensors in mobile devices. This accessibility and miniaturization enabled the massive global adoption of electronic image sensors.
+Fossum's CMOS imager breakthrough was very significant. By leveraging standard CMOS technology, it became possible to integrate not only the light-sensing pixels but also the timing, control, and signal processing circuitry onto the same sensor chip. This integration enabled new functionalities directly at the sensor level (@fig-olympus-overview). Furthermore, this shift dramatically reduced power consumption, a crucial factor that opened the door to the widespread adoption of image sensors in mobile devices. Thus, beyond the technology itself, the breakthrough enabled the massive global adoption of electronic image sensors. Their widespread use continues to impact many aspects of societies across the globe.
 
-Considering the pervasive nature and technological advantages of CMOS image sensors, this section of the book will primarily focus on their properties and operation. We will dedicate separate sections to explore the characteristics of CCD imagers and single-photon avalanche detectors (SPADs).
+Considering the technological advantages and widespread adoption of CMOS image sensors, we primarily focus on their properties and operation. We will dedicate separate sections to explore the characteristics of CCD imagers and single-photon avalanche detectors (SPADs).
 
 <!-- Fossum says: power reduced (100×) as well as avoid many of the charge‐transfer degradation issues associated with exposure to radiation in space [11] (see Figure 23.6).  (From the Book chapter https://onlinelibrary.wiley.com/doi/chapter-epub/10.1002/9781394202478.ch23)-->
 
-## Transduction:  The photoelectric effect
-The energy in the incident light field is encoded by the photodiodes in the image sensor array. Each photodiode converts the irradiance at its aperture electrons.  These are stored in a capacitor, and the voltage in the capacitor is readout by the circuitry. The initial transduction from light to electrons, the photoelectric effect, is linear over a large range: the number of electrons is proportional to the number of incident photons. A basic understanding of CIS principles begins with this linear formulation.
+## The photoelectric effect
+Image sensors all include arrays of tiny, light-sensitive photodiodes. When electromagnetic radiation, such as light, arrives a photodiode, its energy is converted into electrons. This process, known as the **photoelectric effect**, is fundamental to all modern imaging sensors. Understanding how materials convert light into electrical signals is a fascinating chapter in the history of physics and engineering, shaped by groundbreaking experiments and theories.
 
-### Electronic circuitry
-In the real device, nonlinearities do arise. Some of these are caused by the circuitry that manages the acquisition, storage, and readout of the data. These basic circuit functions introduce nonlinearities of a few percent @Wang2017-CMOSLinearity, and hardware design choices can influence the degree of nonlinearity. For example, the capacitance of the storage element and the characteristics of the amplifiers used in the readout process can both contribute to deviations from linearity.
+That certain materials convert light to electrons was first reported by Heinrich Hertz in 1887 [@Hertz1887-photoelectric1, @Hertz1887-photoelectric2]. Hertz used a simple apparatus: a loop of wire with a small gap. When exposed to a strong electromagnetic wave at the right frequency, a current was induced in the loop, and if strong enough, a spark would jump across the gap. Hertz discovered that illuminating the wire loop with ultraviolet (UV) light made the spark stronger, and it could jump across a larger gap between the wires. He concluded that UV light generated additional current in the wire, demonstrating that light can produce electrical signals.
 
-Another source of nonlinearity arises from the photodiode itself. At high irradiance levels, the photodiode can saturate, meaning that it cannot generate additional electrons regardless of the incoming light. This saturation effect imposes a hard limit on the dynamic range of the sensor.
-
-Temperature variations can also affect the linearity of the sensor. Changes in temperature can alter the behavior of the photodiode and the associated circuitry, leading to temperature-dependent nonlinearities. Modern sensors often include compensation mechanisms to mitigate these effects, but residual nonlinearities may still remain.
-
-Understanding and modeling these nonlinearities is critical for applications that require high precision, such as scientific imaging or computational photography. Calibration techniques, such as measuring the sensor response under controlled conditions, can help correct for these nonlinearities in post-processing.
-
-Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.  
-
-### Optical components
-
-There are also other non-electrical components of most image sensors. These are small lens (lenslet) arrays and small color filter arrays that influence which part of the irradiance is capable of producing electrons from each photodiode.
-
-The sensor records the light that exits from the back of the imaging optics. The photodiodes are small and they are located at the bottom of small holes in the sensor. It is necessary to guide the irradiance from the camera lens with an array of microlenses that account for the position of the pixel with respect to the center of the lens. The original role of the microlens array was to compensate for the challenges inherent in this geometry. Overtime, the microlens array has been designed to achieve additional objectives including determining how to focus the image and estimate the scene light field.
-
-To make a color image, the sensor must measure some information about the relative intensity of different wavelengths. To make this measurement small color filters are placed in front of each pixel, so that different pixels are sensitive to different wavelengths. These spectral encoding differences enable the system to reconstruct a color image that is convincing to the human visual system.
-
-## Sensor physics
-
-### Photoelectric effect is linear
-
-Conduction band and valence band.
-
-Linearity of the absorption, up to and including saturation. When you run out of space to store the free electrons.
-
-### Poisson statistics
-
-### Wavelength information
-
-Examples of the wavelength dependency of the silicon, as a function of depth.
-
-Color filter arrays.
-
-### Microlens arrays
-
-Light field possibility.
-
-## ARVS mobile photography article
-
-I was reading @delbracio-mobile-2021 and it surprised me how it glossed over various claims. For example, a small sensor was deemed to be worse than a big sensor without reference to pixel size. The notion that one had to apply gain and thus multiply the noise without considering the light level or pixel size. No mention of well capacity.
-
-Probably some of this stuff is true, some is false, but the whole article doesn't explain the way we should do here. Also, this kind of vague stuff:
-
-3.2.7. Tone mapping. A tone map is a 1D LUT that is applied per color channel to adjust the tonal values of the image. Figure 10 shows an example. Tone mapping serves two purposes. First, combined with color manipulation, it adjusts the image’s aesthetic appeal, often by increasing the contrast. Second, the final output image is usually only 8 to 10 bits per channel (i.e., 256 or 1,024 tonal values), while the raw-RGB sensor represents a pixel’s digital value using 10–14 bits (i.e., 1,024 up to 16,384 tonal values). As a result, it is necessary to compress the tonal values from the wider tonal range to a tighter range via tone mapping. This adjustment is reminiscent of the human eye’s adaptation to scene brightness (Land 1974). Figure 11 shows a typical 1D LUT used for tone mapping.
-
-
-
-### Curved sensors
-Finally, it is possible to reduce spherical aberration by changing the imaging surface. An image system that couples a spherical lens with an appropriately curved sensor can have very small spherical aberration. This idea is partly inspired by the fact that the retina in many animals lines the interior of the eyeball, forming a curved sensor surface. While this is not widely used, there have been several projects to create sensors on bendable materials, including some very expensive research projects. The idea is to build these sensors for cameras with very large field of view and very high resolution across the field of view.
-
-<!-- 
-Curved sensor projects
-[HRL](https://www.hrl.com/news/2024/03/11/hrl-advances-to-camera-build-phase-of-curved-sensor-technology?t)
-[Sony](https://www.dpreview.com/articles/2279255612/sony-s-curved-sensors-may-allow-for-simpler-lenses-and-better-images?comment=5515068691)
-[John Rogers](https://thefutureofthings.com/6161-a-spherical-camera-sensor/)
+<!--
+He also noticed that glass, which blocks UV light, eliminated the effect. Quartz (which transmits UV light) did not.
 -->
+
+The central challenge of the photoelectric effect is to model how electromagnetic radiation—light—interacts with a material to generate an electrical signal. 
+
+## The birth of the photon
+Hertz' initial photoelectric demonstration was in 1887, and it was not until 1897 that JJ Thomson conclusively demonstrated that electrons are discrete, countable particles. Thomson's experiments revealed that cathode rays are composed of negatively charged particles with a specific mass and charge, much smaller than that of an atom. 
+
+In 1902, armed with knowledge of electrons, Philipp Lenard carried out a series of revealing experiments. He observed that increasing the intensity of the incident light increased the number of emitted electrons but **did not** increase their kinetic energy. Instead, the energy of the emitted electrons depended on the **wavelength** of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also identified a **threshold wavelength**—if the light’s wavelength was too long (i.e., its frequency too low), no electrons were emitted, regardless of how intense the light was. These results posed a serious challenge to classical wave theory, which predicted that energy should increase smoothly with intensity, not depend on frequency.
+
+In parallel, physicists in the late 19th century sought to understand the spectrum of light emitted by a blackbody — a perfect emitter and absorber of radiation. In 1900, **Max Planck** tried to match the observed blackbody spectrum with a formula. After some trial and error, he arrived at an expression that fit the data perfectly—but only if he assumed that energy exchange between matter and radiation was quantized. 
+
+$$
+E = n h ν
+$$ 
+
+where 𝑛 is an integer, 𝜈 is the frequency (inverse to wavelength) of the light, and ℎ is the constant he introduced—now known as Planck’s constant.
+Planck speculated that the energy of oscillators in the cavity walls of the material could only take on discrete values and thus the measured absorptions and emissions from a continuous light field needed to match these discrete levels.
+
+In 1905, Albert Einstein offered a revolutionary explanation. He proposed that we should not think of light as a continuous wave that becomes quantized through an interaction with the material.  Rather, he argued, light itself **quantized** into discrete packets of energy—later called **photons**. The energy of each photon is proportional to its frequency,
+
+$$
+E = h \nu
+$$
+
+where $h$ is Planck’s constant and $\nu$ is the frequency of the light. This hypothesis went beyond Max Planck’s earlier work, which had only assumed quantized energy exchange between matter and radiation — not that light itself came in packets. Einstein suggested that **light in free space** behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained both Planck's observations and all of Lenard’s experiments.  His photoelectric theory laid the groundwork for the next generation's work in quantum physics.
+
+## Wave particle duality
+The duality of light, which acts as both a particle and a wave, is one of the most profound and puzzling concepts in physics. While Newton's corpuscular theory of light was set aside due to the overwhelming evidence for wave-like behavior—such as interference and diffraction—the discovery of the photoelectric effect forced physicists to accept that light also exhibits particle-like properties. Many people - and large language models - will tell you that this duality is not a contradiction, but rather a reflection of the *quantum nature* of light: depending on the experiment, light can behave as a wave or as a collection of discrete photons. 
+
+If you don't think that is puzzling , you are not paying close enough attention. The wave-particle duality is not a simple matter of context or perspective—it is a fundamental feature of quantum systems that defies classical intuition. Even Einstein, who introduced the concept of photons, struggled with the philosophical implications of this duality for the rest of his life. In quantum mechanics, light is described by a mathematical object called the wavefunction, which encodes the probabilities of observing different outcomes. When we measure properties associated with waves (such as interference patterns), the wave nature is revealed; when we measure properties associated with particles (such as discrete energy transfer in the photoelectric effect), the particle nature emerges. The fact that both descriptions are necessary—and that neither alone is sufficient—remains one of the most remarkable and mysterious aspects of modern physics.
+
+::: {#lenard-einstein-bohr .callout-note collapse="true"}
+## The Duality of Light, the Duality of People
+
+![Lenard made measurements that defined important properties of the photoelectric effect. Einstein offered a bold theoretical idea, what we now call the photon, that explained Lenard's and Planck's measurements. Einstein, who was Jewish, had a complex personal relationship with Planck, as they navigated Hitler's rise to power. Lenard became strongly anti-Semitic.](images/people/03-Lenard-Einstein.png){#lenard-einstein width="50%" fig-align="center"}
+
+Einstein’s proposal was met with skepticism. The wave theory of light, supported by extensive experimental evidence like interference and diffraction, remained central to physics. Even Einstein himself was uneasy with the resulting **wave-particle duality**. He believed that this duality hinted at an incomplete understanding of nature, and he famously rejected the probabilistic foundations of quantum mechanics, remarking that “God does not play dice.” Niels Bohr, a champion of the new quantum theory and Einstein’s intellectual foil, is said to have replied, “Einstein, don’t tell God what to do.” The tension between wave and particle descriptions remains a central—and still puzzling—theme in physics.
+
+In 1905 —Einstein’s *annus mirabilis*— he published four groundbreaking papers that reshaped modern physics. In addition to the photoelectric effect, for which he was awarded the Nobel prize, he published his work on Special Relativity which showed that **simultaneity is relative**, depending on the observer’s frame of reference. Walter Isaacson’s biography of Einstein (@Isaacson2008-einstein) provides an accessible account of all four discoveries and the broader scientific context. Isaacson also details how Lenard, who was also a Nobel Laureate, became an outspoken anti-Semite who actively opposed Einstein’s recognition.
+<!--
+Photoelectric effect and Lenard
+https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF728iVpg 
+-->
+:::
+
+## Quantifying the photoelectric effect
+ The conversion of photons to electrons is inherently random: even a perfectly stable light source produces a variable number of electrons. This fundamental statistical fluctuation is a key aspect of how light interacts with matter and a fundamental part of the field of quantum optics. The number of absorptions obeys the Poisson distribution, and the specification of this distribution was formalized in by two groups of scientists, in the 1950s. One group was working to understand visual sensitivity (@Pirenne1951-poisson, @Barlow1956-retinalnoise) and the other was working to understand the physics of electromagnetic radiation and image sensors (@Mandel1959-poissonabsorptions). I become interested in this history, and [here are some notes](resources/Poisson-history.html)
+
+The photoelectric effect is linear over a large range, in the sense that doubling the light intensity doubles the **mean** number of electrons generated (@Preece2022-photontransfer). The linearity holds until the material saturates (there are no more free electrons). Within this linear range, the number of electrons is a noisy estimate of the mean number of photons.
+
+The ratio between the number of incident photons and the number of generated electrons is called the photodiode's **quantum efficiency (QE)**. 
+You can measure the QE from the slope of the line relating number of incident photons (x-axis) to the number of generated electrons (y-axis).  A QE of 1 (or 100%) means that every incident photon generates one electron; a lower QE indicates that some photons do not generate an electron. So, a QE of 0.5 means that half of the photons - again randomly - produce an electron.  
+
+In practice, QE varies with wavelength due to the physical properties of the sensor material and the design of the device. Manufacturers often provide QE curves that show the efficiency as a function of wavelength for a given sensor, and we will see examples later when we analyze specific sensors.
+
+$$
+\mathrm{QE}(\lambda) = \frac{\text{number of electrons generated}}{\text{number of incident photons at wavelength } \lambda}
+$$
+
+The photoelectric effect is the initial stage of the CMOS circuit. But as we describe later, the photodiode is integrated within circuitry that stores and then reads out the voltage associated with the electrons. The circuitry can introduce some nonlinearities and noise that are part of the whole system response (@Bohndiek2008-sensorlinearity). But the initial transduction from light to electrons, the photoelectric effect, is linear with respect to the mean number of electrons over a large range. A basic understanding of CIS principles begins with this linear formulation. We discuss the limitations later, after we specify the pixel circuitry.
+
+```{=html}
+<!--
+Bohndiek2008-sensorlinearity paper has figures.  Notice how nonlinear Figures 7 and 17 are.  But earlier figures (e.g., I probably have class data with response linearity and nonlinearity.  The Thieuwissen paper has an analysis of the impact of floating diffusion.
+-->
+```
+
+## Statistics of the photoelectric effect
+The principles that justify the Poisson distribution are simply stated.  Suppose we have a **steady source** of photons, all with the same wavelength. 
+
+1. The likelihood of a photon being absorbed in any given time interval, $\delta t$ is the same
+2. The probability that a photon generates an electron is constant (equal to the quantum efficiency, QE)
+
+These principles meet the definition of the **Poisson** probability distribution, which was first developed Siméon Denis Poisson.  He described the idea in his 1837 work "Recherches sur la probabilité des jugements en matière criminelle et en matière civile (Researches on the Probability of Judgments in Criminal and Civil Matters)". Poisson's goal was to describe the number of discrete events occurring in a fixed interval of time or space if these events occur with a known constant mean rate and independently of the time since the last event, and his applications were in areas like jurisprudence and the number of soldiers killed by horse kicks in the Prussian army. But the mathematical framework he established directly applies to the arrival of photons from a constant light source. In image systems applications, an electron generation is considered an 'event', all the events are the same, and the chance of an event in any small interval of time is the same. 
+
+The Poisson formula that describes the chance of $n$ electrons events has only a single parameter $\lambda$,
+$$
+P(n; \lambda) = \frac{\lambda^n e^{-\lambda}}{n!}
+$$
+
+The parameter $\lambda$ is the expected (mean) number of events, and the variance of the Poisson distribution is also $\lambda$.  The shape of the Poisson distribution is very much like the Normal distribution for mean greater than 15 or 20 (@fig-sensor-poisson). The main differences between the Poisson and Normal distribution are that the Poisson only takes integer values and asymmetric (skewed) for small values of $\lambda$.  The Poisson becomes more symmetric as $\lambda$ increases, and the chance of a negative value becomes very small. For large $\lambda$, the Poisson distribution approaches the Normal distribution, and for small $\lambda$ the Poisson is noticeably skewed to the right. 
+
+![Poisson distribution examples.  The Poisson formula (red lines) and simulations of Poisson counts (bars) are shown for three mean levels.](images/sensors/03-Poisson.png){#fig-sensor-poisson width=70%}
+
+A fact that we will use later is that the Poisson distribution for electrons is not just any Gaussian - the electron distribution must have a mean equal to the variance. 
+
+## Statistics of photons generating electrons
+According to the photon theory of light, the number of photons arriving at a photodiode during a fixed interval follows a Poisson distribution. Each photon has a certain probability (the quantum efficiency) of generating an electron, and each photon can produce at most one electron. As a result, the number of electrons generated by the photodiode is also Poisson distributed, but with a mean reduced by the quantum efficiency. 
+
+The inherent randomness in the number of electrons generated by incident photons is called **shot noise**. You can see a step-by-step statistical explanation of this process in the [ISETCam script](../code/fise_photonsElectrons.html). The script demonstrates why, in conventional CMOS image sensors, both the incident photons and the resulting electrons follow Poisson statistics. Note, however, that this relationship may not apply to other sensor types—such as those that can generate multiple electrons from a single photon.
+
+
