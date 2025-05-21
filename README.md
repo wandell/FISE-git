@@ -1,46 +1,56 @@
-# Foundations of Image Systems Engineering
-Draft of Foundations of Image Systems Engineering, based on my Stanford class with Joyce Farrell (Psych 221)
+# Foundations of Image Systems Engineering (FISE)
+A book based on my Stanford class with Joyce Farrell (Psych 221)
 
-This repository contains chapters and control files (yml) needed to assemble the book.  The main text is in a directory called chapters.
-Default formatting parameters for HTML are in the _quarto.yml file as well.  More could be done.
+## Quarto (from Posit)
+The book is written using the [Quarto tools](https://quarto.org/).  My attempts to control the tools are described below.  Still learning.
 
-The directory organization for the chapters, images and some resources is
+## vscode (from uSoft)
+The software for writing the book is implemented within [vscode](https://code.visualstudio.com/download).
 
+Quarto has extensions for vscode to 
+ * GitHub integration.
+ * write quarto markdown (qmd)
+ * chatgpt/copilot integration
+
+## GitHub:  FISE-git
+
+The GitHub directory organization is
+
+_quarto.yml
 chapters/
    images/
    resources/
 code/    (refers to html renderings of code examples)
-matlab/  (refers to live scripts that become rendered code examples)
+matlab/  (utility m-files that are used to prepare figures and other related tasks)
+
+Formatting for the book is controlled by the _quarto.yml file. Further editing there is likely to be a good thing, as I learn more.
+
+* The chapters directory contains the main qmd (quarto markdown) files.  
+* The directory (images) contains the PNG files. 
+* The directory (resources) contains additional qmd/html files that are of interest to me, but not the main thread of the book.  I link out to these from the chapter.
 
 ## Quarto:  Viewing
 
-Inside VS Code, you can preview your Quarto book using either of these methods:
+Inside VSCode, you can preview the book using several methods:
 
-   Press Ctrl+Shift+P (Windows/Linux) or Cmd+Shift+P (Mac)
-   Type "Quarto: Preview Project"
-   Select it to start the preview
+To preview in a browser just type into the command panel
+
+   quarto preview
+
+I do this a lot.
+
+To preview in a window within VS Code
+
+   Press Cmd+Shift+P (Mac)
+   Select "Quarto: Preview Project"
 
 Or the shortcut key:
 
    Press Ctrl+Shift+K (Windows/Linux) or Cmd+Shift+K (Mac)
 
-To preview in a browser just type into the command panel
+I do this some.
 
-   quarto preview
-   
-## The future
-In addition to putting the book on GitHub pages at some point, we will probably deposit a PDF version on Stanford Digital Repository.
-For the moment, I commented out the pdf formatting option.  That format and perhaps others will be useful in the future.
-
-## vscode
-I downloaded vscode.  There are some quarto extensions to install.  It also has a convenient plugin for managing the FISE-git repository.  I am just starting to use it.
-
-For a while, however, I preferred to use the GitHub Desktop to manage this repository.  Partly this is because I couldn't figure out how to use my GitHub passkey to connect from vscode. I can now.
-
-
-## Quarto
-
-We are writing this book in Quarto from POSIT.  Downloading Quarto for Mac was easy and good.  Downloading vscode, installing the Quarto extension, was good.  
+There are probably other ways.  But these have been good.
 
 ## Quarto: book project
 
@@ -53,15 +63,17 @@ Choose a directory location for your new book project
 
 ## Quarto: resource files
 
-I seem to have to make sure the resource files are created as html files. To do this, I run
+I seem to have to make sure the resource files, which I write as qmd, are converted to html files. To do this, I run
 
    quarto render chapters/resources/file.qmd --to html
 
-For some period of time, the resources files were in the root directory.  I moved them into the chapters/ directory.  Claude says I should be able to keep them in root, but it just wasn't working for me.  
-
 Also, perhaps I should be adding a pre-render command for these files (see below for the code/ files).
 
-For the Matlab code in matlab/*, I use "fise_exportMD" (liveScript) to generate a markdown file.  Then I let quarto render the Markdown? Apparently, I followed some instructions to put the command below into the main _quarto.yml file 
+## Quarto:  Matlab files
+
+(This section is unclear to me.  I have been just exporting HTML from the live script.  But perhaps I once did this and it was better).
+
+For the Matlab code in code/*, I use "fise_exportMD" (liveScript) to generate a markdown file.  Then I let quarto render the Markdown. Apparently, I followed some instructions to put the command below into the main _quarto.yml file 
 
 ```
 project:
@@ -76,19 +88,19 @@ and inside of code/ there is an additional _quarto.yml file and an index.qmd. No
 
 (In the past, I had to move the _files directory into the _book directory by hand until we figure out the proper way.  Maybe what I did for 'code' should work for these additional files? Also, the resources/files.qmd need to be in the _quarto.yml file.  But none of that appears to be true at the moment).
 
-## Quarto section labels
+## Quarto: section labels
 
-This must be in the format {#sec-XXXX} to work with the bibliography (?).  I am not yet sure if this works only for chapters or for arbitrary sections.
+This must be in the format {#sec-XXXX} to work with indexing. I am not yet sure if this works only for chapters or for arbitrary sections.
 
-## Quarto images
-
-I am putting the png files in the chapters/images directory, organized by chapter.
+## Quarto: images
 
 I have not been able to get text to wrap around figures yet.  Will look for example from online books.
 
 ## Quarto referencing
 
-I will start putting the bib file in a references directory.  I plan to use Zotero as the bibtex data management tool.  I tried BibDesk, but it did not work well for me.  Not sure why.
+I created a bib file  called paperpile.bib. I think this started in paperpile and went through Zotero.  This was pretty ugly.
+
+I am now relying on paperpile.bib, and I edit it directly within VScode.  I have made various changes to it, and I add references to paperpile, use CMD-B to get the bibtex formatted reference, and place the new references in paperpile.bib.
 
 I exported my Paperpile references into Zotero.  There are duplicates and the whole thing is OK but messy.  I tried to delete duplicates.  In principle, I could have just used the export from Paperpile.
 
@@ -96,11 +108,13 @@ I then exported those references using the betterbibtex method into paperpile.bi
 
 I am trying this better-bibtex plugin.  Download, go to Tools -> plugin, select the Gear and choose install from file. https://retorque.re/zotero-better-bibtex/installation/
 
+(I plan to use Zotero as the bibtex data management tool.  I tried BibDesk, but it did not work well for me.  Not sure why.)
+
 ## Quarto problems
 
 I don't have wrapping around images or even scaling image sizes working yet.  I see it in other books, but not working yet for me.
 
-# Converting files
+# Converting prior files
 
 I have been using resources from my prior work, including class notes and published papers.  This has involved file type conversion.  Here are notes.
 
@@ -140,5 +154,12 @@ I then copied the md file into the repository so I could copy and paste the text
 I will probably copy the figures in, too, at some point.
 
 ## Wordpress to Markdown
+
 I used the Jekyll Export Tool that is a Wordpress plugin.  I simply installed the plugin and waited a few minutes.  It then exported all of the markdown pages from FOV.  They aren't quite right, but they were close enough to get me well launched.
+
+# The Future - when it is ready for sharing
+
+In addition to putting the book on GitHub pages at some point, we will probably deposit a PDF version on Stanford Digital Repository.
+
+For the moment, I commented out the pdf formatting option.  That format and perhaps others will be useful in the future.
 
