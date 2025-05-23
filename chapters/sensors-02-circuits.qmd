@@ -1,0 +1,39 @@
+# Circuits {#sec-sensors-circuits}
+
+Most digital image sensors share several standard components and design features. The sensor collects electrons generated at each photodiode, which are either stored within the photodiode itself or in a small, nearby capacitor. When it is time to read out the image, specialized circuitry transfers the stored charge sequentially to an analog-to-digital converter (ADC), which converts the charge into a digital value proportional to the number of electrons. The resulting digital values in the image array are roughly proportional to the number of electrons captured by each photodiode. After acquisition and readout, the circuitry performs a reset operation, clearing any remaining electrons in the capacitor to prepare for the next exposure.
+
+While this summary is accurate, it does not explain—or even mention—many important components of image sensor and pixel design. Basic image sensors also include color filter arrays, microlenses that focus light onto each pixel, and specific circuit layouts that manage the flow and storage of charge. The next sections introduce these components and illustrate how to simulate the performance of image sensors with these features, from the scene to the digital output.
+
+These standard designs are effective for many applications, which is why billions have been sold. However, the design also has limitations. For example, the arrangement of color filters can reduce sensitivity, and the circuit layout can introduce noise or limit dynamic range and speed. These constraints have motivated a range of innovations in sensor and pixel design, especially as sensors are used in new applications beyond traditional consumer photography.
+
+Later sections in this part of the book will explore some of these innovations, including advanced pixel architectures, new materials, and on-chip processing techniques. These advances build on the basic sensor design principles discussed here, aiming to improve performance in areas such as dynamic range, noise reduction, and adaptability to challenging imaging conditions. Because this book is online, I can update these sections as new technologies emerge or add links to online resources that describe these innovations.
+
+*To explain*: 3T circuitry. 4T circuitry. APS. Pinned photodiode. Digital pixel sensor.
+
+## 3T circuitry
+
+In the real device, nonlinearities do arise. Some of these are caused by the circuitry that manages the acquisition, storage, and readout of the data. These basic circuit functions introduce nonlinearities of a few percent @Wang2017-CMOSLinearity, and hardware design choices can influence the degree of nonlinearity. For example, the capacitance of the storage element and the characteristics of the amplifiers used in the readout process can both contribute to deviations from linearity.
+
+![http://en.wikipedia.org/wiki/Active_pixel_sensor , http://encyclobeamia.solarbotics.net/articles/vxx.html , 
+Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd also the drain voltage), Vrst is the reset voltage Vee is the negative supply voltage Ground is ground
+](images/sensors/03-3T-circuit.png)
+
+Another source of nonlinearity arises from the photodiode itself. At high irradiance levels, the photodiode can saturate, meaning that it cannot generate additional electrons regardless of the incoming light. This saturation effect imposes a hard limit on the dynamic range of the sensor.
+
+Temperature variations can also affect the linearity of the sensor. Changes in temperature can alter the behavior of the photodiode and the associated circuitry, leading to temperature-dependent nonlinearities. Modern sensors often include compensation mechanisms to mitigate these effects, but residual nonlinearities may still remain.
+
+Understanding and modeling these nonlinearities is critical for applications that require high precision, such as scientific imaging or computational photography. Calibration techniques, such as measuring the sensor response under controlled conditions, can help correct for these nonlinearities in post-processing.
+
+Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
+
+## 4T circuitry
+
+![http://en.wikipedia.org/wiki/Active_pixel_sensor , http://encyclobeamia.solarbotics.net/articles/vxx.html , 
+Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd also the drain voltage), Vrst is the reset voltage Vee is the negative supply voltage Ground is ground
+](images/sensors/03-4T-circuit.png)
+
+## Well capacity
+
+These capacitors have a finite capacity, which is called the **well capacity** or **full-well capacity**. The well capacity is simply the maximum number of electrons that can be stored in the capacitor before it saturates. When the number of photo-generated electrons exceeds the well capacity, the photodiode is saturated and its output no longer increases with increasing light intensity. This limits the dynamic range of the sensor and is an important consideration in sensor design and performance evaluation.
+
+## Circuit noise

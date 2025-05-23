@@ -1,67 +1,77 @@
 project:
- type: book
- output-dir: _book 
- resources:
- - resources/
- - code/
+  type: book
+  output-dir: _book 
+  resources:
+    - chapters/resources/
+    - code/
 
 book:
- title: "Foundations of Image Systems Engineering"
- author:
-   - name: Brian A. Wandell
-     orcid: 0000-0002-2974-1836
- date: last-modified
- chapters:
-   - index.qmd
-   - part: "Scenes"
-     chapters:
-       - chapters/lightfields-intro.qmd
-       - chapters/lightfields-diffraction.qmd
-       - chapters/lightfields-measurement.qmd
-       - chapters/lightfields-properties.qmd
-       - chapters/lightfields-properties-spectral.qmd
-       - chapters/lightfields-properties-spatial.qmd
-   - part: "Optics"
-     chapters:
-       - chapters/optics-principles.qmd
-       - chapters/optics-geometry.qmd
-       - chapters/optics-linear.qmd
-       - chapters/optics-wavefront.qmd
-   - part: "Sensors"
-     chapters:
-       - chapters/sensors-1.qmd
-       - chapters/sensors-2.qmd
-       - chapters/sensors-3.qmd
-       - chapters/sensors-4.qmd
-       - chapters/sensors-5.qmd
-   - part: "Human"
-     chapters:
-       - chapters/human-1.qmd
-   - part: "Image processing"
-     chapters:
-       - chapters/imgprocessing-1.qmd
-   - part: "Displays"
-     chapters:
-       - chapters/displays-1.qmd
-   - part: "Appendix"
-     chapters:
-       - chapters/appendix-isetcam-1.qmd
-       - chapters/appendix-linearmodels.qmd
-   - chapters/references.qmd
+  title: "Foundations of Image Systems Engineering"
+  subtitle: "A Guide to Image Formation, Sensors, and Perception"
+  description: "An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision."
+  language: en
+  output-file: foundations-image-systems
+  author:
+    - name: Brian A. Wandell
+      orcid: 0000-0002-2974-1836
+  date: last-modified
+  chapters:
+    - index.qmd
+    - part: "Scenes"
+      chapters:
+        - chapters/lightfields-01-intro.qmd
+        - chapters/lightfields-02-diffraction.qmd
+        - chapters/lightfields-03-measurement.qmd
+        - chapters/lightfields-04-properties.qmd
+        - chapters/lightfields-05-properties-spectral.qmd
+        - chapters/lightfields-06-properties-spatial.qmd
+    - part: "Optics"
+      chapters:
+        - chapters/optics-01-principles.qmd
+        - chapters/optics-02-geometry.qmd
+        - chapters/optics-03-linear.qmd
+        - chapters/optics-04-wavefront.qmd
+    - part: "Sensors"
+      chapters:
+        - chapters/sensors-01-photoelectric.qmd
+        - chapters/sensors-02-circuits.qmd
+        - chapters/sensors-03-components.qmd
+        - chapters/sensors-04-CCD.qmd
+        - chapters/sensors-05-characterization.qmd
+    - part: "Human"
+      chapters:
+        - chapters/human-01.qmd
+    - part: "Image processing"
+      chapters:
+        - chapters/imgprocessing-01.qmd
+    - part: "Displays"
+      chapters:
+        - chapters/displays-01.qmd
+    - part: "Appendix"
+      chapters:
+        - chapters/appendix-01-isetcam.qmd
+        - chapters/appendix-02-linearmodels.qmd
+    - chapters/references.qmd
 
 bibliography: paperpile.bib
 
 jupyter: matlab
 
 format:
- html:
-   toc: true
-   number-sections: true
-   theme: cosmo
-   fig-cap-location: margin
-   render-on-save: true
+  html:
+    toc: true
+    number-sections: true
+    theme: cosmo   # flatly, yeti, sandstone, minty, cerulean, cosmo
+    fig-cap-location: margin
+    render-on-save: true
+    mathjax: "local"
+  pdf:
+    documentclass: book
+    number-sections: true
+    toc: true
+    fig-cap-location: margin 
 
 crossref:
- fig-prefix: Figure
- tbl-prefix: Table
- sec-prefix: Section
+  fig-prefix: Figure
+  tbl-prefix: Table
+  sec-prefix: Section
