@@ -1,15 +1,20 @@
 # Circuits {#sec-sensors-circuits}
 
-To create an image, the sensor counts the number of electrons generated at each photodiode during the exposure. Each photodiode is connected to a small capacitor that collects and stores these electrons. When it is time to read out the image, specialized circuitry measures transfers the charge stored in each capacitor to an analog-to-digital converter (ADC), which converts the voltage of the stored electrons into a digital value.  This digital value is roughly proportional to the number of photons incident at the photodiode. After the measurement is complete the circuitry resets the capacitor, clearing any remaining electrons to prepare for the next exposure.
+To create an image, the sensor collects the electrons generated at each photodiode.  The electrons are either stored within the photodiode itself or in a small, nearby capacitor. When it is time to read out the image, specialized circuitry transfers the charge stored in these capacitors, sequentially, to an analog-to-digital converter (ADC). The array of digital values are roughly proportional to the number of electrons at the photodiode, and this in turn is roughly proportional to the number of photons (weighted by wavelength). After the acquisition and readout is complete the circuitry performs a reset operation, clearing any remaining electrons in the capacitor to prepare for the next exposure.
 
-To explain:  3T circuitry.  4T circuitry.  APS.  Pinned photodiode.  Digital pixel sensor.
+*To explain*: 3T circuitry. 4T circuitry. APS. Pinned photodiode. Digital pixel sensor.
 
 ## Well capacity
+
 These capacitors have a finite capacity, which is called the **well capacity** or **full-well capacity**. The well capacity is simply the maximum number of electrons that can be stored in the capacitor before it saturates. When the number of photo-generated electrons exceeds the well capacity, the photodiode is saturated and its output no longer increases with increasing light intensity. This limits the dynamic range of the sensor and is an important consideration in sensor design and performance evaluation.
 
 ## 3T circuitry
 
 In the real device, nonlinearities do arise. Some of these are caused by the circuitry that manages the acquisition, storage, and readout of the data. These basic circuit functions introduce nonlinearities of a few percent @Wang2017-CMOSLinearity, and hardware design choices can influence the degree of nonlinearity. For example, the capacitance of the storage element and the characteristics of the amplifiers used in the readout process can both contribute to deviations from linearity.
+
+![http://en.wikipedia.org/wiki/Active_pixel_sensor , http://encyclobeamia.solarbotics.net/articles/vxx.html , 
+Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd also the drain voltage), Vrst is the reset voltage Vee is the negative supply voltage Ground is ground
+](images/sensors/03-3T-circuit.png)
 
 Another source of nonlinearity arises from the photodiode itself. At high irradiance levels, the photodiode can saturate, meaning that it cannot generate additional electrons regardless of the incoming light. This saturation effect imposes a hard limit on the dynamic range of the sensor.
 
@@ -21,6 +26,8 @@ Over time, as technology has scaled, more complex electrical circuitry has been 
 
 ## 4T circuitry
 
+![http://en.wikipedia.org/wiki/Active_pixel_sensor , http://encyclobeamia.solarbotics.net/articles/vxx.html , 
+Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd also the drain voltage), Vrst is the reset voltage Vee is the negative supply voltage Ground is ground
+](images/sensors/03-4T-circuit.png)
+
 ## Circuit noise
-
-
