@@ -1,12 +1,14 @@
 # Circuits {#sec-sensors-circuits}
 
-To create an image, the sensor collects the electrons generated at each photodiode.  The electrons are either stored within the photodiode itself or in a small, nearby capacitor. When it is time to read out the image, specialized circuitry transfers the charge stored in these capacitors, sequentially, to an analog-to-digital converter (ADC). The array of digital values are roughly proportional to the number of electrons at the photodiode, and this in turn is roughly proportional to the number of photons (weighted by wavelength). After the acquisition and readout is complete the circuitry performs a reset operation, clearing any remaining electrons in the capacitor to prepare for the next exposure.
+Most digital image sensors share several standard components and design features. The sensor collects electrons generated at each photodiode, which are either stored within the photodiode itself or in a small, nearby capacitor. When it is time to read out the image, specialized circuitry transfers the stored charge sequentially to an analog-to-digital converter (ADC), which converts the charge into a digital value proportional to the number of electrons. The resulting digital values in the image array are roughly proportional to the number of electrons captured by each photodiode. After acquisition and readout, the circuitry performs a reset operation, clearing any remaining electrons in the capacitor to prepare for the next exposure.
+
+While this summary is accurate, it does not explain—or even mention—many important components of image sensor and pixel design. Basic image sensors also include color filter arrays, microlenses that focus light onto each pixel, and specific circuit layouts that manage the flow and storage of charge. The next sections introduce these components and illustrate how to simulate the performance of image sensors with these features, from the scene to the digital output.
+
+These standard designs are effective for many applications, which is why billions have been sold. However, the design also has limitations. For example, the arrangement of color filters can reduce sensitivity, and the circuit layout can introduce noise or limit dynamic range and speed. These constraints have motivated a range of innovations in sensor and pixel design, especially as sensors are used in new applications beyond traditional consumer photography.
+
+Later sections in this part of the book will explore some of these innovations, including advanced pixel architectures, new materials, and on-chip processing techniques. These advances build on the basic sensor design principles discussed here, aiming to improve performance in areas such as dynamic range, noise reduction, and adaptability to challenging imaging conditions. Because this book is online, I can update these sections as new technologies emerge or add links to online resources that describe these innovations.
 
 *To explain*: 3T circuitry. 4T circuitry. APS. Pinned photodiode. Digital pixel sensor.
-
-## Well capacity
-
-These capacitors have a finite capacity, which is called the **well capacity** or **full-well capacity**. The well capacity is simply the maximum number of electrons that can be stored in the capacitor before it saturates. When the number of photo-generated electrons exceeds the well capacity, the photodiode is saturated and its output no longer increases with increasing light intensity. This limits the dynamic range of the sensor and is an important consideration in sensor design and performance evaluation.
 
 ## 3T circuitry
 
@@ -29,5 +31,9 @@ Over time, as technology has scaled, more complex electrical circuitry has been 
 ![http://en.wikipedia.org/wiki/Active_pixel_sensor , http://encyclobeamia.solarbotics.net/articles/vxx.html , 
 Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd also the drain voltage), Vrst is the reset voltage Vee is the negative supply voltage Ground is ground
 ](images/sensors/03-4T-circuit.png)
+
+## Well capacity
+
+These capacitors have a finite capacity, which is called the **well capacity** or **full-well capacity**. The well capacity is simply the maximum number of electrons that can be stored in the capacitor before it saturates. When the number of photo-generated electrons exceeds the well capacity, the photodiode is saturated and its output no longer increases with increasing light intensity. This limits the dynamic range of the sensor and is an important consideration in sensor design and performance evaluation.
 
 ## Circuit noise
