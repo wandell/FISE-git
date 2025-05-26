@@ -4,22 +4,15 @@ Basic digital image sensors share several key hardware components and design fea
 
 This overview covers the essential operation, but image sensors also include additional hardware such as color filter arrays, microlenses to focus light onto each pixel, and specific circuit layouts to manage charge flow and storage. The following sections introduce these components and show how to simulate sensor performance from scene capture to digital output.
 
-Standard sensor designs are effective for many uses, which is why they are produced in large quantities. However, they have limitations: color filters can reduce sensitivity and restrict spectral information, while circuit elements can introduce noise or limit dynamic range and speed. These challenges have driven innovations in sensor and pixel design, especially for applications beyond traditional photography. Later sections will explore advanced pixel architectures, new materials, and on-chip processing techniques that address these issues. As this book is online, these sections can be updated as new technologies emerge or to include links to additional resources.
+Standard sensor designs are effective for many uses, which is why they are produced in large quantities. However, they have limitations: color filters can reduce sensitivity and restrict spectral information, while circuit elements can introduce noise or limit dynamic range and speed. These challenges have driven innovations in sensor and pixel design, especially for applications beyond traditional photography. Later sections will explore advanced pixel architectures, new materials, and on-chip processing techniques that address these issues. As this book is online, sections about these advances can be updated as new technologies emerge as well as links to additional resources.
 
 ## 3T circuitry
 The initial 3T is a good Foundation for Understanding:
 The 3T (three-transistor) architecture forms the conceptual basis for understanding more complex pixel designs, including 4T and beyond. Explaining it helps readers grasp:
-It was the original circuitry introduced by FOssum in the 1990s. Understanding this circuit will introduce: The basic operation of pixel readout, The role of the reset, source follower, and row select transistors, Sources of noise like kTC noise and fixed pattern noise (FPN).
+It was the original circuitry introduced by Fossum in the 1990s. Understanding this circuit will introduce: The basic operation of pixel readout, The role of the reset, source follower, and row select transistors, Sources of noise like kTC noise and fixed pattern noise (FPN).
 
-The photoelectric effect is linear, but in any real image sensor nonlinearities will arise. Some of these are caused by the circuitry that manages the acquisition, storage, and readout of the data. These basic circuit functions introduce nonlinearities of a few percent @Wang2017-CMOSLinearity, and hardware design choices can influence the degree of nonlinearity. For example, the capacitance of the storage element and the characteristics of the amplifiers used in the readout process can both contribute to deviations from linearity.
+The photoelectric effect measured in a properly setup lab is linear; but in real image sensors the photoelectric effect is embedded in a circuit and nonlinearities will arise. The circuitry that manages the acquisition, storage, and readout of the data has limitations that introduce nonlinearities of a few percent @Wang2017-CMOSLinearity. Hardware limitations, too, can introduce obvious nonlinearities. For example, the component that stores the electrons has finite capacity.  Also, the transistors that move the charge to the ADC can introduce nonlinearities and noise.
 
-The 4T CMOS Pixel:
-The combination of the pinned photodiode with a transfer gate was integrated into CMOS image sensors by Sony in the early 2000s.
-
-Teruo Nakamura and his team at Sony are credited with adapting the PPD concept from CCDs and merging it with APS design to form the modern 4T CMOS pixel, first used in volume in consumer devices around 2001–2003.
-
-This architecture enabled correlated double sampling (CDS), which suppresses reset (kTC) noise and fixed pattern noise (FPN).
-Nakamura, T., et al., "A 1/3 inch 3.75 µm pixel 2M pixel CMOS image sensor with low noise global shutter mode", IEEE International Solid-State Circuits Conference (ISSCC), early 2000s.
 
 ![http://en.wikipedia.org/wiki/Active_pixel_sensor , http://encyclobeamia.solarbotics.net/articles/vxx.html , 
 Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd also the drain voltage), Vrst is the reset voltage Vee is the negative supply voltage Ground is ground
@@ -34,6 +27,9 @@ Understanding and modeling these nonlinearities is critical for applications tha
 Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
 
 ## 4T circuitry
+The 4T CMOS Pixel and pinned photodiode
+The combination of the pinned photodiode with a transfer gate was integrated into CMOS image sensors in the late 1990s.  Review from @Fossum2014-pinnedpd
+
 The 4T pixel (with pinned photodiode and transfer gate) is now the standard in nearly all high-performance CMOS sensors, including: Mobile phone cameras, Machine vision, Automotive, Scientific imaging.
 
 Benefits over 3T: Correlated double sampling (CDS) to remove reset noise, Global shutter (with additional circuitry), Lower dark current and improved quantum efficiency, Better low-light performance and dynamic range
