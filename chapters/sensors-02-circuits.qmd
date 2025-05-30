@@ -24,32 +24,48 @@ Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd 
 
 ## 4T circuitry
 
-Since around 2000, the three-transistor (3T) pixel design has been largely replaced by the four-transistor (4T) pixel circuit [@Fossum2014-pinnedpd]. The 4T architecture introduces a pinned photodiode (PPD) and adds a transfer gate transistor [@fig-sensor-4T-circuit]. The transfer gate moves the accumulated photo-generated charge from the photodiode to a nearby storage node known as the floating diffusion, which is associated with a capacitance denoted $C_{fd}$. 
+Since around 2000, the three-transistor (3T) pixel design has been largely replaced by the four-transistor (4T) pixel circuit [@Fossum2014-pinnedpd]. The 4T architecture introduces a pinned photodiode (PPD) and adds a transfer gate transistor (@fig-sensor-4T-circuit). The transfer gate moves the accumulated photo-generated charge from the photodiode to a nearby storage node called the floating diffusion, which is associated with a capacitance denoted $C_{fd}$. The reset, row select, and source follower circuit elements are still in place.
 
-Today, the 4T pixel is the standard in nearly all high-performance CMOS image sensors, including those used in smartphones, machine vision, automotive systems, and scientific imaging.
+The addition of the transfer gate and floating diffusion enables more precise control over charge transfer and storage within each pixel.
+
+Today, the 4T pixel is standard in nearly all high-performance CMOS image sensors, including those used in smartphones, machine vision, automotive systems, and scientific imaging.
 
 ![The 4T pixel circuit introduces a pinned photodiode and an additional transistor. When activated, the new transistor transfers the accumulated charge from the photodiode to a storage capacitor (the floating diffusion node, $C_{fd}$). The rest of the circuit, including readout and row select, is similar to the 3T design.](images/sensors/03-4T-circuit.png){#fig-sensor-4T-circuit}
 
-The 4T design offers several key advantages over the earlier 3T architecture. Most notably, it enables a technique called correlated double sampling (CDS), which significantly reduces reset noise (also known as $𝑘𝑇𝐶$ noise). In the 4T pixel, the circuit first measures the voltage on the floating diffusion node before transferring charge from the photodiode (capturing a baseline), and then again after the charge is transferred. The difference between these two measurements represents the pixel signal. This subtraction cancels much of the noise introduced during the reset phase, improving signal-to-noise ratio.
+The 4T design offers several key advantages over the earlier 3T architecture. Most notably, it enables correlated double sampling (CDS), which significantly reduces reset noise (also known as $kTC$ noise). In the 4T pixel, the circuit first measures the voltage on the floating diffusion node before transferring charge from the photodiode (capturing a baseline), and then again after the charge is transferred. The difference between these two measurements represents the pixel signal. This subtraction cancels much of the noise introduced during the reset phase, improving signal-to-noise ratio.
 
-Over time, further improvements in materials and circuit architecture have led to even lower noise and higher quantum efficiency. Additional innovations, such as dual conversion gain and advanced pixel structures, have also expanded the dynamic range of CMOS sensors. We will explore some of these developments after reviewing the basic pixel circuit and other key sensor components.
+Further improvements in materials and circuit architecture have led to even lower noise and higher quantum efficiency. Additional innovations, such as dual conversion gain and advanced pixel structures, have also expanded the dynamic range of CMOS sensors. We will explore some of these developments after reviewing the basic pixel circuit and other key sensor components.
+
+## Circuit properties and parameters
+
+### Well capacity
+These capacitors have a finite capacity, which is called the **well capacity** or **full-well capacity**. The well capacity is simply the maximum number of electrons that can be stored in the capacitor before it saturates. When the number of photo-generated electrons exceeds the well capacity, the photodiode is saturated and its output no longer increases with increasing light intensity. This limits the dynamic range of the sensor and is an important consideration in sensor design and performance evaluation.
+
+### Circuit noise
+
+### Temperature dependence
+
+Temperature variations can also affect the linearity of the sensor. Changes in temperature can alter the behavior of the photodiode and the associated circuitry, leading to temperature-dependent nonlinearities. Modern sensors often include compensation mechanisms to mitigate these effects, but residual nonlinearities may still remain.
 
 ## Circuit innovations
 
+Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
+
+
+### Global shutter
 Global shutter (with additional circuitry),
 
+
+### Dynamic range enhancement
 Dynamic range extensions
 
 Another source of nonlinearity arises from the photodiode itself. At high irradiance levels, the photodiode can saturate, meaning that it cannot generate additional electrons regardless of the incoming light. This saturation effect imposes a hard limit on the dynamic range of the sensor.
 
-Temperature variations can also affect the linearity of the sensor. Changes in temperature can alter the behavior of the photodiode and the associated circuitry, leading to temperature-dependent nonlinearities. Modern sensors often include compensation mechanisms to mitigate these effects, but residual nonlinearities may still remain.
 
 Understanding and modeling these nonlinearities is critical for applications that require high precision, such as scientific imaging or computational photography. Calibration techniques, such as measuring the sensor response under controlled conditions, can help correct for these nonlinearities in post-processing.
 
-Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
 
-## Well capacity
 
-These capacitors have a finite capacity, which is called the **well capacity** or **full-well capacity**. The well capacity is simply the maximum number of electrons that can be stored in the capacitor before it saturates. When the number of photo-generated electrons exceeds the well capacity, the photodiode is saturated and its output no longer increases with increasing light intensity. This limits the dynamic range of the sensor and is an important consideration in sensor design and performance evaluation.
 
-## Circuit noise
+
+
