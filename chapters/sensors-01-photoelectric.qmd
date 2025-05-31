@@ -14,7 +14,7 @@ The first successful implementation of this principle in an image sensor was the
 
 While both CCD and modern CMOS (Complementary Metal-Oxide-Semiconductor) imagers utilize the photoelectric effect to detect light, they are built using distinct semiconductor technologies. These differences typically necessitate separate fabrication facilities or specialized process flows within a general CMOS facility. A pivotal development was Eric Fossum's circuit design - the active pixel sensor (APS) - which demonstrated that image sensors could be successfully implemented using mainstream CMOS microelectronics processes (@Fossum2023-invention).
 
-![CMOS image sensors incorporate circuitry, comprising multiple subsystems and enabling many different image processing features. Maybe get a figure from one of Eric's earlier papers.](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
+![CMOS image sensors (CIS) incorporate integrated circuitry and multiple subsystems.  The circuitry and subsystems, together, enable the capture, transfer and digital encoding of the image. Source: [Evident Scientific](https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors).](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
 
 Fossum's CMOS imager breakthrough was very significant. By leveraging standard CMOS technology, it became possible to integrate not only the light-sensing pixels but also the timing, control, and signal processing circuitry onto the same sensor chip. This integration enabled new functionalities directly at the sensor level (@fig-olympus-overview). Furthermore, this shift dramatically reduced power consumption, a crucial factor that opened the door to the widespread adoption of image sensors in mobile devices. Thus, beyond the technology itself, the breakthrough enabled the massive global adoption of electronic image sensors. Their widespread use continues to impact many aspects of societies across the globe.
 
@@ -24,9 +24,9 @@ Considering the technological advantages and widespread adoption of CMOS image s
 
 ## The photoelectric effect
 
-Image sensors all include arrays of tiny, light-sensitive photodiodes. When electromagnetic radiation, such as light, arrives a photodiode, its energy is converted into electrons. This process, known as the **photoelectric effect**, is fundamental to all modern imaging sensors. Understanding how materials convert light into electrical signals is a fascinating chapter in the history of physics and engineering, shaped by groundbreaking experiments and theories.
+Image sensors all include arrays of tiny, light-sensitive devices called **photodiodes**. A photodiode is a semiconductor component that converts incident light into an electrical current. When photons are absorbed in the photodiode’s active region, they generate electron-hole pairs, resulting in a measurable flow of electrons. Photodiodes are the fundamental light-sensing elements in modern image sensors, enabling the conversion of optical images into electronic signals. This conversion process is known as the **photoelectric effect**.
 
-That certain materials convert light to electrons was first reported by Heinrich Hertz [-@Hertz1887-photoelectric2; -@Hertz1887-photoelectric1]. He used a simple apparatus: a loop of wire with a small gap. When exposed to a strong electromagnetic wave at the right frequency, a current was induced in the loop, and if strong enough, a spark would jump across the gap. Hertz discovered that illuminating the wire loop with ultraviolet (UV) light made the spark stronger, and it could jump across a larger gap between the wires. He concluded that UV light generated additional current in the wire, demonstrating that light can produce electrical signals.
+Understanding how materials convert light into electrical signals is a fascinating chapter in the history of physics and engineering, shaped by groundbreaking experiments and theories. The phenomenon that certain materials can convert light to electrons was first reported by Heinrich Hertz [-@Hertz1887-photoelectric2; -@Hertz1887-photoelectric1]. He used a simple apparatus: a loop of wire with a small gap. When exposed to a strong electromagnetic wave at the right frequency, a current was induced in the loop, and if strong enough, a spark would jump across the gap. Hertz discovered that illuminating the wire loop with ultraviolet (UV) light made the spark stronger, allowing it to jump across a larger gap between the wires. He concluded that UV light generated additional current in the wire, demonstrating that light can produce electrical signals.
 
 ```{=html}
 <!--
@@ -93,7 +93,7 @@ The number of photon absorptions in a photodiode follows the Poisson probability
 
 [^sensors-01-photoelectric-1]: The history of these discoveries is fascinating but too detailed to cover here. For more, see [these notes](resources/Poisson-history.html).
 
-The mean number of electrons generated is proportional to the light intensity: doubling the light intensity doubles the **mean** number of electrons (@Preece2022-photontransfer). This linearity holds over a wide range, until the sensor material saturates (when no more electrons can be generated). Within this linear range, the number of electrons is a noisy estimate of the mean number of incident photons.
+The **mean** number of electrons generated is proportional to the light intensity: doubling the light intensity doubles the mean number of electrons (@Preece2022-photontransfer). This linear relationship holds over a wide range, until the sensor material saturates. However, because photon arrivals and electron generation are random processes, the actual number of electrons generated in each measurement fluctuates around this mean. These fluctuations are described by Poisson statistics.
 
 Not every photon generates an electron. The ratio of generated electrons to incident photons is called the photodiode's **quantum efficiency (QE)**. QE can be measured as the slope of the line relating the number of incident photons (x-axis) to the number of generated electrons (y-axis). A QE of 1 (or 100%) means every photon generates one electron; a QE of 0.5 means, on average, half of the photons generate an electron.
 
@@ -103,7 +103,7 @@ $$
 
 In practice, QE depends on wavelength due to the sensor material and device design. Manufacturers often provide QE curves showing efficiency as a function of wavelength, and we will examine examples later.
 
-The photodiode is part of a circuit that stores and reads out the generated charge. This circuitry can introduce nonlinearities and additional noise, affecting the overall system response (@Bohndiek2008-sensorlinearity). However, the initial conversion from light to electrons is linear over a large range. Understanding this linear process is fundamental to CMOS image sensor operation; understanding the full system requires further study of the sensor's electronic components, which we discuss in later sections.
+The photodiode is part of a circuit that stores and reads out the generated charge. While this circuitry can introduce nonlinearities and additional noise (@Bohndiek2008-sensorlinearity), the initial conversion from light to electrons is linear over a large range. Understanding this linear process is fundamental to CMOS image sensor operation; understanding the full system requires further study of the sensor's electronic components, which we discuss in later sections.
 
 ```{=html}
 <!--
