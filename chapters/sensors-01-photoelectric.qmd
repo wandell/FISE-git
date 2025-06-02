@@ -1,94 +1,95 @@
-# Photoelectric {#sec-sensors}
+# Encoding principles {#sec-sensors}
 
-The [Preface](../index.qmd#sec-preface) provides a very brief discussion of the history of image sensor technologies, from film to charge-coupled devices (CCD), and to the invention of CMOS image sensors (CIS).  Here is a bit more.
+The transition from film to digital imaging, enabled by semiconductor technology, has profoundly changed how we record and process images (@boyle1970-ccd-first; see [Preface](../index.qmd#sec-preface)). The initial digital sensors used arrays of tiny, light-sensitive elements called **photodiodes**—semiconductor devices that convert incoming light into electrical current. When photons strike the photodiode’s active region, they generate electron-hole pairs, resulting in a measurable flow of electrons. Each photodiode forms the basis of a pixel in modern image sensors.
 
-Film, the first major commercial technology for capturing and storing image irradiance, relied heavily on chemistry. Light-sensitive molecules were placed in multiple layers onto flexible rolls of plastic, and the roll was loaded into the darkened body of the camera. With the body closed, the film was mechanically advanced, placing a small flat section of film in the focal plane behind the lens. 
+The earliest devices, known as charge-coupled devices (CCD), were built using metal-oxide semiconductor technology (MOS). These sensors required significant power, making them unsuitable for mobile devices and limiting their early adoption to scientific and high-end applications.
 
-![Film was the dominant image sensor and recording material for a hundred years. The chemistry of film for both encoding and developing into images was the core scientific discipline. Film could not be reused, producing a steady commercial profit for large companies, such as Kodak, Fuji, Polaroid and Agfa.](images/sensors/film.png){#fig-film width="60%"}
+A major breakthrough came with Eric Fossum's invention of the Complementary Metal-Oxide Semiconductor (CMOS) image sensor (@Fossum1993-ccd-dinosaurs; @Fossum1995-patent). By implementing an active pixel sensor (APS) circuit, Fossum enabled image sensors to be manufactured using mainstream CMOS microelectronics processes. This dramatically reduced power consumption and allowed integration of light-sensing pixels with timing and signal processing circuitry on the same chip (@fig-olympus-overview). These advances paved the way for the widespread adoption of electronic image sensors in mobile devices and many other applications.
 
-To take a picture, shutter was opened and the spectral irradiance from the lens (optical light field) formed an image on the film. The light changed the structure of molecules in the film layers that were designed to encode the image. For color film, there were multiple layers that differed in their wavelength sensitivity. These molecular changes represented the local brightness of the captured image in different wavebands. Using chemical processes, the density of changes to the light-sensitive molecules could be measured and transferred to other media, such as prints. This process required a variety of chemical consumables, and the film could not be reused. Specialized labs were needed to create the film and to develop and printing the image. Some home hobbyists could develop the film, but mainly the processes were carried out by large commercial organizations.
+![CMOS image sensors (CIS) incorporate integrated circuitry and multiple subsystems. The circuitry and subsystems, together, enable the capture, transfer and digital encoding of the image. Source: [Evident Scientific](https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors).](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
 
-The transition to electronics emerged with the discovery that semiconductor technology could also be used to record irradiance @boyle1970-ccd-first. Light incident on the silicon releases electrons (photoelectric effect), and the spatial pattern of these electrons can be stored and measured. This breakthrough was first implemented in 1970 by Michael Tompsett, who developed the image sensor known as the charge-coupled device (CCD). The semiconductor based sensor revolutionized imaging, moving it from a field based on chemistry to electrical engineering. Importantly, the digital readout from these electrical devices could be immediately integrated with computers. Images could be stored, shared, edited and analyzed directly from the camera output.
-
-The first successful implementation of this principle in an image sensor was the charge-coupled device (CCD), developed in 1970 by Michael Tompsett, building on earlier work by George Smith and Willard Boyle [@boyle1970-ccd-first]. This innovation marked a fundamental shift in imaging, transitioning from a field rooted in chemistry (like photographic film) to one based on electrical engineering. A key advantage was the digital nature of the readout, allowing immediate integration with computers for storage, sharing, editing, and analysis of images directly from the camera.
-
-While both CCD and modern CMOS (Complementary Metal-Oxide-Semiconductor) imagers utilize the photoelectric effect to detect light, they are built using distinct semiconductor technologies. These differences typically necessitate separate fabrication facilities or specialized process flows within a general CMOS facility. A pivotal development was Eric Fossum's circuit design - the active pixel sensor (APS) - which demonstrated that image sensors could be successfully implemented using mainstream CMOS microelectronics processes (@Fossum2023-invention).
-
-![CMOS image sensors incorporate circuitry, comprising multiple subsystems and enabling many different image processing features. Maybe get a figure from one of Eric's earlier papers.](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
-
-Fossum's CMOS imager breakthrough was very significant. By leveraging standard CMOS technology, it became possible to integrate not only the light-sensing pixels but also the timing, control, and signal processing circuitry onto the same sensor chip. This integration enabled new functionalities directly at the sensor level (@fig-olympus-overview). Furthermore, this shift dramatically reduced power consumption, a crucial factor that opened the door to the widespread adoption of image sensors in mobile devices. Thus, beyond the technology itself, the breakthrough enabled the massive global adoption of electronic image sensors. Their widespread use continues to impact many aspects of societies across the globe.
-
-Considering the technological advantages and widespread adoption of CMOS image sensors, we primarily focus on their properties and operation. We will dedicate separate sections to explore the characteristics of CCD imagers and single-photon avalanche detectors (SPADs).
-
-<!-- Fossum says: power reduced (100×) as well as avoid many of the charge‐transfer degradation issues associated with exposure to radiation in space [11] (see Figure 23.6).  (From the Book chapter https://onlinelibrary.wiley.com/doi/chapter-epub/10.1002/9781394202478.ch23)-->
+Photodiodes are the essential building blocks of all modern image sensors, both CCD and CMOS. The physical principle underlying the operation of the photodiode—converting optical images into electrons—is called the **photoelectric effect**. Understanding how materials convert light into electrical signals is a fascinating chapter in the history of physics and engineering, shaped by groundbreaking experiments and theories. We begin this section on sensors by describing the discovery of this phenomenon and its fundamental properties.
 
 ## The photoelectric effect
-Image sensors all include arrays of tiny, light-sensitive photodiodes. When electromagnetic radiation, such as light, arrives a photodiode, its energy is converted into electrons. This process, known as the **photoelectric effect**, is fundamental to all modern imaging sensors. Understanding how materials convert light into electrical signals is a fascinating chapter in the history of physics and engineering, shaped by groundbreaking experiments and theories.
 
-That certain materials convert light to electrons was first reported by Heinrich Hertz in 1887 [@Hertz1887-photoelectric1, @Hertz1887-photoelectric2]. Hertz used a simple apparatus: a loop of wire with a small gap. When exposed to a strong electromagnetic wave at the right frequency, a current was induced in the loop, and if strong enough, a spark would jump across the gap. Hertz discovered that illuminating the wire loop with ultraviolet (UV) light made the spark stronger, and it could jump across a larger gap between the wires. He concluded that UV light generated additional current in the wire, demonstrating that light can produce electrical signals.
+The phenomenon that certain materials can convert light to electrons was first reported by Heinrich Hertz [-@Hertz1887-photoelectric2; -@Hertz1887-photoelectric1]. He used a simple apparatus: a loop of wire with a small gap. When exposed to a strong electromagnetic wave at the right frequency, a current was induced in the loop, and if strong enough, a spark would jump across the gap. Hertz discovered that illuminating the wire loop with ultraviolet (UV) light made the spark stronger, allowing it to jump across a larger gap between the wires. He concluded that UV light generated additional current in the wire, demonstrating that light can produce electrical signals.
 
+```{=html}
 <!--
 He also noticed that glass, which blocks UV light, eliminated the effect. Quartz (which transmits UV light) did not.
 -->
+```
 
-The central challenge of the photoelectric effect is to model how electromagnetic radiation—light—interacts with a material to generate an electrical signal. 
+The central challenge of the photoelectric effect is to model how electromagnetic radiation—light—interacts with a material to generate an electrical signal.
 
 ## The birth of the photon
-Hertz' initial photoelectric demonstration was in 1887, and it was not until 1897 that JJ Thomson conclusively demonstrated that electrons are discrete, countable particles. Thomson's experiments revealed that cathode rays are composed of negatively charged particles with a specific mass and charge, much smaller than that of an atom. 
+
+Hertz' initial photoelectric demonstration was in 1887, and it was not until 1897 that JJ Thomson conclusively demonstrated that electrons are discrete, countable particles. Thomson's experiments revealed that cathode rays are composed of negatively charged particles with a specific mass and charge, much smaller than that of an atom.
 
 In 1902, armed with knowledge of electrons, Philipp Lenard carried out a series of revealing experiments. He observed that increasing the intensity of the incident light increased the number of emitted electrons but **did not** increase their kinetic energy. Instead, the energy of the emitted electrons depended on the **wavelength** of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also identified a **threshold wavelength**—if the light’s wavelength was too long (i.e., its frequency too low), no electrons were emitted, regardless of how intense the light was. These results posed a serious challenge to classical wave theory, which predicted that energy should increase smoothly with intensity, not depend on frequency.
 
-In parallel, physicists in the late 19th century sought to understand the spectrum of light emitted by a blackbody — a perfect emitter and absorber of radiation. In 1900, **Max Planck** tried to match the observed blackbody spectrum with a formula. After some trial and error, he arrived at an expression that fit the data perfectly—but only if he assumed that energy exchange between matter and radiation was quantized. 
+At the same time, physicists were trying to explain the spectrum of light emitted by a blackbody—a perfect absorber and emitter of radiation. In 1900, **Max Planck** tackled this problem. After much effort, he found a formula that matched the observed spectrum, but only if he assumed that energy exchange (joules) between matter and radiation occurred in discrete amounts.
 
 $$
-E = n h ν
-$$ 
+E = n h \nu
+$$
 
-where 𝑛 is an integer, 𝜈 is the frequency (inverse to wavelength) of the light, and ℎ is the constant he introduced—now known as Planck’s constant.
-Planck speculated that the energy of oscillators in the cavity walls of the material could only take on discrete values and thus the measured absorptions and emissions from a continuous light field needed to match these discrete levels.
+Here, $n$ is an integer; $\nu$ is the frequency ($1/sec$) of the light; and $h$ is a constant he discovered — now called Planck’s constant ($h = 6.62607015 \times 10^{-34}$ joule-seconds). Planck proposed that the oscillators in the material’s walls could only transfer energies in discrete steps. This quantization explained why the measured absorption and emission of light matched the observed spectrum, even though the light field itself was continuous.
 
-In 1905, Albert Einstein offered a revolutionary explanation. He proposed that we should not think of light as a continuous wave that becomes quantized through an interaction with the material.  Rather, he argued, light itself **quantized** into discrete packets of energy—later called **photons**. The energy of each photon is proportional to its frequency,
+In 1905, Albert Einstein offered a revolutionary explanation. He proposed that we should not think of light as a continuous wave that becomes quantized through an interaction with the material. Rather, he argued, light itself **quantized** into discrete packets of energy—later called **photons**. The energy of each photon is proportional to its frequency,
 
 $$
 E = h \nu
 $$
 
-where $h$ is Planck’s constant and $\nu$ is the frequency of the light. This hypothesis went beyond Max Planck’s earlier work, which had only assumed quantized energy exchange between matter and radiation — not that light itself came in packets. Einstein suggested that **light in free space** behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained both Planck's observations and all of Lenard’s experiments.  His photoelectric theory laid the groundwork for the next generation's work in quantum physics.
+where $h$ is Planck’s constant and $\nu$ is the frequency of the light. This hypothesis went beyond Max Planck’s work, which assumed the quantization was part of the exchange between matter and radiation — not that light itself came in packets. Einstein suggested that **light in free space** behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained both Planck's observations and all of Lenard’s experiments. His photoelectric theory laid the groundwork for the next generation's work in quantum physics.
 
 ## Wave particle duality
-The duality of light, which acts as both a particle and a wave, is one of the most profound and puzzling concepts in physics. While Newton's corpuscular theory of light was set aside due to the overwhelming evidence for wave-like behavior—such as interference and diffraction—the discovery of the photoelectric effect forced physicists to accept that light also exhibits particle-like properties. Many people - and large language models - will tell you that this duality is not a contradiction, but rather a reflection of the *quantum nature* of light: depending on the experiment, light can behave as a wave or as a collection of discrete photons. 
 
-If you don't think that is puzzling , you are not paying close enough attention. The wave-particle duality is not a simple matter of context or perspective—it is a fundamental feature of quantum systems that defies classical intuition. Even Einstein, who introduced the concept of photons, struggled with the philosophical implications of this duality for the rest of his life. In quantum mechanics, light is described by a mathematical object called the wavefunction, which encodes the probabilities of observing different outcomes. When we measure properties associated with waves (such as interference patterns), the wave nature is revealed; when we measure properties associated with particles (such as discrete energy transfer in the photoelectric effect), the particle nature emerges. The fact that both descriptions are necessary—and that neither alone is sufficient—remains one of the most remarkable and mysterious aspects of modern physics.
+For much of the 19th century, Newton’s idea that light was made of tiny particles (corpuscles) was set aside, as experiments overwhelmingly supported the wave theory of light—interference and diffraction patterns provided strong evidence for wave-like behavior. However, the photoelectric effect presented results that could not be explained by wave theory alone, forcing physicists to recognize that light sometimes behaves as a particle as well. This is the essence of the **wave-particle duality**.
+
+In quantum mechanics, light is described by a mathematical object called the **wavefunction**, which provides the probabilities of different outcomes. When experiments are designed to reveal wave-like effects (such as interference), light behaves as a wave. When experiments probe particle-like effects (such as the photoelectric effect), light behaves as a particle. Both descriptions are necessary, and neither alone is sufficient to fully describe the nature of light.
+
+This duality remains a central and intriguing feature of quantum physics. If you don't find all of this a bit puzzling, you may not be paying enough attention.
 
 ::: {#lenard-einstein-bohr .callout-note collapse="true"}
 ## The Duality of Light, the Duality of People
 
 ![Lenard made measurements that defined important properties of the photoelectric effect. Einstein offered a bold theoretical idea, what we now call the photon, that explained Lenard's and Planck's measurements. Einstein, who was Jewish, had a complex personal relationship with Planck, as they navigated Hitler's rise to power. Lenard became strongly anti-Semitic.](images/people/03-Lenard-Einstein.png){#lenard-einstein width="50%" fig-align="center"}
 
-Einstein’s proposal was met with skepticism. The wave theory of light, supported by extensive experimental evidence like interference and diffraction, remained central to physics. Even Einstein himself was uneasy with the resulting **wave-particle duality**. He believed that this duality hinted at an incomplete understanding of nature, and he famously rejected the probabilistic foundations of quantum mechanics, remarking that “God does not play dice.” Niels Bohr, a champion of the new quantum theory and Einstein’s intellectual foil, is said to have replied, “Einstein, don’t tell God what to do.” The tension between wave and particle descriptions remains a central—and still puzzling—theme in physics.
+Einstein’s proposal of the photon was initially met with skepticism, as the wave theory of light was deeply established in physics. Even Einstein himself was uneasy with the resulting **wave-particle duality**, believing it pointed to an incomplete understanding of nature. He famously rejected the probabilistic foundations of quantum mechanics, remarking that “God does not play dice.” Niels Bohr, a leading figure in quantum theory, responded, “Einstein, don’t tell God what to do.” The tension between wave and particle descriptions remains a central—and still unresolved—theme in physics.
+ <!--
+ Einstein didn't simply ignore the wave phenomena. Instead, he envisioned what we might call a "statistical wave-particle" model. He suggested that individual photons somehow retained a wave-like "guiding field" or statistical distribution that determined where they were likely to go. In diffraction, for example, he imagined that while individual photons passed through as particles, their collective behavior was governed by wave-like probability distributions that created the familiar diffraction patterns.
 
-In 1905 —Einstein’s *annus mirabilis*— he published four groundbreaking papers that reshaped modern physics. In addition to the photoelectric effect, for which he was awarded the Nobel prize, he published his work on Special Relativity which showed that **simultaneity is relative**, depending on the observer’s frame of reference. Walter Isaacson’s biography of Einstein (@Isaacson2008-einstein) provides an accessible account of all four discoveries and the broader scientific context. Isaacson also details how Lenard, who was also a Nobel Laureate, became an outspoken anti-Semite who actively opposed Einstein’s recognition.
-<!--
+Bohr argued that Einstein was clinging to classical intuitions about reality that quantum mechanics had shown to be inadequate. From Bohr's perspective, the probabilistic nature of quantum mechanics wasn't a sign of incomplete knowledge - it was a fundamental feature of nature at the microscopic scale.
+Bohr believed that concepts like "determinism" and "objective reality independent of observation" were classical prejudices that had to be abandoned. He argued that quantum mechanics was complete precisely because it recognized the fundamental role of measurement and the impossibility of simultaneously knowing all properties of a quantum system.
+ -->
+
+In 1905—Einstein’s *annus mirabilis*—he published four groundbreaking papers that reshaped modern physics. In addition to the photoelectric effect, for which he was awarded the Nobel Prize, he introduced Special Relativity, showing that **simultaneity is relative** depending on the observer’s frame of reference. Walter Isaacson’s biography of Einstein (@Isaacson2008-einstein) provides an accessible account of these discoveries and the broader scientific context. Isaacson also details how Lenard, who was also a Nobel Laureate, became an outspoken anti-Semite who actively opposed Einstein’s recognition. <!--
 Photoelectric effect and Lenard
 https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF728iVpg 
 -->
 :::
 
 ## Quantifying the photoelectric effect
- The conversion of photons to electrons is inherently random: even a perfectly stable light source produces a variable number of electrons. This fundamental statistical fluctuation is a key aspect of how light interacts with matter and a fundamental part of the field of quantum optics. The number of absorptions obeys the Poisson distribution, and the specification of this distribution was formalized in by two groups of scientists, in the 1950s. One group was working to understand visual sensitivity (@Pirenne1951-poisson, @Barlow1956-retinalnoise) and the other was working to understand the physics of electromagnetic radiation and image sensors (@Mandel1959-poissonabsorptions). I become interested in this history, and [here are some notes](resources/Poisson-history.html)
 
-The photoelectric effect is linear over a large range, in the sense that doubling the light intensity doubles the **mean** number of electrons generated (@Preece2022-photontransfer). The linearity holds until the material saturates (there are no more free electrons). Within this linear range, the number of electrons is a noisy estimate of the mean number of photons.
+When we model light as a wavefunction, we can only predict the probability that a photon will generate an electron. This means that even with a perfectly stable light source, the number of electrons generated will fluctuate from one measurement to the next. These fundamental statistical fluctuations are a key feature of how light interacts with matter and are central to quantum optics.
 
-The ratio between the number of incident photons and the number of generated electrons is called the photodiode's **quantum efficiency (QE)**. 
-You can measure the QE from the slope of the line relating number of incident photons (x-axis) to the number of generated electrons (y-axis).  A QE of 1 (or 100%) means that every incident photon generates one electron; a lower QE indicates that some photons do not generate an electron. So, a QE of 0.5 means that half of the photons - again randomly - produce an electron.  
+The number of photon absorptions in a photodiode follows the Poisson probability distribution. This statistical property was formalized in the 1950s by two groups: one studying visual sensitivity in the retina (@Pirenne1951-poisson, @Barlow1956-retinalnoise), and another investigating the physics of electromagnetic radiation and image sensors (@Mandel1959-poissonabsorptions).[^sensors-01-photoelectric-1]
 
-In practice, QE varies with wavelength due to the physical properties of the sensor material and the design of the device. Manufacturers often provide QE curves that show the efficiency as a function of wavelength for a given sensor, and we will see examples later when we analyze specific sensors.
+[^sensors-01-photoelectric-1]: The history of these discoveries is fascinating but too detailed to cover here. For more, see [these notes](resources/Poisson-history.html).
+
+The **mean** number of electrons generated is proportional to the light intensity: doubling the light intensity doubles the mean number of electrons (@Preece2022-photontransfer). This linear relationship holds over a wide range, until the sensor material saturates. However, because photon arrivals and electron generation are random processes, the actual number of electrons generated in each measurement fluctuates around this mean. These fluctuations are described by Poisson statistics.
+
+Not every photon generates an electron. The ratio of generated electrons to incident photons is called the photodiode's **quantum efficiency (QE)**. QE can be measured as the slope of the line relating the number of incident photons (x-axis) to the number of generated electrons (y-axis). A QE of 1 (or 100%) means every photon generates one electron; a QE of 0.5 means, on average, half of the photons generate an electron.
 
 $$
 \mathrm{QE}(\lambda) = \frac{\text{number of electrons generated}}{\text{number of incident photons at wavelength } \lambda}
 $$
 
-The photoelectric effect is the initial stage of the CMOS circuit. But as we describe later, the photodiode is integrated within circuitry that stores and then reads out the voltage associated with the electrons. The circuitry can introduce some nonlinearities and noise that are part of the whole system response (@Bohndiek2008-sensorlinearity). But the initial transduction from light to electrons, the photoelectric effect, is linear with respect to the mean number of electrons over a large range. A basic understanding of CIS principles begins with this linear formulation. We discuss the limitations later, after we specify the pixel circuitry.
+In practice, QE depends on wavelength due to the sensor material and device design. Manufacturers often provide QE curves showing efficiency as a function of wavelength, and we will examine examples later.
+
+The photodiode is part of a circuit that stores and reads out the generated charge. While this circuitry can introduce nonlinearities and additional noise (@Bohndiek2008-sensorlinearity), the initial conversion from light to electrons is linear over a large range. Understanding this linear process is fundamental to CMOS image sensor operation; understanding the full system requires further study of the sensor's electronic components, which we discuss in later sections.
 
 ```{=html}
 <!--
@@ -97,38 +98,35 @@ Bohndiek2008-sensorlinearity paper has figures.  Notice how nonlinear Figures 7 
 ```
 
 ## Statistics of the photoelectric effect
-The principles that justify the Poisson distribution of electrons are simply stated.  Suppose we have a **steady source** of photons, all with the same wavelength. 
 
-1. The likelihood of a photon arriving in any given time interval, $\delta t$ is the same
-2. The probability that a photon generates an electron is constant (equal to the quantum efficiency, QE)
+The principles underlying the Poisson distribution of electrons are straightforward. Suppose we have a **steady source** of photons, all with the same wavelength. The probability of a photon arriving in any given small time interval, $\delta t$, is constant. This is the defining property of a Poisson process: events occur independently, with a constant average rate.
 
-These principles are the definition of the **Poisson** probability distribution.
+If the probability that a photon generates an electron is also constant (equal to the quantum efficiency, QE), then each photon arrival is an independent chance to generate an electron. The resulting number of electrons generated in a given interval is also Poisson distributed, with a mean scaled by the quantum efficiency. This statistical fluctuation in the number of electrons is known as the **shot noise** of the sensor.
 
-:::{#photoelectric-poisson .callout-note collapse="true"}
-## Siméon Denis Poisson.  
-We met Poisson earlier as the French academician who tried to disprove Fresnel's wave theory calculations.  He predicted a [a bright point that appears at the center of a circular object's shadow](https://en.wikipedia.org/wiki/Arago_spot) based on that theory.  He thought it couldn't be; but there it was!
+::: {#photoelectric-poisson .callout-note collapse="true"}
+## Siméon Denis Poisson
 
-![Siméon Denis Poisson.](images/sensors/03-Image-of-Poisson.png){#fig-image-poisson width=40%}
+We met Poisson earlier as the French academician who tried to disprove Fresnel's wave theory calculations. He predicted [a bright point that appears at the center of a circular object's shadow](https://en.wikipedia.org/wiki/Arago_spot) based on that theory—thinking it impossible, but it was observed!
 
-Poisson described the idea of this distribution in his 1837 work "Recherches sur la probabilité des jugements en matière criminelle et en matière civile (Researches on the Probability of Judgments in Criminal and Civil Matters)". His goal was to describe the number of discrete events occurring in a fixed interval of time or space if these events occur with a known constant mean rate and independently of the time since the last event, and his applications were in areas like jurisprudence and the number of soldiers killed by horse kicks in the Prussian army. 
+![Siméon Denis Poisson.](images/sensors/03-Image-of-Poisson.png){#fig-image-poisson width="40%"}
 
-But the mathematical framework he established directly applies to the arrival of photons from a constant light source. In image systems applications, an electron generation is considered an 'event', all the events are the same, and the chance of an event in any small interval of time is the same. 
+Poisson described this distribution in his 1837 work "Recherches sur la probabilité des jugements en matière criminelle et en matière civile (Researches on the Probability of Judgments in Criminal and Civil Matters)". His goal was to describe the number of discrete events occurring in a fixed interval of time or space, given a known constant mean rate and independence between events. His applications included jurisprudence and statistics such as the number of soldiers killed by horse kicks in the Prussian army.
+
+The mathematical framework he established applies directly to the arrival of photons from a constant light source. In imaging, each electron generation is considered an 'event', all events are identical, and the probability of an event in any small time interval is the same.
 :::
 
-The Poisson formula that describes the chance of $n$ electrons events has only a single parameter $\lambda$,
+The Poisson formula describes the probability of observing $n$ electron events, given a mean $\lambda$:
 $$
 P(n; \lambda) = \frac{\lambda^n e^{-\lambda}}{n!}
 $$
 
-The parameter $\lambda$ is the expected (mean) number of events, and the variance of the Poisson distribution is also $\lambda$.  The shape of the Poisson distribution is very much like the Normal distribution for mean greater than 15 or 20 (@fig-sensor-poisson). The main differences between the Poisson and Normal distribution are that the Poisson only takes integer values and asymmetric (skewed) for small values of $\lambda$.  The Poisson becomes more symmetric as $\lambda$ increases, and the chance of a negative value becomes very small. For large $\lambda$, the Poisson distribution approaches the Normal distribution, and for small $\lambda$ the Poisson is noticeably skewed to the right. 
+Here, $\lambda$ is both the expected (mean) number of events and the variance of the distribution. For large $\lambda$ (greater than about 15 or 20), the Poisson distribution closely resembles the Normal (Gaussian) distribution (@fig-sensor-poisson). The main differences are that the Poisson distribution only takes integer values and is skewed for small $\lambda$. As $\lambda$ increases, the distribution becomes more symmetric and approaches the Normal distribution.
 
-![Poisson distribution examples.  The Poisson formula (red lines) and simulations of Poisson counts (bars) are shown for three mean levels.](images/sensors/03-Poisson.png){#fig-sensor-poisson width=70%}
+![Poisson distribution examples. The Poisson formula (red lines) and simulations of Poisson counts (bars) are shown for three mean levels.](images/sensors/03-Poisson.png){#fig-sensor-poisson width="70%"}
 
-A fact that we will use later is that the Poisson distribution for electrons is not just any Gaussian - the electron distribution must have a mean equal to the variance. 
+A key fact we will use later: for a Poisson distribution, the mean and variance are equal. This property distinguishes Poisson noise from other types of noise.
 
-## Statistics of photons generating electrons
-According to the photon theory of light, the number of photons arriving at a photodiode during a fixed interval follows a Poisson distribution. Each photon has a certain probability (the quantum efficiency) of generating an electron, and each photon can produce at most one electron. As a result, the number of electrons generated by the photodiode is also Poisson distributed, but with a mean reduced by the quantum efficiency. 
-
-The inherent randomness in the number of electrons generated by incident photons is called **shot noise**. You can see a step-by-step statistical explanation of this process in the [ISETCam script](../code/fise_photonsElectrons.html). The script demonstrates why, in conventional CMOS image sensors, both the incident photons and the resulting electrons follow Poisson statistics. Note, however, that this relationship may not apply to other sensor types—such as those that can generate multiple electrons from a single photon.
-
-
+:::{#shotnoise-poisson .callout-note collapse="true"}
+## ISETCam: shot noise
+You can see a step-by-step statistical explanation of this process in the [ISETCam script](../code/fise_photonsElectrons.html). The script demonstrates why, in conventional CMOS image sensors, both the incident photons and the resulting electrons follow Poisson statistics. Note, however, that this relationship may not apply to other sensor types—such as those that can generate multiple electrons from a single photon.
+:::
