@@ -36,43 +36,52 @@ The transfer gate and floating diffusion give the circuit better control over wh
 
 Today, the 4T pixel is the standard in almost all high-performance CMOS image sensors, including those found in smartphones, industrial cameras, cars, and scientific instruments.
 
+```{=html}
 <!--
 There is also Theuwissen diagram, with five transistors that he calls a 4T circuit.  In the paper 'Linearity analysis ...' @Wang2017-CMOSLinearity.  He says the source follower is shared by multiple rows of pixels. It is Figure 2.  
 
 The text: "Figure 2 shows the schematic of a typical voltage mode 4T pixel. The pixel circuit consists of a pinned photodiode, a charge
 transfer switch (M1), a reset switch (M2), a source follower (M3) and a row select switch (M4). The current source transistor (M5) is shared by multiple rows of pixels. VDD is the power supply while VPIX is the output voltage of pixel. VLN provides an adjustable bias current. In the following analysis, the nonlinearity caused by the row select transistor (M4) is omitted to simplify the analysis."
 -->
+```
 
 The 4T design offers several key advantages over the earlier 3T architecture. Most notably, it enables correlated double sampling (CDS), which significantly reduces reset noise (also known as $kTC$ noise). In the 4T pixel, the circuit first measures the voltage on the floating diffusion node before transferring charge from the photodiode (capturing a baseline), and then again after the charge is transferred. The difference between these two measurements represents the pixel signal. This subtraction cancels much of the noise introduced during the reset phase, improving signal-to-noise ratio.
 
 Further improvements in materials and circuit architecture have led to even lower noise and higher quantum efficiency. Additional innovations, such as dual conversion gain and advanced pixel structures, have also expanded the dynamic range of CMOS sensors. We will explore some of these developments after reviewing the basic pixel circuit and other key sensor components.
 
 ## Circuit properties and parameters
+
 Simulations of the CMOS circuitry can -and do- become very complex during the design phase. Engineers use specialized software that incorporates the foundry's design rules that account for material properties and feature sizes. This design software helps circuit designers achieve a working system from the foundry.
 
-After the chip is built, it is impractical to characterize each different line, device and junction. Designers may place certain test circuits within the chip.  But more generally systems are evaluated with respect to a set of objective measurements using images as input and digital values of output.  This process is called called **system characterization** or **system calibration**. The characterization measurements specify the limitations of system performance, including light sensitivity, system noise, dynamic range, and color accuracy. 
+After the chip is built, it is impractical to characterize each different line, device and junction. Designers may place certain test circuits within the chip. But more generally systems are evaluated with respect to a set of objective measurements using images as input and digital values of output. This process is called called **system characterization** or **system calibration**. The characterization measurements specify the limitations of system performance, including light sensitivity, system noise, dynamic range, and color accuracy.
 
 The characterization measurements are chosen to be practical and insightful about potential system errors. They are chosen to characterize key limitations based on knowledge of the circuit properties.
 
-### Sensitivity:  Fill factor and back illumination
-The pixels in electronic image sensors are quite small, on the order of $1 \text{ }\mu\text{m}^2$ on a side. Consequently, even using a favorable lens with a large aperture (e.g., f/# 2), we often have images that produce only a small number of photons are incident at the photodiode.  For example, in a dimly lit room we can expect no more than an average of 100 photons over an area of $1 \text{ }\mu\text{m}^2$. (See [this script](../code/fise_opticsCountingPhotons.html) for the ISETCam calculation.) The number photons will be Poisson distributed, so the standard deviation is 30!  That's not a very reliable signal.
+### Sensitivity: Fill factor 
 
-Furthermore, the photodiode occupies only part of each pixel; the remaining area is taken up by circuitry that does not detect light. The proportion of the pixel area that is sensitive to light—the photodiode area—directly limits the pixel’s light sensitivity. This proportion is called the **fill factor**. A higher fill factor means more of the pixel is used to detect light, increasing sensitivity. Fill factor is usually expressed as a value between 0 and 1, or as a percentage between 0% and 100%.
+Because modern pixels are so small, each photodiode often collects only a modest number of photons—even under good lighting. For example, a $1~\mu\text{m}^2$ pixel in a dim scene (with a fast f/2 lens) might receive just 200 photons during an exposure. Photon arrivals follow Poisson statistics, so the standard deviation is $\sqrt{200} \approx 14$, or about 7% of the mean. This photon noise is a fundamental limit: it sets the minimum possible noise level and constrains the signal-to-noise ratio (SNR) in low-light conditions. 
 
-The original CMOS image sensors were built with semiconductor technology with feature size on the order of 350 nm, and thus the circuitry might occupy as much as half of the pixel area (fill factor of 0.5).  Over years the feature size has shrunk considerably and the fill factor of modern pixels can be greater than 0.9. 
+::: {#sensor-photons .callout-note collapse="true"}
+## Number of photons at each pixel
+The number of photons arriving at a pixel depends on many factors, including the light intensity, the optics, and the size of the pixel. ISETCam is a useful tool for estimating quantities such as the number of incident photons.  The variance in the number of photons at a $1~\mu\text{m}^2$ pixel under moderate to dim lighting is considerable.  Here is an image calculated using ISETCam, showing the Poisson variation in the number of photons across a small region.
 
-The original sensors were also built with a technology that included multiple metal layers.  The aperture that led down to the 
+![Poisson noise in a uniform region of a dim scene.  Each pixel is $1~\mu\text{m}^2$ and the scene intensity is 50 nits.](images/sensors/03-photonimage.png){#fig-photonimage width="60%"}.
 
+This [ISETCam script](../code/fise_opticsCountingPhotons.html) illustrates the calculation.  Nearly every sensor simulation we run in ISETCam includes calculations like this.
+:::
 
+The photodiode occupies only a portion of the pixel area; some of the pixel area is taken up by the circuitry. The proportion of the pixel area that is sensitive to light—the photodiode area—further limits light sensitivity. This proportion is called the **fill factor**. A higher fill factor means more of the pixel is used to detect light, increasing sensitivity. Fill factor is usually expressed as a value between 0 and 1, or as a percentage between 0% and 100%. The first-generation of CMOS image sensors were built with semiconductor technology with feature size on the order of 350 nm, and thus the circuitry might occupy as much as half of the pixel area (fill factor of 0.5). Over years the feature size has shrunk considerably and the fill factor of modern pixels can be greater than 0.9. The fill factor combined with the light sensitivity of the photodiode might result in about 150 electrons generated from the 200 photons. This number, too, is Poisson distributed so the short noise will be about $\sqrt{150} \approx 14$, about 8% of the mean.
 
 ### Well capacity and dynamic range
-The photodiodes and floating diffusion nodes serve as storage devices, often called **storage wells**. The capacity to store charge (electrons) in the 3T and 4T circuits is called the **well capacity** or **full-well capacity**, which is the maximum number of electrons that can be stored. If the number of photo-generated electrons exceeds the well capacity, the additional electrons cannot be stored and the output no longer increases with light intensity. Hence, the well capacity is an important number for determining the dynamic range of the sensitivity. It is an important factor that determines when the pixel stops encoding photons. 
 
-The well capacity can also have an impact on the response characteristics of the sensor.  An estimate of the number of stored electrons as a function of number of incident photons, for a real sensor, is shown in @fig-sensor-responselinearity. The curve shows how the number of stored electrons increases over a large part of the range.  Initially, the electron count increases linearly.  After a certain level, as we approach the storage limit, the curve trails off and starts to saturate. Finally, as the light intensity increases even further, the curve completely saturates at the well capacity, in this case about 70,000 electrons.
+The photodiodes and floating diffusion nodes serve as storage devices, often called **storage wells**. The capacity to store charge (electrons) in the 3T and 4T circuits is called the **well capacity** or **full-well capacity**, which is the maximum number of electrons that can be stored. If the number of photo-generated electrons exceeds the well capacity, the additional electrons cannot be stored and the output no longer increases with light intensity. Hence, the well capacity is an important number for determining the dynamic range of the sensitivity. It is an important factor that determines when the pixel stops encoding photons.
 
-![A CMOS sensor response curve, showing the number of electrons captured as a function of the number of incident photons.  From @Bohndiek2008-sensorlinearity, Figure 7.](images/sensors/03-responselinearity.png){#fig-sensor-responselinearity width=60%}.
+The well capacity can also have an impact on the response characteristics of the sensor. An estimate of the number of stored electrons as a function of number of incident photons, for a real sensor, is shown in Figure @fig-sensor-linearity. The curve shows how the number of stored electrons increases over a large part of the range. Initially, the electron count increases linearly. After a certain level, as we approach the storage limit, the curve trails off and starts to saturate. Finally, as the light intensity increases even further, the curve completely saturates at the well capacity, in this case about 70,000 electrons.
+
+![A CMOS sensor response curve, showing the number of electrons captured as function of the number of incident photons. From Figure 7 in that paper.](images/sensors/03-responselinearity.png){#fig-sensor-linearity width=60%}.
 
 ### Response curve and nonlinearity
+
 The relationship between the number of incident photons and the number of electrons stored in a pixel is not perfectly linear, especially as the pixel approaches its storage limit. At low and moderate light levels, nearly all photo-generated electrons are successfully stored in the well, resulting in a linear increase in stored charge with increasing light intensity. However, as the well nears its full capacity, several effects cause the response to become sublinear and eventually saturate.
 
 First, when the storage well is almost full, some newly generated electrons cannot be stored and may leak out or recombine, reducing the efficiency of charge collection. Second, some electrons generated by photons may diffuse into neighboring regions of the sensor substrate rather than being stored in the intended circuit element (e.g., floating diffusion noise). Both leakage and diffusion become more significant at higher light intensities, causing the response curve to flatten out as it approaches saturation.
@@ -81,13 +90,13 @@ The exact onset and severity of this nonlinearity depend on the specific circuit
 
 ### Temporal noise
 
-Reset noise.
-Readout noise.
+Reset noise. Readout noise.
 
 ### Dark current
 
 ### Fixed pattern noise
-I don't want it called noise.  It is really variation, not noise.
+
+I don't want it called noise. It is really variation, not noise.
 
 DSNU dark signal nonuniformity
 
@@ -105,12 +114,8 @@ Over time, as technology has scaled, more complex electrical circuitry has been 
 
 Global shutter (with additional circuitry),
 
-Instead of using a floating diffusion as a memory element, Aptina has utilized a surface-pinned storage node in the pixel
-to address dark current challenges. Available in its newest global shutter sensor, the MT9M031, 
-the storage node also enables using a true correlated double sampling technique to reduce readout noise to four electrons, resulting in excellent low-light performance. 
-The combination of the effective use of an anti-reflective metal light shield in close proximity to the memory node and careful doping and potential profile design results in a high GSE.  
+Instead of using a floating diffusion as a memory element, Aptina has utilized a surface-pinned storage node in the pixel to address dark current challenges. Available in its newest global shutter sensor, the MT9M031, the storage node also enables using a true correlated double sampling technique to reduce readout noise to four electrons, resulting in excellent low-light performance. The combination of the effective use of an anti-reflective metal light shield in close proximity to the memory node and careful doping and potential profile design results in a high GSE.\
 Global Shutter Pixel Technologies and CMOS Image Sensors – A Powerful Combination – (Aptina white paper)
-
 
 ### Dynamic range enhancement
 
