@@ -1,18 +1,18 @@
 # Pixels {#sec-sensors-circuits}
 
-CMOS image sensors use photodiodes—and the photoelectric effect—to measure and store the optical light field at the sensor surface. The key technical breakthrough that enabled CMOS sensors was the invention of local circuitry to store and transmit the photon-generated electrons from the photodiode to the computer.
+CMOS image sensors use photodiodes—and the photoelectric effect—to measure and store the optical light field at the sensor surface. The key technical breakthrough that enabled CMOS sensors was the invention of circuitry to store and then transmit the photon-generated electrons from the photodiode to the computer.
 
-The photodiode and its associated circuitry are critical parts of the pixel, but there are other essential components as well (@fig-sensor-pixel-overview). For example, a small lens (microlens) is situated above each pixel, and a color filter passes certain wavelengths of light while blocking others. Integrated circuitry, including transistors and metal lines, manages the storage and transmission of charge.
+The photodiode and this circuitry are critical parts of the pixel; there are other essential components as well (@fig-sensor-pixel-overview). For example, effective image sensors place a small lens (microlens) above each pixel.  Color image sensors place a color filter between the microlens and the photodiode that passes certain wavelengths and blocks others. 
 
 ![Schematic of the early CMOS pixel architecture.](images/sensors/03-pixel-overview.png){#fig-sensor-pixel-overview width="75%"}
 
-Figure @fig-sensor-pixel-overview does not show every detail. Notice the gap between the photodiode and the color filter. In early CMOS imagers, this gap contained many metal lines that carried control and data signals. The metal lines were organized into layers (@fig-sensor-pixel-layers), and the distance from the microlens at the top to the photodiode at the bottom was fairly large compared to the size of the photodiode. In these early pixels, light from the main lens had to travel through what was effectively a tunnel to reach the photodiode.
+ Figure @fig-sensor-pixel-overview is a schematic that omits many details. For example, notice the gap between the photodiode and the color filter. In early CMOS imagers, this gap contained many metal lines that carried control and data signals. The metal lines were organized into layers and they are illustrated in  Figure @fig-sensor-pixel-layers. In the first generation of image sensors the distance from the microlens at the top to the photodiode at the bottom was fairly large compared to the size of the photodiode. In these early pixels, light from the main lens had to travel through what was effectively a tunnel to reach the photodiode.
 
-![In color imagers, the color filters typically come in a pattern that is repeated across the sensor array.  A single pattern is called a super pixel. This image illustrates a super pixel for a sensor with cyan, magenta, and yellow color filters.  The metal lines are left in to emphasize that light from the main lens needed to pass through a tunnel to reach the photodiode.](images/sensors/03-pixel-overview2.png){#fig-sensor-pixel-layers}
+![In color imagers, the color filters are typically arranged in a repeating pattern. The smallest repeating unit of the color filter array is called a **super pixel**. The image illustrates a super pixel for a sensor with cyan, magenta, and yellow color filters. The metal lines are included to show that for this pixel light from the main imaging lens must pass through a tunnel before reaching the photodiode.](images/sensors/03-pixel-overview2.png){#fig-sensor-pixel-layers}
 
-Pixel architecture has evolved significantly over the years. Pixel sizes have shrunk, and the placement of the circuitry and metal lines has changed dramatically; light no longer passes through a deep tunnel. We will consider these improvements later in this section, but it is helpful to first understand the circuitry and key concepts behind the initial design.
+Pixel architecture has evolved significantly over the years, and there continue to be many novel designs. The most straightforward change is that technology has scaled, enabling pixel sizes to shrink and thus increasing spatial sampling resolution. In addition, the placement of the circuitry and metal lines has changed to largely be below the photodiode; light no longer passes through a deep tunnel. There are other improvements to the circuitry, some experimental, that we will review later in this section. It is helpful to first understand the concepts behind the classic circuitry, and then to understand the value of these new pixel concepts.
 
-## Circuitry
+## Classic CMOS Circuitry
 The logical flow of the circuitry is as follows:
 
 -   Before image capture, the circuitry resets each pixel to clear any residual charge from previous exposures.
@@ -39,7 +39,7 @@ Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd 
 -->
 ```
 
-### 4T circuits
+### 4T circuits {#sec-4T-circuit}
 
 ![The 4T pixel circuit introduces a pinned photodiode and an additional transistor. When activated, the new transistor transfers the accumulated charge from the photodiode to a storage capacitor (the floating diffusion node, $C_{fd}$). The rest of the circuit, including readout and row select, is similar to the 3T design.](images/sensors/03-4T-circuit.png){#fig-sensor-4T-circuit}
 
@@ -49,21 +49,14 @@ The transfer gate and floating diffusion give the circuit better control over wh
 
 Today, the 4T pixel is the standard in almost all high-performance CMOS image sensors, including those found in smartphones, industrial cameras, cars, and scientific instruments.
 
-```{=html}
 <!--
 There is also Theuwissen diagram, with five transistors that he calls a 4T circuit.  In the paper 'Linearity analysis ...' @Wang2017-CMOSLinearity.  He says the source follower is shared by multiple rows of pixels. It is Figure 2.  
 
 The text: "Figure 2 shows the schematic of a typical voltage mode 4T pixel. The pixel circuit consists of a pinned photodiode, a charge
 transfer switch (M1), a reset switch (M2), a source follower (M3) and a row select switch (M4). The current source transistor (M5) is shared by multiple rows of pixels. VDD is the power supply while VPIX is the output voltage of pixel. VLN provides an adjustable bias current. In the following analysis, the nonlinearity caused by the row select transistor (M4) is omitted to simplify the analysis."
 -->
-```
 
-The 4T design offers several key advantages over the earlier 3T architecture. Most notably, it enables correlated double sampling (CDS), which significantly reduces reset noise (also known as $kTC$ noise). In the 4T pixel, the circuit first measures the voltage on the floating diffusion node before transferring charge from the photodiode (capturing a baseline), and then again after the charge is transferred. The difference between these two measurements represents the pixel signal. This subtraction cancels much of the noise introduced during the reset phase, improving signal-to-noise ratio.
-
-Further improvements in materials and circuit architecture have led to even lower noise and higher quantum efficiency. Additional innovations, such as dual conversion gain and advanced pixel structures, have also expanded the dynamic range of CMOS sensors. We will explore some of these developments after reviewing the basic pixel circuit and other key sensor components.
-
-## Circuit properties and parameters
-
+## Pixel properties and parameters
 Simulations of the CMOS circuitry can -and do- become very complex during the design phase. Engineers use specialized software that incorporates the foundry's design rules that account for material properties and feature sizes. This design software helps circuit designers achieve a working system from the foundry.
 
 After the chip is built, it is impractical to characterize each different line, device and junction. Designers may place certain test circuits within the chip. But more generally systems are evaluated with respect to a set of objective measurements using images as input and digital values of output. This process is called called **system characterization** or **system calibration**. The characterization measurements specify the limitations of system performance, including light sensitivity, system noise, dynamic range, and color accuracy.
@@ -71,7 +64,6 @@ After the chip is built, it is impractical to characterize each different line, 
 The characterization measurements are chosen to be practical and insightful about potential system errors. They are chosen to characterize key limitations based on knowledge of the circuit properties.
 
 ### Sensitivity: Fill factor
-
 Because modern pixels are so small, each photodiode often collects only a modest number of photons—even under good lighting. For example, a $1~\mu\text{m}^2$ pixel in a dim scene (with a fast f/2 lens) might receive just 200 photons during an exposure. Photon arrivals follow Poisson statistics, so the standard deviation is $\sqrt{200} \approx 14$, or about 7% of the mean. This photon noise is a fundamental limit: it sets the minimum possible noise level and constrains the signal-to-noise ratio (SNR) in low-light conditions.
 
 ::: {#sensor-photons .callout-note collapse="true"}
@@ -96,8 +88,7 @@ $$
 
 The logarithm compresses the range into more manageable numbers, typically between 60 and 100. The factor of 20 comes from conventions in audio engineering, where dynamic range is measured in decibels (dB). Image scientists use the same convention, so dynamic range is usually reported in dB.
 
-### Response curve and nonlinearity
-
+### Response curve nonlinearity
 The finite well capacity can also have an impact on how the response increases with intensity. @fig-sensor-linearity shows an estimate of the number of stored electrons as a function of number of incident photons for a real sensor. The number of stored electrons increases linearly over a large part of the range. Beyond a certain level, as we approach the storage limit, the curve starts to saturate. As the light intensity increases even further, the curve completely flattens at the well capacity, in this example about 70,000 electrons.
 
 ![A CMOS sensor response curve, showing the number of electrons captured as function of the number of incident photons. From Figure 7 in that paper.](images/sensors/03-responselinearity.png){#fig-sensor-linearity width="60%"}
@@ -109,14 +100,32 @@ As the well nears its full capacity, several effects cause the response to becom
 The exact onset and severity of this nonlinearity depend on the specific circuit design and material properties of the sensor. In certain designs the nonlinearity is negligible, with only  some degree of nonlinearity as the well capacity is approached. Understanding the response curve is important for accurately interpreting sensor measurements, especially in applications that require high dynamic range or precise quantitative imaging.
 
 ### Temporal noise
+If we acquire the same image repeatedly, even with no change in the scene, there will be fluctuations in a pixel's output. The difference in a pixel's output across time is called **temporal noise**. There are several contributors to this variation.  We have already reviewed one important contributor, the Poisson distribution of the electrons at the photodiode (Section @sec-photoelectric-statistics). 
 
-Reset noise. Readout noise.
+Each of the different components of the pixel are potential sources of temporal noise. Here is a brief list.
 
-### Dark current
+#### Reset noise
+In the 3T and 4T circuits, we must transfer the electrons from the photodiode or from the floating diffusion noise.  In both cases, there is the possibility that as we start to collect the electrons there will be a random number of electrons left over from the prior image capture.  This variable number of unwanted electrons is a failure to reset the storage to exactly the same state, thus it is called **reset noise**. 
 
-### Fixed pattern noise
+This noise is present in both 3T and 4T of circuits, but it has different properties because the storage location differs (@sec-4T-circuit). An important features of the 4T circuit is that the floating diffusion noise can be read just prior to transferring the electrons from the photodiode, and then again after electrons have been transferred. The difference is read out as the pixel value.  This process is called **correlated double sampling** (CDS), and it significantly reduces reset noise.
 
-I don't want it called noise. It is really variation, not noise.
+In a 3T pixel, reading the voltage on the photodiode disturbs the accumulated charge. Correlated double sampling (CDS) relies on making two non-destructive measurements, and it cannot be used effectively on the photodiode itself and thus the 3T circuit.
+
+ Reset noise is also known as $kTC$ noise because its size depends on a formula related to the capacitcan of the floating diffusion node.
+
+$$
+\sigma^2 = \frac{kT}{C}
+$$ 
+ 
+ In the 4T pixel, the circuit first measures the voltage on the floating diffusion node before transferring charge from the photodiode (capturing a baseline), and then again after the charge is transferred. The difference between these two measurements represents the pixel signal. This subtraction cancels much of the noise introduced during the reset phase, improving signal-to-noise ratio.  
+
+The 4T design is now standard due to its superior noise performance. Further innovations, such as dual conversion gain and stacked pixel structures have also expanded the dynamic range of CMOS sensors. We will explore some of these developments in @sec-sensor-innovations.
+
+
+
+#### Dark current
+
+## Sensor properties: fixed pattern noise
 
 DSNU dark signal nonuniformity
 
@@ -126,21 +135,17 @@ Temperature dependence of circuit and sensor noise.
 
 Temperature variations can also affect the linearity of the sensor. Changes in temperature can alter the behavior of the photodiode and the associated circuitry, leading to temperature-dependent nonlinearities. Modern sensors often include compensation mechanisms to mitigate these effects, but residual nonlinearities may still remain.
 
-## Circuit innovations
-
+## Circuit innovations {#sec-sensor-innovations}
 Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
 
 ### Global shutter
+Instead of using a floating diffusion as a memory element, Aptina has utilized a surface-pinned storage node in the pixel to address dark current challenges. Available in its newest global shutter sensor, the MT9M031, the storage node also enables using a true correlated double sampling technique to reduce readout noise to four electrons, resulting in excellent low-light performance. The combination of the effective use of an anti-reflective metal light shield in close proximity to the memory node and careful doping and potential profile design results in a high GSE.
 
-Global shutter (with additional circuitry),
-
-Instead of using a floating diffusion as a memory element, Aptina has utilized a surface-pinned storage node in the pixel to address dark current challenges. Available in its newest global shutter sensor, the MT9M031, the storage node also enables using a true correlated double sampling technique to reduce readout noise to four electrons, resulting in excellent low-light performance. The combination of the effective use of an anti-reflective metal light shield in close proximity to the memory node and careful doping and potential profile design results in a high GSE.\
 Global Shutter Pixel Technologies and CMOS Image Sensors – A Powerful Combination – (Aptina white paper)
 
 ### Dynamic range enhancement
-
-Dynamic range extensions
-
 Another source of nonlinearity arises from the photodiode itself. At high irradiance levels, the photodiode can saturate, meaning that it cannot generate additional electrons regardless of the incoming light. This saturation effect imposes a hard limit on the dynamic range of the sensor.
 
 Understanding and modeling these nonlinearities is critical for applications that require high precision, such as scientific imaging or computational photography. Calibration techniques, such as measuring the sensor response under controlled conditions, can help correct for these nonlinearities in post-processing.
+
+### Stacked pixel structures

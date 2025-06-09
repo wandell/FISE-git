@@ -1,42 +1,38 @@
 # Encoding principles {#sec-sensors}
 
-The transition from film to digital imaging, enabled by semiconductor technology, has profoundly changed how we record and process images (@boyle1970-ccd-first; see [Preface](../index.qmd#sec-preface)). The initial digital sensors used arrays of tiny, light-sensitive elements called **photodiodes**—semiconductor devices that convert incoming light into electrical current. When photons strike the photodiode’s active region, they generate electron-hole pairs, resulting in a measurable flow of electrons. Each photodiode forms the basis of a pixel in modern image sensors.
+The transition from film to digital imaging, enabled by semiconductor technology, has profoundly changed how we record and process images (@boyle1970-ccd-first; see [Preface](../index.qmd#sec-preface)). Digital image sensors use arrays of tiny, light-sensitive elements called **photodiodes**—semiconductor devices that convert incoming light into electrical current.  Photons incident at the photodiode’s active region generate electron-hole pairs, resulting in a measurable flow of electrons. 
 
-The earliest devices, known as charge-coupled devices (CCD), were built using metal-oxide semiconductor technology (MOS). These sensors required significant power, making them unsuitable for mobile devices and limiting their early adoption to scientific and high-end applications.
+Photodiodes are the essential building block of all modern image sensors. The earliest digital image sensors, known as charge-coupled devices (CCD), were built using metal-oxide semiconductor technology (MOS). Measuring the electrons captured by the array of photodiodes in a CCD requires significant power, making them unsuitable for mobile devices and limiting their early adoption to scientific and high-end applications.
 
-A major breakthrough came with Eric Fossum's invention of the Complementary Metal-Oxide Semiconductor (CMOS) image sensor (@Fossum1993-ccd-dinosaurs; @Fossum1995-patent). By implementing an active pixel sensor (APS) circuit, Fossum enabled image sensors to be manufactured using mainstream CMOS microelectronics processes. This dramatically reduced power consumption and allowed integration of light-sensing pixels with timing and signal processing circuitry on the same chip (@fig-olympus-overview). These advances paved the way for the widespread adoption of electronic image sensors in mobile devices and many other applications.
+A major breakthrough came with Eric Fossum's invention of the Complementary Metal-Oxide Semiconductor (CMOS) image sensor (@Fossum1993-ccd-dinosaurs; @Fossum1995-patent). By implementing an active pixel sensor (APS) circuit, Fossum enabled image sensors to be manufactured using mainstream CMOS microelectronics processes. This dramatically reduced power consumption and allowed integration of light-sensing pixels with timing, control, and signal processing circuitry on the same chip (@fig-olympus-overview). These advances paved the way for the widespread adoption of electronic image sensors in mobile devices and many other applications.
 
 ![CMOS image sensors (CIS) incorporate integrated circuitry and multiple subsystems. The circuitry and subsystems, together, enable the capture, transfer and digital encoding of the image. Source: [Evident Scientific](https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors).](images/sensors/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="489"}
 
-Photodiodes are the essential building blocks of all modern image sensors, both CCD and CMOS. The physical principle underlying the operation of the photodiode—converting optical images into electrons—is called the **photoelectric effect**. Understanding how materials convert light into electrical signals is a fascinating chapter in the history of physics and engineering, shaped by groundbreaking experiments and theories. We begin this section on sensors by describing the discovery of this phenomenon and its fundamental properties.
+The physical principle underlying the operation of the photodiode—converting optical images into electrons—is called the **photoelectric effect**. Understanding how materials convert light into electrical signals is a fascinating chapter in the history of physics and engineering, shaped by groundbreaking experiments and theories that changed our thinking about the world. We begin this section on sensors by describing the discovery of this effect and its fundamental properties.
 
 ## The photoelectric effect
+The certain materials convert light to electrons was first reported by Heinrich Hertz [-@Hertz1887-photoelectric2; -@Hertz1887-photoelectric1]. He used a simple apparatus: a loop of wire with a small gap. When the wire was exposed to a strong electromagnetic wave at the right frequency, a current was induced in the loop; if strong enough, a spark would jump across the gap in the wire. Hertz discovered that illuminating the wire with ultraviolet (UV) light made the spark stronger, allowing it to jump across a larger gap between the wires. He concluded that UV light generated additional current in the wire, demonstrating that light produced electrical signals.
 
-The phenomenon that certain materials can convert light to electrons was first reported by Heinrich Hertz [-@Hertz1887-photoelectric2; -@Hertz1887-photoelectric1]. He used a simple apparatus: a loop of wire with a small gap. When exposed to a strong electromagnetic wave at the right frequency, a current was induced in the loop, and if strong enough, a spark would jump across the gap. Hertz discovered that illuminating the wire loop with ultraviolet (UV) light made the spark stronger, allowing it to jump across a larger gap between the wires. He concluded that UV light generated additional current in the wire, demonstrating that light can produce electrical signals.
-
-```{=html}
 <!--
 He also noticed that glass, which blocks UV light, eliminated the effect. Quartz (which transmits UV light) did not.
 -->
-```
 
 The central challenge of the photoelectric effect is to model how electromagnetic radiation—light—interacts with a material to generate an electrical signal.
 
 ## The birth of the photon
-
 Hertz' initial photoelectric demonstration was in 1887, and it was not until 1897 that JJ Thomson conclusively demonstrated that electrons are discrete, countable particles. Thomson's experiments revealed that cathode rays are composed of negatively charged particles with a specific mass and charge, much smaller than that of an atom.
 
-In 1902, armed with knowledge of electrons, Philipp Lenard carried out a series of revealing experiments. He observed that increasing the intensity of the incident light increased the number of emitted electrons but **did not** increase their kinetic energy. Instead, the energy of the emitted electrons depended on the **wavelength** of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also identified a **threshold wavelength**—if the light’s wavelength was too long (i.e., its frequency too low), no electrons were emitted, regardless of how intense the light was. These results posed a serious challenge to classical wave theory, which predicted that energy should increase smoothly with intensity, not depend on frequency.
+In 1902, armed with knowledge of electrons, Philipp Lenard carried out a series of important experiments. He observed that increasing the intensity of the incident light increased the number of emitted electrons but **did not** increase their kinetic energy. Instead, the energy of the emitted electrons depended on the **wavelength** of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also identified a **threshold wavelength**—if the light’s wavelength was too long (i.e., its frequency too low), no electrons were emitted, regardless of how intense the light was. These results posed a serious challenge to classical wave theory, which predicted that energy should increase smoothly with intensity, not depend on frequency.
 
-At the same time, physicists were trying to explain the spectrum of light emitted by a blackbody—a perfect absorber and emitter of radiation. In 1900, **Max Planck** tackled this problem. After much effort, he found a formula that matched the observed spectrum, but only if he assumed that energy exchange (joules) between matter and radiation occurred in discrete amounts.
+At the same time, physicists were trying to explain the spectrum of light emitted by a blackbody—a perfect absorber and emitter of radiation. In 1900, **Max Planck** tackled this problem. He found a formula that matched the observed spectrum, but only if he assumed that energy exchange (joules) between matter and radiation occurred in discrete amounts.
 
 $$
 E = n h \nu
 $$
 
-Here, $n$ is an integer; $\nu$ is the frequency ($1/sec$) of the light; and $h$ is a constant he discovered — now called Planck’s constant ($h = 6.62607015 \times 10^{-34}$ joule-seconds). Planck proposed that the oscillators in the material’s walls could only transfer energies in discrete steps. This quantization explained why the measured absorption and emission of light matched the observed spectrum, even though the light field itself was continuous.
+Here, $n$ is an integer; $\nu$ is the frequency ($1/sec$) of the radiation; and $h$ is a constant — now called Planck’s constant ($h = 6.62607015 \times 10^{-34}$ joule-seconds). Planck proposed that the oscillators in the material’s walls could only transfer energies in discrete steps. This quantization explained why the measured absorption and emission of light matched the observed spectrum, even though the light field itself was continuous.
 
-In 1905, Albert Einstein offered a revolutionary explanation. He proposed that we should not think of light as a continuous wave that becomes quantized through an interaction with the material. Rather, he argued, light itself **quantized** into discrete packets of energy—later called **photons**. The energy of each photon is proportional to its frequency,
+In 1905, Albert Einstein went further. He proposed that we should not think of light as a continuous wave that becomes quantized through an interaction with the material. Rather, he argued, light itself **quantized** into discrete packets of energy—later called **photons**. The energy of each photon is proportional to its frequency,
 
 $$
 E = h \nu
@@ -45,35 +41,37 @@ $$
 where $h$ is Planck’s constant and $\nu$ is the frequency of the light. This hypothesis went beyond Max Planck’s work, which assumed the quantization was part of the exchange between matter and radiation — not that light itself came in packets. Einstein suggested that **light in free space** behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained both Planck's observations and all of Lenard’s experiments. His photoelectric theory laid the groundwork for the next generation's work in quantum physics.
 
 ## Wave particle duality
-
 For much of the 19th century, Newton’s idea that light was made of tiny particles (corpuscles) was set aside, as experiments overwhelmingly supported the wave theory of light—interference and diffraction patterns provided strong evidence for wave-like behavior. However, the photoelectric effect presented results that could not be explained by wave theory alone, forcing physicists to recognize that light sometimes behaves as a particle as well. This is the essence of the **wave-particle duality**.
 
-In quantum mechanics, light is described by a mathematical object called the **wavefunction**, which provides the probabilities of different outcomes. When experiments are designed to reveal wave-like effects (such as interference), light behaves as a wave. When experiments probe particle-like effects (such as the photoelectric effect), light behaves as a particle. Both descriptions are necessary, and neither alone is sufficient to fully describe the nature of light.
+Don't think that Einstein ignored the wave phenomena. He worked towards a new set of principles that might be called a "statistical wave-particle" model, in which photons retain a wave-like "guiding field" or statistical distribution that determines their path. He imaginged that individual photons are particles, but their collective behavior is governed by an emergent, wave-like probability distributions that creates the familiar diffraction patterns.
+
+But a different, revolutionary theory sprung forth from the next generation, including Neils Bohr. This theory, **quantum mechanics** describes electromagnetic radiation by a mathematical object called the **wavefunction**, which provides the probabilities of different outcomes. When experiments are designed to reveal wave-like effects (such as interference), light behaves as a wave. When experiments probe particle-like effects (such as the photoelectric effect), light behaves as a particle. Both descriptions are necessary, and neither alone is sufficient to fully describe the nature of light.
+
+![Niels Bohr was an important figure in developing and advocating for the statistical wave-particle model in quantum mechanics. As a central architect of quantum theory, and advocate for the probabilistic interpretation of quantum mechanics, he viewed the statistical nature of quantum events as a fundamental aspect of reality. Bohr’s debates with Einstein helped clarify and popularize these concepts.](images/sensors/03-bohr-einstein.png){#fig-bohr-einstein width="60%"}
+
+Bohr argued that Einstein was clinging to classical intuitions about reality that quantum mechanics had shown to be inadequate. From Bohr's perspective, the probabilistic nature of quantum mechanics wasn't a sign of incomplete knowledge - it was a fundamental feature of nature at the microscopic scale. Bohr believed that concepts like "determinism" and "objective reality independent of observation" were classical prejudices that had to be abandoned. He argued that quantum mechanics was complete precisely because it recognized the fundamental role of measurement and the impossibility of simultaneously knowing all properties of a quantum system.
 
 This duality remains a central and intriguing feature of quantum physics. If you don't find all of this a bit puzzling, you may not be paying enough attention.
 
-::: {#lenard-einstein-bohr .callout-note collapse="true"}
-## The Duality of Light, the Duality of People
+::: {#einstein-lenard-bohr .callout-note collapse="true"}
+## Scientists are human
+Einstein’s proposal of the photon was initially met with skepticism, as the wave theory of light was deeply established in physics. Even Einstein himself was uneasy with the resulting **wave-particle duality** and especially with the probabilistic foundations of quantum mechanics, believing it pointed to an incomplete understanding of nature. He famously rejected this probabilistic view, remarking that “God does not play dice.” Niels Bohr responded, “Einstein, don’t tell God what to do.” The tension between wave and particle descriptions remains a central—and still unresolved—theme in physics.
 
-![Lenard made measurements that defined important properties of the photoelectric effect. Einstein offered a bold theoretical idea, what we now call the photon, that explained Lenard's and Planck's measurements. Einstein, who was Jewish, had a complex personal relationship with Planck, as they navigated Hitler's rise to power. Lenard became strongly anti-Semitic.](images/people/03-Lenard-Einstein.png){#lenard-einstein width="50%" fig-align="center"}
+In 1905—Einstein’s *annus mirabilis*—he published four groundbreaking papers that reshaped modern physics. In addition to the photoelectric effect, for which he was awarded the Nobel Prize, he introduced Special Relativity, showing that **simultaneity is relative** depending on the observer’s frame of reference. Walter Isaacson’s biography of Einstein (@Isaacson2008-einstein) provides an accessible account of these discoveries and the broader scientific context. 
 
-Einstein’s proposal of the photon was initially met with skepticism, as the wave theory of light was deeply established in physics. Even Einstein himself was uneasy with the resulting **wave-particle duality**, believing it pointed to an incomplete understanding of nature. He famously rejected the probabilistic foundations of quantum mechanics, remarking that “God does not play dice.” Niels Bohr, a leading figure in quantum theory, responded, “Einstein, don’t tell God what to do.” The tension between wave and particle descriptions remains a central—and still unresolved—theme in physics.
+Isaacson also details how the experimental physicist Lenard, whose work was important to Einstein's theory and who was also a Nobel Laureate, became an outspoken anti-Semite. Lenard actively opposed Einstein’s recognition in the scientific community. As Isaacson also chronicles, Bohr and Einstein maintained a deep mutual respect and professional friendship throughout their careers.
+
+<!--
+![Lenard made measurements that defined important properties of the photoelectric effect. Einstein offered a bold theoretical idea, what we now call the photon, that explained Lenard's and Planck's measurements. Einstein, who was Jewish, had a complex personal relationship with Planck, as they navigated Hitler's rise to power. Lenard became strongly anti-Semitic.](images/people/03-Lenard-Einstein.png){#fig-lenard-einstein fig-cap-location="bottom" fig-align="center" width="35%"}
+-->
  <!--
- Einstein didn't simply ignore the wave phenomena. Instead, he envisioned what we might call a "statistical wave-particle" model. He suggested that individual photons somehow retained a wave-like "guiding field" or statistical distribution that determined where they were likely to go. In diffraction, for example, he imagined that while individual photons passed through as particles, their collective behavior was governed by wave-like probability distributions that created the familiar diffraction patterns.
-
-Bohr argued that Einstein was clinging to classical intuitions about reality that quantum mechanics had shown to be inadequate. From Bohr's perspective, the probabilistic nature of quantum mechanics wasn't a sign of incomplete knowledge - it was a fundamental feature of nature at the microscopic scale.
-Bohr believed that concepts like "determinism" and "objective reality independent of observation" were classical prejudices that had to be abandoned. He argued that quantum mechanics was complete precisely because it recognized the fundamental role of measurement and the impossibility of simultaneously knowing all properties of a quantum system.
- -->
-
-In 1905—Einstein’s *annus mirabilis*—he published four groundbreaking papers that reshaped modern physics. In addition to the photoelectric effect, for which he was awarded the Nobel Prize, he introduced Special Relativity, showing that **simultaneity is relative** depending on the observer’s frame of reference. Walter Isaacson’s biography of Einstein (@Isaacson2008-einstein) provides an accessible account of these discoveries and the broader scientific context. Isaacson also details how Lenard, who was also a Nobel Laureate, became an outspoken anti-Semite who actively opposed Einstein’s recognition. <!--
 Photoelectric effect and Lenard
 https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF728iVpg 
 -->
 :::
 
 ## Quantifying the photoelectric effect
-
-When we model light as a wavefunction, we can only predict the probability that a photon will generate an electron. This means that even with a perfectly stable light source, the number of electrons generated will fluctuate from one measurement to the next. These fundamental statistical fluctuations are a key feature of how light interacts with matter and are central to quantum optics.
+When we model light as a wavefunction, we can only predict the probability that a photon will generate an electron. This means that even with a perfectly stable light source, the number of electrons generated in a photodiode will fluctuate from one measurement to the next. These statistical fluctuations are a key feature of how light interacts with matter and are central to quantum optics.
 
 The number of photon absorptions in a photodiode follows the Poisson probability distribution. This statistical property was formalized in the 1950s by two groups: one studying visual sensitivity in the retina (@Pirenne1951-poisson, @Barlow1956-retinalnoise), and another investigating the physics of electromagnetic radiation and image sensors (@Mandel1959-poissonabsorptions).[^sensors-01-photoelectric-1]
 
@@ -97,7 +95,7 @@ Bohndiek2008-sensorlinearity paper has figures.  Notice how nonlinear Figures 7 
 -->
 ```
 
-## Statistics of the photoelectric effect
+## Statistics of the photoelectric effect {#sec-photoelectric-statistics}
 
 The principles underlying the Poisson distribution of electrons are straightforward. Suppose we have a **steady source** of photons, all with the same wavelength. The probability of a photon arriving in any given small time interval, $\delta t$, is constant. This is the defining property of a Poisson process: events occur independently, with a constant average rate.
 
