@@ -124,50 +124,61 @@ The units of these parameters are:
 * $T$ - Temperature - Kelvin
 * $C$ - Capacitance Farads = Coulombs per volt
 
+The formula above shows that reset noise increases with temperature ($T$). As a result, sensors in colder environments (such as ski slopes) experience less reset noise than those in warmer settings (like beaches in summer). To address this, many cameras use temperature sensors and adjust their image processing to compensate for temperature-dependent noise, helping to maintain consistent image quality in different conditions.
+
 ::: {#sensor-ktc .callout-note collapse="true"}
 ### Units of reset noise
 
-The reset noise formula is usually expressed in terms of volts, as in @eq-ktc-volts.  It is often preferable to convert from volts to the number of electrons.  The formula for charge is
+The reset noise formula is usually expressed in terms of volts (@eq-ktc-volts).  It is often preferable to convert from volts to the number of electrons.  The formula in terms of charge is
 
 $$
 {\sigma_Q}^2 = k T C
 $$ {#eq-ktc-electrons}
 
-In this formula ${\sigma_Q}$ has units of Coulombs. This unit can be converted to electrons using the formula relating the charge (in Coulombs) per electron : ${q_e} \approx 1.602 \times 10^{-19} C$.  
-
-Combining these expressions, the standard deviation of the number of electrons is
+In this formula ${\sigma_Q}$ has units of Coulombs. There are approximately $1.602 \times 10^{-19}$ Coulombs per electron. Thus, we can calculate the standard deviation in electrons as
 
 $$
 \sigma_e \approx \frac{\sqrt{k T C}}{(1.602 \times 10^{-19})}
 $$
 ::: 
 
-One important feature to note from the formula: Temperature variations can also affect the noise. Modern sensors often include compensation mechanisms to mitigate these effects, but residual nonlinearities may still remain.
-
 In the 4T pixel, the circuit first measures the voltage on the floating diffusion node before transferring charge from the photodiode (capturing a baseline), and then again after the charge is transferred. The difference between these two measurements represents the pixel signal. This subtraction cancels much of the reset noise, improving signal-to-noise ratio. 
 
 The 4T design is now standard due to its superior noise performance. Further innovations, such as dual conversion gain and stacked pixel structures have also expanded the dynamic range of CMOS sensors. We will explore some of these developments in @sec-sensor-innovations.
 
 #### Dark current
-Even in the absence of light, some electrons may be generated within the semiconductor material. Some fraction of these electrons, which are not photon-generated, simply  mix in with the photon-generated electrons.  These are called **dark current** and they are not informative about the scene. The number of electrons generated in the dark current depends on factors such as the temperature and the bandgap of the material.
+Even in the absence of light, electrons are generated within the semiconductor material. These electrons are called **dark current**. The number of dark electrons depends on factors such as the temperature and the bandgap of the material. Also, the number increases over time so that the dark current is larger when the exposure is longer.
+
+The dark electrons can find their way into the storage and be indistinguishable from photon-generated electrons. But the dark electrons are not informative about the scene; in fact, they interfere with inferences one would make about the scene.
+
+The dark current level depends on multiple features of the circuit and is hard to predict. There is a relatively large impact of temperature on dark current $I_d$. The scaling of the current with temperature is specified by this standard formula:
 
 $$
 I_d(T) \propto T^3 e^{-E_g/kT}
-$$
+$$ {#eq-sensor-darkcurrent}
+
+ We can convert the dark current (Coulombs/sec) into electrons (e/sec) using the scale factor $1.602 \times 10^{-19}$ Coulombs per electron.  The number of dark electrons is also random, and it follows a Poisson distribution. 
+
+::: {#sensor-dark-current .callout-note collapse="true"}
+### Units of dark current noise
+
+<!-- https://www.onsemi.com/pdf/datasheet/noii4sm6600a-d.pdf -->
+A data sheet for a (discontinued) ON Semiconductor sensor specifies a dark current of $78~e^{-}/\text{s}$ at $T = 21^\circ\text{C} = 294.15~\text{K}$. If we take a picture with a 0.03 second exposure, we expect an average of $2.34$ dark electrons per pixel. If the temperature rises by $30$ Kelvin, to $324.15~\text{K}$, the mean number of dark electrons increases to $3.13$. The number of dark electrons is Poisson distributed, so the variance equals the mean.
+:::
 
 ### Temperature dependence
-The section on reset noise introduced one reason why pixel responses vary as the ambient temperature increases. Beyond that one factor, CMOS image sensors are sensitive to temperature because many of their key physical processes depend on thermal energy. Here is a summary of the factors that change as temperature rises:
+The sections on reset noise and dark current were two examples of how noise depends on temperature. CMOS image sensors are sensitive to temperature in other ways as well, because many of their key physical processes depend on thermal energy. Here is a summary of the factors that change as temperature rises:
 
 * **Dark current increases exponentially**, adding background signal and noise even in the absence of light.
 * **Reset noise** (kTC noise) grows linearly with temperature, especially affecting sensors without correlated double sampling.
 * **Analog circuit offsets and gain** can drift, altering pixel output levels and introducing fixed-pattern noise.
 * **Leakage currents and charge transfer inefficiencies** rise, degrading low-light performance and introducing artifacts.
 
-Together, these effects cause image quality to degrade — particularly in precision applications like scientific imaging or long exposures. To mitigate these issues, sensors often include:
+Together, these effects cause image quality to degrade—particularly in precision applications like scientific imaging or long exposures. To mitigate these issues, sensors often include:
 
 * **Real-time temperature sensors**
 * **Calibration tables** for dark current, gain, and noise
 * **Active cooling systems**
 * **Post-processing corrections** such as dark-frame subtraction and flat-field normalization
 
-Temperature compensation helps maintain consistent signal-to-noise ratio, dynamic range, and color accuracy across operating conditions.
+Temperature compensation by cooling helps maintain consistent signal-to-noise ratio, dynamic range, and color accuracy across operating conditions. If cooling is not possible, knowledge of how noise depends on temperature is important when processing and interpreting camera data.
