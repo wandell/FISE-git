@@ -1,5 +1,4 @@
-# Pixels {#sec-sensors-circuits}
-
+# Pixels {#sec-pixels}
 CMOS image sensors use photodiodes—and the photoelectric effect—to measure and store the optical light field at the sensor surface. The key technical breakthrough that enabled CMOS sensors was the invention of circuitry to store and then transmit the photon-generated electrons from the photodiode to the computer.
 
 The photodiode and this circuitry are critical parts of the pixel; there are other essential components as well (@fig-sensor-pixel-overview). For example, effective image sensors place a small lens (microlens) above each pixel.  Color image sensors place a color filter between the microlens and the photodiode that passes certain wavelengths and blocks others. 
@@ -139,24 +138,48 @@ Combining these expressions, the standard deviation of the number of electrons i
 $$
 \sigma_e \approx \frac{\sqrt{k T C}}{(1.602 \times 10^{-19})}
 $$
-
 ::: 
+
+One important feature to note from the formula: Temperature variations can also affect the noise. Modern sensors often include compensation mechanisms to mitigate these effects, but residual nonlinearities may still remain.
 
 In the 4T pixel, the circuit first measures the voltage on the floating diffusion node before transferring charge from the photodiode (capturing a baseline), and then again after the charge is transferred. The difference between these two measurements represents the pixel signal. This subtraction cancels much of the reset noise, improving signal-to-noise ratio. 
 
 The 4T design is now standard due to its superior noise performance. Further innovations, such as dual conversion gain and stacked pixel structures have also expanded the dynamic range of CMOS sensors. We will explore some of these developments in @sec-sensor-innovations.
 
 #### Dark current
+Even in the absence of light, some electrons may be generated within the semiconductor material. Some fraction of these electrons, which are not photon-generated, simply  mix in with the photon-generated electrons.  These are called **dark current** and they are not informative about the scene. The number of electrons generated in the dark current depends on factors such as the temperature and the bandgap of the material.
 
-## Sensor properties: fixed pattern noise
+$$
+I_d(T) \propto T^3 e^{-E_g/kT}
+$$
 
+## Sensor array: fixed pattern noise
+When manufacturing arrays of pixels, it is possible that there are minor differences between the circuits.  For example, the size of the photodiode might vary by one percent, or the capacitance on the floating diffusion node might vary ever so slightly from pixel to pixel.  
+
+These fluctuations across the array are also considered a type of image sensor noise, and they are called **fixed pattern noise (FPN)**. IMHO, these should not be called at type of noise at all, they are small but permanent imperfections. Nonetheless, here are the two main types of fixed pattern noise.
+
+### Dark signal nonuniformity
 DSNU dark signal nonuniformity
 
+### Photoresponse nonuniformity
 PRNU photoresponse nonuniformity
 
-Temperature dependence of circuit and sensor noise.
+### Temperature dependence
+The section on reset noise introduced one reason why pixel responses vary as the ambient temperature increases. Beyond that one factor, CMOS image sensors are sensitive to temperature because many of their key physical processes depend on thermal energy. Here is a summary of the factors that change as temperature rises:
 
-Temperature variations can also affect the linearity of the sensor. Changes in temperature can alter the behavior of the photodiode and the associated circuitry, leading to temperature-dependent nonlinearities. Modern sensors often include compensation mechanisms to mitigate these effects, but residual nonlinearities may still remain.
+* **Dark current increases exponentially**, adding background signal and noise even in the absence of light.
+* **Reset noise** (kTC noise) grows linearly with temperature, especially affecting sensors without correlated double sampling.
+* **Analog circuit offsets and gain** can drift, altering pixel output levels and introducing fixed-pattern noise.
+* **Leakage currents and charge transfer inefficiencies** rise, degrading low-light performance and introducing artifacts.
+
+Together, these effects cause image quality to degrade — particularly in precision applications like scientific imaging or long exposures. To mitigate these issues, sensors often include:
+
+* **Real-time temperature sensors**
+* **Calibration tables** for dark current, gain, and noise
+* **Active cooling systems**
+* **Post-processing corrections** such as dark-frame subtraction and flat-field normalization
+
+Temperature compensation helps maintain consistent signal-to-noise ratio, dynamic range, and color accuracy across operating conditions.
 
 ## Circuit innovations {#sec-sensor-innovations}
 Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
