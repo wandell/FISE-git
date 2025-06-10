@@ -153,17 +153,6 @@ $$
 I_d(T) \propto T^3 e^{-E_g/kT}
 $$
 
-## Sensor array: fixed pattern noise
-When manufacturing arrays of pixels, it is possible that there are minor differences between the circuits.  For example, the size of the photodiode might vary by one percent, or the capacitance on the floating diffusion node might vary ever so slightly from pixel to pixel.  
-
-These fluctuations across the array are also considered a type of image sensor noise, and they are called **fixed pattern noise (FPN)**. IMHO, these should not be called at type of noise at all, they are small but permanent imperfections. Nonetheless, here are the two main types of fixed pattern noise.
-
-### Dark signal nonuniformity
-DSNU dark signal nonuniformity
-
-### Photoresponse nonuniformity
-PRNU photoresponse nonuniformity
-
 ### Temperature dependence
 The section on reset noise introduced one reason why pixel responses vary as the ambient temperature increases. Beyond that one factor, CMOS image sensors are sensitive to temperature because many of their key physical processes depend on thermal energy. Here is a summary of the factors that change as temperature rises:
 
@@ -180,18 +169,3 @@ Together, these effects cause image quality to degrade — particularly in preci
 * **Post-processing corrections** such as dark-frame subtraction and flat-field normalization
 
 Temperature compensation helps maintain consistent signal-to-noise ratio, dynamic range, and color accuracy across operating conditions.
-
-## Circuit innovations {#sec-sensor-innovations}
-Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
-
-### Global shutter
-Instead of using a floating diffusion as a memory element, Aptina has utilized a surface-pinned storage node in the pixel to address dark current challenges. Available in its newest global shutter sensor, the MT9M031, the storage node also enables using a true correlated double sampling technique to reduce readout noise to four electrons, resulting in excellent low-light performance. The combination of the effective use of an anti-reflective metal light shield in close proximity to the memory node and careful doping and potential profile design results in a high GSE.
-
-Global Shutter Pixel Technologies and CMOS Image Sensors – A Powerful Combination – (Aptina white paper)
-
-### Dynamic range enhancement
-Another source of nonlinearity arises from the photodiode itself. At high irradiance levels, the photodiode can saturate, meaning that it cannot generate additional electrons regardless of the incoming light. This saturation effect imposes a hard limit on the dynamic range of the sensor.
-
-Understanding and modeling these nonlinearities is critical for applications that require high precision, such as scientific imaging or computational photography. Calibration techniques, such as measuring the sensor response under controlled conditions, can help correct for these nonlinearities in post-processing.
-
-### Stacked pixel structures
