@@ -129,18 +129,20 @@ The formula above shows that reset noise increases with temperature ($T$). As a 
 ::: {#sensor-ktc .callout-note collapse="true"}
 ### Units of reset noise
 
-The reset noise formula is usually expressed in terms of volts (@eq-ktc-volts).  It is often preferable to convert from volts to the number of electrons.  The formula in terms of charge is
+The reset noise formula in @eq-ktc-volts gives the noise variance in units of volts. However, it is often more useful to express reset noise in terms of the number of electrons. The equivalent formula for the variance in charge is
 
 $$
 {\sigma_Q}^2 = k T C
 $$ {#eq-ktc-electrons}
 
-In this formula ${\sigma_Q}$ has units of Coulombs. There are approximately $1.602 \times 10^{-19}$ Coulombs per electron. Thus, we can calculate the standard deviation in electrons as
+Here, ${\sigma_Q}$ is in Coulombs. To convert this to electrons, divide by the elementary charge ($1.602 \times 10^{-19}$ Coulombs per electron):
 
 $$
-\sigma_e \approx \frac{\sqrt{k T C}}{(1.602 \times 10^{-19})}
+\sigma_e \approx \frac{\sqrt{k T C}}{1.602 \times 10^{-19}}
 $$
-::: 
+
+Reset noise is typically modeled as a Gaussian distribution with zero mean and standard deviation $\sigma_e$ electrons.
+:::
 
 In the 4T pixel, the circuit first measures the voltage on the floating diffusion node before transferring charge from the photodiode (capturing a baseline), and then again after the charge is transferred. The difference between these two measurements represents the pixel signal. This subtraction cancels much of the reset noise, improving signal-to-noise ratio. 
 
@@ -157,7 +159,7 @@ $$
 I_d(T) \propto T^3 e^{-E_g/kT}
 $$ {#eq-sensor-darkcurrent}
 
- We can convert the dark current (Coulombs/sec) into electrons (e/sec) using the scale factor $1.602 \times 10^{-19}$ Coulombs per electron.  The number of dark electrons is also random, and it follows a Poisson distribution. 
+ We can convert the dark current ($C/s$) into electrons (${e^-}/s$) by dividing the elementary charge, $1.602 \times 10^{-19} ~ C/{e^-}$.  The symbol $C$ is Coulombs. The number of dark electrons is random and follows a Poisson distribution. 
 
 ::: {#sensor-dark-current .callout-note collapse="true"}
 ### Units of dark current noise
