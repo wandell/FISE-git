@@ -15,21 +15,24 @@ Both of these sensor noise characteristics
 The **photoresponse nonuniformity (PRNU) ** refers to the variation in the slope (gain) of the pixel responses (@fig-sensor-noise). There are various reasons why the response curve might differ between pixels. The photodiode area might be slightly larger in one pixel than another, or the effectiveness of the microlens at focusing the light on the photodiode might be slightly different.  
 
 ## Sensor components
-To make a color image, sensors use a color filter array (CFA) placed above the photodiodes. Since a photodiode alone cannot distinguish between different wavelengths, the CFA ensures that each pixel is sensitive to a specific spectral band. The most common CFA pattern is the Bayer arrangement, which uses red, green, and blue filters distributed across the sensor. This allows the sensor to sample the visible spectrum at different locations, and the resulting data can be combined to reconstruct a full-color image. Some sensors use alternative filter patterns or additional spectral bands for specialized applications. Together, microlens arrays and color filter arrays are essential for the function and versatility of modern digital cameras.
+Standard CMOS imagers include a few additional components 
 
+
+### UV/IR blocking filter {#sec-sensor-irfilter}
+
+### Color filter array {#sec-sensor-cfa}
+Sensors use a color filter array (CFA), placed above the photodiodes, to acquire the spectral information necessary to render a color image.The CFA ensures that each pixel is has its own spectral sensitivity. The most common CFA pattern is the Bayer arrangement, which uses red, green, and blue filters distributed across the sensor. This allows the sensor to sample the visible spectrum at different locations, and the resulting data can be combined to reconstruct a full-color image. Some sensors use alternative filter patterns or additional spectral bands for specialized applications. Together, microlens arrays and color filter arrays are essential for the function and versatility of modern digital cameras.
 
 <!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos -->
 
 ![The color filter array and microlens array above the photodiode array. From the El Gamal and Eltoukhy article](images/sensors/03-microlens-cfa.png){#fig-components-overview2 width=50%}
 
-The microlens array is a layer of tiny lenses placed above the color filter array. Each microlens is precisely positioned relative to the main lens, color filter, and photodiode. It serves to focus incoming light from the main lens onto the photodiode within the pixel. The microlens increases light-gathering efficiency, which is especially important as pixel sizes shrink. It also prevents cross-talk, a condition in which light passes at a large angle through a color filter and ends up generating electrons in a pixel that has a different color filter. Over time, microlens arrays have evolved to support additional functions, such as optimizing focus and enabling advanced imaging techniques like light field capture.
-
-### Color filter array {#sec-sensor-cfa}
-
 
 ### Microlens arrays {#sec-sensor-microlens}
 
 Importance for capture on a single pixel  The light field sensor will be described later.  Not sure how to group.
+
+The microlens array is a layer of tiny lenses placed above the color filter array. Each microlens is precisely positioned relative to the main lens, color filter, and photodiode. It serves to focus incoming light from the main lens onto the photodiode within the pixel. The microlens increases light-gathering efficiency, which is especially important as pixel sizes shrink. It also prevents cross-talk, a condition in which light passes at a large angle through a color filter and ends up generating electrons in a pixel that has a different color filter. Over time, microlens arrays have evolved to support additional functions, such as optimizing focus and enabling advanced imaging techniques like light field capture.
 
 ## Sensor innovations {#sec-sensor-innovations}
 Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
@@ -44,14 +47,7 @@ The original sensors were  built using a technology that required stacking multi
 
 ![The improved design, Backside Illuminated (BSI) CMOS, is similar in concept to regular CMOS, but these chips arrange the components differently. In short, the photosites are further forward on the die and the line-by-line readout speed is brisker. This change enables practical advantages: Generally speaking, a BSI CMOS is around an f-stop better when it comes to image noise. That means a BSI CMOS shows as much noise at ISO 12800 as a similar CMOS chip would at ISO 6400. It also means that APS-C and Micro Four Thirds cameras with BSI chips play on more even footing with full-frame CMOS cameras. Those aren't hard-and-fast rules, but they're good guidelines to follow. Stacked CMOS chips improve upon the BSI CMOS concept. They place components in a similar arrangement, but the design also stacks the image signal processor and its ultra-fast DRAM memory into the same silicon. This makes readout speeds even faster. The first mainstream Stacked CMOS camera, the Sony a9 from 2019, made waves by offering an interruption-free photographic experience—you can use it to fire off photos at 20fps without losing view of your scene.](images/sensors/03-sensor-evolution.png){#fig-sensor-evolution width=80%}
 
-### Dynamic range enhancement {#sec-sensor-dynamicrange}
-Another source of nonlinearity arises from the photodiode itself. At high irradiance levels, the photodiode can saturate, meaning that it cannot generate additional electrons regardless of the incoming light. This saturation effect imposes a hard limit on the dynamic range of the sensor.
 
-Understanding and modeling these nonlinearities is critical for applications that require high precision, such as scientific imaging or computational photography. Calibration techniques, such as measuring the sensor response under controlled conditions, can help correct for these nonlinearities in post-processing.
-
-### Foveon {#sec-sensors-foveon}
-
-### Multipsectral {#sec-sensors-spectricity}
 
 
 
