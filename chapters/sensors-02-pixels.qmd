@@ -11,7 +11,7 @@ The photodiode and this circuitry are critical parts of the pixel; there are oth
 
 Pixel architecture has evolved significantly over the years, and there continue to be many novel designs. The most straightforward change is that technology has scaled, enabling pixel sizes to shrink and thus increasing spatial sampling resolution. In addition, the placement of the circuitry and metal lines has changed to below the photodiode; light no longer passes through a deep tunnel. There are other improvements to the circuitry, some experimental, that we will review later in @sec-sensor-innovations. It is helpful to first understand the concepts behind the classic circuitry, so that we can better appreciate these innovations.
 
-## Classic CMOS Circuitry
+## CMOS pixel circuits {#sec-cmos-circuits}
 The logical flow of the circuitry is as follows:
 
 -   Before image capture, the sensor circuitry resets each pixel, clearing residual charge from previous exposures.
@@ -21,7 +21,7 @@ The logical flow of the circuitry is as follows:
 
 CMOS circuitry is the main focus of this section. The role of the other essential pixel components, the color filter arrays and microlenses, is explained in Sections @sec-sensors and @sec-sensors-characterization.  In those sections I describes how to calibrate and model sensor performance, from the scene light field to image capture.
 
-### 3T circuits
+### 3T circuit {#sec-3T-circuit}
 
 ![The original CMOS 3-transistor (3T) circuit design (@Fossum1997-early).](images/sensors/03-3T-circuit.png){#fig-sensor-3T-circuit width="60%"}
 
@@ -38,7 +38,7 @@ Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd 
 -->
 ```
 
-### 4T circuits {#sec-4T-circuit}
+### 4T circuit {#sec-4T-circuit}
 
 ![The 4T pixel circuit introduces a pinned photodiode and an additional transistor. When activated, the new transistor transfers the accumulated charge from the photodiode to a storage capacitor (the floating diffusion node, $C_{fd}$). The rest of the circuit, including readout and row select, is similar to the 3T design.](images/sensors/03-4T-circuit.png){#fig-sensor-4T-circuit width="60%"}
 
@@ -62,7 +62,7 @@ After the chip is built, it is impractical to characterize each different line, 
 
 The characterization measurements are chosen to be practical and insightful about potential system errors. They are chosen to characterize key limitations based on knowledge of the circuit properties.
 
-### Sensitivity: Fill factor
+### Sensitivity: Fill factor {#sec-pixel-fillfactor}
 Because modern pixels are so small, each photodiode often collects only a modest number of photons—even under good lighting. For example, a $1~\mu\text{m}^2$ pixel in a dim scene (with a fast f/2 lens) might receive just 200 photons during an exposure. Photon arrivals follow Poisson statistics, so the standard deviation is $\sqrt{200} \approx 14$, or about 7% of the mean. This photon noise is a fundamental limit: it sets the minimum possible noise level and constrains the signal-to-noise ratio (SNR) in low-light conditions.
 
 ::: {#sensor-photons .callout-note collapse="true"}
@@ -76,7 +76,7 @@ This [ISETCam script](../code/fise_opticsCountingPhotons.html) illustrates the c
 
 The photodiode occupies only a portion of the pixel area; some of the pixel area is taken up by the circuitry. The proportion of the pixel area that is sensitive to light—the photodiode area—further limits light sensitivity. This proportion is called the **fill factor**. A higher fill factor means more of the pixel is used to detect light, increasing sensitivity. Fill factor is usually expressed as a value between 0 and 1, or as a percentage between 0% and 100%. The first-generation of CMOS image sensors were built with semiconductor technology with feature size on the order of 350 nm, and thus the circuitry might occupy as much as half of the pixel area (fill factor of 0.5). Over years the feature size has shrunk considerably and the fill factor of modern pixels can be greater than 0.9. The fill factor combined with the light sensitivity of the photodiode might result in about 150 electrons generated from the 200 photons. This number, too, is Poisson distributed so the short noise will be about $\sqrt{150} \approx 14$, about 8% of the mean.
 
-### Well capacity and dynamic range
+### Well capacity and dynamic range {#sec-pixel-wellcapacity}
 The photodiode and floating diffusion node in each pixel act as charge storage devices, often referred to as **storage wells**. The maximum number of electrons that can be stored in these wells is called the **well capacity** or **full-well capacity**. When the number of photo-generated electrons exceeds this capacity, any additional electrons cannot be stored, and the pixel output no longer increases with light intensity. Well capacity is therefore a key factor in determining the pixel’s dynamic range and the point at which it stops responding to additional light.
 
 The **dynamic range** of a pixel is defined as the ratio between the largest and smallest amounts of light that can be reliably measured. Specifically, we measure the minimum detectable light level ($L_{min}$) and the maximum light level ($L_{max}$) that fills the well just below saturation. The dynamic range is then calculated as:
@@ -87,7 +87,7 @@ $$
 
 The logarithm compresses the range into more manageable numbers, typically between 60 and 100. The factor of 20 comes from conventions in audio engineering, where dynamic range is measured in decibels (dB). Image scientists use the same convention, so dynamic range is usually reported in dB.
 
-### Response curve nonlinearity
+### Response curve {#sec-pixel-responsecurve}
 The finite well capacity can also have an impact on how the response increases with intensity. @fig-sensor-linearity shows an estimate of the number of stored electrons as a function of number of incident photons for a real sensor. The number of stored electrons increases linearly over a large part of the range. Beyond a certain level, as we approach the storage limit, the curve starts to saturate. As the light intensity increases even further, the curve completely flattens at the well capacity, in this example about 70,000 electrons.
 
 ![A CMOS sensor response curve, showing the number of electrons captured as function of the number of incident photons. From Figure 7 in that paper.](images/sensors/03-responselinearity.png){#fig-sensor-linearity width="60%"}
@@ -98,13 +98,13 @@ As the well nears its full capacity, several effects cause the response to becom
 
 The exact onset and severity of this nonlinearity depend on the specific circuit design and material properties of the sensor. In certain designs the nonlinearity is negligible, with only  some degree of nonlinearity as the well capacity is approached. Understanding the response curve is important for accurately interpreting sensor measurements, especially in applications that require high dynamic range or precise quantitative imaging.
 
-## Pixel noise
+## Pixel noise {#sec-pixel-noise}
  
 If we acquire the same image repeatedly, even with no change in the scene, there will be fluctuations in a pixel's output. The difference in a pixel's output across time is called **temporal noise**. There are several contributors to this variation.  We have already reviewed one important contributor, the Poisson distribution of the electrons at the photodiode (Section @sec-photoelectric-statistics). 
 
 Each of the different components of the pixel are potential sources of temporal noise. Here is a brief list.
 
-### Reset noise
+### Reset noise {#sec-pixel-resetnoise}
 In the 3T and 4T circuits, we must transfer the electrons from the photodiode (in 3T) or from the floating diffusion node (in 4T).  In both cases, there is the possibility that as we start to collect the electrons there will be a random number of electrons left over from the prior image capture.  This variable number of unwanted electrons is a failure to reset the storage to exactly the same state, thus it is called **reset noise**. 
 
 This noise is present in both 3T and 4T circuits, but it has different properties because the storage location differs (@sec-4T-circuit). An important feature of the 4T circuit is that the floating diffusion noise can be read just prior to transferring the electrons from the photodiode, and then again after electrons have been transferred. The difference is read out as the pixel value.  This process is called **correlated double sampling** (CDS), and it significantly reduces reset noise.
@@ -147,18 +147,20 @@ In the 4T pixel, the circuit first measures the voltage on the floating diffusio
 
 The 4T design is now standard due to its superior noise performance. Further innovations, such as dual conversion gain and stacked pixel structures have also expanded the dynamic range of CMOS sensors. We will explore some of these developments in @sec-sensor-innovations.
 
-### Dark current
-Even in the absence of light, electrons are generated within the semiconductor material. These electrons are called **dark current**. The number of dark electrons depends on factors such as the temperature and the bandgap of the material. Also, the number increases over time so that the dark current is larger when the exposure is longer.
+### Dark current {#sec-pixel-darkcurrent}
+Even in the absence of light, electrons are generated within the semiconductor material. These electrons make up the **dark current**. The size of the dark current depends on factors such as the temperature and the bandgap of the material. The number of accumulated dark electrons increases over time.
 
-The dark electrons can find their way into the storage and be indistinguishable from photon-generated electrons. But the dark electrons are not informative about the scene; in fact, they interfere with inferences one would make about the scene.
+Dark electrons accumulate in the same storage as photon-generated electrons and are indistinguishable from them in the readout. But the dark electrons are not informative about the scene; in fact, they interfere with inferences one would make about the scene.
 
-The dark current level depends on multiple features of the circuit and is hard to predict. There is a relatively large impact of temperature on dark current $I_d$. The scaling of the current with temperature is specified by this standard formula:
+There is a relatively large impact of temperature on dark current $I_d$. The scaling of the current with temperature is specified by this standard formula:
 
 $$
 I_d(T) \propto T^3 e^{-E_g/kT}
 $$ {#eq-sensor-darkcurrent}
 
- We can convert the dark current ($C/s$) into electrons (${e^-}/s$) by dividing the elementary charge, $1.602 \times 10^{-19} ~ C/{e^-}$.  The symbol $C$ is Coulombs. The number of dark electrons is random and follows a Poisson distribution. 
+ We can convert the dark current (in $C/s$) to a rate of electrons per second by dividing by the elementary charge ($1.602 \times 10^{-19}~C/e^-$). The symbol $C$ is Coulombs. The number of dark electrons is random and follows a Poisson distribution with a mean equal to the expected number of dark electrons for the exposure time. 
+
+The dark current level depends on multiple features of the circuit and is hard to predict from first principles.  The dark current level is usually determined empirically and reported in the data sheets describing the sensor.
 
 ::: {#sensor-dark-current .callout-note collapse="true"}
 ### Units of dark current noise
@@ -167,7 +169,7 @@ $$ {#eq-sensor-darkcurrent}
 A data sheet for a (discontinued) ON Semiconductor sensor specifies a dark current of $78~e^{-}/\text{s}$ at $T = 21^\circ\text{C} = 294.15~\text{K}$. If we take a picture with a 0.03 second exposure, we expect an average of $2.34$ dark electrons per pixel. If the temperature rises by $30$ Kelvin, to $324.15~\text{K}$, the mean number of dark electrons increases to $3.13$. The number of dark electrons is Poisson distributed, so the variance equals the mean.
 :::
 
-### Temperature dependence
+### Temperature dependence {#sec-pixel-temperature}
 The sections on reset noise and dark current were two examples of how noise depends on temperature. CMOS image sensors are sensitive to temperature in other ways as well, because many of their key physical processes depend on thermal energy. Here is a summary of the factors that change as temperature rises:
 
 * **Dark current increases exponentially**, adding background signal and noise even in the absence of light.

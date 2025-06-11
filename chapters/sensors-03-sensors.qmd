@@ -1,24 +1,22 @@
 # Sensors {#sec-sensors}
-We have been considering the properties of the CMOS imager one pixel at a time. In this section we consider the array of pixels, which means we must consider factors such as variations between pixels, the color filter array, and the microlens array.  I describe basic sensor properties as a foundation.  Then, I discuss recent innovations in the pixel and sensor circuitry. This is an active field, so please take this section as an introduction to the foundations and a guide that leads you to learn about the new developments.
+We have been considering the properties of the CMOS imager one pixel at a time. In this section we consider properties of the array, such as the variations between pixels, the color filter array, and the microlens array. Here again, First, I describe the basic principles, the foundations, of sensors. Then, I describe recent innovations in pixel and sensor circuitry, which is an active and fascinating field.
 
 ## Sensor noise
-When manufacturing an array comprising millions of pixels, there will be minor differences them.  This might include the area of the photodiode, or the capacitance on the floating diffusion node, or perhaps the material doping concentration. Foundries are amazing, so there is not much variation, but there will surely be some slight difference between the millions of pixels. Fluctuations across the array are considered to be **sensor noise**.  Because these variations do not change over time, they are called **fixed pattern noise (FPN)**.  
+When manufacturing an array comprising millions of pixels, there will be minor differences between them. For example the area of the photodiode might differ, or the capacitance of the floating diffusion node, or perhaps the material doping concentration. There is not much variation -foundries are amazing- but there will be some. These variations across the array are called **sensor noise**.  The source of the variations do not change over time, and thus they are called **fixed pattern noise (FPN)**.  
+
+![Sensor fixed pattern noise. On average, the pixel responses will be linear.  But variations in the pixel manufacturing will make their responses differ somewhat in the offset and slope.  Variations in the offset, generally due to different amounts of dark current are shown in the DSNU region. They may also differ in the slope of the linear response, perhaps because the photodiode area is slightly different or perhaps there is some slight difference in the transparent media above the different pixels. These slope variations are illustrated by the PRNU arrow.](images/sensors/03-sensor-noise.png){#fig-sensor-noise width="60%"}
+
+Both of these sensor noise characteristics
 
 ### Dark signal nonuniformity {#sensor-dsnu}
-DSNU dark signal nonuniformity
+**Dark signal nonuniformity (DSNU)** refers to the variation in the dark current across the pixels.  Some pixels may accumulate dark current at a slightly higher or lower rate. As a result, when we consider their response to increasing amount of light, they will start at slightly different levels.  This is illustrated in the variation of the starting positions at zero illumination level in Figure @fig-sensor-noise.  Recall that the pixel dark current depends on several factors, including temperature and exposure time (@sec-pixel-darkcurrent).  Hence, the DSNU will also depend on these factors.
 
 ### Photoresponse nonuniformity {#sensor-prnu}
-PRNU photoresponse nonuniformity
+The **photoresponse nonuniformity (PRNU) ** refers to the variation in the slope (gain) of the pixel responses (@fig-sensor-noise). There are various reasons why the response curve might differ between pixels. The photodiode area might be slightly larger in one pixel than another, or the effectiveness of the microlens at focusing the light on the photodiode might be slightly different.  
 
-In addition to the photodiode and underlying circuitry, CMOS image sensors incorporate several crucial optical components that play a vital role in capturing high-quality images. These elements -color filter arrays and microlens arrays- are engineered to enhance light collection and enable accurate color reproduction, making them essential for modern imaging performance.
-
-![The color filter array and microlens array above the photodiode array. Not sure where.  Lookup.](images/sensors/03-components-overview1.png){#fig-components-overview width=50%}
-
+## Sensor components
 To make a color image, sensors use a color filter array (CFA) placed above the photodiodes. Since a photodiode alone cannot distinguish between different wavelengths, the CFA ensures that each pixel is sensitive to a specific spectral band. The most common CFA pattern is the Bayer arrangement, which uses red, green, and blue filters distributed across the sensor. This allows the sensor to sample the visible spectrum at different locations, and the resulting data can be combined to reconstruct a full-color image. Some sensors use alternative filter patterns or additional spectral bands for specialized applications. Together, microlens arrays and color filter arrays are essential for the function and versatility of modern digital cameras.
 
-The original sensors were  built using a technology that required stacking multiple metal layers above the substrate that contained the photodiode. This architecture, called front-side illuminated (FSI), required photons incident at the pixel to make their way down a tunnel to arrive at the light sensitive photodiode. With this architecture, photons incident at an angle This  shown 
-
-![The improved design, Backside Illuminated (BSI) CMOS, is similar in concept to regular CMOS, but these chips arrange the components differently. In short, the photosites are further forward on the die and the line-by-line readout speed is brisker. This change enables practical advantages: Generally speaking, a BSI CMOS is around an f-stop better when it comes to image noise. That means a BSI CMOS shows as much noise at ISO 12800 as a similar CMOS chip would at ISO 6400. It also means that APS-C and Micro Four Thirds cameras with BSI chips play on more even footing with full-frame CMOS cameras. Those aren't hard-and-fast rules, but they're good guidelines to follow. Stacked CMOS chips improve upon the BSI CMOS concept. They place components in a similar arrangement, but the design also stacks the image signal processor and its ultra-fast DRAM memory into the same silicon. This makes readout speeds even faster. The first mainstream Stacked CMOS camera, the Sony a9 from 2019, made waves by offering an interruption-free photographic experience—you can use it to fire off photos at 20fps without losing view of your scene.](images/sensors/03-sensor-evolution.png){#fig-sensor-evolution width=80%}
 
 <!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos -->
 
@@ -26,34 +24,34 @@ The original sensors were  built using a technology that required stacking multi
 
 The microlens array is a layer of tiny lenses placed above the color filter array. Each microlens is precisely positioned relative to the main lens, color filter, and photodiode. It serves to focus incoming light from the main lens onto the photodiode within the pixel. The microlens increases light-gathering efficiency, which is especially important as pixel sizes shrink. It also prevents cross-talk, a condition in which light passes at a large angle through a color filter and ends up generating electrons in a pixel that has a different color filter. Over time, microlens arrays have evolved to support additional functions, such as optimizing focus and enabling advanced imaging techniques like light field capture.
 
-### Color filter array
+### Color filter array {#sec-sensor-cfa}
 
 
-### Microlens arrays
+### Microlens arrays {#sec-sensor-microlens}
 
-Light field possibility.
+Importance for capture on a single pixel  The light field sensor will be described later.  Not sure how to group.
 
-## Circuit innovations {#sec-sensor-innovations}
+## Sensor innovations {#sec-sensor-innovations}
 Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
 
-### Global shutter
+### Global shutter {#sec-sensor-globalshutter}
 Instead of using a floating diffusion as a memory element, Aptina has utilized a surface-pinned storage node in the pixel to address dark current challenges. Available in its newest global shutter sensor, the MT9M031, the storage node also enables using a true correlated double sampling technique to reduce readout noise to four electrons, resulting in excellent low-light performance. The combination of the effective use of an anti-reflective metal light shield in close proximity to the memory node and careful doping and potential profile design results in a high GSE.
 
 Global Shutter Pixel Technologies and CMOS Image Sensors – A Powerful Combination – (Aptina white paper)
 
+### Stacked pixel structures {#sec-sensor-stacked}
+The original sensors were  built using a technology that required stacking multiple metal layers above the substrate that contained the photodiode. This architecture, called front-side illuminated (FSI), required photons incident at the pixel to make their way down a tunnel to arrive at the light sensitive photodiode. With this architecture, photons incident at an angle This  shown 
 
-### Stacked pixel structures
+![The improved design, Backside Illuminated (BSI) CMOS, is similar in concept to regular CMOS, but these chips arrange the components differently. In short, the photosites are further forward on the die and the line-by-line readout speed is brisker. This change enables practical advantages: Generally speaking, a BSI CMOS is around an f-stop better when it comes to image noise. That means a BSI CMOS shows as much noise at ISO 12800 as a similar CMOS chip would at ISO 6400. It also means that APS-C and Micro Four Thirds cameras with BSI chips play on more even footing with full-frame CMOS cameras. Those aren't hard-and-fast rules, but they're good guidelines to follow. Stacked CMOS chips improve upon the BSI CMOS concept. They place components in a similar arrangement, but the design also stacks the image signal processor and its ultra-fast DRAM memory into the same silicon. This makes readout speeds even faster. The first mainstream Stacked CMOS camera, the Sony a9 from 2019, made waves by offering an interruption-free photographic experience—you can use it to fire off photos at 20fps without losing view of your scene.](images/sensors/03-sensor-evolution.png){#fig-sensor-evolution width=80%}
 
-### Dynamic range enhancement
+### Dynamic range enhancement {#sec-sensor-dynamicrange}
 Another source of nonlinearity arises from the photodiode itself. At high irradiance levels, the photodiode can saturate, meaning that it cannot generate additional electrons regardless of the incoming light. This saturation effect imposes a hard limit on the dynamic range of the sensor.
 
 Understanding and modeling these nonlinearities is critical for applications that require high precision, such as scientific imaging or computational photography. Calibration techniques, such as measuring the sensor response under controlled conditions, can help correct for these nonlinearities in post-processing.
 
-### Color technologies
+### Foveon {#sec-sensors-foveon}
 
-#### Foveon {#sec-sensors-foveon}
-
-#### Multipsectral {#sec-sensors-spectricity}
+### Multipsectral {#sec-sensors-spectricity}
 
 
 
