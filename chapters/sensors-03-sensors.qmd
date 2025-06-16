@@ -1,49 +1,21 @@
 # Sensors {#sec-sensors}
-We have been considering the properties of the CMOS imager one pixel at a time. In this section we consider properties of the array, such as the variations between pixels, the color filter array, and the microlens array. Here again, First, I describe the basic principles, the foundations, of sensors. Then, I describe recent innovations in pixel and sensor circuitry, which is an active and fascinating field.
+We have been considering the properties of the CMOS imager one pixel at a time. In this section, we consider properties of the array, such as variations between pixels, the color filter array, and the microlens array. First, I describe the basic principles—the foundations—of sensors. Then, I describe recent innovations in pixel and sensor circuitry, which is an active and fascinating field.
 
 ## Sensor noise
-When manufacturing an array comprising millions of pixels, there will be minor differences between them. For example the area of the photodiode might differ, or the capacitance of the floating diffusion node, or perhaps the material doping concentration. There is not much variation -foundries are amazing- but there will be some. These variations across the array are called **sensor noise**.  The source of the variations do not change over time, and thus they are called **fixed pattern noise (FPN)**.  
+When manufacturing an array comprising millions of pixels, there will be minor differences between them. For example, the area of the photodiode might differ, or the capacitance of the floating diffusion node, or perhaps the material doping concentration. There is not a lot of variation—foundries are amazing—but there will be some. Because these are variations between the pixels, they are called **sensor noise**. Some of these variations do not change over time; for example, the relative photodiode area of different pixels. Thus, these variations are called **fixed pattern noise (FPN)**.
 
-![Sensor fixed pattern noise. On average, the pixel responses will be linear.  But variations in the pixel manufacturing will make their responses differ somewhat in the offset and slope.  Variations in the offset, generally due to different amounts of dark current are shown in the DSNU region. They may also differ in the slope of the linear response, perhaps because the photodiode area is slightly different or perhaps there is some slight difference in the transparent media above the different pixels. These slope variations are illustrated by the PRNU arrow.](images/sensors/03-sensor-noise.png){#fig-sensor-noise width="60%"}
-
-Both of these sensor noise characteristics
+![Sensor fixed pattern noise. On average, the pixel response is linear, but manufacturing variations introduce slight differences in the offset and slope. Dark signal nonuniformities (DSNU) are variations in the offset. These can be due to different amounts of dark current or unaccounted for bias in the reset noise. Photoresponse nonuniformities (PRNU) are variations in the slope of the response. These can be due to differences in the photodiode area or in the transparency of the path from the imaging lens to the pixel.](images/sensors/03-sensor-noise.png){#fig-sensor-noise width="60%"}
 
 ### Dark signal nonuniformity {#sensor-dsnu}
-**Dark signal nonuniformity (DSNU)** refers to the variation in the dark current across the pixels.  Some pixels may accumulate dark current at a slightly higher or lower rate. As a result, when we consider their response to increasing amount of light, they will start at slightly different levels.  This is illustrated in the variation of the starting positions at zero illumination level in Figure @fig-sensor-noise.  Recall that the pixel dark current depends on several factors, including temperature and exposure time (@sec-pixel-darkcurrent).  Hence, the DSNU will also depend on these factors.
+**Dark signal nonuniformity (DSNU)** refers to the variation in the dark current across the pixels. Some pixels may accumulate dark current at a slightly different rates. As a result, when we consider their response to increasing amounts of light, they will start at slightly different levels. This is illustrated in the variation of the starting positions at zero illumination level in Figure @fig-sensor-noise. Recall that the pixel dark current depends on several factors, including temperature and exposure time (@sec-pixel-darkcurrent). Hence, the DSNU will also depend on these factors.
 
 ### Photoresponse nonuniformity {#sensor-prnu}
-The **photoresponse nonuniformity (PRNU) ** refers to the variation in the slope (gain) of the pixel responses (@fig-sensor-noise). There are various reasons why the response curve might differ between pixels. The photodiode area might be slightly larger in one pixel than another, or the effectiveness of the microlens at focusing the light on the photodiode might be slightly different.  
-
-## Sensor components
-Standard CMOS imagers include a few additional components 
-
-
-### UV/IR blocking filter {#sec-sensor-irfilter}
-
-### Color filter array {#sec-sensor-cfa}
-Sensors use a color filter array (CFA), placed above the photodiodes, to acquire the spectral information necessary to render a color image.The CFA ensures that each pixel is has its own spectral sensitivity. The most common CFA pattern is the Bayer arrangement, which uses red, green, and blue filters distributed across the sensor. This allows the sensor to sample the visible spectrum at different locations, and the resulting data can be combined to reconstruct a full-color image. Some sensors use alternative filter patterns or additional spectral bands for specialized applications. Together, microlens arrays and color filter arrays are essential for the function and versatility of modern digital cameras.
-
-<!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos -->
-
-![The color filter array and microlens array above the photodiode array. From the El Gamal and Eltoukhy article](images/sensors/03-microlens-cfa.png){#fig-components-overview2 width=50%}
-
-
-### Microlens arrays {#sec-sensor-microlens}
-
-Importance for capture on a single pixel  The light field sensor will be described later.  Not sure how to group.
-
-The microlens array is a layer of tiny lenses placed above the color filter array. Each microlens is precisely positioned relative to the main lens, color filter, and photodiode. It serves to focus incoming light from the main lens onto the photodiode within the pixel. The microlens increases light-gathering efficiency, which is especially important as pixel sizes shrink. It also prevents cross-talk, a condition in which light passes at a large angle through a color filter and ends up generating electrons in a pixel that has a different color filter. Over time, microlens arrays have evolved to support additional functions, such as optimizing focus and enabling advanced imaging techniques like light field capture.
-
-## Sensor innovations {#sec-sensor-innovations}
-Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
-
-### Global shutter {#sec-sensor-globalshutter}
-Instead of using a floating diffusion as a memory element, Aptina has utilized a surface-pinned storage node in the pixel to address dark current challenges. Available in its newest global shutter sensor, the MT9M031, the storage node also enables using a true correlated double sampling technique to reduce readout noise to four electrons, resulting in excellent low-light performance. The combination of the effective use of an anti-reflective metal light shield in close proximity to the memory node and careful doping and potential profile design results in a high GSE.
-
-Global Shutter Pixel Technologies and CMOS Image Sensors – A Powerful Combination – (Aptina white paper)
+The **photoresponse nonuniformity (PRNU)** refers to the variation in the slope (gain) of the pixel responses (@fig-sensor-noise). There are various reasons why the response curve might differ between pixels. The photodiode area might be slightly larger in one pixel than another, or the effectiveness of the microlens at focusing the light on the photodiode might be slightly different. Also, the media, such as the color filter, may differ slightly between two pixels of the same type.
 
 ### Stacked pixel structures {#sec-sensor-stacked}
 The original sensors were built using a technology called front-side illumination (FSI), in which multiple metal layers are located above the semiconductor substrate. In this architecture, photons incident on the pixel must pass through these metal layers to reach the light-sensitive photodiode (@fig-sensor-evolution (a) and @fig-sensor-pixel-layers). Additionally, both the photodiodes and their associated circuitry share the same substrate, forcing a trade-off: the area used for circuitry reduces the area available for the photodiode.
+
+<!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos -->
 
 The **back-side illuminated (BSI)** sensor addresses this limitation by placing the metal wiring below the substrate, allowing photons to reach the photodiode more directly (@fig-sensor-evolution (b)). The **stacked pixel** architecture goes further by using multiple semiconductor layers (@fig-sensor-evolution (c)). The first layer contains the photodiode array, while the readout circuitry is placed on a separate layer below. Advanced interconnect technologies electrically connect these layers. This multi-layer approach improves light sensitivity and enables more complex on-sensor processing, supporting advanced features and higher performance.
 
@@ -59,4 +31,56 @@ Read this.  Evolution of stacked and BI.
 @Oike2022-stackedevolution
 
 :::
+
+
+## Sensor components
+Conventional CMOS imagers include several additional components (@fig-sensor-pixel-overview). The microlens array is designed to enhance the sensitivity of the array to radiation. The spectral filters, which are commonly included in sensors for consumer photography, are designed to match the properties of the human eye.
+
+### Microlens arrays {#sec-sensor-microlens}
+The microlens array is a layer of tiny lenses placed above the color filter array. These lenses serve to redirect the light from the main lens onto the photodiode, increasing the light-gathering efficiency. The microlens also reduces **pixel cross-talk**. This refers to the case in which light from the imaging lens might arrive at a relatively large angle at color filter. A ray  and ends up generating electrons in a pixel that has a different color filter. Over time, microlens arrays have evolved to support additional functions, such as optimizing focus and enabling advanced imaging techniques for light field capture that I describe later.
+
+![Electron micrograph cross section illustrating the position of the color filters and microlenses above the photodiode (from @elgamalCMOSImageSensors2005)](images/sensors/03-microlens-cfa-SEM.png){#fig-components-microlens width=70%}
+
+At the center of the sensor array, the incidence of the chief ray from the center of the lens is close to perpendicular to the photodiode array. There, a lens centered above the photodiode works well to simply concentrate the rays. At the edges of the array, however, the angle of the chief ray is relatively steep, say 35 degrees. To redirect the rays toward the photodiode, the microlens and the color filter are shifted laterally.  This redirects the angle of the rays so that more of them  arrive at the photodiode.
+
+![De-centering the microlens and color filter above photodiodes at the sensor edge)](images/sensors/03-microlens-shifted.png){#fig-components-shiftedmicrolens width=70%}
+
+@Hwang2023-microlens-alignment @Hwang2023-microlens-quad
+
+## Deep trench isolation
+
+![Deep trench isolation images.)](images/sensors/03-sensor-deeptrench.png){#fig-sensor-deeptrench width=50%}
+
+The microlens was important for classic, frontside illuminated sensors when the path from the lens through the metal layers was quite long and the angle of the chief ray at the edge was fairly large. Even so, the arrays were not enough to prevent significant cross-talk. For large pixels, and the initial sensor pixels were 6 or more microns, this technology along was quite effective.
+
+As pixel sizes became smaller, on the order of 1.5 or 1 micron, the impact of diffraction became increasingly important. After passing through these small pixel apertures, the wavefronts would spread and significant amounts of energy would be deposited in adjacent pixels. **Deep trench isolation (DTI)** was a technology developed to reduce the spread of the light between pixels. Designers developed methods of placing trenches inside the pixel and then filling these trenches with with an insulating material (like silicon dioxide or nitride).  This formed very thin walls within the pixel that would stop the photons that had passed through, say, a green color filter into the photodiode that should only be illuminated by photons that had passed through a red color filter.  Deep trench isolation, therefore, reduced this scattering and thus improved the resolution and color accuracy.   
+
+@Han2020-deeptrench
+
+@Tournier2011-deeptrench
+
+@Park2007-deeptrench
+
+### UV/IR blocking filter {#sec-sensor-irfilter}
+![The UV/IR blocking filter.](images/sensors/03-sensor-uvirfilter.png){#fig-sensor-uvir width=80%}
+
+### Color filter array {#sec-sensor-cfa}
+Sensors use a color filter array (CFA), placed above the photodiodes, to acquire the spectral information necessary to render a color image.The CFA ensures that each pixel is has its own spectral sensitivity. The most common CFA pattern is the Bayer arrangement, which uses red, green, and blue filters distributed across the sensor. This allows the sensor to sample the visible spectrum at different locations, and the resulting data can be combined to reconstruct a full-color image. Some sensors use alternative filter patterns or additional spectral bands for specialized applications. Together, microlens arrays and color filter arrays are essential for the function and versatility of modern digital cameras.
+
+
+## Sensor innovations {#sec-sensor-innovations}
+Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
+
+### Global shutter {#sec-sensor-globalshutter}
+Instead of using a floating diffusion as a memory element, Aptina has utilized a surface-pinned storage node in the pixel to address dark current challenges. Available in its newest global shutter sensor, the MT9M031, the storage node also enables using a true correlated double sampling technique to reduce readout noise to four electrons, resulting in excellent low-light performance. The combination of the effective use of an anti-reflective metal light shield in close proximity to the memory node and careful doping and potential profile design results in a high GSE.
+
+Illustrate rolling shuttter artifact.
+
+Then say something about global shutter technology.
+
+Global Shutter Pixel Technologies and CMOS Image Sensors – A Powerful Combination – (Aptina white paper)
+
+### HDR - split pixel?
+
+Well recycling?
 
