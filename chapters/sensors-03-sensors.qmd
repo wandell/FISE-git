@@ -1,22 +1,26 @@
 # Sensors {#sec-sensors}
+
 We have been considering the properties of the CMOS imager one pixel at a time. In this section, we consider properties of the array, such as variations between pixels, the color filter array, and the microlens array. First, I describe the basic principles—the foundations—of sensors. Then, I describe recent innovations in pixel and sensor circuitry, which is an active and fascinating field.
 
 ## Sensor noise
+
 When manufacturing an array comprising millions of pixels, there will be minor differences between them. For example, the area of the photodiode might differ, or the capacitance of the floating diffusion node, or perhaps the material doping concentration. There is not a lot of variation—foundries are amazing—but there will be some. Because these are variations between the pixels, they are called **sensor noise**. Some of these variations do not change over time; for example, the relative photodiode area of different pixels. Thus, these variations are called **fixed pattern noise (FPN)**.
 
 ![Sensor fixed pattern noise. On average, the pixel response is linear, but manufacturing variations introduce slight differences in the offset and slope. Dark signal nonuniformities (DSNU) are variations in the offset. These can be due to different amounts of dark current or unaccounted for bias in the reset noise. Photoresponse nonuniformities (PRNU) are variations in the slope of the response. These can be due to differences in the photodiode area or in the transparency of the path from the imaging lens to the pixel.](images/sensors/03-sensor-noise.png){#fig-sensor-noise width="60%"}
 
 ### Dark signal nonuniformity {#sensor-dsnu}
+
 **Dark signal nonuniformity (DSNU)** refers to the variation in the dark current across the pixels. Some pixels may accumulate dark current at slightly different rates. As a result, when we consider their response to increasing amounts of light, they will start at slightly different levels. This is illustrated in the variation of the starting positions at zero illumination level in Figure @fig-sensor-noise. Recall that the pixel dark current depends on several factors, including temperature and exposure time (@sec-pixel-darkcurrent). Hence, the DSNU will also depend on these factors.
 
 ### Photoresponse nonuniformity {#sensor-prnu}
+
 The **photoresponse nonuniformity (PRNU)** refers to the variation in the slope (gain) of the pixel responses (@fig-sensor-noise). There are various reasons why the response curve might differ between pixels. The photodiode area might be slightly larger in one pixel than another, or the effectiveness of the microlens at focusing the light on the photodiode might be slightly different. Also, the media, such as the color filter, may differ slightly between two pixels of the same type.
 
 ### Stacked pixel structures {#sec-sensor-stacked}
+
 The original sensors were built using a technology called front-side illumination (FSI), in which multiple metal layers are located above the semiconductor substrate. In this architecture, photons incident on the pixel must pass through these metal layers to reach the light-sensitive photodiode (@fig-sensor-evolution (a) and @fig-sensor-pixel-layers). Additionally, both the photodiodes and their associated circuitry share the same substrate, forcing a trade-off: the area used for circuitry reduces the area available for the photodiode.
 
-.::: {.columns}
-<!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
+.::: {.columns} <!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
 https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor
 -->
 
@@ -24,52 +28,71 @@ The **back-side illuminated (BSI)** sensor addresses this limitation by placing 
 
 The improved design, Backside Illuminated (BSI) CMOS, is similar in concept to regular CMOS, but these chips arrange the components differently. In short, the photosites are further forward on the die and the line-by-line readout speed is brisker. This change enables practical advantages: Generally speaking, a BSI CMOS is around an f-stop better when it comes to image noise. That means a BSI CMOS shows as much noise at ISO 12800 as a similar CMOS chip would at ISO 6400. It also means that APS-C and Micro Four Thirds cameras with BSI chips play on more even footing with full-frame CMOS cameras. Those aren't hard-and-fast rules, but they're good guidelines to follow. Stacked CMOS chips improve upon the BSI CMOS concept. They place components in a similar arrangement, but the design also stacks the image signal processor and its ultra-fast DRAM memory into the same silicon. This makes readout speeds even faster. The first mainstream Stacked CMOS camera, the Sony a9 from 2019, made waves by offering an interruption-free photographic experience—you can use it to fire off photos at 20fps without losing view of your scene.
 
-![The evolution of pixel designs. (a) The original front-side illuminated CMOS sensor. (b) The back side illuminated sensor.  (c) The stacked pixel design. ](images/sensors/03-sensor-evolution.png){#fig-sensor-evolution width=80%}
+![The evolution of pixel designs. (a) The original front-side illuminated CMOS sensor. (b) The back side illuminated sensor. (c) The stacked pixel design.](images/sensors/03-sensor-evolution.png){#fig-sensor-evolution width="80%"}
 
 ::: {#sensor-bsi-stacked .callout-note collapse="true"}
 ## Technology development
+
 Eric Fossum is credited with proposing a back-illuminated (BSI) CMOS technology in 1994, although the need to reduce or move the metal lines and improve sensitivity was widely recognized. More than a decade passed before the technique was mastered and commercialization began. OmniVision Technologies was an early developer, sampling their first BSI sensors (OmniBSI) with the OV8810 BSI sensor announced in September 2008 ($1.4 \mu \text{m}$ and $8$ Megapixels). Sony introduced the first widely used BSI in 2009.
 
+```{=html}
 <!-- Read this.  Evolution of stacked and BI.
 @Oike2022-stackedevolution -->
-
+```
 :::
 
-## Sensor components
+## Sensor components: Space
+
 Conventional CMOS imagers include several additional components (@fig-sensor-pixel-overview). The microlens array is designed to enhance the sensitivity of the array to radiation. The spectral filters, which are commonly included in sensors for consumer photography, are designed to match the properties of the human eye.
 
 ### Microlens arrays and deep trench isolation {#sec-sensor-microlens}
+
 The microlens array is a layer of tiny lenses placed above the color filter array. These lenses serve to redirect the light from the main lens onto the photodiode, increasing the light-gathering efficiency. The microlens also reduces **pixel cross-talk**. This refers to the case in which light from the imaging lens might arrive at a relatively large angle at the color filter. A ray may end up generating electrons in a pixel that has a different color filter. Over time, microlens arrays have evolved to support additional functions, such as optimizing focus and enabling advanced imaging techniques for light field capture that I describe later.
 
-![Electron micrograph cross section illustrating the position of the color filters and microlenses above the photodiode (from @elgamalCMOSImageSensors2005)](images/sensors/03-microlens-cfa-SEM.png){#fig-components-microlens width=70%}
+![Electron micrograph cross section illustrating the position of the color filters and microlenses above the photodiode (from @elgamalCMOSImageSensors2005)](images/sensors/03-microlens-cfa-SEM.png){#fig-components-microlens width="70%"}
 
-At the center of the sensor array, the incidence of the chief ray from the center of the lens is close to perpendicular to the photodiode array. There, a lens centered above the photodiode works well to simply concentrate the rays. At the edges of the array, however, the angle of the chief ray is relatively steep, say 35 degrees. To redirect the rays toward the photodiode, the microlens and the color filter are shifted laterally.  The decentering of the microlens and color filters improves the redirection the rays so that more light arrives at the proper photodiode, and less light is incorrectly absorbed by adjacent photodiodes.
+At the center of the sensor array, the incidence of the chief ray from the center of the lens is close to perpendicular to the photodiode array. There, a lens centered above the photodiode works well to simply concentrate the rays. At the edges of the array, however, the angle of the chief ray is relatively steep, say 35 degrees. To redirect the rays toward the photodiode, the microlens and the color filter are shifted laterally. The decentering of the microlens and color filters improves the redirection the rays so that more light arrives at the proper photodiode, and less light is incorrectly absorbed by adjacent photodiodes.
 
-![De-centering the microlens and color filter above photodiodes at the sensor edge)](images/sensors/03-microlens-shifted.png){#fig-components-shiftedmicrolens width=70%}
+![De-centering the microlens and color filter above photodiodes at the sensor edge)](images/sensors/03-microlens-shifted.png){#fig-components-shiftedmicrolens width="70%"}
 
 @Hwang2023-microlens-alignment @Hwang2023-microlens-quad
 
-![Deep trench isolation images.)](images/sensors/03-sensor-deeptrench.png){#fig-sensor-deeptrench width=50%}
+![Deep trench isolation images.)](images/sensors/03-sensor-deeptrench.png){#fig-sensor-deeptrench width="50%"}
 
 The microlens was important for classic, frontside illuminated sensors when the path from the lens through the metal layers was quite long and the angle of the chief ray at the edge was fairly large. For large pixels, and the initial sensor pixels were 6 or more microns, microlens technology was quite effective.
 
-As pixel sizes became smaller, on the order of 1.5 or 1 micron, the impact of diffraction became increasingly important. Light passing through these small pixel apertures would spread beyond the photodiode, and significant amounts of energy would be deposited in the photodiodes of adjacent pixels. This caused two problems.  First, the spread of the light reduced the sharpness of the image.  Second, the color accuracy of the image was reduced because light that passed through, say a green filter, would produce electrons in the photodiode beneath a red filter.
+As pixel sizes became smaller, on the order of 1.5 or 1 micron, the impact of diffraction became increasingly important. Light passing through these small pixel apertures would spread beyond the photodiode, and significant amounts of energy would be deposited in the photodiodes of adjacent pixels. This caused two problems. First, the spread of the light reduced the sharpness of the image. Second, the color accuracy of the image was reduced because light that passed through, say a green filter, would produce electrons in the photodiode beneath a red filter.
 
-**Deep trench isolation (DTI)** technology was developed to reduce this problem. Designers developed methods of placing trenches at the pixel margins and then filling the trenches with an insulating material (like silicon dioxide or nitride). This formed very thin walls within the pixel that would stop the radiation from spreading between pixels (@fig-sensor-deeptrench). Deep trench isolation improved both the spatial resolution and the color accuracy.
-<!-- 
+**Deep trench isolation (DTI)** technology was developed to reduce this problem. Designers developed methods of placing trenches at the pixel margins and then filling the trenches with an insulating material (like silicon dioxide or nitride). This formed very thin walls within the pixel that would stop the radiation from spreading between pixels (@fig-sensor-deeptrench). Deep trench isolation improved both the spatial resolution and the color accuracy. <!-- 
 @Han2020-deeptrench
 
 @Tournier2011-deeptrench
 
 @Park2007-deeptrench -->
 
+## Sensor components: Wavelength
 
-### UV/IR blocking filter {#sec-sensor-irfilter}
+The bandgap of silicon enables CMOS image sensors to convert photons at wavelengths shorter than 1100 nm into electrons. The human eye, however, only encodes radiation in a narrower range, from about 380 nm to 700 nm. To reproduce a scene for a person, which is the goal of consumer photography, the image sensors need to record spectral radiation in th visible band. Furthermore, the human visual system coarsely samples the spectral signal, using only three broadband photoreceptors. Although it is possible to record the spectral radiance more finely than the human eye, it is not necessary. Thus most cameras are designed to capture only three broadband samples in the visible range.
 
-![The UV/IR blocking filter.](images/sensors/03-sensor-uvirfilter.png){#fig-sensor-uvir width=80%}
+Two types of spectral filters are used to roughly match the wavelength encoding of consumer cameras to the human eye. The three color channels of recorded data are then processed to render a satisfactory reproduction. In this section, I describe the color filters. After describing the essential properties of the human eye in more detail (@sec-human), I describe how the color channels of the sensor are processed to reproduce an accurate or at least pleasant rendering of the scene (@sec-imgprocessing).
+
+### Spectral blocking filter {#sec-sensor-irfilter}
+
+![The UV/IR blocking filter.](images/sensors/03-sensor-uvirfilter.png){#fig-sensor-uvir width="80%"} Consumer cameras typically have a filter that blocks wavelengths beyond 680-700 nm (infrared, **IR**) and below 380-400 nm (ultraviolet, **UV**) from reaching the photodiode. These are thin spectral filters that are integrated onto the sensor, above the microlenses (@fig-sensor-uvir). These **UV/IR filters** are often simply called **IR blocking filters**. This might be because it is simpler and in some cases the UV light is largely blocked by the glass material in the optics.
+
+In the first few generations of cameras, the spectral filters had an additional laminated layer, called an **optical low pass filter (OLPF)**. This layer blurred the image so slightly, to make sure that light from a point in the scene would be spread over a small, say 2x2 array, of pixels. This was necessary because adjacent pixels have have different color filters, and yet we wanted to be able to combine their outputs and report on a single point in the scene. In more modern cameras, the pixel size has shrunk, often below the diffraction limit of the optics. Thus, the optics already spreads the light from a point across the pixels and there is no need for the OLPF.
 
 ### Color filter array {#sec-sensor-cfa}
-Sensors use a color filter array (CFA), placed above the photodiodes, to acquire the spectral information necessary to render a color image. The CFA ensures that each pixel has its own spectral sensitivity. The most common CFA pattern is the Bayer arrangement, which uses red, green, and blue filters distributed across the sensor. This allows the sensor to sample the visible spectrum at different locations, and the resulting data can be combined to reconstruct a full-color image. Some sensors use alternative filter patterns or additional spectral bands for specialized applications. Together, microlens arrays and color filter arrays are essential for the function and versatility of modern digital cameras.
 
+The UV/IR filter define the range of wavelengths that arrive at the photodiodes. Below this filter, many cameras have an additional **color filter array (CFA)** (@fig-pixel-layers). The color filters are typically arranged in a repeating pattern, and the smallest repeating unit of the color filter array is called a **super pixel**. The consequence of this array is that the pixels form multiple interleaved mosaics, each capturing a different part of the wavelength spectrum. Each of these spatial mosaics is usually called a **color channel**. It is common to have three channels in consumer photography; different choices about the spectral encoding are made for other applications in, say, medical, scientific, or industrial applications.
 
+![Spectral sensitivity of the color filters alone. Notice that the red filter passes long wavelength light (IR). Light beyond 680nm, however, does not reach the photodiode because it is blocked by the UV/IR filters.](images/sensors/03-sensor-cfaspectral.png){#fig-cfa-spectral width="70%" fig-align="center"}
+
+<!-- https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors -->
+
+The most common CFA pattern is was patented by Bryce Bayer, at Kodak (Bayer patent here). which uses red, green, and blue filters distributed across the sensor. This allows the sensor to sample the visible spectrum at different locations, and the resulting data can be combined to reconstruct a full-color image. Some sensors use alternative filter patterns or additional spectral bands for specialized applications. Together, microlens arrays and color filter arrays are essential for the function and versatility of modern digital cameras.
+
+![Bayer RGB pattern.](images/sensors/03-sensor-cfapattern.png){#fig-cfa-pattern width="70%" fig-align="center"}
+
+<!-- https://www.nature.com/articles/s41467-022-31019-7/figures/1 -->
 
