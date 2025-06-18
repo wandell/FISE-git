@@ -18,20 +18,23 @@ The **photoresponse nonuniformity (PRNU)** refers to the variation in the slope 
 
 ### Stacked pixel structures {#sec-sensor-stacked}
 
-The original sensors were built using a technology called front-side illumination (FSI), in which multiple metal layers are located above the semiconductor substrate. In this architecture, photons incident on the pixel must pass through these metal layers to reach the light-sensitive photodiode (@fig-sensor-evolution (a) and @fig-sensor-pixel-layers). Additionally, both the photodiodes and their associated circuitry share the same substrate, forcing a trade-off: the area used for circuitry reduces the area available for the photodiode.
+The original sensor stack is called front-side illumination (FSI), in which multiple metal layers are located above the semiconductor substrate (@fig-pixel-layers). Even at the time of the original implementation, it was clear that forcing light to pass through the metal layers to reach the light-sensitive photodiode created many problems. Additionally, both the photodiodes and their associated circuitry share the same substrate, so that the circuitry reduced the area of the photodiode.
 
-.::: {.columns} <!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
+<!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
 https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor
 -->
 
+It took more than a decade, but eventually engineers found a way to 
 The **back-side illuminated (BSI)** sensor addresses this limitation by placing the metal wiring below the substrate, allowing photons to reach the photodiode more directly (@fig-sensor-evolution (b)). The **stacked pixel** architecture goes further by using multiple semiconductor layers (@fig-sensor-evolution (c)). The first layer contains the photodiode array, while the readout circuitry is placed on a separate layer below. Advanced interconnect technologies electrically connect these layers. This multi-layer approach improves light sensitivity and enables more complex on-sensor processing, supporting advanced features and higher performance.
 
-The improved design, Backside Illuminated (BSI) CMOS, is similar in concept to regular CMOS, but these chips arrange the components differently. In short, the photosites are further forward on the die and the line-by-line readout speed is brisker. This change enables practical advantages: Generally speaking, a BSI CMOS is around an f-stop better when it comes to image noise. That means a BSI CMOS shows as much noise at ISO 12800 as a similar CMOS chip would at ISO 6400. It also means that APS-C and Micro Four Thirds cameras with BSI chips play on more even footing with full-frame CMOS cameras. Those aren't hard-and-fast rules, but they're good guidelines to follow. Stacked CMOS chips improve upon the BSI CMOS concept. They place components in a similar arrangement, but the design also stacks the image signal processor and its ultra-fast DRAM memory into the same silicon. This makes readout speeds even faster. The first mainstream Stacked CMOS camera, the Sony a9 from 2019, made waves by offering an interruption-free photographic experience—you can use it to fire off photos at 20fps without losing view of your scene.
+The improved design, Backside Illuminated (BSI) CMOS, is similar in concept to regular CMOS, but these chips arrange the components differently. In short, the photosites are further forward on the die and the line-by-line readout speed is brisker. This change enables practical advantages: Generally speaking, a BSI CMOS is around an f-stop better when it comes to image noise. That means a BSI CMOS shows as much noise at ISO 12800 as a similar CMOS chip would at ISO 6400. It also means that APS-C and Micro Four Thirds cameras with BSI chips play on more even footing with full-frame CMOS cameras. Those aren't hard-and-fast rules, but they're good guidelines to follow. 
+
 
 ![The evolution of pixel designs. (a) The original front-side illuminated CMOS sensor. (b) The back side illuminated sensor. (c) The stacked pixel design.](images/sensors/03-sensor-evolution.png){#fig-sensor-evolution width="80%"}
 
+
 ::: {#sensor-bsi-stacked .callout-note collapse="true"}
-## Technology development
+## BSI technology development
 
 Eric Fossum is credited with proposing a back-illuminated (BSI) CMOS technology in 1994, although the need to reduce or move the metal lines and improve sensitivity was widely recognized. More than a decade passed before the technique was mastered and commercialization began. OmniVision Technologies was an early developer, sampling their first BSI sensors (OmniBSI) with the OV8810 BSI sensor announced in September 2008 ($1.4 \mu \text{m}$ and $8$ Megapixels). Sony introduced the first widely used BSI in 2009.
 
@@ -41,9 +44,14 @@ Eric Fossum is credited with proposing a back-illuminated (BSI) CMOS technology 
 ```
 :::
 
-## Sensor components: Space
+### Stacked sensor
 
-Conventional CMOS imagers include several additional components (@fig-sensor-pixel-overview). The microlens array is designed to enhance the sensitivity of the array to radiation. The spectral filters, which are commonly included in sensors for consumer photography, are designed to match the properties of the human eye.
+Stacked CMOS chips improve upon the BSI CMOS concept. They place components in a similar arrangement, but the design also stacks the image signal processor and its ultra-fast DRAM memory into the same silicon. This makes readout speeds even faster. The first mainstream Stacked CMOS camera, the Sony a9 from 2019, made waves by offering an interruption-free photographic experience—you can use it to fire off photos at 20fps without losing view of your scene.
+
+![Stacked pixel architecture explained.](images/sensors/03-sensor-stackedpixel.png){#fig-sensor-stacked width="50%"}
+
+## Sensor components: Space
+Conventional CMOS imagers include additional components that are critical for producing high quality images (@fig-pixel-overview). The microlens array and deep trench isolation both increase sensitivity and reduce unwanted crosstalk between the pixels. Spectral filters, which are included in sensors for consumer photography and many other types of cameras, are used to captur information about the scene spectral radiance. 
 
 ### Microlens arrays and deep trench isolation {#sec-sensor-microlens}
 
@@ -55,19 +63,21 @@ At the center of the sensor array, the incidence of the chief ray from the cente
 
 ![De-centering the microlens and color filter above photodiodes at the sensor edge)](images/sensors/03-microlens-shifted.png){#fig-components-shiftedmicrolens width="70%"}
 
-@Hwang2023-microlens-alignment @Hwang2023-microlens-quad
-
-![Deep trench isolation images.)](images/sensors/03-sensor-deeptrench.png){#fig-sensor-deeptrench width="50%"}
-
 The microlens was important for classic, frontside illuminated sensors when the path from the lens through the metal layers was quite long and the angle of the chief ray at the edge was fairly large. For large pixels, and the initial sensor pixels were 6 or more microns, microlens technology was quite effective.
+@Hwang2023-microlens-alignment @Hwang2023-microlens-quad
 
 As pixel sizes became smaller, on the order of 1.5 or 1 micron, the impact of diffraction became increasingly important. Light passing through these small pixel apertures would spread beyond the photodiode, and significant amounts of energy would be deposited in the photodiodes of adjacent pixels. This caused two problems. First, the spread of the light reduced the sharpness of the image. Second, the color accuracy of the image was reduced because light that passed through, say a green filter, would produce electrons in the photodiode beneath a red filter.
 
-**Deep trench isolation (DTI)** technology was developed to reduce this problem. Designers developed methods of placing trenches at the pixel margins and then filling the trenches with an insulating material (like silicon dioxide or nitride). This formed very thin walls within the pixel that would stop the radiation from spreading between pixels (@fig-sensor-deeptrench). Deep trench isolation improved both the spatial resolution and the color accuracy. <!-- 
+**Deep trench isolation (DTI)** technology was developed to reduce this problem. Designers developed methods of placing trenches at the pixel margins and then filling the trenches with an insulating material (like silicon dioxide or nitride). This formed very thin walls within the pixel that would stop the radiation from spreading between pixels (@fig-sensor-deeptrench). Deep trench isolation improved both the spatial resolution and the color accuracy. 
+
+![Deep trench isolation images.)](images/sensors/03-sensor-deeptrench.png){#fig-sensor-deeptrench width="50%"}
+
+Alternative DTI as well as BSI.
+
+![Alternative BSI image.](images/sensors/BSI_DTI_Pixel_Technology.png){#fig-sensor-evolution width="80%"}
+
 @Han2020-deeptrench
-
 @Tournier2011-deeptrench
-
 @Park2007-deeptrench -->
 
 ## Sensor components: Wavelength
