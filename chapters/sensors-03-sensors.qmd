@@ -24,23 +24,26 @@ The original sensor stack is called front-side illumination (FSI), in which mult
 https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor
 -->
 
-### Back illuminated (BI) sensor {#sec-sensor-bsi}
+### Back-Side illuminated (BSI) sensor {#sec-sensor-bsi}
+After years of incremental improvements, engineers developed a new architecture to overcome the limitations of front-side illuminated (FSI) sensors. The resulting design, known as **Back-Side illuminated (BSI)** CMOS, rearranges the device layers to improve sensitivity. In BSI sensors, the photodiode and wiring layers are flipped; the light no longer needs to pass through the wires.  
 
-After years of incremental improvements, engineers developed a new architecture to overcome the limitations of front-side illuminated (FSI) sensors. The resulting design, known both as **Back Illuminated (BI)** and **Backside illuminated (BSI)** CMOS, rearranges the device layers to improve sensitivity (@fig-sensor-bsi). In BSI sensors, the photodiode and wiring layers are flipped, so the light no longer needs to pass through the wires.  To enable this, notice it was necessary to change the position of the photodiode in the substrate.  If you just flip the wires and silicon, the light would need to pass through the silicon substrate prior to arriving at the photodiode. Thus it was necessary to thin the silicon substrate. This configuration increases the amount of light reaching the photodiode, significantly improving pixel and sensor sensitivity.
+![The back-side illuminated pixel. (a) The front-side illuminated pixel has metal lines above the silicon substrate. (b) The back side illuminated sensor flips the metal lines and silicon substrate.  Source: <a href="https://scientificimaging.com/knowledge-base/front-side-illuminated-and-back-side-illuminated-imagers" target="_blank">Scientific Imaging.</a>](images/sensors/03-sensor-bsi2.png){#fig-sensor-bsi2 width="60%"}
 
-![The evolution of pixel designs. (a) The original front-side illuminated CMOS sensor. (b) The back side illuminated sensor. Source: <a href="https://scientificimaging.com/knowledge-base/front-side-illuminated-and-back-side-illuminated-imagers" target="_blank">Scientific Imaging.</a>](images/sensors/03-sensor-bsi2.png){#fig-sensor-bsi2 width="80%"}
+In addition to flipping the order of the silicon and wires, it was necessary to change the thickness of the substrate (@fig-sensor-bsi2). In the FSI pixel, the photodiode is embedded in a relatively thick layer of silicon. Flipping this structure would require the light to pass through a substantial amount of silicon prior to reaching the photodiode. This is problematic because the silicon absorbs light, and particularly short-wavelength light (@sec-sensor-wavelength). Thus, it was necessary to find a way to thin the silicon substrate and still have a working photodiode and circuitry. 
 
+### Deep photodiodes {#sec-sensor-deepdiode}
+@fig-sensor-skhynix illustrates a further improvement in the BSI design. SK Hynix, Omnivision and other manufacturers recognized that simply flipping the sensor (BSI) improved light capture. But as pixel sizes continued to shrink there was relatively little ability to store electrons.  Thus the well capacity was reduced and which limited the pixel's dynamic range (@sec-pixel-wellcapacity). Moreover, the sensitivity to longer wavelengths, which penetrates deeper into silicon, became a challenge (@sec-sensor-wavelength). 
 
-The development of BSI CMOS image sensors was closely tied to advances in **die stacking** technology. Manufacturing BSI sensors requires thinning the silicon wafer and, in advanced designs, separating the photodiode and readout circuitry onto different layers. These layers are then bonded together using direct oxide bonding and connected electrically with **Through-Silicon Vias (TSVs)**. This approach not only improved light sensitivity but also established the foundation for stacking more complex readout and processing circuitry beneath the photodiode layer, paving the way for the stacked pixel architectures that followed.
+To overcome these limitations, many vendors invented methods to build photodiodes that extend significantly deeper into the silicon (deep photodiode technology). Increasing the volume of the photodiode has two benefits.  First, the photodiode can gather more charge before saturating.  Second, the photodiode has higher long-wavelength sensitivity. 
 
-![The evolution of pixel designs. (a) The original front-side illuminated CMOS sensor. (b) The back side illuminated sensor. Source: <a href="https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor/" target="_blank">Skhynix.</a>](images/sensors/03-sensor-bsi.png){#fig-sensor-bsi width="80%"}
+![Deep photodiodes in the BSI. (a) A super pixel of a front-side illuminated CMOS sensor, including the microlenses, color filters, metal lines, and silicon. (b) A back-side illuminated super pixel with deep photodiode technology. Source: <a href="https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor/" target="_blank">Skhynix.</a>](images/sensors/03-sensor-bsi.png){#fig-sensor-skhynix width="70%"}
 
 ::: {#sensor-bsi-stacked .callout-note collapse="true"}
 ## BSI technology development
 
 [Wikipedia article](https://en.wikipedia.org/wiki/Back-illuminated_sensor)
 
-Eric Fossum first proposed the concept of back-illuminated (BSI) CMOS image sensors in 1994, recognizing the need to reduce metal line obstruction and improve sensitivity. However, it took more than a decade for the technology to mature and reach commercial viability. OmniVision Technologies was among the first to develop BSI sensors, introducing the OV8810 (1.4 μm pixels, 8 megapixels) in September 2008. Sony followed soon after, launching the first widely adopted BSI sensors in 2009.
+Eric Fossum first proposed the concept of back-side illuminated (BSI) CMOS image sensors in 1994, recognizing the need to reduce metal line obstruction and improve sensitivity. However, it took more than a decade for the technology to mature and reach commercial viability. OmniVision Technologies was among the first to develop BSI sensors, introducing the OV8810 (1.4 μm pixels, 8 megapixels) in September 2008. Sony followed soon after, launching the first widely adopted BSI sensors in 2009.
 
 ```{=html}
 <!-- Read this.  Evolution of stacked and BI.
@@ -54,6 +57,12 @@ Eric Fossum first proposed the concept of back-illuminated (BSI) CMOS image sens
 A significant step towards multi-layer integration was taken by Mitsumasa Koyanagi of Tohoku University, who pioneered the technique of wafer-to-wafer bonding with TSV in 1989
 -->
 
+In the original planar technology, the photodiode and circuitry occupy adjacent space within the substrate. This means that the photodiode area must compete for space with the transistor size.  Reducing the photodiode area means less light efficiency;  reducing the transistor size means noisier performance.
+
+![Pixels in the stacked sensor are based on die stacking technology. Several layers of silicon that are bonded and connected using Through-Silicon Via (TSV) technology. The technology began with 2-layers, but when have you ever known Silicon Valley to stop?](images/sensors/03-pixel-stacked.png){#fig-sensor-stacked width="50%"}
+
+**Stacked sensors** are an advanced design that places the photodiode and CMOS circuitry on different layers, using a method called **die stacking** technology. The layers are bonded together using direct oxide bonding and connected electrically with **Through-Silicon Vias (TSVs)**. Placing the photodiode and circuitry on different layers means they no longer compete for space.  This approach not only improved light sensitivity but also established the foundation for stacking more complex readout and processing circuitry beneath the photodiode layer, paving the way for the stacked pixel architectures that followed.
+
 The **stacked pixel** architecture goes further by using multiple semiconductor layers (@fig-sensor-evolution (c)). The development and widespread adoption of Back-Illuminated Sensors (BSI) were not merely parallel advancements but a fundamental prerequisite for the widespread adoption of the stacked pixel structure. BSI technology addressed the critical problem of light blockage by circuitry in traditional planar sensors, physically reorienting the light path. The manufacturing processes involved in BSI, specifically the thinning and flipping of wafers, directly led to the capability and motivation for stacking the photodiode layer on top of a separate logic layer. This created a situation where the optimization of light capture (via BSI) opened the door for a radical architectural change (stacking), demonstrating a profound causal link between these two innovations.
 
 
@@ -62,7 +71,7 @@ The stacked design directly addresses inherent limitations of traditional planar
 
 Stacked CMOS chips improve upon the BSI CMOS concept. They place components in a similar arrangement, but the design also stacks the image signal processor and its ultra-fast DRAM memory into the same silicon. This makes readout speeds even faster. The first mainstream Stacked CMOS camera, the Sony a9 from 2019, made waves by offering an interruption-free photographic experience—you can use it to fire off photos at 20fps without losing view of your scene.
 
-![Stacked pixel architecture explained.](images/sensors/03-sensor-stackedpixel.png){#fig-sensor-stacked width="50%"}
+
 
 ## Sensor components: Space {#sec-sensor-space}
 Conventional CMOS imagers include additional components that are critical for producing high quality images (@fig-pixel-overview). The microlens array and deep trench isolation both increase sensitivity and reduce unwanted crosstalk between the pixels. Spectral filters, which are included in sensors for consumer photography and many other types of cameras, are used to captur information about the scene spectral radiance. 
@@ -86,10 +95,6 @@ As pixel sizes became smaller, on the order of 1.5 or 1 micron, the impact of di
 **Deep trench isolation (DTI)** technology was developed to reduce this problem. Designers developed methods of placing trenches at the pixel margins and then filling the trenches with an insulating material (like silicon dioxide or nitride). This formed very thin walls within the pixel that would stop the radiation from spreading between pixels (@fig-sensor-deeptrench). Deep trench isolation improved both the spatial resolution and the color accuracy. 
 
 ![Deep trench isolation images.)](images/sensors/03-sensor-deeptrench.png){#fig-sensor-deeptrench width="50%"}
-
-Alternative DTI as well as BSI.
-
-![Alternative BSI image.](images/sensors/BSI_DTI_Pixel_Technology.png){#fig-sensor-evolution width="80%"}
 
 @Han2020-deeptrench
 @Tournier2011-deeptrench
