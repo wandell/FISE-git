@@ -52,9 +52,6 @@ To overcome these limitations, many vendors invented methods to build photodiode
 ![Deep photodiodes in the BSI. (a) A super pixel of a front-side illuminated CMOS sensor, including the microlenses, color filters, metal lines, and silicon. (b) A back-side illuminated super pixel with deep photodiode technology. Source: <a href="https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor/" target="_blank">Skhynix.</a>](images/sensors/03-sensor-bsi.png){#fig-sensor-skhynix width="70%"}
 
 ### Stacked sensor {#sec-sensor-stacked}
-
-
-
 In the original planar technology, photodiodes are adjacent to the transistor circuits within the silicon substrate. Thus, photodiodes must compete for space with the transistors.  Reducing the photodiode area means less light efficiency; reducing the transistor size means noisier performance. Youse pays yer money and yer makes yer choice.
 
 ![Pixels in the stacked sensor are based on die stacking technology. Several layers of silicon that are bonded and connected using Through-Silicon Via (TSV) technology. The technology began with 2-layers, but when have you ever known Silicon Valley to stop?](images/sensors/03-pixel-stacked.png){#fig-sensor-stacked width="50%"}
@@ -105,33 +102,41 @@ As pixel sizes shrank to around 1.5 microns or less, diffraction effects became 
 @Park2007-deeptrench -->
 
 ## Sensor components: Wavelength {#sec-sensor-wavelength}
-Silicon-based CMOS image sensors can detect photons with wavelengths shorter than about 1100 nm. However, the human eye is sensitive only to a narrower range, roughly 380 nm to 700 nm. For consumer photography, the goal is to capture images that appear natural to human observers, so sensors are designed to record light primarily within the visible spectrum. The human visual system samples this spectrum using three types of broadband photoreceptors, making it unnecessary for most cameras to capture more than three broad spectral bands.
+Silicon-based CMOS image sensors are sensitive to photons with wavelengths up to about 1100 nm. In contrast, the human eye detects only a narrower range, from roughly 380 nm to 700 nm. For consumer cameras, the goal is to capture images that look natural to people, so sensors are designed to record light mainly within the visible spectrum. Since human vision uses three types of broadband photoreceptors, most cameras only need to capture three broad spectral bands.
 
-To achieve this, two types of spectral filters are used in image sensors: one to block unwanted infrared and ultraviolet light, and another to divide the visible spectrum into three color channels. The resulting data are then processed to produce images that closely match human color perception. In this section, I describe these filters. After reviewing the relevant properties of human vision (@sec-human), I explain how sensor color channels are processed to render accurate or visually pleasing images (@sec-imgprocessing).
+To achieve this, image sensors use two types of spectral filters: one to block unwanted infrared (IR) and ultraviolet (UV) light, and another to divide the visible spectrum into three color channels. The resulting data are processed to produce images that closely match human color perception. In this section, I describe these filters. After reviewing the relevant properties of human vision (@sec-human), I explain how sensor color channels are processed to render accurate or visually pleasing images (@sec-imgprocessing).
 
 ### Spectral blocking filter {#sec-sensor-irfilter}
-Many consumer cameras incorporate a spectral filter that blocks wavelengths longer than 680-700 nm (infrared, **IR**) and shorter than 380-400 nm (ultraviolet, **UV**) from reaching the photodiode. These thin **UV/IR blocking filters** are integrated onto the sensor, above the microlenses (@fig-sensor-uvir)[^irfilters].
+Most consumer cameras include a spectral filter that blocks wavelengths longer than 680–700 nm (IR) and shorter than 380–400 nm (UV) from reaching the photodiode. These thin **UV/IR blocking filters** are placed above the microlenses on the sensor (@fig-sensor-uvir)[^irfilters].
 
-[^irfilters]: Although the filters block both UV and IR they are also called **IR blocking filters**. This might be because it is simpler and in some cases the UV light is already blocked by the glass material in the optics.]
+[^irfilters]: Although these filters block both UV and IR, they are often called **IR blocking filters**. This may be because the glass in the optics already blocks much of the UV light.
 
-![The UV/IR blocking filter are placed above the microlens. These filters allow only radiation visible to a person (light) to reach the photodiodes. Source: <a href="https://commons.wikimedia.org/wiki/File:Removed_EOS_350D_IR-blocking_filter.jpg" target="_blank">Source: Removed EOS 350D IR-blocking filter</a>](images/sensors/03-sensor-uvirfilter.png){#fig-sensor-uvir width="80%"} 
+![The UV/IR blocking filter is placed above the microlens. These filters allow only visible light to reach the photodiodes. Source: <a href="https://commons.wikimedia.org/wiki/File:Removed_EOS_350D_IR-blocking_filter.jpg" target="_blank">Removed EOS 350D IR-blocking filter</a>](images/sensors/03-sensor-uvirfilter.png){#fig-sensor-uvir width="80%"} 
 
-In the first few generations of cameras, the spectral filters had an additional laminated layer that blurred the image slightly. This **optical low pass filter (OLPF)** was included to make sure that light from a point in the scene would be spread over a small, say 2x2 array, of pixels. This blur is useful because adjacent pixelshave different color filters, but we combine their outputs and treat them as arising from a single point in the scene. In more recent generations, the pixel size has shrunk and is often below the spread due to diffraction (@fig-blur-comparison). Hence, the optics spreads the light from a point across multiple pixels and there is no need for the OLPF.
+Early digital cameras often included an additional laminated layer called an **optical low pass filter (OLPF)**, which slightly blurred the image. The OLPF ensured that light from a point in the scene would be spread over a small area (such as a 2x2 pixel region). This blur was useful because adjacent pixels have different color filters, but their outputs are combined and treated as coming from a single point in the scene. In recent cameras, pixel sizes have become so small that diffraction already spreads the light across multiple pixels (@fig-blur-comparison), making the OLPF unnecessary.
 
 ### Color filter array {#sec-sensor-cfa}
-Below the UV/IR blocking filter, color cameras have a **color filter array (CFA)** (@fig-pixel-layers). Typically, the array is comprised of three types of filters, arranged in a repeating pattern. The smallest repeating unit of the color filter array is called a **super pixel**. The pixels behind one of the color filter types forms a mosaic that samples the image.  Taken together, the pixels comprise four interleaved mosaics. Each of these spatial mosaics is usually called a **color channel**. 
+Below the UV/IR blocking filter, color cameras have a **color filter array (CFA)** (@fig-pixel-layers). Typically, the CFA consists of three types of filters arranged in a repeating pattern. The smallest repeating unit is called a **super pixel**. Pixels behind each filter type form a mosaic that samples the image, and together these mosaics create three interleaved **color channels**.
 
-It is common to have three channels, red, green and blue, in consumer photography. The most common super pixel pattern is made from two green filters, one red and one blue (@fig-cfa-pattern). This is called the Bayer pattern, to honor the person who patented this arrangement (@bayerColorImagingArray1976).
+For consumer photography, the most common CFA pattern is the Bayer pattern, which uses two green filters, one red, and one blue in each super pixel (@fig-cfa-pattern). This arrangement is named after its inventor (@bayerColorImagingArray1976).
 
 ![Bayer RGB pattern. Source: <a href="https://www.nature.com/articles/s41467-022-31019-7/figures/1" target="_blank">Pixel-level Bayer-type colour router based on metasurfaces, Zou et al. 2022</a>](images/sensors/03-sensor-cfapattern.png){#fig-cfa-pattern width="70%" fig-align="center"}
 
-The data from these interleaved mosaics is ordinarily combined into a full-color image that has a red,green and blue value at every location. This processing is called **demosaicking**.  When images are coarsey sampled, demosaicking is important.  But for modern sensors, which have a very large number of small pixels, and the entire super pixel is within the pointspread function of the lens, demosaicking becomes less important.
+::: {#sensor-bayer .callout-note collapse="true"}
+## The Bayer pattern
+Say something about human vision motivation.
 
-@fig-cfa-spectral shows the spectral transmission of three color filters from a consumer camera. Different spectral filters, and even different physical methods, are used in other applications, say, for medical, scientific, or industrial cameras.
+Also, isn't there another Bryce Bayer related patent?  Maybe for displays or printers or something?
 
-![Spectral sensitivity of the color filters alone. Notice that the red filter passes long wavelength light (IR). Light beyond 680nm, however, does not reach the photodiode because it is blocked by the UV/IR filters. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>](images/sensors/03-sensor-cfaspectral.png){#fig-cfa-spectral width="70%" fig-align="center"}
+:::
 
-The spectral sensitivity of a color channel does not depend on the color filter alone. The light must pass through the lens, the UV/IR filter, the microlens, the color filter, and then be absorbed in the silicon.  Each of these components can have an impact on the likelihood of a photon being absorbed, and their combination is what determines the spectral responsivity of the color channel.
+The data from these mosaics are combined to create a full-color image with red, green, and blue values at every pixel location. This process is called **demosaicking**. Demosaicking is especially important when images are coarsely sampled. For modern sensors with many small pixels—where the entire super pixel fits within the lens point spread function—demosaicking becomes less critical.
+
+@fig-cfa-spectral shows the spectral transmission of three color filters from a consumer camera. Different spectral filters and physical methods are used in other applications, such as medical, scientific, or industrial cameras.
+
+![Spectral sensitivity of the color filters alone. Notice that the red filter passes long-wavelength light (IR). Light beyond 680 nm, however, does not reach the photodiode because it is blocked by the UV/IR filters. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>](images/sensors/03-sensor-cfaspectral.png){#fig-cfa-spectral width="70%" fig-align="center"}
+
+The spectral sensitivity of a color channel depends on more than just the color filter. Light must pass through the lens, the UV/IR filter, the microlens, the color filter, and finally be absorbed in the silicon. Each component affects the probability that a photon is absorbed, and their combined effect determines the overall spectral responsivity of the color channel.
 
 ![Spectral sensitivity of the color channels in a typical modern sensor.](images/sensors/03-sensor-channel-spectral.png){#fig-channel-spectral width="70%" fig-align="center"}
 
