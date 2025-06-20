@@ -127,7 +127,6 @@ Stacked CMOS chips improve upon the BSI CMOS concept. They place components in a
 Conventional CMOS imagers include additional components that are critical for producing high quality images (@fig-pixel-overview). The microlens array and deep trench isolation both increase sensitivity and reduce unwanted crosstalk between the pixels. Spectral filters, which are included in sensors for consumer photography and many other types of cameras, are used to captur information about the scene spectral radiance. 
 
 ### Microlens arrays {#sec-sensor-microlens}
-
 The microlens array is a layer of tiny lenses placed above the color filter array. These lenses serve to redirect the light from the main lens onto the photodiode, increasing the light-gathering efficiency. The microlens also reduces **pixel cross-talk**. This refers to the case in which light from the imaging lens might arrive at a relatively large angle at the color filter. A ray may end up generating electrons in a pixel that has a different color filter. Over time, microlens arrays have evolved to support additional functions, such as optimizing focus and enabling advanced imaging techniques for light field capture that I describe later.
 
 ![Electron micrograph cross section illustrating the position of the color filters and microlenses above the photodiode (from @elgamalCMOSImageSensors2005)](images/sensors/03-microlens-cfa-SEM.png){#fig-components-microlens width="60%"}
@@ -167,27 +166,28 @@ Early digital cameras often included an additional laminated layer called an **o
 ### Color filter array {#sec-sensor-cfa}
 Below the UV/IR blocking filter, color cameras have a **color filter array (CFA)** (@fig-pixel-layers). Typically, the CFA consists of three types of filters arranged in a repeating pattern. The smallest repeating unit is called a **super pixel**. Pixels behind each filter type form a mosaic that samples the image, and together these mosaics create three interleaved **color channels**.
 
-For consumer photography, the most common CFA pattern is the Bayer pattern, which uses two green filters, one red, and one blue in each super pixel (@fig-cfa-pattern). This arrangement is named after its inventor (@bayerColorImagingArray1976).
+For consumer photography, the most common CFA pattern is the Bayer pattern [-@bayerColorImagingArray1976], which uses two green filters, one red, and one blue in each super pixel (@fig-cfa-pattern). The data from these mosaics is combined to create a full-color image with red, green, and blue values at every pixel location. This process is called **demosaicking**. 
 
-![Bayer RGB pattern. Source: <a href="https://www.nature.com/articles/s41467-022-31019-7/figures/1" target="_blank">Pixel-level Bayer-type colour router based on metasurfaces, Zou et al. 2022</a>](images/sensors/03-sensor-cfapattern.png){#fig-cfa-pattern width="70%" fig-align="center"}
+![Bayer RGB pattern. Source: <a href="https://www.nature.com/articles/s41467-022-31019-7/figures/1" target="_blank">Pixel-level Bayer-type colour router based on metasurfaces, Zou et al. 2022</a>](images/sensors/03-sensor-cfa-pattern.png){#fig-cfa-pattern width="60%" fig-align="center"}
 
 ::: {#sensor-bayer .callout-note collapse="true"}
 ## The Bayer pattern
-Say something about human vision motivation.
+<a href="https://en.wikipedia.org/wiki/Bryce_Bayer" target="_blank">Bryce Bayer</a> was a researcher at Kodak Research Labs and the inventor of the Bayer color filter array. 
 
-Also, isn't there another Bryce Bayer related patent?  Maybe for displays or printers or something?
+Kodak was among the first companies to design and market digital cameras. In the mid-1960s, Bayer’s group worked alongside another team focused on psychophysics and human color perception. The Bayer filter was designed to mimic aspects of human vision: specifically, it uses twice as many green filters as red or blue, reflecting the human eye’s greater spatial resolution to these wavelengths.
 
+In March 1975, Kodak filed a patent application titled "Color imaging array," naming Bayer as the sole inventor. The patent (U.S. 3,971,065, issued July 1976) became foundational for digital imaging. Kodak typically licensed its patents as a bundle, with the Bayer filter patent being a key part of this portfolio. While it is difficult to assign a specific value to this single patent, it contributed significantly to the value of Kodak’s licensing program, which generated billions of dollars. Despite this, Kodak ultimately struggled to adapt to the digital era (@sec-preface-film).
 :::
 
-The data from these mosaics are combined to create a full-color image with red, green, and blue values at every pixel location. This process is called **demosaicking**. Demosaicking is especially important when images are coarsely sampled. For modern sensors with many small pixels—where the entire super pixel fits within the lens point spread function—demosaicking becomes less critical.
+Demosaicking is important when a sensor has relatively large pixels and thus the images are coarsely sampled. For modern sensors with many small pixels—where the entire super pixel fits within the lens point spread function—demosaicking is less critical. We will analyze the impact of demosaicking and pixel size in @sec-imgprocessing.
 
-@fig-cfa-spectral shows the spectral transmission of three color filters from a consumer camera. Different spectral filters and physical methods are used in other applications, such as medical, scientific, or industrial cameras.
+@fig-cfa-spectral shows the spectral transmission of three color filters from a consumer camera. Over the years, the number of different color filters used in color photography has converged onto a relatively small set with common properties (@tominagaMeasurementEstimationSpectral2021). Different spectral filters and physical methods for sampling the spectrum are used in for other applications, such as medical, scientific, or industrial cameras.
 
-![Spectral sensitivity of the color filters alone. Notice that the red filter passes long-wavelength light (IR). Light beyond 680 nm, however, does not reach the photodiode because it is blocked by the UV/IR filters. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>](images/sensors/03-sensor-cfaspectral.png){#fig-cfa-spectral width="70%" fig-align="center"}
+![Spectral transmission profiles typical color filters. Notice that the red filter passes long-wavelength light (IR). But light beyond 680 nm does not reach the photodiode because it is blocked by the UV/IR filter. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>](images/sensors/03-sensor-cfa-spectral.png){#fig-cfa-spectral width="70%" fig-align="center"}
 
-The spectral sensitivity of a color channel depends on more than just the color filter. Light must pass through the lens, the UV/IR filter, the microlens, the color filter, and finally be absorbed in the silicon. Each component affects the probability that a photon is absorbed, and their combined effect determines the overall spectral responsivity of the color channel.
+The spectral sensitivity of a color channel depends on the entire light path, not just the color filter. The sensitivity depends on the light transmitted by the lens, the UV/IR filter, the microlens, the color filter, and finally the spectral quantum efficiency of the photodiode. Each of these components can affect the probability that a photon is absorbed; their combined effect determines the overall spectral responsivity of the color channel.
 
-![Spectral sensitivity of the color channels in a typical modern sensor.](images/sensors/03-sensor-channel-spectral.png){#fig-channel-spectral width="70%" fig-align="center"}
+![Spectral quantum efficiency sensitivity of three color channels in a typical modern sensor.  The channel properties are determined by the combination of media in the light path.](images/sensors/03-sensor-channel-spectral.png){#fig-channel-spectral width="70%" fig-align="center"}
 
 
 <!--  -->
