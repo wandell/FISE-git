@@ -1,4 +1,4 @@
-# Sensor systems
+# Subsystems {#sec-sensor-systems}
 Images are captured under a wide variety of conditions, and there is no single set of parameters—such as focus, exposure time, or sensor gain—that guarantees high-quality results in every situation. To address this, sensors are equipped with control systems that automatically adjust acquisition parameters. These systems help prevent pixel saturation, reduce image noise, and set optical properties like focal plane and depth of field. In computer vision applications, such as robotics or autonomous driving, these control systems are essential for obtaining reliable quantitative data. In consumer photography, they assist users in quickly achieving settings that produce visually appealing images.
 
 The sensor control systems are typically implemented by the commercial vendors. The general principles of these control methods can be described, but the specific implementations can be quite complex, with many parameters, and are trade secrets. Moreover, the control systems themselves need to be adjusted in various ways that depend on the details of the optics and sensor in the camera. This section describes the principles of the control systems.  It is my view that there are opportunities to develop better open standards for designing and evaluating these control systems through simulation. 
@@ -6,31 +6,58 @@ The sensor control systems are typically implemented by the commercial vendors. 
 ## Focus
 In some imaging applications, the lens position can be fixed. For example, consider an autonomous driving system where the camera is designed to detect vehicles or pedestrians at distances greater than 3 meters. With a focal length of 30 mm, the ideal sensor-to-lens distance for objects beyond 3 meters varies only slightly—from $\frac{300}{299} \times 25$ mm to 25 mm—about $83 \mu \text{m}$. Over this range, image sharpness remains nearly constant, with the effect depending mainly on the aperture size (see @sec-optics-dof). In such cases, the lens can be set to focus at infinity, and no adjustment is needed.
 
-However, in many other imaging systems, the camera must adjust the lens position to bring objects at different distances into focus. This is especially important in consumer photography, such as for close-up portraits or images of nearby objects. Traditionally, users manually focused cameras by looking through a viewfinder and turning a focus ring until the image appeared sharp. Over time, manufacturers developed mechanisms and algorithms to automate this process, typically assuming that the subject near the center of the image should be in focus.
+However, in many other imaging systems, the camera must adjust the lens position to bring objects at different distances into focus. This is especially important in consumer photography, for close-up portraits or enabling the photography to put some objects into focus while blurring the background. 
 
-In classic SLR and DSLR cameras, focusing was achieved mechanically, often using a ring that the user could rotate (@fig-sensor-vcm). These lenses were usually rotationally symmetric, so turning the ring both rotated the lens and moved it closer or farther from the sensor. Most camera lenses are multi-element designs; sometimes all elements move together, but often only a subset shifts to adjust focus. The thread pitch of the focus ring determines how finely the position can be adjusted.
+### Lens positioning: SLR and DSLR {#sec-lens-positioning-slr}
+In **single-lens reflex (SLR)**  and digital SLR (DSLR) cameras focusing was achieved mechanically. The imaging lens -typically comprising multiple lenses and called either multi-element optics or a lens assembly-  was mounted on a screw thread. The position of some of the lenses could be adjusted by rotating the assembly along the thread. These lenses were rotationally symmetric, so the rotation was irrelevant to the image quality. The thread pitch of the screw determined how finely the position can be adjusted. 
 
-For smartphones and other compact devices, a different approach is required due to space constraints. These cameras also use multi-element lenses, but the assemblies are much smaller. Focus is commonly controlled by a voice coil motor (VCM), which is reliable, inexpensive, and widely used in the industry.
+SLR camera bodies and lenses were relatively large. I lugged quite a few of them around on trips. For my wife. Moving the entire assembly back and forth was challenging. This was called the **unit focusing** design. To lighten the load, lens designers created systems that could change the focus by moving only a small, relatively light, subgroup of lenses within the assembly. If the lenses were in the middle of the assembly, this was called **internal focusing**, and if the lenses were at the read this was called **rear focusing**. This had several advantages.
 
-![Cell phone optics. The optics themselves are very compact but still multi-element. The position of the optics is usually controlled by a voice-coil motor.](images/sensors/03-sensor-vcm.png){#fig-sensor-vcm}
+* **Faster and Quieter Autofocus:** Moving a smaller, lighter group of elements requires a much smaller, less powerful motor. This allows for significantly faster, quieter, and more energy-efficient autofocus performance, which is critical for tracking moving subjects.
+* **Constant Lens Length:** Because all the movement happens inside the sealed barrel, the overall physical length of the lens does not change during focusing. This improves the balance and handling of the camera and lens combination.
+* **Non-Rotating Front Element:** The front of the lens does not move or rotate. This is a huge advantage when using filters like **polarizers** or **graduated neutral density filters**, which must be kept in a specific orientation to work correctly.
+* **Improved Optical Performance:** By freeing designers from the constraint of moving the entire optical block, internal focusing allows for more complex and better-corrected optical formulas. It can lead to sharper images and better close-focusing capabilities.
+
+Moving only a small, internal group of lens elements is a sophisticated design that is fundamental to the performance of modern autofocus lenses.
+
+::: {#sensor-slr .callout-note collapse="true" title="Single-lens reflex"}
+SLR cameras were the coolest ones when I was middle-aged.  The SLR design replaced the **rangefinder** approach.
+A rangefinder camera has two separate optical paths:
+
+* The "Taking" or "Imaging" Lens: This is the main lens that focuses the image onto the film or sensor. You do not look through this lens.
+* The Viewfinder Window: This is a separate, small window on the camera body that you look through to compose your shot.
+
+There were often slight differences between the view through the lens and the view through the viewfinder, and this added to the challenge of using these cameras well.
+
+![Overview of an SLR and its subsystems](images/sensors/03-sensor-slr.png){#fig-sensor-slr width="60%"}
+
+The SLR breakthrough was that it used a single optical path through the lens assembly for view finding, autofocus, and capturing the image (hence, "single lens"). The light after the lens assembly would pass through a beam splitter, which directs about 70% of the light to the viewfinder and the rest to the autofocus subsystem. The beam splitter usually takes the form of a semi-transparent "reflex" mirror. When it was time to capture the image, the mirror would be moved out of the light path allowing all the light to form an image on the film (SLR) or digital sensor (DSLR) (@fig-sensor-slr).
+
+The SLR design also lets the user separately control the size of the aperture, and this has an impact on the depth of field (@sec-optics-dof).  An advantage of the SLR design is that you can see the depth of field narrow or increase in the viewfinder of the SLR design.
+
+:::
+
+### Lens positioning: mobile devices {#sec-lens-positioning-mobile}
+Smartphones and other compact devices required a different approach due to space constraints. These cameras also use multi-element lenses, but they are much smaller. Focus is commonly controlled by a voice coil motor (VCM), which is reliable, inexpensive, and widely used in the industry (@fig-sensor-vcm).
+
+![Cell phone optics. The optics themselves are very compact but still multi-element. The position of the optics is usually controlled by a voice-coil motor.](images/sensors/03-sensor-vcm.png){#fig-sensor-vcm width="60%"}
 
 There is also a growing market for lens positioning using Micro-Electro-Mechanical Systems (MEMS) devices. MEMS actuators offer advantages such as low power consumption, fast response, and miniaturization, making them attractive for mobile imaging systems.
 
-![A video showing lens assembly position controlled by a MEMS device.](videos/sensors/MEMS-autofocus.mov){#fig-sensor-mems width="60%"}
+![A video showing lens assembly position controlled by a MEMS device.](videos/sensors/MEMS-autofocus.mov){#fig-sensor-mems width="70%"}
 
 Conceptually, autofocus methods share similarities with techniques for estimating object distance. Both rely on understanding the optical light field (@sec-optical-lightfield). While the implementation of autofocus algorithms has evolved significantly in recent years, the underlying physical principles remain the same. We begin with the classic autofocus mechanism and then describe more recent implementations that are integrated directly into CMOS sensors.
 
 <!-- liquid lens callout here? -->
 
 ### Phase detection autofocus {#sec-phasedetection-autofocus}
+@fig-focusprinciples-classic shows a system for phase detection autofocus (PDAF). It illustrates the rays from a small object, near the lens, on the principal optical axis (horizontal black line). Because the point is reasonably close, the incident light field rays are diverging.  The rays incident at the top of the aperture are shown as red and those at the bottom as green. If the point is brought to a good focuse, these rays will converge to a small spot on the sensor.  The autofocus system shown here, which uses a mirror to send the rays to a pair of detectors, is designed to measure whether the rays from the top and bottom of the lens will meet at the sensor. 
 
-![Classical autofocus mechanism.](images/sensors/03-focusprinciples-2.png){#fig-focusprinciples-classic width="60%"}
+![Phase detection autofocus, as invented in the 1970s. ](images/sensors/03-focusprinciples-2.png){#fig-focusprinciples-classic width="60%"}
 
-@fig-focusprinciples-classic shows a classic phase detection autofocus (PDAF) system. Rays from a point object on the lens axis (horizontal black line) pass through different parts of the lens aperture—some from the top (red), some from the bottom (green). If the lens is correctly focused, these rays converge to form a sharp spot on the sensor.
+In this design, a mirror behind the main lens directs the rays from the top and bottom of the lens to two separate microlenses. Each microlens focuses the rays onto a linear sensor array. The microlens and sensor positions are arranged so that when the image is in focus, both the light arriving at both linear arrays will be centered. If that is the case, we have good focus.  The system might then move the mirror out of the way, allowing the sensor to capture the image.
 
-The autofocus system measures whether the rays from the top and bottom of the lens would meet at the same point on the sensor. In this classic design, a mirror behind the main lens splits the light, directing rays from the top and bottom of the lens to two separate microlenses. Each microlens focuses the rays onto its own linear sensor array. When the image is in focus, both arrays receive light at their centers. The mirror then moves out of the way, allowing the camera to capture the image.
-
-If the image is out of focus, the rays from the top and bottom of the lens are displaced from the centers of their respective arrays, but in opposite directions. The distance between these positions—the phase difference—indicates how much the lens needs to be adjusted to achieve focus. The camera uses this information to move the lens and bring the image into focus. This method, known as **phase detection autofocus (PDAF)**, became a key feature in single-lens reflex (SLR) cameras.
+If the image is out of focus, the rays from the top and bottom of the lens are displaced from the centers of their respective arrays. The relative position of the rays in the two arrays provides information about the defocus. The distance between these positions—called the phase difference—indicates how the lens needs to be adjusted to achieve focus. The autofocus subsystem uses this information to move the lens and bring the image into focus. This method, known as **phase detection autofocus (PDAF)**, became a key feature in single-lens reflex (SLR) cameras.
 
 However, this approach has limitations. The mirror, microlenses, and sensor arrays form a relatively large and complex mechanical system, making it unsuitable for compact devices like smartphones. Also, this system only allows either focusing or image capture at one time, not both simultaneously. Later technologies addressed these issues.
 
@@ -51,55 +78,15 @@ In 2014 a method for  idea emerged that was based on the same physical principle
 
 Next image will explain the phase detection from within the sensor.  Microlenses.  Dual pixel.  Shifted images.
 
+::: {#sensor-dpaf .callout-note collapse="false" title="Dual pixel autofocus: Canon"}
 
-::: {#sensor-dpaf .callout-note collapse="false" title="Dual pixel autofocus: Canon and then Sony"}
-Canon is widely recognized as the **originator and first implementer of Dual Pixel Autofocus (DPAF)**:
+<!-- CHATGPT:  FISE-Sensor/Phase Detection Autofocus -->
 
----
-
-## 🏆 Canon: The Pioneer
-
-* Canon **introduced DPAF** with the **EOS 70D in 2013**, building on earlier hybrid PDAF/live-view systems like the EOS 650D/T4i-D ([en.wikipedia.org][1]).
-* Official Canon documentation confirms that **each pixel** on a DPAF sensor has **two photodiodes under one microlens**, enabling on-sensor phase detection and fast, smooth autofocus—especially for video ([usa.canon.com][2]).
-* Canon credits itself as the **inventor of DPAF**, a sentiment echoed by multiple sources:
-
-  > "Dual pixel autofocus was invented by Canon and implemented into most of their cameras since 2013." ([wedio.com][3])
-
----
-
-## 🇯🇵 Sony: A Later Entrant
-
-* Sony has explored a similar **dual‑pixel sensor design**, with patent filings surfacing around **2017** suggesting they were working on their version of DPAF ([thenewcamera.com][4]).
-* As of now, Sony's development remains **mostly in the patent stage**, with no widely deployed, Canon‑style DPAF system in their mirrorless cameras yet.
-* Sony’s on-chip autofocus efforts include **"dual-PD" and "All-pixel AF"** technologies for mobile and sensor markets—but these appear to be **parallel or derivative efforts**, not the original innovation ([news.ycombinator.com][5], [sony-semicon.com][6]).
-
----
-
-## ✔️ Summary
-
-| Company   | Contribution to DPAF | First Implementation               |
-| --------- | -------------------- | ---------------------------------- |
-| **Canon** | Inventor and pioneer | EOS 70D (2013)                     |
-| **Sony**  | Patent development   | Post‑2017, no major deployment yet |
-
-**Canon clearly led the way**, both in defining the technology and bringing it to market, while **Sony's efforts came later**, largely confined to patents and internal development.
-
-So, in answer to your question: **Canon had the idea and was first to implement DPAF**, and Sony followed with their own patents afterward.
-
-If you’d like, I can dig up specific patent dates or technical comparisons!
-
-[1]: https://en.wikipedia.org/wiki/Digital_single-lens_reflex_camera?utm_source=chatgpt.com "Digital single-lens reflex camera"
-[2]: https://www.usa.canon.com/learning/training-articles/training-articles-list/intro-to-dual-pixel-autofocus-dpaf?srsltid=AfmBOoqOWeeB-2AQBm2LizJeHJ2uveINYldthZ42JKCKcq6rH2gB1WmZ&utm_source=chatgpt.com "Intro to Dual Pixel Autofocus (DPAF) | Canon U.S.A., Inc."
-[3]: https://www.wedio.com/en/learn/dual-pixel-autofocus?srsltid=AfmBOopVRX9n7uQ9QkrnvO_jC0hzekwh2eodH0tQjFG8Hq2OT-ps3IP_&utm_source=chatgpt.com "Dual Pixel Autofocus | What It Is & 15 Canon Cameras - Wedio"
-[4]: https://thenewcamera.com/sony-working-on-dual-pixel-cmos-af-tech/?utm_source=chatgpt.com "Sony Working on Dual-Pixel CMOS AF Tech - NEW CAMERA"
-[5]: https://news.ycombinator.com/item?id=27783587&utm_source=chatgpt.com "Mirrorless cameras with phase detection have actually existed for a ..."
-[6]: https://www.sony-semicon.com/en/technology/mobile/autofocus.html?utm_source=chatgpt.com "All-pixel Auto Focus (AF) Technology | Image Sensor for Mobile"
-
-
+Canon **introduced DPAF** with the **EOS 70D in 2013**, building on earlier hybrid PDAF/live-view systems like the EOS 650D/T4i-D.  This technology is now widespread, with vendors from Sony to Omnivision both shipping sensors with **two photodiodes under one microlens**. This enables on-sensor phase detection and fast, smooth autofocus—especially for video ([usa.canon.com][2]).
 :::
 
 ## Exposure and gain control
-If we integrate for a long time, the image will saturate.  If we image for too short, we get few and thus noisy photon-limited images.  Selecting a good exposure duration is important.
+If the camera integrates photons over a long period of time, the electron well at can fill up. If the well is filled, the voltage from the pixel is said to be **saturated**.  Conversely, if the camera integrates over a short period of time, given the scene intensity, there will only be a few electrons in the well. These number might be small compared to the number of electrons generated by intrinsic camera noise.  Also, the Poisson noise means that the signal-to-noise for a small number of electrons will be poor. Hence, it is important to select a good exposure duration to avoid noise and saturation.
 
 ### Classic exposure 
 
