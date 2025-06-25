@@ -6,9 +6,21 @@ The sensor control systems are typically implemented by the commercial vendors. 
 ## Focus
 For certain image systems applications the lens position can be fixed. For example, suppose you are designing an imaging system for an autonomous driving application and the camera is intended to identify vehicles or vulnerable road users that are at least 3 meters away. The focal length of the camera might be, say 30 mm.  Recall from @eq-focaldistance, the ideal focal distance to objects beyond 3 meters will have a very small range, from $\frac{300}{299} 25$ to $25 \text{mm}$, which is about $83 \mu \text{m}$. The sharpness of the image over that range will not change much - the impact will depend on the size of the aperture (@sec-optics-dof). Thus, the lens can be placed to bring object at a large distance into focus.
 
-For many other image systems a camera system must be able to adjust the lens position so that image of interest is in focus at the sensor. This is common in consumer photography, say when making a close-up portrait or capturing an image of an object of interest that is relatively close to the camera.  For many generations of cameras focus was managed manually by the user, who would look through a view finder and move the lens by hand until the image looked sharp. But over time, vendors have generated many devices and algorithms that automatically adjust the lens position on the assumption that objects near the center of the image are intended to be in focus.
+For many other image systems a camera system must be able to adjust the lens position so that image of interest is in focus at the sensor. This is common in consumer photography, say when making a close-up portrait or capturing an image of an object of interest that is relatively close to the camera.  For several generations, cameras focus was managed manually by the user, who would look through a view finder and move the lens by hand until the image looked sharp. But over time, vendors have generated many devices and algorithms that automatically adjust the lens position on the assumption that objects near the center of the image are intended to be in focus.
 
-The algorithms for focusing are closely coupled to algorithms for estimating object distance.  The physical principles of the measurements needed to control focus are require an understanding of the optical lightfield (@sec-optical-lightfield). The implementation of these autofocus algorithms has changed dramatically over the last 15 years, but the underlying physical principles are the same.  We begin with the classic mechanism, and then explain the more recent implementations.
+Shifting the position of a large lens in a classic SLR or digital SLR (DSLR) camera could be managed by a mechanical system involving [a ring that the user could turn](https://richardhaw.com/2017/10/21/repair-infinity-focus-calibration-12/). First, remember that these optics were nearly always designed to be rotationally invariant; turning the ring would both rotate the optics and shift its distance from the film or digital sensor. Generally, these cameras had multi-element optics. In a few cases all the elements would shift together, but more commonly the optics is designed so that the focal distance was controlled by shifting only a [subset of the lenses](https://www.thedigitalprocess.com/free-photography-lessons-level-2/how-cameras-focus-a-guide/). The thread on the screw determined the fineness of the position adjustment.
+
+For cell phones, with their very small form factor, another solution was needed. The optics in these image systems are also multi-element, but typically they are very small.  It was very common to control the lens assembly using a voice coil motor (@fig-sensor-vcm). These motors have been very reliable in XXX industry and can be made cheaply.
+
+![Cell phone optics.  The optics themselves are very compact but still multi-element.  The position of the the optics is usually controlled by a voice-coil motor.](images/sensors/03-sensor-vcm.png){#fig-sensor-vcm}
+
+There has also been a large market for lens positioning using Micro-Electro-Mechanical Systems (MEMS) devices.  The advantage of these devices is something?   Say more here.  
+
+![A video showing lens assembly position controlled by a MEMS device.](videos/sensors/MEMS-autofocus.mov){#fig-sensor-mems width="60%""}
+
+Conceptually, autofocus methods have much in common with methods for estimating object distance. In both cases, the physical principles of the measurements benefit from understanding the optical lightfield (@sec-optical-lightfield). The implementation of these autofocus algorithms has changed dramatically over the last 15 years, but the physical principles are the same.  We begin with the classic autofocus mechanism, and then explain more recent implementations that are integrated with CMOS sensors.
+
+<!-- liquid lens callout here? -->
 
 ### Phase detection autofocus {#sec-phasedetection-autofocus}
 
@@ -31,7 +43,7 @@ Leica had previously patented a different autofocus method based on contrast det
 :::
 
 ### Dual pixel autofocus {#sec-dualpixel-autofocus}
-Autofocus is important for consumer photography.  The classic PDAF subsystem did not fit well into the cell phone form factor, forcing cell phone vendors to use signal processing methods or user interventions to set the focus. The signal processing methods were based on examining the image contrast near edges prior to acquisition.  An in focus image should have a sharp edge, and the methods would adjust the lens position to increase edge contrast.
+Because the classic phase detection autofocus subsystem does not fit well with the very small cell phone form factor, vendors tried other methods to help adjust the focus.  Mainly, these were signal processing methods coupled with user input that would set the focus. The signal processing methods were based on examining the image contrast near edges prior to acquisition.  An in focus image should have a sharp edge, and the methods would adjust the lens position to increase edge contrast.
 
 In 2014 a method for  idea emerged that was based on the same physical principles as phase detection, but this time integrated into the CMOS sensor directly.  This technique is called **dual pixel autofocus (DPAF)**.
 
