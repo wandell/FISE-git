@@ -2,7 +2,15 @@
 A book based on my Stanford class with Joyce Farrell (Psych 221)
 
 ## Quarto (from Posit)
-The book is written using the [Quarto tools](https://quarto.org/).  My attempts to control the tools are described below.  Still learning.
+The book is written using the [Quarto tools](https://quarto.org/).  
+
+* Go to https://quarto.org/download/.
+* Download the installer.
+* Run the installer and follow the instructions.
+
+After installation, verify by opening Command Prompt or PowerShell and typing "quarto check"
+
+My attempts to control the Quarto and VSCode tools are described below.  Still learning.
 
 ## vscode (from uSoft)
 The software for writing the book is implemented within [vscode](https://code.visualstudio.com/download).

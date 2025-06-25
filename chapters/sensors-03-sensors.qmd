@@ -1,10 +1,10 @@
 # Sensors {#sec-sensors}
 
-We have been considering the properties of the CMOS imager one pixel at a time. In this section, we consider properties of the array, such as variations between pixels, the color filter array, and the microlens array. First, I describe the basic principles—the foundations—of sensors. Then, I describe recent innovations in pixel and sensor circuitry, which is an active and fascinating field.
+The discussion so far has focused on the properties of CMOS imagers at the level of individual pixels. This section shifts the perspective to the sensor array as a whole, exploring how pixel-to-pixel variations, the color filter array, and the microlens array influence overall performance. It begins with the foundational principles of sensor operation and then highlights recent innovations in pixel and sensor circuitry—a rapidly evolving and fascinating field. These array-level effects can limit image quality, especially in low-light or high-dynamic-range scenes.
 
 ## Sensor noise {#sec-sensor-noise}
 
-When manufacturing an array comprising millions of pixels, there will be minor differences between them. For example, the area of the photodiode might differ, or the capacitance of the floating diffusion node, or perhaps the material doping concentration. There is not a lot of variation—foundries are amazing—but there will be some. Because these are variations between the pixels, they are called **sensor noise**. Some of these variations do not change over time; for example, the relative photodiode area of different pixels. Thus, these variations are called **fixed pattern noise (FPN)**.
+When manufacturing an array comprising millions of pixels, there will be minor differences between them. For example, the area of the photodiode might differ, or the capacitance of the floating diffusion node, or perhaps the material doping concentration. Although modern foundries achieve remarkable uniformity, some variation is inevitable. These are variations between pixels and are often referred to as **sensor noise**. Some of these sensor variations do not change over time; for example, the relative photodiode area of different pixels. These variations across the sensor are called **fixed pattern noise (FPN)**.
 
 ![Sensor fixed pattern noise. On average, the pixel response is linear, but manufacturing variations introduce slight differences in the offset and slope. Dark signal nonuniformities (DSNU) are variations in the offset. These can be due to different amounts of dark current or unaccounted for bias in the reset noise. Photoresponse nonuniformities (PRNU) are variations in the slope of the response. These can be due to differences in the photodiode area or in the transparency of the path from the imaging lens to the pixel.](images/sensors/03-sensor-noise.png){#fig-sensor-noise width="60%"}
 
@@ -18,7 +18,9 @@ The **photoresponse nonuniformity (PRNU)** refers to the variation in the slope 
 
 ## Evolution of pixel structures {#sec-sensor-evolution}
 
-The original sensor stack is called front-side illumination (FSI), in which multiple metal layers are located above the semiconductor substrate (@fig-pixel-layers). Even at the time of the original implementation, it was clear that forcing light to pass through the metal layers to reach the light-sensitive photodiode created many problems. Additionally, both the photodiodes and their associated circuitry share the same substrate, so that the circuitry reduced the area of the photodiode.
+There has been a large engineering effort to reduce various sources of noise, including temporal and fixed pattern noise, as well as other limitations in the sensor design relating to color and dynamic range. The engineering effort was supported by the enormous demand for CMOS sensors. In 2020, approximately 6.5 billion sensors were shipped.  In 2025, we expect about 13 billion sensors to be produced. That's a lot of sensors and the demand motivates a lot of engineering. This section covers the evolution of the pixel and sensor design.
+
+The original sensor architecture, known as front-side illumination (FSI), places multiple metal layers above the semiconductor substrate (@fig-pixel-layers). Even at the time of the original implementation, it was clear that forcing light to pass through the metal layers to reach the light-sensitive photodiode created many problems. Additionally, both the photodiodes and their associated circuitry share the same substrate, so that the circuitry reduced the area of the photodiode.
 
 <!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
 https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor
@@ -109,32 +111,27 @@ The **stacked sensor** design directly addresses the trade-off between the light
 
 Placing the photodiode and circuitry on different layers means they no longer compete for space.  This approach both improves light sensitivity and also establishes the foundation for stacking additional processing circuitry beneath the photodiode layer. 
 
-
-<!-- Stacked Pixel Structures Google doc 
+<!-- Stacked Sensor Structures Google doc 
 A significant step towards multi-layer integration was taken by Mitsumasa Koyanagi of Tohoku University, who pioneered the technique of wafer-to-wafer bonding with TSV in 1989
 -->
 
-
 ::: {.callout-note title="Stacked sensor applications" collapse="true"}
-
 This stacked sensor expanded the capabilities of image sensors well beyond basic light capture, enabling advanced features such as high dynamic range (HDR) video, faster frame rates, and the integration of on-chip artificial intelligence (AI) processing.
 
 Stacked CMOS chips improve upon the BSI CMOS concept. They place components in a similar arrangement, but the design also stacks the image signal processor and its ultra-fast DRAM memory into the same silicon. This makes readout speeds even faster. The first mainstream Stacked CMOS camera, the Sony a9 from 2019, made waves by offering an interruption-free photographic experience—you can use it to fire off photos at 20fps without losing view of your scene.
-
 :::
 
 ## Sensor components: Space {#sec-sensor-space}
 Conventional CMOS imagers include additional components that are critical for producing high quality images (@fig-pixel-overview). The microlens array and deep trench isolation both increase sensitivity and reduce unwanted crosstalk between the pixels. Spectral filters, which are included in sensors for consumer photography and many other types of cameras, are used to captur information about the scene spectral radiance. 
 
 ### Microlens arrays {#sec-sensor-microlens}
-
 The microlens array is a layer of tiny lenses placed above the color filter array. These lenses serve to redirect the light from the main lens onto the photodiode, increasing the light-gathering efficiency. The microlens also reduces **pixel cross-talk**. This refers to the case in which light from the imaging lens might arrive at a relatively large angle at the color filter. A ray may end up generating electrons in a pixel that has a different color filter. Over time, microlens arrays have evolved to support additional functions, such as optimizing focus and enabling advanced imaging techniques for light field capture that I describe later.
 
 ![Electron micrograph cross section illustrating the position of the color filters and microlenses above the photodiode (from @elgamalCMOSImageSensors2005)](images/sensors/03-microlens-cfa-SEM.png){#fig-components-microlens width="60%"}
 
 At the center of the sensor array, the incidence of the chief ray from the center of the lens is close to perpendicular to the photodiode array. There, a lens centered above the photodiode works well to simply concentrate the rays. At the edges of the array, however, the angle of the chief ray is relatively steep, say 35 degrees. To redirect the rays toward the photodiode, the microlens and the color filter are shifted laterally. The decentering of the microlens and color filters improves the redirection the rays so that more light arrives at the proper photodiode, and less light is incorrectly absorbed by adjacent photodiodes.
 
-![De-centering the microlens and color filter above photodiodes at the sensor edge)](images/sensors/03-microlens-shifted.png){#fig-components-shiftedmicrolens width="100%"}
+![Geometric logic for de-centering the microlens and color filter above photodiodes at the sensor edges.](images/sensors/03-microlens-shifted.png){#fig-components-shiftedmicrolens width="100%"}
 
 The microlens was important for classic, frontside illuminated sensors when the path from the lens through the metal layers was quite long and the angle of the chief ray at the edge was fairly large. For large pixels, and the initial sensor pixels were 6 or more microns, microlens technology was quite effective.
 @Hwang2023-microlens-alignment @Hwang2023-microlens-quad
@@ -165,31 +162,31 @@ Most consumer cameras include a spectral filter that blocks wavelengths longer t
 Early digital cameras often included an additional laminated layer called an **optical low pass filter (OLPF)**, which slightly blurred the image. The OLPF ensured that light from a point in the scene would be spread over a small area (such as a 2x2 pixel region). This blur was useful because adjacent pixels have different color filters, but their outputs are combined and treated as coming from a single point in the scene. In recent cameras, pixel sizes have become so small that diffraction already spreads the light across multiple pixels (@fig-blur-comparison), making the OLPF unnecessary.
 
 ### Color filter array {#sec-sensor-cfa}
-Below the UV/IR blocking filter, color cameras have a **color filter array (CFA)** (@fig-pixel-layers). Typically, the CFA consists of three types of filters arranged in a repeating pattern. The smallest repeating unit is called a **super pixel**. Pixels behind each filter type form a mosaic that samples the image, and together these mosaics create three interleaved **color channels**.
+Below the UV/IR blocking filter, color cameras have a **color filter array (CFA)** (@fig-pixel-layers). Typically, the CFA consists of three types of filters arranged in a repeating pattern. The smallest repeating unit is called a **super pixel**. Pixels behind each filter type form a mosaic that samples the image, and together these mosaics create three interleaved **color channels**. For consumer photography, the most common CFA pattern is the Bayer pattern [-@bayerColorImagingArray1976], which uses two green filters, one red, and one blue in each super pixel (@fig-cfa-pattern).
 
-For consumer photography, the most common CFA pattern is the Bayer pattern, which uses two green filters, one red, and one blue in each super pixel (@fig-cfa-pattern). This arrangement is named after its inventor (@bayerColorImagingArray1976).
+![Bayer RGB pattern. Source: <a href="https://www.nature.com/articles/s41467-022-31019-7/figures/1" target="_blank">Pixel-level Bayer-type colour router based on metasurfaces, Zou et al. 2022</a>](images/sensors/03-sensor-cfa-pattern.png){#fig-cfa-pattern width="60%" fig-align="center"}
 
-![Bayer RGB pattern. Source: <a href="https://www.nature.com/articles/s41467-022-31019-7/figures/1" target="_blank">Pixel-level Bayer-type colour router based on metasurfaces, Zou et al. 2022</a>](images/sensors/03-sensor-cfapattern.png){#fig-cfa-pattern width="70%" fig-align="center"}
+::: {#sensor-bayer .callout-note collapse="true" title="Bayer pattern"}
+<a href="https://en.wikipedia.org/wiki/Bryce_Bayer" target="_blank">Bryce Bayer</a> worked at Kodak Research Labs and invented the Bayer color filter array. 
 
-::: {#sensor-bayer .callout-note collapse="true"}
-## The Bayer pattern
-Say something about human vision motivation.
+In the mid-1960s, Bayer’s group worked alongside another team focused on psychophysics and human color perception. Kodak was among the first companies to design and market digital cameras, and he was consulted on how to arrange the color filters.  The Bayer filter configuration was designed to mimic aspects of human vision: specifically, he proposed using twice as many green filters as red or blue, reflecting the human eye’s greater spatial resolution to these wavelengths.
 
-Also, isn't there another Bryce Bayer related patent?  Maybe for displays or printers or something?
-
+In March 1975, Kodak filed a patent application titled "Color imaging array," naming Bayer as the sole inventor. The patent (U.S. 3,971,065, issued July 1976) became foundational for digital imaging. Kodak typically licensed its patents as a bundle, with the Bayer filter patent being a key part of this portfolio. While it is difficult to assign a specific value to this single patent, it contributed significantly to the value of Kodak’s licensing program, which generated billions of dollars. Despite this, Kodak ultimately struggled to adapt to the digital era (@sec-preface-film).
 :::
 
-The data from these mosaics are combined to create a full-color image with red, green, and blue values at every pixel location. This process is called **demosaicking**. Demosaicking is especially important when images are coarsely sampled. For modern sensors with many small pixels—where the entire super pixel fits within the lens point spread function—demosaicking becomes less critical.
+@fig-cfa-spectral shows the spectral transmission of three color filters from a consumer camera. Over the years, the number of different color filters used in color photography has converged onto a relatively small set with common properties (@tominagaMeasurementEstimationSpectral2021). Different spectral filters and physical methods for sampling the spectrum are used in for other applications, such as medical, scientific, or industrial cameras.
 
-@fig-cfa-spectral shows the spectral transmission of three color filters from a consumer camera. Different spectral filters and physical methods are used in other applications, such as medical, scientific, or industrial cameras.
+![Spectral transmission profiles typical color filters. Notice that the red filter passes long-wavelength light (IR). But light beyond 680 nm does not reach the photodiode because it is blocked by the UV/IR filter. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>](images/sensors/03-sensor-cfa-spectral.png){#fig-cfa-spectral width="70%" fig-align="center"}
 
-![Spectral sensitivity of the color filters alone. Notice that the red filter passes long-wavelength light (IR). Light beyond 680 nm, however, does not reach the photodiode because it is blocked by the UV/IR filters. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>](images/sensors/03-sensor-cfaspectral.png){#fig-cfa-spectral width="70%" fig-align="center"}
+The spectral sensitivity of a color channel depends on the entire light path, not just the color filter. The sensitivity depends on the light transmitted by the lens, the UV/IR filter, the microlens, the color filter, and finally the spectral quantum efficiency of the photodiode. Each of these components can affect the probability that a photon is absorbed; their combined effect determines the overall spectral responsivity of the color channel.
 
-The spectral sensitivity of a color channel depends on more than just the color filter. Light must pass through the lens, the UV/IR filter, the microlens, the color filter, and finally be absorbed in the silicon. Each component affects the probability that a photon is absorbed, and their combined effect determines the overall spectral responsivity of the color channel.
+![Spectral quantum efficiency sensitivity of three color channels in a typical modern sensor.  The channel properties are determined by the combination of media in the light path.](images/sensors/03-sensor-channel-spectral.png){#fig-channel-spectral width="70%" fig-align="center"}
 
-![Spectral sensitivity of the color channels in a typical modern sensor.](images/sensors/03-sensor-channel-spectral.png){#fig-channel-spectral width="70%" fig-align="center"}
+ When using a color filter array, we obtain one spectral sample at each position.  To represent a color image, however, we represent three spectral samples at each location.  Thus, we must convert the data from these interleaved mosaics to create a full-color image by assigning a red, green, and blue value at every pixel location. This process, called **demosaicking** can be very useful when a sensor has relatively large pixels.  In that case, the images are coarsely sampled and the image appearance is significantly improved by interpolating the color channels, essentially upsampling the measurements. 
+ 
+ There is a principle we can use when evaluating whether a pixel is 'large'. The imaging lens has a point spread function (@sec-pointspread and @sec-optics-linear), and if its spread is two times larger than the pixel size we consider the pixel small. On the other hand, if the pixel is equal to or larger than the point spread, we consider the pixel large. 
 
+For modern sensors, particularly in consumer imaging, pixel sizes can be quite small, often less than $1~\mu \text{m}$. This pixel size is smaller than the ideal point spread function of a diffraction limited lens (@sec-airy-pattern), and often considerably smaller than the point spread function of the true system. For such sensors many small pixels —and even the entire super pixel- fit within the point spread function. Demosaicking is less critical in this case; we can simply group the measured values of the super pixel into a single point in the RGB image. We will quantify the impact of optics, pixel size and demosaicking for image quality in @sec-imgprocessing.
 
 <!--  -->
 
- 

@@ -1,16 +1,93 @@
 # Sensor systems
-The range of light levels and and lighting conditions is quite large.  It is impossible to find a unique set of parameters - including focus, exposure, sensor gain - to acquire images that avoid saturation, excessive noise and proper focus. Sensors are integrated with control systems that aim to set these critical properties such as the exposure duration, aperture size, focus and signal gain. In computer vision applications, such as autonomous driving or robotics, these control systems are important guides for creating accurate quantitative sensor data.  In consumer photography, these systems help the user quickly find settings that will render an attractive image.
+Images are captured under a wide variety of conditions, and there is no single set of parameters—such as focus, exposure time, or sensor gain—that guarantees high-quality results in every situation. To address this, sensors are equipped with control systems that automatically adjust acquisition parameters. These systems help prevent pixel saturation, reduce image noise, and set optical properties like focal plane and depth of field. In computer vision applications, such as robotics or autonomous driving, these control systems are essential for obtaining reliable quantitative data. In consumer photography, they assist users in quickly achieving settings that produce visually appealing images.
 
-## Basic systems
+The sensor control systems are typically implemented by the commercial vendors. The general principles of these control methods can be described, but the specific implementations can be quite complex, with many parameters, and are trade secrets. Moreover, the control systems themselves need to be adjusted in various ways that depend on the details of the optics and sensor in the camera. This section describes the principles of the control systems.  It is my view that there are opportunities to develop better open standards for designing and evaluating these control systems through simulation. 
 
 ## Focus
+For certain image systems applications the lens position can be fixed. For example, suppose you are designing an imaging system for an autonomous driving application and the camera is intended to identify vehicles or vulnerable road users that are at least 3 meters away. The focal length of the camera might be, say 30 mm.  Recall from @eq-focaldistance, the ideal focal distance to objects beyond 3 meters will have a very small range, from $\frac{300}{299} 25$ to $25 \text{mm}$, which is about $83 \mu \text{m}$. The sharpness of the image over that range will not change much - the impact will depend on the size of the aperture (@sec-optics-dof). Thus, the lens can be placed to bring object at a large distance into focus.
 
-### Classic autofocus
+For many other image systems a camera system must be able to adjust the lens position so that image of interest is in focus at the sensor. This is common in consumer photography, say when making a close-up portrait or capturing an image of an object of interest that is relatively close to the camera.  For many generations of cameras focus was managed manually by the user, who would look through a view finder and move the lens by hand until the image looked sharp. But over time, vendors have generated many devices and algorithms that automatically adjust the lens position on the assumption that objects near the center of the image are intended to be in focus.
 
-### Dual pixel autofocus
+The algorithms for focusing are closely coupled to algorithms for estimating object distance.  The physical principles of the measurements needed to control focus are require an understanding of the optical lightfield (@sec-optical-lightfield). The implementation of these autofocus algorithms has changed dramatically over the last 15 years, but the underlying physical principles are the same.  We begin with the classic mechanism, and then explain the more recent implementations.
 
+### Phase detection autofocus {#sec-phasedetection-autofocus}
+
+![Classical autofocus mechanism.](images/sensors/03-focusprinciples-2.png){#fig-focusprinciples-classic width="70%"}
+
+@fig-focusprinciples-classic shows a classic phase detection autofocus (PDAF) system. Rays from a point object on the lens axis (horizontal black line) pass through different parts of the lens aperture—some from the top (red), some from the bottom (green). If the lens is correctly focused, these rays converge to form a sharp spot on the sensor.
+
+The autofocus system measures whether the rays from the top and bottom of the lens would meet at the same point on the sensor. In this classic design, a mirror behind the main lens splits the light, directing rays from the top and bottom of the lens to two separate microlenses. Each microlens focuses the rays onto its own linear sensor array. When the image is in focus, both arrays receive light at their centers. The mirror then moves out of the way, allowing the camera to capture the image.
+
+If the image is out of focus, the rays from the top and bottom of the lens are displaced from the centers of their respective arrays, but in opposite directions. The distance between these positions—the phase difference—indicates how much the lens needs to be adjusted to achieve focus. The camera uses this information to move the lens and bring the image into focus. This method, known as **phase detection autofocus (PDAF)**, became a key feature in single-lens reflex (SLR) cameras.
+
+However, this approach has limitations. The mirror, microlenses, and sensor arrays form a relatively large and complex mechanical system, making it unsuitable for compact devices like smartphones. Also, this system only allows either focusing or image capture at one time, not both simultaneously. Later technologies addressed these issues.
+
+::: {#sensor-phasedetect-autofocus .callout-note collapse="false" title="Phase detection autofocus: Commercialization"}
+Phase detection autofocus (PDAF) for SLR cameras was pioneered by Honeywell, which patented the core concepts in the 1970s (U.S. Patents 3,875,401 and 4,185,191). Their design used a beam-splitting rangefinder rather than a flip mirror.
+
+The first commercial SLR with PDAF was the Minolta Maxxum 7000 (α-7000 in Japan), released in 1985. It integrated in-body PDAF and motorized lens control, using phase differences detected by two 1D sensors to drive lens adjustments.
+
+Leica had previously patented a different autofocus method based on contrast detection, which they licensed to Minolta. However, Minolta found it slow and unreliable, so they used a phase detection approach instead—without a proper license from Honeywell. Honeywell sued and won a [substantial award](https://www.nytimes.com/1992/02/12/business/honeywell-minolta-dispute-teaches-conflicting-lessons.html).
+:::
+
+### Dual pixel autofocus {#sec-dualpixel-autofocus}
+Autofocus is important for consumer photography.  The classic PDAF subsystem did not fit well into the cell phone form factor, forcing cell phone vendors to use signal processing methods or user interventions to set the focus. The signal processing methods were based on examining the image contrast near edges prior to acquisition.  An in focus image should have a sharp edge, and the methods would adjust the lens position to increase edge contrast.
+
+In 2014 a method for  idea emerged that was based on the same physical principles as phase detection, but this time integrated into the CMOS sensor directly.  This technique is called **dual pixel autofocus (DPAF)**.
+
+![Dual pixel autofocus sensor design.](images/sensors/03-sensor-dpaf.png){#fig-sensor-dpaf width="80%"}
+
+Next image will explain the phase detection from within the sensor.  Microlenses.  Dual pixel.  Shifted images.
+
+
+::: {#sensor-dpaf .callout-note collapse="false" title="Dual pixel autofocus: Canon and then Sony"}
+Canon is widely recognized as the **originator and first implementer of Dual Pixel Autofocus (DPAF)**:
+
+---
+
+## 🏆 Canon: The Pioneer
+
+* Canon **introduced DPAF** with the **EOS 70D in 2013**, building on earlier hybrid PDAF/live-view systems like the EOS 650D/T4i-D ([en.wikipedia.org][1]).
+* Official Canon documentation confirms that **each pixel** on a DPAF sensor has **two photodiodes under one microlens**, enabling on-sensor phase detection and fast, smooth autofocus—especially for video ([usa.canon.com][2]).
+* Canon credits itself as the **inventor of DPAF**, a sentiment echoed by multiple sources:
+
+  > "Dual pixel autofocus was invented by Canon and implemented into most of their cameras since 2013." ([wedio.com][3])
+
+---
+
+## 🇯🇵 Sony: A Later Entrant
+
+* Sony has explored a similar **dual‑pixel sensor design**, with patent filings surfacing around **2017** suggesting they were working on their version of DPAF ([thenewcamera.com][4]).
+* As of now, Sony's development remains **mostly in the patent stage**, with no widely deployed, Canon‑style DPAF system in their mirrorless cameras yet.
+* Sony’s on-chip autofocus efforts include **"dual-PD" and "All-pixel AF"** technologies for mobile and sensor markets—but these appear to be **parallel or derivative efforts**, not the original innovation ([news.ycombinator.com][5], [sony-semicon.com][6]).
+
+---
+
+## ✔️ Summary
+
+| Company   | Contribution to DPAF | First Implementation               |
+| --------- | -------------------- | ---------------------------------- |
+| **Canon** | Inventor and pioneer | EOS 70D (2013)                     |
+| **Sony**  | Patent development   | Post‑2017, no major deployment yet |
+
+**Canon clearly led the way**, both in defining the technology and bringing it to market, while **Sony's efforts came later**, largely confined to patents and internal development.
+
+So, in answer to your question: **Canon had the idea and was first to implement DPAF**, and Sony followed with their own patents afterward.
+
+If you’d like, I can dig up specific patent dates or technical comparisons!
+
+[1]: https://en.wikipedia.org/wiki/Digital_single-lens_reflex_camera?utm_source=chatgpt.com "Digital single-lens reflex camera"
+[2]: https://www.usa.canon.com/learning/training-articles/training-articles-list/intro-to-dual-pixel-autofocus-dpaf?srsltid=AfmBOoqOWeeB-2AQBm2LizJeHJ2uveINYldthZ42JKCKcq6rH2gB1WmZ&utm_source=chatgpt.com "Intro to Dual Pixel Autofocus (DPAF) | Canon U.S.A., Inc."
+[3]: https://www.wedio.com/en/learn/dual-pixel-autofocus?srsltid=AfmBOopVRX9n7uQ9QkrnvO_jC0hzekwh2eodH0tQjFG8Hq2OT-ps3IP_&utm_source=chatgpt.com "Dual Pixel Autofocus | What It Is & 15 Canon Cameras - Wedio"
+[4]: https://thenewcamera.com/sony-working-on-dual-pixel-cmos-af-tech/?utm_source=chatgpt.com "Sony Working on Dual-Pixel CMOS AF Tech - NEW CAMERA"
+[5]: https://news.ycombinator.com/item?id=27783587&utm_source=chatgpt.com "Mirrorless cameras with phase detection have actually existed for a ..."
+[6]: https://www.sony-semicon.com/en/technology/mobile/autofocus.html?utm_source=chatgpt.com "All-pixel Auto Focus (AF) Technology | Image Sensor for Mobile"
+
+
+:::
 
 ## Exposure and gain control
+If we integrate for a long time, the image will saturate.  If we image for too short, we get few and thus noisy photon-limited images.  Selecting a good exposure duration is important.
 
 ### Classic exposure 
 
