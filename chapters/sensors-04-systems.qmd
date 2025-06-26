@@ -70,20 +70,28 @@ Leica had previously patented a different autofocus method based on contrast det
 :::
 
 ### Dual pixel autofocus {#sec-dualpixel-autofocus}
-Because the classic phase detection autofocus subsystem does not fit well with the very small cell phone form factor, vendors tried other methods to help adjust the focus.  Mainly, these were signal processing methods coupled with user input that would set the focus. The signal processing methods were based on examining the image contrast near edges prior to acquisition.  An in focus image should have a sharp edge, and the methods would adjust the lens position to increase edge contrast.
+The phase detection autofocus subsystem is difficult to fit within the cell phone form factor.  Consequently, vendors tried a number of other methods. These were mainly based on estimating the contrast of the image through the lens and sensor, an approach called **contrast detection autofocus (CDAF)**. An in focus image should have a sharp edge, and CDAF methods would hunt for a lens position to increase edge contrast. There are no principled measurements that guide how to move the lens based on contrast, and the method struggles with noisy and low light images. Thus, the method was relatively slow. Other techniques were also investigated using time-of-flight technology (@sec-sensors-tof) to measure distance to objects in the field of view, and some of these continue to be used.
 
-In 2014 a method for  idea emerged that was based on the same physical principles as phase detection, but this time integrated into the CMOS sensor directly.  This technique is called **dual pixel autofocus (DPAF)**.
+But in 2014 a method emerged based on the same principles as phase detection; the method could be directly integrated into the CMOS sensor! This technique, **dual pixel autofocus (DPAF)**, is now widely used by most vendors. The CMOS integration places two photodiodes underneath all or at least some microlenses (@fig-sensor-dpaf). When acquiring an image, the voltages from the two photodiodes are summed and readout.  During the autofocus operation, however, the voltages from the two photodiodes are compared.
 
 ![Dual pixel autofocus sensor design.](images/sensors/03-sensor-dpaf.png){#fig-sensor-dpaf width="80%"}
 
-Next image will explain the phase detection from within the sensor.  Microlenses.  Dual pixel.  Shifted images.
-
-::: {#sensor-dpaf .callout-note collapse="false" title="Dual pixel autofocus: Canon"}
+::: {#sensor-dpaf .callout-note collapse="true" title="Dual pixel autofocus: Canon"}
 
 <!-- CHATGPT:  FISE-Sensor/Phase Detection Autofocus -->
 
 Canon **introduced DPAF** with the **EOS 70D in 2013**, building on earlier hybrid PDAF/live-view systems like the EOS 650D/T4i-D.  This technology is now widespread, with vendors from Sony to Omnivision both shipping sensors with **two photodiodes under one microlens**. This enables on-sensor phase detection and fast, smooth autofocus—especially for video ([usa.canon.com][2]).
 :::
+
+The logic of the design is based on understanding the optical light field.  Consider some pixels near the center of the sensor array.  The rays from the left and right sides of the lens arrive at the pixel at a two different angles.  If we trace these rays through the microlens, we can see that they would end up on different sides of the silicon substrate.  By placing two photodiodes in the substrate, say on the left and right side of the pixel, we estimate the optical light field from the left and right side of the lens.
+
+If the image is in good focus at the sensor, the signals encoded by the two photodiodes will be the same, apart from noise.  Thus, if we plot the intensity of the response of the left and right photodiodes, they will be the same. But if the focus is off, the rays from the left and right side of the lens will not be encoded by the same pixel. Instead, the rays from the left and right side of the optical light field will be spread out (defocus) and shifted different pixels. Because of their angles the rays from this point will tend to be on the photodiodes on the left on one side and they will be blurred and shifted to the photodiodes on the right on the other side.  The same will be true for other nearby points.  Thus, the response of the photodiodes on the left and right side will be shifted copies of one another. This shift has the same information as the shift in the PDAF method; it provides information about the size and direction of the defocus.  
+
+![Shift from defocus.  Needs work.  Also, could do it with the Chess Set image and true light field simulation. t_cameraLightField.](images/sensors/03-sensors-lf-shift.png){#fig-sensor-lf-shift width="80%"}
+
+Using multiple photodiodes under a single microlens recovers information about the optical light field. It is worth noting, and raises the question of whether we might be able to build upon this idea to estimate the optical light field.  Such an advanced sensor design has been tried and is called a light field camera (@sec-sensors-lightfield). 
+
+
 
 ## Exposure and gain control
 If the camera integrates photons over a long period of time, the electron well at can fill up. If the well is filled, the voltage from the pixel is said to be **saturated**.  Conversely, if the camera integrates over a short period of time, given the scene intensity, there will only be a few electrons in the well. These number might be small compared to the number of electrons generated by intrinsic camera noise.  Also, the Poisson noise means that the signal-to-noise for a small number of electrons will be poor. Hence, it is important to select a good exposure duration to avoid noise and saturation.
