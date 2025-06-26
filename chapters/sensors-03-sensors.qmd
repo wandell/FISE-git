@@ -1,8 +1,7 @@
 # Pixel arrays {#sec-pixel-arrays}
+The discussion so far has focused on the properties of CMOS imagers at the level of individual pixels. This section shifts the perspective to the pixel array as a whole, exploring how pixel-to-pixel variations, the color filter array, and the microlens array influence overall performance. It begins with the foundational principles of sensor operation and then highlights recent innovations in pixel and sensor circuitry—a rapidly evolving and fascinating field. These array-level effects can limit image quality, especially in low-light or high-dynamic-range scenes.
 
-The discussion so far has focused on the properties of CMOS imagers at the level of individual pixels. This section shifts the perspective to the sensor array as a whole, exploring how pixel-to-pixel variations, the color filter array, and the microlens array influence overall performance. It begins with the foundational principles of sensor operation and then highlights recent innovations in pixel and sensor circuitry—a rapidly evolving and fascinating field. These array-level effects can limit image quality, especially in low-light or high-dynamic-range scenes.
-
-## Array noise {#sec-sensor-noise}
+## Array noise {#sec-array-noise}
 
 When manufacturing an array comprising millions of pixels, there will be minor differences between them. For example, the area of the photodiode might differ, or the capacitance of the floating diffusion node, or perhaps the material doping concentration. Although modern foundries achieve remarkable uniformity, some variation is inevitable. These are variations between pixels and are often referred to as **sensor noise**. Some of these sensor variations do not change over time; for example, the relative photodiode area of different pixels. These variations across the sensor are called **fixed pattern noise (FPN)**.
 
@@ -20,15 +19,18 @@ The **photoresponse nonuniformity (PRNU)** refers to the variation in the slope 
 
 There has been a large engineering effort to reduce various sources of noise, including temporal and fixed pattern noise, as well as other limitations in the sensor design relating to color and dynamic range. The engineering effort was supported by the enormous demand for CMOS sensors. In 2020, approximately 6.5 billion sensors were shipped.  In 2025, we expect about 13 billion sensors to be produced. That's a lot of sensors and the demand motivates a lot of engineering. This section covers the evolution of the pixel and sensor design.
 
-The original sensor architecture, known as front-side illumination (FSI), places multiple metal layers above the semiconductor substrate (@fig-pixel-layers). Even at the time of the original implementation, it was clear that forcing light to pass through the metal layers to reach the light-sensitive photodiode created many problems. Additionally, both the photodiodes and their associated circuitry share the same substrate, so that the circuitry reduced the area of the photodiode.
+The sensor architecture I have described is known as **front-side illumination (FSI)**. The architecture has the obvious challenge of placing multiple metal layers above the semiconductor substrate (@fig-pixel-layers). Even at the time of the original implementation, it was clear that requiring light to pass through the metal layers to reach the light-sensitive photodiode created many problems. 
+
+Additionally, both the photodiodes and their associated circuitry share the same substrate. Requiring the circuitry and photodiode to share space reduced the sensitivity the sensor. Finally, the original pixels were fairly large, $6 \mu \text{m}$ or more. As technology scaled and pixels became smaller -many CMOS imagers have pixels as small as $0.8 \mu \text{m}$ a reduction in area of $50x$- additional problems arose. Different opportunities arose as well.
+
+These challenges, and the huge success of CMOS sensors, were met by a massive, world-wide, engineering effort to improve the system. The evolution of image sensor pixel technology that came from this effort enabled dramatic improvements in image quality, sensitivity, and device functionality. The following sections describe the key milestones that were achieved through academic and industry partnerships.
 
 <!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
 https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor
 -->
 
-:::{.callout-note title="Timeline of Pixel Evolution" collapse="true"}
-
-The evolution of image sensor pixel technology has enabled dramatic improvements in image quality, sensitivity, and device functionality. Key milestones include:
+:::{.callout-note title="Pixel Evolution timeline" collapse="true"}
+Here is a timeline for the key milestones achieved in the sections below.
 
 <!--
 | Technology                | Commercialization | Key Benefit                                 |
@@ -80,12 +82,11 @@ After years of incremental improvements, engineers developed a new architecture 
 
 In addition to flipping the order of the silicon and wires, it was necessary to change the thickness of the substrate (@fig-sensor-bsi2). In the FSI pixel, the photodiode is embedded in a relatively thick layer of silicon. Flipping this structure would require the light to pass through a substantial amount of silicon prior to reaching the photodiode. This is problematic because the silicon absorbs light, and particularly short-wavelength light (@sec-sensor-wavelength). Thus, it was necessary to find a way to thin the silicon substrate and still have a working photodiode and circuitry. 
 
-::: {#sensor-bsi .callout-note collapse="true"}
-## BSI technology development
+::: {#sensor-bsi .callout-note collapse="true" title="BSI technology development"}
 
 [Wikipedia article](https://en.wikipedia.org/wiki/Back-illuminated_sensor)
 
-Eric Fossum first proposed the concept of back-side illuminated (BSI) CMOS image sensors in 1994, recognizing the need to reduce metal line obstruction and improve sensitivity. However, it took more than a decade for the technology to mature and reach commercial viability. OmniVision Technologies was among the first to develop BSI sensors, introducing the OV8810 (1.4 μm pixels, 8 megapixels) in September 2008. Sony followed soon after, launching the first widely adopted BSI sensors in 2009.
+The concept of back-side illuminated (BSI) CMOS image sensors was first proposed by Eric Fossum in 1994 to address the limitations caused by metal wiring obstructing incoming light and to improve sensitivity. While the benefits of rearranging the sensor layers were clear to many, developing a practical manufacturing process proved challenging. It took more than a decade for BSI technology to become commercially viable. OmniVision Technologies was among the first to introduce a commercial BSI sensor, releasing the OV8810 (1.4 μm pixels, 8 megapixels) in September 2008. Sony soon followed, launching the first widely adopted BSI sensors in 2009.
 
 ```{=html}
 <!-- Read this.  Evolution of stacked and BI.
