@@ -1,14 +1,14 @@
-# Subsystems {#sec-sensor-systems}
+# Sensor Subsystems {#sec-sensor-systems}
 Images are captured under a wide variety of conditions, and there is no single set of parameters—such as focus, exposure time, or sensor gain—that guarantees high-quality results in every situation. To address this, sensors are equipped with control systems that automatically adjust acquisition parameters. These systems help prevent pixel saturation, reduce image noise, and set optical properties like focal plane and depth of field. In computer vision applications, such as robotics or autonomous driving, these control systems are essential for obtaining reliable quantitative data. In consumer photography, they assist users in quickly achieving settings that produce visually appealing images.
 
 The sensor control systems are typically implemented by the commercial vendors. The general principles of these control methods can be described, but the specific implementations can be quite complex, with many parameters, and are trade secrets. Moreover, the control systems themselves need to be adjusted in various ways that depend on the details of the optics and sensor in the camera. This section describes the principles of the control systems.  It is my view that there are opportunities to develop better open standards for designing and evaluating these control systems through simulation. 
 
-## Focus
+## Focus Control Systems {#sec-focus-control}
 In some imaging applications, the lens position can be fixed. For example, consider an autonomous driving system where the camera is designed to detect vehicles or pedestrians at distances greater than 3 meters. With a focal length of 30 mm, the ideal sensor-to-lens distance for objects beyond 3 meters varies only slightly—from $\frac{300}{299} \times 25$ mm to 25 mm—about $83 \mu \text{m}$. Over this range, image sharpness remains nearly constant, with the effect depending mainly on the aperture size (see @sec-optics-dof). In such cases, the lens can be set to focus at infinity, and no adjustment is needed.
 
 However, in many other imaging systems, the camera must adjust the lens position to bring objects at different distances into focus. This is especially important in consumer photography, for close-up portraits or enabling the photography to put some objects into focus while blurring the background. 
 
-### Lens positioning: SLR and DSLR {#sec-lens-positioning-slr}
+### Lens Positioning in SLR and DSLR Cameras {#sec-lens-positioning-slr}
 In **single-lens reflex (SLR)**  and digital SLR (DSLR) cameras focusing was achieved mechanically. The imaging lens -typically comprising multiple lenses and called either multi-element optics or a lens assembly-  was mounted on a screw thread. The position of some of the lenses could be adjusted by rotating the assembly along the thread. These lenses were rotationally symmetric, so the rotation was irrelevant to the image quality. The thread pitch of the screw determined how finely the position can be adjusted. 
 
 SLR camera bodies and lenses were relatively large. I lugged quite a few of them around on trips. For my wife. Moving the entire assembly back and forth was challenging. This was called the **unit focusing** design. To lighten the load, lens designers created systems that could change the focus by moving only a small, relatively light, subgroup of lenses within the assembly. If the lenses were in the middle of the assembly, this was called **internal focusing**, and if the lenses were at the read this was called **rear focusing**. This had several advantages.
@@ -37,7 +37,7 @@ The SLR design also lets the user separately control the size of the aperture, a
 
 :::
 
-### Lens positioning: mobile devices {#sec-lens-positioning-mobile}
+### Lens Positioning in Mobile Devices {#sec-lens-positioning-mobile}
 Smartphones and other compact devices required a different approach due to space constraints. These cameras also use multi-element lenses, but they are much smaller. Focus is commonly controlled by a voice coil motor (VCM), which is reliable, inexpensive, and widely used in the industry (@fig-sensor-vcm).
 
 ![Cell phone optics. The optics themselves are very compact but still multi-element. The position of the optics is usually controlled by a voice-coil motor.](images/sensors/03-sensor-vcm.png){#fig-sensor-vcm width="60%"}
@@ -50,7 +50,7 @@ Conceptually, autofocus methods share similarities with techniques for estimatin
 
 <!-- liquid lens callout here? -->
 
-### Phase detection autofocus {#sec-phasedetection-autofocus}
+### Phase Detection Autofocus (PDAF) {#sec-phasedetection-autofocus}
 @fig-focusprinciples-classic shows a system for phase detection autofocus (PDAF). It illustrates the rays from a small object, near the lens, on the principal optical axis (horizontal black line). Because the point is reasonably close, the incident light field rays are diverging.  The rays incident at the top of the aperture are shown as red and those at the bottom as green. If the point is brought to a good focuse, these rays will converge to a small spot on the sensor.  The autofocus system shown here, which uses a mirror to send the rays to a pair of detectors, is designed to measure whether the rays from the top and bottom of the lens will meet at the sensor. 
 
 ![Phase detection autofocus, as invented in the 1970s. ](images/sensors/03-focusprinciples-2.png){#fig-focusprinciples-classic width="60%"}
@@ -69,7 +69,7 @@ The first commercial SLR with PDAF was the Minolta Maxxum 7000 (α-7000 in Japan
 Leica had previously patented a different autofocus method based on contrast detection, which they licensed to Minolta. However, Minolta found it slow and unreliable, so they used a phase detection approach instead—without a proper license from Honeywell. Honeywell sued and won a [substantial award](https://www.nytimes.com/1992/02/12/business/honeywell-minolta-dispute-teaches-conflicting-lessons.html).
 :::
 
-### Dual pixel autofocus {#sec-dualpixel-autofocus}
+### Dual Pixel Autofocus (DPAF) {#sec-dualpixel-autofocus}
 The phase detection autofocus subsystem is difficult to fit within the cell phone form factor.  Consequently, vendors tried a number of other methods. These were mainly based on estimating the contrast of the image through the lens and sensor, an approach called **contrast detection autofocus (CDAF)**. An in focus image should have a sharp edge, and CDAF methods would hunt for a lens position to increase edge contrast. There are no principled measurements that guide how to move the lens based on contrast, and the method struggles with noisy and low light images. Thus, the method was relatively slow. Other techniques were also investigated using time-of-flight technology (@sec-sensors-tof) to measure distance to objects in the field of view, and some of these continue to be used.
 
 But in 2014 a method emerged based on the same principles as phase detection; the method could be directly integrated into the CMOS sensor! This technique, **dual pixel autofocus (DPAF)**, is now widely used by most vendors. The CMOS integration places two photodiodes underneath all or at least some microlenses (@fig-sensor-dpaf). When acquiring an image, the voltages from the two photodiodes are summed and readout.  During the autofocus operation, however, the voltages from the two photodiodes are compared.
@@ -91,42 +91,16 @@ If the image is in good focus at the sensor, the signals encoded by the two phot
 
 Using multiple photodiodes under a single microlens recovers some information about the optical light field -the left and right subpixels measure rays from different sides of the imaging lens. This raises the idea that we might be able to extend this idea to estimate more about the optical light field. Also, if we had such light field sensor, what could we do with it (@sec-sensors-lightfield)? 
 
-## Exposure and gain control
+## Exposure and Gain Control {#sec-exposure-gain-control}
 If the camera integrates photons over a long period of time, the electron well at can fill up. If the well is filled, the voltage from the pixel is said to be **saturated**.  Conversely, if the camera integrates over a short period of time, given the scene intensity, there will only be a few electrons in the well. These number might be small compared to the number of electrons generated by intrinsic camera noise.  Also, the Poisson noise means that the signal-to-noise for a small number of electrons will be poor. Hence, it is important to select a good exposure duration to avoid noise and saturation.
 
-### Classic exposure 
+### Classic Exposure Methods {#sec-classic-exposure}
 
-### Exposure bracketing
+### Exposure Bracketing Techniques {#sec-exposure-bracketing}
 
-### Burst photography
+### Burst Photography {#sec-burst-photography}
 Google but others.  Multiple capture.
 
-## System innovations {#sec-sensor-innovations}
 
-Maybe this should be an additional chapter
-
-Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
-
-### Global shutter {#sec-sensor-globalshutter}
-Instead of using a floating diffusion as a memory element, Aptina has utilized a surface-pinned storage node in the pixel to address dark current challenges. Available in its newest global shutter sensor, the MT9M031, the storage node also enables using a true correlated double sampling technique to reduce readout noise to four electrons, resulting in excellent low-light performance. The combination of the effective use of an anti-reflective metal light shield in close proximity to the memory node and careful doping and potential profile design results in a high GSE.
-
-Illustrate rolling shuttter artifact.
-
-Then say something about global shutter technology.
-
-Global Shutter Pixel Technologies and CMOS Image Sensors – A Powerful Combination – (Aptina white paper)
-
-Well recycling?
-### Lightfield cameras {#sec-sensor-lightfield}
-Refocus.  Depth estimation
-
-### Split pixel {#sec-sensor-splitpixel}
-Autonomous driving.  HDR.
-
-### Foveon {#sec-sensor-foveon}
-Link back to physics.
-
-### Spectral imagers {#sec-sensor-spectral}
-Spectricity.  IMEC.
 
 
