@@ -23,14 +23,14 @@ The sensor architecture I have described is known as **front-side illumination (
 
 Additionally, both the photodiodes and their associated circuitry share the same substrate. Requiring the circuitry and photodiode to share space reduced the sensitivity the sensor. Finally, the original pixels were fairly large, $6 \mu \text{m}$ or more. As technology scaled and pixels became smaller -many CMOS imagers have pixels as small as $0.8 \mu \text{m}$ a reduction in area of $50x$- additional problems arose. Different opportunities arose as well.
 
-These challenges, and the huge success of CMOS sensors, were met by a massive, world-wide, engineering effort to improve the system. The evolution of image sensor pixel technology that came from this effort enabled dramatic improvements in image quality, sensitivity, and device functionality. The following sections describe the key milestones that were achieved through academic and industry partnerships.
+These challenges, and the huge success of CMOS sensors, were met by a massive, world-wide, engineering effort to improve the system. The evolution of image sensor pixel technology that came from this effort enabled dramatic improvements in image quality, sensitivity, and device functionality. The following sections describe the key milestones that were achieved through academic and industry partnerships. For an authoritative review, consult @Oike2022-stackedevolution.
 
 <!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
 https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor
 -->
 
 :::{.callout-note title="Pixel Evolution timeline" collapse="true"}
-Here is a timeline for the key milestones achieved in the sections below.
+Here is a timeline for the key milestones described in the sections below.
 
 | Technology                | Commercialization | Key Benefit                                 |
 |---------------------------|------------------|----------------------------------------------|
@@ -85,14 +85,10 @@ In addition to flipping the order of the silicon and wires, it was necessary to 
 
 ::: {#sensor-bsi .callout-note collapse="true" title="BSI technology development"}
 
-[Wikipedia article](https://en.wikipedia.org/wiki/Back-illuminated_sensor)
-
 The concept of back-side illuminated (BSI) CMOS image sensors was first proposed by Eric Fossum in 1994 to address the limitations caused by metal wiring obstructing incoming light and to improve sensitivity. While the benefits of rearranging the sensor layers were clear to many, developing a practical manufacturing process proved challenging. It took more than a decade for BSI technology to become commercially viable. OmniVision Technologies was among the first to introduce a commercial BSI sensor, releasing the OV8810 (1.4 μm pixels, 8 megapixels) in September 2008. Sony soon followed, launching the first widely adopted BSI sensors in 2009.
 
-```{=html}
-<!-- Read this.  Evolution of stacked and BI.
-@Oike2022-stackedevolution -->
-```
+[Wikipedia article on BSI](https://en.wikipedia.org/wiki/Back-illuminated_sensor)
+
 :::
 
 ### Deep photodiodes {#sec-sensor-deepdiode}
@@ -103,24 +99,26 @@ To overcome these limitations, many vendors invented methods to build photodiode
 ![Deep photodiodes in the BSI. (a) A super pixel of a front-side illuminated CMOS sensor, including the microlenses, color filters, metal lines, and silicon. (b) A back-side illuminated super pixel with deep photodiode technology. Source: <a href="https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor/" target="_blank">Skhynix.</a>](images/sensors/03-sensor-bsi.png){#fig-sensor-skhynix width="70%"}
 
 ### Stacked sensor {#sec-sensor-stacked}
-In the original planar technology, photodiodes are adjacent to the transistor circuits within the silicon substrate. Thus, photodiodes must compete for space with the transistors.  Reducing the photodiode area means less light efficiency; reducing the transistor size means noisier performance. Youse pays yer money and yer makes yer choice.
+In traditional (planar) sensor technology, both the photodiodes and their associated transistor circuits are fabricated side by side within the same silicon substrate. This arrangement forces a trade-off: increasing the area for photodiodes improves light sensitivity, but leaves less space for transistors, which can increase noise and limit functionality. Conversely, allocating more area to transistors reduces the light-gathering efficiency of each pixel.
 
-The **stacked sensor** design directly addresses the trade-off between the light collection area (fill factor) and the necessary space for readout circuitry. By relocating the processing circuitry to a separate, underlying layer, the stacked structure maximizes the light-sensitive area for a given pixel size, allowing for more efficient photon capture.Furthermore, this separation permits the use of larger, more stable transistors within the logic layer, which significantly contributes to noise reduction and improved imaging properties.
+The **stacked sensor** architecture overcomes this limitation by physically separating the photodiode layer from the readout and processing circuitry. In a stacked sensor, the photodiodes occupy one silicon layer, while the supporting electronics are fabricated on a separate layer beneath. This structure maximizes the light-sensitive area (fill factor) for each pixel and enables the use of more advanced, lower-noise circuitry without sacrificing pixel size.
 
 ![Pixels in the stacked sensor are based on die stacking technology. Several layers of silicon that are bonded and connected using Through-Silicon Via (TSV) technology. The technology began with 2-layers, but when have you ever known Silicon Valley to stop?](images/sensors/03-pixel-stacked.png){#fig-sensor-stacked width="50%"}
 
-**Stacked sensors** were the next advance, following BSI. The new innovation was finding a method to place the photodiode and its circuitry on different layers. The key technology is called **die stacking**. The different layers of silicon are bonded together and connected electrically with **Through-Silicon Vias (TSVs)**. As you can imagine, with the features being so small, this is a challenging technology.
+The key enabling technology is called **die stacking**. The silicon layers are bonded together and electrically connected using two main methods. The original approach used **Through-Silicon Vias (TSVs)**—tiny holes etched through the silicon and filled with a conductive material (such as copper or tungsten) to create vertical electrical connections. 
 
-Placing the photodiode and circuitry on different layers means they no longer compete for space.  This approach both improves light sensitivity and also establishes the foundation for stacking additional processing circuitry beneath the photodiode layer. 
+More recently, **Cu-Cu (copper-to-copper)** direct bonding has become common. In this method, patterned copper pads on each wafer are precisely aligned and bonded under heat and pressure, allowing for dense, fine-pitch interconnects between the pixel and logic layers. Cu-Cu bonding is ideal for high-resolution, high-speed sensors, enabling features like global shutter or per-pixel memory. TSVs are still used for tasks such as power delivery and global I/O routing.
+
+Stacked sensors have unlocked new capabilities in image sensor design. By separating the photodiode and circuitry layers, manufacturers can improve light sensitivity, reduce noise, and add advanced processing features directly beneath the pixel array. This architecture forms the foundation for ongoing innovation in sensor performance and functionality.
 
 <!-- Stacked Sensor Structures Google doc 
 A significant step towards multi-layer integration was taken by Mitsumasa Koyanagi of Tohoku University, who pioneered the technique of wafer-to-wafer bonding with TSV in 1989
 -->
 
 ::: {.callout-note title="Stacked sensor applications" collapse="true"}
-This stacked sensor expanded the capabilities of image sensors well beyond basic light capture, enabling advanced features such as high dynamic range (HDR) video, faster frame rates, and the integration of on-chip artificial intelligence (AI) processing.
+Stacked CMOS sensors build on the BSI CMOS architecture by integrating the pixel array with a separate logic layer. This close integration enables advanced features such as high dynamic range (HDR) imaging, faster frame rates, and on-chip processing—including artificial intelligence (AI) functions.
 
-Stacked CMOS chips improve upon the BSI CMOS concept. They place components in a similar arrangement, but the design also stacks the image signal processor and its ultra-fast DRAM memory into the same silicon. This makes readout speeds even faster. The first mainstream Stacked CMOS camera, the Sony a9 from 2019, made waves by offering an interruption-free photographic experience—you can use it to fire off photos at 20fps without losing view of your scene.
+Some stacked sensors incorporate high-speed DRAM directly beneath the pixel array, allowing for rapid data readout and temporary storage. This architecture made possible innovations like the Sony a9 (2019), which could capture images at 20 frames per second (fps) with a continuous, blackout-free viewfinder experience.
 :::
 
 ## Sensor components: Space {#sec-sensor-space}
