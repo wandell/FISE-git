@@ -98,19 +98,16 @@ Using multiple photodiodes under a single microlens recovers some information ab
 
 To capture a high-quality image, the exposure must be set so that dark regions of the scene generate enough electrons to rise above the sensor’s noise floor, while bright regions remain within the pixel’s full well capacity (@sec-wellcapacity-dynamicrange). Poor exposure control leads to two main problems. If the exposure time is too short, pixels in dark areas collect very few electrons—sometimes fewer than the noise level. Even with a low-noise camera, the inherent Poisson noise means that a small number of electrons results in a low signal-to-noise ratio (for example, with a mean of 4 electrons, the standard deviation is 2, so SNR is only 2). On the other hand, if the exposure time is too long, pixels in bright areas can fill their electron wells and become **saturated**—all higher scene intensities are recorded at the same maximum value. Proper exposure control adjusts acquisition parameters so that the scene’s dynamic range fits within the sensor’s dynamic range, avoiding both excessive noise and saturation.
 
+### Exposure value {#sec-exposure-value}
 Two image system parameters control the match: the lens aperture size and the exposure duration. Increasing the aperture raises the intensity level of the irradiance at the sensor.  Extending the exposure duration allows the sensor to convert more photons into electrons. A numerical summary of the aperture diameter and exposure duration is called the [**exposure value**](https://en.wikipedia.org/wiki/Exposure_value).  It has the simple formula
 
 $$
 EV = \log_{2}(\frac{F^2}{T}) = 2 \log_{2}(F) - \log_{2}(T)
 $$ {#eq-exposure-value}
 
-where $F$ is the f-number and $T$ is the exposure duration.  Notice that the $EV$ is 0 when the f-number is 1 and the exposure duration is 1 sec. The exposure value decreases as the exposure duration increases or the aperture increases.
+where $F$ is the f-number and $T$ is the exposure duration.  The exposure value decreases as the exposure duration increases or the aperture increases. We set a larger exposure value as the scene intensity increases. Thus, if the $F$ is 1 and $T$ is 1 sec, the $EV$ will be 0.  We might find the irradiance is too bright and a lot of pixels are saturated.  We could then shorten the exposure duration to, say $1/2$ sec.  The $EV$ then increases to 1. Equivalently, we might keep the exposure duration but increase the f-number to $\sqrt{2}$.  This setting would also produce an $EV$ of 1, and achieve the same dynamic range of electrons.
 
-In film cameras, when each exposure of the film was expensive, separate devices might measure the the general light level and guide the user to set the aperture and exposure. With electronic systems, however, the scene intensity level could be measured by acquisitions through the sensor prior to acquiring the final image. 
-
-Conversely, 
-
-### Exposure Value {#sec--exposure-value}
+In film cameras, when each exposure of the film was expensive, separate devices might measure the the general light level and guide the user to set the aperture and exposure. Such a system would provide the user with a desirable exposure value setting given the scene. With electronic systems we can do much more.  For example, the scene intensity level can be estimated by brief acquisitions through the sensor prior to acquiring the final image. 
 
 ### Exposure Bracketing {#sec-exposure-bracketing}
 
