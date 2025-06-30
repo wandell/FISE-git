@@ -96,26 +96,38 @@ Using multiple photodiodes under a single microlens recovers some information ab
 
 ## Exposure Control {#sec-exposure-control}
 
-To capture a high-quality image, the exposure must be set so that dark regions of the scene generate enough electrons to rise above the sensor’s noise floor, while bright regions remain within the pixel’s full well capacity (@sec-wellcapacity-dynamicrange). Poor exposure control leads to two main problems. If the exposure time is too short, pixels in dark areas collect very few electrons—sometimes fewer than the noise level. Even with a low-noise camera, the inherent Poisson noise means that a small number of electrons results in a low signal-to-noise ratio (for example, with a mean of 4 electrons, the standard deviation is 2, so SNR is only 2). On the other hand, if the exposure time is too long, pixels in bright areas can fill their electron wells and become **saturated**—all higher scene intensities are recorded at the same maximum value. Proper exposure control adjusts acquisition parameters so that the scene’s dynamic range fits within the sensor’s dynamic range, avoiding both excessive noise and saturation.
+To capture a high-quality image, dark regions of the scene should generate enough electrons to rise above the sensor’s noise floor, and bright regions remain within the pixel’s full well capacity (@sec-wellcapacity-dynamicrange). If the exposure time is too short, pixels in dark areas collect very few electrons—sometimes fewer than the pixel noise level. Even with a low-noise pixel, the inherent Poisson noise means that a small number of electrons results in a low signal-to-noise ratio. For example, with a mean of 4 electrons, the standard deviation is 2, so SNR is only 2. 
+
+On the other hand, if the exposure time is too long, pixels in bright areas will create more electrons than can be stored in the floating diffusion node.  The node will **saturate**, and many scene intensities will be recorded at the same maximum voltage. 
+
+Proper exposure control adjusts acquisition parameters so that the scene’s dynamic range fits within the sensor’s dynamic range, avoiding both excessive noise and saturation. In a conventional exposure control system, there are two image system parameters that control the fit: the lens aperture size and the exposure duration. Increasing the aperture raises the intensity level of the irradiance at the sensor.  Extending the exposure duration allows the sensor to convert more photons into electrons.  We begin with the classic specification of how the combination of these parameters are combined to specify exposure.
 
 ### Exposure value {#sec-exposure-value}
-Two image system parameters control the match: the lens aperture size and the exposure duration. Increasing the aperture raises the intensity level of the irradiance at the sensor.  Extending the exposure duration allows the sensor to convert more photons into electrons. A numerical summary of the aperture diameter and exposure duration is called the [**exposure value**](https://en.wikipedia.org/wiki/Exposure_value).  It has the simple formula
+The [**exposure value (EV)**](https://en.wikipedia.org/wiki/Exposure_value) is a numerical summary that combines the effects of aperture diameter and exposure duration to guide exposure settings. For a lens with f-number $F$ and exposure time $T$ (in seconds), the exposure value is defined as
 
 $$
-EV = \log_{2}(\frac{F^2}{T}) = 2 \log_{2}(F) - \log_{2}(T)
+\text{EV} = \log_{2}\left(\frac{F^2}{T}\right) = 2 \log_{2}(F) - \log_{2}(T)
 $$ {#eq-exposure-value}
 
-where $F$ is the f-number and $T$ is the exposure duration.  The exposure value decreases as the exposure duration increases or the aperture increases. We set a larger exposure value as the scene intensity increases. Thus, if the $F$ is 1 and $T$ is 1 sec, the $EV$ will be 0.  We might find the irradiance is too bright and a lot of pixels are saturated.  We could then shorten the exposure duration to, say $1/2$ sec.  The $EV$ then increases to 1. Equivalently, we might keep the exposure duration but increase the f-number to $\sqrt{2}$.  This setting would also produce an $EV$ of 1, and achieve the same dynamic range of electrons.
+A lower EV corresponds to a longer exposure time or a wider aperture (lower $F$), allowing more light to reach the sensor. As scene brightness increases, a higher EV is needed to avoid overexposure. For example, if $F = 1$ and $T = 1$ second, then $EV = 0$. If the image is too bright and pixels are saturated, you can either halve the exposure time to $T = 1/2$ second (increasing $EV$ to 1), or keep $T = 1$ second and increase the f-number to $F = \sqrt{2}$ (also resulting in $EV = 1$). Both adjustments reduce the amount of light reaching the sensor by half[^exposure-fnumber].
 
-In film cameras, when each exposure of the film was expensive, separate devices might measure the the general light level and guide the user to set the aperture and exposure. Such a system would provide the user with a desirable exposure value setting given the scene. With electronic systems we can do much more.  For example, the scene intensity level can be estimated by brief acquisitions through the sensor prior to acquiring the final image. 
+[^exposure-fnumber]: The f-number is the ratio of the focal length divided by the aperture diameter {@sec-fnumber}. For a fixed focal length, increasing the f-number means reducing the aperture diameter.  Thus, less light reaches the sensor.
+
+In film cameras, where each exposure was costly, photographers often used separate light meters to determine the appropriate aperture and exposure time. Modern electronic cameras can estimate scene brightness automatically, often by taking continuous measurements just before the main exposure. On DSLRs, this process is typically triggered by pressing the shutter button halfway. In smartphones, exposure estimation usually begins as soon as the camera app is opened.
 
 ### Exposure Bracketing {#sec-exposure-bracketing}
+Perhaps no idea is more fundamental in engineering applications than this:  If you don't know what value of the parameter to use, make measurements over a range of values (parameter sweep) and either use the best value or combine the data from the multiple measurements.
 
-Classic, see notes for class maybe?  Somewhere I wrote about the long history of exposure bracketing.
+In photography sweeping out multiple exposure durations is called **exposure bracketing**.  Perhaps its first use was by [Gustave Le Gray](https://en.wikipedia.org/wiki/Gustave_Le_Gray) around 1851. In photographing a scene of sea and sky, he realized the film could not accurately record both.  Hence, he took two exposures, one to capture the sea and one the sky.
+
+Modern digital cameras often have an exposure bracketing option. Usually, the user picks one of the images.  It is possible, of course, to combine the images into a single shot.  More on that shortly.
 
 ### Burst Photography {#sec-exposure-burst}
+In an effort to avoid saturation, a team at Google suggested acquiring multiple images with a short exposure duration @hasinoff2016-burst-photography.  Their algorithm proposes aligning the individual images and then summing them to reduce the shot noise @sec-shot-noise.  
 
-Google paper and issues with alignment.
+This approach makes sense when the sensor has very little noise and shot noise dominates. In that case, the measurements at each pixel are Poisson distributed, say with a mean of $\lambda$.  The sum of $N$ such measurements is still Poisson distributed but with a mean of $N \lambda$. 
+
+The value of this approach is that we can choose an exposure distribution that avoids saturation.  The disadvantage of this approach is that the objects in the scene, or the camera itself, may move between acquisitions. The alignment between the images can be difficult, or even impossible, to achieve.  But with a camera on a tripod, and a still scene, the idea will surely work.  It can often work in more general settings.
 
 ### Space-varying exposure duration (#sec-exposure-dps)
 
