@@ -24,27 +24,27 @@ SLR camera bodies and lenses are relatively large. I lugged quite a few of them 
 Moving only a small, internal group of lens elements is a sophisticated design that is fundamental to the performance of modern autofocus lenses.
 
 ::: {#sensor-slr .callout-note collapse="true" title="Single-lens reflex"}
-SLR cameras were the coolest ones when I was middle-aged. The SLR design replaced the **rangefinder** approach. A rangefinder camera has two separate optical paths:
+SLR cameras represented a major advance over earlier rangefinder designs, and when I was young they were considered super cool. In a rangefinder camera, there are two separate optical paths:
 
--   The "Taking" or "Imaging" Lens: This is the main lens that focuses the image onto the film or sensor. You do not look through this lens.
--   The Viewfinder Window: This is a separate, small window on the camera body that you look through to compose your shot.
+-   **Imaging Lens:** The main lens focuses the image onto the film or sensor, but you do not look through this lens.
+-   **Viewfinder Window:** A separate window on the camera body that you use to compose the shot.
 
-There were often slight differences between the view through the lens and the view through the viewfinder, and this added to the challenge of using these cameras well.
+Because the viewfinder and imaging lens are separate, the viewfinder image can differ slightly from what is captured on film or sensor, making precise framing more challenging.
 
 ![Overview of an SLR and its subsystems](images/sensors/03-sensor-slr.png){#fig-sensor-slr width="60%"}
 
-The SLR breakthrough was that it used a single optical path through the lens assembly for view finding, autofocus, and capturing the image (hence, "single lens"). The light after the lens assembly would pass through a beam splitter, which directs about 70% of the light to the viewfinder and the rest to the autofocus subsystem. The beam splitter usually takes the form of a semi-transparent "reflex" mirror. When it was time to capture the image, the mirror would be moved out of the light path allowing all the light to form an image on the film (SLR) or digital sensor (DSLR) (@fig-sensor-slr).
+The innovation of the SLR (Single-Lens Reflex) camera is that it uses a single optical path for composing, focusing, and capturing the image—hence "single lens." Light entering through the lens assembly is directed by a semi-transparent "reflex" mirror (a type of beam splitter). Typically, about 70% of the light is sent to the viewfinder, while the remainder is directed to the autofocus subsystem. When the shutter is pressed, the mirror flips out of the way, allowing all the light to reach the film (SLR) or digital sensor (DSLR) (@fig-sensor-slr).
 
-The SLR design also lets the user separately control the size of the aperture, and this has an impact on the depth of field (@sec-optics-dof). An advantage of the SLR design is that you can see the depth of field narrow or increase in the viewfinder of the SLR design.
+The SLR design also allows the user to control the aperture size, which directly affects the depth of field (@sec-optics-dof). One advantage of this design is that you can preview changes in depth of field directly through the viewfinder.
 :::
 
 ### Lens Positioning in Mobile Devices {#sec-lens-positioning-mobile}
 
-Smartphones and other compact devices required a different approach due to space constraints. These cameras also use multi-element lenses, but they are much smaller. Focus is commonly controlled by a voice coil motor (VCM), which is reliable, inexpensive, and widely used in the industry (@fig-sensor-vcm).
+DSLRs had a large volume compared to smartphones and other compact devices. These cameras also use much smaller multi-element lenses. Focus is commonly controlled by a voice coil motor (VCM), which is reliable, inexpensive, and widely used in the industry (@fig-sensor-vcm). The small motor moves the entire lens assembly.
 
 ![Cell phone optics. The optics themselves are very compact but still multi-element. The position of the optics is usually controlled by a voice-coil motor.](images/sensors/03-sensor-vcm.png){#fig-sensor-vcm width="80%"}
 
-There is also a growing market for lens positioning using Micro-Electro-Mechanical Systems (MEMS) devices. MEMS actuators offer advantages such as low power consumption, fast response, and miniaturization, making them attractive for mobile imaging systems.
+There is also a growing market for lens positioning in cell pones using Micro-Electro-Mechanical Systems (MEMS) devices. These devices offer advantages such as low power consumption, fast response, and miniaturization, making them attractive for mobile imaging systems. The difference, however, is not huge.
 
 ![A video showing lens assembly position controlled by a MEMS device.](videos/sensors/MEMS-autofocus.mov){#fig-sensor-mems width="60%"}
 
@@ -125,8 +125,92 @@ This approach is particularly effective when sensor read noise is low and shot n
 The main advantage of burst photography is that it allows the use of short exposures to avoid saturation in bright regions, while still achieving high image quality by combining multiple frames. However, this method requires accurate alignment of the images. If there is motion in the scene or camera shake—especially if objects move in front of one another (occlusion)—alignment becomes challenging or may fail. Burst photography works best with static scenes and a stable camera, but can still provide benefits in more dynamic situations, even if not every frame can be perfectly aligned.
 
 ### Space-varying exposure duration (#sec-exposure-dps)
+The entire problem of exposure control becomes greatly simplified if there is not one exposure time, but there is a space-varying exposure time. In that case, the pixels in dark parts of the image can have a longer exposure time than pixels in the light part. This idea was implemented by the digital pixel sensor (@sec-digital-pixel). Recall that the voltage on each pixel, or small group of pixels, was measured non-destructively by the ADC. The voltage ($v_i$) and sample time ($t_i$) were recorded for the $i^{th}$ pixel. These two values, together, estimate the effective intensity ($E = v_i / t_i$).
+
+Using only the **last non-saturated read** in a DPS provides a **higher SNR** than combining exponentially spaced earlier reads — particularly when the number of reads is small and the sensor is near saturation.
+
+::: {.callout-note collapse="true" title="Optimal SNR from Exponentially spaced reads"}
+<!-- FISE-Sensor: DPS SNR Optimization -->
+
+## Optimal SNR from Exponentially Spaced Reads
+
+In digital pixel sensors (DPS), it is common to sample the photodiode voltage multiple times during exposure. These samples can be taken at exponentially spaced time points to extend dynamic range. Suppose the sample times are given by
+
+$$
+t_i = t_0 \cdot 2^{i-1}, \quad \text{for } i = 1, 2, \dots, k,
+$$
+
+with corresponding measurements
+
+$$
+V_i = \alpha t_i + n_i,
+$$
+
+where \( \alpha \) is the photon flux (in electrons per unit time), and \( n_i \sim \mathcal{N}(0, \sigma_r^2) \) is independent Gaussian read noise.
+
+We consider two estimators for \( \alpha \):
+
+### Using the Last Valid Read
+
+If we estimate the flux using only the last read before saturation:
+
+$$
+\hat{\alpha}_{\text{last}} = \frac{V_k}{t_k},
+$$
+
+then the signal-to-noise ratio (SNR) is
+
+$$
+\mathrm{SNR}_{\text{last}} = \frac{\alpha t_k}{\sigma_r}.
+$$
+
+### Using Linear Regression
+
+Using all \( k \) samples in a least-squares fit to estimate \( \alpha \), the variance of the slope estimator is
+
+$$
+\mathrm{Var}(\hat{\alpha}_{\text{reg}}) = \frac{\sigma_r^2}{\sum_{i=1}^k (t_i - \bar{t})^2},
+$$
+
+with
+
+$$
+\bar{t} = \frac{1}{k} \sum_{i=1}^k t_i = \frac{t_0 (2^k - 1)}{k}.
+$$
+
+The sum of squared deviations becomes
+
+$$
+\sum_{i=1}^k (t_i - \bar{t})^2 = \sum_{i=1}^k t_i^2 - k \bar{t}^2 = t_0^2 \left( \frac{4^k - 1}{3} - \frac{(2^k - 1)^2}{k} \right).
+$$
+
+Thus, the regression SNR is
+
+$$
+\mathrm{SNR}_{\text{reg}} = \frac{\alpha \sqrt{ \sum (t_i - \bar{t})^2 }}{\sigma_r}.
+$$
+
+We compare the two:
+
+$$
+\frac{\mathrm{SNR}_{\text{reg}}}{\mathrm{SNR}_{\text{last}}} = \frac{ \sqrt{ \sum (t_i - \bar{t})^2 } }{ t_k } = \frac{1}{2^{k-1}} \sqrt{ \frac{4^k - 1}{3} - \frac{(2^k - 1)^2}{k} }.
+$$
+
+### Numerical Examples
+
+| \( k \) | \( \mathrm{SNR}_{\text{reg}} / \mathrm{SNR}_{\text{last}} \) |
+|--------|--------------------------------------------------------------|
+| 2      | 0.35                                                         |
+| 3      | 0.54                                                         |
+| 4      | 0.67                                                         |
+| 5      | 0.75                                                         |
+
+As the table shows, the regression estimator has **lower SNR** than the last sample for small \( k \). When samples are exponentially spaced in time, most of the signal is concentrated in the last read. Early reads contain proportionally less signal but still contribute read noise, diminishing the benefit of regression.
+
+ <!-- You may wish to include a plot of the SNR ratio vs. \( k \) to visualize this result.  
+(See Figure @fig-snr-exponential if added.) -->
+
+:::
 
 
-
-@#sec-digital-pixel
 
