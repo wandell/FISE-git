@@ -6,9 +6,21 @@ Another way to consider an optical system is to think of how the radiation incid
 This treatment is particularly important for optics because so many important optical systems are linear.  Specifically, they satisfy the (testable) experimental property called the **Principle of Superposition**. Linear systems are found in many science and engineering disciplines, and we will see the idea repeatedly and in many different contexts in the rest of this book.  
 
 ## Principle of superposition
-When characterizing a system, the scientist or engineer's first hope is that its input-output relationship is approximately linear. We say a system, $L$, is linear if it satisfies the superposition rule: $$L(x + y) = L(x) + L(y).$$ The variables $x$ and $y$ are two possible inputs to the system, and $x+y$ is their superposition. $L(x)$ is the output of the system.  In the optical system case that we are considering, $x$ might be the spectral image at the entrance aperture of the optics and $L(x)$ might be the spectral image at the exit aperture.
+When characterizing a system, the scientist or engineer's first hope is that its input-output relationship is approximately linear. We say a system, $L$, is linear if it satisfies the superposition rule: 
 
-There is a specialization of superposition that is often separated out: ** Homogeneity**, which is $L(\alpha x) = \alpha L(x)$. Homogeneity is a consequence of the superposition rule. Consider that
+$$
+L(x + y) = L(x) + L(y).
+$$ {#eq-superposition}
+
+The variables $x$ and $y$ are two possible inputs to the system, and $x+y$ is their superposition. $L(x)$ is the output of the system.  In the optical system case that we are considering, $x$ might be the spectral image at the entrance aperture of the optics and $L(x)$ might be the spectral image at the exit aperture.
+
+There is a special case of superposition,  **Homogeneity**, that is often separated out.
+
+$$
+L(\alpha x) = \alpha L(x)
+$$ {#eq-homogeneity}
+
+ Homogeneity is a consequence of the superposition rule. Consider superimposing an input on itself
 
 $$\begin{aligned}
 L(x + x) &= L(2x) \nonumber  \\ 
@@ -18,11 +30,38 @@ L(x + x) &= L(2x) \nonumber  \\
 
 This is easily generalized for any integer $m$ to show that [^optics-linearity]
 
-$$L(m x) = m  L(x).$$
+$$
+L(m x) = m  L(x).
+$$
 
-If you put enough energy into a system it will blow up - so no system satisifies linearity over an infinite range. But many systems are linear over a meaningful input range (sometimes call their *compliance range*).
+It is useful to remember that some systems obey homogeneity but not the superposition. For example, $f(x) = \lvert x \rvert$.
 
-[^optics-linearity]: Real-valued systems that follow the superposition rule obey the homogeneity rule for any real scalar, not just for integers. It is useful to remember that some systems obey homogeneity but not the superposition. For example, $f(x) = \lvert x \rvert$, and $f(x) = x^2$ both satisfy homogeneity, but not superposition.
+Another important case is the Euclidean norm of a vector, 
+
+$$
+f(\mathbf{x}) = \|\mathbf{x}\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}.
+$$ 
+
+Both satisfy homogeneity, but neither satisifies superposition. 
+
+The famous $ReLu$ function used in neural networks satisfies homogeneity $ReLu(x) = max(0,x)$, for $\alpha > 0$, without satisfying superposition
+
+$$
+ReLu( 2 + 1)) \neq ReLu(2) + ReLu(1)
+$$
+
+No system is completely linear:  if you put enough energy into a system it will blow up. But many systems are linear over a meaningful input range (sometimes call their *compliance range*).  Many other systems are locally linear when measured using small perturbations.
+
+[^optics-linearity]: Real-valued systems that follow the superposition rule obey the homogeneity rule for any rational number, not just for integers.  Consider $L(\frac{p}{q}x)$ and carry on.  If you want all real numbers, you need continuity.  But, we are engineers, are we not?
+
+### Point spread functions
+There is an immediate practical consequence of superposition for optics.  The input to a lens is a scene that comprises the intensity across a set of points, $I(\mathbf{p})$. If we can measure how the optics spreads the light from every point, $\mathbf{p} = (p_x, p_y, p_z)$, then we can calculate the expected image just from the point spread functions. Suppose the point spread functions, defined for each point, are $\mathbf{p}$ is $PSF_p()$.  Then the image can be calculated as the intensity of the scene times the point spread, summed across all points
+
+$$
+\sum_{\mathbf{p}} I(\mathbf{p}) PSF_p .
+$$ {#eq-pointspread-1}
+
+There are some details of this calculation -related to the possibility that objects in three-space can block the light from a point- that make this formula not quite right. But if all the points are on a plane, or everything is far away, the calculation is about right. I want you to get the principle of adding up point spreads as a good start. We are engineers, are we not?
 
 ## Shift-invariant linear systems
 
