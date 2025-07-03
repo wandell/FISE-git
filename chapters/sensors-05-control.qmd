@@ -62,7 +62,7 @@ The autofocus subsystem uses this phase difference to determine how to move the 
 
 However, this approach has drawbacks. The mirror, microlenses, and sensor arrays require a relatively large and complex mechanical assembly, making it impractical for compact devices like smartphones. Additionally, the system can only perform focusing or image capture at one time, not both simultaneously. Later technologies addressed these limitations.
 
-::: {#sensor-phasedetect-autofocus .callout-note collapse="false" title="Phase detection autofocus: Commercialization"}
+::: {#sensor-phasedetect-autofocus .callout-note collapse="true" title="Phase detection autofocus: Commercialization"}
 Phase detection autofocus (PDAF) for SLR cameras was pioneered by Honeywell, which patented the key concepts in the 1970s (U.S. Patents 3,875,401 and 4,185,191). Their design used a beam-splitting rangefinder rather than the later flip-mirror approach.
 
 The first commercial SLR to feature PDAF was the Minolta Maxxum 7000 (α-7000 in Japan), released in 1985. It integrated in-body PDAF and motorized lens control, using phase differences measured by two linear sensor arrays to drive lens adjustments.
@@ -72,7 +72,7 @@ Leica had previously patented a different autofocus method based on contrast det
 
 ### Dual Pixel Autofocus (DPAF) {#sec-dualpixel-autofocus}
 
-Traditional phase detection autofocus (PDAF) systems are difficult to implement in the compact form factor of smartphones. As a result, manufacturers initially adopted methods called **contrast detection autofocus (CDAF)**. These methods adjust the lens position to maximize image contrast, under the assumption that a well-focused image will have the sharpest edges. The CDAF methods lack a direct, physical measurement to guide lens movement, making it relatively slow and unreliable, especially in low-light or noisy conditions. Other approaches, such as time-of-flight (ToF) sensors (@sec-sensors-tof), have also been explored and are still used in some devices.
+Traditional phase detection autofocus (PDAF) systems are difficult to implement in the compact form factor of smartphones. As a result, manufacturers initially adopted methods called **contrast detection autofocus (CDAF)**. These methods adjust the lens position to maximize image contrast, under the assumption that a well-focused image will have the sharpest edges. The CDAF methods lack a direct, physical measurement to guide lens movement, making it relatively slow and unreliable, especially in low-light or noisy conditions. Other approaches, such as time-of-flight (ToF) sensors (@sec-sensor-tof), have also been explored and are still used in some devices.
 
 A major breakthrough came in 2014 with the introduction of **dual pixel autofocus (DPAF)**, which applies the principles of phase detection directly within the CMOS sensor. In DPAF, each pixel (or a subset of pixels) contains two photodiodes beneath a single microlens (@fig-sensor-dpaf). During normal image capture, the signals from both photodiodes are combined. For autofocus, however, the signals are read separately and compared.
 
@@ -86,7 +86,7 @@ The underlying principle is based on the optical light field. For pixels near th
 
 ![Shift from defocus. Needs work. Also, could do it with the Chess Set image and true light field simulation. t_cameraLightField.](images/sensors/03-sensors-lf-shift.png){#fig-sensor-lf-shift width="80%"}
 
-By using two photodiodes under each microlens, DPAF sensors capture some information about the optical light field—the left and right subpixels sample rays from different parts of the lens. This concept could be extended further: with more subpixels, it may be possible to recover even richer light field information, opening up new possibilities for computational imaging and post-capture refocusing (@sec-sensors-lightfield).
+By using two photodiodes under each microlens, DPAF sensors capture some information about the optical light field—the left and right subpixels sample rays from different parts of the lens. This concept could be extended further: with more subpixels, it may be possible to recover even richer light field information, opening up new possibilities for computational imaging and post-capture refocusing (@sec-sensor-lightfield).
 
 ## Exposure Control {#sec-exposure-control}
 To capture a high-quality image, the exposure must be set so that dark regions generate enough electrons to rise above the sensor’s noise floor, while bright regions do not exceed the pixel’s full well capacity (@sec-wellcapacity-dynamicrange). If the exposure time is too short, pixels in dark areas collect very few electrons—sometimes fewer than the noise level. Even with a low-noise sensor, the inherent Poisson noise means that a small number of electrons results in a low signal-to-noise ratio. For example, if a pixel collects an average of 4 electrons, the standard deviation is 2, so the SNR is only 2.
