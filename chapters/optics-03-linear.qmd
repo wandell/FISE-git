@@ -1,26 +1,30 @@
-# Optics and linear systems {#sec-optics-linear}
-Geometric optics is helpful for understanding and characterizing many optical system properties. The ideas in geometric optics are closely tied to the physical properties of the lenses which makes geometric optics a particularly valuable tool in lens design.
+# Optics and Linear Systems {#sec-optics-linear}
+Geometric optics is valuable for understanding and characterizing many properties of optical systems. Its concepts are closely linked to the physical characteristics of lenses, making geometric optics especially useful in lens design.
 
-Another way to consider an optical system is to think of how the radiation incident at the entrance aperture is transformed into radiation incident at the sensor surface.  This point of view treats the optics as transforming one spctral image (the irradiance from the incident light field) into a second spectral image (the irradiance at the sensor surface).  This characterization of the optics is thinking of the system in terms of signal processing, a valuable approach for system simulation.  
+Another perspective is to view an optical system as a transformer: it converts the radiation entering the aperture into radiation at the sensor surface. This approach treats the optics as mapping one spectral image (the incident light field) into another (the irradiance at the sensor). Thinking of the system in terms of signal processing is a powerful method for system simulation and analysis.
 
-This treatment is particularly important for optics because so many important optical systems are linear.  Specifically, they satisfy the (testable) experimental property called the **Principle of Superposition**. Linear systems are found in many science and engineering disciplines, and we will see the idea repeatedly and in many different contexts in the rest of this book.  
+## Linear Systems
+This perspective is particularly important because many optical systems are approximately linear. Specifically, they satisfy the **Principle of Superposition**, a property that can be tested experimentally. Linear systems are common in science and engineering, and we will encounter this concept repeatedly throughout the book.
 
-## Principle of superposition
-When characterizing a system, the scientist or engineer's first hope is that its input-output relationship is approximately linear. We say a system, $L$, is linear if it satisfies the superposition rule: 
+### Principle of Superposition
+When analyzing a system, scientists and engineers often hope its input-output relationship is linear. A system $L$ is linear if it satisfies the superposition rule:
 
 $$
 L(x + y) = L(x) + L(y).
 $$ {#eq-superposition}
 
-The variables $x$ and $y$ are two possible inputs to the system, and $x+y$ is their superposition. $L(x)$ is the output of the system.  In the optical system case that we are considering, $x$ might be the spectral image at the entrance aperture of the optics and $L(x)$ might be the spectral image at the exit aperture.
+Here, $x$ and $y$ are two possible inputs, and $L(x)$ is the system's response. For an optical system, $x$ might represent the incident light field at the entrance aperture, and $L(x)$ the spectral irradiance at the sensor surface.
 
-There is a special case of superposition,  **homogeneity**, that is often separated out.
+No real system is perfectly linear—extreme inputs will always cause failure—but many systems are linear over a significant range of inputs. Others are locally linear, meaning they behave linearly for small signals. Linear and locally linear systems are fundamental in mathematics, physics, and engineering.
+
+### Principle of Homogeneity
+A special case of superposition is **homogeneity**:
 
 $$
 L(\alpha x) = \alpha L(x)
 $$ {#eq-homogeneity}
 
- Homogeneity is a consequence of the superposition rule. Consider adding an input to itself
+Homogeneity follows from superposition. For example, adding an input to itself:
 
 $$\begin{aligned}
 L(x + x) &= L(2x) \nonumber  \\ 
@@ -29,51 +33,47 @@ L(x + x) &= L(2x) \nonumber  \\
 \end{aligned}
 $$
 
-This is easily generalized for any integer $m$,
+This generalizes to any integer $m$:
 
 $$
-L(m x) = m  L(x).
+L(m x) = m L(x).
 $$
 
-::: {.callout-note title="Extension to rational numbers" collapse="true"}
+::: {.callout-note title="Extension to Rational Numbers" collapse="true"}
 
-Real-valued systems that obey superposition also obey homogeneity rule for any rational number, not just for integers. Suppose that $\alpha = \frac{p}{q}$ is a rational number. Then
-
-$$
-L(\alpha x) = L(\frac{p}{q}x) = p L(\frac{x}{q}) .
-$$
-
-Make the change of variable, $x\prime = x/q$, and notice that 
+For real-valued systems that obey superposition, homogeneity holds for any rational number. If $\alpha = \frac{p}{q}$ is rational:
 
 $$
-\begin{align}
-L(x) =& L(q x\prime) = q L(x\prime) \\
-L(x\prime) =& \frac{1}{q} L(x) .
-\end{align}
+L(\alpha x) = L\left(\frac{p}{q}x\right) = p L\left(\frac{x}{q}\right).
 $$
 
-Finally
+Let $x' = x/q$, so
 
 $$
-L(\alpha x) = L(\frac{p}{q}x) = L(p x\prime) = p L(x\prime) = p \frac{1}{q}L(x) = \frac{p}{q} L(x) = \alpha L(x)
+L(x) = L(q x') = q L(x') \implies L(x') = \frac{1}{q} L(x).
 $$
 
-If you want all real numbers, not just the rationals, you need continuity.  But, we are engineers, are we not?
+Therefore,
+
+$$
+L(\alpha x) = p L(x') = p \frac{1}{q} L(x) = \frac{p}{q} L(x) = \alpha L(x).
+$$
+
+To extend this to all real numbers, continuity is required. But for most engineering purposes, this is sufficient.
 :::
 
-It is useful to remember that some systems obey homogeneity but not superposition. Two examples are $f(x) = \lvert x \rvert$ and
+It is important to note that a system can be homogeneous without being linear. For example, $f(x) = |x|$ and the vector length function
 
 $$
-f(\mathbf{x}) = \|\mathbf{x}\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2} 
-$$ 
-
-The function, $ReLu(x) = max(0,x)$, for $\alpha > 0$, is widely used in neural networks.  It too satisfies homogeneity without satisfying superposition
-
-$$
-1 = ReLu( 2 + -1) \neq ReLu(2) + ReLu(-1) = 2 + 0.
+f(\mathbf{x}) = \|\mathbf{x}\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
 $$
 
-As a practical matter, remember that no real system can be completely linear:  if you put enough energy into any system it will blow up! But many systems are linear over a meaningful input range called their **compliance range**. Many other systems are linear when measured using small perturbations.  So linear approximations and linear systems appear throughout mathematics, physics and engineering.
+are homogeneous but not linear. The function $ReLU(x) = \max(0, x)$, widely used in neural networks, is also homogeneous for $\alpha > 0$ but not linear:
+
+$$
+1 = ReLU(2 + -1) \neq ReLU(2) + ReLU(-1) = 2 + 0.
+$$
+
 
 ### Point spread functions
 There is an immediate practical consequence of superposition for optics.  The input to the optics is a scene that with intensity $I(\mathbf{p})$ for every point in the scene, $\mathbf{p} = (p_x, p_y, p_z)$. The point spread functions define how the optics spreads the light from a point across the image $PSF_\mathbf{p}(x,y)$, for each point. 
