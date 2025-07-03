@@ -76,25 +76,31 @@ $$
 
 
 ### Point spread functions
-There is an immediate practical consequence of superposition for optics.  The input to the optics is a scene that with intensity $I(\mathbf{p})$ for every point in the scene, $\mathbf{p} = (p_x, p_y, p_z)$. The point spread functions define how the optics spreads the light from a point across the image $PSF_\mathbf{p}(x,y)$, for each point. 
 
-With knowledge of these functions and a belief in superposition, we can calculate the image intensity for any input scene. The image is the intensity of the scene times the point spread, summed across all points
+Superposition has a really useful consequence when we think about how optics turn a scene into an image. Imagine the scene as a bunch of points, each with its own intensity $I(\mathbf{p})$, where $\mathbf{p} = (p_x, p_y, p_z)$ is the location of each point in the scene. For each of these points, the optics spreads out the light in a certain way—this is called the point spread function, or $PSF_\mathbf{p}(x, y)$. Here, $(x, y)$ are positions in the image.
+
+If we know all these point spread functions, and if the system is linear (so superposition holds), we can figure out what the image will look like for any scene. We just add up the contribution from every point in the scene. The formula looks like this:
 
 $$
-O(x,y) = \sum_{\mathbf{p}} I(\mathbf{p}) PSF_\mathbf{p}(x,y) .
+O(x, y) = \sum_{\mathbf{p}} I(\mathbf{p})\, PSF_\mathbf{p}(x, y)
 $$ {#eq-pointspread-1}
 
-::: {.callout-note title="PSF limitation" collapse="true"}
-Objects in three-space can occlude one another.  These occlusions mean that the pointspread from $\mathbf{p}$ may depend on the geometry of the scene. This limitation disturbs the perfect linearity formula. 
+Here, $O(x, y)$ is the brightness at each spot in the image. Each point in the scene sends out its own little blur, and the image is just the sum of all those blurs.
 
-But if all the points are on a plane, or everything is far away, the calculation is about right. I want you to feel the principle of adding up point spreads because it is the right way to start. We are engineers, are we not?
+::: {.callout-note title="A limitation of PSFs" collapse="true"}
+There’s a catch: in real scenes, objects can block each other (occlusion). That means the point spread from one spot might be blocked or changed by something else in the scene, so the formula above isn’t always perfect.
+
+But if all the points are on a flat surface, or if everything is far away (so nothing blocks anything else), this approach works well. The main idea is that you can build up the whole image by adding up the point spreads from each part of the scene. It’s a great starting point for understanding how images form.
 :::
 
+A limitation with this observation is that we might have to measure a lot of different point spread functions. For some systems, that is true.  But for many systems, and certainly within small regions of the scene for most systems, across many positions, $\mathbf{p}$; the point spread function shifts but its shape remains the same.  This makes the system calibration and calculations much easier.
+
 ## Shift-invariant linear systems
+When the shape of the point spread function is the same for different points, except for a shift in position, we say the system is **shift invariant**When a system is shift-invariant, we can model and characterize it and very efficiently, based on only a few measurements.
 
-The idea of shift invariance - whether referring to a shift in space or a shift in time - is an important special feature of a linear system. When a system is shift-invariant, we can model and characterize it and very efficiently, based on only a few measurements.
+There are a large number of shift invariant linear systems in all branches of science and engineering. Optical linear systems usually refers to shift invariant in space; and there are many other linear systems that are a shift invariant in time. The simplifications of shift invariance make it a very useful tool, and some linear systems courses focus almost entirely on shift-invariant linear systems, with little time spent on the general linear system. 
 
-The image formation component (optics) of most image systems are typically linear, but they are not fully shift-invariant.  Even so, one often finds a region near the main optical axis of a system that is spatially shift invariant. Our colleagues in optics call these spatially shift invariant regions *isoplanatic*.  
+The image formation component (optics) of most image systems are typically linear, but they are not fully shift-invariant.  Even so, one often finds a region near the main optical axis to be spatially shift invariant. My colleagues in optics call these spatially shift invariant regions **isoplanatic**.  
 
 Some mathematical notation is useful, as a reminder. Suppose we express image translation as a function, say expressing translation of an image, $x$, by an amount, $\delta$, as $T(x,\delta)$. The linear relationship from the input to the output of the optics is $L(x)$. An isoplanatic region means that the linear transform of a translated image is approximately equal to the translation of the linear response. 
 
