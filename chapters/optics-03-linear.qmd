@@ -26,9 +26,10 @@ $$\begin{aligned}
 L(x + x) &= L(2x) \nonumber  \\ 
 &= L(x) + L(x) \nonumber \\
 &= 2L(x). \nonumber
-\end{aligned}$$
+\end{aligned}
+$$
 
-This is easily generalized for any integer $m$ to show that [^optics-linearity]
+This is easily generalized for any integer $m$ to show that
 
 $$
 L(m x) = m  L(x).
@@ -52,7 +53,31 @@ $$
 
 No system is completely linear:  if you put enough energy into a system it will blow up. But many systems are linear over a meaningful input range (sometimes call their *compliance range*).  Many other systems are locally linear when measured using small perturbations.
 
-[^optics-linearity]: Real-valued systems that follow the superposition rule obey the homogeneity rule for any rational number, not just for integers.  Consider $L(\frac{p}{q}x)$ and carry on.  If you want all real numbers, you need continuity.  But, we are engineers, are we not?
+::: {.callout-note title="Extension to rational numbers" collapse="true"}
+
+Real-valued systems that obey superposition also obey homogeneity rule for any rational number, not just for integers. Suppose that $\alpha = \frac{p}{q}$ is a rational number. Then
+
+$$
+L(\alpha x) = L(\frac{p}{q}x) = p L(\frac{x}{q}) .
+$$
+
+Make the change of variable, $x\prime = x/q$, and notice that 
+
+$$
+\begin{align}
+L(x) =& L(q x\prime) = q L(x\prime) \\
+L(x\prime) =& \frac{1}{q} L(x) .
+\end{align}
+$$
+
+Finally
+
+$$
+L(\alpha x) = L(\frac{p}{q}x) = L(p x\prime) = p L(x\prime) = p \frac{1}{q}L(x) = \frac{p}{q} L(x) = \alpha L(x)
+$$
+
+If you want all real numbers, not just the rationals, you need continuity.  But, we are engineers, are we not?
+:::
 
 ### Point spread functions
 There is an immediate practical consequence of superposition for optics.  The input to a lens is a scene that comprises the intensity across a set of points, $I(\mathbf{p})$. If we can measure how the optics spreads the light from every point, $\mathbf{p} = (p_x, p_y, p_z)$, then we can calculate the expected image just from the point spread functions. Suppose the point spread functions, defined for each point, are $\mathbf{p}$ is $PSF_p()$.  Then the image can be calculated as the intensity of the scene times the point spread, summed across all points
