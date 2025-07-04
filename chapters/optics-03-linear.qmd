@@ -65,7 +65,7 @@ $$
 L(\alpha x) = p L(x') = p \frac{1}{q} L(x) = \frac{p}{q} L(x) = \alpha L(x).
 $$
 
-To extend this to all real numbers, continuity is required. But for most engineering purposes, this is sufficient.
+To extend this to all real numbers, continuity and far more extensive proof is required. But how about we just work with the rationals and be engineers for now?
 :::
 
 It is important to note that a system can be homogeneous without being linear. For example, $f(x) = |x|$ and the vector length function
@@ -116,12 +116,21 @@ Notice that @eq-shiftinvariance-defined allows the size of the image shift, $\de
 
 The image formation component (optics) of most image systems are typically linear, but they are not globally shift-invariant. Rather, they are shift invariant over some part, but not all, of the full visual field. Usually there is a region near the optical axis that is shift invariant, and the system is also locally shift-invariant at off-axis points. This local shift invariance is similar to a system that is locally linear. In optics the shift invariant region is called an **isoplanatic** region. 
 
-## Point spread functions
+## Widely used PSFs
+
+When simulating optical systems, there are a few point spread functions (PSFs) that come up again and again.
+
+The **Airy pattern** is the gold standard for sharpness in an ideal lens. It’s based on the physics of light waves, so it’s the “best case” for a perfect, diffraction-limited lens. The Airy pattern depends on the wavelength of light, so it’s a real physical limit, not just a mathematical idea.
+
+The **Gaussian** and **Lorentzian** (sometimes called Cauchy) PSFs are more like practical shortcuts. They’re simple formulas that do a pretty good job of describing how real lenses blur light. The Gaussian is especially popular because it’s easy to work with in calculations. The Lorentzian has fatter tails, which means it’s better for modeling systems where light gets scattered a lot—like if your lens is scratched or there’s a lot of internal reflection.
+
+![Cross-section through three point spread functions that are commonly used to characterize imaging optics.  Use ISETCam to redraw.  This was made using FISE-Optics.](images/optics/02-optics-PSF_comparison.png){#fig-psf-comparison width="70%"}
 
 ### The Airy pattern
-The Airy pattern, introduced in @sec-airy-pattern and @fig-blur-comparison, is an example of an important point spread function.  That pattern is the response of a pinhole camera to a point of light, and it is also the pattern we expect an circularly symmetric, ideal (diffraction-limited) optical system.  The Airy pattern is a limit on the size of a point that is imaged given the $f/\#$ of a diffraction-limited optical system.
 
-We wrote the formula for the size of the Airy disk in @eq-airy1 and showed an image of the point spread in @fig-blur-comparison. Because the system is circularly symmetric, the formula for the entire pattern, can be expressed with respect to just one variable, the radius from the center $r$. The intensity distribution $I(r)$ in the image plane for a system with $f/\# = N$, illuminated with monochromatic light of wavelength $\lambda$, is given by:
+The Airy pattern (see @sec-airy-pattern and @fig-blur-comparison) is what you get if you shine a point of light through a perfect, circular lens or a pinhole camera. It’s the sharpest spot you can get, limited only by the physics of light. The pattern is circularly symmetric, so you only need to know the distance from the center, $r$, to describe it.
+
+The intensity at a distance $r$ from the center is:
 
 $$
 I(r) = I_0 \left[ \frac{2 J_1\left( \frac{\pi r}{\lambda N} \right)}{ \frac{\pi r}{\lambda N} } \right]^2
@@ -129,31 +138,46 @@ $$
 
 Where:
 
-- $I(r)$: Intensity at radial position $r$ on the image plane  
-- $I_0$: Maximum intensity at the center of the Airy pattern  
-- $J_1$: First-order Bessel function of the first kind  
-- $N$: The system's $f/\#$
-- $\lambda$: Wavelength of the monochromatic light  
-- $r$: Radial distance from the optical axis in the image plane  
+- $I_0$ is the peak intensity at the center
+- $J_1$ is the first-order Bessel function
+- $N$ is the $f/\#$ of the lens
+- $\lambda$ is the wavelength of light
 
-Repeating @eq-airy1, but this time using the $f/\# = N$, the diameter of the first dark ring (minimum in intensity) is approximately:
+The first dark ring (where the intensity drops to zero) is at a radius:
 
 $$
 d = 2.44 \, \lambda N
 $$
 
+This tells you how “tight” the spot can be focused.
+
 ### Lorentzian (Cauchy)
 
+The Lorentzian function pops up in physics and probability. It’s famous for its “fat tails”—meaning it doesn’t drop off as quickly as a Gaussian. This makes it handy for modeling blur when there’s a lot of stray light or scattering.
+
+$$
+I(r) = \frac{I_0}{1 + \left( \frac{r}{\gamma} \right)^2}
+$$
+
+Here, $\gamma$ controls how wide the central peak is. A bigger $\gamma$ means a wider, flatter blur with more light in the tails.
 
 ### Gaussian
 
+The Gaussian is the classic “bell curve.” It’s simple and often a good enough approximation for many optical systems.
+
+$$
+I(r) = I_0 \exp\left( -\frac{r^2}{2\sigma^2} \right)
+$$
+
+Here, $\sigma$ sets how spread out the blur is. Larger $\sigma$ means a blurrier image.
 
 ### Line spread functions
 
-Relationship between point spread and line spread. psf2lsf easy, but to go back you need to assume something about the circular symmetry.
+Sometimes, instead of a single point, you want to know how a thin line gets blurred. The **line spread function** (LSF) is what you measure when the input is a line.  As you might imagine, the If you know the PSF, you can compute the LSF by adding up the PSF along one direction. If your PSF is circularly symmetric, it’s easy to go from PSF to LSF. But going back from LSF to PSF is trickier—you have to assume the blur is the same in all directions.
 
-### Harmonics 
-Almost eigenfunctions.  Not quite because of phase.  If we treat the harmonics as 2-dimensional vectors, then they are eigenfunctions.
+### Harmonics
+
+Harmonics (like sine and cosine waves) are almost the “natural” patterns for linear systems—they’re close to being eigenfunctions. For imaging, they’re not quite perfect eigenfunctions because of phase shifts, but if you think of them as 2D vectors, they’re pretty close.
 
 ### Optical Transfer Function
 
