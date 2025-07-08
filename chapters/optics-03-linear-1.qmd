@@ -124,12 +124,13 @@ The **Airy pattern** is based on the physics of light waves; it’s the pattern 
 
 ![Cross-section of three  point spread functions that are widely used in simulation. These point spreads were applied for a lens and sensor configuration with an $f/\#$ of 4 and a focal length of 3.9mm. The radius of the Airy disk for this configuration is 3.4 microns (see the zero-crossing of the Airy pattern).](images/optics/optics-siKernels-graph.png){#fig-psf-graph width="60%"}
 
-The cross-section graphs of these PSFs are a useful way to see the details of their differences. We can go beyond the curves to visualize how these different PSF shapes are manifest in spectral radiance images. I compare these three PSFs and a fourth one, called the **pillbox**, in a <a href="../code/fise_opticsPSF.html" target="_blank"> an ISETCam live script, fise_opticsPSF.</a>  The images in @fig-psf-image were made using that script.
+The cross-section graphs of these PSFs are a useful way to see the details of their differences. We can go beyond the curves to visualize how these different PSF shapes are manifest in spectral radiance images (@fig-psf-image). That image compares the three custom PSFs and a fourth one, called the **Pillbox**.  I created the images using the ISETCam script <a href="../code/fise_opticsPSF.html" target="_blank">fise_opticsPSF.</a>  
 
 ![Images created by applying four different point spreads to an image of grid lines. The diffraction limited pattern and the Gaussian pattern have point spread functions that vary with wavelength.  The *pillbox* and *Lorentzian* PSFs were made wavelength-indepedent. Notice how the high tail of the Lorentzian PSF produces the appearance of a veiling glare. The pillbox has about the same with as the other functions, but introduces much more blur because it stays at a high level over the entire width.  I introduced a wavelength dependence to the Gaussian so that that long wavelengths (reddish) spread a little more than the short wavelengths.  That is also true of the Airy pattern, but to a smaller extent. See fise_siKernels.m ](images/optics/optics-siKernels-image.png){#fig-psf-image width="90%"}
 
-### The Airy pattern
+Here is a description of the different PSFs and a brief descrition of their properties.
 
+### The Airy pattern
 The Airy pattern (see @sec-airy-pattern and @fig-blur-comparison) is what you get if you shine a point of light through a perfect, circular lens or a pinhole camera. It’s the sharpest spot you can get, limited only by the physics of light. The pattern is circularly symmetric, so you only need to know the distance from the center, $r$, to describe it.
 
 The intensity at a distance $r$ from the center is:
@@ -172,9 +173,19 @@ $$
 
 Here, $\gamma$ controls how wide the central peak is. A bigger $\gamma$ means a wider, flatter blur with more light in the tails.
 
-### Line spread functions
+## Line spread functions
+When I created @fig-psf-image, I decided to illustrate the effect of the PSFs using grid lines rather than points. It was my judgment that the differences would be easier to visualize.  It is fairly common to assess the impact of the point spread this way.  When we calculate the image of a line we are calculating the **line spread function (LSF)**.
 
-Sometimes, instead of a single point, you want to know how a thin line gets blurred. The **line spread function** (LSF) is what you measure when the input is a line.  As you might imagine, the If you know the PSF, you can compute the LSF by adding up the PSF along one direction. If your PSF is circularly symmetric, it’s easy to go from PSF to LSF. But going back from LSF to PSF is trickier—you have to assume the blur is the same in all directions.
+If the PSF is circularly symmetric, there is only one LSF associated with it. Also, given an LSF it is possible to recover a unique circularly symmetric PSF.  It is straightforward to compute the LSF by adding up the PSF along one dimension. To find the PSF in the y-direction, we simply sum this way:
+
+$$
+LSF = \sum_x PSF(x,y)
+$$
+
+Here are the linespread functions of the Gaussian and Lorenzian.
+
+
+I am not plotting the Pillbox because it is not circularly symmetric. In has the same LSF for the horizontal and vertical directions, but its LSF differs in other directions. 
 
 ## Chromatic aberration
 
