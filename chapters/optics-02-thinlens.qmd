@@ -1,20 +1,17 @@
 # Thin lenses {#sec-optics-thinlens}
+Many image system properties can be summarized by the geometric optics of ray tracing. This analysis characterizes important performance characteristics of an optical system, such as its focal length, magnification, and depth of field. These optical properties can be analyzed in a particularly simple and clear way if we consider very simple thin lenses. 
 
-Many image system properties can be summarized by ray tracing. This analysis characterizes critical performance characteristics of an optical system, such as its focal length, magnification, and depth of field. These optical properties can be analyzed in a particularly simple and clear way if we consider very simple thin lenses. This has some practical value as well because image systems are often made from lenses that are well approximated by a collection thin lenses. In some cases we can describe the whole system by calculating how multiple thin lenses combine to form the whole optical system. And in other cases, an entire image system can be characterized using these same concepts.
+Starting with an analysis of a thin lens has much practical value. First, many people, including both engineers and photographers, rely on the thin lens ideas when they describe optical system characteristics. Familiarity with these ray trace characterizations is important for anyone working in the field of image systems engineering. Second, even more complex image systems are often made from lenses that are well approximated by a collection thin lenses. We will go on to see how to extend the thin lens ideas to more complex systems in @sec-optics-morelenses.
 
-Another reason to understand image systems by ray tracing is that many people, including most photographers, rely on these parameters when they describe optical system characteristics. Familiarity with these ray trace characterizations is important for anyone working in the field of image systems engineering.
+This section explains ways to understand image system optics by ray tracing. Important as it is, ray tracing is not up to the task of a full image systems simulation. As we saw in @sec-optics-geometric, we will need to account for the wave properties of light, for example to incorporate diffraction. We will explain the methods used for simulating the spectral irradiance at the sensor in subsequent chapters about linear systems (@sec-optics-linear) and wavefront calculations (@sec-optics-wavefront). 
 
-The simplest way to introduce these ideas is to use a thin lens model. We couple ray tracing methods with geometry and occasional linear algebra to derive certain performance characteristics. Ray tracing is not up to the task of a full simulation that calculates how the incident light field is transformed into optical light field. Such a calculation requires using linear system methods and accounting for the wave properties of light, for example to incorporate diffraction. We will explain the methods used for simulating the spectral irradiance at the sensor in subsequent chapters (@sec-optics-wavefront). Here we introduce ways to understand the summaries of an image system that can be revealed by ray tracing.
+## What is a thin lens {#sec-optics-thinlensdefined}
 
-::: {.callout-note collapse="true" title="What is a thin lens?"}
-If the lens width is much smaller than the *radius of curvature* of its two surfaces, it is called a *thin lens*. The radius of the circle that (at least approximately) conforms to the surface of the lens is the radius of curvature. There is no universally agreed upon numerical value for what is meant by much smaller, but it is common to consider a lens whose width is one-tenth or less of the radius of curvature to be a thin lens.
+If a lens width is much smaller than the *radius of curvature* of its two surfaces, it is called a *thin lens*. The radius of the circle that (at least approximately) conforms to the surface of the lens is the radius of curvature. There is no universally agreed upon numerical value for what is meant by much smaller, but it is common to consider a lens whose width is one-tenth or less of the radius of curvature to be a thin lens.
 
 ![(a) This lens width is smaller than the radius of the circle that matches its surface. The lens might be considered thin. (b) This lens width is approximately equal to the radius of curvature. It is not be a thin lens.](images/optics/thinlens-definition.png){#fig-thinlens-definition fig-align="center" width="60%"}
-:::
 
-The ISET3d calculations make use of all of the principles below and are based on rays. The ISETCam calculations make use of the principles below, as well. But the image formation calculation treats the lens as modifying the wavefront of the light. We describe this approach in [@sec-optics-wavefront].
-
-## Focal points
+## Focal points {#sec-optics-focalpoints}
 
 @fig-thinlens-focalpoints shows the important concept of the primary and secondary focal points of a convex and concave thin lens. The primary focal point (F) is the location on the optical axis such that any ray coming from it towards the lens travels parallel to the axis after refraction. The distance from that point to the middle of the lens is called the *focal length*. The secondary focal point The secondary focal point (F') is the axial point such that any incident ray traveling parallel to the axis will, after refraction, proceed toward, or appear to come from it. The secondary focal point has its own focal length.
 
@@ -24,16 +21,15 @@ When examining the behavior of an equiconvex lens, two primary scenarios emerge.
 
 The equiconcave lens presents a contrasting optical behavior. When incident rays enter the lens at various angles with the intention of producing parallel rays, these rays converge at the primary focal point (F) on the opposite side of the lens. Dashed lines can be used to trace and illustrate this convergence. In a separate scenario, when parallel rays enter the equiconcave lens, they diverge after refraction. If these diverging rays are extended backward using dashed lines, they appear to originate from the secondary focal point (F') on the opposite side of the lens.
 
-## Biconvex lenses
+## Biconvex lenses {#sec-optics-biconvex}
 
-![Different radii of curvature for a thin lens.](images/optics/thinlens-asymmetric.png){#fig-thinlens-asymmetric fig-align="center" width="100%"}
+![Different radii of curvature for a thin lens.](images/optics/thinlens-asymmetric.png){#fig-thinlens-asymmetric fig-align="center" width="60%"}
 
 The lenses drawn in @fig-thinlens-focalpoints are symmetric (i.e., equiconvex and equiconcave). It is not surprising, therefore, that the focal lengths of the primary and secondary focal points are equal. It is more surprising to learn that even if the thin lens has a different curvature on the two sides, the two focal lengths will still be equal [@fig-thinlens-asymmetric]. We will explain this after we introduce the lensmaker's equation, below.
 
 There are many other useful calculations that one can explore with simple lenses and ray tracing. Here, we cover the very basics to give the reader some of the terminology and a sense of how these systems are analyzed. For a deeper dive, I suggest the reader look into some of the excellent textbooks on optics (References here. Usually Goodman; Born and Wolf; I like Jenkins and White.)
 
 ## Three ray trace principles {#sec-3principles}
-
 Consider the vector object on the left of @fig-lensmaker-center. A ray from the arrowhead that is parallel to the axis will be refracted through the focal point. A ray from origin of the vector, which is on the optical axis, will also pass through the focal point. Finally, a ray from the arrowhead - and this is new - that passes through the center of the lens will continue on a straight path.
 
 ![Tracing an object through the lens to an image.](images/optics/lensmaker-center.png){#fig-lensmaker-center fig-align="center" width="70%"}
@@ -41,16 +37,13 @@ Consider the vector object on the left of @fig-lensmaker-center. A ray from the 
 In summary, rays that
 
 -   Enter parallel to the optical axis and pass through the focal point on the opposite side.
-
 -   Pass through the center of the lens do not deviate (refract).
-
 -   Pass through the primary focal point toward the lens exit parallel to the optical axis.
 
-## Focal plane
-
+## Focal plane {#sec-optics-focalplane}
 They rays from a distant point off the optical approach the entrance as parallel to one another but oblique to the optical axis. The ray that passes through the center of the lens is called the *chief ray*. There will also be a ray that passes through the primary focal point. It will be refracted by the lens and emerge as parallel to the optical axis. These two rays intersect where the image of the point will be formed.
 
-![The focal plane for distant points is perpendicular to the optical axis and passes through the secondary focal point (blue dashed line).](images/optics/thinlens-obliquerays.png){fig-align="center" width="70%"}
+![The focal plane for distant points is perpendicular to the optical axis and passes through the secondary focal point (blue dashed line).](images/optics/thinlens-obliquerays.png){#fig-optics-focalplane fig-align="center" width="70%"}
 
 ```{=html}
 <!-- 
@@ -59,7 +52,7 @@ https://pressbooks.online.ucf.edu/osuniversityphysics3/chapter/thin-lenses/?t
 -->
 ```
 
-## Lens power (diopters)
+## Lens power (diopters) {#sec-optics-lenspower}
 
 The *power* of a lens is the inverse of the focal length, in meters. The unit for lens power, $1/m$ is the *diopter*. A short focal length implies large power, either due to the curvature of the lens surface or the refractive index of the lens material.
 
@@ -97,7 +90,7 @@ The common names for these variables are
 *  $d_i$ - Focal distance
 *  $f$   - Lens focal length
   
-## Focal distance {#sec-focaldistance1}
+## Focal distance {#sec-optics-focaldistance}
 
 The location of the image plane, where an object is represented in best focus, depends on the distance from the lens to the object. This is the **focal distance**. Notice that when $d_o = \infty$, then $d_i = f$. We can re-write the lens formula to calculate this distance. Thus, if we know the focal length, $f$, and the distance to an object, $d_o$, we can calculate the distance to the focal plane, $d_i$ as
 
@@ -119,7 +112,7 @@ $$ {#eq-focal-distance}
 
 This script plots the focal distance as a function of object distance expressed as a multiple of focal length.
 
-## Lensmaker equation
+## Lensmaker equation {#sec-optics-lensmaker}
 
 ```{=html}
 <!-- 
@@ -139,21 +132,21 @@ Notice that flipping the shape of the lens, so that $R_2$ and $R_1$ exchange, th
 
 Here is a link to a very nice [video derivation of the formula](https://www.khanacademy.org/science/in-in-class-12th-physics-india/in-in-ray-optics-and-optical-instruments/in-in-refraction-in-thin-lenses/v/lens-makers-formula).
 
-## The f-number (f/#) {#sec-fnumber}
+## The $f/\#$ (f-number) {#sec-optics-fnumber}
 
-The f-number (f/#) of a thin lens is the ratio of its focal length and entrance aperture diameter (@fig-fnumber). For example, when we write f/4, it means that the focal length is 4x the aperture diameter.
+The $f/\#$ of a thin lens is the ratio of its focal length and entrance aperture diameter (@fig-fnumber). For example, when we write f/4, it means that the focal length is 4x the aperture diameter.
 
-![Graphic of the f/#.](images/optics/lensparameters-fnumber.png){#fig-fnumber fig-align="center" width="50%"}
+![Graphic of the $f/\#$.](images/optics/lensparameters-fnumber.png){#fig-fnumber fig-align="center" width="50%"}
 
-The f/# is an important parameter for all thin lenses, and it appears in many formulae. It is the only free parameter of a circular, diffraction-limited thin lens. This is an important case for assessing system performance because it represents an upper bound on lens performance. If we simulate performance of a system assuming diffraction-limited optics, we cannot improve the system by using better optics.
+The $f/\#$ is an important parameter for all thin lenses, and it appears in many formulae. It is the only free parameter of a circular, diffraction-limited thin lens. This is an important case for assessing system performance because it represents an upper bound on lens performance. If we simulate performance of a system assuming diffraction-limited optics, we cannot improve the system by using better optics.
 
-As an example, the Airy disk diameter (meters) on the focal plane of a diffraction limited lens depends only on the wavelength of light and the f/# of the lens. If the wavelength is $\lambda$ and f/# is $F$, the formula for the Airy disk diameter is
+As an example, the Airy disk diameter (meters) on the focal plane of a diffraction limited lens depends only on the wavelength of light and the f/# of the lens. If the wavelength is $\lambda$ and f/# is $N$, the formula for the Airy disk diameter is
 
-$$ d = 2.44 ~ \lambda ~ F$$ {#eq-airy2}
+$$ d = 2.44 ~ \lambda ~ N$$ {#eq-airy2}
 
 If you revisit the first calculation of the Airy disk, in @sec-lightfields-diffraction, you will see that this formula is implicit in how we modeled the image from a diffraction limited pinhole [@eq-airy1].
 
-## Magnification and zoom
+## Magnification and zoom {#sec-optics-zoom}
 
 Consider the simple thin lens in @fig-optics-magnification with a focal distance of $f = 0.1m$. We draw the rays to the image plane for an object at a distance of $d_o = 0.3m$.
 
@@ -173,7 +166,7 @@ Some camera optics with an adjustable focal length, and this enables the user to
 
 ![Optical zoom. (a) A small image that just fits onto the sensor (dashed lines). (b) If we magnify the image, say by increasing the focal length and image distance, the sensor measures a smaller portion of the image. This is optical zoom.](images/optics/lensparameters-zoom.png){#fig-optics-zoom fig-align="center" width="80%"}
 
-## F-number and image intensity
+## $F/\#$ and image intensity {#sec-optics-fnumberintensity}
 
 Suppose we wish to magnify the image, but we want to maintain the image irradiance level. In that case, we must capture $4$ times as much light. We do this by increasing the lens diameter, $D$. The formula for the area of the aperture is $\pi (D/2)^2$; thus, doubling the $D$ increases the area by a factor of $4$.
 
