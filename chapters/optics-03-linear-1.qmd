@@ -1,9 +1,9 @@
 # Optics and Linear Systems {#sec-optics-linear}
-Geometric optics is valuable for understanding and characterizing many properties of optical systems. Its concepts are closely linked to the physical characteristics of lenses, making geometric optics especially useful in lens design.
+Geometric optics helps us understand how lenses work by focusing on things like the shape of the lens, what it’s made of, and how far it is from the sensor. This approach is great for designing lenses and figuring out their basic properties.
 
-Another perspective is to view an optical system from as a signal processing device:  it converts the radiation entering the aperture into radiation at the sensor surface. This approach treats the optics as mapping one spectral image (the incident light field) into another (the irradiance at the sensor). Thinking of the system in terms of signal processing is a powerful method for system simulation and analysis.
+But there’s another way to look at optical systems: as signal processors. In this view, the system takes in light from the scene and transforms it into the light that arrives at the sensor. This signal processing perspective is powerful because it lets us think about what the system does, without worrying too much about the details of how it’s built. It’s also a practical way to simulate and analyze optical systems.
 
-This perspective is particularly important because many optical systems are approximately linear. Specifically, they satisfy the **Principle of Superposition**, a property that can be tested experimentally. Linear systems are common in science and engineering, and we will encounter linear systems repeatedly throughout the book.
+This approach is especially useful because many optical systems are close to being linear—they follow the **Principle of Superposition**. You can actually test this property in the lab. There are lots of tools for working with linear systems, and you’ll see them used again and again in science and engineering. In this section, we’ll introduce these ideas using a simple optical system as an example.
 
 ## Principle of Superposition
 A system $L$ is linear if it satisfies the superposition rule:
@@ -116,17 +116,17 @@ Notice that @eq-shiftinvariance-defined allows the size of the image shift, $\de
 
 The image formation component (optics) of most image systems are typically linear, but they are not globally shift-invariant. Rather, they are shift invariant over some part, but not all, of the full visual field. Usually there is a region near the optical axis that is shift invariant, and the system is also locally shift-invariant at off-axis points. This local shift invariance is similar to a system that is locally linear. In optics the shift invariant region is called an **isoplanatic** region. 
 
-## Widely used PSFs
+## Common PSFs in simulation
 
-When simulating optical systems, there are a few point spread functions (PSFs) that come up again and again.
+When simulating optical systems, there are a few point spread functions (PSFs) that come up again and again (@fig-psf-graph).
+
+The **Airy pattern** is based on the physics of light waves; it’s the pattern for a perfect, diffraction-limited lens imaging a point at a distance. The Airy pattern depends on the wavelength of light, and it represents an inescapable physical limitation. The **Gaussian** and **Lorentzian** (sometimes called Cauchy) PSFs are simple formulas that are used to approximate how some real lenses blur light. The Gaussian is especially popular because it’s easy to work with in calculations. The Lorentzian has higher tails, which means it’s better for modeling systems where light gets scattered a lot—like if your lens is scratched or there’s a lot of internal reflection.
 
 ![Cross-section of three  point spread functions that are widely used in simulation. These point spreads were applied for a lens and sensor configuration with an $f/\#$ of 4 and a focal length of 3.9mm. The radius of the Airy disk for this configuration is 3.4 microns (see the zero-crossing of the Airy pattern).](images/optics/optics-siKernels-graph.png){#fig-psf-graph width="60%"}
 
-The **Airy pattern** is the gold standard for sharpness in an ideal lens. It’s based on the physics of light waves, so it’s the “best case” for a perfect, diffraction-limited lens. The Airy pattern depends on the wavelength of light, so it’s a real physical limit, not just a mathematical idea.
+The cross-section graphs of these PSFs are a useful way to see the details of their differences. We can go beyond the curves to visualize how these different PSF shapes are manifest in spectral radiance images. I compare these three PSFs and a fourth one, called the **pillbox**, in a <a href="../code/fise_opticsPSF.html" target="_blank"> an ISETCam live script, fise_opticsPSF.</a>  The images in @fig-psf-image were made using that script.
 
-The **Gaussian** and **Lorentzian** (sometimes called Cauchy) PSFs are practical shortcuts. They are simple formulas that do a good job of approximating how some real lenses blur light. The Gaussian is especially popular because it’s easy to work with in calculations. The Lorentzian has fatter tails, which means it’s better for modeling systems where light gets scattered a lot—like if your lens is scratched or there’s a lot of internal reflection.
-
-![Images of applying the different point spreads to an image of grid lines.  The diffraction limited pattern and the Gaussian pattern have point spread functions that vary with wavelength.  The pillbox and Lorentzian were assigned wavelength-indepent point spreads.  Notice how the Lorentzian point spread, which has a high tail, produces something that appears like a glare in the image. The pillbox has about the same with as the other functions, but introduces much more blur because it stays at a high level over the entire width.  I introduced a wavelength dependence to the Gaussian so that that long wavelengths (reddish) spread a little more than the short wavelengths.  That is also true of the Airy pattern, but to a smaller extent. See fise_siKernels.m ](images/optics/optics-siKernels-image.png){#fig-psf-image width="90%"}
+![Images created by applying four different point spreads to an image of grid lines. The diffraction limited pattern and the Gaussian pattern have point spread functions that vary with wavelength.  The *pillbox* and *Lorentzian* PSFs were made wavelength-indepedent. Notice how the high tail of the Lorentzian PSF produces the appearance of a veiling glare. The pillbox has about the same with as the other functions, but introduces much more blur because it stays at a high level over the entire width.  I introduced a wavelength dependence to the Gaussian so that that long wavelengths (reddish) spread a little more than the short wavelengths.  That is also true of the Airy pattern, but to a smaller extent. See fise_siKernels.m ](images/optics/optics-siKernels-image.png){#fig-psf-image width="90%"}
 
 ### The Airy pattern
 
@@ -171,8 +171,6 @@ I(r) = \frac{I_0}{1 + \left( \frac{r}{\gamma} \right)^2}
 $$
 
 Here, $\gamma$ controls how wide the central peak is. A bigger $\gamma$ means a wider, flatter blur with more light in the tails.
-
-**Put in a picture illustrating them via ISETCam**
 
 ### Line spread functions
 
