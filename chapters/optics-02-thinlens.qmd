@@ -65,7 +65,7 @@ The optics in the human eye has multiple elements. Even so, we can measure its f
 Young people can accommodate easily. As people age, we lose the ability to change the optical power of the optics, a condition called *presbyopia*. This happens to everyone. This biological fact is a consideration for the design of near field displays (@sec-displays).
 
 ## The lens formula {#sec-lens-formula}
-When an object is far away, the rays arriving at the lens are parallel. The image of the object will be in focus at the focal length. When the object is closer, we can use the *Lens formula* to find the plane where the object will be in focus. The equation, which was derived by Halley in 1693, relies on the three ray tracing properties of symmetric thin lenses (@sec-3principles). Using these principles, we can locate where the object at a distance $d_o$ will be in focused on the image side; call that distance $d_i$.
+When an object is far away, the rays arriving at the lens are parallel. The image of the object will be in focus at the focal length. When the object is closer, we can use the *Lens formula* to find the plane where the object will be in focus. The equation, which was derived by Halley in 1693, relies on the three ray tracing properties of symmetric thin lenses (@sec-optics-3principles). Using these principles, we can locate where the object at a distance $d_o$ will be in focused on the image side; call that distance $d_i$.
 
 ![Similar triangles for the lens formula.](images/optics/lensmaker-similartriangles.png){#fig-lensmaker-similartriangles fig-align="center" width="95%"}
 
@@ -86,13 +86,13 @@ $$ {#eq-lensformula}
 
 The common names for these variables are
 
-*  $d_o$ - Object distance
-*  $d_i$ - Focal distance
-*  $f$   - Lens focal length
+*  $d_o$ - **Object distance**
+*  $d_i$ - **Image distance**
+*  $f$   - **Lens focal length**
   
-## Focal distance {#sec-optics-focaldistance}
+## Image distance {#sec-optics-focaldistance}
 
-The location of the image plane, where an object is represented in best focus, depends on the distance from the lens to the object. This is the **focal distance**. Notice that when $d_o = \infty$, then $d_i = f$. We can re-write the lens formula to calculate this distance. Thus, if we know the focal length, $f$, and the distance to an object, $d_o$, we can calculate the distance to the focal plane, $d_i$ as
+For a lens with focal length $f$, @eq-lensformula defines the relationship between the object distance and the image distance, where the object is in best focus. Notice that when $d_o = \infty$, then $d_i = f$. We can re-write the formula to calculate this distance explicitly. 
 
 $$
 \frac{-1}{d_i} = \frac{1}{d_o} - \frac{1}{f}
@@ -102,27 +102,19 @@ d_i =  \frac{1}{\frac{1}{f} - \frac{1}{d_o}}
 $$ 
 $$
 d_i = \frac{f~d_o}{d_o - f} 
-$$ {#eq-focaldistance}
+$$
 
-You can see from [@eq-focaldistance] that as $d_o$ becomes much larger than $f$, $d_i$ becomes approximately $f$. Specifically, if we express $d_o$ in terms of the focal length of the lens, $k f$, we have
+You can see from [@eq-imagedistance] that as $d_o$ becomes much larger than $f$, $d_i$ becomes approximately $f$. Specifically, if we express $d_o$ in terms of the focal length of the lens, $k f$, we have
 
 $$
 d_i = \frac{f k f}{(k-1) f} = f \frac{k}{k-1}
-$$ {#eq-focal-distance}
+$$ {#eq-imagedistance}
 
-This script plots the focal distance as a function of object distance expressed as a multiple of focal length.
+This script plots the image distance as a function of object distance expressed as a multiple of focal length.
 
 ## Lensmaker equation {#sec-optics-lensmaker}
 
-```{=html}
-<!-- 
-Great tutorial for deriving.  Better than anything I could do.  High school stuff.
-https://www.khanacademy.org/science/in-in-class-12th-physics-india/in-in-ray-optics-and-optical-instruments/in-in-refraction-in-thin-lenses/v/lens-makers-formula 
-This formula only works for thin lenses. Created by Mahesh Shenoy.
--->
-```
-
-The lens formula computes the focal distance for a lens of known focal length. How do we calculate the focal length of a thin lens? There is a formula we can use to calculate the focal length of a thin lens with (a) both sides approximately spherical, and (b) embedded in a homogeneous environment.
+The lens formula computes the image distance for a lens of known focal length. How do we calculate the focal length of a thin lens? There is a formula we can use to calculate the focal length of a thin lens with (a) both sides approximately spherical, and (b) embedded in a homogeneous environment.
 
 Suppose the refractives index of the lens is $n_2$ and of the surrounding medium is $n_1$. Suppose that the radius of curvature of the first surface is $R_1$ and the second surface $R_2$. The formula for the focal length is
 
@@ -148,7 +140,7 @@ If you revisit the first calculation of the Airy disk, in @sec-lightfields-diffr
 
 ## Magnification and zoom {#sec-optics-zoom}
 
-Consider the simple thin lens in @fig-optics-magnification with a focal distance of $f = 0.1m$. We draw the rays to the image plane for an object at a distance of $d_o = 0.3m$.
+Consider the simple thin lens in @fig-optics-magnification with a image distance of $f = 0.1m$. We draw the rays to the image plane for an object at a distance of $d_o = 0.3m$.
 
 ![Ray tracing lenses with different focal lengths. Suppose focal length of the lens in the bluish box is $0.1 m$ and the distance to the object as $0.3m$. And suppose the focal length in the greenish box is $0.2 m$.](images/optics/lensparameters-magnification.png){#fig-optics-magnification fig-align="center" width="90%"}
 
@@ -172,10 +164,36 @@ Suppose we wish to magnify the image, but we want to maintain the image irradian
 
 The size of the lens with the larger diameter is sketched by the dashed ellipse in the green section of @fig-optics-magnification. Increasing the focal length expands the image size and reduces the image intensity. Increasing the lens diameter compensates for the reduced intensity. Doubling the focal length and entrance diameter preserves the f/# (ratio of the focal length and the aperture diameter). This example illustrates that lenses with the same f/# produce images with the same image intensity.
 
-## Circle of confusion {#sec-optics-coc}
-
-Figure showing it and the formula.
-
 ## Depth of field {#sec-optics-dof}
+@eq-focaldistance tells us how to set the distance between the optics and image plane, $d_i$, to bring an object at distance $d_o$ into focus.  We might also be interested to answer the related question:  Given that an object at $d_o$ is in focus, what will the blur be for objects nearer or further? The range of distances over which the objects remain in good focus is called the **depth of field**.
 
-The sequence from class slides.
+The size of the depth of field can be controlled by adjusting the size of the lens aperture.  As it becomes smaller, the lens becomes closer to a pinhole, the depth of field increases.  The depth of field can become quite narrow for a large aperture. Controlling the depth of field can create visually interesting images (@fig-optics-bokeh). Photographers and cinematographers often use settings to bring the main object of interest into good focus and blurring the rest. The depth of field is a quantitative description of the lens setting.  Photographers use the term **bokeh** to describe the aesthetic impact one can achieve by adjusting the depth of field. This quality depends on the optics as well as the scene contents.
+
+![The depth of field is controlled by the size of the lens aperture.  (A) Photographers often adjust the depth of field to bring the main object into focus, allowing other parts of the scene to become defocused.  (B) If we fix the image distance, increasing the $f/\#$ decreases the aperture, making the lens increasingly like a pinhole camera. For a large $f/\#$, the depth of field becomes quite larger.](images/optics/optics-bokeh.png){#fig-optics-bokeh width="80%"}
+
+<!--
+https://en.wikipedia.org/wiki/Depth_of_field
+http://www.rags-int-inc.com/PhotoTechStuff/DoF/
+http://www.rags-int-inc.com/PhotoTechStuff/DoF_Calculator/DoF_Calculator.html
+-->
+
+### Circle of confusion {#sec-optics-coc}
+The notion of a **circle of confusion** is useful for understanding and quantifying why the depth of field depends on the aperture.  Consider image formation with a thin lens at a fixed distance from the image plane (@fig-optics-coc1).  The middle image shows a point that is at the image distance.
+
+
+![Circle of Confusion](images/optics/optics-coc-1.png){#fig-optics-coc1 width="60%"}
+
+s_opticsCoC
+
+### Formula for depth of field
+
+
+$$
+\text{DOF} \approx \frac{2 (N) C U^2}{f^2}
+$$
+
+-   $N$ - Lens $f/\#$ (dimensionless)
+-   $C$ - Diameter of the circle of confusion (m)
+-   $U$ - Distance to the subject in object space (m)
+-   $f$ - Lens focal length (m)
+
