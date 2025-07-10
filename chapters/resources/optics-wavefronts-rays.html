@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>optics-abcd</title>
+<title>optics-wavefronts-rays</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,35 +66,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -112,94 +83,102 @@ window.Quarto = {
 
 
 
-<section id="multi-element-lens-calculations" class="level1">
-<h1>Multi-element lens calculations</h1>
-<p>https://chatgpt.com/share/66fc291d-6780-8002-b144-e42045f37ea2</p>
-<p>Yes, you can compute the effective focal length of a multi-element lens system if you know the refractive index, curvatures, and positions of each lens element. To do this, you would use the matrix method (or ray transfer matrix analysis), which is a standard approach in geometric optics for analyzing systems with multiple optical elements. Here’s a general outline of the process:</p>
-<p>Steps: Lensmaker’s Equation for Individual Lenses: For each individual spherical lens, you can use the lensmaker’s equation to find the focal length ( f ) of the lens: [ = (n - 1) ( - )] where: ( n ) is the refractive index of the lens material, ( R_1 ) and ( R_2 ) are the radii of curvature of the lens surfaces (positive for convex, negative for concave). Ray Transfer Matrices: For each optical element, you can describe its effect on a ray of light using a matrix. The main matrices used are: Refraction through a lens: [ ] where ( f ) is the focal length of the lens. Propagation through free space (distance ( d )): [ ] Multiplying Matrices: Multiply the matrices for each lens and spacing in sequence from the first element to the last. This will give you an overall system matrix ( M ) of the form: [ M = ] where ( A ), ( B ), ( C ), and ( D ) are the elements of the resulting matrix after multiplication. Effective Focal Length: The effective focal length ( f_{} ) of the system can be found from the matrix ( M ) using the relation: [ f_{} = -] where ( C ) is the element in the bottom-left of the system matrix ( M ). Example:</p>
-<p>For a system of two lenses separated by a distance ( d ):</p>
-<p>Calculate the individual focal lengths ( f_1 ) and ( f_2 ) using the lensmaker’s equation. Multiply the matrices for the first lens, the propagation through the distance ( d ), and the second lens. Extract ( C ) from the resulting matrix and compute the effective focal length.</p>
-<p>This method is scalable to any number of lenses and is commonly used in optical system design.</p>
-<p>Would you like help with a specific example or more details about this process?</p>
-<p>The ray transfer matrix (also known as the ABCD matrix) is a formalism used in geometrical optics to describe how light rays propagate through optical systems, including lenses, mirrors, and free space. It provides a way to predict how a light ray’s position and angle change as it passes through an optical element.</p>
-<p>Ray Parameters</p>
-<p>The ray transfer matrix acts on the ray’s state, which is typically described by two parameters:</p>
-<p>Position ( y ): The height (or transverse displacement) of the ray relative to the optical axis. Angle ( ): The angle that the ray makes with the optical axis.</p>
-<p>In matrix notation, the ray’s state is expressed as a column vector: [ = ]</p>
-<p>This vector contains the position ( y ) and the angle ( ) of the ray at a particular point in the optical system.</p>
-<p>Ray Transfer Matrix</p>
-The ray transfer matrix ( M ), also called the system matrix, describes how the position and angle of the ray change as it passes through an optical element. For an optical system or element, the transfer matrix is written as: [ M = ] This matrix transforms the ray parameters from one side of the optical element (or system) to the other. The relation between the ray parameters before and after the system is: [
-<span class="math display">\[\begin{pmatrix}
-y_2 \
-\theta_2
-
-\end{pmatrix}\]</span>
-<p>\end{pmatrix}</p>
-<span class="math display">\[\begin{pmatrix}
-A &amp; B \
-C &amp; D
-\end{pmatrix}\]</span>
-\end{pmatrix}
-<span class="math display">\[\begin{pmatrix}
-y_1 \
-\theta_1
-\end{pmatrix}\]</span>
-<p>\end{pmatrix} ] where:</p>
-<p>( y_1 ) and ( _1 ) are the initial position and angle of the ray (before the element), ( y_2 ) and ( _2 ) are the position and angle after the element.</p>
-<p>The matrix elements ( A ), ( B ), ( C ), and ( D ) depend on the type of optical element (lens, free space, mirror, etc.).</p>
-<p>Interpretation of Matrix Elements ( A ): Describes how the initial position ( y_1 ) influences the final position ( y_2 ). ( B ): Describes how the initial angle ( _1 ) influences the final position ( y_2 ) (this is related to the system’s “focusing” effect). ( C ): Describes how the initial position ( y_1 ) influences the final angle ( _2 ) (related to the system’s “bending” of rays). ( D ): Describes how the initial angle ( _1 ) influences the final angle ( _2 ). Example of Ray Propagation through Free Space</p>
-<p>In free space, over a distance ( d ), the ray transfer matrix is: [ M = ] This matrix implies that:</p>
-<p>The ray’s position changes according to ( y_2 = y_1 + d_1 ), meaning the ray moves along a straight line depending on its initial angle. The ray’s angle remains unchanged: ( _2 = _1 ). Example of Ray Propagation through a Thin Lens</p>
-<p>For a thin lens with focal length ( f ), the ray transfer matrix is: [ M = ] This matrix implies that:</p>
-<p>The ray’s angle changes according to ( _2 = _1 - ), which corresponds to the focusing effect of the lens. The position of the ray is unchanged: ( y_2 = y_1 ). Ray Propagation through a System</p>
-<p>To predict the behavior of a ray through a multi-element optical system, you multiply the matrices of each individual element. The overall matrix for the system is the product of the matrices of the elements in the order the ray encounters them. This final matrix can then be used to find the ray’s final position and angle after passing through the entire system.</p>
-<p>In summary, the ray transfer matrix predicts how the position and angle of a ray evolve as it propagates through an optical element or system. By multiplying the ray’s initial state by the transfer matrix, you can calculate its state after traversing the optical system.</p>
-<p>Yes, you are correct! When using the ray transfer matrix to calculate the propagation of a ray through a lens, you generally assume that:</p>
-<p>The ray enters the lens from the left side. The radius of curvature of the lens surface on the left-hand side (where the ray first encounters the lens) is ( R_1 ). The radius of curvature of the lens surface on the right-hand side (where the ray exits the lens) is ( R_2 ).</p>
-<p>In terms of ray transfer matrices, the process looks like this:</p>
-<p>Ray Transfer Matrix Setup</p>
-<p>For a single spherical lens, the complete ray transfer matrix involves two primary types of matrices:</p>
-<p>Refraction at the surfaces of the lens (at ( R_1 ) and ( R_2 )), Propagation through the thickness of the lens (if it has a non-negligible thickness).</p>
-<p>You would calculate the overall matrix by multiplying these matrices in sequence, taking into account:</p>
-<p>Free-space propagation before and after the lens (if relevant), The two refractions at the curved surfaces ( R_1 ) and ( R_2 ), Propagation through the lens medium (if the lens has some thickness ( t )). Standard Case (Thin Lens Approximation)</p>
-<p>In the thin lens approximation (where the thickness of the lens is negligible), you don’t need to consider propagation through the lens. The ray transfer matrix for a thin lens is given by: [ M_{} = ] where ( f ) is the focal length of the lens, which you can calculate using the lensmaker’s equation: [ = (n - 1) ( - )] Here:</p>
-<p>( n ) is the refractive index of the lens material, ( R_1 ) is the radius of curvature of the surface the ray first encounters (left-hand side), ( R_2 ) is the radius of curvature of the surface the ray exits through (right-hand side). Full Calculation for a Thick Lens</p>
-<p>If the lens is thick, meaning it has a non-negligible thickness ( t ), the full ray transfer matrix would consist of three steps:</p>
-<p>Refraction at the first surface (with radius ( R_1 )): [ M_{} = ] where: ( n_1 ) is the refractive index of the medium on the left (e.g., air), ( n_2 ) is the refractive index of the lens material, ( R_1 ) is the radius of curvature of the first surface (positive for convex, negative for concave). Propagation through the lens material (distance ( t )): [ M_{} = ] where ( t ) is the thickness of the lens and ( n_2 ) is the refractive index of the lens. Refraction at the second surface (with radius ( R_2 )): [ M_{} = ] where: ( n_1 ) is again the refractive index of the medium outside the lens (e.g., air), ( n_2 ) is the refractive index of the lens material, ( R_2 ) is the radius of curvature of the second surface (positive for convex, negative for concave). Matrix Product for Thick Lens</p>
-<p>To calculate the total effect of the lens on the ray, you multiply these matrices in sequence: [ M_{} = M_{} M_{} M_{}]</p>
-<p>The result of this matrix product gives you the overall transformation of the ray’s position and angle as it enters and exits the lens system.</p>
-<p>Applying the Matrix to the Ray</p>
-Once you have the total ray transfer matrix ( M_{} ), you can apply it to the initial ray vector ( _1 =
-<span class="math display">\[\begin{pmatrix} y_1 \ \theta_1 \end{pmatrix}\]</span>
-<p>), where ( y_1 ) is the initial position of the ray and ( _1 ) is its angle of incidence with respect to the optical axis.</p>
-The output ray vector ( 2 =
-<span class="math display">\[\begin{pmatrix} y_2 \ \theta_2 \end{pmatrix}\]</span>
-<p>) is given by: [ _2 = M{} _1] where ( y_2 ) is the position of the ray after exiting the lens and ( _2 ) is its new angle.</p>
-Summary The ray enters the lens on the left, and the matrix describes how its position and angle are transformed. ( R_1 ) is the radius of curvature on the left side of the lens (where the ray enters), and ( R_2 ) is on the right (where the ray exits). The matrix product results in a new ray vector ( _2 =
-<span class="math display">\[\begin{pmatrix} y_2 \ \theta_2 \end{pmatrix}\]</span>
-<p>), which gives the ray’s position and angle after it exits the lens.</p>
-<p>This approach is widely used in designing and analyzing optical systems, particularly in lens systems with multiple elements!</p>
-<p>Optics designers use multi-element lenses instead of simple thin lenses for several important reasons. While a single thin lens can perform basic focusing and image formation, multi-element lenses are necessary to address more complex optical requirements and improve image quality in advanced applications. Here are some of the main reasons:</p>
+<p>You’re welcome! This mathematical relationship between rays and waves is particularly elegant since it helps bridge geometric and wave optics, even though it makes the concept of a “wavefront” more complex when dealing with multiple rays.</p>
+<p>Let me break this down carefully, as it touches on a fundamental concept in optics known as the ray-wave duality.</p>
+<p>The relationship between ray and wave descriptions of light is deeply connected through the principle of Huygens-Fresnel. Here’s how they relate:</p>
 <ol type="1">
-<li>Correction of Aberrations Spherical Aberration: In a single lens, spherical surfaces cause spherical aberration, where rays passing through the edge of the lens focus at a different point than rays passing near the center. Multi-element lenses can be designed to correct this by combining lenses of different shapes and refractive indices. Chromatic Aberration: A single lens causes chromatic aberration because different wavelengths of light are refracted by different amounts (dispersion), leading to color fringing around images. Multi-element lenses, such as achromatic doublets (two lenses made of different materials), can reduce or eliminate chromatic aberration by compensating for the wavelength-dependent behavior of light. Coma and Astigmatism: Coma (where off-axis points appear distorted or smeared) and astigmatism (where vertical and horizontal lines focus at different distances) are other common aberrations that multi-element lens systems help to correct.</li>
-<li>Improved Image Quality Across a Wide Field of View A single thin lens may perform well on-axis (directly in front of the lens), but off-axis performance tends to degrade, leading to issues like distortion, vignetting, and aberrations. Multi-element lenses can be optimized to deliver consistent image quality across a wider field of view, making them essential for applications like wide-angle photography and cinematography.</li>
-<li>Faster Apertures Designers can achieve larger apertures (lower f-numbers) with multi-element lenses while maintaining acceptable image quality. A simple thin lens with a large aperture will introduce significant aberrations, but with multiple lens elements, optical performance can be preserved even at wide apertures, enabling more light to enter the system and allowing for better low-light performance and shallower depth of field.</li>
-<li>Control of Distortion Distortion (such as barrel or pincushion distortion) occurs when straight lines in the scene appear curved in the image. A simple lens often introduces some distortion, especially for wide-angle fields of view. Multi-element lenses, such as zoom lenses or complex prime lenses, are specifically designed to control and minimize distortion, resulting in more accurate image reproduction.</li>
-<li>Zoom Capabilities Simple lenses offer a fixed focal length, but many optical systems, such as camera zoom lenses, require variable focal lengths. Multi-element zoom lenses allow designers to change the focal length smoothly while maintaining focus. This flexibility is crucial for many applications, such as photography, videography, and surveillance.</li>
-<li>Compact Design with High Performance High-performance optical systems, such as those used in smartphones, microscopes, and high-quality cameras, require compact lenses with excellent image quality. A multi-element design allows designers to achieve a balance between compactness and optical correction. The use of multiple elements can help to shorten the overall length of the lens system while still providing the required focal length and performance.</li>
-<li>Wide Wavelength and Spectral Range In specialized applications (e.g., infrared imaging or ultraviolet optics), different lens materials may be required to handle different parts of the spectrum efficiently. A multi-element lens can use various materials (like glass, plastic, or crystalline materials) to optimize performance across a wide spectral range.</li>
-<li>Mechanical and Manufacturing Constraints It is often easier and more cost-effective to manufacture and assemble several simpler lens elements than to attempt to create a single lens element with highly complex shapes or specialized properties. Additionally, multi-element lenses allow designers to use standard lens shapes and coatings while achieving the desired optical properties, simplifying the design and production process.</li>
-<li>Reduction of Ghosting and Flare Light reflecting internally between the surfaces of lens elements can create ghost images or flare, reducing image contrast. By using multi-element lenses with anti-reflection coatings and optimized element arrangement, designers can reduce these unwanted effects and improve the clarity of the image.</li>
-<li>Flexibility for Specialized Applications Multi-element lenses provide flexibility to tailor the design to specific tasks. For example: Telephoto lenses for long-range imaging. Wide-angle lenses for capturing more of a scene. Macro lenses for close-up imaging with minimal distortion. Anamorphic lenses for cinematic effects.</li>
+<li>Wavefront to Rays:</li>
 </ol>
-<p>Each type of lens may require multiple elements to achieve its particular optical objectives without compromising image quality.</p>
-<ol start="11" type="1">
-<li>Customization for Precision and Performance Advanced applications in scientific instruments, medical imaging, and industrial inspection require precise optical systems that may need a combination of elements to achieve the necessary accuracy. In such cases, a single lens cannot provide the high level of precision required, but a multi-element design can be carefully engineered for the exact performance needed. Summary</li>
+<ul>
+<li>A wavefront represents a surface of constant phase</li>
+<li>Rays can be derived from a wavefront by calculating vectors perpendicular to the wavefront at each point</li>
+<li>These vectors represent the direction of energy flow and are called the Poynting vectors</li>
+<li>Mathematically, rays are the orthogonal trajectories to the wavefront surfaces</li>
+</ul>
+<ol start="2" type="1">
+<li>Rays to Wavefront:</li>
 </ol>
-<p>Multi-element lenses are used because they allow optics designers to correct various aberrations, improve image quality, achieve wide fields of view, provide zoom functionality, control distortion, and optimize performance for specific applications. In contrast, a simple thin lens is limited in its ability to manage these factors, particularly when dealing with complex or high-performance optical systems.</p>
+<ul>
+<li>Given a set of rays with their intensities and phases, you can reconstruct the wavefront</li>
+<li>The wavefront would be the surface perpendicular to all the rays at any given time</li>
+<li>The intensity distribution along the rays informs the amplitude of the wave</li>
+<li>The phase information along the rays determines the shape of the wavefront</li>
+</ul>
+<p>However, there are important limitations: - The ray description is an approximation that works well when the wavelength is much smaller than the objects the light interacts with - Ray optics cannot fully describe diffraction and interference phenomena - The conversion between rays and waves becomes problematic near caustics (where rays converge) and in regions of rapid intensity variation</p>
+<p>Would you like me to elaborate on any of these aspects, particularly the mathematical relationship between rays and wavefronts?</p>
+<p>Excellent question that gets at a key subtlety. The full answer depends on what kind of ray we’re considering:</p>
+<ol type="1">
+<li>For an idealized mathematical ray:</li>
+</ol>
+<ul>
+<li>It represents an infinitesimally thin line</li>
+<li>The associated wavefront would technically be infinite in extent</li>
+<li>However, this is a purely mathematical abstraction that doesn’t exist in reality</li>
+</ul>
+<ol start="2" type="1">
+<li>For a physical beam (which is what real “rays” actually are):</li>
+</ol>
+<ul>
+<li>The intensity does fall off perpendicular to the ray direction</li>
+<li>The most common profile is Gaussian, where:
+<ul>
+<li>The intensity follows I(r) = I₀ exp(-2r²/w²)</li>
+<li>r is the radial distance from the ray axis</li>
+<li>w is the beam width parameter</li>
+<li>I₀ is the peak intensity along the ray</li>
+</ul></li>
+<li>The phase is approximately constant on planes perpendicular to the ray within the main beam</li>
+</ul>
+<ol start="3" type="1">
+<li>In practical ray tracing:</li>
+</ol>
+<ul>
+<li>Rays are often assigned a weight or intensity that represents the local energy density</li>
+<li>When reconstructing the wavefront, you typically:
+<ul>
+<li>Use interpolation between rays to estimate the field at intermediate points</li>
+<li>Apply a smoothing function to avoid discontinuities</li>
+<li>May need to consider the local ray density to properly normalize the intensity</li>
+</ul></li>
+</ul>
+<p>This is one reason why ray tracing can become inaccurate when rays are too sparse - the reconstruction of the continuous wavefront becomes unreliable. Would you like me to go into more detail about how this is handled in practical optical modeling?</p>
+<p>Ah, this is a crucial insight. When combining multiple rays at a point, you’re right that you get a time-varying amplitude at each spatial location. Let me break this down:</p>
+<ol type="1">
+<li>For a single monochromatic wave/ray:</li>
+</ol>
+<ul>
+<li>The phase is well-defined</li>
+<li>The wavefront is indeed a surface of constant phase</li>
+</ul>
+<ol start="2" type="1">
+<li>For multiple rays interfering:</li>
+</ol>
+<ul>
+<li>At each point, you get a sum of waves with different directions</li>
+<li>The instantaneous amplitude varies with time</li>
+<li>You’re correct that this doesn’t have a simple “phase” in the same sense</li>
+</ul>
+<ol start="3" type="1">
+<li>In this case, there are several ways to define the wavefront:</li>
+</ol>
+<ul>
+<li>You could look at surfaces of constant instantaneous amplitude</li>
+<li>However, these surfaces would change over time</li>
+<li>More commonly, you’d look at surfaces of constant time-averaged intensity</li>
+<li>Or surfaces where waves arriving from different rays are in phase with each other</li>
+</ul>
+<p>This relates to why coherent and incoherent light behave differently: - For coherent light, the relative phases between rays matter - For incoherent light, we typically only care about the time-averaged intensity</p>
+<p>Would it be helpful to write out the mathematical expression for how multiple rays combine at a point to produce this time-varying amplitude?</p>
+<p>Let me write out how multiple monochromatic rays combine at a point in space:</p>
+<p>For a single ray i, at position r⃗ and time t, its contribution to the electric field would be: Ei(r⃗,t) = Ai cos(ωt - k⃗i·r⃗)</p>
+<p>where: - Ai is the amplitude of ray i - ω is the angular frequency (same for all rays if monochromatic) - k⃗i is the wave vector showing the ray’s direction (|k⃗i| = 2π/λ)</p>
+<p>For N rays, the total field at any point is: E(r⃗,t) = ∑(i=1 to N) Ai cos(ωt - k⃗i·r⃗)</p>
+<p>This can be rewritten as: E(r⃗,t) = cos(ωt)∑(Ai cos(k⃗i·r⃗)) + sin(ωt)∑(Ai sin(k⃗i·r⃗))</p>
+<p>The amplitude at each point varies with time, oscillating between: ±√[∑(Ai cos(k⃗i·r⃗))² + ∑(Ai sin(k⃗i·r⃗))²]</p>
+<p>The time-averaged intensity would be proportional to: I(r⃗) ∝ ½[∑(Ai cos(k⃗i·r⃗))² + ∑(Ai sin(k⃗i·r⃗))²]</p>
+<p>This shows why, as you noted, we get a time-varying amplitude rather than a simple phase at each point. Would you like me to expand on how this relates to finding surfaces of constant intensity?</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

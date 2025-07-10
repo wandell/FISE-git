@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>poisson-history</title>
+<title>optics-05-linear-2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,100 +23,88 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="Poisson-history_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Poisson-history_files/libs/quarto-html/quarto.js"></script>
-<script src="Poisson-history_files/libs/quarto-html/popper.min.js"></script>
-<script src="Poisson-history_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="Poisson-history_files/libs/quarto-html/anchor.min.js"></script>
-<link href="Poisson-history_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Poisson-history_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="Poisson-history_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="Poisson-history_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Poisson-history_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
+}</script>
+
 
 </head>
 
 <body class="fullcontent">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
 <main class="content" id="quarto-document-content">
 
 
 
 
-<section id="poisson-absorptions" class="level2">
-<h2 class="anchored" data-anchor-id="poisson-absorptions">Poisson absorptions</h2>
-<p>The story of the basic discovery of the photoelectric effect, and the role of Hertz, Einstein, Planck and Lenard fascinated me. As a practical matter these days, perhaps the most important engineering insight is that the number of photons incident at the photodiode, and the number of electrons generated by these photons, has a Poisson distribution. I spent some time trying to understand who developed that specific insight - not just that these are random but specifically that they are Poisson. It was a real surprise to me that this formulation had to wait about 50 years after Einstein’s work. Here is my understanding.</p>
+<section id="sec-optics-harmonics" class="level1">
+<h1>Harmonics</h1>
+<p>We should probably start by talking about the term harmonic. For real valued functions, it just means sin and cos functions, which are really the same except for a shift in position. The harmonics are the sin, cos, and all the shifted versions in between.</p>
+<p>Do we start by noticing that the sum of two harmonics of the same frequency is a harmonic of the same frequency?</p>
+<section id="eigenfunctions---almost" class="level2">
+<h2 class="anchored" data-anchor-id="eigenfunctions---almost">Eigenfunctions - almost</h2>
+<p>Harmonics (like sine and cosine waves) are almost the “natural” patterns for linear systems—they’re close to being eigenfunctions. For imaging, they’re not quite perfect eigenfunctions because of phase shifts, but if you think of them as 2D vectors, they’re pretty close.</p>
 </section>
-<section id="einstein-1909-poisson-like-but-more-than-poisson" class="level2">
-<h2 class="anchored" data-anchor-id="einstein-1909-poisson-like-but-more-than-poisson">Einstein 1909 — Poisson-like, but More Than Poisson</h2>
-<p>Einstein’s 1909 analysis of energy fluctuations in blackbody radiation marks an important early step toward our modern understanding of photon statistics. He examined the variance of the energy contained within a small subvolume of a cavity in thermal equilibrium and found it consisted of two distinct terms: one linear and one quadratic in the mean photon number. The linear term corresponds to fluctuations from discrete, independently arriving photons—what we now recognize as <strong>shot noise</strong>, characteristic of <strong>Poisson statistics</strong>. The quadratic term, however, arises from interference effects and reflects <strong>wave-like correlations</strong>, which do not occur in a purely Poisson process.</p>
-<p><span class="math display">\[
-\langle (\Delta E)^2 \rangle = h \nu \langle n \rangle + \left( h \nu \langle n \rangle \right)^2
-\]</span></p>
-<p>Here, <span class="math inline">\(\langle n \rangle\)</span> is the average number of photons at frequency <span class="math inline">\(\nu\)</span>, and <span class="math inline">\(h\)</span> is Planck’s constant.</p>
-<p>Einstein interpreted this two-part structure as evidence that light cannot be fully described either as a particle or as a wave alone—it exhibits both aspects, depending on the observable under consideration. This insight was a remarkable early hint of <strong>wave-particle duality</strong>, predating the formal development of quantum electrodynamics by decades.</p>
-<p>While this analysis includes a term that resembles Poissonian fluctuations, it goes beyond the framework of simple photon counting. By considering energy fluctuations in a volume—not just discrete detection events—Einstein’s approach was more general and conceptually distinct from the later, more focused treatments of photon counting and the photoelectric effect.</p>
-<p>In summary, Einstein’s result contains a Poisson-like term but also highlights wave-induced correlations, making it richer than a purely Poisson model. The full realization that photon arrivals at a detector follow a Poisson distribution—under suitable conditions—emerged later with the advent of quantum optics and the formal theory of photon statistics.</p>
-<p>Long exchange about Einstein, Lenard, Mandel, Wolf, Pirenne, Barlow. Stored here in ChatGPT. https://chatgpt.com/share/682ceccb-4c9c-8002-9e5d-d623a14348d9</p>
+<section id="optical-transfer-function" class="level2">
+<h2 class="anchored" data-anchor-id="optical-transfer-function">Optical Transfer Function</h2>
 </section>
-<section id="the-vision-science-crowd" class="level2">
-<h2 class="anchored" data-anchor-id="the-vision-science-crowd">The vision science crowd</h2>
-<p>The section about Poisson distribution, Barlow, and such is here.</p>
-<p>Barlow (1956) In his influential paper, “Retinal noise and absolute threshold” (J. Opt. Soc. Am.), Barlow proposed that the variability in visual threshold is due to random fluctuations in photon arrival, and he interpreted Hecht’s findings in terms of quantum shot noise. While Barlow did not explicitly name the Poisson distribution, he was clearly using Poisson-like reasoning — modeling the discrete and probabilistic nature of photon arrivals at low light levels.</p>
-<p>Emil Mandel, along with Leonard Mandel (no relation) and Emil Wolf, provided the rigorous quantum-optical foundations for the Poisson statistics of coherent light sources — such as lasers or thermal light in certain regimes. Their work clarified when and why the number of photon detections should follow a Poisson distribution, and established this as a consequence of the quantum state of the light field.</p>
-<p>Barlow was conceptually ahead of Mandel in applying Poisson reasoning to photon absorption in the retina. But Mandel and Wolf provided the formal, quantum-theoretic justification for using Poisson statistics in photon counting, which wasn’t fully developed until the late 1950s and early 1960s.</p>
-<p>Suggested text from ChatGPT:</p>
-<p>“In 1956, Horace Barlow formalized this interpretation, reasoning that visual sensitivity is limited not by retinal inefficiency but by the quantum nature of light itself—a constraint imposed by the probabilistic arrival of photons. Although the formal derivation of Poisson statistics in quantum optics came later—most notably through the work of Mandel and Wolf in 1959—Barlow’s insight preceded and anticipated that mathematical foundation.”</p>
-<p>Equation 1 in this paper states that absorptions are Poisson. He writes “The Poisson distribution is not particularly convenient to deal with, but fortunately, the values have been tabulated by Molina25 over a wide range.”</p>
-<p>Barlow, H. B. (1956). “Retinal noise and absolute threshold.” Journal of the Optical Society of America, 46(8), 634–639. https://doi.org/10.1364/JOSA.46.000634</p>
-<p>But now, I see that Barlow cites Pirenne for the Poisson “This probability is quite independent of the number of similar events in the past or the neighboring retina, and therefore the number of events in a given retinal area and time follows the Poisson distribution as shown in detail by Pirenne. 7 (b)” And in fact, Pirenne has a whole section of his 1951 paper, see Equation (2) for the derivation of the Poisson distribution for retinal absorptions.</p>
-<p>Pirenne’s insights were instrumental in shaping subsequent research on visual thresholds. His work provided a theoretical foundation that influenced Horace Barlow’s 1956 paper, “Retinal Noise and Absolute Threshold”, where Barlow cites Pirenne’s 1951 study as a key authority on the statistical nature of photon absorption. Barlow extended Pirenne’s ideas, suggesting that the limits of visual sensitivity are imposed by the quantum properties of light itself, rather than by imperfections in the visual system.</p>
-<p>Thus, Pirenne’s 1951 paper stands as a pivotal work that bridged the gap between quantum physics and biological vision, laying the groundwork for the application of Poisson statistics in understanding the fundamental limits of human visual perception.</p>
-<p>In Foundations of Vision I should explain that Barlow concluded (a) one quantum excites a rod, but (b) several rods must be excited to generate a percept. I think that was the conclusion in Cornsweet. It is a good project for ISETCam and the class.</p>
-<p>Correct — based on available records and close examination of Mandel and Wolf’s early publications (especially Mandel’s 1958 and 1959 papers and their later comprehensive work, <em>Optical Coherence and Quantum Optics</em>), it appears that <strong>they did not cite Pirenne</strong>.</p>
-<p>Mandel and Wolf were focused primarily on building a rigorous quantum theory of photon statistics, often referencing foundational work in quantum electrodynamics and statistical optics rather than physiological or psychophysical studies of vision. Their mathematical formalism emerged somewhat independently of the vision science tradition.</p>
-<p>In contrast, <strong>Pirenne (1951)</strong> and <strong>Barlow (1956)</strong> came from a sensory physiology perspective, using Poisson statistics to explain photon absorption in the retina based on empirical and theoretical arguments grounded in visual detection thresholds.</p>
-<p>So, although Pirenne clearly articulated the use of the Poisson distribution in photon absorption well before Mandel and Wolf’s formal treatments, his work appears to have been <strong>overlooked or simply outside the citation scope</strong> of their quantum optics papers. The convergence of ideas from physiology and quantum optics happened more fully in later decades as interdisciplinary fields like biophotonics matured.</p>
-<p>I should have realized that Barbara Sakkitt and Horace must have worked on this question together - even in the 1970s when she published her work.</p>
-<p>The stochastic nature of absorptions was recognized since the earliest days of quantum mechanics. Specifically showing that the number of electrons generated by light will be Poisson distributed is widely credited to work by Mandel and Wolf in papers starting around 1958. I am genuinely surprised that the Poisson statistics of photon counting was not rigorously demonstrated until about 1960.</p>
-<p>One reason for my surprise is that the stochastic nature was known and even used in human experiments by Hecht, Schaler and Pirenne that are quite famous in the vision science literature. But they did not specifically name the distribution of absorptions. The idea was somehow ‘in the air’, as the remarkable vision scientist, Horace Barlow, included it in a famous 1956 paper that</p>
-<p>A friend pointed out to me that practical devices to measure electrons were only starting to arise in the 60s and 70s. Perhaps once counting electrons became widespread, a more precise theory of the randomness of photo-electrons had a practical purpose and the theory followed.</p>
+<section id="modulation-transfer" class="level2">
+<h2 class="anchored" data-anchor-id="modulation-transfer">Modulation Transfer</h2>
+</section>
+<section id="contrast-sensitivity" class="level2">
+<h2 class="anchored" data-anchor-id="contrast-sensitivity">Contrast sensitivity</h2>
+
+
+</section>
 </section>
 
-</main>
-<!-- /main column -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

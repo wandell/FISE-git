@@ -90,7 +90,7 @@ The common names for these variables are
 *  $d_i$ - **Image distance**
 *  $f$   - **Lens focal length**
   
-## Image distance {#sec-optics-focaldistance}
+## Image distance {#sec-optics-imagedistance}
 
 For a lens with focal length $f$, @eq-lensformula defines the relationship between the object distance and the image distance, where the object is in best focus. Notice that when $d_o = \infty$, then $d_i = f$. We can re-write the formula to calculate this distance explicitly. 
 
@@ -165,7 +165,7 @@ Suppose we wish to magnify the image, but we want to maintain the image irradian
 The size of the lens with the larger diameter is sketched by the dashed ellipse in the green section of @fig-optics-magnification. Increasing the focal length expands the image size and reduces the image intensity. Increasing the lens diameter compensates for the reduced intensity. Doubling the focal length and entrance diameter preserves the f/# (ratio of the focal length and the aperture diameter). This example illustrates that lenses with the same f/# produce images with the same image intensity.
 
 ## Depth of field {#sec-optics-dof}
-@eq-focaldistance tells us how to set the distance between the optics and image plane, $d_i$, to bring an object at distance $d_o$ into focus.  We might also be interested to answer the related question:  Given that an object at $d_o$ is in focus, what will the blur be for objects nearer or further? The range of distances over which the objects remain in good focus is called the **depth of field**.
+@eq-imagedistance tells us how to set the distance between the optics and image plane, $d_i$, to bring an object at distance $d_o$ into focus.  We might also be interested to answer the related question:  Given that an object at $d_o$ is in focus, what will the blur be for objects nearer or further? The range of distances over which the objects remain in good focus is called the **depth of field**.
 
 The size of the depth of field can be controlled by adjusting the size of the lens aperture.  As it becomes smaller, the lens becomes closer to a pinhole, the depth of field increases.  The depth of field can become quite narrow for a large aperture. Controlling the depth of field can create visually interesting images (@fig-optics-bokeh). Photographers and cinematographers often use settings to bring the main object of interest into good focus and blurring the rest. The depth of field is a quantitative description of the lens setting.  Photographers use the term **bokeh** to describe the aesthetic impact one can achieve by adjusting the depth of field. This quality depends on the optics as well as the scene contents.
 
@@ -182,17 +182,18 @@ Consider an image formed with a thin lens that is kept at a fixed distance from 
 
 ![Circle of confusion](images/optics/optics-coc-1.png){#fig-optics-coc1 width="60%"}
 
+Consider the effect of narrowing the aperture (@fig-optics-coc2).  The angle of the rays arriving at the sensor
+
+![Narrowing the aperture changes the angular range of the rays at the image plane.  By reducing the angle, we reduce the diameter of the circle of confusion.](images/optics/optics-coc-2.png){#fig-optics-coc2 width="60%"}
+
+We can calculate the size of the circle of confusion for different lenses using the ISETCam function [opticsCoC](https://github.com/iset/ISETCam/blob/main/opticalimage/optics/opticsCoC.m){target="_blank"}. The script [s_opticsCoC](https://github.com/iset/ISETCam/blob/main/scripts/optics/s_opticsCoC.m){target="_blank"} compares the circle of confusion for two lenses with the same image distance but different apertures. 
+
 <!-- s_opticsCoC.m -->
-![Narrowing the aperture reduces the size of the circle of confusion.](images/optics/optics-coc-2.png){#fig-optics-coc2 width="60%"}
+![Narrowing the aperture reduces the size of the circle of confusion. Notice that the vertical axis is logarithmic, so that the change in diameter is substantial. Both lenses have a 50 mm distance to the image plane.  One lens has an $f/\#$ of 2 (aperture=25 mm).  The other lens has an $f/\#$ of 8 (aperture=6.25 mm).](images/optics/optics-coc-3.png){#fig-optics-coc3 width="60%"}
 
-This is a link: `r ieLink({'scripts','optics','s_opticsCoC.m'})`
-
-This is a link: `ieLink({'scripts','optics','s_opticsCoC.m'})`
-
+Suppose we select a circle of confusion diameter that we consider to be good focus. From the curves in @fig-optics-coc3, the range of good focus depths will be narrower for the large aperture than the small aperture.  What formula might we use to 
 
 ### Formula for depth of field
-
-Describe the formula in words.  Maybe show the graph from class slides calculation.
 
 ![Graph showing DOF as a function of f/#.](images/optics/optics-coc-1.png){#fig-optics-dof width="60%"}
 
