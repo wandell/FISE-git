@@ -118,7 +118,9 @@ The lens formula computes the image distance for a lens of known focal length. H
 
 Suppose the refractives index of the lens is $n_2$ and of the surrounding medium is $n_1$. Suppose that the radius of curvature of the first surface is $R_1$ and the second surface $R_2$. The formula for the focal length is
 
-$$\frac{1}{f} = (\frac{n_2}{n_1} - 1) ( \frac{1}{R_1} - \frac{1}{R_2}) $$ {#eq-lensmaker}
+$$
+\frac{1}{f} = (\frac{n_2}{n_1} - 1) ( \frac{1}{R_1} - \frac{1}{R_2}) 
+$$ {#eq-lensmaker}
 
 Notice that flipping the shape of the lens, so that $R_2$ and $R_1$ exchange, the magnitude of the focal length remains the same; it just changes sign. So the magnitude of the primary and secondary focal lengths are the same for such thin lenses.
 
@@ -134,7 +136,9 @@ The $f/\#$ is an important parameter for all thin lenses, and it appears in many
 
 As an example, the Airy disk diameter (meters) on the image plane of a diffraction limited lens depends only on the wavelength of light and the f/# of the lens. If the wavelength is $\lambda$ and f/# is $N$, the formula for the Airy disk diameter is
 
-$$ d = 2.44 ~ \lambda ~ N$$ {#eq-airy2}
+$$ 
+d = 2.44 ~ \lambda ~ N
+$$ {#eq-airy2}
 
 If you revisit the first calculation of the Airy disk, in @sec-lightfields-diffraction, you will see that this formula is implicit in how we modeled the image from a diffraction limited pinhole [@eq-airy1].
 
@@ -146,11 +150,15 @@ Consider the simple thin lens in @fig-optics-magnification with a image distance
 
 Using the lens formula, the image distance for the lens in the bluish box is
 
-$$d_i = \frac{f \times d_o}{d_o - f} = \frac{0.1 \times 0.3}{0.3 - 0.1} = 0.15 m$$
+$$
+d_i = \frac{f \times d_o}{d_o - f} = \frac{0.1 \times 0.3}{0.3 - 0.1} = 0.15 m
+$$
 
 The image distance for the lens in the greenish box, with twice the focal length, $f' = 0.2m$, is
 
-$$d_{iL} = \frac{0.2 \times 0.3}{0.3 - 0.2} = 0.60 m$$.
+$$
+d_{iL} = \frac{0.2 \times 0.3}{0.3 - 0.2} = 0.60 \text{m}
+$$
 
 The image distance and image size both increase by a factor of $4$. The two lenses have the same entrance aperture, so they capture the same amount of light. Because the longer focal length lens spreads the image over a larger area, the amount of light per unit area (irradiance) in the image is reduced.
 
@@ -180,22 +188,35 @@ http://www.rags-int-inc.com/PhotoTechStuff/DoF_Calculator/DoF_Calculator.html
 ### Circle of confusion {#sec-optics-coc}
 Consider an image formed with a thin lens that is kept at a fixed distance from the image plane (@fig-optics-coc1).  The middle image panel an object in excellent focus, and the other two panels show points that are too near or too far. As the point moves away from the in-focus object distsance, in either direction, the image will be a roughly circular region increases in diameter.  This is the circle of confusion. This is the **circle of confusion**.  It is a useful concept that is specifically helpful for understanding and quantifying the depth of field. 
 
-![Circle of confusion](images/optics/optics-coc-1.png){#fig-optics-coc1 width="60%"}
+![Circle of confusion](images/optics/optics-coc-1.png){#fig-optics-coc1 width="40%"}
 
-Consider the effect of narrowing the aperture (@fig-optics-coc2).  The angle of the rays arriving at the sensor
+Notice that narrowing the aperture reduces the angle of the rays that arrive at the sensor (@fig-optics-coc2). As the angle narrows, the image size of an out-of-focus point shrinks. If the point is already in focus, however, the rays are arriving at the same point and the image size is little changed. This is the same idea we observed in @sec-lightfields-diffraction when we explained pinhole cameras. This diagram makes clear that a pinhole camera has a very large depth of field. No Bokeh for the pinhole afficianados!
 
-![Narrowing the aperture changes the angular range of the rays at the image plane.  By reducing the angle, we reduce the diameter of the circle of confusion.](images/optics/optics-coc-2.png){#fig-optics-coc2 width="60%"}
+![Narrowing the aperture changes the angular range of the rays at the image plane. The original rays are shown in gray and the rays that pass through the aperture are again shown in blue. Because of the reduction in angle, the image blur is reduced (shown at the right). Thus, the diameter of the circle of confusion is reduced as well.](images/optics/optics-coc-2.png){#fig-optics-coc2 width="40%"}
 
-We can calculate the size of the circle of confusion for different lenses using the ISETCam function [opticsCoC](https://github.com/iset/ISETCam/blob/main/opticalimage/optics/opticsCoC.m){target="_blank"}. The script [s_opticsCoC](https://github.com/iset/ISETCam/blob/main/scripts/optics/s_opticsCoC.m){target="_blank"} compares the circle of confusion for two lenses with the same image distance but different apertures. 
+We can use the diameter of the circle of confusion to quantify the depth of field. The diameter depends on the parameters of the lens and image plane (@fig-optics-coc3). The size of the circle of confusion is computed by the ISETCam function [opticsCoC](https://github.com/iset/ISETCam/blob/main/opticalimage/optics/opticsCoC.m){target="_blank"}.  A script using this function to [s_opticsCoC](https://github.com/iset/ISETCam/blob/main/scripts/optics/s_opticsCoC.m){target="_blank"} compares the circle of confusion for two lenses. 
 
 <!-- s_opticsCoC.m -->
 ![Narrowing the aperture reduces the size of the circle of confusion. Notice that the vertical axis is logarithmic, so that the change in diameter is substantial. Both lenses have a 50 mm distance to the image plane.  One lens has an $f/\#$ of 2 (aperture=25 mm).  The other lens has an $f/\#$ of 8 (aperture=6.25 mm).](images/optics/optics-coc-3.png){#fig-optics-coc3 width="60%"}
 
-Suppose we select a circle of confusion diameter that we consider to be good focus. From the curves in @fig-optics-coc3, the range of good focus depths will be narrower for the large aperture than the small aperture.  What formula might we use to 
+Suppose we select a circle of confusion diameter that we consider to be good focus. From the curves in @fig-optics-coc3, the depth range of good focus will be relatively narrow for the large aperture compared to the small aperture. 
+
+::: {.callout-note title="CoC formula" collapse="true"}
+The diameter of the circle confusion can be calculated using this geometry. Suppose the image plane is placed so that a point $P$ is in focus, so that the distance to the image plane is $f_P$. Another point, $X$, is closer and thus its focus would be beyond the image plane, say at $f_X$.
+
+![Geometric demonstration of the circle of confusion size.](images/optics/optics-coc-callout.png){#fig-optics-coc-callout width="40%"}
+
+There will be two similar right triangles.  One is formed with the sides $A/2$ (half the aperture) and $f_X$; the similar triangle (blue) has sides $f_X - f_P$ and $C_r$ (the radius of the circle of confusion). Because the right triangles are similar, the sides must satisfy
+$$
+\frac{C_r}{A/2} = \frac{f_X - f_P}{f_X}
+$$
+
+Consequently, the diameter of the circle of confusion is $A \frac{f_X - f_P}{f_X}$
+:::
 
 ### Formula for depth of field
 
-![Graph showing DOF as a function of f/#.](images/optics/optics-dof-image.png){#fig-optics-dof width="60%"}
+Say something about the formula.
 
 $$
 \text{DOF} \approx \frac{2 N C (d_o)^2}{f^2}
@@ -205,4 +226,8 @@ $$ {#eq-optics-depthoffield}
 -   $C$ - Diameter of the circle of confusion (m)
 -   $d_o$ - Distance to the subject in object space (m)
 -   $f$ - Lens focal length (m)
+
+![Pseudo-color image showing depth of field in meters (pseudocolor) for relative to different distances (vertical axis) and $f/\#$ (horizontal axis).  The calculation is done for a 100 mm focal length lens.](images/optics/optics-dof-image.png){#fig-optics-dof width="60%"}
+
+There it is.
 
