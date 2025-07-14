@@ -65,7 +65,7 @@ The optics in the human eye has multiple elements. Even so, we can measure its f
 Young people can accommodate easily. As people age, we lose the ability to change the optical power of the optics, a condition called *presbyopia*. This happens to everyone. This biological fact is a consideration for the design of near field displays (@sec-displays).
 
 ## The lens formula {#sec-lens-formula}
-When an object is far away, the rays arriving at the lens are parallel. The image of the object will be in focus at the focal length. When the object is closer, we can use the *Lens formula* to find the plane where the object will be in focus. The equation, which was derived by Halley in 1693, relies on the three ray tracing properties of symmetric thin lenses (@sec-optics-3principles). Using these principles, we can locate where the object at a distance $d_o$ will be in focused on the image side; call that distance $d_i$.
+When an object is far away, the rays arriving at the lens are parallel. The image of the object will be in focus at the focal length. When the object is closer, we can use the *Lens formula* to find the plane where the object will be in focus. This is called the **image distance**.  The equation, which was derived by Halley in 1693, relies on the three ray tracing properties of symmetric thin lenses (@sec-optics-3principles). Using these principles, we can locate where the object at a distance $d_o$ will be in focused on the image side; call that distance $d_i$.
 
 ![Similar triangles for the lens formula.](images/optics/lensmaker-similartriangles.png){#fig-lensmaker-similartriangles fig-align="center" width="95%"}
 
@@ -86,23 +86,22 @@ $$ {#eq-lensformula}
 
 The common names for these variables are
 
-*  $d_o$ - **Object distance**
-*  $d_i$ - **Image distance**
-*  $f$   - **Lens focal length**
+*  $d_o$ - Object distance
+*  $d_i$ - Image distance
+*  $f$   - Lens focal length
   
-## Image distance {#sec-optics-imagedistance}
-
-For a lens with focal length $f$, @eq-lensformula defines the relationship between the object distance and the image distance, where the object is in best focus. Notice that when $d_o = \infty$, then $d_i = f$. We can re-write the formula to calculate this distance explicitly. 
+## Image distance formula {#sec-optics-imagedistance}
+@eq-lensformula defines a relationship between the object distance and the image distance for a thin lens. We can rearrange the terms.
 
 $$
 \frac{-1}{d_i} = \frac{1}{d_o} - \frac{1}{f}
-$$ 
 $$
-d_i =  \frac{1}{\frac{1}{f} - \frac{1}{d_o}}
-$$ 
+
+Notice that when $d_o = \infty$, then $d_i = f$. We can re-write the formula to calculate the image distance explicitly. 
+
 $$
-d_i = \frac{f~d_o}{d_o - f} 
-$$
+d_i = \frac{1}{\frac{1}{f} - \frac{1}{d_o}} = \frac{f~d_o}{d_o - f} 
+$$  {#eq-imagedistance}
 
 You can see from [@eq-imagedistance] that as $d_o$ becomes much larger than $f$, $d_i$ becomes approximately $f$. Specifically, if we express $d_o$ in terms of the focal length of the lens, $k f$, we have
 
@@ -194,14 +193,13 @@ Notice that narrowing the aperture reduces the angle of the rays that arrive at 
 
 ![Narrowing the aperture changes the angular range of the rays at the image plane. The original rays are shown in gray and the rays that pass through the aperture are again shown in blue. Because of the reduction in angle, the image blur is reduced (shown at the right). Thus, the diameter of the circle of confusion is reduced as well.](images/optics/optics-coc-2.png){#fig-optics-coc2 width="40%"}
 
-We can use the diameter of the circle of confusion to quantify the depth of field. The diameter depends on the parameters of the lens and image plane (@fig-optics-coc3). The size of the circle of confusion is computed by the ISETCam function [opticsCoC](https://github.com/iset/ISETCam/blob/main/opticalimage/optics/opticsCoC.m){target="_blank"}.  A script using this function to [s_opticsCoC](https://github.com/iset/ISETCam/blob/main/scripts/optics/s_opticsCoC.m){target="_blank"} compares the circle of confusion for two lenses. 
+We can use the diameter of the circle of confusion to quantify the depth of field. The diameter depends on the parameters of the lens and image plane (@fig-optics-coc3). The size of the circle of confusion is computed by the ISETCam function [opticsCoC](https://github.com/iset/ISETCam/blob/main/opticalimage/optics/opticsCoC.m){target="_blank"}.  
 
-<!-- s_opticsCoC.m -->
 ![Narrowing the aperture reduces the size of the circle of confusion. Notice that the vertical axis is logarithmic, so that the change in diameter is substantial. Both lenses have a 50 mm distance to the image plane.  One lens has an $f/\#$ of 2 (aperture=25 mm).  The other lens has an $f/\#$ of 8 (aperture=6.25 mm).](images/optics/optics-coc-3.png){#fig-optics-coc3 width="60%"}
 
 Suppose we select a circle of confusion diameter that we consider to be good focus. From the curves in @fig-optics-coc3, the depth range of good focus will be relatively narrow for the large aperture compared to the small aperture. 
 
-::: {.callout-note title="CoC formula" collapse="true"}
+::: {.callout-note title="Deriving the CoC formula" collapse="false"}
 The diameter of the circle confusion can be calculated using this geometry. Suppose the image plane is placed so that a point $P$ is in focus, so that the distance to the image plane is $f_P$. Another point, $X$, is closer and thus its focus would be beyond the image plane, say at $f_X$.
 
 ![Geometric demonstration of the circle of confusion size.](images/optics/optics-coc-callout.png){#fig-optics-coc-callout width="40%"}
@@ -211,21 +209,46 @@ $$
 \frac{C_r}{A/2} = \frac{f_X - f_P}{f_X}
 $$
 
-Consequently, the diameter of the circle of confusion is $A \frac{f_X - f_P}{f_X}$
+The diameter of the circle of confusion is twice the radius, $C = 2*C_r = A \frac{f_X - f_P}{f_X}$
 :::
 
-### Formula for depth of field
+### Depth of field formula {#sec-optics-dof-formula}
+
+The depth of field formula quantifies the range of object distances that appear acceptably sharp in an image. It is widely used as an approximation, as we approximate an optical system as a thin lens:
 
 $$
-\text{DOF} \approx \frac{2 N C (d_o)^2}{f^2}
+\text{DOF} \approx 2 N C ({\frac{d_o}{f}})^2
 $$ {#eq-optics-depthoffield}
 
--   $N$ - Lens $f/\#$ (dimensionless)
--   $C$ - Diameter of the circle of confusion (m)
--   $d_o$ - Distance to the subject in object space (m)
--   $f$ - Lens focal length (m)
+where:
 
-![Depth of field in meters (z-axis) at different object distances and then lens approximation $f/\#$ values. The calculation is done assuming a 100 mm focal length diffraction-limited lens. See [s_opticsDoF](https://github.com/iset/ISETCam/blob/main/scripts/optics/focus_dof/s_opticsDoF.m){target="_blank"}](images/optics/optics-dof-image.png){#fig-optics-dof width="60%"}
+-   $N$ is the lens $f/\#$ (focal ratio, dimensionless)
+-   $C$ is the acceptable diameter of the circle of confusion (in meters)
+-   $d_o$ is the object distance (in meters)
+-   $f$ is the lens focal length (in meters)
 
-There it is.
+Recall that $N = f/A$, where $A$ is the aperture diameter. Substituting this into the formula gives:
+
+$$
+\frac{N}{f^2} = \frac{f}{A} \cdot \frac{1}{f^2} = \frac{1}{A f}
+$$
+
+So, the DOF formula can also be written as:
+
+$$
+\text{DOF} \approx \frac{2 C (d_o)^2}{A f}
+$$
+
+This relationship shows:
+
+-   DOF increases with object distance ($d_o$)
+-   DOF increases with the allowable circle of confusion ($C$)
+-   DOF decreases as aperture diameter ($A$) increases (i.e., with a larger aperture)
+-   DOF decreases as focal length ($f$) increases
+
+**Example:**  
+The plot below shows the DOF for a 100 mm focal length, diffraction-limited lens, as a function of $f/\#$ and object distance. The calculations use the ISETCam script [s_opticsDoF](https://github.com/iset/ISETCam/blob/main/scripts/optics/focus_dof/s_opticsDoF.m){target="_blank"}, which calls [opticsDoF](https://github.com/iset/ISETCam/blob/main/opticalimage/optics/opticsDoF.m){target="_blank"} to implement @eq-optics-depthoffield.
+
+![Depth of field in meters (z-axis) at different object distances and thin lens approximation $f/\#$ values. ](images/optics/optics-dof-image.png){#fig-optics-dof width="60%"}
+
 
