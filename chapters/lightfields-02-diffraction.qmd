@@ -1,11 +1,4 @@
 # Pinholes and diffraction {#sec-lightfields-diffraction}
-
-```{=html}
-<!--
-Difference between Fresnel and Fraunhofer diffraction calculations.  One of the RIT students called this a minimal require ent.  It is also present in Zemax.  Far field and near field point spread functions.
--->
-```
-
 If we imagine light as a collection of rays, it is easy to understand Leonardo's explanation of why imaging through a pinhole produces an image  (@fig-pinhole-basic). The rays from the point **A**, which is far away, radiate in a wide range of directions, but only a small portion of those rays arrive at the pinhole aperture. The rays from **A** rays will be parallel to one another (collimated). According to the ray model of light, this collection of rays will pass straight through the pinhole aperture and form an image of the point on the recording surface (e.g., Leonardo's wall).
 
 ![Pinhole camera geometry. (A) The rays from a distant, on-axis point arrive at in parallel at the pinhole. Were there no diffraction, they would simply continue on to form an image the size of the pinhole. (B) An off-axis point's rays also arrive in parallel, but they are at an angle to the pinhole aperture. Hence, fewer rays pass through the aperture so the image would be dimmer and smaller. If we can tolerate a relatively large point spread, this design is workable. But if we require a small point spread, diffraction makes this design unworkable.](images/lightfields/pinholePSF.png){#fig-pinhole-basic fig-align="center" width="70%"}
@@ -14,6 +7,7 @@ Consider a distant but off-axis point, **B**. Its rays, too, will start in many 
 
 @fig-ayscough illustrates an image formed by a great many points. Each point in the scene is blurred and rendered at a unique position. If the image intensity through the pinhole is adequate, and we do not mind the blurring, we will have a satisfactory image.
 
+## Pinhole rendering
 Ray optics, also called **geometric optics**, is a useful and widely used approximation for many calculations, including computer graphics. In @fig-pinhole-chessset I rendered a chess set scene with the pieces, each a few cm tall, positioned about 0.5 meters from the pinhole camera. The four pictures were rendered using different pinhole diameters. The upper left allows only one ray through from each location in the scene. The aperture diameters for the next three pictures are for three different pinhole sizes. The images are brighter as the pinhole size increases. For this example, the image at the two smaller pinhole sizes are tolerable. Depending on your viewing distance from the screen or page, the third pinhole image might be usable. But the largest pinhole, which lets in the most light, loses so much spatial information that the individual pieces blur together in the image.
 
 ![A simulated scene rendered through a pinhole camera, using only ray tracing. The size of the pinhole diameter increases from the upper left to the lower right. The relative intensity is preserved in the renderings so that the scene becomes brighter as the pinhole diameter increases. Rendered with [@pharrPBRTVersion4] and [@iset3d2022].](images/lightfields/01-pinhole-chessset.png){#fig-pinhole-chessset width="80%" fig-align="center"}
@@ -29,8 +23,7 @@ The Dutch scientist Christiaan Huygens, also working at the same time as Newton,
 
 A consequence of the wave theory is that as light passes through a pinhole, or near an edge, the spherical waves from each point on the wavefront are revealed. This is because the aperture limits the region of the plane wave that continues on. If there is a small number of points passing through the aperture, each emitting a spherical wave, the result will be closer to spherical but certainly no longer planar. Instead, the sum of the spherical waves from the few points will sum to a new wavefront that spreads in multiple directions. When the pinhole diameter is small, and only a small portion of the plane wave compared to the wavelength of light enters the pinhole, the spherical wavefront becomes quite large and this blurs the image (@fig-huygens-waves). Were there only a single point, a spherical wave would be revealed. 
 
-::: {.callout-note collapse="true" title="Rays and waves"}
-## Why choose?
+::: {.callout-note collapse="false" title="Rays and waves and hypotheses"}
 
 <!-- History.  https://chatgpt.com/c/67098b1d-ae24-8002-be3d-d55f2bc87045 -->
 
@@ -46,7 +39,7 @@ Gemini puts basic sciences into hypothesis and engineering into tools.
 https://g.co/gemini/share/9013b83cc4f6 -->
 :::
 
-## Which effect blurs the image more? {#sec-airy-pattern}
+## Pinhole size or diffraction: which blurs more? {#sec-airy-pattern}
 From these simple considerations, we have seen that the image is blurred by two effects: the pinhole size and diffraction. Increasing the pinhole would create a larger spot on the wall, but decreasing the pinhole size reveals the spherical nature of the wavefront and also increases the size of the spot on the wall.  We can compare the size of these two effects numerically.
 
 ![The Airy pattern of a pinhole camera.](images/lightfields/01-blur-comparison.png){#fig-blur-comparison fig-cap-location="margin" width="80%"}
@@ -73,8 +66,7 @@ The diffraction spread is larger than the pinhole spread when $d$ exceeds $D$. W
 
 The diffraction spread exceeds the pinhole spread when $d$ exceeds $D$. We do the calculation for different assumptions about the distance to the image plane [ISETCam script](/code/fise_diffraction.html). As an example, we find that when the distance to the image plane is $L = 1m$, the pinhole blur is larger than the diffraction blur for a pinhole diameter of about $1 mm$. When the image plane distance, $L$, is closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
 
-::: {.callout-note collapse="true" title="The size of the diffraction point spread"}
-## Airy disk formula {.unnumbered}
+::: {.callout-note collapse="false" title="The diameter of the diffraction point spread"}
 
 In a paper entitled "On the Diffraction of an Object-glass with Circular Aperture", George Airy provided the mathematical description of the diffraction pattern [@airy-1835-diffraction]. A modern derivation of the full point spread function for both the circular aperture and other shapes is in @goodman2022 (pages 88-94). The computation is implemented and frequently used in ISETCam. It is explained [in this tutorial](https://htmlpreview.github.io/?https://github.com/ISET/isetcam/blob/main/tutorials/optics/t_opticsAiryDisk.html).
 
@@ -92,8 +84,12 @@ The size of the spot on the image plane depends on the distance how far away the
 :::
 
 ## Point spread functions {#sec-pointspread}
-In this section, we have repeatedly referred to how a pinhole camera forms an image of a single point of light in a scene. Analyzing how a point source is rendered—specifically, how its light is distributed in the image—is fundamental in optics. This distribution is called the **point spread function (PSF)**, and it is a key measure of optical performance. The Airy pattern is a classic example of a PSF, but there are many others that we will encounter when we analyze optical systems using linear systems methods (@sec-optics-linear).
+Throughout this section, we have discussed how a single point of light is imaged by an optical system. The resulting image is called the **point spread function (PSF)**, and it is a fundamental measure of optical performance. The Airy pattern, for example, is the PSF produced by a circular aperture due to diffraction. We will encounter other types of PSFs when we analyze optical systems using linear systems theory (@sec-optics-linear).
 
-There are two main types of diffraction relevant to pinhole imaging. When the point source is far from the pinhole, the incoming wavefront is essentially planar. This situation is described by **Fraunhofer diffraction** (also called [far-field diffraction](https://en.wikipedia.org/wiki/Fraunhofer_diffraction)), and the Airy pattern applies.
+It is important to note that most optical systems, including lenses, do not have a single, fixed PSF. The PSF can vary depending on the distance to the point source and its position in the field of view. For systems with circular symmetry, the position is often described by the **field height**, which is the angle between the optical axis and the point's location.
 
-When the point source is close to the pinhole, the wavefront is curved (spherical), and the resulting diffraction pattern is different. This case is described by **Fresnel diffraction** (also called [near-field diffraction](https://en.wikipedia.org/wiki/Fresnel_diffraction)), and the PSF depends on the distance from the source to the aperture.
+Even in pinhole imaging, the PSF is not unique. There are two main diffraction regimes to consider. When the point source is far from the pinhole, the incoming wavefront is essentially planar, and the resulting diffraction pattern is described by **Fraunhofer diffraction** (or [far-field diffraction](https://en.wikipedia.org/wiki/Fraunhofer_diffraction)). In this case, the Airy pattern accurately describes the PSF.
+
+When the point source is close to the pinhole, the wavefront is curved (spherical), and the diffraction pattern changes. This situation is described by **Fresnel diffraction** (or [near-field diffraction](https://en.wikipedia.org/wiki/Fresnel_diffraction)). Here, the PSF depends on the distance from the source to the aperture.
+
+We will explore the role of the PSF in lens simulation, characterization, and computational imaging methods in @sec-optics-linear and @sec-optics-harmonics.
