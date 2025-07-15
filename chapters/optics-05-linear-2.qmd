@@ -1,8 +1,101 @@
-# Harmonics {#sec-optics-harmonics}
+# Optical transfer functions {#sec-optical-transfer}
+There is an obvious simplicity when we think of images as being a set of points. It is an important insight, however, to understand that the same image can be described in man different ways. Alternative representations of an image can be valuable in helping us analyze how the image is transformed by the image system.
 
-We should probably start by talking about the term harmonic.  For real valued functions, it just means sin and cos functions, which are really the same except for a shift in position.  The harmonics are the sin, cos, and all the shifted versions in between.
+A very important general ideal of finding alternative representations of the data is the use of **linear models**. We first introduced linear models in @sec-linear-models where we applied them to characterizing the properties of light fields.  
 
-Do we start by noticing that the sum of two harmonics of the same frequency is a harmonic of the same frequency?
+Here, we use linear models again, but in this case they are useful as an alternative representation of the spatial distribution of image intensity, $I(x,y)$, that is useful for characterizing the properties of an optical system. A linear model of the image intensity can be written simply this way:
+
+$$
+I(x,y) = \sum_{i} w_{i} B_{i}(x,y)
+$$
+
+The functions $B_{i,j}$ are the spatial basis functions of the image intensity.  The scalar values $w_{i,j}$ are the weights that each basis function contributes to the image.  In general, but not always, we use basis functions that are orthogonal to one another, that is 
+
+$$
+0 = \sum_{x,y} B_i (x,y) B_j (x,y)
+$$ {eq-spatial-orthogonal}
+
+We will see various versions of such models; they are often called **image decompositions** because the linear model decomposes the original image into these basis functions. Linear models are not just important in iamge systems, but in all of science and engineering. Of all the decompositions, the one into harmonic functions has been the most important. 
+
+## Harmonics {#sec-optics-harmonics}
+For real-valued signals - such as light intensity - harmonic functions are the Sine and Cosine functions. These are four examples of  **image harmonics**. 
+
+![What's an image harmonic, you say? And why is this a good idea?](images/optics/optics-harmonics.png){#fig-optics-harmonics width="100%"}
+
+We can simplify the math, without losing much in generality, if we work with one-dimensional images -these are patterns vary along the x-dimension but are constant along the y-direction. @fig-optics-harmonics-1d shows different spatial frequencies and contrasts of these 1d images.
+
+![These are all of the form ${a_0}/2 + a_f sin(2 \pi f x + \phi_f)$, but with $\phi_f = 0$ and $a_f$ varying from $1, 0.5 \text{ to } 0.1$.](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="100%"}
+
+It is a bit surprising that you can add together images like this to make any pattern.  For example, here I am adding up a series of this images at different frequencies.  Notice that the result becomes increasingly compact so that after a while adding these very extended images produces a single line!
+
+![These are all of the form ${a_0}/2 + a_f sin(2 \pi f x + \phi_f)$, but with $\phi_f = 0$ and $a_f$ varying from $1, 0.5 \text{ to } 0.1$.](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="100%"}
+
+
+There is a second way to think about the optical transformations. Rather than measure how the optics transforms points at different depths and visual field positions, we measure how the system transforms
+
+### Fourier series
+**Jean Baptiste Joseph Fourier** had the important insight we can express most realistic functions -such as a 1-dimensional light pattern $I(x)$- as the weighted sum of harmonics. We write this idea as the **Fourier series**. 
+
+$$
+I(x) = \frac{a_0}{2} + \sum_f s_f \sin(2 \pi f x ) + c_f \cos(2 \pi f x)
+$$ {#eq-fourier-series}
+
+The first term, $\frac{a_0}{2}$, is the mean of the signal $I(x)$. For each frequency, $f$, there are two coefficients: the amplitudes $s_f$ and $c_f$. These terms represent the modulation of the signal around the mean.
+
+Another way to write the Fourier series is to use only one type of harmonic, say the Sine, but to include a frequency-dependent phase. 
+
+$$
+I(x) = \frac{a_0}{2} + \sum_f a_f \sin(2 \pi f x + \phi_f)
+$$ {#eq-fourier-series-phase}
+
+In this form, the equation also has two parameters, an amplitude $s_f$ and phase $\phi_f$. The parameters these two representations are related by 
+
+$$
+\begin{align}
+a_f & = \sqrt{{s_f}^2 + {c_f}^2} \\
+\phi_f & = \arctan(\frac{c_f}{s_f})
+\end{align}
+$$
+
+### Fourier series coefficients
+
+The coefficients of the series are computed using the following integrals:
+
+- Constant (mean) term:
+
+  $$
+  a_0 = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \, dx
+  $$
+
+- Cosine (even) coefficients:
+
+  $$
+  a_f = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \cos(2 \pi f x) \, dx
+  $$
+
+- Sine (odd) coefficients:
+
+  $$
+  b_f = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) \sin(2 \pi f x) \, dx
+  $$
+
+The coefficient $a_0$ in the Fourier series is **twice** the average (mean) value of the function over the interval.
+
+$$
+\text{Mean of } f(x) = \frac{1}{2\pi} \int_{-\pi}^{\pi} f(x)\, dx = \frac{a_0}{2}
+$$
+
+And that is why it appears divided by 2.
+
+::: {.callout-note title="Joseph Fourier" collapse="true"}
+
+Something about his story and the challenge of getting his work published.
+
+![Jean Baptiste Joseph Fourier](images/optics/optics-fourier.png){#fig-optics-fourier width="60%"}
+
+Maybe the criticism of his work.
+
+:::
 
 ## Eigenfunctions - almost
 
