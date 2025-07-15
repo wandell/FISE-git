@@ -1,39 +1,47 @@
 # Optical transfer functions {#sec-optical-transfer}
-There is an obvious simplicity when we think of images as being a set of points. It is an important insight, however, to understand that the same image can be described in man different ways. Alternative representations of an image can be valuable in helping us analyze how the image is transformed by the image system.
+It is easy to think of images as a set of points. It is an important insight, however, to realize that an image can be described in other ways. Some of these alternative image representations are valuable for analyzing optical performance in an the image system.
 
-A very important general ideal of finding alternative representations of the data is the use of **linear models**. We first introduced linear models in @sec-linear-models where we applied them to characterizing the properties of light fields.  
+An important general approach for creating alternative representations is to linear models. We introduced linear models in @sec-linear-models, and we applied them to characterizing the spectral properties of light fields. Here we will be using linear models again, but in a different way.  In this case we create linear models of the image intensity spatial distribution, $I(x,y)$. The model will be useful for characterizing the properties of an optical system. 
 
-Here, we use linear models again, but in this case they are useful as an alternative representation of the spatial distribution of image intensity, $I(x,y)$, that is useful for characterizing the properties of an optical system. A linear model of the image intensity can be written simply this way:
+A general linear model of the image intensity can be written this way:
 
 $$
 I(x,y) = \sum_{i} w_{i} B_{i}(x,y)
 $$
 
-The functions $B_{i,j}$ are the spatial basis functions of the image intensity.  The scalar values $w_{i,j}$ are the weights that each basis function contributes to the image.  In general, but not always, we use basis functions that are orthogonal to one another, that is 
+The functions $B_{i}(x,y)$ are the **spatial basis functions**, and the scalar values $w_{i,j}$ are the weights. The model represents the image as the weighted sum of these basis functions. In general, but not always, we select basis functions that are orthogonal to one another, 
 
 $$
-0 = \sum_{x,y} B_i (x,y) B_j (x,y)
+0 = \sum_{x,y} B_i (x,y) B_j (x,y).
 $$ {eq-spatial-orthogonal}
 
-We will see various versions of such models; they are often called **image decompositions** because the linear model decomposes the original image into these basis functions. Linear models are not just important in iamge systems, but in all of science and engineering. Of all the decompositions, the one into harmonic functions has been the most important. 
+These models are also called an **image decompositions**, because we consider the linear model as decomposing the original image into these basis functions. Linear models important in image systems, and they are important in science and engineering broadly. Of all the linear models, the decomposition into the weighted sum of harmonic functions has been the most important. 
 
 ## Harmonics {#sec-optics-harmonics}
-For real-valued signals - such as light intensity - harmonic functions are the Sine and Cosine functions. These are four examples of  **image harmonics**. 
+For real-valued signals - such as light intensity - the harmonic functions are the *Sine* and *Cosine*. In typical use, *Sine* and *Cosine* are one-dimensional functions.  But in image systems applications we express them as two-dimensional images
 
-![What's an image harmonic, you say? And why is this a good idea?](images/optics/optics-harmonics.png){#fig-optics-harmonics width="100%"}
+$$
+I(x,y) = M(1 + A sin(2\pi f_x x + \phi_x + 2 \pi f_y y + \ phi_y)) .
+$${#eq-harmonics-2d}
 
-We can simplify the math, without losing much in generality, if we work with one-dimensional images -these are patterns vary along the x-dimension but are constant along the y-direction. @fig-optics-harmonics-1d shows different spatial frequencies and contrasts of these 1d images.
+Th harmonic image has a mean of $M$ and a **contrast** of $A$. Because image intensities are always positive, any realizable image must have the value of $A$ be within the range $[-1 1]$. @fig-optics-harmonics-2d shows four examples of **image harmonics**, each with a different pair of frequencies $f_x$ and $f_y$.
+
+![What's an image harmonic, you say? And why is this a good idea?](images/optics/optics-harmonics.png){#fig-optics-harmonics-2d width="100%"}
+
+We can develop many of the principles of linear models using one-dimensional harmonic images. @fig-optics-harmonics-1d shows a set of spatial harmonics with different spatial frequencies $f_x$, $f_y = 0$ and a range of contrasts $A$. 
 
 ![These are all of the form ${a_0}/2 + a_f sin(2 \pi f x + \phi_f)$, but with $\phi_f = 0$ and $a_f$ varying from $1, 0.5 \text{ to } 0.1$.](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="100%"}
 
-It is a bit surprising that you can add together images like this to make any pattern.  For example, here I am adding up a series of this images at different frequencies.  Notice that the result becomes increasingly compact so that after a while adding these very extended images produces a single line!
+### Fourier series
+It is was surprising for mathematicians to learn that the weighted sum of harmonics can represent measurable functions. Each of the individual harmonics is periodic and spans the entire image width; how could the sum of these harmonics be equal to the image of something as compact as a thin line?  
 
-![These are all of the form ${a_0}/2 + a_f sin(2 \pi f x + \phi_f)$, but with $\phi_f = 0$ and $a_f$ varying from $1, 0.5 \text{ to } 0.1$.](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="100%"}
+For example, here I am adding up a series of this images at different frequencies.  Notice that the result becomes increasingly compact so that after a while adding these very extended images produces a single line!
+
+![How summing harmonics add up to a line. The sum of the first 4, 16, 64, 96, and 128 harmonics. To match the impulse, we can sum only cos(). ](images/optics/optics-reconstruction.png){#fig-optics-reconstruction width="100%"}
 
 
 There is a second way to think about the optical transformations. Rather than measure how the optics transforms points at different depths and visual field positions, we measure how the system transforms
 
-### Fourier series
 **Jean Baptiste Joseph Fourier** had the important insight we can express most realistic functions -such as a 1-dimensional light pattern $I(x)$- as the weighted sum of harmonics. We write this idea as the **Fourier series**. 
 
 $$
