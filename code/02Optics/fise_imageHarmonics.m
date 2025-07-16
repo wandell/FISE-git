@@ -158,11 +158,12 @@ for fx = 0:(N-1)
     % reconstructed_impulse = reconstructed_impulse + DFT_coefficients(k_freq + 1) * exp(1j * 2 * pi * k_freq * n_indices / N);
     % reconstructed_impulse = reconstructed_impulse + DFT_coefficients(k_freq + 1) * cos(2 * pi * k_freq * n_indices / N);
     reconstructed_impulse = reconstructed_impulse + cos(2 * pi * fx * n_indices2 / N);
-    if fx == 4 || fx == 16 || fx == 64 || fx == 96 || fx == N-1
+    if fx == 4 || fx == 16 || fx == 64 || fx == 72 || fx == N-1
         nexttile;
-        imagesc(x_plot,x_plot,circshift(reconstructed_impulse /(fx +1), [0, (N-1)/2]));
-        axis image equal tight
-        pause(1);
+        Y = circshift(reconstructed_impulse /(fx +1), [0, (N-1)/2]);
+        imagesc(x_plot,x_plot,Y);        
+        hold on; plot(x_plot,-1*Y(65,:),'r-');
+        axis image equal tight off
     end
 end
 
