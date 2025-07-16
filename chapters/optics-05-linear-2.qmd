@@ -21,24 +21,32 @@ These models are also called an **image decompositions**, because we consider th
 For real-valued signals - such as light intensity - the harmonic functions are the *Sine* and *Cosine*. In typical use, *Sine* and *Cosine* are one-dimensional functions.  But in image systems applications we express them as two-dimensional images
 
 $$
-I(x,y) = M(1 + A sin(2\pi f_x x + \phi_x + 2 \pi f_y y + \ phi_y)) .
+I(x,y) = M(1 + A sin(2\pi f_x x + \phi_x + 2 \pi f_y y + \phi_y)) .
 $${#eq-harmonics-2d}
 
-Th harmonic image has a mean of $M$ and a **contrast** of $A$. Because image intensities are always positive, any realizable image must have the value of $A$ be within the range $[-1 1]$. @fig-optics-harmonics-2d shows four examples of **image harmonics**, each with a different pair of frequencies $f_x$ and $f_y$.
+The harmonic mean is $M$ and its **contrast** is $A$. Because image intensities are always positive, for any realizable image $A$ be within the range $[-1 1]$. @fig-optics-harmonics-2d shows four examples of **image harmonics**, each with a different pair of frequencies $f_x$ and $f_y$.  When both $f_x$ and $f_y$ are non-zero, the image appears to be a slanted harmonic.  When one of the two is $0$, the image will be a vertical ($f_y = 0$) or horizontal ($f_x = 0$) grating pattern.
 
-![What's an image harmonic, you say? And why is this a good idea?](images/optics/optics-harmonics.png){#fig-optics-harmonics-2d width="100%"}
+![Examples of harmonic images.](images/optics/optics-harmonics.png){#fig-optics-harmonics-2d width="100%"}
 
 We can develop many of the principles of linear models using one-dimensional harmonic images. @fig-optics-harmonics-1d shows a set of spatial harmonics with different spatial frequencies $f_x$, $f_y = 0$ and a range of contrasts $A$. 
 
-![These are all of the form ${a_0}/2 + a_f sin(2 \pi f x + \phi_f)$, but with $\phi_f = 0$ and $a_f$ varying from $1, 0.5 \text{ to } 0.1$.](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="100%"}
+![These one-dimensional harmonics are of the form in @eq-harmonics-2d, but simplified so that $\phi_x = \phi_y = f_y = 0$. The contrast $A$ varyies from the top to bottom row $(1, 0.5, 0.1)$.  The x-range is $(0,1)$, and the frequencies are $f_x = (1,2,4,8)$](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="100%"}
 
 ### Fourier series
-It is was surprising for mathematicians to learn that the weighted sum of harmonics can represent measurable functions. Each of the individual harmonics is periodic and spans the entire image width; how could the sum of these harmonics be equal to the image of something as compact as a thin line?  
+It was surprising for mathematicians to learn -around 1820- that most of the functions we encounter in daily life can be expressed as the weighted sum of harmonics. This is surprising because each individual harmonic is periodic, spanning the entire image width. How can the sum of such functions equal something as localized as a thin line?  
 
-For example, here I am adding up a series of this images at different frequencies.  Notice that the result becomes increasingly compact so that after a while adding these very extended images produces a single line!
+We can see this happen and get a bit of an intuition from the video in @fig-optics-reconstruction-movie. It shows a series of images as we add together different frequencies. Notice that the result becomes increasingly compact so that after a while adding these very extended images produces a single line! The reason is that the positive and negative parts of the harmonics start to cancel one another, leaving only the value at cos(0), which is positive and ends up forming the line.
 
 ![How summing harmonics add up to a line. The sum of the first 4, 16, 64, 96, and 128 harmonics. To match the impulse, we can sum only cos(). ](images/optics/optics-reconstruction.png){#fig-optics-reconstruction width="100%"}
 
+::: {.callout-note collapse="true" title="Reconstruction movie"}
+A movie showing how the sum converges as we add in the harmonics, one by one. At first, the harmonics are spread across the image.  As we add in more harmonics, the different frequency harmonics cancel one another at the locations apart from the central position at $0$ where they are all positive ($\cos(0)$). 
+
+Adding in the first $0-64$ produces the line. The next $65-128$ brings back a little ringing, which goes away when the sum is complete.  This is a very special case of an even symmetric function.  We can do the calculation with just cosines.
+
+![A line reconstructed by adding many harmonics at different frequencies. ](images/optics/lineReconstruct.mp4){#fig-optics-reconstruction-movie width="60%" fig-align="center"}
+
+:::
 
 There is a second way to think about the optical transformations. Rather than measure how the optics transforms points at different depths and visual field positions, we measure how the system transforms
 
