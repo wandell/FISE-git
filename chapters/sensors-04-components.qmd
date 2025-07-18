@@ -1,0 +1,72 @@
+# System components {#sec-sensor-components}
+Conventional CMOS imagers include several components that are critical for producing high quality images (@fig-pixel-overview). The microlens array and deep trench isolation both increase sensitivity and reduce unwanted crosstalk between the pixels. Spectral filters, which are included in sensors for consumer photography and many other types of cameras, are used to capture information about the scene spectral radiance. 
+
+## Spatial components {#sec-sensor-space}
+
+### Microlens arrays {#sec-sensor-microlens}
+The microlens array is a layer of tiny lenses placed above the color filter array. These lenses serve to redirect the light from the main lens onto the photodiode, increasing the light-gathering efficiency. The microlens also reduces **pixel cross-talk**. This refers to the case in which light from the imaging lens might arrive at a relatively large angle at the color filter. A ray may end up generating electrons in a pixel that has a different color filter. Over time, microlens arrays have evolved to support additional functions, such as optimizing focus and enabling advanced imaging techniques for light field capture that I describe later.
+
+![Electron micrograph cross section illustrating the position of the color filters and microlenses above the photodiode (from @elgamalCMOSImageSensors2005)](images/sensors/03-microlens-cfa-SEM.png){#fig-components-microlens width="60%"}
+
+At the center of the sensor array, the incidence of the chief ray from the center of the lens is close to perpendicular to the photodiode array. There, a lens centered above the photodiode works well to simply concentrate the rays. At the edges of the array, however, the angle of the chief ray is relatively steep, say 35 degrees. To redirect the rays toward the photodiode, the microlens and the color filter are shifted laterally. The decentering of the microlens and color filters improves the redirection the rays so that more light arrives at the proper photodiode, and less light is incorrectly absorbed by adjacent photodiodes.
+
+![Geometric logic for de-centering the microlens and color filter above photodiodes at the sensor edges.](images/sensors/03-microlens-shifted.png){#fig-components-shiftedmicrolens width="100%"}
+
+The microlens was important for classic, frontside illuminated sensors when the path from the lens through the metal layers was quite long and the angle of the chief ray at the edge was fairly large. For large pixels, and the initial sensor pixels were 6 or more microns, microlens technology was quite effective.
+@Hwang2023-microlens-alignment @Hwang2023-microlens-quad
+
+### Deep trench isolation (DTI) {#sec-sensor-dti}
+As pixel sizes shrank to around 1.5 microns or less, diffraction effects became more significant. Light entering these tiny pixel apertures would spread out, causing photons to be absorbed not only by the intended photodiode but also by neighboring ones. This led to two main issues: reduced image sharpness due to optical blur, and decreased color accuracy because light passing through, for example, a green filter could generate electrons in a photodiode beneath a red filter.
+
+**Deep trench isolation (DTI)** technology addresses these challenges. Engineers introduced narrow trenches at the boundaries between pixels and filled them with insulating materials such as silicon dioxide or silicon nitride (@fig-sensor-deeptrench). These trenches act as barriers, preventing light from spreading laterally between adjacent pixels. As a result, DTI improves both spatial resolution and color fidelity in modern image sensors.
+
+![Deep trench isolation revealed by Chipworks from a 8MP Samsung ISOCELL imager in the Galaxy S5 (2014). Light passes through color filters (bottom) to the silicon photodiodes. They are separated by deep, poly-filled trenches in the substrate. Source: <a href="https://image-sensors-world.blogspot.com/2014/04/chipworks-shows-samsung-isocell-cross.html" target="_blank">Image Sensors World, April 1, 2014</a>](images/sensors/03-sensor-deeptrench.png){#fig-sensor-deeptrench width="70%"}
+
+@Han2020-deeptrench
+@Tournier2011-deeptrench
+@Park2007-deeptrench -->
+
+## Spectral components {#sec-sensor-wavelength}
+Silicon-based CMOS image sensors are sensitive to photons with wavelengths up to about 1100 nm. In contrast, the human eye detects only a narrower range, from roughly 380 nm to 700 nm. For consumer cameras, the goal is to capture images that look natural to people, so sensors are designed to record light mainly within the visible spectrum. Since human vision uses three types of broadband photoreceptors, most cameras only need to capture three broad spectral bands.
+
+To achieve this, image sensors use two types of spectral filters: one to block unwanted infrared (IR) and ultraviolet (UV) light, and another to divide the visible spectrum into three color channels. The resulting data are processed to produce images that closely match human color perception. In this section, I describe these filters. After reviewing the relevant properties of human vision (@sec-human), I explain how sensor color channels are processed to render accurate or visually pleasing images (@sec-imgprocessing).
+
+### UV/IR filters {#sec-sensor-irfilter}
+Most consumer cameras include a spectral filter that blocks wavelengths longer than 680–700 nm (IR) and shorter than 380–400 nm (UV) from reaching the photodiode. These thin **UV/IR blocking filters** are placed above the microlenses on the sensor (@fig-sensor-uvir)[^irfilters].
+
+[^irfilters]: Although these filters block both UV and IR, they are often called **IR blocking filters**. This may be because the glass in the optics already blocks much of the UV light.
+
+![The UV/IR blocking filter is placed above the microlens. These filters allow only visible light to reach the photodiodes. Source: <a href="https://commons.wikimedia.org/wiki/File:Removed_EOS_350D_IR-blocking_filter.jpg" target="_blank">Removed EOS 350D IR-blocking filter</a>](images/sensors/03-sensor-uvirfilter.png){#fig-sensor-uvir width="80%"} 
+
+Early digital cameras often included an additional laminated layer called an **optical low pass filter (OLPF)**, which slightly blurred the image. The OLPF ensured that light from a point in the scene would be spread over a small area (such as a 2x2 pixel region). This blur was useful because adjacent pixels have different color filters, but their outputs are combined and treated as coming from a single point in the scene. In recent cameras, pixel sizes have become so small that diffraction already spreads the light across multiple pixels (@fig-blur-comparison), making the OLPF unnecessary.
+
+### Color filter arrays (CFA) {#sec-sensor-cfa}
+
+Below the UV/IR blocking filter, color cameras have a **color filter array (CFA)** (@fig-pixel-layers). Typically, the CFA consists of three types of filters arranged in a repeating pattern. The smallest repeating unit is called a **super pixel**. Pixels behind each filter type form a mosaic that samples the image, and together these mosaics create three interleaved **color channels**. For consumer photography, the most common CFA pattern is the Bayer pattern [-@bayerColorImagingArray1976], which uses two green filters, one red, and one blue in each super pixel (@fig-cfa-pattern).
+
+![Bayer RGB pattern. Source: <a href="https://www.nature.com/articles/s41467-022-31019-7/figures/1" target="_blank">Pixel-level Bayer-type colour router based on metasurfaces, Zou et al. 2022</a>](images/sensors/03-sensor-cfa-pattern.png){#fig-cfa-pattern width="60%" fig-align="center"}
+
+::: {#sensor-bayer .callout-note collapse="true" title="Bayer pattern"}
+<a href="https://en.wikipedia.org/wiki/Bryce_Bayer" target="_blank">Bryce Bayer</a> worked at Kodak Research Labs and invented the Bayer color filter array. 
+
+In the mid-1960s, Bayer’s group worked alongside another team focused on psychophysics and human color perception. Kodak was among the first companies to design and market digital cameras, and he was consulted on how to arrange the color filters.  The Bayer filter configuration was designed to mimic aspects of human vision: specifically, he proposed using twice as many green filters as red or blue, reflecting the human eye’s greater spatial resolution to these wavelengths.
+
+In March 1975, Kodak filed a patent application titled "Color imaging array," naming Bayer as the sole inventor. The patent (U.S. 3,971,065, issued July 1976) became foundational for digital imaging. Kodak typically licensed its patents as a bundle, with the Bayer filter patent being a key part of this portfolio. While it is difficult to assign a specific value to this single patent, it contributed significantly to the value of Kodak’s licensing program, which generated billions of dollars. Despite this, Kodak ultimately struggled to adapt to the digital era (@sec-preface-film).
+:::
+
+@fig-cfa-spectral shows the spectral transmission of three color filters from a consumer camera. Over the years, the number of different color filters used in color photography has converged onto a relatively small set with common properties (@tominagaMeasurementEstimationSpectral2021). Different spectral filters and physical methods for sampling the spectrum are used in for other applications, such as medical, scientific, or industrial cameras.
+
+![Spectral transmission profiles typical color filters. Notice that the red filter passes long-wavelength light (IR). But light beyond 680 nm does not reach the photodiode because it is blocked by the UV/IR filter. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>](images/sensors/03-sensor-cfa-spectral.png){#fig-cfa-spectral width="70%" fig-align="center"}
+
+The spectral sensitivity of a color channel depends on the entire light path, not just the color filter. The sensitivity depends on the light transmitted by the lens, the UV/IR filter, the microlens, the color filter, and finally the spectral quantum efficiency of the photodiode. Each of these components can affect the probability that a photon is absorbed; their combined effect determines the overall spectral responsivity of the color channel.
+
+![Spectral quantum efficiency sensitivity of three color channels in a typical modern sensor.  The channel properties are determined by the combination of media in the light path.](images/sensors/03-sensor-channel-spectral.png){#fig-channel-spectral width="70%" fig-align="center"}
+
+ When using a color filter array, we obtain one spectral sample at each position.  To represent a color image, however, we represent three spectral samples at each location.  Thus, we must convert the data from these interleaved mosaics to create a full-color image by assigning a red, green, and blue value at every pixel location. This process, called **demosaicking** can be very useful when a sensor has relatively large pixels.  In that case, the images are coarsely sampled and the image appearance is significantly improved by interpolating the color channels, essentially upsampling the measurements. 
+ 
+ There is a principle we can use when evaluating whether a pixel is 'large'. The imaging lens has a point spread function (@sec-pointspread and @sec-optics-linear), and if its spread is two times larger than the pixel size we consider the pixel small. On the other hand, if the pixel is equal to or larger than the point spread, we consider the pixel large. 
+
+For modern sensors, particularly in consumer imaging, pixel sizes can be quite small, often less than $1~\mu \text{m}$. This pixel size is smaller than the ideal point spread function of a diffraction limited lens (@sec-airy-pattern), and often considerably smaller than the point spread function of the true system. For such sensors many small pixels —and even the entire super pixel- fit within the point spread function. Demosaicking is less critical in this case; we can simply group the measured values of the super pixel into a single point in the RGB image. We will quantify the impact of optics, pixel size and demosaicking for image quality in @sec-imgprocessing.
+
+<!--  -->
+

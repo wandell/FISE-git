@@ -1,15 +1,18 @@
 function rootPath=fiseRootPath()
-% Return the path to the root iset directory
+% Return the path to the root FISE-git directory
 %
-% This function must reside in the directory at the base of the FISE
-% code directory structure.  It is used to determine the location of
-% various sub-directories.
+% This function resides in the **code** subdirectory the FISE-git
+% repository. It is used to determine the location of the main
+% FISE-git directory on the user's machine.
 %
 % Example:
-%   fullfile(fiseRootPath,'data')
+%   fiseRootPath
+%   fullfile(fiseRootPath,'chapters','images')
 
 rootPath=which('fiseRootPath');
 
-rootPath = fileparts(rootPath);
+% The file is in /code.  We return one directory up.
+rootPath = fileparts(fileparts(rootPath));
+
 
 end

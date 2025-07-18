@@ -1,17 +1,22 @@
-# Pixels {#sec-pixels}
+# Pixels and sensors {#sec-pixels}
 Having established the fundamental physics of light-to-electron conversion, we now examine how these principles are implemented in the design of image sensor pixels. To understand how the photoelectric effect is harnessed in practical devices, we next review the behavior of electrons in semiconductors—the foundation of modern image sensor pixels.
 
-## Electrons in semiconductors {#sec-sensor-electrons}
+## Semiconductors and electrons {#sec-semiconductor-physics}
 Atoms in a silicon semiconductor are arranged in a crystalline structure, and their electrons occupy specific energy levels grouped into two main bands: the **valence band** (lower energy) and the **conduction band** (higher energy). Under normal conditions, most electrons remain in the valence band. When a silicon atom absorbs a photon, an electron can be excited from the valence band to the conduction band (@fig-sensor-bandgap).
 
-### The bandgap {sec-sensor-bandgap}
+<!--
+A particularly clear explanation with figures and a video.
+https://scientificimaging.com/knowledge-base/photoelectric-effect/ 
+-->
+
+### Bandgap {#sec-bandgap-photon-absorption}
  The minimum energy required for this transition is called the **bandgap**, and it is measured in electron volts (eV). For silicon at room temperature ($21 \deg C$), the bandgap is 1.12 eV. Only photons with energy equal to or greater than this value can generate free electrons in silicon.
 
 ![Energy bands in silicon semiconductors. A photon can excite an electron in the Valence band.  If the photon has enough energy, the electron can shift to the conduction band, becoming a free electron that can be stored and counted. ](images/sensors/03-sensor-bandgap.png){#fig-sensor-bandgap width=50%}
 
 Without special circuitry, the hole and electron will re-combine. To make an image sensor, we need a method to measure the number of electrons. In a CCD an electric field between the bands prevents recombination. In CMOS electrons are trapped in capacitors placed in the silicon. We explain how this is done in @sec-pixels.
 
-### Wavelength effects {sec-sensor-wavelength}
+### Wavelength effects in silicon sensors {#sec-wavelength-effects}
 There are several wavelength-dependent effects worth noting about silicon sensors. First, we can calculate the energy in Joules of a photon of wavelength $\lambda$ using this the photon energy formula:
 
 We can convert from Joules (J) to electron volts (eV) with this formula
@@ -24,7 +29,7 @@ A wavelength of 1100 nm has just enough energy (1.12 eV) to transition an electr
 
 Third, the chance that a photon excites an electron that crosses the bandgrap depends on the photon's energy level. Higher energy (shorter wavelength) photons are more likely to cause the electron to change bands. For this reason, different wavelengths are absorbed at different spatial depths in the material. Short-wavelength photons are much more likely to generate electrons near the surface compared to long-wavelength photons.  Conversely, long-wavelength photons are relatively more likely to generate electrons deeper in the material. This depth-dependence on wavelength has been used to create color image sensors (@sec-sensor-foveon).
 
-## CMOS pixel circuits {#sec-cmos-circuits}
+## CMOS Pixel: Front-side illuminated {#sec-cmos-pixel-fsi}
 CMOS image sensors use photodiodes—and the photoelectric effect—to measure and store the optical light field at the sensor surface. The key technical breakthrough that enabled CMOS sensors was the invention of circuitry to store and then transmit the photon-generated electrons from the photodiode to the computer.
 
 The photodiode and this circuitry are critical parts of the pixel; there are other essential components as well (@fig-pixel-overview). For example, effective image sensors place a small lens (microlens) above each pixel.  Color image sensors place a color filter between the microlens and the photodiode that passes certain wavelengths and blocks others. 
@@ -46,9 +51,11 @@ The logical flow of the circuitry is as follows:
 -   During readout, the circuitry transfers the stored charge to an analog-to-digital converter (ADC).
 -   The digital image array records the amount of light captured by each pixel.
 
-The role of the other essential pixel components, the color filter arrays and microlenses, is explained in Section @sec-sensors.  In @sec-sensors-characterization I describes how to calibrate and model sensor performance, from the scene light field to image capture.
+The role of the other essential pixel components, the color filter arrays and microlenses, is explained in Section @sec-sensor-components.  In @sec-system-modeling I describes how to calibrate and model sensor performance, from the scene light field to image capture.
 
-### 3T circuit {#sec-3T-circuit}
+## CMOS circuits {#sec-sensor-circuits}
+
+### Three-Transistor (3T) Pixel Design {#sec-3T-pixel-design}
 
 ![The original CMOS 3-transistor (3T) circuit design (@Fossum1997-early).](images/sensors/03-3T-circuit.png){#fig-sensor-3T-circuit width="60%"}
 
@@ -65,7 +72,7 @@ Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd 
 -->
 ```
 
-### 4T circuit {#sec-4T-circuit}
+### Four-Transistor (4T) pixel design {#sec-4T-pixel-design}
 
 ![The 4T pixel circuit introduces a pinned photodiode and an additional transistor. When activated, the new transistor transfers the accumulated charge from the photodiode to a storage capacitor (the floating diffusion node, $C_{fd}$). The rest of the circuit, including readout and row select, is similar to the 3T design.](images/sensors/03-4T-circuit.png){#fig-sensor-4T-circuit width="60%"}
 
@@ -81,134 +88,126 @@ There is also Theuwissen diagram, with five transistors that he calls a 4T circu
 The text: "Figure 2 shows the schematic of a typical voltage mode 4T pixel. The pixel circuit consists of a pinned photodiode, a charge
 transfer switch (M1), a reset switch (M2), a source follower (M3) and a row select switch (M4). The current source transistor (M5) is shared by multiple rows of pixels. VDD is the power supply while VPIX is the output voltage of pixel. VLN provides an adjustable bias current. In the following analysis, the nonlinearity caused by the row select transistor (M4) is omitted to simplify the analysis."
 -->
+## Sensor evolution {#sec-sensor-evolution}
 
-## Pixel circuit properties 
-Simulations of the CMOS circuitry can -and do- become very complex during the design phase. Engineers use specialized software that incorporates the foundry's design rules that account for material properties and feature sizes. This design software helps circuit designers achieve a working system from the foundry.
+There has been a large engineering effort to reduce various sources of noise, including temporal and fixed pattern noise, as well as other limitations in the sensor design relating to color and dynamic range. The engineering effort was supported by the enormous demand for CMOS sensors. In 2020, approximately 6.5 billion sensors were shipped.  In 2025, we expect about 13 billion sensors to be produced. That's a lot of sensors and the demand motivates a lot of engineering. This section covers the evolution of the pixel and sensor design.
 
-After the chip is built, it is impractical to characterize each different line, device and junction. Designers may place certain test circuits within the chip. But more generally systems are evaluated with respect to a set of objective measurements using images as input and digital values of output. This process is called called **system characterization** or **system calibration**. The characterization measurements specify the limitations of system performance, including light sensitivity, system noise, dynamic range, and color accuracy.
+The sensor architecture I have described is known as **front-side illumination (FSI)**. The architecture has the obvious challenge of placing multiple metal layers above the semiconductor substrate (@fig-pixel-layers). Even at the time of the original implementation, it was clear that requiring light to pass through the metal layers to reach the light-sensitive photodiode created many problems. 
 
-The characterization measurements are chosen to be practical and insightful about potential system errors. They are chosen to characterize key limitations based on knowledge of the circuit properties.
+Additionally, both the photodiodes and their associated circuitry share the same substrate. Requiring the circuitry and photodiode to share space reduced the sensitivity the sensor. Finally, the original pixels were fairly large, $6 \mu \text{m}$ or more. As technology scaled and pixels became smaller -many CMOS imagers have pixels as small as $0.8 \mu \text{m}$ a reduction in area of $50x$- additional problems arose. Different opportunities arose as well.
 
-### Sensitivity: Fill factor {#sec-pixel-fillfactor}
-Because modern pixels are so small, each photodiode often collects only a modest number of photons—even under good lighting. For example, a $1~\mu\text{m}^2$ pixel in a dim scene (with a fast f/2 lens) might receive just 200 photons during an exposure. Photon arrivals follow Poisson statistics, so the standard deviation is $\sqrt{200} \approx 14$, or about 7% of the mean. This photon noise is a fundamental limit: it sets the minimum possible noise level and constrains the signal-to-noise ratio (SNR) in low-light conditions.
+These challenges, and the huge success of CMOS sensors, were met by a massive, world-wide, engineering effort to improve the system. The evolution of image sensor pixel technology that came from this effort enabled dramatic improvements in image quality, sensitivity, and device functionality. The following sections describe the key milestones that were achieved through academic and industry partnerships. For an authoritative review, consult @Oike2022-stackedevolution.
 
-::: {#sensor-photons .callout-note collapse="true"}
-## Number of photons at each pixel
-The number of photons arriving at a pixel depends on many factors, including the light intensity, the optics, and the size of the pixel. ISETCam is a useful tool for estimating quantities such as the number of incident photons. The variance in the number of photons at a $1~\mu\text{m}^2$ pixel under moderate to dim lighting is considerable. Here is an image calculated using ISETCam, showing the Poisson variation in the number of photons across a small region.
+<!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
+https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor
+-->
 
-![Poisson noise in a uniform region of a dim scene. Each pixel is \$1\~\\mu\\text{m}\^2\$ and the scene intensity is 50 nits.](images/sensors/03-photonimage.png){#fig-photonimage width="60%"}.
+:::{.callout-note title="Pixel Evolution timeline" collapse="true"}
+<!-- See Research doc 'The Genesis and Evolution of Stacked Pixel Structures ....' -->
 
-This [ISETCam script](../code/fise_opticsCountingPhotons.html) illustrates the calculation. Nearly every sensor simulation we run in ISETCam includes calculations like this.
+Here is a timeline for the key milestones described in the sections below.
+
+| Technology                | Commercialization | Key Benefit                                 |
+|---------------------------|------------------|----------------------------------------------|
+| **Front-Side Illumination (FSI)**   | 1990s–2000s      | Simplicity, but limited by wiring obstruction|
+| **Back-Side Illumination (BSI)**    | ~2007–2010       | Higher QE, better low-light, smaller pixels  |
+| **Deep Trench Isolation (DTI)**     | ~2010s           | Reduced crosstalk, higher pixel density      |
+| **Deep Photodiode**                 | ~2015+           | Higher sensitivity, dynamic range            |
+| **Stacked Sensor**                  | ~2015+           | Advanced features, compact design            |
+
+<!--
+- **Front-Side Illumination (FSI):** Early standard; light passes through wiring before reaching the photodiode.
+- **Back-Side Illumination (BSI):** Introduced ~2010; light enters from the back, improving efficiency for small pixels.
+- **Deep Trench Isolation (DTI):** Early 2010s; insulating trenches reduce crosstalk between pixels.
+- **Deep Photodiode:** Mid-2010s; deeper photodiodes increase sensitivity and dynamic range.
+- **Stacked Sensor:** Mid-2010s onward; sensor and circuitry are stacked for advanced features and compact design.
+
+
+- **Front-Side Illumination (FSI) (1970s–2000s)**
+    - Standard architecture for early CCD and CMOS sensors.
+    - Light enters from the front, passing through metal wiring and transistors before reaching the photodiode.
+    - Wiring blocks some light, reducing quantum efficiency, especially as pixel sizes shrink.
+
+- **Back-Side Illumination (BSI) (Late 2000s, commercialization ~2007–2010)**
+    - Sensor wafer is thinned and flipped so light enters from the back, directly reaching the photodiode.
+    - Dramatically improves quantum efficiency, especially for small pixels.
+    - First widely adopted in smartphone cameras (e.g., iPhone 4 in 2010).
+
+- **Deep Trench Isolation (DTI) (Early 2010s)**
+    - Introduced to reduce electrical and optical crosstalk between pixels.
+    - Trenches filled with insulating material are etched between pixels, confining photo-generated electrons.
+    - Enables higher pixel density and better color fidelity.
+
+- **Deep Photodiode (Mid 2010s)**
+    - Photodiodes are engineered to extend deeper into the silicon substrate.
+    - Increases the volume for photon absorption, improving sensitivity and full-well capacity.
+    - Particularly beneficial for small pixels and high dynamic range imaging.
+
+- **Stacked Sensor (3D Stacking) (Mid–Late 2010s)**
+    - Sensor and circuitry are fabricated on separate silicon layers and then stacked (bonded) together.
+    - Allows for more complex circuitry (e.g., faster readout, on-chip memory, AI processing) without sacrificing pixel area.
+    - Now common in high-end smartphone and professional sensors.
+  
+  -->
 :::
 
-The photodiode occupies only a portion of the pixel area; some of the pixel area is taken up by the circuitry. The proportion of the pixel area that is sensitive to light—the photodiode area—further limits light sensitivity. This proportion is called the **fill factor**. A higher fill factor means more of the pixel is used to detect light, increasing sensitivity. Fill factor is usually expressed as a value between 0 and 1, or as a percentage between 0% and 100%. The first-generation of CMOS image sensors were built with semiconductor technology with feature size on the order of 350 nm, and thus the circuitry might occupy as much as half of the pixel area (fill factor of 0.5). Over years the feature size has shrunk considerably and the fill factor of modern pixels can be greater than 0.9. The fill factor combined with the light sensitivity of the photodiode might result in about 150 electrons generated from the 200 photons. This number, too, is Poisson distributed so the short noise will be about $\sqrt{150} \approx 14$, about 8% of the mean.
+## Back-side illuminated (BSI) {#sec-sensor-bsi}
+After years of incremental improvements, engineers developed a new architecture to overcome the limitations of front-side illuminated (FSI) sensors. The resulting design, known as **Back-Side illuminated (BSI)** CMOS, rearranges the device layers to improve sensitivity. In BSI sensors, the photodiode and wiring layers are flipped; the light no longer needs to pass through the wires.  
 
-### Well capacity and dynamic range {#sec-pixel-wellcapacity}
-The photodiode and floating diffusion node in each pixel act as charge storage devices, often referred to as **storage wells**. The maximum number of electrons that can be stored in these wells is called the **well capacity** or **full-well capacity**. When the number of photo-generated electrons exceeds this capacity, any additional electrons cannot be stored, and the pixel output no longer increases with light intensity. Well capacity is therefore a key factor in determining the pixel’s dynamic range and the point at which it stops responding to additional light.
+![The back-side illuminated pixel. (a) The front-side illuminated pixel has metal lines above the silicon substrate. (b) The back side illuminated sensor flips the metal lines and silicon substrate.  Source: <a href="https://scientificimaging.com/knowledge-base/front-side-illuminated-and-back-side-illuminated-imagers" target="_blank">Scientific Imaging.</a>](images/sensors/03-sensor-bsi2.png){#fig-sensor-bsi2 width="60%"}
 
-The **dynamic range** of a pixel is defined as the ratio between the largest and smallest amounts of light that can be reliably measured. Specifically, we measure the minimum detectable light level ($L_{min}$) and the maximum light level ($L_{max}$) that fills the well just below saturation. The dynamic range is then calculated as:
+In addition to flipping the order of the silicon and wires, it was necessary to change the thickness of the substrate (@fig-sensor-bsi2). In the FSI pixel, the photodiode is embedded in a relatively thick layer of silicon. Flipping this structure would require the light to pass through a substantial amount of silicon prior to reaching the photodiode. This is problematic because the silicon absorbs light, and particularly short-wavelength light (@sec-sensor-wavelength). Thus, it was necessary to find a way to thin the silicon substrate and still have a working photodiode and circuitry. 
 
-$$
-\text{DR} = 20~\log_{10}\left(\frac{L_{max}}{L_{min}}\right)
-$$
+::: {#sensor-bsi .callout-note collapse="true" title="BSI technology development"}
 
-The logarithm compresses the range into more manageable numbers, typically between 60 and 100. The factor of 20 comes from conventions in audio engineering, where dynamic range is measured in decibels (dB). Image scientists use the same convention, so dynamic range is usually reported in dB.
+The concept of back-side illuminated (BSI) CMOS image sensors was first proposed by Eric Fossum in 1994 to address the limitations caused by metal wiring obstructing incoming light and to improve sensitivity. While the benefits of rearranging the sensor layers were clear to many, developing a practical manufacturing process proved challenging. It took more than a decade for BSI technology to become commercially viable. OmniVision Technologies was among the first to introduce a commercial BSI sensor, releasing the OV8810 (1.4 μm pixels, 8 megapixels) in September 2008. Sony soon followed, launching the first widely adopted BSI sensors in 2009.
 
-### Response curve {#sec-pixel-responsecurve}
-The finite well capacity can also have an impact on how the response increases with intensity. @fig-sensor-linearity shows an estimate of the number of stored electrons as a function of number of incident photons for a real sensor. The number of stored electrons increases linearly over a large part of the range. Beyond a certain level, as we approach the storage limit, the curve starts to saturate. As the light intensity increases even further, the curve completely flattens at the well capacity, in this example about 70,000 electrons.
+[Wikipedia article on BSI](https://en.wikipedia.org/wiki/Back-illuminated_sensor)
 
-![A CMOS sensor response curve, showing the number of electrons captured as function of the number of incident photons. From Figure 7 in that paper.](images/sensors/03-responselinearity.png){#fig-sensor-linearity width="60%"}
-
-This pattern can be understood in terms of the physics. At low and moderate light levels, nearly all photo-generated electrons are successfully stored in the well. The photoelectric effect is linear and thus there is a linear increase in stored charge with increasing light intensity. 
-
-As the well nears its full capacity, several effects cause the response to become sublinear and eventually saturate. First, when the storage well is almost full, some newly generated electrons cannot be stored and may leak out or recombine, reducing the efficiency of charge collection. Second, some electrons generated by photons may diffuse into neighboring regions of the sensor substrate rather than being stored in the intended circuit element (e.g., floating diffusion noise). Both leakage and diffusion become more significant at higher light intensities, causing the response curve to flatten out as it approaches saturation.
-
-The exact onset and severity of this nonlinearity depend on the specific circuit design and material properties of the sensor. In certain designs the nonlinearity is negligible, with only  some degree of nonlinearity as the well capacity is approached. Understanding the response curve is important for accurately interpreting sensor measurements, especially in applications that require high dynamic range or precise quantitative imaging.
-
-## Pixel noise {#sec-pixel-noise}
- 
-If we acquire the same image repeatedly, even with no change in the scene, there will be fluctuations in a pixel's output. The difference in a pixel's output across time is called **temporal noise**. There are several contributors to this variation.  We have already reviewed one important contributor, the Poisson distribution of the electrons at the photodiode (Section @sec-photoelectric-statistics). 
-
-Each of the different components of the pixel are potential sources of temporal noise. Here is a brief list.
-
-### Reset noise {#sec-pixel-resetnoise}
-In the 3T and 4T circuits, we must transfer the electrons from the photodiode (in 3T) or from the floating diffusion node (in 4T).  In both cases, there is the possibility that as we start to collect the electrons there will be a random number of electrons left over from the prior image capture.  This variable number of unwanted electrons is a failure to reset the storage to exactly the same state, thus it is called **reset noise**. 
-
-This noise is present in both 3T and 4T circuits, but it has different properties because the storage location differs (@sec-4T-circuit). An important feature of the 4T circuit is that the floating diffusion noise can be read just prior to transferring the electrons from the photodiode, and then again after electrons have been transferred. The difference is read out as the pixel value.  This process is called **correlated double sampling** (CDS), and it significantly reduces reset noise.
-
-In a 3T pixel, reading the voltage on the photodiode disturbs the accumulated charge. CDS relies on making two non-destructive measurements, which is not possible on the photodiode itself in the 3T circuit. 
-
-Reset noise is also known as $kTC$ noise because its size depends on a formula related to the capacitance of the floating diffusion node. The most common representation of the noise is with respect to the pixel voltage.
-
-$$
-{\sigma_V}^2 = \frac{kT}{C}
-$$ {#eq-ktc-volts}
-
-The units of these parameters are:
-
-* $k$ - Boltzmann constant - Joules per Kelvin
-* $T$ - Temperature - Kelvin
-* $C$ - Capacitance Farads = Coulombs per volt
-
-The formula above shows that reset noise increases with temperature ($T$). As a result, sensors in colder environments (such as ski slopes) experience less reset noise than those in warmer settings (like beaches in summer). To address this, many cameras use temperature sensors and adjust their image processing to compensate for temperature-dependent noise, helping to maintain consistent image quality in different conditions.
-
-::: {#sensor-ktc .callout-note collapse="true"}
-### Units of reset noise
-
-The reset noise formula in @eq-ktc-volts gives the noise variance in units of volts. However, it is often more useful to express reset noise in terms of the number of electrons. The equivalent formula for the variance in charge is
-
-$$
-{\sigma_Q}^2 = k T C
-$$ {#eq-ktc-electrons}
-
-Here, ${\sigma_Q}$ is in Coulombs. To convert this to electrons, divide by the elementary charge ($1.602 \times 10^{-19}$ Coulombs per electron):
-
-$$
-\sigma_e \approx \frac{\sqrt{k T C}}{1.602 \times 10^{-19}}
-$$
-
-Reset noise is typically modeled as a Gaussian distribution with zero mean and standard deviation $\sigma_e$ electrons.
 :::
 
-In the 4T pixel, the circuit first measures the voltage on the floating diffusion node before transferring charge from the photodiode (capturing a baseline), and then again after the charge is transferred. The difference between these two measurements represents the pixel signal. This subtraction cancels much of the reset noise, improving signal-to-noise ratio. 
+## Deep photodiodes {#sec-sensor-deepdiode}
+@fig-sensor-skhynix illustrates a further improvement in the BSI design. SK Hynix, Omnivision and other manufacturers recognized that simply flipping the sensor (BSI) improved light capture. But as pixel sizes continued to shrink there was relatively little ability to store electrons.  Thus the well capacity was reduced and which limited the pixel's dynamic range (@sec-wellcapacity-dynamicrange). Moreover, the sensitivity to longer wavelengths, which penetrates deeper into silicon, became a challenge (@sec-sensor-wavelength). 
 
-The 4T design is now standard due to its superior noise performance. Further innovations, such as dual conversion gain and stacked pixel structures have also expanded the dynamic range of CMOS sensors. We will explore some of these developments in @sec-sensor-innovations.
+To overcome these limitations, many vendors invented methods to build photodiodes that extend significantly deeper into the silicon (deep photodiode technology). Increasing the volume of the photodiode has two benefits.  First, the photodiode can gather more charge before saturating.  Second, the photodiode has higher long-wavelength sensitivity. 
 
-### Dark current {#sec-pixel-darkcurrent}
-Even in the absence of light, electrons are generated within the semiconductor material. These electrons make up the **dark current**. The size of the dark current depends on factors such as the temperature and the bandgap of the material. The number of accumulated dark electrons increases over time.
+![Deep photodiodes in the BSI. (a) A super pixel of a front-side illuminated CMOS sensor, including the microlenses, color filters, metal lines, and silicon. (b) A back-side illuminated super pixel with deep photodiode technology. Source: <a href="https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor/" target="_blank">Skhynix.</a>](images/sensors/03-sensor-bsi.png){#fig-sensor-skhynix width="70%"}
 
-Dark electrons accumulate in the same storage as photon-generated electrons and are indistinguishable from them in the readout. But the dark electrons are not informative about the scene; in fact, they interfere with inferences one would make about the scene.
+## Stacked sensors {#sec-sensor-stacked}
+In the original planar technology, photodiodes are adjacent to the transistor circuits within the silicon substrate. Thus, photodiodes must compete for space with the transistors.  Reducing the photodiode area means less light efficiency; reducing the transistor size means noisier performance. Youse pays yer money and yer makes yer choice.
 
-There is a relatively large impact of temperature on dark current $I_d$. The scaling of the current with temperature is specified by this standard formula:
+The **stacked sensor** architecture overcomes this limitation by physically separating the photodiode layer from the readout and processing circuitry. In a stacked sensor, the photodiodes occupy one silicon layer, while the supporting electronics are fabricated on a separate layer beneath. This structure maximizes the light-sensitive area (fill factor) for each pixel and enables the use of more advanced, lower-noise circuitry without sacrificing pixel size.
 
-$$
-I_d(T) \propto T^3 e^{-E_g/kT}
-$$ {#eq-sensor-darkcurrent}
+![Pixels in the stacked sensor are based on die stacking technology. Several layers of silicon that are bonded and connected using Through-Silicon Via (TSV) technology. The technology began with 2-layers, but when have you ever known Silicon Valley to stop?](images/sensors/03-pixel-stacked.png){#fig-sensor-stacked width="50%"}
 
- We can convert the dark current (in $C/s$) to a rate of electrons per second by dividing by the elementary charge ($1.602 \times 10^{-19}~C/e^-$). The symbol $C$ is Coulombs. The number of dark electrons is random and follows a Poisson distribution with a mean equal to the expected number of dark electrons for the exposure time. 
+The key enabling technology is called **die stacking**. The silicon layers are bonded together and electrically connected using two main methods. The original approach used **Through-Silicon Vias (TSVs)**—tiny holes etched through the silicon and filled with a conductive material (such as copper or tungsten) to create vertical electrical connections. 
 
-The dark current level depends on multiple features of the circuit and is hard to predict from first principles.  The dark current level is usually determined empirically and reported in the data sheets describing the sensor.
+More recently, **Cu-Cu (copper-to-copper)** direct bonding has become common. In this method, patterned copper pads on each wafer are precisely aligned and bonded under heat and pressure, allowing for dense, fine-pitch interconnects between the pixel and logic layers. Cu-Cu bonding is ideal for high-resolution, high-speed sensors, enabling features like global shutter or per-pixel memory. TSVs are still used for tasks such as power delivery and global I/O routing.
 
-::: {#sensor-dark-current .callout-note collapse="true"}
-### Units of dark current noise
+Stacked sensors have unlocked new capabilities in image sensor design. By separating the photodiode and circuitry layers, manufacturers can improve light sensitivity, reduce noise, and add advanced processing features directly beneath the pixel array. This architecture forms the foundation for ongoing innovation in sensor performance and functionality.
 
-<!-- https://www.onsemi.com/pdf/datasheet/noii4sm6600a-d.pdf -->
-A data sheet for a (discontinued) ON Semiconductor sensor specifies a dark current of $78~e^{-}/\text{s}$ at $T = 21^\circ\text{C} = 294.15~\text{K}$. If we take a picture with a 0.03 second exposure, we expect an average of $2.34$ dark electrons per pixel. If the temperature rises by $30$ Kelvin, to $324.15~\text{K}$, the mean number of dark electrons increases to $3.13$. The number of dark electrons is Poisson distributed, so the variance equals the mean.
+<!-- Stacked Sensor Structures Google doc 
+A significant step towards multi-layer integration was taken by Mitsumasa Koyanagi of Tohoku University, who pioneered the technique of wafer-to-wafer bonding with TSV in 1989
+-->
+
+::: {.callout-note title="Stacked sensor applications" collapse="true"}
+Stacked CMOS sensors build on the BSI CMOS architecture by integrating the pixel array with a separate logic layer. This close integration enables advanced features such as high dynamic range (HDR) imaging, faster frame rates, and on-chip processing—including artificial intelligence (AI) functions.
+
+Some stacked sensors incorporate high-speed DRAM directly beneath the pixel array, allowing for rapid data readout and temporary storage. This architecture made possible innovations like the Sony a9 (2019), which could capture images at 20 frames per second (fps) with a continuous, blackout-free viewfinder experience.
 :::
 
-### Temperature dependence {#sec-pixel-temperature}
-The sections on reset noise and dark current were two examples of how noise depends on temperature. CMOS image sensors are sensitive to temperature in other ways as well, because many of their key physical processes depend on thermal energy. Here is a summary of the factors that change as temperature rises:
+## Digital pixel sensor {#sec-digital-pixel}
+The Digital Pixel Sensor (DPS) was a significant parallel development in image sensor technology.  The initial ideas were presented in the mid 1990s, at roughly the same time as the APS 3T and 4T circuits were implemented.  The APS circuitry included an analog-to-digital conversion (ADC) at the column or chip level. The DPS architecture extended the pixel circuit by including an ADC within the pixel circuit @fowler1995-dps-patent @Udoy2025-dps-review.
 
-* **Dark current increases exponentially**, adding background signal and noise even in the absence of light.
-* **Reset noise** (kTC noise) grows linearly with temperature, especially affecting sensors without correlated double sampling.
-* **Analog circuit offsets and gain** can drift, altering pixel output levels and introducing fixed-pattern noise.
-* **Leakage currents and charge transfer inefficiencies** rise, degrading low-light performance and introducing artifacts.
+Digitizing the signal at the pixel had several advantages for high dynamic range imaging, global shuttering and readout speed @elgamal2005-cmos-imagesensors @kleinfelder2001-10000fps @Wandell2002-CommonPrinciples. An important feature of the original digital pixel sensors was that the pixel voltage was read non-destructively and repeatedly, say at 1 ms, 2 ms, 4 ms, and so forth. As the photon generated electrons increased in the well, the voltage was sampled.  The voltage for each pixel was reported when the pixel had passed one half well capacity, assuring it was much larger than the noise.  It would be reported at a time before the well capacity was reached, so that it was below saturation. The information from each pixel was the a voltage and and the time at which it reached that voltage. Thus, each pixel had its own exposure duration -or put another way, the sensor had a space-varying exposure duration. Pixels in dark regions of the scene had longer exposure times than pixels in the bright regions. We explain the value of this approach for high dynamic range imaging in @sec-exposure-control.  
 
-Together, these effects cause image quality to degrade—particularly in precision applications like scientific imaging or long exposures. To mitigate these issues, sensors often include:
+The DPS concept was introduced at an early point in the development of CMOS imagers, and thus it faced significant hurdles in miniaturization. The idea of an ADC on the sensor foreshadowed an opportunity that has arisen as pixel architecture evolves. The stacked pixel structure offers a remedy by allowing the ADC and memory circuits to be placed in a separate layer underneath the photodiode. This enables higher pixel density and broader application of in-pixel conversion. It is quite possible that the next generation of image sensors will implement the DPS concept (@note-digital-pixel).
 
-* **Real-time temperature sensors**
-* **Calibration tables** for dark current, gain, and noise
-* **Active cooling systems**
-* **Post-processing corrections** such as dark-frame subtraction and flat-field normalization
+::: {.callout-note #note-digital-pixel collapse="true" title="Commercialization of the digital pixel sensor"}
+El Gamal co-founded Pixim, Inc. in 1998, a fabless semiconductor company that commercialized chipsets for security cameras based on this DPS technology. A challenge for early DPS implementations was the reduced photodiode area in the planar array due to the additional ADC circuitry. This increased the cost of the chip and narrowed the field of potential applications and prevented widespread mainstream adoption for many years. Pixim was acquired by Sony Electronics in 2012.
 
-Temperature compensation by cooling helps maintain consistent signal-to-noise ratio, dynamic range, and color accuracy across operating conditions. If cooling is not possible, knowledge of how noise depends on temperature is important when processing and interpreting camera data.
+In 2023 Sony introduced the [Sony a9 iii](https://en.wikipedia.org/wiki/Sony_%CE%B19_III). It has 24.6 Megapixels and a global shutter.  The camera can operate at high frame rates [(120 frames per sec)](https://www.sony.co.uk/interchangeable-lens-cameras/products/ilce-9m3?locale=en_GB). It appears to be using a digital pixel approach. 
+
+It's highly probable that [Yusuke Oike](https://sites.google.com/site/yusukeoike) who worked in the El Gamal group from 2010-2012,  played a crucial role in the development and design of the groundbreaking global shutter sensor that is at the core of the a9 III's capabilities. He has been with Sony Corporation and Sony Semiconductor Solutions Corporation for many years, focusing on research and development of CMOS image sensors, pixel architecture, circuit design, and imaging device technologies. He's held positions like Senior General Manager of Research Division and is even listed as the newly appointed CTO of Sony Semiconductor Solutions Corporation in a 2025 news release.
+:::
+

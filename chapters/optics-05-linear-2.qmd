@@ -1,0 +1,202 @@
+# Optical transfer functions {#sec-optical-transfer}
+It is easy to think of images as a set of points. It is an important insight, however, to realize that an image can be described in other ways. Some of these alternative image representations are valuable for analyzing optical performance in an the image system.
+
+An important general approach for creating alternative representations is to linear models. We introduced linear models in @sec-linear-models, and we applied them to characterizing the spectral properties of light fields. Here we will be using linear models again, but in a different way.  In this case we create linear models of the image intensity spatial distribution, $I(x,y)$. The model will be useful for characterizing the properties of an optical system. 
+
+A general linear model of the image intensity can be written this way:
+
+$$
+I(x,y) = \sum_{i} w_{i} B_{i}(x,y)
+$${#eq-linear-model}
+
+The functions $B_{i}(x,y)$ are the **spatial basis functions**, and the scalar values $w_{i}$ are the weights applied to each basis function. The image is represented as the weighted sum of these basis functions. When we think of an image as a set of points, we are implicitly using basis functions that are zero everywhere except at the location of the point.  The weights are the image intensity at that point.
+
+For a linear model to be useful, we need to be able to find the weights from the image, and we need to be able to construct the image from the weights.  The functions that  are called **image transforms**.  Finding the transform is made much simpler if we choose the linear model basis functions to be orthogonal to one another, which means
+
+$$
+0 = \sum_{x,y} B_i (x,y) B_j (x,y).
+$$ {#eq-spatial-orthogonal}
+
+The value of orthogonality can be seen best by representing @eq-linear-model in discrete form an using matrices. Discrete representations using vectors and matrices is the way we compute, and thus a more practical if less pure.  To emphasize the discrete representation we will shift notation just a bit so that $I(x)$ becomes $I[n]$, and $B(x,y)$ becomes $B[n,m]$. 
+
+We can convert the basis functions, which are matrices, into a column vector by stacking the columns on top of one another. We then group these columns into the columns of a single matrix, $\mathbf{B}$. We similarly stack the columns of the image into a long column vector $\mathbf{I}$.  The weights are already a vector which we write as, $\mathbf{w}$. 
+
+We can write @eq-linear-model as a matrix equation this way
+
+$$
+\mathbf{I} = \mathbf{B w} .
+$$ {#eq-linear-model-matrix}
+
+The $i^{th}$ weight in the vector $\mathbf{w}$ multiples the $i^{th}$ column of the matrix $\mathbf{B}$.  All of these products are summed, and thus this matrix equation is the same as the @eq-linear-model.
+
+When the basis functions are orthogonal, $\mathbf{B^t B}$ is the identity matrix.  This means we can transform from the image data to the weights quite simply,
+
+$$
+\mathbf{w} = \mathbf{B^t I} .
+$$ {#eq-linear-model-inverse}
+
+So, that's good.  Now, there are instances when we might make linear models that are not orthogonal.  In that case, we have to find the inverse of $\mathbf{B}$ to move back and forth between the image and its transform. Computers are pretty big these days, so we can live with that.  But it is very nice to have the basis functions be orthogonal.
+
+Linear models are important for image systems and science and engineering broadly. Of the many linear models, having the bases be **harmonic functions** has been the most important. Let's review.
+
+## Harmonics {#sec-optics-harmonics}
+For real-valued signals - such as light intensity - the harmonic functions are the *Sine* and *Cosine*. You probably first learned about *Sine* and *Cosine* as one-dimensional functions -they take a single number in and produce a single number out. But in image systems applications we we use Sine and Cosine to represent two-dimensional images,
+
+$$
+I(x,y) = M(1 + A sin(2\pi f_x x + \phi_x + 2 \pi f_y y + \phi_y)) .
+$${#eq-harmonics-2d}
+
+The mean of the harmonic is $M$, and the **contrast** is $A$. Because image intensities are always non-negative, the value of $A$ for any realizable image must be within the range $[-1 1]$. @fig-optics-harmonics-2d shows four **image harmonics**. When both $f_x$ and $f_y$ are non-zero, the image is oriented.  When one of the two is $0$, the image is vertical ($f_y = 0$) or horizontal ($f_x = 0$)[^spatial-frequency].
+
+[^spatial-frequency]:  Words go here about the use of the term spatial frequency.
+
+![Examples of harmonic images.](images/optics/optics-harmonics.png){#fig-optics-harmonics-2d width="60%"}
+
+We can develop many of the principles of linear models using one-dimensional harmonic images, like the images in @fig-optics-harmonics-1d. These harmonics have different spatial frequencies $f_x$ and a range of contrasts $A$. They are one-dimensional because I set $f_y = 0$.
+
+![These one-dimensional harmonics are of the form in @eq-harmonics-2d, but simplified so that $\phi_x = \phi_y = f_y = 0$. The contrast $A$ varyies from the top to bottom row $(1, 0.5, 0.1)$.  The x-range is $(0,1)$, and the frequencies are $f_x = (1,2,4,8)$](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
+
+### Line reconstruction
+Around 1805, **Jean Baptiste Joseph Fourier** reported that most of the functions we encounter in daily life can be expressed as the weighted sum of harmonics. This surprised, or perhaps annoyed, the mathematicians of the French academy (see the historical note below). The reason it is surprising is that the individual harmonics each span the image width. How can the sum of such functions add up to a thin line?  
+
+We can get some insight into how this happens from @fig-optics-reconstruction. The figure shows images that are created as we add together certain harmonics over larger and larger frequency ranges: the image becomes increasingly compact. The positive and negative parts of the harmonics start to cancel one another, leaving only the value at cos(0), which is positive and ends up forming the line. If we add up enough harmonics, of just the right type, the image becomes precisely a single line! 
+
+![Summing harmonics to become line. The panels show the sum of the first 4, 16, 64, 72, and finally all 128 harmonics. To match a single line in the middle (col=65) of this 129 column image, the weights of each harmonic are all $w_f = 1$. Because the image is even symmetric, we need to sum only the $cos()$ terms. The red traces superimposed on the images are the intensity. The central region becomes thinner and the ripples on the side are eliminated by the 64th harmonic.  They return as we keep going to f = 72, but are eliminated again at f=128.  Ask your linear systems instructor about this; s/he will like you for it.](images/optics/optics-reconstruction.png){#fig-optics-reconstruction width="100%"}
+
+::: {.callout-note collapse="true" title="Line reconstruction: the movie"}
+A movie showing how the sum converges as we add in the harmonics, one by one. At first, the harmonics are spread across the image.  As we add in more harmonics, the different frequency harmonics cancel one another at the locations apart from the central position at $0$ where they are all positive ($\cos(0)$). 
+
+Adding in the first $0-64$ produces the line. The next $65-128$ brings back a little ringing, which goes away when the sum is complete.  This is a very special case of an even symmetric function.  We can do the calculation with just cosines.
+
+![A line reconstructed by adding many harmonics at different frequencies. ](images/optics/lineReconstruct.mp4){#fig-optics-reconstruction-movie width="60%" fig-align="center"}
+
+:::
+
+## Fourier Series
+The concept of representing functions as sums of harmonics is known as the **Fourier series**. For images or signals, the Fourier series can be written in several equivalent forms. Here are three common representations. In these formula, rather than using $I(x)$, which implies $x$ is a continuous variable, we use $I[n]$ to signify that we are sampling at discrete points.  For that reason, these are properly called **Discrete Fourier series**
+
+**1. Sine and Cosine Form**
+
+$$
+I[n] = \frac{a_0}{2} + \sum_{f=0}^{N-1}  s_f \sin(2 \pi f n ) + c_f \cos(2 \pi f n)
+$$ {#eq-fourier-series}
+
+- $\frac{a_0}{2}$ is the mean value of the signal $I(x)$.
+- For each frequency $f$, $s_f$ and $c_f$ are the sine and cosine coefficients, describing how much of each harmonic is present.
+
+**2. Amplitude and Phase Form**
+
+Alternatively, the series can be written using only sine functions, with a frequency-dependent amplitude and phase:
+
+$$
+I[n] = \frac{a_0}{2} + \sum_{f=0}^{N-1}  a_f \sin(2 \pi f n + \phi_f)
+$$ {#eq-fourier-series-phase}
+
+- $a_f$ is the amplitude for frequency $f$.
+- $\phi_f$ is the phase shift for frequency $f$.
+
+The amplitude and phase are related to the sine and cosine coefficients by:
+
+$$
+\begin{align}
+a_f & = \sqrt{{s_f}^2 + {c_f}^2} \\
+\phi_f & = \arctan\left(\frac{c_f}{s_f}\right)
+\end{align}
+$$
+
+**3. Complex Exponential Form**
+
+In mathematics and engineering, the Fourier series is often expressed using complex exponentials:
+$$
+I[n] = \sum_{f=0}^{N-1} c_f \, e^{i 2 \pi f n / N}
+$$
+
+- $f$ is an integer, and the sum runs over all positive and negative frequencies.
+- The coefficients $c_f$ are generally complex numbers.
+
+The complex coefficients are computed using the **Fourier transform**:
+
+$$
+c_f = \frac{1}{N} \sum_{n=0}^{N-1} I[n] \, e^{-i 2 \pi f n / N}
+$$
+
+If $I[n]$ is real-valued, the coefficients satisfy $c_{-f} = \overline{c_f}$, where $\overline{c_f}$ is the complex conjugate of $c_f$.
+
+The relationship between the complex exponential representation is connected to the others using Euler's formula:
+
+$$
+I[n] \exp(i 2\pi f n) = I[n] \left[ \cos(2\pi f n) + i \sin(2\pi f n) \right] 
+$$
+
+This follows from Euler’s formula:
+
+$$
+e^{j\theta} = \cos(\theta) + j\sin(\theta) 
+$$ {#eq-Eulers-formula}
+
+Each of these forms is mathematically equivalent, and the choice of representation depends on the application and context.
+
+### Fourier series coefficients
+
+For the **Discrete Fourier Series**, where the function is $I[n]$ sampled at $N$ points, the coefficients are computed as:
+
+- Constant (mean) term:
+
+  $$
+  a_0 = \frac{2}{N} \sum_{n=0}^{N-1} I[n]
+  $$
+
+- Cosine (even) coefficients:
+
+  $$
+  a_f = \frac{2}{N} \sum_{n=0}^{N-1} I[n] \cos\left(\frac{2\pi f n}{N}\right)
+  $$
+
+- Sine (odd) coefficients:
+
+  $$
+  b_f = \frac{2}{N} \sum_{n=0}^{N-1} I[n] \sin\left(\frac{2\pi f n}{N}\right)
+  $$
+
+The mean value of $I[n]$ is $\frac{a_0}{2}$, which is why it appears divided by 2 in the Discrete Fourier Series.
+
+::: {.callout-note title="About Jean Baptiste Joseph Fourier" collapse="true"}
+Here is a link to a nice website with a  <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Fourier/" target="_blank">biography of Fourier and many others</a> . The material below is extracted from that site and wikipedia.
+
+## About Fourer
+- Son of a tailor
+- Orphaned at 9
+- Educated by Benedictines
+- Promoted the French Revolution
+- Accompanied Bonaparte as scientific adviser to Egypt
+- Appointed Governor near Grenoble
+- A statue of Fourier, in Grenoble, was melted down for armaments!
+
+![Jean Baptiste Joseph Fourier](images/optics/optics-fourier.png){#fig-optics-fourier width="40%"}
+
+## Publishing
+While serving as Governor in Grenoble, Fourier made his major mathematical contributions to the theory of heat. He began this work around 1804, and by 1807 had completed his influential memoir, "On the Propagation of Heat in Solid Bodies." Fourier presented this memoir to the Paris Institute on December 21, 1807, where a committee of prominent mathematicians—Lagrange, Laplace, Monge, and Lacroix—was assigned to review it. Although the memoir is now highly regarded, it was controversial at the time.
+
+The committee had two main concerns. First, Lagrange and Laplace objected to Fourier's use of trigonometric series to expand functions—what we now call Fourier series. Despite further explanations from Fourier, they remained unconvinced. As noted by J. Herivel in his biography of Fourier:
+
+> All these are written with such exemplary clarity—from a logical as opposed to calligraphic point of view—that their inability to persuade Laplace and Lagrange ... provides a good index of the originality of Fourier's views.
+
+Second, Biot criticized Fourier's derivation of the equations for heat transfer, noting that Fourier did not reference Biot's 1804 paper on the topic. However, Biot's paper was later shown to be incorrect. Laplace and Poisson also raised similar objections.
+
+In 1811, the Institute announced a prize competition on the propagation of heat in solid bodies. Fourier submitted his 1807 memoir along with additional work on the cooling of infinite solids and on terrestrial and radiant heat. Only one other entry was received. The prize committee—Lagrange, Laplace, Malus, Haüy, and Legendre—awarded Fourier the prize.
+
+However, their report was mixed, stating: “... the manner in which the author arrives at these equations is not exempt of difficulties and that his analysis to integrate them still leaves something to be desired on the score of generality and even rigour.” As a result, there was no immediate move in Paris to publish Fourier's work.
+:::
+
+## Eigenfunctions - almost
+This section explains a couple of reasons why harmonics are a really important set of basis functions. Some have to do with physics and reality.  Some have to do with mathematics.
+
+Harmonics (like sine and cosine waves) are almost the “natural” patterns for linear systems—they’re close to being eigenfunctions. For imaging, they’re not quite perfect eigenfunctions because of phase shifts, but if you think of them as 2D vectors, they’re pretty close.
+
+## Optical Transfer Function
+
+## Modulation Transfer
+
+## Contrast sensitivity
+
+
