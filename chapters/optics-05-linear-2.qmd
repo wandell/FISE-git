@@ -51,20 +51,20 @@ $$
 I(x,y) = M(1 + A sin(2\pi f_x x + \phi_x + 2 \pi f_y y + \phi_y)) .
 $${#eq-harmonics-2d}
 
-The mean of the harmonic is $M$, and the **contrast** is $A$. Because image intensities are always non-negative, the value of $A$ for any realizable image must be within the range $[-1 1]$. @fig-optics-harmonics-2d shows four **image harmonics**. When both $f_x$ and $f_y$ are non-zero, the image is oriented.  When one of the two is $0$, the image is vertical ($f_y = 0$) or horizontal ($f_x = 0$)[^spatial-frequency].
+The mean of the harmonic is $M$, and the **contrast** is $A$. Because image intensities are always non-negative, the value of $A$ for any realizable image must be within the range $[-1 1]$. @fig-optics-harmonics-2d shows four **image harmonics**. When both $f_x$ and $f_y$ are non-zero, the image is oriented[^spatial-frequency].
 
-[^spatial-frequency]:  Words go here about the use of the term spatial frequency.
+[^spatial-frequency]:  Different fields use somewhat different terminology and approximations to this one-dimensional gratings.  Vision scientists typically call these images **spatial frequency gratings**.  Engineers often approximate the sinusoidal intensity patterns using evenly spaced bars or sometimes even lines. It is likely more than one person will complain to me that I chose to describe them as harmonics.  Oh well.
 
-![Examples of harmonic images.](images/optics/optics-harmonics.png){#fig-optics-harmonics-2d width="60%"}
+![Harmonic images. These have different $f_x$ and $f_y$ values, but all have contrast $A=1$. The image is vertical if $f_y = 0$ and horizontal if $f_x = 0$](images/optics/optics-harmonics.png){#fig-optics-harmonics-2d width="80%"}
 
 We can develop many of the principles of linear models using one-dimensional harmonic images, like the images in @fig-optics-harmonics-1d. These harmonics have different spatial frequencies $f_x$ and a range of contrasts $A$. They are one-dimensional because I set $f_y = 0$.
 
 ![These one-dimensional harmonics are of the form in @eq-harmonics-2d, but simplified so that $\phi_x = \phi_y = f_y = 0$. The contrast $A$ varyies from the top to bottom row $(1, 0.5, 0.1)$.  The x-range is $(0,1)$, and the frequencies are $f_x = (1,2,4,8)$](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
 
 ### Lines from harmonics
-Around 1805, **Jean Baptiste Joseph Fourier** found that most of the functions we encounter in daily life can be expressed as the weighted sum of harmonics. This surprised, or perhaps annoyed, the mathematicians of the French academy [see the historical note](#fourier-history). 
+Around 1805, **Jean Baptiste Joseph Fourier** discovered that most of the functions we encounter in daily life can be expressed as the weighted sum of harmonics. This surprised, or perhaps annoyed, the mathematicians of the French academy [see the historical note](#fourier-history). 
 
-It may seem counterintuitive that a thin line can be constructed by summing harmonics, each of which extends across the entire image. How does the combination of these broad functions result in a localized feature like a line? 
+To many people it is counterintuitive that a thin line can be constructed by summing harmonics, each of which extends across the entire image. How does the combination of these broad functions result in a localized feature like a line? 
 
 @fig-optics-reconstruction provides insight into this process. The figure shows how the image evolves as we sum increasing numbers of harmonics: starting with just a few, the result is broad and diffuse, but as more harmonics are added, the image becomes increasingly concentrated. The key is that the positive and negative regions of the harmonics cancel each other out everywhere except at the center, where all the cosine terms are positive ($\cos(0)$). With enough harmonics, the sum converges to a single, sharp line.
 
@@ -107,32 +107,43 @@ $$
 where $w_f$ are complex numbers ($i = \sqrt{-1}$).
 
 ### Calculating the weights: Discrete Fourier transform
-We need a way to transform the sampled image intensities, $I[n]$ into the weights of the Discrete Fourier Series. The most common way approach is to compute the complex coefficients using the **Discrete Fourier transform**:
+To analyze images using the Discrete Fourier Series, we need a way to transform the sampled image intensities, $I[n]$, into the Fourier weights, $w_f$. The most common method is the **Discrete Fourier Transform (DFT)**:
 
 $$
 w_f = \frac{1}{N} \sum_{n=0}^{N-1} I[n] \, e^{-i 2 \pi f n / N}
 $$ {#eq-discrete-fourier-transform}
 
-<!--
-If $I[n]$ is real-valued, the coefficients satisfy $w_{-f} = \overline{w_f}$, where $\overline{w_f}$ is the complex conjugate of $w_f$.
--->
+At first glance, this formula might look intimidating, but it's actually quite elegant. On the right, we have the sampled image values multiplied by a complex exponential. Thanks to **Euler's formula**, we know that any complex exponential can be written in terms of sine and cosine:
 
-If we prefer to use real numbers throughout, we can calculate the sine and cosine coefficients, $s_f$ and $c_f$, from the image intensities, $I[n]$, using these equations:
+$$
+e^{i\theta} = \cos(\theta) + i\sin(\theta).
+$$ {#eq-Eulers-formula}
+
+This means the DFT is really just combining the familiar sine and cosine terms into a single, compact expression using complex numbers. Many people find this complex formulation neater than keeping track of separate sine and cosine coefficients.
+
+It's important to note that while $I[n]$ is real-valued, the DFT coefficients $w_f$ are generally complex. For a real signal, there is redundancy: the coefficients satisfy $w_{f} = \overline{w_{N-f}}$, where $\overline{w_f}$ is the complex conjugate of $w_f$.[^dft-coefficients]
+
+[^dft-coefficients]:  The complex conjugate of $a + i b$ is $a - i b$.
+
+If you prefer to work with real numbers, you can compute the sine and cosine coefficients, $s_f$ and $c_f$, directly from the image intensities:
+
 $$
 \begin{align}
 a_0 &= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \\
 s_f &= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \sin\left(\frac{2\pi f n}{N}\right) \\
-c_f &= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \cos\left(\frac{2\pi f n}{N}\right) \\
+c_f &= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \cos\left(\frac{2\pi f n}{N}\right)
 \end{align}
 $$
 
-The mean value of $I[n]$ is $\frac{a_0}{2}$, which is how it appears divided in the Discrete Fourier Series (@eq-fourier-series).
+Here, $a_0$ gives twice the mean value of $I[n]$, which is why the Discrete Fourier Series (@eq-fourier-series) starts with $\frac{a_0}{2}$.
 
 ### Relating the representations
-<!-- https://g.co/gemini/share/521451e13c27 -->
 
-- $\frac{a_0}{2}$ is the mean value of the signal $I(x)$, as is $w_0$.
-- The amplitude and phase are related to the sine and cosine coefficients by:
+There are several equivalent ways to write the Discrete Fourier Series, and it's helpful to know how the parameters relate:
+
+- $\frac{a_0}{2}$ and $w_0$ both represent the mean value of the signal $I[n]$.
+
+- The amplitude and phase parameters relate to the sine and cosine coefficients as follows:
 
 $$
 \begin{align}
@@ -141,27 +152,19 @@ a_f & = \sqrt{{s_f}^2 + {c_f}^2} \\
 \end{align}
 $$
 
--  The complex weights, $w_f$ relate to the other representations uses Euler's formula:
+- The complex weights $w_f$ are related to the sine and cosine coefficients by
 
 $$
-e^{i\theta} = \cos(\theta) + i\sin(\theta). 
-$$ {#eq-Eulers-formula}
-
-With some work, we can show that the complex weights are related to the sine and cosine coefficients by
-
-$$
-\begin{align}
-w_f  &= \frac{1}{2} (c_f - i s_f ) ~~ \text{f>0} \\
-w_0  &= a_0/2
-\end{align}
+w_f  = \frac{1}{2} (c_f - i s_f ) \qquad \text{for } f > 0
 $$
 
-and also 
+- And the complex weights $w_f$ are related to the amplitude and phase by
 
 $$
-w_f = \frac{a_f}{2} (e^{i (\phi_f - \pi/2}) ~~ \text{f>0}
+w_f = \frac{a_f}{2} e^{i (\phi_f - \pi/2)} \qquad \text{for } f > 0
 $$
 
+So, whether you prefer to think in terms of sines and cosines, amplitudes and phases, or complex exponentials, you can always translate between these forms.
 
 ::: {.callout-note title="About Jean Baptiste Joseph Fourier" collapse="false" #fourier-history}
 Here is a link to a nice website with a  <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Fourier/" target="_blank">biography of Fourier and many others</a> . The material below is extracted from that site and wikipedia.
