@@ -1,7 +1,10 @@
 # Spectral regularities
 
 ```{=html}
-<!-- [https://chatgpt.com/share/679ebc49-5a7c-8002-a282-598e7f1bbb30 ]
+<!-- 
+ Fiete book.
+ 
+ [https://chatgpt.com/share/679ebc49-5a7c-8002-a282-598e7f1bbb30 ]
 Solar spectrum. Fraunhofer lines.  Stability of the solar spectrum 
 
 https://chatgpt.com/c/679ebbfc-b510-8002-b372-489cd173d5d0
@@ -13,6 +16,9 @@ https://cie.co.at/datatable/components-relative-spectral-distribution-daylight
 ```
 
 ## Solar Radiation
+<!-- 
+Define blackbody radiation.  Formula here first.  It may come up again later in photons and electrons 
+-->
 
 The Sun serves as Earth's primary radiation source. The radiation emitted from the Sun's surface in the visible spectrum remains relatively consistent over time. Due to its significance for imaging and human vision, skylight became an early subject of scientific investigation.
 
@@ -82,11 +88,13 @@ Vision enables us to interpret the environment by recording the how the ambient 
 
 I am fond of a distinction that Ted Adelson introduced to help think about the environment: *things and stuff*" @Adelson2001-stuff. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these categories also helps us set computational goals.
 
-![Illustration of *things* and *stuff*. I am not sure how to count the grass - the collection of stuff or the blades of grass. Is the ocean stuff but a wave a thing? The sky, and beach (globally) seem like stuff. The rabbit and birds are definitely things, but their coats might be considered stuff. It is worth thinking about the difference. It is also worth noticing how Imagen3 produced some pretty odd animal faces.](images/paste-1.png){#fig-things-stuff fig-align="center" width="70%"}
+![The distinction between *things* and *stuff* plays a role in vision science and now computer vision.  These images, from @schmidt2025-stuff, illustrate what is meant by stuff. The authors explored the appearance of materials and stuff, in contrast to much other work aimed at identifying things.](images/lightfields/01-things-stuff.png){#fig-things-stuff fig-align="center" width="70%"}
 
-I find the distinction useful because it helps separate out the types of algorithms we might apply to understand the environment. Segmentation applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. We wish to be able to recognize such things whatever their material might be. A vision system must also be able to make judgments about a sandy beach, a cloudy sky, a grassy hillside. We wish to be able to recognize such stuff whatever its shape might be.
+The distinction helps separate out the types of algorithms we might apply to understand the environment. Segmentation applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. We wish to be able to recognize such things whatever their material might be. A vision system must also be able to make judgments about a sandy beach, a cloudy sky, a grassy hillside. We wish to be able to recognize such stuff whatever its shape might be.
 
-A related challenge in human vision is quantifying the appearance of things and stuff, and for this challenge surface reflectance, texture, and context (e.g., ambient illumination, or what things and stuff are nearby) all play a role @Schmid2023-materialperception. A corresponding concept - something we might call appearance for a computer vision system - seems desirable. One way to formulate the problem of appearance for a computer vision system is to use and estimate of material reflectance and texture to mean appearance for the computer.
+A related challenge in human vision is quantifying the appearance of things and stuff, and for this challenge surface reflectance, texture, and context (e.g., ambient illumination, or what things and stuff are nearby) all play a role @schmid2023-materialperception. A corresponding concept - something we might call appearance for a computer vision system - seems desirable. One way to formulate the problem of appearance for a computer vision system is to use and estimate of material reflectance and texture to mean appearance for the computer.
+
+[The COCO-Stuff 164k dataset](https://datasetninja.com/cocostuff164k) has many images categorized in terms of 'things' and stuff.
 :::
 
 The radiation incident on a small, planar patch of material can come from different directions, which we can specify by two angles. The intensity of the reflected radiation will also vary with direction (two more dimensions). The incident and reflected light can be measured as the intensity for different wavelengths and polarizations (two more dimensions). We will set aside fluorescence for the present, returning to it later. Hence, a full description of surface spectral reflectance requires specifying multiple parameters.
@@ -121,7 +129,7 @@ Over the decades a number of imaging groups have measured the reflectance of man
 
 A Finnish group, for example, measured 1269 different color swatches from the Munsell Book of Colors. This widely used book spans a wide range of color samples that provides designers with a method for identifying, selecting, matching, and communicating about color. @Parkkinen1989-munsellspectra made their spectral measurements at 1 nm resolution. A linear model using three basis functions fits all the measurements with an error of about 2.5%. A linear model with 5 basis functions fits the data to within about 1%. This accuracy is usually often enough for image systems applications (@fig-reflectance-bases A).
 
-The linear models for diffuse surface reflectance of several types of common materials are similar (@fig-reflectancebases). The data from Vrhel and colleagues @Vrhel1994-MeasurementAnalysisObject, included in ISETCam, measures a few dozen surfaces from several different groups (paint, natural objects, man-made objects, food). It is likely the authors chose the samples to have similar means and a broad representation of color appearances. For this sampling strategy, the first component will necessarily be similar. BUt the 2nd and 3rd basis functions are also similar, and this is less likely to be a selection artifact. Rather, the similarity arises because the diffuse spectral reflectance functions are very smooth functions wavelength @Maloney1986-linearmodels-surface.
+The linear models for diffuse surface reflectance of several types of common materials are similar (@fig-reflectance-bases). The data from Vrhel and colleagues @Vrhel1994-MeasurementAnalysisObject, included in ISETCam, measures a few dozen surfaces from several different groups (paint, natural objects, man-made objects, food). It is likely the authors chose the samples to have similar means and a broad representation of color appearances. For this sampling strategy, the first component will necessarily be similar. BUt the 2nd and 3rd basis functions are also similar, and this is less likely to be a selection artifact. Rather, the similarity arises because the diffuse spectral reflectance functions are very smooth functions wavelength @Maloney1986-linearmodels-surface.
 
 ![Three basis functions comparing the basis functions derived from the @Parkkinen1989-munsellspectra Munsell Color Book data (upper left) and three different categories of materials. The basis functions are not identical, but they have many similarities, including the wavelengths of the zero-crossings of the 2nd and 3rd basis functions. Data from @Vrhel1994-MeasurementAnalysisObject and distributed in ISETCam.](images/lightfields/01-reflectance-bases.png){#fig-reflectance-bases fig-align="center" width="80%"}
 
@@ -134,7 +142,7 @@ Maybe illustrate the visual size of the errors, as I have in other scripts.\
 
 ## Specular reflection (mirror)
 
-The conceptual opposite of diffuse reflection is mirror reflection. In this case, an incident light ray from one direction reflects from the surface in just one direction. The geometry of mirror reflection is shown in @fig-fig-mirror-reflection. The incident ray, reflected ray, and surface normal all lie in the same plane (the **plane of incidence**). The angle of incidence is equal to the angle of reflection, and the surface normal acts as a line of symmetry in the plane of incidence.
+The conceptual opposite of diffuse reflection is mirror reflection. In this case, an incident light ray from one direction reflects from the surface in just one direction. The geometry of mirror reflection is shown in @fig-mirror-reflection. The incident ray, reflected ray, and surface normal all lie in the same plane (the **plane of incidence**). The angle of incidence is equal to the angle of reflection, and the surface normal acts as a line of symmetry in the plane of incidence.
 
 ![Geometry of mirror reflection. The incident (blue) and reflected (red) ray have a component parallel to the surface normal and a component in the surface plane. The component in the surface plane is the same; but the component in the normal direction is sign-reversed (points in the opposite direction). The ray angles with respect to the surface normal of the two rays is matched $\theta_i$ = $\theta_r$.](images/lightfields/mirror-reflection.png){#fig-mirror-reflection}
 
