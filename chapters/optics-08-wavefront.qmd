@@ -3,9 +3,72 @@ ISETCam uses wavefront representations.  Continuity.
 
 Still shift invariant
 
-Complex description of the PSF.  Why this rather than just the PSF?  
+Complex valued description of the PSF.  Why this rather than just the PSF?  
 
-Model of plausible PSFs in this Zernike polynomial space is better.
+Enables us to specify properties like scratches, aperture size.
+
+Model of plausible PSFs in this Zernike polynomial space is better than the free PSF description.
+
+<!-- 
+FISE-Optics exchange with ChatGPT:
+Good exchange about the wavefront aberration representation.  
+Some of it is below.  
+Other parts in [this link](https://chatgpt.com/share/688153b5-ea8c-8002-b7c1-369ad4121a5b)
+
+Restating Your Observations
+Equivalence to PSF:
+The wavefront aberration function (measured at the exit pupil) is related to the PSF through the Fourier transform of the pupil function, where the phase term is derived from the wavefront aberration. So yes — wavefront and PSF are transform pairs, and one can be derived from the other, in principle.
+
+(a) Pupil Scaling:
+Once you have the wavefront aberration map, you can easily simulate smaller pupils (e.g., to model stopping down a lens). This is harder to do from the PSF directly.
+
+(b) Adding Imperfections:
+It's straightforward to incorporate apodization effects, obscurations, scratches, and dust by modifying the pupil amplitude. This allows very nuanced modeling of the system.
+
+(c) Intuitive Control via Zernike Terms:
+Zernike polynomials map directly to familiar aberrations:
+
+defocus
+
+astigmatism
+
+coma
+
+spherical aberration, etc.
+This makes the system interpretable and provides a low-dimensional parametric model for optimization or machine learning.
+
+Additional Benefits and Use Cases
+Multi-Field Prediction:
+If you measure wavefront aberrations over different field angles, you can build a field-dependent wavefront aberration model. This helps predict off-axis PSFs more naturally than patch-wise empirical PSFs.
+
+Flexibility for Simulation:
+Wavefront-based models make it easier to simulate PSFs at different:
+
+Wavelengths (because of chromatic dependence of aberrations)
+
+Focus settings
+
+Pupil shapes (e.g., elliptical, cat-eye pupils, or diffractive apertures)
+
+Supports Inverse Design and Optimization:
+Optical design software often works in Zernike space to minimize aberrations or balance tradeoffs (e.g., between coma and field curvature). This representation helps with gradient-based optimization.
+
+Compact Representation:
+For many imaging systems, a small number of Zernike terms are enough to represent the aberrations meaningfully. This reduces data storage and enables fast computation of PSFs for rendering or simulation.
+
+Wavefront Sensing Hardware:
+Systems like Shack-Hartmann sensors measure the wavefront directly. Using Zernike decomposition on the output allows immediate interpretation and simulation without needing to reconstruct PSFs from images.
+
+Interfacing with Human Vision Models:
+In visual optics (e.g., for modeling the human eye), Zernike representations are the standard. This makes it easy to compare and combine artificial optics (e.g., camera lenses) with biological optics models.
+
+Caveats / Limitations
+Zernike expansion is usually valid only over a circular pupil, and convergence may degrade if the pupil is irregular or decentered.
+
+High-frequency aberrations (e.g., from surface roughness) may be hard to model without many terms, while the PSF may capture them empirically.
+
+For strongly asymmetric pupils or complex field dependencies, other basis sets (like Seidel or Legendre) or a direct empirical model may be more accurate.
+-->
 
 ## Wavefronts and images
 Look for an explanation of why the wavefront at the lens is related to the image irradiance by a Fourier Transform.  Goodman?  ChatGPT?  Come on, it must be out there.
@@ -22,3 +85,87 @@ Pupil shape can get introduced here.
 
 ## Example: Scratches and HDR rendering illustrated
 
+Here’s a Quarto-formatted explanation of the mathematical connection between **wavefront aberrations** and the **point spread function (PSF)**, emphasizing how Zernike polynomials and pupil modifications fit into the framework.
+
+---
+
+## Wavefront Aberrations and the PSF {#sec-optics-psf-wavefront}
+<!-- Originated with ChatGPT in FISE-Optics -->
+
+To model the image of a point source (i.e., the PSF), we consider the **pupil function**, which describes the amplitude and phase of the light at the exit pupil of the system. Aberrations are incorporated into the **phase** component.
+
+### The Pupil Function
+
+Let $A(\rho, \theta)$ be the pupil amplitude (often 1 inside the pupil and 0 outside), and let $W(\rho, \theta)$ be the wavefront aberration function in units of length (e.g., microns). The pupil function is:
+
+$$
+P(\rho, \theta) = A(\rho, \theta) \, e^{i \, \frac{2\pi}{\lambda} W(\rho, \theta)}
+$$
+
+where
+
+* $\lambda$ is the wavelength
+* $\rho, \theta$ are polar coordinates over the pupil
+
+The phase term encodes the optical path difference introduced by aberrations.
+
+---
+
+### Computing the PSF
+
+The complex field in the image plane (at best focus) is proportional to the **Fourier transform of the pupil function**:
+
+$$
+U(x, y) \propto \mathcal{F}\{ P(\rho, \theta) \}
+$$
+
+The **PSF** is the **intensity** of this field:
+
+$$
+\text{PSF}(x, y) = |U(x, y)|^2
+$$
+
+Hence, the wavefront shape directly influences the spatial structure of the PSF.
+
+---
+
+### Using Zernike Polynomials
+
+The wavefront function $W(\rho, \theta)$ is often expanded in terms of **Zernike polynomials** $Z_n^m(\rho, \theta)$, which form an orthonormal basis over the unit circle:
+
+$$
+W(\rho, \theta) = \sum_{n,m} a_n^m Z_n^m(\rho, \theta)
+$$
+
+Each coefficient $a_n^m$ corresponds to a specific aberration mode:
+
+* defocus
+* astigmatism
+* coma
+* spherical aberration
+* trefoil, etc.
+
+This representation enables:
+
+* systematic control over image degradation
+* parametric simulations of optical quality
+* statistical modeling (e.g., for manufacturing tolerances or biological variation)
+
+---
+
+### Modifying the Pupil
+
+To model different physical configurations:
+
+* **Stopping down the aperture**
+  Modify $A(\rho, \theta)$ to reduce the pupil radius
+* **Adding obscurations, vignetting, or scratches**
+  Mask parts of $A(\rho, \theta)$ or add amplitude modulation
+* **Simulating phase plates or diffractive elements**
+  Alter $W(\rho, \theta)$ with custom phase profiles
+
+These changes immediately reflect in the PSF via the Fourier transform.
+
+---
+
+Would you like a MATLAB or Python snippet that performs this calculation for a few Zernike terms and visualizes the PSF?
