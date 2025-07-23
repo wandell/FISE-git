@@ -106,7 +106,7 @@ $$ {#eq-exposure-value}
 
 A lower EV means either a longer exposure time or a wider aperture (smaller $F$), both of which allow more light to reach the sensor. As scene brightness increases, a higher EV is needed to avoid overexposure. For example, if $F = 1$ and $T = 1$ second, then $EV = 0$. If the image is too bright and pixels are saturated, you can either halve the exposure time to $T = 1/2$ second (raising $EV$ to 1), or keep $T = 1$ second and increase the f-number to $F = \sqrt{2}$ (also $EV = 1$). Both changes reduce the light reaching the sensor by half[^exposure-fnumber].
 
-[^exposure-fnumber]: The f-number is the ratio of the focal length to the aperture diameter (@sec-fnumber). For a fixed focal length, increasing the f-number means reducing the aperture diameter, so less light reaches the sensor.
+[^exposure-fnumber]: The f-number is the ratio of the focal length to the aperture diameter (@sec-optics-fnumber). For a fixed focal length, increasing the f-number means reducing the aperture diameter, so less light reaches the sensor.
 
 In film cameras, where each exposure was costly, photographers often used a separate light meter to determine the correct aperture and exposure time. Modern electronic cameras estimate scene brightness automatically, usually by taking continuous measurements just before the main exposure. On DSLRs, this process is typically triggered by pressing the shutter button halfway. In smartphones, exposure estimation usually begins as soon as the camera app is opened.
 
@@ -124,15 +124,13 @@ This approach is particularly effective when sensor read noise is low and shot n
 
 The main advantage of burst photography is that it allows the use of short exposures to avoid saturation in bright regions, while still achieving high image quality by combining multiple frames. However, this method requires accurate alignment of the images. If there is motion in the scene or camera shake—especially if objects move in front of one another (occlusion)—alignment becomes challenging or may fail. Burst photography works best with static scenes and a stable camera, but can still provide benefits in more dynamic situations, even if not every frame can be perfectly aligned.
 
-### Space-varying exposure duration (#sec-exposure-dps)
+### Space-varying exposure duration {#sec-exposure-dps}
 The entire problem of exposure control becomes greatly simplified if there is not one exposure time, but there is a space-varying exposure time. In that case, the pixels in dark parts of the image can have a longer exposure time than pixels in the light part. This idea was implemented by the digital pixel sensor (@sec-digital-pixel). Recall that the voltage on each pixel, or small group of pixels, was measured non-destructively by the ADC. The voltage ($v_i$) and sample time ($t_i$) were recorded for the $i^{th}$ pixel. These two values, together, estimate the effective intensity ($E = v_i / t_i$).
 
 Using only the **last non-saturated read** in a DPS provides a **higher SNR** than combining exponentially spaced earlier reads — particularly when the number of reads is small and the sensor is near saturation.
 
-::: {.callout-note collapse="true" title="Optimal SNR from Exponentially spaced reads"}
+::: {.callout-note collapse="false" title="Optimal SNR from Exponentially spaced reads"}
 <!-- FISE-Sensor: DPS SNR Optimization -->
-
-## Optimal SNR from Exponentially Spaced Reads
 
 In digital pixel sensors (DPS), it is common to sample the photodiode voltage multiple times during exposure. These samples can be taken at exponentially spaced time points to extend dynamic range. Suppose the sample times are given by
 
@@ -146,9 +144,9 @@ $$
 V_i = \alpha t_i + n_i,
 $$
 
-where \( \alpha \) is the photon flux (in electrons per unit time), and \( n_i \sim \mathcal{N}(0, \sigma_r^2) \) is independent Gaussian read noise.
+where $\alpha$ is the photon flux (in electrons per unit time), and $n_i \sim \mathcal{N}(0, \sigma_r^2)$ is independent Gaussian read noise.
 
-We consider two estimators for \( \alpha \):
+We consider two estimators for $\alpha$:
 
 ### Using the Last Valid Read
 
@@ -166,7 +164,7 @@ $$
 
 ### Using Linear Regression
 
-Using all \( k \) samples in a least-squares fit to estimate \( \alpha \), the variance of the slope estimator is
+Using all $k$ samples in a least-squares fit to estimate $\alpha$, the variance of the slope estimator is
 
 $$
 \mathrm{Var}(\hat{\alpha}_{\text{reg}}) = \frac{\sigma_r^2}{\sum_{i=1}^k (t_i - \bar{t})^2},
@@ -198,16 +196,16 @@ $$
 
 ### Numerical Examples
 
-| \( k \) | \( \mathrm{SNR}_{\text{reg}} / \mathrm{SNR}_{\text{last}} \) |
+| $k$ | $\mathrm{SNR}_{\text{reg}} / \mathrm{SNR}_{\text{last}}$ |
 |--------|--------------------------------------------------------------|
 | 2      | 0.35                                                         |
 | 3      | 0.54                                                         |
 | 4      | 0.67                                                         |
 | 5      | 0.75                                                         |
 
-As the table shows, the regression estimator has **lower SNR** than the last sample for small \( k \). When samples are exponentially spaced in time, most of the signal is concentrated in the last read. Early reads contain proportionally less signal but still contribute read noise, diminishing the benefit of regression.
+As the table shows, the regression estimator has lower SNR (ratio less than 1) than the last sample for small $k$. Early reads contain less signal but still contribute read noise, diminishing the benefit of regression.
 
- <!-- You may wish to include a plot of the SNR ratio vs. \( k \) to visualize this result.  
+ <!-- You may wish to include a plot of the SNR ratio vs. $k$ to visualize this result.  
 (See Figure @fig-snr-exponential if added.) -->
 
 :::
