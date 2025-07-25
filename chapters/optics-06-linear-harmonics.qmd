@@ -1,48 +1,4 @@
 # Linear optics - harmonics {#sec-optics-linear-harmonics}
-It is natural to think of images as a set of points. It is far less obvious, and an important insight, to realize that an image can be described in many other ways. Some of these alternative ways are valuable for analyzing and characterizing optical performance of image systems.
-
-Linear models are an important method for exploring alternative image representations. We introduced linear models in @sec-linear-models, and we applied them to characterizing the spectral properties of light fields. Here we use linear models again, but in a different way. We create model the image intensity spatial distribution, $I(x,y)$. The linear model we introduce is widely used to characterize the properties of an optical system. 
-
-## Spatial basis functions {#sec-optics-spatial-basis}
-
-A linear model of the image intensity can be written this way:
-
-$$
-I(x,y) = \sum_{i} w_{i} B_{i}(x,y)
-$${#eq-linear-model}
-
-The functions $B_{i}(x,y)$ are the **spatial basis functions**, and the scalar values $w_{i}$ are the weights applied to each basis function. The image is equal to the weighted sum of these basis functions. 
-
-When we represent an image as a set of points, the basis functions are points.  That is, $B_i$ is zero everywhere except except at one $(x,y)$ point.  The weights are the image intensity at that point, $I(x,y)$.
-
-## Orthogonal image transforms
-For a linear model to be useful, we need a method for finding the weights from the image. A function that maps $I(x,y)$ into the weights, $w_i$ is called an **image transform**.  If we choose a basis functions that are orthogonal to one another, the transform is easy to find.
-
-$$
-0 = \sum_{x,y} B_i (x,y) B_j (x,y),
-$$ {#eq-spatial-orthogonal}
-
-The simplicity of the transform can be seen by representing @eq-linear-model in discrete form an using matrices. Discrete representations using vectors and matrices is the way we compute, and thus a more practical if less pure.  To emphasize the discrete representation we will shift notation just a bit so that $I(x)$ becomes $I[n]$, and $B(x,y)$ becomes $B[n,m]$. 
-
-We can convert the basis functions, which are matrices, into a column vector by stacking the columns on top of one another. We then group these columns into the columns of a single matrix, $\mathbf{B}$. We similarly stack the columns of the image into a long column vector $\mathbf{I}$.  The weights are already a vector which we write as, $\mathbf{w}$. 
-
-We can write @eq-linear-model as a matrix equation this way
-
-$$
-\mathbf{I} = \mathbf{B w} .
-$$ {#eq-linear-model-matrix}
-
-The $i^{th}$ weight in the vector $\mathbf{w}$ multiples the $i^{th}$ column of the matrix $\mathbf{B}$.  All of these products are summed, and thus this matrix equation is the same as the @eq-linear-model.
-
-When the basis functions are orthogonal, $\mathbf{B^t B}$ is the identity matrix.  This means we can transform from the image data to the weights quite simply,
-
-$$
-\mathbf{w} = \mathbf{B^t I} .
-$$ {#eq-linear-model-inverse}
-
-So, that's good.  Now, there are instances when we might make linear models that are not orthogonal.  In that case, we have to find the inverse of $\mathbf{B}$ to move back and forth between the image and its transform. Computers are pretty big these days, so we can live with that.  But it is very nice to have the basis functions be orthogonal.
-
-Linear models are important for image systems and science and engineering broadly. Of the many linear models, having the bases be **harmonic functions** has been the most important. Let's review.
 
 ## Harmonics {#sec-optics-harmonics}
 For real-valued signals - such as light intensity - the harmonic functions are the *Sine* and *Cosine*. You probably first learned about *Sine* and *Cosine* as one-dimensional functions -they take a single number in and produce a single number out. But in image systems applications we we use Sine and Cosine to represent two-dimensional images,

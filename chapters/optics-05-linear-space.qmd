@@ -14,12 +14,9 @@ $$ {#eq-superposition}
 
 Here, $x$ and $y$ are two possible inputs, and $L(x)$ is the system's response to the input $x$. The input variable can be a scalar, vector, matrix, or tensor. For example, in an optical system, $x$ might represent the incident light field at the entrance aperture, and $L(x)$ could be the spectral irradiance measured at the sensor .
 
-### Real-World Linearity 
+No real system is perfectly linear over all possible signals. Extreme inputs with a massive amount of energy may behave unpredictably or even break the system! However, many systems are linear over an input range that covers most of the likely use cases. 
 
-No real system is perfectly linear over all possible signals. Extreme inputs with a massive amount of energy may behave unpredictably or even break! However, many systems are linear over an input range that covers all the likely use cases. 
-
-### Local Linearity 
-Some systems are only **locally linear**.  This means they behave linearly within a limited region, such as near a particular input $x_1$.  A system might be approximately linear in different ways depending on the input region. For example, the linear approximation near $x_1$ could be different from the one near $x_2$. This idea of local linearity is a fundamental concept in mathematics, physics, and engineering.[^taylor-series]
+In other cases the system will have many linear regimes, each much less than the entire input range. These systems are called **locally linear**. The linear approximation will differ between regions, so that the linear approximation in a region near $x_1$ will differ from the linear approximation near $x_2$. The principle of local linearity is a fundamental concept in mathematics, physics, and engineering.[^taylor-series]
 
  [^taylor-series]: If you’ve seen the Taylor series expansion in calculus, you may recognize the principle of local linearity in mathematics!
 
@@ -68,7 +65,7 @@ $$
 To extend this to all real numbers, continuity and far more extensive proof is required. But how about we just work with the rationals and be engineers for now?
 :::
 
-It is important to note that a system can be homogeneous without being linear. For example, $f(x) = |x|$ and the vector length function
+Do remember that a system can be homogeneous without being linear. For example, $f(x) = |x|$ and the vector length function
 
 $$
 f(\mathbf{x}) = \|\mathbf{x}\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
@@ -80,9 +77,10 @@ $$
 1 = ReLU(2 + -1) \neq ReLU(2) + ReLU(-1) = 2 + 0.
 $$
 
+Be aware of these special cases can be of use to you in the future.
 
 ## Point spread functions
-Linearity is the critical foundation for modeling how optics turns an input scene into a sensor image. We imagine the scene as a collection of points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $I(\mathbf{p})$. The optics spreads out the light from each point in a certain way—this is called the point spread function, or $PSF_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image.
+Linearity is the foundation that we use to modelg how optical elements convert an input scene into a sensor image. We imagine the scene as a collection of points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $I(\mathbf{p})$. The optics spreads out the light from each point in a certain way—this is called the point spread function, or $PSF_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image.
 
 If we know how the light from each point is spread, and superposition holds, we can calculate the output image, $O(x,y)$ for any input scene: We just add up the contribution from every point. The formula looks like this:
 
@@ -97,6 +95,116 @@ There’s a catch: in real scenes, objects can block each other (occlusion). Tha
 
 But if all the points are on a flat surface, or if everything is far away (so nothing blocks anything else), this approach works well. The main idea is that you can build up the whole image by adding up the point spreads from each part of the scene. It’s a great starting point for understanding how images form.
 :::
+
+The point spread function is an intuitive way to understand the performance of the optical system. But, it is not a great general tool to quantify image quality. We can quantify the shape of the point spread function for the simplest cases (Airy pattern). And below I describe some point spread shapes that can be described using a small number of parameters and are useful for simulation (@sec-pointspread-common). But the point spread representation alone is not helpful enough to approximate many real lenses, multielement lenses, or measurements of the human eye.  In the following we build up some tools so that we can use other representations that will be very helpful in characterizing and understanding system performance.
+
+## Discrete linear systems {#sec-linear-discrete}
+Many of the practical computations we describe in the following sections use **discrete** representations of linear systems. We have already seen discretization when we represented a spatial stimulus at sample points or a spectral stimulus at sample wavelengths.
+
+In these discrete representations, a continuous stimulus, say $s(x)$, is sampled to form a vector of values, $\mathbf{s}$. We often write the entries as $s[x_i]$, where $i$ is an integer index, or simply $s[u]$, with square brackets to remind us that the signal is sampled.
+
+A discrete linear system is then described by a matrix, $\mathbf{L}$, which maps the input vector to an output vector, $\mathbf{o}$:
+
+$$
+\mathbf{o} = \mathbf{L} \mathbf{s}
+$$ {#eq-linear-matrix}
+
+It can be helpful to visualize this as a matrix tableau: each column of $\mathbf{L}$ is scaled by the corresponding entry in $\mathbf{s}$, and the output is the sum of these weighted columns.
+
+**PUT IN A MATRIX TABLEAU IMAGE HERE**
+
+All discrete linear systems can be represented this way. Sometimes, the input is naturally an image (a matrix), and we need to "flatten" it into a vector; other times, we might use more clever tricks to keep the image structure. But the key idea is that, in the discrete world, linear systems are just matrices that map input vectors to output vectors.
+
+::: {.callout-note collapse="true" title='History - linear algebra and matrices'}
+
+It was an honor for me, as an assistant professor, to attend faculty meetings with Joe Goodman, Ron Bracewell, Tom Cover and others. As we discussed the engineering curriculum, there was often a dispute. My heroes in the older faculty preferred to teach using integrals and continuous functions.  The younger faculty spent most of their working days with computers and programming, and we preferred to teach using matrices and discrete functions. I still remember Ron Bracewell saying something like, continuous functions are the reality and we must explain that first.  After the students understand that, we can introduce them to the vulgar discrete approximations which are important because of computers.  Good times.
+
+Despite these disagreements, we all recognized that it is very useful - and these days essential! - to understand linear systems in terms of vectors and matrices. This has become the most common way to discuss many mathematical methods, and mathematics framed in terms of vectors and matrices is fundamental to the massive wave of neural network calculations in science and engineering.  Where did this representation come from?  In fact, where did the whole framing in terms of linear algebra of vector spaces come from? Click the link.
+
+[History of matrices and linear algebra](resources/history-linear-algebra.html){target=_blank}
+
+The original idea of representing sets of linear equations in terms of matrices - Cayley.
+
+:::
+
+## Spatial basis functions {#sec-optics-spatial-basis}
+
+It is natural to think of images as a set of points; historically, it was an important insight to realize that an image can be described in many other ways. Some of these alternatives are very valuable for analyzing and characterizing optical performance of image systems.
+
+Linear models are an important method for exploring alternative image representations. We introduced linear models in @sec-linear-models, and we applied them to characterizing the spectral properties of light fields. Here we use linear models again, but in a different way. In this case, we build linear models of the image intensity spatial distribution, $I(x,y)$. 
+
+A linear model of the image intensity can be written this way:
+
+$$
+I(x,y) = \sum_{i} w_{i} B_{i}(x,y)
+$${#eq-linear-model}
+
+The functions $B_{i}(x,y)$ are the **spatial basis functions**, and the scalar values $w_{i}$ are the weights applied to each basis function. The image is equal to the weighted sum of these basis functions. 
+
+When we represent an image as a set of points, the basis functions are points.  That is, $B_i$ is zero everywhere except except at one $(x,y)$ point.  The weights are the image intensity at that point, $I(x,y)$.
+
+## Orthogonal image transforms
+For a linear model to be useful, we need a method for finding the weights from the image. A function that maps $I(x,y)$ into the weights, $w_i$ is called an **image transform**.  If we choose a basis functions that are orthogonal to one another, the transform is easy to find.
+
+$$
+0 = \sum_{x,y} B_i (x,y) B_j (x,y),
+$$ {#eq-spatial-orthogonal}
+
+The simplicity of the transform can be seen by representing @eq-linear-model in discrete form an using matrices. Discrete representations using vectors and matrices is the way we compute, and thus a more practical if less pure.  To emphasize the discrete representation we will shift notation just a bit so that $I(x)$ becomes $I[n]$, and $B(x,y)$ becomes $B[n,m]$. 
+
+We can convert the basis functions, which are matrices, into a column vector by stacking the columns on top of one another. We then group these columns into the columns of a single matrix, $\mathbf{B}$. We similarly stack the columns of the image into a long column vector $\mathbf{I}$.  The weights are already a vector which we write as, $\mathbf{w}$. 
+
+We can write @eq-linear-model as a matrix equation this way
+
+$$
+\mathbf{I} = \mathbf{B w} .
+$$ {#eq-linear-model-matrix}
+
+The $i^{th}$ weight in the vector $\mathbf{w}$ multiples the $i^{th}$ column of the matrix $\mathbf{B}$.  All of these products are summed, and thus this matrix equation is the same as the @eq-linear-model.
+
+When the basis functions are orthogonal, $\mathbf{B^t B}$ is the identity matrix.  This means we can transform from the image data to the weights quite simply,
+
+$$
+\mathbf{w} = \mathbf{B^t I} .
+$$ {#eq-linear-model-inverse}
+
+So, that's good.  Now, there are instances when we might make linear models that are not orthogonal.  In that case, we have to find the inverse of $\mathbf{B}$ to move back and forth between the image and its transform. Computers are pretty big these days, so we can live with that.  But it is very nice to have the basis functions be orthogonal.
+
+Linear models are important for image systems and science and engineering broadly. Of the many linear models, having the bases be **harmonic functions** has been the most important. Let's review.
+
+
+## System eigenfunctions
+
+An **eigenfunction** of a system is an input that whose output is the same as the input, up to a scale factor.  Harmonics are almost eigenfunctions. This is a very useful fact to know about a system because it means when we use an eigenfunction as input, we know almost everything about the output.  In symbols, if $\mathbf{L}$ is a matrix that represents a discrete linear system, the column vector $\mathbf{e}_i$ is an eigenfunction if
+
+$$
+\alpha_i \mathbf{e}_i = \mathbf{L} \mathbf{e}_i 
+$$ {#eq-eigenfunction-definition}
+
+The scalar values, $\alpha_i$ are the **eigenvalues** of the linear transformation. 
+
+An important and somewhat remarkable fact about the collection of eigenfunctions of a linear system is this:  they are an orthogonal basis of the possible inputs.  Any input, $\mathbf{s}$, can be described uniquely as the weighted sum of the eigenfunctions,
+
+$$
+\mathbf{s} = \sum_i \sigma_i \mathbf{e}_i .
+$$
+
+This means if we represent the stimulus with respect to the eigenfunctions, and we know the eigenvalues, we can predict the output to the stimulus.
+
+$$
+\mathbf{o} = L ( s_i \mathbf{e}_i ) = \alpha_i \sigma_i \mathbf{e}_i
+$$
+
+
+
+Harmonic functions are a tool to help with system characterization. Their value arises from this simple and important fact:  When the input to an optical system is a harmonic function at spatial frequency $f$ and unit contrast, in each local region the image will also be a harmonic function at the same frequency.  The relative phase and amplitude of the output will differ from the input, but we only need to measure these two parameters.  
+
+This chapter explains the general principle and then provides several ways in which harmonics are used to characterize optical systems as well as the human visual system.
+
+
+If the input is a harmonic of frequency $f$, the output will be a scaled version of that harmonic.  It is not a perfect eigenfunction only because there can also be a phase shift. This input-output simplicity makes the harmonics very useful tools for system characterization.
+
+The mathematics 
 
 ## Shift-invariant linear systems
 A practical limitation of characterizing a general linear systems is that it can have many different PSFs - one for every point! But many real systems are much simpler. These systems have essentially the same point spread function across many points, with the only difference being that the point spread function is shifted between points. Because the shape of the point spread function remains the same -it is only shifted- we say such a system is **shift invariant**. 
