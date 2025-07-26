@@ -79,18 +79,18 @@ $$
 
 Be aware of these special cases can be of use to you in the future.
 
-## Point spread functions
-Linearity is the foundation of how we model the optical transformation of an input scene into a sensor image. We imagine the scene as a collection of points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $I(\mathbf{p})$. The optics spreads out the light from each point in a certain way—this is called the point spread function, or $PSF_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image.
+## Point spread functions {#sec-pointspread-2}
+In @sec-pointspread we introduced the idea of the point spread function. It is a measurement of how the optics transforms the light from the point source in the scene into an image. When superposition holds, we can combine use the point spread functions to predict how the input scene becomes a sensor image. 
 
-If we know how the light from each point is spread, and superposition holds, we can calculate the output image, $O(x,y)$ for any input scene: We just add up the contribution from every point. The formula looks like this:
+We describe the scene as a collection of points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $I(\mathbf{p})$.   We write the point spread function for each point as $PSF_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image. By superposition, we can calculate the output image, $O(x,y)$ by adding up the point spreads from every scene point. The formula looks like this:
 
 $$
 O(x, y) = \sum_{\mathbf{p}} I(\mathbf{p})\, PSF_\mathbf{p}(x, y)
 $$ {#eq-pointspread-1}
 
-Here, $O(x, y)$ is the intensity at image position. Each scene point contributes a scaled PSF, and the output image is just the sum of all those PSFs.
+Here, $O(x, y)$ is the intensity at each image position. Each point in the scene contributes a scaled version of its PSF. The output image is the weighted sum of all those PSFs.
 
-The point spread function is an intuitive way to understand the performance of the optical system. But, it is easy to use as for quantifying image quality. The point spread function can be quantified with a few parameters for some cases (Airy pattern, @sec-pointspread-common). But in general we do not have high quality approximations for many real lenses, multielement lenses, or measurements of the human eye.  The following sections describes other methods, also based on linearity, that we use to characterize and understand system performance.
+Point spread functions are an intuitive way to understand the performance of the optical system. But, this framing is not easy to use as for quantifying image quality. The point spread function can be quantified using a few parameters only in a few cases (@sec-airy-pattern, @sec-pointspread-common). But in general we do not have high quality numerical approximations of point spread functions for many real lenses, multielement lenses, or measurements of the human eye.  The following sections describes other methods of thinking about the linear transforms that provide us with alternative representations that we can use to characterize and understand system performance.  All of these representations still rely on linearity (superposition).
 
 ::: {.callout-note title="A limitation of PSFs" collapse="true"}
 Point spread functions (PSFs) are an excellent tool for modeling optical systems when the scene can be approximated as a flat surface, or when all objects are far enough away that occlusion is negligible. In these cases, each point in the scene contributes independently to the image, and the total image can be predicted by summing the PSFs from each point.
@@ -111,11 +111,17 @@ $$
 \mathbf{o} = \mathbf{L} \mathbf{s}
 $$ {#eq-linear-matrix}
 
-It can be helpful to visualize this as a matrix tableau: each column of $\mathbf{L}$ is scaled by the corresponding entry in $\mathbf{s}$, and the output is the sum of these weighted columns.
+This can also be written as a summation
+
+$$
+o[i] = \sum_j L_{i,j} s[j] 
+$$ {#eq-linear-matrix-summation}
+
+I find it helpful to visualize this as a matrix tableau: the $j^{th}$ column of $\mathbf{L}$ is scaled by the $j^{th}$ entry of $s[j]$. The output vector is the weighted sum of the columns of $\mathbf{L}$.
 
 **PUT IN A MATRIX TABLEAU IMAGE HERE**
 
-All discrete linear systems can be represented as matrices. Sometimes, the input is naturally an image (a matrix), and we need to "flatten" it into a vector; other times, we might use more clever tricks to keep the image structure. But the key idea to keep in mind is that, in the discrete world, linear systems are matrices that map input vectors to output vectors.
+The transformations of any discrete linear system can be represented as matrix. Sometimes, the input is naturally an image (a matrix), and we need to "flatten" it into a vector; other times, we might use more clever tricks to keep the image structure. But the key idea to keep in mind is that, in the discrete world, linear systems are matrices that map input vectors to output vectors.
 
 ::: {.callout-note collapse="true" title='History - linear algebra and matrices'}
 When I was an assistant professor, I had the privilege of joining faculty meetings with senior colleagues I deeply admired—Joe Goodman, Ron Bracewell, Tom Cover, and others. In these meetings, we often discussed how best to teach key mathematical ideas to engineering students. The more senior faculty generally favored starting with integrals and continuous functions, emphasizing that these are the true foundation of the mathematics. The younger faculty, who spent much of their time programming, leaned toward teaching with matrices and vectors. I remember Ron Bracewell remarking that continuous functions are the reality, and we should introduce those first—then, only later, show students the "vulgar" discrete approximations that we use because our computational tools require them. Good times.
@@ -126,12 +132,9 @@ It helps to know that representing problems with vectors and matrices is not a r
 :::
 
 ## Spatial basis functions {#sec-optics-spatial-basis}
+It is natural to think of images as a set of points, and it is somewhat disappointing to realize that this representation isn't always helpful for system characterization.  Historically, it was an important insight to realize that images can be described in many other ways. Some of these alternatives are very valuable for analyzing and characterizing optical performance of image systems.
 
-It is natural to think of images as a set of points; historically, it was an important insight to realize that an image can be described in many other ways. Some of these alternatives are very valuable for analyzing and characterizing optical performance of image systems.
-
-Linear models are an important method for exploring alternative image representations. We introduced linear models in @sec-linear-models, and we applied them to characterizing the spectral properties of light fields. Here we use linear models again, but in a different way. In this case, we build linear models of the image intensity spatial distribution, $I(x,y)$. 
-
-A linear model of the image intensity can be written this way:
+Linear models are an important method for exploring alternative image representations. We introduced linear models in @sec-linear-models, and we applied them to characterizing the spectral properties of light fields. Here we use linear models again, but this time to as models of the image intensity, $I(x,y)$. A linear model of the image intensity can be written this way:
 
 $$
 I(x,y) = \sum_{i} w_{i} B_{i}(x,y)
@@ -139,7 +142,7 @@ $${#eq-linear-model}
 
 The functions $B_{i}(x,y)$ are the **spatial basis functions**, and the scalar values $w_{i}$ are the weights applied to each basis function. The image is equal to the weighted sum of these basis functions. 
 
-When we represent an image as a set of points, the basis functions are points.  That is, $B_i$ is zero everywhere except except at one $(x,y)$ point.  The weights are the image intensity at that point, $I(x,y)$.
+When we represent an image as a set of points, the basis functions are points.  That is, $B_i$ is zero everywhere except except at one $(x,y)$ point.  The basis weights are the image intensity at that point, $I(x,y)$.
 
 ## Orthogonal image transforms
 For a linear model to be useful, we need a method for finding the weights from the image. A function that maps $I(x,y)$ into the weights, $w_i$ is called an **image transform**.  If we choose a basis functions that are orthogonal to one another, the transform is easy to find.
@@ -166,9 +169,9 @@ $$
 \mathbf{w} = \mathbf{B^t I} .
 $$ {#eq-linear-model-inverse}
 
-So, that's good.  Now, there are instances when we might make linear models that are not orthogonal.  In that case, we have to find the inverse of $\mathbf{B}$ to move back and forth between the image and its transform. Computers are pretty big these days, so we can live with that.  But it is very nice to have the basis functions be orthogonal.
+So, that's simple! Now, there are instances when we might make linear models that are not orthogonal. In that case, we have to find the inverse of $\mathbf{B}$ to move back and forth between the image and its transform. Computers are pretty big these days, so we can live with that.  But it is very nice to have the basis functions be orthogonal.
 
-Linear models are important for image systems and science and engineering broadly. Of the many linear models, having the bases be **harmonic functions** has been the most important. We are heading that direction, and the way will get there is through eigenfunctions.
+Linear models are important for image systems and science and engineering broadly. Of the many linear models, the **harmonic functions basis** has been the most important. We are heading that direction, and the way will get there is through eigenfunctions.
 
 ## System eigenfunctions
 
@@ -180,19 +183,18 @@ $$ {#eq-eigenfunction-definition}
 
 The scalar values, $\alpha_i$ are the **eigenvalues** of the linear transformation. 
 
-An important and somewhat remarkable fact about the collection of eigenfunctions of a linear system is this:  they are an orthogonal basis of the possible inputs.  Any input, $\mathbf{s}$, can be described uniquely as the weighted sum of the eigenfunctions,
+Some linear systems -and of course the ones we will be studying- have a set of eigenvectors that serve as an orthogonal basis for the input. For these systems, we can represent the stimulus as the weighted sum of its eigenfunctions.  Notice how simple this makes calculatin the output, $\mathbf{o}$ to an input $\mathbf{s}$. 
 
 $$
-\mathbf{s} = \sum_i \sigma_i \mathbf{e}_i .
-$$
+\begin{aligned}
+\mathbf{o} & = \mathbf{L} ~ \mathbf{s} \\
+  & = \mathbf{L} ~ (\sum_i \sigma_i \mathbf{e}_i ) \\
+  & = \sum_i \sigma_i \mathbf{L} \mathbf{e}_i \\
+  &  = \sum_i \sigma_i \alpha_i  \mathbf{e}_i
+ \end{aligned}
+$$ {#eq-linear-eigencalculations}
 
-This means if we represent the stimulus with respect to the eigenfunctions, and we know the eigenvalues, we can predict the output to the stimulus.
-
-$$
-\mathbf{o} = L ( s_i \mathbf{e}_i ) = \alpha_i \sigma_i \mathbf{e}_i
-$$
-
-
+In words, we express the stimulus as the weighted sum of the eigenfunctions.  Then we use linearity to apply the transformation to each of the eigenfunctions. This brings up the eigenvalue times the eigenfunction. So in the end, the output is the sum of the eigenfunctions, with each scaled by a weight corresponding to the stimulus itself ($\sigma_i$) and a second weight associated with the linear transformation ($\alpha_i$).  This can become even simpler if we select our stimulus to be an eigenfunction!  
 
 Harmonic functions are a tool to help with system characterization. Their value arises from this simple and important fact:  When the input to an optical system is a harmonic function at spatial frequency $f$ and unit contrast, in each local region the image will also be a harmonic function at the same frequency.  The relative phase and amplitude of the output will differ from the input, but we only need to measure these two parameters.  
 
