@@ -80,7 +80,7 @@ $$
 Be aware of these special cases can be of use to you in the future.
 
 ## Point spread functions
-Linearity is the foundation that we use to modelg how optical elements convert an input scene into a sensor image. We imagine the scene as a collection of points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $I(\mathbf{p})$. The optics spreads out the light from each point in a certain way—this is called the point spread function, or $PSF_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image.
+Linearity is the foundation of how we model the optical transformation of an input scene into a sensor image. We imagine the scene as a collection of points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $I(\mathbf{p})$. The optics spreads out the light from each point in a certain way—this is called the point spread function, or $PSF_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image.
 
 If we know how the light from each point is spread, and superposition holds, we can calculate the output image, $O(x,y)$ for any input scene: We just add up the contribution from every point. The formula looks like this:
 
@@ -90,20 +90,22 @@ $$ {#eq-pointspread-1}
 
 Here, $O(x, y)$ is the intensity at image position. Each scene point contributes a scaled PSF, and the output image is just the sum of all those PSFs.
 
-::: {.callout-note title="A limitation of PSFs" collapse="true"}
-There’s a catch: in real scenes, objects can block each other (occlusion). That means the point spread from one spot might be blocked or changed by something else in the scene, so the formula above isn’t always perfect.
+The point spread function is an intuitive way to understand the performance of the optical system. But, it is easy to use as for quantifying image quality. The point spread function can be quantified with a few parameters for some cases (Airy pattern, @sec-pointspread-common). But in general we do not have high quality approximations for many real lenses, multielement lenses, or measurements of the human eye.  The following sections describes other methods, also based on linearity, that we use to characterize and understand system performance.
 
-But if all the points are on a flat surface, or if everything is far away (so nothing blocks anything else), this approach works well. The main idea is that you can build up the whole image by adding up the point spreads from each part of the scene. It’s a great starting point for understanding how images form.
+::: {.callout-note title="A limitation of PSFs" collapse="true"}
+Point spread functions (PSFs) are an excellent tool for modeling optical systems when the scene can be approximated as a flat surface, or when all objects are far enough away that occlusion is negligible. In these cases, each point in the scene contributes independently to the image, and the total image can be predicted by summing the PSFs from each point.
+
+However, in three-dimensional scenes where objects can block light from those behind them (**occlusion**), the situation becomes more complex. The contribution of a point to the image may be partially or completely blocked by closer objects. As a result, the effective point spread depends on the arrangement of objects in the scene, and cannot be characterized by a single, scene-independent PSF. Accurately modeling these effects requires more advanced techniques, such as those used in computer graphics, and often involves recalculating the image formation for each specific scene.
+
+In summary, PSFs provide a powerful and practical framework for image prediction when occlusion can be ignored, but their direct application is limited in scenes with significant three-dimensional structure and occlusion.
 :::
 
-The point spread function is an intuitive way to understand the performance of the optical system. But, it is not a great general tool to quantify image quality. We can quantify the shape of the point spread function for the simplest cases (Airy pattern). And below I describe some point spread shapes that can be described using a small number of parameters and are useful for simulation (@sec-pointspread-common). But the point spread representation alone is not helpful enough to approximate many real lenses, multielement lenses, or measurements of the human eye.  In the following we build up some tools so that we can use other representations that will be very helpful in characterizing and understanding system performance.
-
 ## Discrete linear systems {#sec-linear-discrete}
-Many of the practical computations we describe in the following sections use **discrete** representations of linear systems. We have already seen discretization when we represented a spatial stimulus at sample points or a spectral stimulus at sample wavelengths.
+Many of the practical computations we describe in the following sections use **discrete** representations of linear systems. 
 
-In these discrete representations, a continuous stimulus, say $s(x)$, is sampled to form a vector of values, $\mathbf{s}$. We often write the entries as $s[x_i]$, where $i$ is an integer index, or simply $s[u]$, with square brackets to remind us that the signal is sampled.
+We have already used discretization to represent a spatial stimulus at sample points or a spectral stimulus at sample wavelengths. In these discrete representations, a continuous stimulus, say $s(x)$, is sampled to form a vector of values, $\mathbf{s}$. We will write the entries as $s[x_i]$, where $i$ is an integer index, or simply $s[u]$, with square brackets to remind us that the signal is discretely sampled.
 
-A discrete linear system is then described by a matrix, $\mathbf{L}$, which maps the input vector to an output vector, $\mathbf{o}$:
+Discrete linear systems can be described by a matrix, $\mathbf{L}$, which maps the input vector to an output vector, $\mathbf{o}$:
 
 $$
 \mathbf{o} = \mathbf{L} \mathbf{s}
@@ -113,18 +115,14 @@ It can be helpful to visualize this as a matrix tableau: each column of $\mathbf
 
 **PUT IN A MATRIX TABLEAU IMAGE HERE**
 
-All discrete linear systems can be represented this way. Sometimes, the input is naturally an image (a matrix), and we need to "flatten" it into a vector; other times, we might use more clever tricks to keep the image structure. But the key idea is that, in the discrete world, linear systems are just matrices that map input vectors to output vectors.
+All discrete linear systems can be represented as matrices. Sometimes, the input is naturally an image (a matrix), and we need to "flatten" it into a vector; other times, we might use more clever tricks to keep the image structure. But the key idea to keep in mind is that, in the discrete world, linear systems are matrices that map input vectors to output vectors.
 
 ::: {.callout-note collapse="true" title='History - linear algebra and matrices'}
+When I was an assistant professor, I had the privilege of joining faculty meetings with senior colleagues I deeply admired—Joe Goodman, Ron Bracewell, Tom Cover, and others. In these meetings, we often discussed how best to teach key mathematical ideas to engineering students. The more senior faculty generally favored starting with integrals and continuous functions, emphasizing that these are the true foundation of the mathematics. The younger faculty, who spent much of their time programming, leaned toward teaching with matrices and vectors. I remember Ron Bracewell remarking that continuous functions are the reality, and we should introduce those first—then, only later, show students the "vulgar" discrete approximations that we use because our computational tools require them. Good times.
 
-It was an honor for me, as an assistant professor, to attend faculty meetings with Joe Goodman, Ron Bracewell, Tom Cover and others. As we discussed the engineering curriculum, there was often a dispute. My heroes in the older faculty preferred to teach using integrals and continuous functions.  The younger faculty spent most of their working days with computers and programming, and we preferred to teach using matrices and discrete functions. I still remember Ron Bracewell saying something like, continuous functions are the reality and we must explain that first.  After the students understand that, we can introduce them to the vulgar discrete approximations which are important because of computers.  Good times.
+We all agreed that discrete representations are extremely useful—and today, they are essential. Mathematics framed in terms of vectors and matrices is at the heart of modern neural networks and much of computational science and engineering. That’s the approach I use throughout this book. Still, I remember Bracewell’s advice, and sometimes feel a bit of guilt for not starting with the continuous case.
 
-Despite these disagreements, we all recognized that it is very useful - and these days essential! - to understand linear systems in terms of vectors and matrices. This has become the most common way to discuss many mathematical methods, and mathematics framed in terms of vectors and matrices is fundamental to the massive wave of neural network calculations in science and engineering.  Where did this representation come from?  In fact, where did the whole framing in terms of linear algebra of vector spaces come from? Click the link.
-
-[History of matrices and linear algebra](resources/history-linear-algebra.html){target=_blank}
-
-The original idea of representing sets of linear equations in terms of matrices - Cayley.
-
+It helps to know that representing problems with vectors and matrices is not a recent development. The importance of linear algebra and matrix methods was recognized nearly 200 years ago. If you’re interested in the history of these ideas, you can read more here: [History of matrices and linear algebra](resources/history-linear-algebra.html){target=_blank}
 :::
 
 ## Spatial basis functions {#sec-optics-spatial-basis}
@@ -170,8 +168,7 @@ $$ {#eq-linear-model-inverse}
 
 So, that's good.  Now, there are instances when we might make linear models that are not orthogonal.  In that case, we have to find the inverse of $\mathbf{B}$ to move back and forth between the image and its transform. Computers are pretty big these days, so we can live with that.  But it is very nice to have the basis functions be orthogonal.
 
-Linear models are important for image systems and science and engineering broadly. Of the many linear models, having the bases be **harmonic functions** has been the most important. Let's review.
-
+Linear models are important for image systems and science and engineering broadly. Of the many linear models, having the bases be **harmonic functions** has been the most important. We are heading that direction, and the way will get there is through eigenfunctions.
 
 ## System eigenfunctions
 
