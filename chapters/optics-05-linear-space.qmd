@@ -41,6 +41,20 @@ $$
 L(m x) = m L(x).
 $$
 
+Do remember that a system can be homogeneous without being linear. For example the absolute value, $f(x) = |x|$, and the vector length function
+
+$$
+f(\mathbf{x}) = \|\mathbf{x}\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
+$$
+
+are homogeneous but not linear. The function $ReLU(x) = \max(0, x)$, widely used in neural networks, is also homogeneous for $\alpha > 0$ but not linear:
+
+$$
+1 = ReLU(2 + -1) \neq ReLU(2) + ReLU(-1) = 2 + 0.
+$$
+
+Remembering that these cases exist may be of use to you in the future.
+
 ::: {.callout-note title="Extension to Rational Numbers" collapse="true"}
 
 For real-valued systems that obey superposition, homogeneity holds for any rational number. If $\alpha = \frac{p}{q}$ is rational:
@@ -64,25 +78,10 @@ $$
 To extend this to all real numbers, continuity and far more extensive proof is required. But how about we just work with the rationals and be engineers for now?
 :::
 
-Do remember that a system can be homogeneous without being linear. For example the absolute value, $f(x) = |x|$, and the vector length function
-
-$$
-f(\mathbf{x}) = \|\mathbf{x}\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
-$$
-
-are homogeneous but not linear. The function $ReLU(x) = \max(0, x)$, widely used in neural networks, is also homogeneous for $\alpha > 0$ but not linear:
-
-$$
-1 = ReLU(2 + -1) \neq ReLU(2) + ReLU(-1) = 2 + 0.
-$$
-
-Remembering that these cases exist may be of use to you in the future.
-
-
 ## Discrete linear systems {#sec-linear-discrete}
-Many of the practical computations we describe in the following sections use **discrete** representations of linear systems. 
+The ISETCam simulations we perform in the book use **discrete** representations of linear systems. 
 
-We have already used discretization to represent a spatial stimulus at sample points or a spectral stimulus at sample wavelengths. In these discrete representations, a continuous stimulus, say $s(x)$, is sampled to form a vector of values, $\mathbf{s}$. We will write the entries as $s[x_i]$, where $i$ is an integer index, or simply $s[u]$, with square brackets to remind us that the signal is discretely sampled.
+We have already used discretization to represent a spatial stimulus at sample points or a spectral stimulus at sample wavelengths. In these discrete representations, a continuous stimulus, say $s(x)$, is sampled to form a vector of values, $\mathbf{s}$. We will write the entries as $s[x_i]$, where $i$ is an integer index, or simply $s[i]$, with square brackets to remind us that the signal is discretely sampled.
 
 Discrete linear systems can be described by a matrix, $\mathbf{L}$, which maps the input vector to an output vector, $\mathbf{o}$:
 
@@ -93,14 +92,14 @@ $$ {#eq-linear-matrix}
 This can also be written as a summation
 
 $$
-o[i] = \sum_j L_{i,j} s[j] 
+o[i] = \sum_j L[i,j] s[j] 
 $$ {#eq-linear-matrix-summation}
 
-I find it helpful to visualize this as a matrix tableau: the $j^{th}$ column of $\mathbf{L}$ is scaled by the $j^{th}$ entry of $s[j]$. The output vector is the weighted sum of the columns of $\mathbf{L}$.
+I find it helpful to visualize this as a matrix tableau: the $j^{th}$ column of $\mathbf{L}$ is scaled by the $j^{th}$ entry, $s[j]$. The visualization helps see that the output vector is the weighted sum of the columns of the matrix $\mathbf{L}$.
 
 **PUT IN A MATRIX TABLEAU IMAGE HERE**
 
-The transformations of any discrete linear system can be represented as matrix. Sometimes, the input is naturally an image (a matrix), and we need to "flatten" it into a vector; other times, we might use more clever tricks to keep the image structure. But the key idea to keep in mind is that, in the discrete world, linear systems are matrices that map input vectors to output vectors.
+The action of any discrete linear system can be represented as matrix. There may be some notation or representations that change, but the principle always hold.  For example, sometimes the input is naturally thought of as an image (a matrix), and we need to "flatten" it into a vector; other times, we might use other clever tricks to do the linear transformation while keeping the image structure. But the key idea to keep in mind is that, in the discrete world, linear systems are matrices that map input vectors to output vectors.
 
 ::: {.callout-note collapse="true" title='History - linear algebra and matrices'}
 When I was an assistant professor, I had the privilege of joining faculty meetings with senior colleagues I deeply admired—Joe Goodman, Ron Bracewell, Tom Cover, and others. In these meetings, we often discussed how best to teach key mathematical ideas to engineering students. The more senior faculty generally favored starting with integrals and continuous functions, emphasizing that these are the true foundation of the mathematics. The younger faculty, who spent much of their time programming, leaned toward teaching with matrices and vectors. I remember Ron Bracewell remarking that continuous functions are the reality, and we should introduce those first—then, only later, show students the "vulgar" discrete approximations that we use because our computational tools require them. Good times.
@@ -111,7 +110,7 @@ It helps to know that representing problems with vectors and matrices is not a r
 :::
 
 ## Spatial basis functions {#sec-optics-spatial-basis}
-It is natural to think of images as a set of points, and in @sec-pointspread we introduced the idea of the point spread function.  This is a very important system characvterization, but it isn't always helpful for system characterization. It was an important insight to realize that images can be described in many other ways. Some of these alternatives are very valuable for analyzing and characterizing optical performance of image systems.
+It is natural to think of images as a set of points, and in @sec-pointspread we introduced the idea of the point spread function.  This is a very important system characterization, but it isn't always helpful for system characterization. It was an important insight  realize that images can be described in many other ways. Some of these alternatives are very valuable for analyzing and characterizing optical performance of image systems.
 
 Linear models are an important method for exploring alternative image representations. We introduced linear models in @sec-linear-models, and we applied them to characterizing the spectral properties of light fields. Here we use linear models again, but this time to as models of the image intensity, $I(x,y)$. A linear model of the image intensity can be written this way:
 
