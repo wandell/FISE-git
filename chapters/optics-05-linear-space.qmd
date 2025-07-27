@@ -5,7 +5,7 @@ But there’s another way to look at optical systems: as signal processors. In t
 
 This approach is especially useful because many optical systems are close to being linear—they follow the **Principle of Superposition**. You can actually test this property in the lab. There are lots of tools for working with linear systems, and you’ll see them used again and again in science and engineering. In this section, we’ll introduce these ideas using a simple optical system as an example.
 
-## Principle of Superposition
+## Principles of Superposition and Homogeneity
 A system $L$ is linear if it satisfies the superposition rule:
 
 $$
@@ -20,7 +20,6 @@ In other cases the system will have many linear regimes, each much less than the
 
  [^taylor-series]: If you’ve seen the Taylor series expansion in calculus, you may recognize the principle of local linearity in mathematics!
 
-### Principle of Homogeneity
 A special case of superposition is **homogeneity**:
 
 $$
@@ -65,7 +64,7 @@ $$
 To extend this to all real numbers, continuity and far more extensive proof is required. But how about we just work with the rationals and be engineers for now?
 :::
 
-Do remember that a system can be homogeneous without being linear. For example, $f(x) = |x|$ and the vector length function
+Do remember that a system can be homogeneous without being linear. For example the absolute value, $f(x) = |x|$, and the vector length function
 
 $$
 f(\mathbf{x}) = \|\mathbf{x}\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
@@ -77,28 +76,8 @@ $$
 1 = ReLU(2 + -1) \neq ReLU(2) + ReLU(-1) = 2 + 0.
 $$
 
-Be aware of these special cases can be of use to you in the future.
+Remembering that these cases exist may be of use to you in the future.
 
-## Point spread functions {#sec-pointspread-2}
-In @sec-pointspread we introduced the idea of the point spread function. It is a measurement of how the optics transforms the light from the point source in the scene into an image. When superposition holds, we can combine use the point spread functions to predict how the input scene becomes a sensor image. 
-
-We describe the scene as a collection of points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $I(\mathbf{p})$.   We write the point spread function for each point as $PSF_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image. By superposition, we can calculate the output image, $O(x,y)$ by adding up the point spreads from every scene point. The formula looks like this:
-
-$$
-O(x, y) = \sum_{\mathbf{p}} I(\mathbf{p})\, PSF_\mathbf{p}(x, y)
-$$ {#eq-pointspread-1}
-
-Here, $O(x, y)$ is the intensity at each image position. Each point in the scene contributes a scaled version of its PSF. The output image is the weighted sum of all those PSFs.
-
-Point spread functions are an intuitive way to understand the performance of the optical system. But, this framing is not easy to use as for quantifying image quality. The point spread function can be quantified using a few parameters only in a few cases (@sec-airy-pattern, @sec-pointspread-common). But in general we do not have high quality numerical approximations of point spread functions for many real lenses, multielement lenses, or measurements of the human eye.  The following sections describes other methods of thinking about the linear transforms that provide us with alternative representations that we can use to characterize and understand system performance.  All of these representations still rely on linearity (superposition).
-
-::: {.callout-note title="A limitation of PSFs" collapse="true"}
-Point spread functions (PSFs) are an excellent tool for modeling optical systems when the scene can be approximated as a flat surface, or when all objects are far enough away that occlusion is negligible. In these cases, each point in the scene contributes independently to the image, and the total image can be predicted by summing the PSFs from each point.
-
-However, in three-dimensional scenes where objects can block light from those behind them (**occlusion**), the situation becomes more complex. The contribution of a point to the image may be partially or completely blocked by closer objects. As a result, the effective point spread depends on the arrangement of objects in the scene, and cannot be characterized by a single, scene-independent PSF. Accurately modeling these effects requires more advanced techniques, such as those used in computer graphics, and often involves recalculating the image formation for each specific scene.
-
-In summary, PSFs provide a powerful and practical framework for image prediction when occlusion can be ignored, but their direct application is limited in scenes with significant three-dimensional structure and occlusion.
-:::
 
 ## Discrete linear systems {#sec-linear-discrete}
 Many of the practical computations we describe in the following sections use **discrete** representations of linear systems. 
@@ -132,7 +111,7 @@ It helps to know that representing problems with vectors and matrices is not a r
 :::
 
 ## Spatial basis functions {#sec-optics-spatial-basis}
-It is natural to think of images as a set of points, and it is somewhat disappointing to realize that this representation isn't always helpful for system characterization.  Historically, it was an important insight to realize that images can be described in many other ways. Some of these alternatives are very valuable for analyzing and characterizing optical performance of image systems.
+It is natural to think of images as a set of points, and in @sec-pointspread we introduced the idea of the point spread function.  This is a very important system characvterization, but it isn't always helpful for system characterization. It was an important insight to realize that images can be described in many other ways. Some of these alternatives are very valuable for analyzing and characterizing optical performance of image systems.
 
 Linear models are an important method for exploring alternative image representations. We introduced linear models in @sec-linear-models, and we applied them to characterizing the spectral properties of light fields. Here we use linear models again, but this time to as models of the image intensity, $I(x,y)$. A linear model of the image intensity can be written this way:
 
@@ -141,8 +120,6 @@ I(x,y) = \sum_{i} w_{i} B_{i}(x,y)
 $${#eq-linear-model}
 
 The functions $B_{i}(x,y)$ are the **spatial basis functions**, and the scalar values $w_{i}$ are the weights applied to each basis function. The image is equal to the weighted sum of these basis functions. 
-
-When we represent an image as a set of points, the basis functions are points.  That is, $B_i$ is zero everywhere except except at one $(x,y)$ point.  The basis weights are the image intensity at that point, $I(x,y)$.
 
 ## Orthogonal image transforms
 For a linear model to be useful, we need a method for finding the weights from the image. A function that maps $I(x,y)$ into the weights, $w_i$ is called an **image transform**.  If we choose a basis functions that are orthogonal to one another, the transform is easy to find.
@@ -171,7 +148,14 @@ $$ {#eq-linear-model-inverse}
 
 So, that's simple! Now, there are instances when we might make linear models that are not orthogonal. In that case, we have to find the inverse of $\mathbf{B}$ to move back and forth between the image and its transform. Computers are pretty big these days, so we can live with that.  But it is very nice to have the basis functions be orthogonal.
 
-Linear models are important for image systems and science and engineering broadly. Of the many linear models, the **harmonic functions basis** has been the most important. We are heading that direction, and the way will get there is through eigenfunctions.
+## Point spreads and other representations
+The principles of linear models are important for image systems and science and engineering broadly. Of the many linear models, two stand out as the most important. 
+
+The first is the representation as points.  When we represent an image as a set of points, we don't even notice that we are using an orthogonal basis. The points are the basis functions, $B_i$ is zero everywhere except except at one $(x,y)$ point.  The weights are the image intensity at that point, $I(x,y)$. Also, the point representation is orthogonal.  The inner product of two point basis functions is zero!  
+
+The point representation is used very widely in many fields.  When used with dynamic systems, the point is usually called the **impulse**.  Or, in general, the **Dirac delta function** to honor a physicist who developed formal theory using the representation.  The use of points to represent an image is so natural that this observation is rarely made. We make it here mainly to emphasize that there are other linear model representations that have these key properties:  the stimulus is the weighted sum of the basis functions and the basis functions are orthogonal to one another.  Those two properties make the point representation valuable, and they also make the alternative representations valuable.
+
+ The second most important orthogonal representation are the **harmonic functions** . We are heading towards an explanation of these. The way will get there is through eigenfunctions.
 
 ## System eigenfunctions
 
@@ -223,6 +207,27 @@ Notice that @eq-shiftinvariance-defined allows the size of the image shift, $\de
 :::
 
 The image formation component (optics) of most image systems are typically linear, but they are not globally shift-invariant. Rather, they are shift invariant over some part, but not all, of the full visual field. Usually there is a region near the optical axis that is shift invariant, and the system is also locally shift-invariant at off-axis points. This local shift invariance is similar to a system that is locally linear. In optics the shift invariant region is called an **isoplanatic** region. 
+
+## Point spread functions {#sec-pointspread-2}
+In @sec-pointspread we introduced the idea of the point spread function. It is a measurement of how the optics transforms the light from the point source in the scene into an image. When superposition holds, we can combine use the point spread functions to predict how the input scene becomes a sensor image. 
+
+We describe the scene as a collection of points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $I(\mathbf{p})$.   We write the point spread function for each point as $PSF_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image. By superposition, we can calculate the output image, $O(x,y)$ by adding up the point spreads from every scene point. The formula looks like this:
+
+$$
+O(x, y) = \sum_{\mathbf{p}} I(\mathbf{p})\, PSF_\mathbf{p}(x, y)
+$$ {#eq-pointspread-1}
+
+Here, $O(x, y)$ is the intensity at each image position. Each point in the scene contributes a scaled version of its PSF. The output image is the weighted sum of all those PSFs.
+
+Point spread functions are an intuitive way to understand the performance of the optical system. But, this framing is not easy to use as for quantifying image quality. The point spread function can be quantified using a few parameters only in a few cases (@sec-airy-pattern, @sec-pointspread-common). But in general we do not have high quality numerical approximations of point spread functions for many real lenses, multielement lenses, or measurements of the human eye.  The following sections describes other methods of thinking about the linear transforms that provide us with alternative representations that we can use to characterize and understand system performance.  All of these representations still rely on linearity (superposition).
+
+::: {.callout-note title="A limitation of PSFs" collapse="true"}
+Point spread functions (PSFs) are an excellent tool for modeling optical systems when the scene can be approximated as a flat surface, or when all objects are far enough away that occlusion is negligible. In these cases, each point in the scene contributes independently to the image, and the total image can be predicted by summing the PSFs from each point.
+
+However, in three-dimensional scenes where objects can block light from those behind them (**occlusion**), the situation becomes more complex. The contribution of a point to the image may be partially or completely blocked by closer objects. As a result, the effective point spread depends on the arrangement of objects in the scene, and cannot be characterized by a single, scene-independent PSF. Accurately modeling these effects requires more advanced techniques, such as those used in computer graphics, and often involves recalculating the image formation for each specific scene.
+
+In summary, PSFs provide a powerful and practical framework for image prediction when occlusion can be ignored, but their direct application is limited in scenes with significant three-dimensional structure and occlusion.
+:::
 
 ## Common PSFs in simulation {#sec-pointspread-common}
 
