@@ -70,17 +70,6 @@ $$
 To extend this to all real numbers, continuity and far more extensive proof is required. But how about we just work with the rationals and be engineers for now?
 :::
 
-## Local linearity
-No real system is perfectly linear for all possible inputs. If you push a system with extremely large signals—say, by shining a laser into a camera or overloading an amplifier—it may behave unpredictably or even break! But for most practical purposes, many systems are linear over a useful range of inputs.
-
-When a system is not linear everywhere, it may still be well-approximated as linear within a limited region of its input space. In other words, the system is **locally linear**: if you zoom in close enough to a particular operating point, the system’s behavior looks linear, even if it isn’t globally so.
-
-The key idea is that the best linear approximation depends on where you are in the input space. The linear model near $x_1$ might look quite different from the linear model near $x_2$. So, when modeling or analyzing a system, it’s important to know which region you’re working in.
-
-This principle of local linearity is fundamental in mathematics, physics, and engineering.[^taylor-series] It’s the reason why linear models are so widely used, even for systems that aren’t truly linear everywhere.
-
-[^taylor-series]: If you’ve seen the Taylor series expansion in calculus, you’ve already encountered local linearity. Near a point $x$, you can approximate a function by its value at $x$ plus a correction that depends on how far you are from $x$ and the derivative at $x$.
-
 ## Discrete linear systems {#sec-ls-discrete}
 The ISETCam simulations we use throughout this book rely on **discrete** representations of linear systems.
 
@@ -120,7 +109,7 @@ Any discrete linear system can be represented as a matrix. The notation may vary
 ## Spatial basis functions {#sec-ls-spatial-basis}
 Image systems engineers need effective ways to characterize system performance. One common approach is to examine how the system responds to a point of light—this is the point spread function (PSF) introduced in @sec-pointspread. The PSF is a fundamental tool, but it has limitations: using a point of light involves very few photons, and PSFs can vary in complex ways that are hard to summarize with just a few parameters.
 
-A key insight is that images can be described in many ways, not just as a collection of points. Some alternative representations are especially useful for analyzing and characterizing the optical performance of imaging systems. Linear models provide a powerful framework for defining and exploring these alternative image representations. We first introduced linear models in @sec-linear-models, and used them to describe the spectral properties of light fields. Here, we revisit linear models in a more general context, applying them to the spatial intensity of images, $S[u,v]$. A linear model for spatial intensity looks like this:
+A key insight is that images can be described in many ways, not just as a collection of points. Some alternative representations are especially useful for analyzing and characterizing the optical performance of imaging systems. Linear models provide a powerful framework for defining and exploring these alternative image representations. We first used linear models to describe the spectral properties of light fields (@sec-linear-models). Here, we use linear models in a different context, applying them to the spatial intensity of images, $S[u,v]$. A linear model for spatial intensity looks like this:
 
 $$
 S[u,v] = \sum_{i} w[i] B_i[u,v]
@@ -131,15 +120,15 @@ The functions $B_i[u,v]$ are called **spatial basis functions**, and the scalars
 If we agree on a set of basis functions, then we can describe any image simply by specifying the weights. In fact, when we describe an image as a grid of intensity values, we’re implicitly using a set of point basis functions—each one nonzero at a single location and zero everywhere else.
 
 ## Image transforms {#sec-ls-orthogonal-transforms}
-For a linear model to be useful, we need a way to find the weights from the image itself. A function that maps $S(u,v)$ to the weights $w[i]$ is called an **image transform**. If we choose basis functions that are orthogonal to each other, this transform becomes especially simple. Orthogonality means that
+For a linear model to be useful, we need a way to find the basis weights from the image itself. A function that maps an image, $S(u,v)$ to the weights $w[i]$ is called an **image transform**. If we choose **orthogonal basis functions** this transform becomes especially simple. Orthogonal means
 
 $$
 0 = \sum_{u,v} B_i[u,v] ~ B_j[u,v]
 $$ {#eq-spatial-orthogonal}
 
-for any two different basis functions $B_i$ and $B_j$.
+for any two pair of different basis functions $B_i$ and $B_j$.
 
-To work with these mathematically, we often “flatten” each basis function $B_i$ (which is a matrix) into a long column vector by stacking its columns. We do the same for the image $S[u,v]$, turning it into a vector $\mathbf{s}$. If we collect all the basis vectors as columns of a matrix $\mathbf{B}$, and the weights as a vector $\mathbf{w}$, we can write the linear model from @eq-linear-model as a matrix equation:
+To work with these two-dimensional images mathematically, we often “flatten” each basis function $B_i$ (which is a matrix) into a long column vector by stacking its columns. We do the same for the image $S[u,v]$, turning it into a vector $\mathbf{s}$. If we collect all the basis vectors into the columns of a matrix $\mathbf{B}$, and the weights into a vector $\mathbf{w}$, we can write the linear model from @eq-linear-model as a matrix equation:
 
 $$
 \mathbf{s} = \mathbf{B w}
@@ -150,10 +139,14 @@ Here, the $i^{th}$ entry in $\mathbf{w}$ multiplies the $i^{th}$ column of $\mat
 Now, if the basis functions are orthogonal, then $\mathbf{B^t B}$ is the identity matrix. This makes it easy to recover the weights from the image:
 
 $$
-\mathbf{w} = \mathbf{B^t s}
+\begin{aligned}
+\mathbf{s} &= \mathbf{B w} \\
+\mathbf{B^t s} &= \mathbf{B^t B w} \\
+\mathbf{B^t s} &= \mathbf{w}
+\end{aligned}
 $$ {#eq-linear-model-inverse}
 
-In words: just multiply the transpose of the basis matrix by the image vector to get the weights. That’s all there is to it!
+In words: just multiply the image vector by the transpose of the basis matrix to calculate the weights. That’s all there is to it!
 
 If the basis functions aren’t orthogonal, we have to work a bit harder and use the inverse of $\mathbf{B}$ to solve for the weights. That’s not usually a problem for computers, but it’s much more convenient when the basis is orthogonal and we can just use the transpose.
 
@@ -178,7 +171,7 @@ $$ {#eq-eigenfunction-definition}
 
 where $\alpha_i$ is the **eigenvalue** associated with $\mathbf{e}_i$. The eigenvalue tells us how much the eigenvector is stretched or shrunk by the transformation.
 
-Many image systems we describe in this book have a complete set of orthogonal eigenvectors. By a complete set, I mean (a) the eigenvectors of the system are a basis for the input (@sec-ls-spatial-basis), and (b) the eigenvectors are orthogonal to one another (@sec-ls-orthogonal-transforms). This means we can express any input vector (stimulus) as a weighted sum of the image system's eigenvectors. The power of this observation is that measuring the system response to an eigenvector input is very simple:
+Many image systems we describe in this book have a **complete set** of orthogonal eigenvectors. By a complete set, I mean (a) the eigenvectors of the system are a basis for the input (@sec-ls-spatial-basis), and (b) the eigenvectors are orthogonal to one another (@sec-ls-orthogonal-transforms). This means we can express any input vector (stimulus) as a weighted sum of the image system's eigenvectors. The power of this observation is that measuring the system response to an eigenvector input is very simple:
 
 $$
 \begin{aligned}
@@ -198,7 +191,7 @@ A practical challenge in characterizing general linear systems is that, in princ
 
 Shift-invariant linear systems are common across science and engineering. Many physical devices and phenomena can be well-approximated as shift-invariant, at least over a useful range. This property makes them much easier to calibrate: we only need to measure a single PSF, rather than one for every possible input location. In imaging, the PSF is the key measurement that characterizes the system. In systems that respond over time (like audio or electronics), the equivalent measurement is the **impulse response**—the system’s output when given a very brief input. The impulse response plays the same role as the PSF, just in the time domain.
 
-Because shift invariance simplifies both analysis and computation, many courses on “linear systems” focus almost entirely on shift-invariant cases.
+Because shift invariance simplifies both analysis and computation, many courses on “linear systems” focus almost entirely on the shift-invariant case.
 
 ::: {.callout-note title="Shift invariance notation" collapse="true"}
 Let’s make the idea of shift invariance a bit more precise. Suppose we use $T()$ to represent a shift (translation) operation. If we shift an image $x$ by an amount $\delta$, we write $T(x, \delta)$. A system $L()$ is shift-invariant if shifting the input and then applying the system gives the same result as applying the system first and then shifting the output (possibly by a scaled amount):
@@ -210,19 +203,17 @@ $$ {#eq-shiftinvariance-defined}
 Here, $\alpha$ is a scale factor that accounts for magnification or other effects. For example, if you move an object by $\delta$ meters, its image might move by $\alpha \delta$ meters on the sensor.
 :::
 
-In practice, most imaging systems are linear, but not perfectly shift-invariant everywhere. Instead, they are shift-invariant only within certain regions of the field of view. This is called **local shift invariance**. In optics, such a region is known as an **isoplanatic** patch. Within an isoplanatic region, the PSF is (approximately) the same everywhere, so the shift-invariant analysis applies locally.
-
 Not all linear systems have a complete set of eigenvectors. Only discrete linear systems represented by **normal matrices** are guaranteed to have an orthogonal set of eigenvectors.  The definition of a normal matrix is
 
 $$
-\mathbf{L L^* = L^* L}
+\mathbf{L L^* = L^* L} .
 $$ {#eq-normal-matrix-definition}
 
-where the $*$-operator means **conjugate transpose**[^conjugate-transpose].
+The $*$-operator means **conjugate transpose**[^conjugate-transpose].
 
 [^conjugate-transpose]: This means take the complex conjugate of each entry ($a + ib \rightarrow a - ib$), and transpose the matrix.  For a real matrix, the $*$-operator is amounts to the usual transpose. 
 
-## Harmonics and Shift-invariance SILs {#sec-ls-almost-eigen}
+## Harmonics and Shift-invariance {#sec-ls-harmonics-sil}
 In words, we express the stimulus as the weighted sum of the eigenfunctions.  Then we use linearity to apply the transformation to each of the eigenfunctions. This brings up the eigenvalue times the eigenfunction. So in the end, the output is the sum of the eigenfunctions, with each scaled by a weight corresponding to the stimulus itself ($\sigma_i$) and a second weight associated with the linear transformation ($\alpha_i$).  This can become even simpler if we select our stimulus to be an eigenfunction!  
 
 Harmonic functions are a tool to help with system characterization. Their value arises from this simple and important fact:  When the input to an optical system is a harmonic function at spatial frequency $f$ and unit contrast, in each local region the image will also be a harmonic function at the same frequency.  The relative phase and amplitude of the output will differ from the input, but we only need to measure these two parameters.  
@@ -239,3 +230,16 @@ We all agreed that discrete representations are extremely useful—and today, th
 
 It helps to know that representing problems with vectors and matrices is not a recent development. The importance of linear algebra and matrix methods was recognized nearly 200 years ago. If you’re interested in the history of these ideas, you can read more here: [History of matrices and linear algebra](resources/history-linear-algebra.html){target=_blank}
 :::
+
+## Local linearity {#sec-ls-local-linearity}
+No real system is perfectly linear for all possible inputs. If you push a system with extremely large signals—say, by shining a laser into a camera or overloading an amplifier—it may behave unpredictably or even break! But for most practical purposes, many systems are linear over a useful range of inputs.
+
+When a system is not linear everywhere, it may still be well-approximated as linear within a limited region of its input space. In other words, the system is **locally linear**: if your keep your signals similar enough to a particular operating point, the system’s behavior is linear, even if it isn’t globally so.
+
+For a locally linear system, the best linear approximation depends on where you are in the input space. The linear model near $x_1$ might look quite different from the linear model near $x_2$. So, when modeling or analyzing a locally linear system, it’s important to know which region you’re working in.
+
+In practice, the optics of most imaging systems are linear over a large range, but not shift-invariant. Instead, they are shift-invariant only within certain regions of the field of view. This is called **local shift invariance**. In optics, such a region is known as an **isoplanatic** patch. Within an isoplanatic region, the PSF is (approximately) the same everywhere, so the shift-invariant analysis applies locally.
+
+This principle of local linearity is fundamental in mathematics, physics, and engineering.[^taylor-series] It’s the reason why linear models are so widely used, even for systems that aren’t truly linear everywhere.
+
+[^taylor-series]: If you’ve seen the Taylor series expansion in calculus, you’ve already encountered local linearity. Near a point $x$, you can approximate a function by its value at $x$ plus a correction that depends on how far you are from $x$ and the derivative at $x$.
