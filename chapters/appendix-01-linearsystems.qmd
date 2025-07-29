@@ -130,7 +130,7 @@ The functions $B_i[u,v]$ are called **spatial basis functions**, and the scalars
 
 If we agree on a set of basis functions, then we can describe any image simply by specifying the weights. In fact, when we describe an image as a grid of intensity values, we’re implicitly using a set of point basis functions—each one nonzero at a single location and zero everywhere else.
 
-## Image transforms {#sec-ls-image-transforms}
+## Image transforms {#sec-ls-orthogonal-transforms}
 For a linear model to be useful, we need a way to find the weights from the image itself. A function that maps $S(u,v)$ to the weights $w[i]$ is called an **image transform**. If we choose basis functions that are orthogonal to each other, this transform becomes especially simple. Orthogonality means that
 
 $$
@@ -178,7 +178,7 @@ $$ {#eq-eigenfunction-definition}
 
 where $\alpha_i$ is the **eigenvalue** associated with $\mathbf{e}_i$. The eigenvalue tells us how much the eigenvector is stretched or shrunk by the transformation.
 
-Many linear systems—including the ones we focus on in this book—have a complete set of orthogonal eigenvectors. This means we can express any input vector (stimulus) as a weighted sum of these eigenvectors. The real power of this approach is that applying the system to such an input becomes very simple:
+Many image systems we describe in this book have a complete set of orthogonal eigenvectors. By a complete set, I mean (a) the eigenvectors of the system are a basis for the input (@sec-ls-spatial-basis), and (b) the eigenvectors are orthogonal to one another (@sec-ls-orthogonal-transforms). This means we can express any input vector (stimulus) as a weighted sum of the image system's eigenvectors. The power of this observation is that measuring the system response to an eigenvector input is very simple:
 
 $$
 \begin{aligned}
@@ -191,7 +191,7 @@ $$ {#eq-linear-eigencalculations}
 
 Here, $\mathbf{s}$ is the input, written as a sum of eigenvectors with weights $\sigma_i$. The output $\mathbf{o}$ is just the sum of the same eigenvectors, but now each one is scaled by its eigenvalue $\alpha_i$. This makes analyzing and understanding the system much easier.
 
-Harmonic functions (like sines and cosines) are almost eigenfunctions for many imaging systems, which is why they are so useful in practice.
+Harmonic functions (like sines and cosines) are almost eigenfunctions for many image systems; this makes them very useful stimuli for characterization and design. I explain this idea in the Appendix to [Foundations of Vision](https://wandell.github.io/FOV-1995/appendix.html). The key ideas are explained below, from a slightly different point of view.
 
 ## Shift-invariant linear systems {#sec-ls-shiftinvariance}
 A practical challenge in characterizing general linear systems is that, in principle, each point in the input could have its own unique point spread function (PSF). That’s a lot to measure! Fortunately, many real systems are much simpler: their PSF is essentially the same everywhere, except that it’s shifted to match the input location. In other words, the shape of the PSF doesn’t change—it just moves around. We call such systems **shift-invariant**.
@@ -212,7 +212,17 @@ Here, $\alpha$ is a scale factor that accounts for magnification or other effect
 
 In practice, most imaging systems are linear, but not perfectly shift-invariant everywhere. Instead, they are shift-invariant only within certain regions of the field of view. This is called **local shift invariance**. In optics, such a region is known as an **isoplanatic** patch. Within an isoplanatic region, the PSF is (approximately) the same everywhere, so the shift-invariant analysis applies locally.
 
-## Harmonics are almost eigenfunctions of SILs {#sec-ls-almost-eigen}
+Not all linear systems have a complete set of eigenvectors. Only discrete linear systems represented by **normal matrices** are guaranteed to have an orthogonal set of eigenvectors.  The definition of a normal matrix is
+
+$$
+\mathbf{L L^* = L^* L}
+$$ {#eq-normal-matrix-definition}
+
+where the $*$-operator means **conjugate transpose**[^conjugate-transpose].
+
+[^conjugate-transpose]: This means take the complex conjugate of each entry ($a + ib \rightarrow a - ib$), and transpose the matrix.  For a real matrix, the $*$-operator is amounts to the usual transpose. 
+
+## Harmonics and Shift-invariance SILs {#sec-ls-almost-eigen}
 In words, we express the stimulus as the weighted sum of the eigenfunctions.  Then we use linearity to apply the transformation to each of the eigenfunctions. This brings up the eigenvalue times the eigenfunction. So in the end, the output is the sum of the eigenfunctions, with each scaled by a weight corresponding to the stimulus itself ($\sigma_i$) and a second weight associated with the linear transformation ($\alpha_i$).  This can become even simpler if we select our stimulus to be an eigenfunction!  
 
 Harmonic functions are a tool to help with system characterization. Their value arises from this simple and important fact:  When the input to an optical system is a harmonic function at spatial frequency $f$ and unit contrast, in each local region the image will also be a harmonic function at the same frequency.  The relative phase and amplitude of the output will differ from the input, but we only need to measure these two parameters.  
