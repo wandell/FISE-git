@@ -1,8 +1,7 @@
 # Linear systems {#sec-appendix-linear-systems .unnumbered}
 
 ## Linear systems overview
-
-Many courses in science, technology, engineering and mathematics cover linear systems theory.  Each of the fields has their own way of approaching the topic, and there are many different levels. There are two purposes for this appendix.  The first is to introduce linear systems ideas to people who have never been exposed to them before.  I hope that the framing here is at an introductory level so that people new to the idea of linear systems can see the main points.  The second is to provide more experienced readers with the framing that I use in this book. This chapter explains the ideas and notation that I think are useful for image systems engineering simulations.
+Linear systems theory is a foundational topic in science, engineering, and mathematics, but each field tends to approach it a bit differently and at varying levels of depth. This appendix has two main goals. First, it aims to introduce the core ideas of linear systems to readers who may not have seen them before, using an accessible and intuitive approach. Second, it provides a consistent framework and notation for more experienced readers, matching the perspective used throughout this book. My hope is that both newcomers and those with prior exposure will find this chapter a useful reference for the concepts and tools we use in image systems engineering.
 
 ## Principles of Superposition and Homogeneity {#sec-ls-superposition}
 A system $L$ is linear if it satisfies the superposition rule:
@@ -12,12 +11,6 @@ L(x + y) = L(x) + L(y).
 $$ {#eq-superposition}
 
 Here, $x$ and $y$ are two possible inputs, and $L(x)$ is the system's response to the input $x$. The input variable can be a scalar, vector, matrix, or tensor. For example, in an optical system, $x$ might represent the incident light field at the entrance aperture, and $L(x)$ could be the spectral irradiance measured at the sensor .
-
-No real system is perfectly linear over all possible signals. Extreme inputs with a massive amount of energy may behave unpredictably or even break the system! However, many systems are linear over an input range that covers most of the likely use cases. 
-
-In other cases the system will have many linear regimes, each much less than the entire input range. These systems are called **locally linear**. The linear approximation will differ between regions, so that the linear approximation in a region near $x_1$ will differ from the linear approximation near $x_2$. The principle of local linearity is a fundamental concept in mathematics, physics, and engineering.[^taylor-series]
-
- [^taylor-series]: If you’ve seen the Taylor series expansion in calculus, you may recognize the principle of local linearity in mathematics!
 
 A special case of superposition is **homogeneity**:
 
@@ -34,25 +27,25 @@ L(x + x) &= L(2x) \nonumber  \\
 \end{aligned}
 $$
 
-This generalizes to any integer $m$:
+Perhaps you can see how this generalizes to any integer $m$:
 
 $$
 L(m x) = m L(x).
 $$
 
-Do remember that a system can be homogeneous without being linear. For example the absolute value, $f(x) = |x|$, and the vector length function
+Finally, remember that a system can be homogeneous without being linear. For example the absolute value, $f(x) = |x|$, and the vector length function
 
 $$
 f(\mathbf{x}) = \|\mathbf{x}\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
 $$
 
-are homogeneous but not linear. The function $ReLU(x) = \max(0, x)$, widely used in neural networks, is also homogeneous for $\alpha > 0$ but not linear:
+are both homogeneous but not linear. The function $ReLU(x) = \max(0, x)$, widely used in neural networks, is also homogeneous for $\alpha > 0$ but not linear:
 
 $$
 1 = ReLU(2 + -1) \neq ReLU(2) + ReLU(-1) = 2 + 0.
 $$
 
-Remembering that these cases exist may be of use to you in the future.
+Remembering that such cases exist may be of use to you in the future.
 
 ::: {.callout-note title="Extension to Rational Numbers" collapse="false"}
 
@@ -77,123 +70,147 @@ $$
 To extend this to all real numbers, continuity and far more extensive proof is required. But how about we just work with the rationals and be engineers for now?
 :::
 
+## Local linearity
+No real system is perfectly linear for all possible inputs. If you push a system with extremely large signals—say, by shining a laser into a camera or overloading an amplifier—it may behave unpredictably or even break! But for most practical purposes, many systems are linear over a useful range of inputs.
+
+When a system is not linear everywhere, it may still be well-approximated as linear within a limited region of its input space. In other words, the system is **locally linear**: if you zoom in close enough to a particular operating point, the system’s behavior looks linear, even if it isn’t globally so.
+
+The key idea is that the best linear approximation depends on where you are in the input space. The linear model near $x_1$ might look quite different from the linear model near $x_2$. So, when modeling or analyzing a system, it’s important to know which region you’re working in.
+
+This principle of local linearity is fundamental in mathematics, physics, and engineering.[^taylor-series] It’s the reason why linear models are so widely used, even for systems that aren’t truly linear everywhere.
+
+[^taylor-series]: If you’ve seen the Taylor series expansion in calculus, you’ve already encountered local linearity. Near a point $x$, you can approximate a function by its value at $x$ plus a correction that depends on how far you are from $x$ and the derivative at $x$.
+
 ## Discrete linear systems {#sec-ls-discrete}
-The ISETCam simulations we perform in the book use **discrete** representations of linear systems. 
+The ISETCam simulations we use throughout this book rely on **discrete** representations of linear systems.
 
-We have already used discretization to represent a spatial stimulus at sample points or a spectral stimulus at sample wavelengths. In these discrete representations, a continuous stimulus, say $s(x)$, is sampled to form a vector of values, $\mathbf{s}$. We will write the entries as $s[x_i]$, where $i$ is an integer index, or simply $s[i]$, with square brackets to remind us that the signal is discretely sampled.
+We have already seen how to discretize a continuous stimulus—such as a spatial pattern or a spectrum—by sampling it at a set of points. For example, a continuous signal $s(x)$ becomes a vector of sampled values, $\mathbf{s}$. We’ll write the entries as $s[x_i]$, where $i$ is an integer index, or simply $s[i]$. The square brackets are a reminder that the signal is discretely sampled.
 
-Discrete linear systems can be described by a matrix, $\mathbf{L}$, which maps the input vector to an output vector, $\mathbf{o}$:
+A discrete linear system can be described by a matrix, $\mathbf{L}$, which maps the input vector to an output vector, $\mathbf{o}$:
 
 $$
 \mathbf{o} = \mathbf{L} \mathbf{s}
 $$ {#eq-linear-matrix}
 
-This can also be written as a summation
+This can also be written as a summation:
 
 $$
 o[i] = \sum_j L[i,j] s[j] 
 $$ {#eq-linear-matrix-summation}
 
-I find it helpful to visualize this as a matrix tableau: the $j^{th}$ column of $\mathbf{L}$ is scaled by the $j^{th}$ entry, $s[j]$. The visualization helps see that the output vector is the weighted sum of the columns of the matrix $\mathbf{L}$.
+It’s helpful to visualize this as a matrix tableau: each column of $\mathbf{L}$ is scaled by the corresponding entry in $\mathbf{s}$, and the output vector is the sum of these scaled columns.
 
-![Visualization of a matrix multiplication.  This is called a matrix tableau.  It emphases the matrix as a set of columns, and the signal ($s$) and output ($o$) as two column vectors. The linear transformation, $L$, in this case is a square matrix ($N \times N$).](images/linearsystems/matrixTableau-1.png){#sec-appendix-matrix-tableau width=60%}
+![Visualization of a matrix multiplication.  This is called a matrix tableau.  It emphasizes the matrix as a set of columns, and the signal ($s$) and output ($o$) as two column vectors. The linear transformation, $L$, in this case is a square matrix ($N \times N$).](images/linearsystems/matrixTableau-1.png){#sec-appendix-matrix-tableau width=60%}
 
-The action of any discrete linear system can be represented as matrix. There may be some notation or representations that change, but the principle always hold.  For example, sometimes the input is naturally thought of as an image (a matrix), and we need to "flatten" it into a vector; other times, we might use other clever tricks to do the linear transformation while keeping the image structure. But the key idea to keep in mind is that, in the discrete world, linear systems are matrices that map input vectors to output vectors.
+Any discrete linear system can be represented as a matrix. The notation may vary—sometimes the input is naturally an image (a matrix), and we “flatten” it into a vector; other times, we use tricks to keep the image structure intact. But the key idea is always the same: in the discrete world, linear systems are matrices that map input vectors to output vectors.
 
-::: {.callout-note collapse="true" title='History - linear algebra and matrices'}
-When I was an assistant professor, I had the privilege of joining faculty meetings with senior colleagues I deeply admired—Joe Goodman, Ron Bracewell, Tom Cover, and others. In these meetings, we often discussed how best to teach key mathematical ideas to engineering students. The more senior faculty generally favored starting with integrals and continuous functions, emphasizing that these are the true foundation of the mathematics. The younger faculty, who spent much of their time programming, leaned toward teaching with matrices and vectors. I remember Ron Bracewell remarking that continuous functions are the reality, and we should introduce those first—then, only later, show students the "vulgar" discrete approximations that we use because our computational tools require them. Good times.
+::: {.callout-note title="Some matrix notation" collapse="false"}
 
-We all agreed that discrete representations are extremely useful—and today, they are essential. Mathematics framed in terms of vectors and matrices is at the heart of modern neural networks and much of computational science and engineering. That’s the approach I use throughout this book. Still, I remember Bracewell’s advice, and sometimes feel a bit of guilt for not starting with the continuous case.
+| Notation | Meaning |
+|----------|---------|
+| **Bold capital letter** ($\mathbf{B}$) | Matrix |
+| **Bold lower case** ($\mathbf{s}$) | Vector (column, $N \times 1$) |
+| *Ordinary lower case* ($\alpha$, $s$) | Scalar (Latin or Greek) |
+| *Ordinary upper case* ($L(u,v)$) | 2D matrix or image (continuous) |
+| $L[\text{row},\text{col}]$ | Discrete image or matrix (row, col ordering) |
+| $\mathbf{B^t}$ | Matrix or vector transpose (superscript $t$) |
 
-It helps to know that representing problems with vectors and matrices is not a recent development. The importance of linear algebra and matrix methods was recognized nearly 200 years ago. If you’re interested in the history of these ideas, you can read more here: [History of matrices and linear algebra](resources/history-linear-algebra.html){target=_blank}
 :::
 
-## Spatial basis functions {#sec-optics-spatial-basis}
-It is natural to think of images as a set of points, and in @sec-pointspread we introduced the idea of the point spread function.  This is a very important system characterization, but it isn't always helpful for system characterization. It was an important insight  realize that images can be described in many other ways. Some of these alternatives are very valuable for analyzing and characterizing optical performance of image systems.
+## Spatial basis functions {#sec-ls-spatial-basis}
+Image systems engineers need effective ways to characterize system performance. One common approach is to examine how the system responds to a point of light—this is the point spread function (PSF) introduced in @sec-pointspread. The PSF is a fundamental tool, but it has limitations: using a point of light involves very few photons, and PSFs can vary in complex ways that are hard to summarize with just a few parameters.
 
-Linear models are an important method for exploring alternative image representations. We introduced linear models in @sec-linear-models, and we applied them to characterizing the spectral properties of light fields. Here we use linear models again, but this time to as models of the image intensity, $I(x,y)$. A linear model of the image intensity can be written this way:
+A key insight is that images can be described in many ways, not just as a collection of points. Some alternative representations are especially useful for analyzing and characterizing the optical performance of imaging systems. Linear models provide a powerful framework for defining and exploring these alternative image representations. We first introduced linear models in @sec-linear-models, and used them to describe the spectral properties of light fields. Here, we revisit linear models in a more general context, applying them to the spatial intensity of images, $S[u,v]$. A linear model for spatial intensity looks like this:
 
 $$
-O(x,y) = \sum_{i} w_{i} B_{i}(x,y)
+S[u,v] = \sum_{i} w[i] B_i[u,v]
 $${#eq-linear-model}
 
-The functions $B_{i}(x,y)$ are the **spatial basis functions**, and the scalar values $w_{i}$ are the weights applied to each basis function. The image is equal to the weighted sum of these basis functions. 
+The functions $B_i[u,v]$ are called **spatial basis functions**, and the scalars $w[i]$ are the weights for each basis function. The image intensity $S[u,v]$ is just a weighted sum of these basis functions.
 
-## Orthogonal image transforms {#sec-ls-orthogonal-bases}
-For a linear model to be useful, we need a method for finding the weights from the image. A function that maps $I(x,y)$ into the weights, $w_i$ is called an **image transform**.  If we choose a basis functions that are orthogonal to one another, the transform is easy to find.
+If we agree on a set of basis functions, then we can describe any image simply by specifying the weights. In fact, when we describe an image as a grid of intensity values, we’re implicitly using a set of point basis functions—each one nonzero at a single location and zero everywhere else.
+
+## Image transforms {#sec-ls-image-transforms}
+For a linear model to be useful, we need a way to find the weights from the image itself. A function that maps $S(u,v)$ to the weights $w[i]$ is called an **image transform**. If we choose basis functions that are orthogonal to each other, this transform becomes especially simple. Orthogonality means that
 
 $$
-0 = \sum_{x,y} B_i (x,y) B_j (x,y),
+0 = \sum_{u,v} B_i[u,v] ~ B_j[u,v]
 $$ {#eq-spatial-orthogonal}
 
-The simplicity of the transform can be seen by representing @eq-linear-model in discrete form an using matrices. Discrete representations using vectors and matrices is the way we compute, and thus a more practical if less pure.  To emphasize the discrete representation we will shift notation just a bit so that $I(x)$ becomes $I[n]$, and $B(x,y)$ becomes $B[n,m]$. 
+for any two different basis functions $B_i$ and $B_j$.
 
-We can convert the basis functions, which are matrices, into a column vector by stacking the columns on top of one another. We then group these columns into the columns of a single matrix, $\mathbf{B}$. We similarly stack the columns of the image into a long column vector $\mathbf{I}$.  The weights are already a vector which we write as, $\mathbf{w}$. 
-
-We can write @eq-linear-model as a matrix equation this way
+To work with these mathematically, we often “flatten” each basis function $B_i$ (which is a matrix) into a long column vector by stacking its columns. We do the same for the image $S[u,v]$, turning it into a vector $\mathbf{s}$. If we collect all the basis vectors as columns of a matrix $\mathbf{B}$, and the weights as a vector $\mathbf{w}$, we can write the linear model from @eq-linear-model as a matrix equation:
 
 $$
-\mathbf{o} = \mathbf{B w} .
+\mathbf{s} = \mathbf{B w}
 $$ {#eq-linear-model-matrix}
 
-The $i^{th}$ entry in the vector $\mathbf{w}$ multiples the $i^{th}$ column of the matrix $\mathbf{B}$.  The weighted columns are summed. This matrix equation is the same as the @eq-linear-model.
+Here, the $i^{th}$ entry in $\mathbf{w}$ multiplies the $i^{th}$ column of $\mathbf{B}$, and the sum gives us the image vector $\mathbf{s}$. This is just a compact way of writing the weighted sum from before.
 
-When the basis functions are orthogonal, $\mathbf{B^t B}$ is the identity matrix.  In this case we can transform from the image data to the basis function weights quite simply,
+Now, if the basis functions are orthogonal, then $\mathbf{B^t B}$ is the identity matrix. This makes it easy to recover the weights from the image:
 
 $$
-\mathbf{w} = \mathbf{B^t o} .
+\mathbf{w} = \mathbf{B^t s}
 $$ {#eq-linear-model-inverse}
 
-So, that's simple! 
+In words: just multiply the transpose of the basis matrix by the image vector to get the weights. That’s all there is to it!
 
-There are instances when we create linear models with bases that are not orthogonal. In that case, we have to find the inverse of $\mathbf{B}$ to move back and forth between the image and its transform. Computers are pretty big these days, so we can live with that.  But it is very nice to have the basis functions be orthogonal.
+If the basis functions aren’t orthogonal, we have to work a bit harder and use the inverse of $\mathbf{B}$ to solve for the weights. That’s not usually a problem for computers, but it’s much more convenient when the basis is orthogonal and we can just use the transpose.
 
-The principles of linear models are important for image systems and science and engineering broadly. Of the many linear models, two stand out as the most important.  The first is the representation as points.  When we represent an image as a set of points, we don't even notice that we are using an orthogonal basis. The points are the basis functions, $B_i$ is zero everywhere except except at one $(x,y)$ point.  The weights are the image intensity at that point, $I(x,y)$. Also, the point representation is orthogonal.  The inner product of two point basis functions is zero!  
+## Points and harmonics {#sec-ls-points-harmonics}
+Linear models are central to science, engineering, and mathematics. Among the many possible linear models, two orthogonal basis sets are especially important.
 
-The point representation is used very widely in many fields.  When used with dynamic systems, the point is usually called the **impulse**.  Or, in general, the **Dirac delta function** to honor a physicist who developed formal theory using the representation.  The use of points to represent an image is so natural that this observation is rarely made. We make it here mainly to emphasize that there are other linear model representations that have these key properties:  the stimulus is the weighted sum of the basis functions and the basis functions are orthogonal to one another.  Those two properties make the point representation valuable, and they also make the alternative representations valuable.
+The first is the **point basis**. When we represent an image as a grid of points, we are implicitly using a set of orthogonal basis functions—each basis function, $B_i[u,v]$, is zero everywhere except at a single $(u,v)$ location. The weight for each basis function is simply the image intensity at that point, $S[u,v]$. Because each point basis function is nonzero at only one location, the inner product of any two different point basis functions is zero—they are orthogonal by construction.
 
- The second important orthogonal representation uses **harmonic functions** as basis functions. We are heading towards an explanation of why these are so important. The way will get there is through eigenfunctions and shift-invariant linear systems, below.
+This point (or “impulse”) representation is so natural that we often take it for granted. In dynamic systems, the point basis is called the **impulse** or, more formally, the **Dirac delta function** (named after physicist Paul Dirac). The key idea is that the stimulus can be written as a weighted sum of orthogonal basis functions, with the weights given by the image values themselves. This property makes the point basis both powerful and convenient—but it’s not the only useful choice.
+
+The second is the **harmonic basis** —that is, sine and cosine waves at different spatial frequencies. Harmonic bases are fundamental for analyzing and understanding many systems, especially those that are shift-invariant. In the next sections, we’ll see why harmonics are so valuable, and how they relate to eigenfunctions and shift-invariant linear systems.
 
 ## Eigenfunctions {#sec-ls-eigenfunctions}
 
-An **eigenfunction** of a system is an input that whose output is the same as the input, up to a scale factor.  Harmonics are almost eigenfunctions. This is a very useful fact to know about a system because it means when we use an eigenfunction as input, we know almost everything about the output.  In symbols, if $\mathbf{L}$ is a matrix that represents a discrete linear system, the column vector $\mathbf{e}_i$ is an eigenfunction if
+An **eigenfunction** (or, in the discrete case, an **eigenvector**) of a system is a special input that produces an output that is simply a scaled version of itself. In other words, when you feed an eigenfunction into a linear system, the system just scales it—nothing else changes. This property is incredibly useful, because it means we can predict exactly what will happen to these inputs.
+
+For a discrete linear system represented by a matrix $\mathbf{L}$, a column vector $\mathbf{e}_i$ is an eigenvector if
 
 $$
-\alpha_i \mathbf{e}_i = \mathbf{L} \mathbf{e}_i 
+\mathbf{L} \mathbf{e}_i = \alpha_i \mathbf{e}_i
 $$ {#eq-eigenfunction-definition}
 
-The scalar values, $\alpha_i$ are the **eigenvalues** of the linear transformation. 
+where $\alpha_i$ is the **eigenvalue** associated with $\mathbf{e}_i$. The eigenvalue tells us how much the eigenvector is stretched or shrunk by the transformation.
 
-Some linear systems -and of course the ones we will be studying- have a set of eigenvectors that serve as an orthogonal basis for the input. For these systems, we can represent the stimulus as the weighted sum of its eigenfunctions.  Notice how simple this makes calculatin the output, $\mathbf{o}$ to an input $\mathbf{s}$. 
+Many linear systems—including the ones we focus on in this book—have a complete set of orthogonal eigenvectors. This means we can express any input vector (stimulus) as a weighted sum of these eigenvectors. The real power of this approach is that applying the system to such an input becomes very simple:
 
 $$
 \begin{aligned}
-\mathbf{o} & = \mathbf{L} ~ \mathbf{s} \\
-  & = \mathbf{L} ~ (\sum_i \sigma_i \mathbf{e}_i ) \\
-  & = \sum_i \sigma_i \mathbf{L} \mathbf{e}_i \\
-  &  = \sum_i \sigma_i \alpha_i  \mathbf{e}_i
- \end{aligned}
+\mathbf{o} & = \mathbf{L} \mathbf{s} \\
+       & = \mathbf{L} \left(\sum_i \sigma_i \mathbf{e}_i \right) \\
+       & = \sum_i \sigma_i \mathbf{L} \mathbf{e}_i \\
+       & = \sum_i \sigma_i \alpha_i \mathbf{e}_i
+\end{aligned}
 $$ {#eq-linear-eigencalculations}
 
+Here, $\mathbf{s}$ is the input, written as a sum of eigenvectors with weights $\sigma_i$. The output $\mathbf{o}$ is just the sum of the same eigenvectors, but now each one is scaled by its eigenvalue $\alpha_i$. This makes analyzing and understanding the system much easier.
+
+Harmonic functions (like sines and cosines) are almost eigenfunctions for many imaging systems, which is why they are so useful in practice.
 
 ## Shift-invariant linear systems {#sec-ls-shiftinvariance}
-A practical limitation of characterizing a general linear systems is that it can have many different PSFs - one for every point! But many real systems are much simpler. These systems have essentially the same point spread function across many points, with the only difference being that the point spread function is shifted between points. Because the shape of the point spread function remains the same -it is only shifted- we say such a system is **shift invariant**. 
+A practical challenge in characterizing general linear systems is that, in principle, each point in the input could have its own unique point spread function (PSF). That’s a lot to measure! Fortunately, many real systems are much simpler: their PSF is essentially the same everywhere, except that it’s shifted to match the input location. In other words, the shape of the PSF doesn’t change—it just moves around. We call such systems **shift-invariant**.
 
-Across the many branches of science and engineering, there are a large number of physical phenomena and engineering devices that are well-approximated as shift invariant linear systems. These systems are relatively straightforward to calibrate because we only need to estimate a single point spread function. Also, there are many computational tools that help us simulate shift invariant systems.  In imaging the point spread function is the key measurement that characterizes the linear system. In applications to systems that characterize responses over time, the key measurement is the response to a short temporal input. This is called the **impulse response**, and it is the equivalent of the point spread function in an imaging system. 
+Shift-invariant linear systems are common across science and engineering. Many physical devices and phenomena can be well-approximated as shift-invariant, at least over a useful range. This property makes them much easier to calibrate: we only need to measure a single PSF, rather than one for every possible input location. In imaging, the PSF is the key measurement that characterizes the system. In systems that respond over time (like audio or electronics), the equivalent measurement is the **impulse response**—the system’s output when given a very brief input. The impulse response plays the same role as the PSF, just in the time domain.
 
-The simplicity derived from shift invariance is so useful that some courses entitled 'linear systems' focus almost entirely on shift-invariant linear systems. 
+Because shift invariance simplifies both analysis and computation, many courses on “linear systems” focus almost entirely on shift-invariant cases.
 
 ::: {.callout-note title="Shift invariance notation" collapse="true"}
-A little mathematical notation may be useful. Suppose we write image translation as a function, $T()$. If we shift an image, $x$, by an amount, $\delta$, we write it as $T(x,\delta)$. A shift invariant system means that the output of a linear system, $L()$, to a translated image is the translated linear response
+Let’s make the idea of shift invariance a bit more precise. Suppose we use $T()$ to represent a shift (translation) operation. If we shift an image $x$ by an amount $\delta$, we write $T(x, \delta)$. A system $L()$ is shift-invariant if shifting the input and then applying the system gives the same result as applying the system first and then shifting the output (possibly by a scaled amount):
 
 $$
-L(T(x,\delta)) \approx T(L(x),\alpha \delta).
+L(T(x, \delta)) \approx T(L(x), \alpha \delta).
 $$ {#eq-shiftinvariance-defined}
 
-Notice that @eq-shiftinvariance-defined allows the size of the image shift, $\delta$, to differ from the size of the output shift, $\alpha \delta$. So if we displace an object by an amount $\delta \text{m}$, the image will be displaced by an amount $\alpha \delta \text{m}$ on the sensor. This scale factor depends on the image magnfication. 
+Here, $\alpha$ is a scale factor that accounts for magnification or other effects. For example, if you move an object by $\delta$ meters, its image might move by $\alpha \delta$ meters on the sensor.
 :::
 
-The image formation component (optics) of most image systems are typically linear, but they are not globally shift-invariant. Rather, they are shift invariant over some part, but not all, of the full visual field. Usually there is a region near the optical axis that is shift invariant, and the system is also locally shift-invariant at off-axis points. This local shift invariance is similar to a system that is locally linear. In optics the shift invariant region is called an **isoplanatic** region. 
+In practice, most imaging systems are linear, but not perfectly shift-invariant everywhere. Instead, they are shift-invariant only within certain regions of the field of view. This is called **local shift invariance**. In optics, such a region is known as an **isoplanatic** patch. Within an isoplanatic region, the PSF is (approximately) the same everywhere, so the shift-invariant analysis applies locally.
 
 ## Harmonics are almost eigenfunctions of SILs {#sec-ls-almost-eigen}
 In words, we express the stimulus as the weighted sum of the eigenfunctions.  Then we use linearity to apply the transformation to each of the eigenfunctions. This brings up the eigenvalue times the eigenfunction. So in the end, the output is the sum of the eigenfunctions, with each scaled by a weight corresponding to the stimulus itself ($\sigma_i$) and a second weight associated with the linear transformation ($\alpha_i$).  This can become even simpler if we select our stimulus to be an eigenfunction!  
@@ -204,3 +221,11 @@ This chapter explains the general principle and then provides several ways in wh
 
 If the input is a harmonic of frequency $f$, the output will be a scaled version of that harmonic.  It is not a perfect eigenfunction only because there can also be a phase shift. This input-output simplicity makes the harmonics very useful tools for system characterization.
 
+
+::: {.callout-note collapse="true" title='History - linear algebra and matrices'}
+When I was an assistant professor, I had the privilege of joining faculty meetings with senior colleagues I deeply admired—Joe Goodman, Ron Bracewell, Tom Cover, and others. In these meetings, we often discussed how best to teach key mathematical ideas to engineering students. The more senior faculty generally favored starting with integrals and continuous functions, emphasizing that these are the true foundation of the mathematics. The younger faculty, who spent much of their time programming, leaned toward teaching with matrices and vectors. I remember Ron Bracewell remarking that continuous functions are the reality, and we should introduce those first—then, only later, show students the "vulgar" discrete approximations that we use because our computational tools require them. Good times.
+
+We all agreed that discrete representations are extremely useful—and today, they are essential. Mathematics framed in terms of vectors and matrices is at the heart of modern neural networks and much of computational science and engineering. That’s the approach I use throughout this book. Still, I remember Bracewell’s advice, and sometimes feel a bit of guilt for not starting with the continuous case.
+
+It helps to know that representing problems with vectors and matrices is not a recent development. The importance of linear algebra and matrix methods was recognized nearly 200 years ago. If you’re interested in the history of these ideas, you can read more here: [History of matrices and linear algebra](resources/history-linear-algebra.html){target=_blank}
+:::
