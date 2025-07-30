@@ -5,20 +5,20 @@ But there’s another way to look at optical systems: as signal processors. In t
 
 This approach is especially useful because many optical systems are close to being linear —they satisfy the **Principle of Superposition**. You can test this property in the lab. There are lots of mathematical tools for working with linear systems, and they are taught in many context across science, technology, engineering and mathematics.
 
-Because many readers will be familiar with the ideas, I moved an introduction to linear systems into a linear systems appendix, @sec-appendix-linear-systems.  If you are familiar with linear systems principles and tools, use that appendix to understand the notation and thinking for the image systems engineering simulations in this book.
+Because many readers will be familiar with the ideas, I put an introduction to linear systems into a linear systems appendix, @sec-appendix-linear-systems.  If you are familiar with linear systems principles and tools, use that appendix to understand the notation and thinking for the image systems engineering simulations in this book.
 
 ## Point spread functions {#sec-pointspread-2}
-In @sec-pointspread I introduced the idea of the point spread function. It is simply the image of a point of light. If we know the point spread for each location in the scene, and superposition holds, we can predict how any input scene becomes an image. 
+In @sec-pointspread I introduced the idea of the point spread function (PSF). It is simply the image of a point of light. If we know the point spread for each location in the scene, and superposition holds, we can predict how any input scene becomes an image. 
 
-The scene is a collection of points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $S(\mathbf{p})$.   Write the point spread function of a point as $PSF_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image. Using superposition, we calculate the output image, $O(x,y)$ by adding up the weighted point spreads from every scene point. The formula looks like this:
+The scene is a collection of scene points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $S(\mathbf{p})$. Write the point spread function of a scene point as $PSF_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image. Using superposition, we calculate the output image, $O(x,y)$ by adding up the weighted point spreads from every scene point. The formula looks like this:
 
 $$
-O(x, y) = \sum_{\mathbf{p}} S(\mathbf{p})\, PSF_\mathbf{p}(x, y)
+O(x, y) = \sum_{\mathbf{p}} s(\mathbf{p})\, \text{PSF}_\mathbf{p}(x, y)
 $$ {#eq-pointspread-1}
 
 Here, $O(x, y)$ is the intensity at each image position. Each point in the scene contributes a scaled version of its PSF. The output image is the weighted sum of all those PSFs.
 
-Point spread functions are an intuitive way to understand the performance of the optical system. They are widely used, and widely discussed. There are even sections of conferences devoted to **point spread function engineering**.  This refers to understanding how to design optics that produce point spread functions with specific characteristics.
+Point spread functions are an intuitive way to understand the performance of the optical system. They are widely used and discussed. There are even sections of conferences devoted to **point spread function engineering**.  This refers to understanding how to design optics that produce point spread functions with specific characteristics, and I give some examples below in @sec-optics-psf-engineering.
 
 ::: {.callout-note title="A limitation of PSFs" collapse="true"}
 Point spread functions (PSFs) are an excellent tool for modeling optical systems when the scene can be approximated as a flat surface, or when all objects are far enough away that occlusion is negligible. In these cases, each point in the scene contributes independently to the image, and the total image can be predicted by summing the PSFs from each point.
@@ -30,7 +30,7 @@ In summary, PSFs provide a powerful and practical framework for image prediction
 
 ## Common PSFs in simulation {#sec-pointspread-common}
 
-When simulating optical systems, a few point spread functions (PSFs) that come up again and again (@fig-psf-graph).
+In optical system simulation, a few PSFs come up again and again (@fig-psf-graph).
 
 - **Airy pattern** is the only one of these PSFs that is based on the physics of light waves. This is the PSF we measure for a perfect, diffraction-limited lens imaging a point at a distance (@sec-airy-pattern and @fig-blur-comparison). The Airy pattern depends on wavelength and represents a best case limit. 
 - **Gaussian** is popular because it’s easy to work with in calculations. 
@@ -41,7 +41,7 @@ A graph of the cross-section through these PSFs is a useful way to compare them.
 
 ![Cross-section of four  point spread functions that are widely used in simulation. These point spreads were applied for a lens and sensor configuration with an $f/\#$ of 4 and a focal length of 3.9mm. The radius of the Airy disk for this configuration is 3.4 microns (see the zero-crossing of the Airy pattern).](images/optics/optics-siKernels-graph.png){#fig-psf-graph width="60%"}
 
-We can further visualize how the four PSF shapes transform a spectral radiance image using simulation. @fig-psf-image compares the optical images created by the four PSFs for a scene comprising a set of grid lines. The images were calculated using the ISETCam script <a href="../code/fise_opticsPSF.html" target="_blank">fise_opticsPSF.</a>  The Airy and Gaussian PSFs were implemented with point spread functions that vary with wavelength. The Pillbox and Lorentzian PSFs were implemented as wavelength-indepedent.
+We can visualize how the four PSF shapes transform a spectral radiance image using simulation. @fig-psf-image compares the optical images created by the four PSFs for a scene comprising a set of grid lines. The images were calculated using the ISETCam script <a href="../code/fise_opticsPSF.html" target="_blank">fise_opticsPSF.</a>  The Airy and Gaussian PSFs were implemented with point spread functions that vary with wavelength. The Pillbox and Lorentzian PSFs were implemented as wavelength-indepedent.
 
 ![The Airy pattern shows the image for a diffraction limited lens with an $f/\# =4$. The Gaussian has a spread that is roughly consistent with the Airy Disk size and a similar wavelength dependency; long-wavelengths spread more than short wavelengths. The high tail of the Lorentzian PSF produces a veiling glare. The Pillbox size is about equal to the Airy disk, but it introduces much more blur because it has a relatively high level over the entire width.](images/optics/optics-siKernels-image.png){#fig-psf-image width="90%"}
 
@@ -102,14 +102,13 @@ Here are the linespread functions of the Gaussian and Lorenzian.
 Given an LSF, it is possible to recover a unique circularly symmetric PSF using <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/wavefront/psf/lsf2circularpsf.m" target="_blank">`lsf2circularpsf.m`.</a>. I am not plotting the Pillbox because it is not circularly symmetric. In has the same LSF for the horizontal and vertical directions, but its LSF differs in other directions. 
 
 ## Chromatic aberration types {#sec-transverse-chromatic-aberration}
+In @sec-chromatic-aberration I explained the idea that because the index of refraction of a lens might vary with wavelength, the best focus distance would also vary with wavelength. In addition, even for an ideal lens, there will be a wavelength dependence arising from the wave nature of light and the size of the aperture or ($\text{f}/\#$). 
 
-*Not sure where this should go*
-
-In @sec-chromatic-aberration I explained the idea that because the index of refraction of a lens might vary with wavelength, the best focus distance would also vary with wavelength. In addition, even for an ideal lens, there will be a wavelength dependence arising from the wave nature of light. In this section we captured this variation by creating wavelength-dependent PSFs for the Airy and the Gaussian PSFs.  This type of chromatic aberration, a defocus of the image, is called **longitudinal chromatic aberration**.
+A typical consequence for optical systems is that we can achieve a very good focus (small PSF) for one wavelength, but less precise for others.  change in shape of the PSF as we vary the wavelength is called This type of chromatic aberration, a defocus of the image, is called **longitudinal chromatic aberration**.
 
 There is a second type of chromatic aberration, called **transverse chromatic aberration** that arises in real imaging systems. The transverse aberration is somewhat related to the longitudinal aberration, but it has a different physical basis.
 
-## An engineered point spread function
+## Point spread engineering {#sec-optics-psf-engineering}
 
 See if we can find the example of the astronomer looking for exoplanets.  He wanted a point spread that was black in the center!
 
