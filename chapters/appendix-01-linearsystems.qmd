@@ -91,7 +91,7 @@ $$ {#eq-linear-matrix-summation}
 
 It’s helpful to visualize this as a matrix tableau: each column of $\mathbf{L}$ is scaled by the corresponding entry in $\mathbf{s}$, and the output vector is the sum of these scaled columns.
 
-![Visualization of a matrix multiplication.  This is called a matrix tableau.  It emphasizes the matrix as a set of columns, and the signal ($s$) and output ($o$) as two column vectors. The linear transformation, $L$, in this case is a square matrix ($N \times N$).](images/linearsystems/matrixTableau-1.png){#sec-appendix-matrix-tableau width=60%}
+![Visualization of a matrix multiplication.  This is called a matrix tableau.  It emphasizes the matrix as a set of columns, and the signal ($s$) and output ($o$) as two column vectors. The linear transformation, $L$, in this case is a square matrix ($N \times N$).](images/linearsystems/matrixTableau-1.png){#sec-ls-matrix-tableau width=60%}
 
 Some matrices have an inverse, and for these we can estimate the input by measuring the output. Square matrices are particularly simple to work with, and a square matrix means we are matching the sample spacing of the inputs with the sample spacing of the outputs. Some matrices are not invertible, and the best we can do from the measurements is constrain the set of possible inputs.
 
@@ -113,18 +113,16 @@ Throughout this volume, I am trying to keep the mathematical typography consiste
 :::
 
 ## Optics: Pointspread matrix {#sec-ls-point-matrix}
-Image systems engineers often examine system performance by measuring the response to a point of light—this is the point spread function (PSF) introduced in @sec-pointspread.  A point of light, $p$, is represented by a vector that has $1$ in a single location and zeros elsewhere.  Each column of the linear transformation, $\mathbf{L}$, is the point spread function corresponding to a sampled point, $\text{PSF}_p$.
+Image systems engineers often examine system performance by measuring the response to a point of light—this is the point spread function (PSF) introduced in @sec-pointspread.  A point of light, $p_i$, is represented by a vector that has $1$ in a single location and zeros elsewhere.  Each column of the linear transformation, $\mathbf{L}$, is the point spread function corresponding to the sampled point, $\text{PSF}_i$.
 
-![Matrix tableau of an optical system with the point spreads in the columns.](){#fig-ls-matrix-psf}
+![Matrix tableau of an optical system with the point spreads in the columns.](images/linearsystems/psfmatrix.png){#fig-ls-matrix-psf width=80%}
 
-I drew this tableau for a one-dimensional system to make the idea clear.  If we are using a two-dimensional model, we would have to flatten the image matrices into columns, but only complexity would be added.  The principles would be unchanged.
+I drew this tableau for a one-dimensional point spread, to make the idea clear. For two-dimensional images, we would have to flatten the image data into columns. But only complexity would be added, and the principles would be unchanged.
 
 ## Spatial basis functions {#sec-ls-spatial-basis}
-The PSF is a fundamental tool, but it has limitations: using a point of light involves very few photons, and PSFs can vary in complex ways that are hard to summarize with just a few parameters.
+The PSF is a fundamental tool, but it has limitations: using a point of light involves very few photons, and PSFs can vary in complex ways that are hard to summarize with just a few parameters. A key insight is that we can use linear models to describe images in many different ways, not just as a collection of points. Some alternative representations are especially useful for analyzing the optical performance of imaging systems.  Here, we use linear models to create alternative representations of the spatial intensity of images, $S[u,v]$. 
 
-The first is the **point basis**. When we represent an image as a grid of points, we are implicitly using a set of orthogonal basis functions—each basis function, $B_i[u,v]$, is zero everywhere except at a single $(u,v)$ location. The weight for each basis function is simply the image intensity at that point, $S[u,v]$. Because each point basis function is nonzero at only one location, the inner product of any two different point basis functions is zero—they are orthogonal by construction.
-
-A key insight is that images can be described in many ways, not just as a collection of points. Some alternative representations are especially useful for analyzing and characterizing the optical performance of imaging systems. Linear models provide a powerful framework for defining and exploring these alternative image representations. We first used linear models to describe the spectral properties of light fields (@sec-linear-models). Here, we use linear models in a different context, applying them to the spatial intensity of images, $S[u,v]$. A linear model for spatial intensity looks like this:
+A linear model for spatial intensity looks like this:
 
 $$
 S[u,v] = \sum_{i} w[i] B_i[u,v]
@@ -134,8 +132,9 @@ The functions $B_i[u,v]$ are called **spatial basis functions**, and the scalars
 
 If we agree on a set of basis functions, then we can describe any image simply by specifying the weights. In fact, when we describe an image as a grid of intensity values, we’re implicitly using a set of point basis functions—each one nonzero at a single location and zero everywhere else.
 
+
 ## Image transforms {#sec-ls-orthogonal-transforms}
-For a linear model to be useful, we need a way to find the basis weights from the image itself. A function that maps an image, $S(u,v)$ to the weights $w[i]$ is called an **image transform**. If we choose **orthogonal basis functions** this transform becomes especially simple. Orthogonal means
+For a linear model to be useful, we need a way to find the basis weights from the image. A function that maps an image, $S[u,v]$ to the weights $w[i]$ is called an **image transform**. If we choose **orthogonal basis functions** this transform becomes especially simple. Orthogonal means
 
 $$
 0 = \sum_{u,v} B_i[u,v] ~ B_j[u,v]
@@ -165,13 +164,27 @@ In words: just multiply the image vector by the transpose of the basis matrix to
 
 If the basis functions aren’t orthogonal, we have to work a bit harder and use the inverse of $\mathbf{B}$ to solve for the weights. That’s not usually a problem for computers, but it’s much more convenient when the basis is orthogonal and we can just use the transpose.
 
-## Points and harmonics {#sec-ls-points-harmonics}
-Linear models are central to science, engineering, and mathematics. Among the many possible linear models, two orthogonal basis sets are especially important.
 
-This point (or “impulse”) representation is so natural that we often take it for granted. In dynamic systems, the point basis is called the **impulse** or, more formally, the **Dirac delta function** (named after physicist Paul Dirac). The key idea is that the stimulus can be written as a weighted sum of orthogonal basis functions, with the weights given by the image values themselves. This property makes the point basis both powerful and convenient—but it’s not the only useful choice.
+:::{.callout-note title="Point basis" collapse="false"}
+This seems almost too trivial to mention.  But here we go.
 
+When we describe images as points, $S[u,v]$, we are implicitly using the **point basis**. The points form an orthogonal basis functions—each basis function, $B_i[u,v]$, is zero everywhere except at a single $(u,v)$ location. The weight for each basis function is simply the image intensity at that point, $S[u,v]$. 
 
-The second is the **harmonic basis** —that is, sine and cosine waves at different spatial frequencies. In the next sections, I explain why harmonics are so valuable for analyzing certain types of linear systems. 
+$$
+S[u,v] = \sum_{u,v} S[u,v] B_i[u,v]
+$${#eq-linear-model}
+
+Because each point basis function is nonzero at only one location, the inner product of any two different point basis functions is zero—they are orthogonal by construction.
+:::
+
+## Harmonics {#sec-ls-points-harmonics}
+Linear models are central to science, engineering, and mathematics. Among the many possible linear models, two orthogonal basis sets are especially important. 
+
+We have repeatedly used the point representation of the image. The point (or “impulse”) representation is so natural that we often take it for granted.  The second is the **harmonic basis** —that is, sine and cosine waves at different spatial frequencies. In the next sections, I explain why harmonics are so valuable for analyzing certain types of linear systems. 
+
+::: {.callout-note title="Dynamic systems" collapse="false"}
+In systems that respond over time (like audio or electronics), the equivalent measurement is the **impulse response**—the system’s output when given a very brief input. The impulse response plays the same role as the PSF, just in the time domain. In dynamic systems, the point basis is called the **impulse** and the point spread is the **impulse response**. The mathematical formulation of the impulse or point is often called the **Dirac delta function**, to honor the theoretical physicist Paul Dirac. 
+:::
 
 ## Eigenfunctions {#sec-ls-eigenfunctions}
 An **eigenfunction** (or, in the discrete case, an **eigenvector**) of a system is a special input that produces an output that is simply a scaled version of itself. In other words, when you feed an eigenfunction into a linear system, the system just scales it—nothing else changes. This property is incredibly useful, because it means we can predict exactly what will happen to these inputs.
@@ -197,20 +210,20 @@ $$ {#eq-linear-eigencalculations}
 
 Here, $\mathbf{s}$ is the input, written as a sum of eigenvectors with weights $\sigma_i$. The output $\mathbf{o}$ is just the sum of the same eigenvectors, but now each one is scaled by its eigenvalue $\alpha_i$. This makes analyzing and understanding the system much easier.
 
-Not all linear systems have a complete set of eigenvectors. Only discrete linear systems represented by **normal matrices** are guaranteed to have an orthogonal set of eigenvectors.  The definition of a normal matrix is
+Not all linear systems have a complete set of eigenvectors. Only discrete linear systems represented by **normal matrices** are guaranteed to have an orthogonal set of eigenvectors.  The definition of a normal matrix is[^conjugate-transpose].
 
 $$
 \mathbf{L L^* = L^* L} .
 $$ {#eq-normal-matrix-definition}
 
-The $*$-operator means **conjugate transpose**[^conjugate-transpose].
 
-[^conjugate-transpose]: This means take the complex conjugate of each entry ($a + ib \rightarrow a - ib$), and transpose the matrix.  For a real matrix, the $*$-operator is amounts to the usual transpose. 
+[^conjugate-transpose]: The $*$-operator means **conjugate transpose**.
+This means take the complex conjugate of each entry ($a + ib \rightarrow a - ib$), and transpose the matrix. For a real matrix, the $*$-operator amounts to the usual matrix transpose. 
 
 ## Shift-invariant linear (SIL) systems  {#sec-ls-shiftinvariance}
-A practical challenge in characterizing general linear systems is that, in principle, each point in the input could have its own unique point spread function (PSF). That’s a lot to measure! Fortunately, many real systems are much simpler: their PSF is essentially the same everywhere, except that it’s shifted to match the input location. In other words, the shape of the PSF doesn’t change—it just moves around. We call such systems **shift-invariant**.
+A practical challenge in characterizing general linear systems is that each input point could have a different point spread function (PSF). That’s a lot to measure! Fortunately, many real systems are much simpler: their PSF is essentially the same, except that it’s shifted to match the shift in input location. In other words, the shape of the PSF doesn’t change—it just translates. We call such systems **shift-invariant**.
 
-Shift-invariant linear systems are common across science and engineering. Many physical devices and phenomena can be well-approximated as shift-invariant, at least over a useful range. This property makes them much easier to calibrate: we only need to measure a single PSF, rather than one for every possible input location. In imaging, the PSF is the key measurement that characterizes the system. In systems that respond over time (like audio or electronics), the equivalent measurement is the **impulse response**—the system’s output when given a very brief input. The impulse response plays the same role as the PSF, just in the time domain.
+Shift-invariant linear systems are common across science and engineering. Many physical devices and phenomena can be well-approximated as shift-invariant, at least over a useful range. This property makes them much easier to calibrate: we only need to measure a single PSF -the response to a single point!- rather than measure every possible point. You can see why for a shift-invariant system the PSF is the key measurement that characterizes the system. 
 
 Because shift invariance simplifies both analysis and computation, many courses on “linear systems” focus almost entirely on the shift-invariant case.
 
@@ -227,30 +240,24 @@ Here, $\alpha$ is a scale factor that accounts for magnification or other effect
 ## SIL system matrix
 The matrix representation of an SIL, $\mathbf{L}$ is simple and can be visualized.  If the input stimulus is a point, then it is a vector that has a $1$ in a single entry and $0$ elsewhere. The point spread function is the column of the matrix, $\mathbf{L}$.  Since the point spread functions are all the same, except for a shift, the columns are all the same except for a shift. 
 
-If we arrange the sample spacing on the input and output properly, we can shift the input point by one row and the point spread column will shift down one row.  The entries of the matrix, shown in the tableau, will be
+If we arrange the sample spacing of the input and output measurements carefully, we can shift the input point by one row and the corresponding column, representing a point spread measurement, will also shift down one row. The entries of the matrix, shown in the tableau, will look like this @fig-ls-circulant-matrix.
 
-![Circulant matrix](){#fig-ls-circulant-matrix}
+![Circulant matrix.](images/linearsystems/circulant-matrix.png){#fig-ls-circulant-matrix width=70%}
 
-There is one detail.  We treat the point spread functions as 'circular'.  When a value shifts below the bottom of the matrix, we copy it into the missing entry at the top of the column.  Hopefully you can see what I mean from the @fig-ls-circulant-matrix.
+For computer simulations, there are many details to keep track of, especially issues relating to the edge and wrapping. For example, we often treat the point spread functions as 'circular', so when a value shifts below the bottom of the matrix, we do not throw it away but we copy it into the missing entry at the top of the column. In @fig-ls-circulant-matrix, the edges of the point spread are all zero, and that made the diagram simpler. 
+
+Have a good look at @fig-ls-circulant-matrix. Feel how simple an SIL system matrix is compared to a general linear system (@sec-ls-matrix-tableau). Linear systems in general are great to work with.  If you are working with an SIL, you are particularly fortunate.  The next section gives another reason why.
 
 ## Harmonics:  Eigenvectors for shift-invariance {#sec-ls-harmonics-sil}
-Finally, we are at the main point I have been working towards.  It is the abstraction behind the use of harmonics with shift invariant linear systems in @sec-optics-linear-harmonics, where we develop the Discrete Fourier Series (@sec-optics-fourier-series).
+We have reached the observation that is the basis of many calculations in the main chapters in the book: the relationship between harmonics and shift invariant linear systems. These ideas are introduced in the main text in @sec-optics-linear-harmonics, where we develop the Discrete Fourier Series (@sec-optics-fourier-series). The ideas continue to be used in many subsequent chapter.
 
-Haromnic functions are (almost) eigenfunctions of shift-invariant linear systems. If we move from purely real stimuli to complex stimuli, the complex exponentials, through Euler's formula (@eq-Eulers-formula), are the complex harmonics. They are genuinely eigenfunctions of shift-invariant linear systems.  And the are a complete, orthogonal set of eigenfunctions so that any input stimulus can be described as the weighted sum of complex exponentials.
+Haromonic functions are *almost* eigenfunctions of shift-invariant linear systems. By almost, I mean that when a harmonic is the input, the output is a scaled harmonic with a possible shift in position (phase). It is not exactly an eigenfunction because two parameters, the amplitude and phase, can change.
 
+The mathematics of this near-miss is managed by expressing the signal using complex instead of real numbers. For complex numbers, which inherently have two parameters, we can say without any guilt that the complex exponentials are eigenvectors of a shift-invariant linear system. Moreover, the complex exponentials are a complete, orthogonal set of eigenfunctions; any input stimulus can be described as the weighted sum of complex exponentials. We relate the complex exponentials back to the real harmonics, using Euler's formula (@eq-Eulers-formula). [^harmonics-FOV].
 
-*Harmonic functions (like sines and cosines) are almost eigenfunctions for many image systems; this makes them very useful stimuli for characterization and design. I explain this idea in the Appendix to [Foundations of Vision](https://wandell.github.io/FOV-1995/appendix.html). The key ideas are explained below, from a slightly different point of view.*
+[^harmonics-FOV]: I explain the relationship between harmonics and shift-invariant linear systems in detail, staying away from complex exponentials, in the Appendix to [Foundations of Vision](https://wandell.github.io/FOV-1995/appendix.html){target=_blank}.
 
-
-the stimulus as the weighted sum of the eigenfunctions.  Then we use linearity to apply the transformation to each of the eigenfunctions. This brings up the eigenvalue times the eigenfunction. So in the end, the output is the sum of the eigenfunctions, with each scaled by a weight corresponding to the stimulus itself ($\sigma_i$) and a second weight associated with the linear transformation ($\alpha_i$).  This can become even simpler if we select our stimulus to be an eigenfunction!  
-
-
-Harmonic functions are a tool to help with system characterization. Their value arises from this simple and important fact:  When the input to an optical system is a harmonic function at spatial frequency $f$ and unit contrast, in each local region the image will also be a harmonic function at the same frequency.  The relative phase and amplitude of the output will differ from the input, but we only need to measure these two parameters.  
-
-This chapter explains the general principle and then provides several ways in which harmonics are used to characterize optical systems as well as the human visual system.
-
-If the input is a harmonic of frequency $f$, the output will be a scaled version of that harmonic.  It is not a perfect eigenfunction only because there can also be a phase shift. This input-output simplicity makes the harmonics very useful tools for system characterization.
-
+Taken together this means shift-invariant linear systems and harmonics can take advantage of the full power and simplicity of the eigenvector calculations (@eq-linear-eigencalculations). When the input to an optical system is a harmonic function at spatial frequency $f$ and unit contrast, the output image will be a harmonic function at the same frequency. The amplitude and of the output will differ from the input, but we only need to measure these two parameters. This input-output simplicity makes the harmonics very useful tools for system characterization.
 
 ::: {.callout-note collapse="true" title='History - linear algebra and matrices'}
 When I was an assistant professor, I had the privilege of joining faculty meetings with senior colleagues I deeply admired—Joe Goodman, Ron Bracewell, Tom Cover, and others. In these meetings, we often discussed how best to teach key mathematical ideas to engineering students. The more senior faculty generally favored starting with integrals and continuous functions, emphasizing that these are the true foundation of the mathematics. The younger faculty, who spent much of their time programming, leaned toward teaching with matrices and vectors. I remember Ron Bracewell remarking that continuous functions are the reality, and we should introduce those first—then, only later, show students the "vulgar" discrete approximations that we use because our computational tools require them. Good times.
@@ -261,14 +268,14 @@ It helps to know that representing problems with vectors and matrices is not a r
 :::
 
 ## Local linearity {#sec-ls-local-linearity}
-No real system is perfectly linear for all possible inputs. If you push a system with extremely large signals—say, by shining a laser into a camera or overloading an amplifier—it may behave unpredictably or even break! But for most practical purposes, many systems are linear over a useful range of inputs.
+No real system is linear for all possible inputs. If you push a system with extremely large signals—say, by shining a laser into a camera or overloading an amplifier—it may behave unpredictably or even break! But for most practical purposes, many systems are linear over a useful range of inputs.
 
 When a system is not linear everywhere, it may still be well-approximated as linear within a limited region of its input space. In other words, the system is **locally linear**: if your keep your signals similar enough to a particular operating point, the system’s behavior is linear, even if it isn’t globally so.
 
 For a locally linear system, the best linear approximation depends on where you are in the input space. The linear model near $x_1$ might look quite different from the linear model near $x_2$. So, when modeling or analyzing a locally linear system, it’s important to know which region you’re working in.
 
-In practice, the optics of most imaging systems are linear over a large range, but not shift-invariant. Instead, they are shift-invariant only within certain regions of the field of view. This is called **local shift invariance**. In optics, such a region is known as an **isoplanatic** patch. Within an isoplanatic region, the PSF is (approximately) the same everywhere, so the shift-invariant analysis applies locally.
+In practice, the optics of most imaging systems are linear over a large range, but they are shift-invariant over a smaller input range, only within a limited region of the field of view. This is called **local shift invariance**. Such a region is known as an **isoplanatic** patch. The shift-invariant analysis applies well to such local regions, and degrades if we measure over larger regions.
 
-This principle of local linearity is fundamental in mathematics, physics, and engineering.[^taylor-series] It’s the reason why linear models are so widely used, even for systems that aren’t truly linear everywhere.
+This principle of local linearity, or local shift-invariance, is fundamental in mathematics, physics, and engineering.[^taylor-series] It’s the reason why linear models are so widely used, even for systems that aren’t truly linear everywhere.
 
 [^taylor-series]: If you’ve seen the Taylor series expansion in calculus, you’ve already encountered local linearity. Near a point $x$, you can approximate a function by its value at $x$ plus a correction that depends on how far you are from $x$ and the derivative at $x$.
