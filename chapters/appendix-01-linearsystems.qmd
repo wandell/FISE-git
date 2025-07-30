@@ -3,7 +3,7 @@
 -->
 
 ## Linear systems overview
-Linear systems theory is a foundational topic in science, engineering, and mathematics, but each field tends to approach it a bit differently and at varying levels of depth. This appendix has two main goals. First, it aims to introduce the core ideas of linear systems to readers who may not have seen them before, using an accessible and intuitive approach. Second, it provides a consistent framework and notation for more experienced readers, matching the perspective used throughout this book. My hope is that both newcomers and those with prior exposure will find this chapter a useful reference for the concepts and tools we use in image systems engineering.
+Linear systems theory is a foundational topic in science, engineering, and mathematics. Each discipline field explains the importance of linear systems a bit differently, and they use it at varying levels of depth. In this appendix I introduce the core ideas of linear systems for image systems engineering.  I have two goals.  First, I hope to provide readers an accessible and intuitive description from the point of view of image systems engineering. Second, I will introduce the general notation used throughout this book. My hope is that both newcomers and those with prior exposure will find this chapter a useful reference for the concepts and tools we use in image systems engineering.
 
 ## Principles of Superposition and Homogeneity {#sec-ls-superposition}
 A system $L$ is linear if it satisfies the superposition rule:
@@ -12,20 +12,20 @@ $$
 L(x + y) = L(x) + L(y).
 $$ {#eq-superposition}
 
-Here, $x$ and $y$ are two possible inputs, and $L(x)$ is the system's response to the input $x$. The input variable can be a scalar, vector, matrix, or tensor. For example, in an optical system, $x$ might represent the incident light field at the entrance aperture, and $L(x)$ could be the spectral irradiance measured at the sensor .
+Here, $x$ and $y$ are two possible inputs, and $L(x)$ is the system's response to the input $x$. The input variable can be a scalar, vector, matrix, or tensor. For example, in an optical system, $x$ might represent the incident light field at the entrance aperture, and $L(x)$ could be the spectral irradiance measured at the sensor. For modeling an image sensor, $x$ could be the irradiance at the sensor and $L(x)$ would be the electrons accumulated in the pixels.  For human vision, $x$ might be the spectral power distribution of the incident light field and $L(x)$ the photon absorptions in the three types of cone photoreceptors.
 
-A special case of superposition is **homogeneity**:
+**Homogeneity** is special case of superposition:
 
 $$
 L(\alpha x) = \alpha L(x)
 $$ {#eq-homogeneity}
 
-Homogeneity follows from superposition. For example, adding an input to itself:
+Homogeneity follows from superposition. For example, adding an input to itself,
 
 $$\begin{aligned}
 L(x + x) &= L(2x) \nonumber  \\ 
 &= L(x) + L(x) \nonumber \\
-&= 2L(x). \nonumber
+&= 2L(x) . \nonumber
 \end{aligned}
 $$
 
@@ -35,7 +35,7 @@ $$
 L(m x) = m L(x).
 $$
 
-Finally, remember that a system can be homogeneous without being linear. For example the absolute value, $f(x) = |x|$, and the vector length function
+Homogeneity is also noted as a special case because a system can be homogeneous without being linear. For example the absolute value, $f(x) = |x|$, and the vector length function
 
 $$
 f(\mathbf{x}) = \|\mathbf{x}\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
@@ -73,11 +73,11 @@ To extend this to all real numbers, continuity and far more extensive proof is r
 :::
 
 ## Discrete linear systems {#sec-ls-discrete}
-The ISETCam simulations we use throughout this book rely on **discrete** representations of linear systems.
+The ISETCam simulations rely on **discrete** representations of linear systems.
 
-We have already seen how to discretize a continuous stimulus—such as a spatial pattern or a spectrum—by sampling it at a set of points. For example, a continuous signal $s(x)$ becomes a vector of sampled values, $\mathbf{s}$. We’ll write the entries as $s[x_i]$, where $i$ is an integer index, or simply $s[i]$. The square brackets are a reminder that the signal is discretely sampled.
+We convert a continuous stimulus—such as a spatial pattern or a spectrum—by sampling it at a set of points. In general, a continuous signal $s(x)$ becomes a vector of sampled values, $\mathbf{s}$, by sampling it at a set of values, $x_i$.  We might write the entries as $s[x_i]$, where $i$ is an integer index, or simply $s[i]$. The square brackets are a reminder that the signal is discretely sampled.
 
-A discrete linear system can be described by a matrix, $\mathbf{L}$, which maps the input vector to an output vector, $\mathbf{o}$:
+Any discrete linear system can be represented as a matrix, $\mathbf{L}$, which maps the input vector to an output vector, $\mathbf{o}$:
 
 $$
 \mathbf{o} = \mathbf{L} \mathbf{s}
@@ -93,7 +93,11 @@ It’s helpful to visualize this as a matrix tableau: each column of $\mathbf{L}
 
 ![Visualization of a matrix multiplication.  This is called a matrix tableau.  It emphasizes the matrix as a set of columns, and the signal ($s$) and output ($o$) as two column vectors. The linear transformation, $L$, in this case is a square matrix ($N \times N$).](images/linearsystems/matrixTableau-1.png){#sec-appendix-matrix-tableau width=60%}
 
-Any discrete linear system can be represented as a matrix. The notation may vary—sometimes the input is naturally an image (a matrix), and we “flatten” it into a vector; other times, we use tricks to keep the image structure intact. But the key idea is always the same: in the discrete world, linear systems are matrices that map input vectors to output vectors.
+Some matrices have an inverse, and for these we can estimate the input by measuring the output. Square matrices are particularly simple to work with, and a square matrix means we are matching the sample spacing of the inputs with the sample spacing of the outputs. Some matrices are not invertible, and the best we can do from the measurements is constrain the set of possible inputs.
+
+The notation we use for the vectors and matrices may vary—sometimes the input is naturally an image (a matrix), and we “flatten” it into a vector; other times, we use tricks to keep the image structure intact and still carry out the computation. But the key idea is always the same: in the discrete world, linear systems are matrices that map input vectors to output vectors.
+
+Throughout this volume, I am trying to keep the mathematical typography consistent with this table.
 
 ::: {.callout-note title="Some matrix notation" collapse="false"}
 
@@ -108,8 +112,17 @@ Any discrete linear system can be represented as a matrix. The notation may vary
 
 :::
 
+## Optics: Pointspread matrix {#sec-ls-point-matrix}
+Image systems engineers often examine system performance by measuring the response to a point of light—this is the point spread function (PSF) introduced in @sec-pointspread.  A point of light, $p$, is represented by a vector that has $1$ in a single location and zeros elsewhere.  Each column of the linear transformation, $\mathbf{L}$, is the point spread function corresponding to a sampled point, $\text{PSF}_p$.
+
+![Matrix tableau of an optical system with the point spreads in the columns.](){#fig-ls-matrix-psf}
+
+I drew this tableau for a one-dimensional system to make the idea clear.  If we are using a two-dimensional model, we would have to flatten the image matrices into columns, but only complexity would be added.  The principles would be unchanged.
+
 ## Spatial basis functions {#sec-ls-spatial-basis}
-Image systems engineers need effective ways to characterize system performance. One common approach is to examine how the system responds to a point of light—this is the point spread function (PSF) introduced in @sec-pointspread. The PSF is a fundamental tool, but it has limitations: using a point of light involves very few photons, and PSFs can vary in complex ways that are hard to summarize with just a few parameters.
+The PSF is a fundamental tool, but it has limitations: using a point of light involves very few photons, and PSFs can vary in complex ways that are hard to summarize with just a few parameters.
+
+The first is the **point basis**. When we represent an image as a grid of points, we are implicitly using a set of orthogonal basis functions—each basis function, $B_i[u,v]$, is zero everywhere except at a single $(u,v)$ location. The weight for each basis function is simply the image intensity at that point, $S[u,v]$. Because each point basis function is nonzero at only one location, the inner product of any two different point basis functions is zero—they are orthogonal by construction.
 
 A key insight is that images can be described in many ways, not just as a collection of points. Some alternative representations are especially useful for analyzing and characterizing the optical performance of imaging systems. Linear models provide a powerful framework for defining and exploring these alternative image representations. We first used linear models to describe the spectral properties of light fields (@sec-linear-models). Here, we use linear models in a different context, applying them to the spatial intensity of images, $S[u,v]$. A linear model for spatial intensity looks like this:
 
@@ -155,13 +168,8 @@ If the basis functions aren’t orthogonal, we have to work a bit harder and use
 ## Points and harmonics {#sec-ls-points-harmonics}
 Linear models are central to science, engineering, and mathematics. Among the many possible linear models, two orthogonal basis sets are especially important.
 
-The first is the **point basis**. When we represent an image as a grid of points, we are implicitly using a set of orthogonal basis functions—each basis function, $B_i[u,v]$, is zero everywhere except at a single $(u,v)$ location. The weight for each basis function is simply the image intensity at that point, $S[u,v]$. Because each point basis function is nonzero at only one location, the inner product of any two different point basis functions is zero—they are orthogonal by construction.
-
-Take note of the linear system matrix when we are working with points. A point of light, $p$, is represented as an input that has $1$ in a single location and zeros elsewhere.  Each column of the linear transformation, $\mathbf{L}$ is the point spread function of that point, $\text{PSF}_p$.
-
-![Point spreads in the columns](){#fig-ls-matrix-psf}
-
 This point (or “impulse”) representation is so natural that we often take it for granted. In dynamic systems, the point basis is called the **impulse** or, more formally, the **Dirac delta function** (named after physicist Paul Dirac). The key idea is that the stimulus can be written as a weighted sum of orthogonal basis functions, with the weights given by the image values themselves. This property makes the point basis both powerful and convenient—but it’s not the only useful choice.
+
 
 The second is the **harmonic basis** —that is, sine and cosine waves at different spatial frequencies. In the next sections, I explain why harmonics are so valuable for analyzing certain types of linear systems. 
 
