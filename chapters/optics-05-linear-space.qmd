@@ -10,7 +10,7 @@ Because many readers will be familiar with the ideas, I put an introduction to l
 ## Point spread functions {#sec-pointspread-2}
 In @sec-pointspread I introduced the idea of the point spread function (PSF). It is simply the image of a point of light. If we know the point spread for each location in the scene, and superposition holds, we can predict how any input scene becomes an image. 
 
-The scene is a collection of scene points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $S(\mathbf{p})$. Write the point spread function of a scene point as $PSF_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image. Using superposition, we calculate the output image, $O(x,y)$ by adding up the weighted point spreads from every scene point. The formula looks like this:
+The scene is a collection of scene points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $S(\mathbf{p})$. Write the point spread function of a scene point as $\text{PSF}_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image. Using superposition, we calculate the output image, $O(x,y)$ by adding up the weighted point spreads from every scene point. The formula looks like this:
 
 $$
 O(x, y) = \sum_{\mathbf{p}} s(\mathbf{p})\, \text{PSF}_\mathbf{p}(x, y)
@@ -102,13 +102,32 @@ Here are the linespread functions of the Gaussian and Lorenzian.
 Given an LSF, it is possible to recover a unique circularly symmetric PSF using <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/wavefront/psf/lsf2circularpsf.m" target="_blank">`lsf2circularpsf.m`.</a>. I am not plotting the Pillbox because it is not circularly symmetric. In has the same LSF for the horizontal and vertical directions, but its LSF differs in other directions. 
 
 ## Chromatic aberration types {#sec-transverse-chromatic-aberration}
-In @sec-chromatic-aberration I explained the idea that because the index of refraction of a lens might vary with wavelength, the best focus distance would also vary with wavelength. In addition, even for an ideal lens, there will be a wavelength dependence arising from the wave nature of light and the size of the aperture or ($\text{f}/\#$). 
+Because the index of refraction of a lens might vary with wavelength, the best focus distance also varies with wavelength (@sec-chromatic-aberration). Even for an ideal lens there is a wavelength dependence arising from the wave nature of light and the size of the aperture or $\text{f}/\#$ (@eq-airy1). 
 
-A typical consequence for optical systems is that we can achieve a very good focus (small PSF) for one wavelength, but less precise for others.  change in shape of the PSF as we vary the wavelength is called This type of chromatic aberration, a defocus of the image, is called **longitudinal chromatic aberration**.
+### Longitudinal aberration
+A consequence of this wavelength-dependence is that for a given image distance will be in best focus (small PSF) for one wavelength, but not all. The wavelength-dependent defocus is called **longitudinal chromatic aberration**.
 
+There is noticeable chromatic aberration for many types of lenses and materials.  The most surprising optical system with a large amount of chromatic aberration is the human eye!  The point spread at the human retina for different wavelengths is quite different.
+
+![Human point spread functions at 425, 525, and 625 nm in the central fovea.](){#fig-optics-human-psf width=60%}
+<!--
+Use ISETBio to show the human PSF 
+-->
+
+Could do the linespread or the pointspread or both.  Maybe with a plot.  Anyway, doing it with a new ISETBio script would be good.  And the Artal functions?
+
+### Transverse aberration
 There is a second type of chromatic aberration, called **transverse chromatic aberration** that arises in real imaging systems. The transverse aberration is somewhat related to the longitudinal aberration, but it has a different physical basis.
 
+Get the slides in from class.
+
 ## Point spread engineering {#sec-optics-psf-engineering}
+
+Interesting developments in PSF engineering here.  These are two I know about.  Maybe look a little deeper.
+
+We don't have to be passive consumers of the psf.  We can try to make one that we like.
+
+### Finding exoplanets through PSF engineering {#sec-psf-expolanets}
 
 See if we can find the example of the astronomer looking for exoplanets.  He wanted a point spread that was black in the center!
 
@@ -126,6 +145,7 @@ He has also been involved in other projects with similar goals, such as the Kerm
 
 https://www.light-am.com/article/doi/10.37188/lam.2025.033
 
+### Estimating Depth PSF engineering {#sec-psf-depth}
 
 Dr. Rafael Piestun, a professor at the University of Colorado Boulder.
 
