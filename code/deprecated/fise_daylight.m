@@ -6,7 +6,7 @@ fraunhoferLines = comment{4};
 
 %% Plot the spectrum and a blackbody radiator
 
-ieNewGraphWin;
+ieFigure;
 plot(solarWave,solarSPD,'-k');
 bb = blackbody(solarWave,5775);
 bb = ieScale(bb,1);
@@ -29,16 +29,17 @@ end
 
 %% Compare with measurements out our window in California by Jeff DiCarlo
 
-[dayPsych,pWave] = ieReadSpectra('DaylightPsychBldg');
+[dayPsych,pWave] = ieReadSpectra('daylightStanford');
 dayPsychMean = ieScale(mean(dayPsych,2),1);
 
-ieNewGraphWin;
+ieFigure;
 plot(pWave,dayPsychMean,'sb-');
 hold on;
 plot(solarWave,solarSPD,'-k');
 xlabel('Wave (nm)')
 ylabel('Relative energy');
 grid on;
+
 %% Add Fraunhofer lines
 
 fWave = cell2mat(fraunhoferLines(:,3));
@@ -58,7 +59,7 @@ set(gca,'xlim',[380 750]);
 cieDaylightBasis = ieReadSpectra('cieDaylightBasis',pWave);
 
 % Show the daylight bases.  These are not orthonormal.
-ieNewGraphWin;
+ieFigure;
 plot(pWave,cieDaylightBasis);
 grid on; xlabel('Wave (nm)'); ylabel('Relative energy');
 xaxisLine;
@@ -70,7 +71,7 @@ wgts = pinv(cieDaylightBasis)*dayPsychMean;
 
 % It seems like the wave might be off by about 2 nm between our
 % measurements and the standard. So, I shifted the plot.
-ieNewGraphWin;
+ieFigure;
 plot(pWave,dayPsychMean,'k--');
 hold on;
 plot(pWave+2,cieDaylightBasis*wgts,'ro');

@@ -1,8 +1,8 @@
 function fise_exportFigure(figHandle, filename, varargin)
-% exportFigureForLiveScript Export a figure as PNG and insert in Live Script
+% Export a figure as PNG and insert in Live Script
 %
-%   exportFigureForLiveScript(figHandle, filename)
-%   exportFigureForLiveScript(figHandle, filename, 'Resolution', 150, 'Width', 600, 'Height', 400)
+%   fise_exportFigure(figHandle, filename)
+%   fise_exportFigure(figHandle, filename, 'Resolution', 150, 'Width', 600, 'Height', 400)
 %
 %   - figHandle: handle to the figure (use gcf for current figure)
 %   - filename: name of the PNG file to save (e.g., 'fig1.png')
@@ -40,4 +40,5 @@ if usejava('desktop') && ~isdeployed
 else
     fprintf('Non-interactive mode: saved image but did not insert into Live Script.\n');
 end
+
 end
