@@ -107,7 +107,7 @@ Because the index of refraction of a lens might vary with wavelength, the best f
 ### Longitudinal aberration
 A consequence of this wavelength-dependence is that for a given image distance will be in best focus (small PSF) for one wavelength, but not all. The wavelength-dependent defocus is called **longitudinal chromatic aberration**.
 
-There is noticeable chromatic aberration for many types of lenses and materials.  The most surprising optical system with a large amount of chromatic aberration is the human eye!  The line spread function (and point spread) of the irradiance at the human retina differs greatly between wavelengths.
+There is noticeable chromatic aberration for many types of lenses and materials.  The most surprising optical system with a large amount of chromatic aberration is the human eye!  The line spread and point spread functions measured at the human retina both vary considerably as we change the stimulus wavelength.
 
 :::{.panel-tabset}
 ## Line Spread Function
@@ -119,11 +119,22 @@ There is noticeable chromatic aberration for many types of lenses and materials.
 
 <figcaption>
 Click on the tabs at the top to see typical human line spread functions or point spread functions for stimuli with equal energy, 425 nm, 525 nm, and 625 nm. See <a href="../code/02Optics/fise_humanLSF.html" target="_blank">Human LSF</a> for how ISETBio/ISETCam implements that calculation.
+
 </figcaption>
 
-### Transverse aberration
-A second type of chromatic aberration, **transverse chromatic aberration** also arises in real imaging systems. This aberration is related to longitudinal aberration, but it has a different physical basis.  It arises from the blur coupled with the position of the aperture of the optics.
 
+The very large longitudinal chromatic aberration of the human eye has consequences for many aspects of the human visual system and image systems engineering technology.  We will describe it quantitatively and explain why it matters to technology in @sec-human.
+
+### Transverse aberration
+A second type of chromatic aberration, called **transverse chromatic aberration**, is also common in real imaging systems. While it is related to longitudinal chromatic aberration, its physical origin is different.
+
+Transverse chromatic aberration occurs when the image blur interacts with the position and size of the aperture. The top panel in the figure below shows blue and red rays from a point on the left. The blue rays are in focus, forming a tight spot on the image plane. The red rays, however, come to focus behind the image plane, creating a larger, blurred red circle.
+
+![Transverse chromatic aberration. (A) Typical longitudinal chromatic aberration.  (B). Shifting the pupil aperture and size introduces transverse chromatic aberration.](images/optics/chromatic-transverse.png){#fig-optics-transverse width=70%}
+
+Now, imagine reducing the aperture size and moving it in front of the lens. This new aperture position blocks some of the rays from both colors. For the blue rays, which were already converging to a tight focus, the effect is minimal—perhaps the spot gets a little dimmer. But for the red rays, which were more spread out, the shifted aperture blocks rays that would have formed the lower part of the red blur circle. As a result, the red blur circle is clipped at the bottom and its center shifts upward, so it no longer lines up with the blue spot. This lateral displacement is transverse chromatic aberration.
+
+By adjusting the size and position of the aperture, we can control the amount and direction of transverse chromatic aberration. The physical factors that cause this shift are different from those that produce longitudinal chromatic aberration, even though both effects are related to how different wavelengths focus.
 
 ## Point spread engineering {#sec-optics-psf-engineering}
 

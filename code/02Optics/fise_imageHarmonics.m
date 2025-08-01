@@ -175,7 +175,7 @@ exportgraphics(gcf,fname);
 %% My version of the movie
 
 % I failed using getframe.  So I literally just captured the movie on
-% my screen using Apple tools
+% my screen using Apple tools (screen grab stuff).
 
 % Special case does not need the complex exponential.
 
@@ -202,7 +202,8 @@ for fx = 0:(N-1)
     pause(0.1);
 end
 
-%%
+%% This is probably the failure case
+
 % Define the output video file name and format
 outputVideoFile = 'lineReconstruct.mp4';
 
