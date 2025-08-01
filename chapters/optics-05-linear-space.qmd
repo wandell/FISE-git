@@ -18,34 +18,35 @@ $$ {#eq-pointspread-1}
 
 Here, $O(x, y)$ is the intensity at each image position. Each point in the scene contributes a scaled version of its PSF. The output image is the weighted sum of all those PSFs.
 
-Point spread functions are an intuitive way to understand the performance of the optical system. They are widely used and discussed. There are even sections of conferences devoted to **point spread function engineering**.  This refers to understanding how to design optics that produce point spread functions with specific characteristics, and I give some examples below in @sec-optics-psf-engineering.
+Point spread functions are an intuitive way to understand the performance of the optical system, andthey are widely used in applications. In @sec-optics-psf-engineering I will describe how scientists and engineers design optics to achieve specific PSF characteristics to estimate depth or to reveal hard-to-see objects.
+
+In the @sec-appendix-linear-systems I describe how the point spread function is used to create the linear system matrix: each column of the linear system matrix is a point spread.  When the system is shift-invariant (@sec-ls-shiftinvariance), the columns of the matrix are shifted copies of that point spread.  We also explain that harmonics are eigenvectors of such matrices.  This section further explores the analysis of optics using PSFs, and  @sec-optics-harmonics we explores applications using harmonics.
 
 ::: {.callout-note title="A limitation of PSFs" collapse="true"}
 Point spread functions (PSFs) are an excellent tool for modeling optical systems when the scene can be approximated as a flat surface, or when all objects are far enough away that occlusion is negligible. In these cases, each point in the scene contributes independently to the image, and the total image can be predicted by summing the PSFs from each point.
 
 However, in three-dimensional scenes where objects can block light from those behind them (**occlusion**), the situation becomes more complex. The contribution of a point to the image may be partially or completely blocked by closer objects. As a result, the effective point spread depends on the arrangement of objects in the scene, and cannot be characterized by a single, scene-independent PSF. Accurately modeling these effects requires more advanced techniques, such as those used in computer graphics, and often involves recalculating the image formation for each specific scene.
 
-In summary, PSFs provide a powerful and practical framework for image prediction when occlusion can be ignored, but their direct application is limited in scenes with significant three-dimensional structure and occlusion.
+In summary, PSFs provide a powerful and practical framework for image prediction when occlusion can be ignored, but their direct application is limited in scenes with significant three-dimensional structure and occlusion. In those cases, computer graphics techniques based on ray tracing are more appropriate.
 :::
 
 ## Common PSFs in simulation {#sec-pointspread-common}
+The PSFs of real systems can be difficult to model using a simple formula. In ISETCam we make it possible to provide an empirical PSF when it is known.  But there are many cases in which the PSF is not yet known, say for a system that is under design and the optics have not yet been selected. In such optical system simulations, a few PSFs are routinely used to approximate image system performance prior to implementation (@fig-psf-graph).
 
-In optical system simulation, a few PSFs come up again and again (@fig-psf-graph).
-
-- **Airy pattern** is the only one of these PSFs that is based on the physics of light waves. This is the PSF we measure for a perfect, diffraction-limited lens imaging a point at a distance (@sec-airy-pattern and @fig-blur-comparison). The Airy pattern depends on wavelength and represents a best case limit. 
+- **Airy pattern** is the only one of these PSFs that is based on the physics of light waves. This is the PSF we measure for a perfect, diffraction-limited lens imaging a point at a distance (@sec-airy-pattern and @fig-blur-comparison). The Airy pattern depends on wavelength and represents a best case limit. The optics you use will not be better than this.
 - **Gaussian** is popular because it’s easy to work with in calculations. 
 - **Lorentzian** (also called Cauchy) has higher tails than the Gaussian. This makes it better for modeling systems where light gets scattered a lot—like if the lens is scratched or there are many internal reflections from a multi-element lens assembly.
-- **Pillbox** A square region with constant values that averages the values over the region. Who doesn't like a simple average?
+- **Pillbox** A square region with constant values that averages the values over the region. Who doesn't like a simple average?  Well, I don't - but apart from me?
 
 A graph of the cross-section through these PSFs is a useful way to compare them. 
 
 ![Cross-section of four  point spread functions that are widely used in simulation. These point spreads were applied for a lens and sensor configuration with an $f/\#$ of 4 and a focal length of 3.9mm. The radius of the Airy disk for this configuration is 3.4 microns (see the zero-crossing of the Airy pattern).](images/optics/optics-siKernels-graph.png){#fig-psf-graph width="60%"}
 
-We can visualize how the four PSF shapes transform a spectral radiance image using simulation. @fig-psf-image compares the optical images created by the four PSFs for a scene comprising a set of grid lines. The images were calculated using the ISETCam script <a href="../code/fise_opticsPSF.html" target="_blank">fise_opticsPSF.</a>  The Airy and Gaussian PSFs were implemented with point spread functions that vary with wavelength. The Pillbox and Lorentzian PSFs were implemented as wavelength-indepedent.
+We can simulate how the four PSF shapes transform a spectral radiance (@fig-psf-image). We compare the optical images four each of the PSFs for a scene comprising a set of grid lines. The images were calculated using the ISETCam script <a href="../code/fise_opticsPSF.html" target="_blank">fise_opticsPSF.</a>  The Airy and Gaussian PSFs were implemented with wavelength-dependent point spread functions. The Pillbox and Lorentzian PSFs were implemented as wavelength-indepedent.
 
 ![The Airy pattern shows the image for a diffraction limited lens with an $f/\# =4$. The Gaussian has a spread that is roughly consistent with the Airy Disk size and a similar wavelength dependency; long-wavelengths spread more than short wavelengths. The high tail of the Lorentzian PSF produces a veiling glare. The Pillbox size is about equal to the Airy disk, but it introduces much more blur because it has a relatively high level over the entire width.](images/optics/optics-siKernels-image.png){#fig-psf-image width="90%"}
 
-Here is a description of the different PSF formulae along with a brief descrition of their properties.
+These PSFs functions are valuable because they have simple parameters that control the amount of blur or light scatter. Here is a description of the different PSF formulae along with a brief descrition of their properties.
 
 ### The Airy pattern
 The Airy pattern is circularly symmetric, so you only need to know the distance from the center, $r$, to describe it. The intensity at a distance $r$ from the center is:
@@ -61,11 +62,11 @@ Where:
 - $N$ is the $f/\#$ of the lens
 - $\lambda$ is the wavelength of light
 
-The first dark ring defines the Airy disk.  It is the diameter where the intensity drops to zero, and defines the smallest spot size.
+The first dark ring defines the Airy disk (@fig-blur-comparison , @sec-airy-pattern).  It is the diameter where the intensity drops to zero, and defines the smallest spot size.
 
 $$
 d = \arcsin(2.44 \, \lambda N) \approx 2.44 \, \lambda N
-$$
+$$ {#eq-airydisk3}
 
 For $f/\# = 4$ the diameter ranges from 3.9 $\mu\text{m}$ (400 nm) to 6.83 $\mu\text{m}$ (700nm).  See the ISETCam function <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/optics/airyDisk.m" target="_blank">`airyDisk`</a>
 
@@ -86,12 +87,14 @@ $$
 
 Here, $\gamma$ controls how wide the central peak is. A bigger $\gamma$ means a wider, flatter blur with more light in the tails.
 
-All of these PSFs are implemented in <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/optics/shiftinvariant/siSynthetic.m" target="_blank">`siSynthetic.m`.</a>
+All of these PSFs are simulated in <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/optics/shiftinvariant/siSynthetic.m" target="_blank">`siSynthetic.m`.</a>
 
-## Line spread functions
-When I created @fig-psf-image, I decided to illustrate the effect of the PSFs using grid lines rather than points. It was my judgment that the differences would be easier to visualize the impact of the point spread this way. When we calculate the image of a line, we are calculating the **line spread function (LSF)**.
+::: {.callout-note title="Linespread functions" collapse="true"}
+In @fig-psf-image, I illustrated the effect of the PSFs using grid lines rather than points. It seemed to me that the differences are  easier to visualize the impact of the point spread this way. The image created by a very thin line is called the **line spread function (LSF)**.
 
-If the PSF is circularly symmetric, the same LSF is measured for any line orientation. To find the PSF we simply sum along the direction (see <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/wavefront/psf/psf2lsf.m" target="_blank">`psf2lsf.m`.</a>. We will calculate a different LSF if the PSF is not circularly symmetric. The formula is very simple.
+To find the LSF from the PSF, we simply sum along the direction (see <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/wavefront/psf/psf2lsf.m" target="_blank">`psf2lsf.m`.</a>. We will calculate the same LSF for any direction when the PSF is cicularly symmetric.  If it is not, then we will find a different LSF for each direction. 
+
+The formula to calculate the PSF in a direction, in this case the $y$ direction, is very simple. We just sum across the $x$ direction.
 
 $$
 LSF = \sum_x PSF(x,y)
@@ -99,7 +102,12 @@ $$
 
 Here are the linespread functions of the Gaussian and Lorenzian.
 
-Given an LSF, it is possible to recover a unique circularly symmetric PSF using <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/wavefront/psf/lsf2circularpsf.m" target="_blank">`lsf2circularpsf.m`.</a>. I am not plotting the Pillbox because it is not circularly symmetric. In has the same LSF for the horizontal and vertical directions, but its LSF differs in other directions. 
+Given an LSF, it is possible to recover a unique circularly symmetric PSF using <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/wavefront/psf/lsf2circularpsf.m" target="_blank">`lsf2circularpsf.m`.</a>. The Airy pattern is circularly symmetric; the Gaussian and Lorentz are usually implemented as circularly symmetric.  The pillbox is not.
+:::
+
+One of the challenges in pure simulation studies is to determine how to specify the wavelength dependence of the PSF.  This is only formally specified for the Airy pattern, based on the wavelength of light and the size of the circular, pinhole aperture.  But for the Gaussian and Lorentzian, we must make a choice.
+
+It is possible to measure the wavelength dependence for an existing system, say a system that uses materials with known properties. The variations in the PSF caused by these wavelength-dependences are called chromatic aberrations.  We describe the two types of aberrations and how they might be measured in the next section.
 
 ## Chromatic aberration types {#sec-transverse-chromatic-aberration}
 Because the index of refraction of a lens might vary with wavelength, the best focus distance also varies with wavelength (@sec-chromatic-aberration). Even for an ideal lens there is a wavelength dependence arising from the wave nature of light and the size of the aperture or $\text{f}/\#$ (@eq-airy1). 
