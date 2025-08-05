@@ -163,31 +163,41 @@ The usual goal of optical design for consumer photography is to create a lens th
 The goal of optical design can differ, of course, for different applications. In the sections below, I describe two cases that I found to be very interesting.  The first case designs optics for telescopes that are looking for planets in other star systems (exoplanets).  The second case designs optics that can be helpful in estimating the depth of objects in an image. For example, in microscopy we might be interested to measure the tissue layer where a particular glowing molecule resides. These two examples are drawn from the literature of PSF engineering.
 
 ### Exoplanets and PSF engineering {#sec-psf-expolanets}
+When we see an eclipse of the sun, the moon blocks out the bright central region.  The edge of the sun, its corona, becomes visible. Its properties have intrigued people for centuries, but waiting for a solar eclipse to study it was quite limiting.  Thus, there was considerable interest when Bernard Lyot, in the 1930s, introduced an optical technique to view and measure the sun's corona — the coronagraph. The basic idea has been extended over the years and modern space telescopes include [coronograph instrumentation](https://jwst-docs.stsci.edu/jwst-mid-infrared-instrument/miri-instrumentation/miri-coronagraphs#gsc.tab=0){target=_blank}.
+
+A coronagraph is an optical instrument designed to block the light from a bright central source (like the sun or a star), making it possible to observe faint objects nearby, such as the solar corona.  The key to a coronagraph’s effectiveness is engineering the point spread function (PSF) so that light from the central source is suppressed in the image.  This allows much dimmer features to be detected. Modern coronagraphs use carefully designed apertures and phase masks to create a “dark spot” in the PSF at the location of the bright source, dramatically improving the ability to see faint companions or structures close to it. This is a good example of **PSF engineering**:** designing optics to implement PSF that achieves a specific goal. 
+
+::: {.callout-note title="Lyot coronagraph" collapse="false"}
+
+Image from the star evenly illuminates the telescope pupil and is brought to a focus at a point behind the first lens.  This point is then reimaged with a second lens that passes through a 'Lyot stop'.  The new image 
+
+![JWST description of the Lyot coronagraph.](images/optics/optics-lyot-coronagraph.png){#fig-optics-lyot width="80%"}
+
+:::
 
 <!-- https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12182/121820G/The-small-ELF-project--toward-an-ultra-large-coronagraphic/10.1117/12.2629645.full 
+
 Jeff describes the Exo-Life Finder (ELF) project.  The quotes below are about the Small ELF (SELF) prototype.
--->
 
-> The SELF pathfinder telescope illustrated in Fig. 19 is now under construction and will provide confidence that this is feasible. We believe, as we argued here, that there are no fundamental  reasons  why  we  cannot  build  50  m-scale telescopes  on  the  ground  that  can  reach  sensitivity  levels sufficient to find evidence of life on nearby exoplanets. (@kuhn2025-astronomy).
-
-> The telescope we’d like to  design  and  build  targets  the  problem  of  finding  life around planets outside the solar system. To do this requires separating  the  reflected  starlight  off  the  planet  from  the star.  Astronomers  call  this “direct  imaging”.  This  means we’re interested in optical systems that can have a narrow field-of-view  (FOV),  perhaps  just  a  few  arcseconds,  and
-enormous  photometric  dynamic  range  capability.  A laudable  goal  is  to  achieve  raw  sensitivity  of  10−8 of  the
-stellar  flux  in  a  region  within  about  1  arcsecond  of  the central  star.  A  dedicated  telescope  with  this  capability
-could  make  images  of  the  surface  of  nearby  exoplanets using  data  inversion  techniques,  perhaps  sufficient  to  see even signs of advanced exolife civilizations6,7.
-
-The light reflected from a planet is 10^10 smaller for earth like situation, or for a red star maybe 10^8 or 10^9 times brighter.
-
-The design of the optics needed to see a planet circling a star requires no spread from the star onto the light from the planet.  The angle might be 1 sec of arc between them.  So the point spread must be less down by more than 10^8 or 10^9 within 1 sec of arc.  Otherwise the light from the star will mask the light from the planet.
-
-![Optics design for a point spread with a dark spot in the middle, where the star is located.  That would be panel e.  The design of the pupil aperture with these multiple little circles and some of them delaying the phase, is shown in a-d.](images/optics/optics-psfengineering-kuhn.png){#fig-psfengineering-kuhn width=70%}
-
-He is an astronomer at the University of Hawaiʻi's Institute for Astronomy and has a long history of working on instruments and technologies for both solar observation and exoplanet detection.
+Kuhn is an astronomer at the University of Hawaiʻi's Institute for Astronomy and has a long history of working on instruments and technologies for both solar observation and exoplanet detection.
 
 Kuhn is a key figure in the development of a special type of telescope called the Exo-Life Finder (ELF), which is designed to directly image exoplanets. The technology behind this, as you describe, involves creating a coronagraphic point spread function (PSF) that effectively blocks the light from the central star, allowing the much fainter light from nearby planets to be detected. This is a form of PSF engineering with a "black in the middle" design, specifically for the purpose of finding exoplanets.
 
 He has also been involved in other projects with similar goals, such as the Kermit camera for the Lyot Project Coronagraph, which was designed for "companion searches close to bright stars."
 
 https://www.light-am.com/article/doi/10.37188/lam.2025.033
+-->
+
+In recent years, coronograph techniques have been applied to discovering **exoplanets**; these are planets that orbit a star outside the solar system. One such project, the Exo-Life Finder (ELF), is using PSF engineering to search for life on exoplanets. 
+
+> The telescope we’d like to  design  and  build  targets  the  problem  of  finding  life around planets outside the solar system. To do this requires separating  the  reflected  starlight  off  the  planet  from  the star.  Astronomers  call  this “direct  imaging”.  This  means we’re interested in optical systems that can have a narrow field-of-view  (FOV),  perhaps  just  a  few  arcseconds,  and
+enormous  photometric  dynamic  range  capability.  A laudable  goal  is  to  achieve  raw  sensitivity  of  $10^−8$ of  the
+stellar  flux  in  a  region  within  about  1  arcsecond  of  the central  star.  A  dedicated  telescope  with  this  capability
+could  make  images  of  the  surface  of  nearby  exoplanets using  data  inversion  techniques,  perhaps  sufficient  to  see even signs of advanced exolife civilizations (@kuhn2025-astronomy).
+
+The paper by @kuhn2025-astronomy describes the challenges in building a large optical instrument that can suppress the central light from a star to reveal the light reflected from the near by circling exoplanet.  Building such an instrument involves mechanical engineering, material science, optics, signal processing, financial and political considerations.
+
+![Optics design for a point spread with a dark spot in the middle, where the star is located.  That would be panel e.  The design of the pupil aperture with these multiple little circles and some of them delaying the phase, is shown in a-d.](images/optics/optics-psfengineering-kuhn.png){#fig-psfengineering-kuhn width=70%}
 
 ### Depth and PSF engineering {#sec-psf-depth}
 Biologists frequently use  fluorescent markers to tag specific molecules. These tags identify a single molecule, and when stimulated they emit enough photons to be easily visible in a dark field microscope.  Because each of the molecules is so small, they are effectively points.  The image that they form through the microscope is a point spread function.
