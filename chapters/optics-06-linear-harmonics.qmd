@@ -1,20 +1,30 @@
 # Linear optics - harmonics {#sec-optics-linear-harmonics}
+
+
 The point spread is not easy to use as for certain topics, such as quantifying image quality. It is mainly useful when it is quantified using a few parameters, such as the special case of the Airy Pattern (@sec-airy-pattern) and some other examples I describe in @sec-pointspread-common. But in general we do not have high quality numerical approximations of point spread functions for many real lenses, multielement lenses, or measurements of the human eye.  The following sections describes other methods of thinking about the linear transforms that provide us with alternative representations that we can use to characterize and understand system performance.  All of these representations still rely on linearity (superposition).
 
 ## Harmonics {#sec-optics-harmonics}
-For real-valued signals - such as light intensity - the harmonic functions are the *Sine* and *Cosine*. You probably first learned about *Sine* and *Cosine* as one-dimensional functions -they take a single number in and produce a single number out. But in image systems applications we we use Sine and Cosine to represent two-dimensional images,
+For real-valued signals - such as light intensity - the harmonic functions are the *Sine* and *Cosine*. You probably first learned about *Sine* and *Cosine* as one-dimensional functions -they take a single number as input and produce a single number out. 
 
 $$
-I(x,y) = M(1 + A sin(2\pi f_x x + \phi_x + 2 \pi f_y y + \phi_y)) .
+I(x) = \sin(2\pi f_x + \phi_x)
+$${#eq-harmonics-1d}
+
+In image systems applications, however, we use a two-dimensional form of the Sine and Cosine functions to represent images.  The representation is quite similar, but differs in a couple of ways.
+
+$$
+I(x,y) = M(1 + A \sin(2\pi f_x x + \phi_x + 2 \pi f_y y + \phi_y)) .
 $${#eq-harmonics-2d}
 
-The mean of the harmonic is $M$, and the **contrast** is $A$. Because image intensities are always non-negative, the value of $A$ for any realizable image must be within the range $[-1 1]$. @fig-optics-harmonics-2d shows four **image harmonics**. When both $f_x$ and $f_y$ are non-zero, the image is oriented[^spatial-frequency].
+First, notice that to represent image intensity, the function must be all positive.  Thus, we express the harmonic as $1$ plus the harmonic, to keep the values positive, and we choose a mean value, $M$, that is represented as a multiplier.  Expressed in this way, the harmonic represents the variation around the mean. This variation is called the **image contrast**.   The amount of image contrast specified by the scale factor, $A$. To keep the image intensities non-negative, the value of $A$ for any realizable image must be within the range $[-1 1]$. 
+
+@fig-optics-harmonics-2d shows four **image harmonics**. When both $f_x$ and $f_y$ are non-zero, the image is oriented[^spatial-frequency].
 
 [^spatial-frequency]:  Different fields use somewhat different terminology and approximations to this one-dimensional gratings.  Vision scientists typically call these images **spatial frequency gratings**.  Engineers often approximate the sinusoidal intensity patterns using evenly spaced bars or sometimes even lines. It is likely more than one person will complain to me that I chose to describe them as harmonics.  Oh well.
 
 ![Harmonic images. These have different $f_x$ and $f_y$ values, but all have contrast $A=1$. The image is vertical if $f_y = 0$ and horizontal if $f_x = 0$](images/optics/optics-harmonics.png){#fig-optics-harmonics-2d width="80%"}
 
-We can develop many of the principles of linear models using one-dimensional harmonic images, like the images in @fig-optics-harmonics-1d. These harmonics have different spatial frequencies $f_x$ and a range of contrasts $A$. They are one-dimensional because I set $f_y = 0$.
+In general image analysis, we have to consider all of the different harmonic orientations.  But to develop many of the principles of linear models, we can restrict ourselves to one-dimensional harmonic images, like the images in @fig-optics-harmonics-1d. These harmonics have different spatial frequencies $f_x$ and a range of contrasts $A$. They are one-dimensional because I fixed $f_y = 0$.
 
 ![These one-dimensional harmonics are of the form in @eq-harmonics-2d, but simplified so that $\phi_x = \phi_y = f_y = 0$. The contrast $A$ varyies from the top to bottom row $(1, 0.5, 0.1)$.  The x-range is $(0,1)$, and the frequencies are $f_x = (1,2,4,8)$](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
 
