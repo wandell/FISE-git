@@ -1,0 +1,169 @@
+# Shift invariance {#sec-appendix-shiftinvariance}
+
+Move SIL from prior appendix chapter to here.
+
+## Shift invariance and Fourier Series
+
+Move DFS from linear-harmonics section to here.  
+
+Add MTF and OTF and practical calculations, say with ISETCam, there.
+
+
+## Discrete Fourier Series (DFS) {#sec-optics-fourier-series}
+
+(Move to Appendix)
+
+The Discrete Fourier Series (DFS) represents sampled data as sums of harmonics. It’s the frequency-domain counterpart to the point (impulse) basis (@sec-ls-spatial-basis). More background appears in @sec-appendix-linear-systems.
+
+For a sampled 1D signal we write $I[n]$ with $n = 0,\ldots,N-1$ (there are $N$ samples). The DFS uses integer spatial frequencies $f = 0,\ldots,N-1$ and assumes the signal repeats every $N$ samples (periodic extension). Here are three equivalent forms.
+
+1. Sine–cosine form
+
+$$
+I[n] = \frac{a_0}{2} + \sum_{f=1}^{N-1} \, s_f \,\sin\!\left(\frac{2 \pi f n}{N}\right) + c_f \,\cos\!\left(\frac{2 \pi f n}{N}\right)
+$$ {#eq-fourier-series}
+
+
+2. Amplitude–phase form
+
+$$
+I[n] = \frac{a_0}{2} + \sum_{f=1}^{N-1} a_f \,\sin\!\left(\frac{2 \pi f n}{N} + \phi_f\right),
+\qquad a_f \ge 0
+$$ {#eq-fourier-series-phase}
+
+3. Complex exponential form
+
+$$
+I[n] = \sum_{f=0}^{N-1} w_f \, e^{\,i \, 2 \pi f n / N},
+$$ {#eq-fourier-series-complex}
+
+where the weights $w_f$ are complex and $i = \sqrt{-1}$. 
+
+### Calculating the weights: Discrete Fourier transform (DFT)
+We need a way to transform the sampled image intensities, $I[n]$, into the Fourier weights, $w_f$. The most common method is the **Discrete Fourier Transform (DFT)**:
+$$
+w_f = \frac{1}{N} \sum_{n=0}^{N-1} I[n] \, e^{-i 2 \pi f n / N}
+$$ {#eq-discrete-fourier-transform}
+
+At first glance, this formula might look intimidating, but it's actually quite elegant. On the right, we have the sampled image values multiplied by a complex exponential. Thanks to **Euler's formula**, we know that any complex exponential can be written in terms of sine and cosine:
+
+$$
+e^{i\theta} = \cos(\theta) + i\sin(\theta).
+$$ {#eq-Eulers-formula}
+
+This means the DFT is really just combining the familiar sine and cosine terms into a single, compact expression using complex numbers. Many people find this complex formulation neater than keeping track of separate sine and cosine coefficients.
+
+It's important to note that while $I[n]$ is real-valued, the DFT coefficients $w_f$ are generally complex. For a real signal, there is redundancy: the coefficients satisfy $w_{f} = \overline{w_{N-f}}$, where $\overline{w_f}$ is the complex conjugate of $w_f$.[^dft-coefficients]
+
+[^dft-coefficients]:  The complex conjugate of $a + i b$ is $a - i b$.
+
+If you prefer to work with real numbers, you can compute the sine and cosine coefficients, $s_f$ and $c_f$, directly from the image intensities:
+
+$$
+\begin{align}
+a_0 &= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \\
+s_f &= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \sin\left(\frac{2\pi f n}{N}\right) \\
+c_f &= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \cos\left(\frac{2\pi f n}{N}\right)
+\end{align}
+$$
+
+Here, $a_0$ gives twice the mean value of $I[n]$, which is why the Discrete Fourier Series (@eq-fourier-series) starts with $\frac{a_0}{2}$.
+
+## Relating the DFS representations
+
+There are several equivalent ways to write the Discrete Fourier Series, and it's helpful to know how the parameters relate:
+
+- $\frac{a_0}{2}$ and $w_0$ both represent the mean value of the signal $I[n]$.
+
+- The amplitude and phase parameters relate to the sine and cosine coefficients as follows:
+
+$$
+\begin{align}
+a_f & = \sqrt{{s_f}^2 + {c_f}^2} \\
+\phi_f & = \arctan\left(\frac{c_f}{s_f}\right)
+\end{align}
+$$
+
+- The complex weights $w_f$ are related to the sine and cosine coefficients by
+
+$$
+w_f  = \frac{1}{2} (c_f - i s_f ) \qquad \text{for } f > 0
+$$
+
+- And the complex weights $w_f$ are related to the amplitude and phase by
+
+$$
+w_f = \frac{a_f}{2} e^{i (\phi_f - \pi/2)} \qquad \text{for } f > 0
+$$
+
+So, whether you prefer to think in terms of sines and cosines, amplitudes and phases, or complex exponentials, you can always translate between these forms.
+
+::: {.callout-note title="About Jean Baptiste Joseph Fourier" collapse="false" #fourier-history}
+See <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Fourier/" target="_blank">a brief biography of Fourier</a>, who had a fascinating life. He served as a scientific adviser on Bonaparte’s Egyptian expedition and later as Prefect of Isère in Grenoble, where he pursued his theory of heat conduction and the use of trigonometric series.
+
+In 1807 Fourier presented his heat memoir to the Paris Institute. The committee (Lagrange, Laplace, Monge, Lacroix) balked at representing arbitrary functions by trigonometric series and questioned the rigor; Biot and Poisson added objections. Fourier won the Institute’s 1811 prize, but publication lagged until 1822—evidence of the Academy’s initial resistance to what we now call Fourier series.
+
+:::{.columns}
+::: {.column width="50%"}
+- Son of a tailor; Orphaned at 9
+- Educated by Benedictines
+- Supported the Revolution, becoming an adviser to Bonaparte in Egypt
+- A statue of Fourier, erected in Grenoble, was later melted for armaments
+:::
+::: {.column width="50%"}
+![Jean Baptiste Joseph Fourier](images/optics/optics-fourier.png){#fig-optics-fourier width="60%"}
+:::
+:::
+
+:::
+
+### Counting parameters
+A length‑$N$ real signal $I[n]$ has $N$ real values. At first glance, each DFS parameterization seems to use more than $N$ parameters. For example, the sine–cosine form has both $s_f$ and $c_f$ for each $f$, and the complex exponential form uses $N$ complex weights $w_f$ (that’s $2N$ real numbers). How can that be?
+
+The resolution is that for real signals the Fourier coefficients obey symmetries that reduce the number of independent values back to $N$ real degrees of freedom.
+
+The cleanest way to see this is in the complex form. For real $I[n]$,
+$$
+w_{f} \;=\; \overline{w}_{\,N-f}, \qquad f=1,\ldots,N-1,
+$$
+so the coefficients come in complex‑conjugate pairs. Using Euler’s formula (@eq-Eulers-formula), these relate to the sine–cosine and amplitude–phase parameters as
+$$
+w_f = \tfrac{1}{2}\,(c_f - i\,s_f), \qquad
+w_{N-f} = \tfrac{1}{2}\,(c_f + i\,s_f),
+$$ {#eq-nyquist-1}
+and
+$$
+w_f = \tfrac{a_f}{2}\,e^{\,i(\phi_f - \pi/2)}, \qquad
+w_{N-f} = \tfrac{a_f}{2}\,e^{\,-i(\phi_f - \pi/2)}.
+$$ {#eq-nyquist-2}
+
+Two special bins are purely real for real signals:
+- DC ($f=0$): only the cosine term contributes; this is the mean.
+- When $N$ is even, the Nyquist bin ($f=N/2$): $\sin(\pi n)=0$ for all integers $n$, so only cosine remains. This bin is also purely real.
+
+These symmetries remove the apparent over‑parameterization.
+
+### Sampling rate and Nyquist frequency
+If image samples are spaced every $\Delta x$, we say the sampling rate is $f_s = 1/\Delta x$ (samples per unit). The Nyquist frequency is half the sampling rate,
+$$
+f_N \;=\; \frac{f_s}{2} \;=\; \frac{1}{2\,\Delta x},
+$$
+and is measured in cycles per unit (e.g., cycles/degree or cycles/mm for spatial signals). In DFT index units (dimensionless bin indices), $f_N$ aligns with the bin at index $N/2$ when $N$ is even; when $N$ is odd there is no bin exactly at $f_N$.
+
+As we saw in the previous section, because of conjugate symmetry, only about “half” of the spectrum is unique:
+
+- Even $N$: There are two special, real bins—DC ($f=0$) and Nyquist ($f=N/2$). The remaining bins form conjugate pairs $(f,\,N-f)$ for $f=1,\ldots,N/2-1$. The count of distinct frequency bins is
+    $$
+    1 \text{ (DC)} \;+\; (N/2-1) \text{ pairs} \;+\; 1 \text{ (Nyquist)} \;=\; N/2 + 1.
+    $$
+    Each conjugate pair contributes two real degrees of freedom (real and imaginary parts), and the two special bins contribute one each, totaling $N$ real degrees of freedom.
+
+- Odd $N$: There is no Nyquist bin. We have DC ($f=0$) plus conjugate pairs $(f,\,N-f)$ for $f=1,\ldots,(N-1)/2$. The count of distinct bins is
+    $$
+    1 \text{ (DC)} \;+\; (N-1)/2 \text{ pairs} \;=\; (N+1)/2,
+    $$
+    again yielding $N$ real degrees of freedom.
+
+It is common to compute and report only this non‑redundant “half‑spectrum” (plus DC, and the Nyquist bin when $N$ is even). In continuous‑domain sampling language, frequencies above the Nyquist frequency $f_N$ “fold” or alias back; in DFT index terms, information in bins above $N/2$ is redundant with bins below $N/2$ for real‑valued signals. Some authors therefore call the Nyquist frequency the folding frequency.
+
+
