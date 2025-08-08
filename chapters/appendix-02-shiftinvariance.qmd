@@ -1,18 +1,61 @@
-# Shift invariance {#sec-appendix-shiftinvariance}
+# Shift invariant systems {#sec-appendix-shiftinvariance}
 
-Move SIL from prior appendix chapter to here.
+Linear models are central to science, engineering, and mathematics. Among the many possible linear models, two orthogonal basis sets are especially important. 
 
-## Shift invariance and Fourier Series
+First, we have repeatedly used the point representation of the image. The point (or “impulse”) representation is so natural that we often take it for granted.  The second is the **harmonic basis** —that is, sine and cosine waves at different spatial frequencies. In this section, I explain why harmonics are so valuable for analyzing certain types of linear systems. 
 
-Move DFS from linear-harmonics section to here.  
+::: {.callout-note title="Dynamic systems" collapse="false"}
+In systems that respond over time (like audio or electronics), the equivalent measurement is the **impulse response**—the system’s output when given a very brief input. The impulse response plays the same role as the PSF, just in the time domain. In dynamic systems, the point basis is called the **impulse** and the point spread is the **impulse response**. The mathematical formulation of the impulse or point is often called the **Dirac delta function**, to honor the theoretical physicist Paul Dirac. 
+:::
 
-Add MTF and OTF and practical calculations, say with ISETCam, there.
+## Shift-invariant linear (SIL) systems  {#sec-ls-shiftinvariance}
+A practical challenge in characterizing general linear systems is that each input point could have a different point spread function (PSF). That’s a lot to measure! Fortunately, many real systems are much simpler: their PSF is essentially the same, except that it’s shifted to match the shift in input location. In other words, the shape of the PSF doesn’t change—it just translates. We call such systems **shift-invariant**.
 
+Shift-invariant linear systems are common across science and engineering. Many physical devices and phenomena can be well-approximated as shift-invariant, at least over a useful range. This property makes them much easier to calibrate: we only need to measure a single PSF -the response to a single point!- rather than measure every possible point. You can see why for a shift-invariant system the PSF is the key measurement that characterizes the system. 
+
+Because shift invariance simplifies both analysis and computation, many courses on “linear systems” focus almost entirely on the shift-invariant case.
+
+::: {.callout-note title="Shift invariance notation" collapse="true"}
+Let’s make the idea of shift invariance a bit more precise. Suppose we use $T()$ to represent a shift (translation) operation. If we shift an image $x$ by an amount $\delta$, we write $T(x, \delta)$. A system $L()$ is shift-invariant if shifting the input and then applying the system gives the same result as applying the system first and then shifting the output (possibly by a scaled amount):
+
+$$
+L(T(x, \delta)) \approx T(L(x), \alpha \delta).
+$$ {#eq-shiftinvariance-defined}
+
+Here, $\alpha$ is a scale factor that accounts for magnification or other effects. For example, if you move an object by $\delta$ meters, its image might move by $\alpha \delta$ meters on the sensor.
+:::
+
+## SIL system matrix
+The matrix representation of an SIL, $\mathbf{L}$ is simple and can be visualized.  If the input stimulus is a point, then it is a vector that has a $1$ in a single entry and $0$ elsewhere. The point spread function is the column of the matrix, $\mathbf{L}$.  Since the point spread functions are all the same, except for a shift, the columns are all the same except for a shift. 
+
+If we arrange the sample spacing of the input and output measurements carefully, we can shift the input point by one row and the corresponding column, representing a point spread measurement, will also shift down one row. The entries of the matrix, shown in the tableau, will look like this @fig-ls-circulant-matrix.
+
+![Circulant matrix.](images/linearsystems/circulant-matrix.png){#fig-ls-circulant-matrix width=70%}
+
+For computer simulations, there are many details to keep track of, especially issues relating to the edge and wrapping. For example, we often treat the point spread functions as 'circular', so when a value shifts below the bottom of the matrix, we do not throw it away but we copy it into the missing entry at the top of the column. In @fig-ls-circulant-matrix, the edges of the point spread are all zero, and that made the diagram simpler. 
+
+Have a good look at @fig-ls-circulant-matrix. Feel how simple an SIL system matrix is compared to a general linear system (@sec-ls-matrix-tableau). Linear systems in general are great to work with.  If you are working with an SIL, you are particularly fortunate.  The next section gives another reason why.
+
+## Harmonics:  Eigenvectors for shift-invariance {#sec-ls-harmonics-sil}
+We have reached the observation that is the basis of many calculations in the main chapters in the book: the relationship between harmonics and shift invariant linear systems. These ideas are introduced in the main text in @sec-optics-linear-harmonics, where we develop the Discrete Fourier Series (@sec-optics-fourier-series). The ideas continue to be used in many subsequent chapter.
+
+Haromonic functions are *almost* eigenfunctions of shift-invariant linear systems. By almost, I mean that when a harmonic is the input, the output is a scaled harmonic with a possible shift in position (phase). It is not exactly an eigenfunction because two parameters, the amplitude and phase, can change.
+
+The mathematics of this near-miss is managed by expressing the signal using complex instead of real numbers. For complex numbers, which inherently have two parameters, we can say without any guilt that the complex exponentials are eigenvectors of a shift-invariant linear system. Moreover, the complex exponentials are a complete, orthogonal set of eigenfunctions; any input stimulus can be described as the weighted sum of complex exponentials. We relate the complex exponentials back to the real harmonics, using Euler's formula (@eq-Eulers-formula). [^harmonics-FOV].
+
+[^harmonics-FOV]: I explain the relationship between harmonics and shift-invariant linear systems in detail, staying away from complex exponentials, in the Appendix to [Foundations of Vision](https://wandell.github.io/FOV-1995/appendix.html){target=_blank}.
+
+Taken together this means shift-invariant linear systems and harmonics can take advantage of the full power and simplicity of the eigenvector calculations (@eq-linear-eigencalculations). When the input to an optical system is a harmonic function at spatial frequency $f$ and unit contrast, the output image will be a harmonic function at the same frequency. The amplitude and of the output will differ from the input, but we only need to measure these two parameters. This input-output simplicity makes the harmonics very useful tools for system characterization.
+
+::: {.callout-note collapse="true" title='History - linear algebra and matrices'}
+When I was an assistant professor, I had the privilege of joining faculty meetings with senior colleagues I deeply admired—Joe Goodman, Ron Bracewell, Tom Cover, and others. In these meetings, we often discussed how best to teach key mathematical ideas to engineering students. The more senior faculty generally favored starting with integrals and continuous functions, emphasizing that these are the true foundation of the mathematics. The younger faculty, who spent much of their time programming, leaned toward teaching with matrices and vectors. I remember Ron Bracewell remarking that continuous functions are the reality, and we should introduce those first—then, only later, show students the "vulgar" discrete approximations that we use because our computational tools require them. Good times.
+
+We all agreed that discrete representations are extremely useful—and today, they are essential. Mathematics framed in terms of vectors and matrices is at the heart of modern neural networks and much of computational science and engineering. That’s the approach I use throughout this book. Still, I remember Bracewell’s advice, and sometimes feel a bit of guilt for not starting with the continuous case.
+
+It helps to know that representing problems with vectors and matrices is not a recent development. The importance of linear algebra and matrix methods was recognized nearly 200 years ago. If you’re interested in the history of these ideas, you can read more here: [History of matrices and linear algebra](resources/history-linear-algebra.html){target=_blank}
+:::
 
 ## Discrete Fourier Series (DFS) {#sec-optics-fourier-series}
-
-(Move to Appendix)
-
 The Discrete Fourier Series (DFS) represents sampled data as sums of harmonics. It’s the frequency-domain counterpart to the point (impulse) basis (@sec-ls-spatial-basis). More background appears in @sec-appendix-linear-systems.
 
 For a sampled 1D signal we write $I[n]$ with $n = 0,\ldots,N-1$ (there are $N$ samples). The DFS uses integer spatial frequencies $f = 0,\ldots,N-1$ and assumes the signal repeats every $N$ samples (periodic extension). Here are three equivalent forms.
