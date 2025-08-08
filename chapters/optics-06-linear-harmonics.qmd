@@ -39,13 +39,13 @@ Around 1805, **Jean Baptiste Joseph Fourier** discovered that most of the functi
 
 To many people it is counterintuitive that a thin line can be constructed by summing harmonics, each of which extends across the entire image. How does the combination of these broad functions result in a localized feature like a line? 
 
-@fig-optics-reconstruction provides insight into this process. The figure shows how the image evolves as we sum increasing numbers of harmonics: starting with just a few, the result is broad and diffuse, but as more harmonics are added, the image becomes increasingly concentrated. The key is that the positive and negative regions of the harmonics cancel each other out everywhere except at the center, where all the cosine terms are positive ($\cos(0)$). With enough harmonics, the sum converges to a single, sharp line.
+@fig-optics-reconstruction provides insight into how this happen. The figure shows how the image evolves as we sum increasing numbers of harmonics: starting with just a few, the result is broad and diffuse, but as more harmonics are added, the image becomes increasingly concentrated. The key is that the positive and negative regions of the harmonics cancel each other out everywhere except at the center, where all the cosine terms are positive ($\cos(0)$). With enough harmonics, the sum converges to a single, sharp line.
 
 In this example, we reconstruct a line at the center (column 65) of a 129-column image by setting all harmonic weights to $w_f = 1$. Because the target image is even symmetric, only the cosine terms are needed. The red traces in the figure show the intensity profile: as more harmonics are added, the central peak narrows and side ripples diminish. By the 64th harmonic, the line is well-formed; adding more harmonics briefly reintroduces some ringing, which disappears when the full set is included. This phenomenon is a classic result in linear systems—ask your instructor for more details!
 
 ![Summing harmonics to become a line. The panels show the sum of the first 4, 16, 64, 72, and finally all 128 harmonics. To match a single line in the middle (col=65) of this 129 column image, the weights of each harmonic are all $w_f = 1$. Because the image is even symmetric, we need to sum only the $cos()$ terms. The red traces superimposed on the images are the intensity. The central region becomes thinner and the ripples on the side are eliminated by the 64th harmonic.  They return as we keep going to f = 72, but are eliminated again at f=128.  Ask your linear systems instructor about this; s/he will like you for it.](images/optics/optics-reconstruction.png){#fig-optics-reconstruction width="100%"}
 
-::: {.callout-note collapse="true" title="Line reconstruction: the movie"}
+::: {.callout-note collapse="false" title="Line reconstruction: the movie"}
 This movie illustrates how the sum converges as harmonics are added one by one. Initially, the harmonics are distributed across the image. As more are included, their contributions cancel everywhere except at the central position ($0$), where all are positive ($\cos(0)$). 
 
 Adding harmonics from $f=0$ to $f=64$ produces the line; adding $f=65$ to $f=128$ introduces some ringing, which is eliminated when the sum is complete. This is a special case for even symmetric functions, where only cosines are required.
@@ -54,30 +54,32 @@ Adding harmonics from $f=0$ to $f=64$ produces the line; adding $f=65$ to $f=128
 
 :::
 
-## Discrete Fourier Series {#sec-optics-fourier-series}
-The **Fourier series** represents functions as sums of harmonics. The Fourier series can be written in several equivalent forms. What follows are three common representations. 
+## Discrete Fourier Series (DFS) {#sec-optics-fourier-series}
+The Discrete Fourier Series (DFS) represents sampled data as sums of harmonics. It’s the frequency-domain counterpart to the point (impulse) basis (@sec-ls-spatial-basis). More background appears in @sec-appendix-linear-systems.
 
-In these formulae, rather than using $I(x)$, which implies $x$ is a continuous variable, we use $I[n]$ to signify that we are sampling at discrete points. For that reason, these formulae represent the **Discrete Fourier series**
+For a sampled 1D signal we write $I[n]$ with $n = 0,\ldots,N-1$ (there are $N$ samples). The DFS uses integer spatial frequencies $f = 0,\ldots,N-1$ and assumes the signal repeats every $N$ samples (periodic extension). Here are three equivalent forms.
 
-**1. Sine and Cosine Form**
+1. Sine–cosine form
 
 $$
-I[n] = \frac{a_0}{2} + \sum_{f=0}^{N-1}  s_f \sin(2 \pi f n ) + c_f \cos(2 \pi f n)
+I[n] = \frac{a_0}{2} + \sum_{f=1}^{N-1} \, s_f \,\sin\!\left(\frac{2 \pi f n}{N}\right) + c_f \,\cos\!\left(\frac{2 \pi f n}{N}\right)
 $$ {#eq-fourier-series}
 
-**2. Amplitude and Phase Form**
+
+2. Amplitude–phase form
 
 $$
-I[n] = \frac{a_0}{2} + \sum_{f=0}^{N-1}  a_f \sin(2 \pi f n + \phi_f)
+I[n] = \frac{a_0}{2} + \sum_{f=1}^{N-1} a_f \,\sin\!\left(\frac{2 \pi f n}{N} + \phi_f\right),
+\qquad a_f \ge 0
 $$ {#eq-fourier-series-phase}
 
-**3. Complex Exponential Form**
+3. Complex exponential form
 
 $$
-I[n] = \sum_{f=0}^{N-1} w_f \, e^{i 2 \pi f n / N}
-$$
+I[n] = \sum_{f=0}^{N-1} w_f \, e^{\,i \, 2 \pi f n / N},
+$$ {#eq-fourier-series-complex}
 
-where $w_f$ are complex numbers ($i = \sqrt{-1}$).
+where the weights $w_f$ are complex and $i = \sqrt{-1}$. 
 
 ### Calculating the weights: Discrete Fourier transform
 To analyze images using the Discrete Fourier Series, we need a way to transform the sampled image intensities, $I[n]$, into the Fourier weights, $w_f$. The most common method is the **Discrete Fourier Transform (DFT)**:
@@ -170,7 +172,54 @@ In 1811, the Institute announced a prize competition on the propagation of heat 
 
 However, their report was mixed, stating: “... the manner in which the author arrives at these equations is not exempt of difficulties and that his analysis to integrate them still leaves something to be desired on the score of generality and even rigour.” As a result, there was no immediate move in Paris to publish Fourier's work.
 :::
+### Counting parameters
+A length‑$N$ real signal $I[n]$ has $N$ real values. At first glance, each DFS parameterization seems to use more than $N$ parameters. For example, the sine–cosine form has both $s_f$ and $c_f$ for each $f$, and the complex exponential form uses $N$ complex weights $w_f$ (that’s $2N$ real numbers). How can that be?
 
+The resolution is that for real signals the Fourier coefficients obey symmetries that reduce the number of independent values back to $N$ real degrees of freedom.
+
+The cleanest way to see this is in the complex form. For real $I[n]$,
+$$
+w_{f} \;=\; \overline{w}_{\,N-f}, \qquad f=1,\ldots,N-1,
+$$
+so the coefficients come in complex‑conjugate pairs. Using Euler’s formula (@eq-Eulers-formula), these relate to the sine–cosine and amplitude–phase parameters as
+$$
+w_f = \tfrac{1}{2}\,(c_f - i\,s_f), \qquad
+w_{N-f} = \tfrac{1}{2}\,(c_f + i\,s_f),
+$$ {#eq-nyquist-1}
+and
+$$
+w_f = \tfrac{a_f}{2}\,e^{\,i(\phi_f - \pi/2)}, \qquad
+w_{N-f} = \tfrac{a_f}{2}\,e^{\,-i(\phi_f - \pi/2)}.
+$$ {#eq-nyquist-2}
+
+Two special bins are purely real for real signals:
+- DC ($f=0$): only the cosine term contributes; this is the mean.
+- When $N$ is even, the Nyquist bin ($f=N/2$): $\sin(\pi n)=0$ for all integers $n$, so only cosine remains. This bin is also purely real.
+
+These symmetries remove the apparent over‑parameterization.
+
+### Sampling rate and Nyquist frequency
+If image samples are spaced every $\Delta x$, we say the sampling rate is $f_s = 1/\Delta x$ (samples per unit). The Nyquist frequency is half the sampling rate,
+$$
+f_N \;=\; \frac{f_s}{2} \;=\; \frac{1}{2\,\Delta x},
+$$
+and is measured in cycles per unit (e.g., cycles/degree or cycles/mm for spatial signals). In DFT index units (dimensionless bin indices), $f_N$ aligns with the bin at index $N/2$ when $N$ is even; when $N$ is odd there is no bin exactly at $f_N$.
+
+As we saw in the previous section, because of conjugate symmetry, only about “half” of the spectrum is unique:
+
+- Even $N$: There are two special, real bins—DC ($f=0$) and Nyquist ($f=N/2$). The remaining bins form conjugate pairs $(f,\,N-f)$ for $f=1,\ldots,N/2-1$. The count of distinct frequency bins is
+    $$
+    1 \text{ (DC)} \;+\; (N/2-1) \text{ pairs} \;+\; 1 \text{ (Nyquist)} \;=\; N/2 + 1.
+    $$
+    Each conjugate pair contributes two real degrees of freedom (real and imaginary parts), and the two special bins contribute one each, totaling $N$ real degrees of freedom.
+
+- Odd $N$: There is no Nyquist bin. We have DC ($f=0$) plus conjugate pairs $(f,\,N-f)$ for $f=1,\ldots,(N-1)/2$. The count of distinct bins is
+    $$
+    1 \text{ (DC)} \;+\; (N-1)/2 \text{ pairs} \;=\; (N+1)/2,
+    $$
+    again yielding $N$ real degrees of freedom.
+
+It is common to compute and report only this non‑redundant “half‑spectrum” (plus DC, and the Nyquist bin when $N$ is even). In continuous‑domain sampling language, frequencies above the Nyquist frequency $f_N$ “fold” or alias back; in DFT index terms, information in bins above $N/2$ is redundant with bins below $N/2$ for real‑valued signals. Some authors therefore call the Nyquist frequency the folding frequency.
 
 ## Two-dimensional Fourier Transforms
 
