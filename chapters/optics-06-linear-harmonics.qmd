@@ -34,7 +34,7 @@ For many linear-systems principles, it is enough to consider one-dimensional har
 
 ![A set of one-dimensional image harmonics. They vary in $x$ with $f_y = 0$. The contrast $A$ varies from top to bottom $(1, 0.5, 0.1)$. The $x$-range is $(0,1)$, and the spatial frequencies are $f_x = (1, 2, 4, 8)$.](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
 
-## Harmonics and space {#eq-optics-harmonics-space}
+## Harmonics and lines {#eq-optics-harmonics-lines}
 To many people it is counterintuitive that a thin line can be constructed by summing harmonics, each of which extends across the entire image. How does the combination of these broad functions result in a localized feature like a line? 
 
 @fig-optics-reconstruction provides insight into how this happen. The figure shows how the image evolves as we sum increasing numbers of harmonics: starting with just a few, the result is broad and diffuse, but as more harmonics are added, the image becomes increasingly concentrated. The key is that the positive and negative regions of the harmonics cancel each other out everywhere except at the center, where all the cosine terms are positive ($\cos(0)$). With enough harmonics, the sum converges to a single, sharp line.
@@ -52,22 +52,57 @@ Adding harmonics from $f=0$ to $f=64$ produces the line; adding $f=65$ to $f=128
 
 :::
 
+## Harmonic characterization {#sec-optics-characterization}
 
-## Using the Fourier Transform
+There are many reasons why people would like to describe the quality of an optical system.  Commercial vendors that sell parts may need to specify the quality and the tolerance of the quality measure.  We may want to optimize the properties of a design, using the image quality measure as a metric for the optimization.  We may wish to simulate the system and learn which signals are preserved by the optics and which are lost to image quality.
 
-Start here with an image of the 2D FFT, perhaps.  Mainly, though, we want to get to the MTF and image representations of the harmonic images.
+If the point spread function can be quantified using a few parameters, such as the Airy Pattern, it can be helpful in system characterization.  But more often than not, the point spread function is an image that has not natural parameterization to quantify system performance.
 
-::: {.callout-notes title='2D Fourier Transforms' collapse='false'}
+The harmonic functions, on the other hand, have a natural set of parameters, and the different frequencies and orientations have a simple intuitive interpretation.  This has led to their widespread use in image quality characterization.
 
-Some words.
+## Optical Transfer Function {#sec-optical-transfer-function}
+
+## Modulation Transfer {#sec-modulation-transfer-function}
+
+## Contrast sensitivity {#sec-contrast-sensitivity-function}
+
+## Local shift-invariance 
+
+Say stuff about how they apply to isoplanatic regions (shift-invariant) but not to the image as a whole. 
+
+The point spread depends on parameters such as the pupil aperture, which often changes as people adjust for light level.  Hence, it is not always possible to have a unique point spread for a point.
+
+It is tough, by the way, to have depth dependent point spreads and to interpolate between point spreads.
+
+What else?
+
+## More examples
+
+Slides from class for inspiration here. Define the MTF and the OTF.
+Start an image of the 2D FFT amplitude, perhaps.  
+
+Get to image representations of the harmonic images, and then images more broadly.
+
+Parts of the Fourier representation (center, edges, and so forth)
+
+High frequency fall off.
+
+Develop the ISO 12233 standard, relating edges and MTF50
+
+Illustrate aliasing for the whole system?  Even if we aren't through the image sensor?
+
+Separability for 2D might be good.  Not sure which formulae to add.
+
+
+:::{.callout-note title='2D Fourier Transforms' collapse='false'}
+Bracewell and Goodman for introducing the 2D Fourier transform for image applications.
 
 [Link to Google resource.](resources/history-2D-fourier-transform.html){target=_blank}
 
-Some more words
-
 :::
 
-Not sure how much to add.  But separability might be good.  And the formulae.
+
+
 
 
 
