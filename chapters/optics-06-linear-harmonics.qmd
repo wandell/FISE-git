@@ -1,34 +1,38 @@
 # Linear optics - harmonics {#sec-optics-linear-harmonics}
-Up to now, our analyses of optical systems were based on points. As I explain in @sec-appendix-linear-systems, this is but one way to think about how signals are represented.  It can be very valuable to use other stimulus representations to characterize the properties of systems, and we go into much of the mathematical detail of how this can be done in @sec-appendix-linear-systems. That chatper explains that for shift invariant linear systems, the harmonic functions  (@sec-ls-points-harmonics) are particular useful alternative representation to points.
+Until now, we have analyzed optical systems using point-based stimuli (impulses and point spread functions). As discussed in @sec-appendix-linear-systems, this is only one of many useful signal representations. In this section, we introduce an alternative: image harmonics (sinusoidal patterns). Harmonic representations are common in the imaging literature for both theory and measurement because they align naturally with how many optical systems behave.
 
-In this section we explain how to represent and analyze optical systems using a different representation, **image harmonics**. It is very common to find these representations in the image systems literature, both as a theoretical method and in practical system measurements. One reason is that the point spread function is a difficult stimulus to use for some goals, such as quantifying how fine a pattern we will be able to resolve through the optics. Harmonics are an easier way to analyze pattern resolution. Second, it can be difficult to measure point spread functions with precision because, by definition, there is relatively little light. It can be much more convenient to use patterned stimuli that extends across space because this creates a higher quality signal for system evaluation. 
+There are two practical motivations. First, while the point spread function is fundamental, it is not always the most convenient tool for predicting how finely a system can resolve detail; spatial resolution is often easier to analyze in the frequency domain using harmonics. Second, point stimuli are photon-inefficient and difficult to measure precisely. Extended sinusoidal targets deliver more light, produce higher signal-to-noise measurements, and allow precise control of spatial frequency, orientation, and phase.
 
-The following section describes image harmonics and how we use them to characterize and understand system performance. Do remember that the main value of the analysis with harmonics still relies on that fact that the system is linear (superposition) and shift-invariant.  The image harmonics are an alternative spatial basis to represent our stimuli (@sec-ls-spatial-basis), and their relationship to shift-invariant linear systems is particularly simple (@sec-ls-eigenfunctions).
+The next section defines image harmonics and shows how to use them to characterize system performance. The mathematical foundations appear in @sec-ls-appendix. In brief: for linear, shift-invariant systems, harmonics form a spatial basis for arbitrary stimuli (@sec-ls-spatial-basis) and act as eigenfunctions of the system (@sec-ls-eigenfunctions). These properties make harmonics especially valuable for analysis, design, and for defining measures such as the modulation transfer function (MTF).
 
 ## Image harmonics {#sec-optics-harmonics}
-For real-valued signals - such as light intensity - the harmonic functions are the *Sine* and *Cosine*. You probably first learned about *Sine* and *Cosine* as one-dimensional functions -they take a single number as input and produce a single number out. 
+Harmonics are a convenient way to model and measure imaging systems. For real-valued signals—such as light intensity—the basic building blocks are the sine and cosine functions. You likely first met these as one-dimensional functions: they take a single input and produce a single output.
 
 $$
-I(x) = \sin(2\pi f_x + \phi_x)
+I(x) = \sin(2\pi f_x x + \phi_x)
 $${#eq-harmonics-1d}
 
-In image systems applications, however, we use a two-dimensional form of the Sine and Cosine functions to represent images.  The representation is quite similar, but differs in a couple of ways.
+Here, $f_x$ is the spatial frequency (in cycles per unit distance) and $\phi_x$ is the phase (a horizontal shift).
+
+In imaging, we typically need a two-dimensional representation to describe variation across both $x$ and $y$. A useful form that keeps intensities non-negative is
 
 $$
-I(x,y) = M(1 + A \sin(2\pi f_x x + \phi_x + 2 \pi f_y y + \phi_y)) .
+I(x,y) = M\big(1 + A \sin(2\pi f_x x + \phi_x + 2\pi f_y y + \phi_y)\big).
 $${#eq-harmonics-2d}
 
-First, notice that to represent image intensity, the function must be all positive.  Thus, we express the harmonic as $1$ plus the harmonic, to keep the values positive, and we choose a mean value, $M$, that is represented as a multiplier.  Expressed in this way, the harmonic represents the variation around the mean. This variation is called the **image contrast**.   The amount of image contrast specified by the scale factor, $A$. To keep the image intensities non-negative, the value of $A$ for any realizable image must be within the range $[-1 1]$. 
+- $M$ is the mean (DC) intensity.
+- $A$ is the contrast or modulation depth. To ensure $I(x,y) \ge 0$, we require $|A| \le 1$. In practice, we often take $A \in [0,1]$ and absorb any sign into the phase.
+- The pair $(f_x, f_y)$ is the 2D spatial frequency. When both are nonzero, the pattern has an orientation; the bars are perpendicular to the vector $(f_x, f_y)$, with angle $\theta = \mathrm{atan2}(f_y, f_x)$.
 
-@fig-optics-harmonics-2d shows four **image harmonics**. When both $f_x$ and $f_y$ are non-zero, the image is oriented[^spatial-frequency].
+@fig-optics-harmonics-2d shows four image harmonics. When $f_y = 0$ the pattern is vertical (varies only along $x$); when $f_x = 0$ it is horizontal (varies only along $y$).[^spatial-frequency]
 
-[^spatial-frequency]:  Different fields use somewhat different terminology and approximations to this one-dimensional gratings.  Vision scientists typically call these images **spatial frequency gratings**.  Engineers often approximate the sinusoidal intensity patterns using evenly spaced bars or sometimes even lines. It is likely more than one person will complain to me that I chose to describe them as harmonics.  Oh well.
+[^spatial-frequency]: Different fields use different terminology. Vision scientists often call these spatial frequency gratings. Engineers sometimes approximate sinusoidal patterns with evenly spaced bars or lines. We use the term harmonics.
 
-![Harmonic images. These have different $f_x$ and $f_y$ values, but all have contrast $A=1$. The image is vertical if $f_y = 0$ and horizontal if $f_x = 0$](images/optics/optics-harmonics.png){#fig-optics-harmonics-2d width="80%"}
+![Harmonic images. These have different $f_x$ and $f_y$ values, but all have contrast $A=1$. The image is vertical if $f_y = 0$ and horizontal if $f_x = 0$.](images/optics/optics-harmonics.png){#fig-optics-harmonics-2d width="80%"}
 
-In general image analysis, we have to consider all of the different harmonic orientations.  But to develop many of the principles of linear models, we can restrict ourselves to one-dimensional harmonic images, like the images in @fig-optics-harmonics-1d. These harmonics have different spatial frequencies $f_x$ and a range of contrasts $A$. They are one-dimensional because I fixed $f_y = 0$.
+For many linear-systems principles, it is enough to consider one-dimensional harmonics by fixing $f_y = 0$. The examples in @fig-optics-harmonics-1d vary only along $x$ and illustrate different spatial frequencies $f_x$ and contrasts $A$.
 
-![This is a group of image harmonics that we consider to be one-dimensional. They vary in $x$, but $y$ is irrelevant because we set $f_y = 0$. The contrast $A$ varyies from the top to bottom row $(1, 0.5, 0.1)$.  The x-range is $(0,1)$, and the spatial frequencies are $f_x = (1,2,4,8)$](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
+![A set of one-dimensional image harmonics. They vary in $x$ with $f_y = 0$. The contrast $A$ varies from top to bottom $(1, 0.5, 0.1)$. The $x$-range is $(0,1)$, and the spatial frequencies are $f_x = (1, 2, 4, 8)$.](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
 
 ## Harmonics and space {#eq-optics-harmonics-space}
 Around 1805, **Jean Baptiste Joseph Fourier** discovered that most of the functions we encounter in daily life can be expressed as the weighted sum of harmonics. This surprised, or perhaps annoyed, the mathematicians of the French academy [see the historical note](#fourier-history). 
