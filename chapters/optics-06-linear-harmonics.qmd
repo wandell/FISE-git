@@ -63,26 +63,34 @@ The point spread function characterizes the system using many values measured fr
 
 ![A shift invariant linear system transforms a one-dimensional image harmonic by a scale factor and a shift.  ](images/optics/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
 
-## Optical Transfer Function {#sec-optical-transfer-function}
+## Transfer Functions {#sec-optics-transfer-function}
+
+### Optical Transfer Function {#sec-OTF}
+
 The **optical transfer function (OTF)** represents the full effect, both amplitude and phase, of a shift-invariant image system.  The scale factor is a real-value, and the shift (in radians) is in the exponent of the complex exponential
 
 $$
 OTF(f) = s_f ~ e^{-i \delta_f}
 $$ {#eq-otf-definition}
 
-The complex representation is useful because we can use it to calculate how an image, $I(x)$, is transformed to its output $O(x)$.  We do this by writing the image using its Fourier representation $\mathscr{F}(I(x))$. We calculate the final image by multipling the Fourier representation by the OTF, and then inverting the Fourier transform back into spatial coordinates.
+The complex representation is immediately useful because to calculate how an image, $I(x)$, is transformed to its output, $O(x)$. We express the image using its Fourier representation $\mathscr{F}(I(x))$. Then we multiply the Fourier representation by the OTF. Finally, we use the inverse Fourier transform to express the result into spatial coordinates.
 
 $$
 O(x) = \mathscr{F}^{-1}(\mathscr{F}(I(x))~OTF(f))
 $$ {#eq-otf-calculation}
 
-Thus, the OTF contains all of the information needed to describe the system just as the point spread funciton does.
+The OTF contains all of the information needed to describe the how the shift invariant linear system transforms the image, just as the point spread function does.
 
-## Modulation Transfer {#sec-modulation-transfer-function}
+### Modulation Transfer Function {#sec-MTF}
+Perhaps the most common use of the harmonic analysis is the **modulation transfer function (MTF)**.  The MTF(f) is the scale factors, $s_f$. 
 
+$$
+MTF(\mathbf{f}) = \left| OTF(\mathbf{f}) \right| = \left| s_f ~ e^{-i \delta_f} \right|  = s_f
+$$ {#eq-MTF-defined}
 
+ It is quite common for systems to have very little phase shift, $\delta_f \approx 0$.  In that case, the OTF is simply $s_f$, which is also the MTF.  This approximation may be good enough for a simulation.
 
-## Contrast sensitivity {#sec-contrast-sensitivity-function}
+### Contrast Sensitivity Function {#sec-CSF}
 
 ## Local shift-invariance 
 
