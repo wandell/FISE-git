@@ -93,6 +93,15 @@ $$ {#eq-MTF-defined}
 ![Sweep frequency demonstration of the MTF.](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
 
 ### Contrast Sensitivity Function {#sec-CSF}
+There are many systems when we cannot peer inside of them to measure the response.  The human visual system is a good example, but in fact it can be hard to make a measurement in many other instruments.  Say the illuminance at a sensor that is packed behind optics and whose output is influenced by the sampling and post-processing.  Who knows what happens to the illuminance at the sensor before all that.
+
+In those cases, we can perform an analysis by adjusting the input, rather than measuring the output.  It's a cool idea, and here is how it applies in this context.  Suppose we have a camera, and the only thing we can measure is the that is output by the camera.  The image output might have been transformed in various ways by some clever summer interns at a company.  But GOd knows what they did.
+
+To estimate the MTF of the system we might make a measurement with a harmonic of frequency $f$. We might find that we can just detect the modulation of the harmonic when its contrast, $A$, is 0.01 (1 percent). We say this is the contrast detection threshold for frequency $f$.  Now, suppose we make a measurement with a different harmonic, $f \prime$, and we find that we can just detect the modulation from the background when its contrast is 0.05 (5 percent).  The increase in the contrast required to achieve the same result means that there was a reduction in contrast sensitivity. We can conclude that the system has $5x$ less sensitivity to $f \prime$ than $f$ because we need five times as much contrast to detect it.
+
+We define the contrast sensitivity as the inverse of the contrast needed to achieve the detection.  A plot of the contrast sensitivity as a function of the input frequency is called the **contrast sensitivity function (CSF)**. 
+
+The CSF has been measured for many different types of harmonics in human subjects.  In the context of engineering, this type of measurement is called an input referred measurement.  We measure a constant feature of the system's response, and we ask how we would have to adjust the input (level, contrast, variance) to achieve that output.  For the human case, the output is stimulus detection.
 
 ## Local shift-invariance 
 
