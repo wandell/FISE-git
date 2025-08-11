@@ -1,8 +1,26 @@
-%[text] # FISE\_MTF
-%[text] Illustrate how to measure the MTF from some experimental measuresments.
-ieInit;
+%% FISE_MTF
+%
+% Illustrate the MTF.
+% 
+% Create a sweep frequency in the scene.  The scene is constant as the
+% frequency increases.
+% 
+% Pass the scene through the optics. The amplitude decreases as
+% frequency increases. 
+%
+% The ratio of the scene amplitude to the optical image amplitude is
+% the frequency dependent scale factor $s_f$. A good approximation is
+% shown by the red curve, which is the upper envelope of the sweep
+% frequency in the optical image.
+%
+% See also
+%   
+
 %%
-imSize = [128, 1024]; % row,col
+ieInit;
+
+%%
+imSize = [256, 1024]; % row,col
 maxF = 50;     % cyc/image
 wave = 550;    % nm
 yContrast = ones(1,imSize(1));
@@ -10,17 +28,26 @@ yContrast = ones(1,imSize(1));
 scene = sceneCreate('sweep frequency',imSize,maxF,wave,yContrast);
 scene = sceneSet(scene,'fov',5);
 
-sceneWindow(scene);
+plotScene(scene,'luminance hline rgb',[1,round(imSize(1) / 2)]);
+
+set(gcf,'Units','normalized'); 
+set(gcf,'Position',[ 0.01    0.5    0.6    0.4]);
+
+exportgraphics(gca,'scenesweep.png');
+
 %%
 oi = oiCreate("default");
 oi = oiCompute(oi,scene,'crop',true);
-oiWindow(oi); %[output:6951f91c]
+% oiWindow(oi);
 
-%[appendix]{"version":"1.0"}
-%---
-%[metadata:view]
-%   data: {"layout":"onright"}
-%---
-%[output:6951f91c]
-%   data: {"dataType":"image","outputData":{"dataUri":"data:image\/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXwAAABLCAYAAABz7zxrAAAUVklEQVR4Ae3Be6zn6UEX4OfznrbYe2mnuzt7ZjpbIiAigSj0ZmnZbVOkLUQUkZAoxgsBFOMtXmqMMUa8xFtAgSAa0YQAohigKE27SwvSUtBAABEw7U5nzs7udnq\/Sdvzfvzj+8cvv5w5Zy47250z5\/s8o6vVarU6EYbVarVanQjDarVarU6EYbVarVYnwrBarVarE2FYrVar1YkwrFar1epEGFar1Wp1Igyr1Wq1OhGG1Wq1Wp0Iw2q1Wq1OhOGYyH+IvCny5shbIvdH7o\/cH3kg8kDkZyI\/E\/mZyFsjb4u8LfKzkZ+L\/I\/Iz0feHnlH5Bcivxj5pcj\/ivxy5Fcivxb59cj\/ifxW5P9G3hV5MHIhshd5OPLeyPsjH4x8JPKxyCcivxP5VGQ\/MiMiIiIiIiKN7Ec+Gfl45MORy5FLkXdFfiPyi5G3RX4y8kOR7478o8gbIn8u8vWRV0deHnlF5LWRPxX5q5F\/Gvl3kTdG\/kfkVyMXI++P\/L\/IpyMz8unIRyOPRv5P5O2R\/xT5V5E3RL4x8vrIH4t8e+Q7I\/858j8jD0Y+HPlk5FORj0Qeirwz8mORfxD55sjXR74t8t2R\/xb57cj7Ip+IfDzySOSdkR+O\/M3IN0X+SuR7I++IXIh8PPLRyF7k\/sj3RL418u2Rfx95R+Ry5GORhyLviPy7yF+M\/I3If438RuRDkfdH3hn5t5G\/HPmHkZ+L7EU+FPmtyI9H3hD5+5G3Ri5GLkd+JfJdkb8d+dHIb0YuR34j8iORvxv5gcj\/jbw38s7I90b+aeQtkQuRd0feGPmOyA9FzkcuRv5r5J9Efiry7shvRn408s8ib428J\/JLke+P\/GDk1yO\/HfmxyPdFfiHyrshPR\/515Oci7468KfI9kXdE3hX58cj3R34l8puRH4\/8cORXI++M\/EDkbZHfivxY5Acj\/zvyC5H\/GHl75NcjPxR5Y+TXIz8VeWPk1yI\/GfkvkV+NvDnyxsivRB6I\/ETklyNvjLwx8r8iPxn52cgvRX4s8vbI2yM\/EfnFyH+LvCny9shPRH4hcn\/kLZF3RH4q8vORByL3R34+8t8jPx\/56chbI2+JvDny1sibIj8beVPkrZE3Rx6I3B+5P\/JA5C2RByJvjjwQeXPkgcibI\/dH3hR5U+RfxnExHBd3YRe72MUudnEGu9jFLnZxBmewizM4gzM4gzM4gzM4izM4i7M4ixfgLF6AF+AFOId7cA\/OYhd34fl4Lp6DZ+LpeCo+C0\/GDobDBTt4Cp6GZ+EUTuMcXoCz2MVp3Inn43l4Dp6Jp+EpeBKejM\/CM\/BsPA934G6cwTmcwXPxu\/AkDDwJz8AdOIczuAun8Bw8DU\/BU\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\/aVtenbm11a6lbR11d3Ry1uk0Nx01Rq+Ogbm\/1+Kirq+tXj11RG\/X4qoPqsasTabid1JXVolbXozbqeKsnXh0fdWPq1lA3Xx17w+2oDqrrV7eu2lbb6vZQj7+6ddStp26+Wj0BhttB3Vx1fNXNV4u6cUVdXVHUZ0ZdXR2uPvPqM6MOV49dUVdX16ZunjpaHUvD7a5uTC3qiVdHq0Ut6qC6MXVj6mh1dXW0oijqcHV1dXPU9avHrg4qalGHq8PVjatFUTdH3bg68YbjrI5WB9VGbdStqQ6qa1M3Ty2KunZFPTFqW22ra1cbta221UF1UFFHK+rxURt1\/WpRN09dm6Io6vrUtjpabatjazgu6mi1qKsr6srq1lFXV4u6uWqjFrWtrl1R1LWpo9X1qcPVojZqUVdW1OFqoxZ1beqgog6qjaKOVttqo6grK+potajDFbWtFrWog4o6XB1UFHW4WtSNKerYGI6rWtSV1bUpalG3rlrURi1qUdSiFkVdu6IWtVHb6upqUdvqaLUoijpcUYs6qKiNurI6qBZ189S1qaMVdbg6qDbqaHW42qgrq+tT24q6sjpcUQfVojZqW1HUoqhFLepYG46ToqhttahFLYqiKIqiFrVRi6IoiqKeOEUtalHUohZFLWpRG0Vdv6IoiqKurha1KIpa1EFFURR1tKIo6qBaFEVtK4o6XFHURlEUtVEURW0raltR1EZR24raqG1FUduKWhS1rTaKWtSiKIpa1KI2ilrURlEURW0URR1UG0Vt1KIoilrURlHbalHUoq6sNmpRG0UdO8NxVRS1qEUt6mi1KGpR2+qJVRu1qI1aFLWoRS2KunZFURRFURS1KOpoRVEUtairq0VRBxVFUYs6qCjqyoqiqI2iqCsriqK21baiFrWtthVFLWqjNoqittWiqINqUYuiNmpRG7WoRS2K2qhFUVdW1LaiKGpRFLUoalEH1aKojaKoRS2KWhRFUdSiqEVt1LE1HBcTxcREMVFMTExMTBQTExMTExMTExMTExMTExMTExPTE2NiYqKYKIqJoiiKopgoJopiYrq6iYmJoigmJiYmiulwE0UxsY+JiYnpoImJfexjHxN10MTExMREbZuYmJiYmDYmJvYxMW0UE\/vYx7QxMbGPohYTE\/uYmBYTE\/uYNiYmpo2JiWlRTOxjWkxMTBQTE\/uYFhMT02JiH9NiYh9FMTFRTExMFBMTxcTERDExMTGxj2JiHxMTExMTExP72EcxMVFMFMXExMTExMTExMTExEQxMTFRTBQTExNFMTExMTFRTBTFRDExUUxMTEzHxnBcFBPFxMTExMTExMTExMTExMTExMTExMTExMTEPvYxsY+J6TNrHxMTExMTExNFURTFxERRFBMTE9PVTUxMTExMTEwUExPT4SYmJvYxMTExMR00MTExMTExHTQxsY997GPaNjGxj31MTBsTE\/vYR21MTOxjH9NGMbGPfUyLiX3sYx\/TopjYx7QoJvaxb2NiHxPFxD72MS0m9jExMbGPiaKY2Me0mJgoiomJiYmJiYmJiYmJiX1MTExMTExMTEwUExPFxMTExMTERFFMTEzsY2JiopiYmJgoJiYmJoqJiYmJYh\/FPiaKiYl9FBPFRDExMTExMTExMTFRTNSxMRwXD2MPe9jDHvZwEXvYwx72cBEXsYeLuIiLuIiLuIiLuICLuIALuID34ALeg\/fgPTiPB\/EgLmAPD+O9eD8+iI\/gY\/gEfgefwj6mwxX7+CQ+jg\/jMi7hPN6DC9jDJTyC9+J9+CA+go\/jk\/g0PoXfwUfxIbwPj+IhXMR5XMT78f\/waUx8Gh\/FoziPi3gYl\/FBfByfxCfwYVzGJVzAg\/gwPolP4SN4CBdwCe\/HR\/EJfBSXcQnn8T58Ah\/HI7iAh\/EhfAwfxmVcwAV8HB\/FHvZwGR\/FR\/AoLuAyPoaHcBGP4iP4EC7hPD6E9+MiHsVH8AFcxB4+hAfxMD6MD2IPF3EZ53EZH8bDOI\/LOI9H8CG8Fw\/ivbiA9+L9eAgX8CAewgfwCM7jIh7GB3AJD+JBPIIPYA\/vwQVcxiM4j\/N4GJdxAe\/GQ3gfLuLdeAiXcQHvxsO4jPN4EJfwCM7jAh7FHh7Ew3gUD+ICHsVFPIhHcAnncQkP4Twu4WGcx0O4hPPYwyW8B5dwCefxMPZwAQ\/jAi7gEi7gEh7CBVzCBexhDxdwCRdwEQ\/hAh7CRTyEPexhDxfxEC5iDxexhz3sYQ972MNF7OEi9nARe9jDHvbwXsfGcEz0T1ZfU3119VXV+6r3Ve+r3lu9t\/oV1a+ofkX1ldVXVF9R\/fLqy6t\/sPqy6kurL6m+uPpl1S+t\/v7ql1S\/uPr7ql9Y\/T3Vz6v+7urnVO+pnq3uVu+qPr\/63Opzqs+sPr361OpnVZ9c3amOqqqqqqqqaqo71adUn1Z9VvVU9XT1c6pfUP2y6iuqr69+Q\/Xbqn+z+h3Vf1P9keqbqz9XfVv1p6r\/vvrPqn+t+qerr6v+weoXVc9Un1v9XdUnVUf1SdVnVO+o\/p7qS6t\/rPoXqt9R\/cHqT1b\/U\/W7qn+x+kerf6B6T\/VZ1adUn1x9ZvXu6ouqX1v929Xvq\/5I9bur31b9qurnVp9XfWr1adU7qy+q\/vHqP6r+QPWfV7+l+pLq2erTqs+o7lbvq35r9Xuq31X9U9WXVE9Vn169u\/qS6p+ufmf1H1f\/cPULqs+uPrf6ouqfqf6L6t+qvry6W3129fOqX1P9jurfqb6yeqZ6qvrF1W+v\/oPq11U\/v3qq+gXVr6\/+veo3VX939fnVF1W\/pfrXqq+qnq2+sPq66huq31A9Vz1T\/cPVv159bfWF1c+vfl31r1ZfWX1B9Uurf7b6jdUvrH5u9Wur31x9cfVzql9Z\/fPVl1dfWH1N9VurL6l+TvVrqn+2+sXVz69+TfWPV7+o+qLqN1VfUf286tdWv7H6e6svrv6J6kurX1j9hurrql9YfW31ddXfV3199Y9Uv6j66urrql9cvbf61dUvqb6u+rrq76++vvrl1S+tfm31pdWXVr+6+mXVr6q+pvrS6ldXX1y9r\/qq6kuqr62+rHpv9b7qy6p\/qPqy6ldWX1l9VfXV1VdWX1P98uprqq+svrp6b\/W+6n3Ve6uvqt5bfXX13uqrq\/dWX129r\/qa6muqf6mOi2G1Wq1WJ8KwWq1WqxNhWK1Wq9WJMKxWq9XqRBhWq9VqdSIMq9VqtToRhtVqtVqdCMNqtVqtToRhtVqtVifCsFqtVqsTYVitVqvViTCsVqvV6kQYVqvVanUiDKvVarU6EYbVarVanQjDarVarU6EYbVarVYnwrBarVarE2FYrVar1YkwrFar1epEGFar1Wp1Igyr1Wq1OhGG1Wq1Wp0Iw2q1Wq1OhGG1Wq1WJ8KwWq1WqxPh\/wO6Xkh5d4LmSQAAAABJRU5ErkJggg==","height":75,"width":380}}
-%---
+udata = plotOI(oi,'illuminance hline rgb',[1,round(imSize(1) / 2)]);
+set(gcf,'Units','normalized'); 
+set(gcf,'Position',[ 0.01    0.5    0.6    0.4]);
+
+[upperEnvelope, lowerEnvelope] = envelope(-1*udata.data,5,'peak'); 
+hold on;
+plot(udata.pos,-1*upperEnvelope,'r-');
+
+exportgraphics(gca,'oisweep.png');
+
+%% END
