@@ -1,20 +1,24 @@
 # Linear optics - harmonics {#sec-optics-linear-harmonics}
-Until now, we have analyzed optical systems using point-based stimuli (impulses and point spread functions). As discussed in @sec-appendix-linear-systems, this is only one of many useful signal representations. In this section, we introduce an alternative: image harmonics. These representations are common in the image systems engineering literature for both theory and measurement because they provide a valuable approach to measuring how many systems behave.
+We have mainly been analyzingd optical systems using point-based stimuli (impulses and point spread functions). This is one of many useful signal representations (@sec-appendix-linear-systems, ). In this section, we introduce a second class of stimuli: image harmonics. These stimuli are commonly used in the image systems engineering literature for both theory and measurement. They provide a valuable and insightful approach to measuring how image systems behave.
 
-There are two practical motivations. First, while the point spread function is fundamental, it is not always the most convenient tool for predicting how finely a system can resolve detail; spatial resolution is often easier to analyze using harmonics. Second, point stimuli are photon-inefficient and difficult to measure precisely. Extended harmonic targets deliver more light, produce higher signal-to-noise measurements, and allow precise control of spatial frequency, orientation, and phase.
+There are two practical motivations for considering alternative stimuli. First, point stimuli are not convenient tool for predicting how finely a system can resolve detail; the spatial resolution of an image system is often easier to analyze using harmonics. Second, point stimuli are photon-inefficient and thus difficult to measure precisely. Extended harmonic targets deliver more light, produce higher signal-to-noise measurements, and allow precise control of spatial frequency, orientation, and phase.
 
-The next sections define image harmonics and show how to use them to characterize system performance. Much of the mathematical foundations underpinning this representation appear in @sec-appendix-linear-systems. In brief: for linear, shift-invariant systems, harmonics form a spatial basis for arbitrary stimuli (@sec-ls-spatial-basis) and are nearly eigenfunctions of the system (@sec-ls-eigenfunctions). These properties make harmonics especially valuable for analysis, design.
+The next sections define image harmonics and show how to use them to characterize system performance. The mathematical foundations underpinning this representation appear in @sec-appendix-linear-systems. In brief: for linear, shift-invariant systems, harmonics form a spatial basis for arbitrary stimuli (@sec-ls-spatial-basis) and are nearly eigenfunctions of the system (@sec-ls-eigenfunctions). These properties make harmonics especially valuable for analysis and design.
 
 ## Image harmonics {#sec-optics-harmonics}
-Harmonics are a convenient way to model and measure imaging systems. For real-valued signals—such as light intensity—the basic building blocks are the sine and cosine functions. You likely first met these as one-dimensional functions: they take a single input and produce a single output.
+For real-valued signals —such as light intensity— the harmonics are built upon the sine and cosine functions. You likely first met these as one-dimensional functions: they take a single input and produce a single output that varies from $[-1,1]$.
 
 $$
 I(x) = \sin(2\pi f_x x + \phi_x)
 $${#eq-harmonics-1d}
 
-Here, $f_x$ is the spatial frequency (in cycles per unit distance) and $\phi_x$ is the phase (a horizontal shift).
+Here, $f_x$ is the spatial frequency (in cycles per unit distance) and $\phi_x$ is the phase (a spatial shift).  Image intensities are positive numbers, so to model them with harmonics we add $1$ to the value.
 
-In imaging, we typically need a two-dimensional representation to describe variation across both $x$ and $y$. A useful form that keeps intensities non-negative is
+$$
+I(x) = 1 + \sin(2\pi f_x x + \phi_x)
+$${#eq-harmonics-1d-v2}
+
+In imaging, we typically need a two-dimensional representation to describe variation across both $x$ and $y$. A useful form that keeps intensities non-negative and includes two dimensions is
 
 $$
 I(x,y) = M\big(1 + A \sin(2\pi f_x x + \phi_x + 2\pi f_y y + \phi_y)\big).
@@ -30,14 +34,14 @@ $${#eq-harmonics-2d}
 
 ![Harmonic images. These have different $f_x$ and $f_y$ values, but all have contrast $A=1$. The image is vertical if $f_y = 0$ and horizontal if $f_x = 0$.](images/optics/optics-harmonics.png){#fig-optics-harmonics-2d width="80%"}
 
-For many linear-systems principles, it is enough to consider one-dimensional harmonics by fixing $f_y = 0$. The examples in @fig-optics-harmonics-1d vary only along $x$ and illustrate different spatial frequencies $f_x$ and contrasts $A$.
+For many linear-systems analyses, say when the system is circularly symmetric, it is enough to consider one-dimensional harmonics by fixing $f_y = 0$. The examples in @fig-optics-harmonics-1d vary only along $x$ and illustrate different spatial frequencies $f_x$ and contrasts $A$.
 
 ![A set of one-dimensional image harmonics. They vary in $x$ with $f_y = 0$. The contrast $A$ varies from top to bottom $(1, 0.5, 0.1)$. The $x$-range is $(0,1)$, and the spatial frequencies are $f_x = (1, 2, 4, 8)$.](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
 
 ## Harmonics and lines {#eq-optics-harmonics-lines}
-To many people it is counterintuitive that a thin line can be constructed by summing harmonics, each of which extends across the entire image. How does the combination of these broad functions result in a localized feature like a line? 
+To many people it is counterintuitive that a thin line can be constructed by summing harmonics. The line is very compact, but each harmonic extends across the entire image. How can the sum of these harmonics functions result in such a localized image?
 
-@fig-optics-reconstruction provides insight into how this happen. The figure shows how the image evolves as we sum increasing numbers of harmonics: starting with just a few, the result is broad and diffuse, but as more harmonics are added, the image becomes increasingly concentrated. The key is that the positive and negative regions of the harmonics cancel each other out everywhere except at the center, where all the cosine terms are positive ($\cos(0)$). With enough harmonics, the sum converges to a single, sharp line.
+@fig-optics-reconstruction shows how the image evolves as we sum increasing numbers of harmonics: Starting with just a few, the result is broad and diffuse, but as more harmonics are added, the image becomes increasingly concentrated. The key is that the positive and negative regions of the higher frequency harmonics cancel each other out everywhere except at the center, where all the cosine terms are positive ($\cos(0)$). With enough harmonics, the sum converges to a single, sharp line.
 
 In this example, we reconstruct a line at the center (column 65) of a 129-column image by setting all harmonic weights to $w_f = 1$. Because the target image is even symmetric, only the cosine terms are needed. The red traces in the figure show the intensity profile: as more harmonics are added, the central peak narrows and side ripples diminish. By the 64th harmonic, the line is well-formed; adding more harmonics briefly reintroduces some ringing, which disappears when the full set is included. This phenomenon is a classic result in linear systems—ask your instructor for more details!
 
@@ -53,16 +57,30 @@ Adding harmonics from $f=0$ to $f=64$ produces the line; adding $f=65$ to $f=128
 :::
 
 ## Harmonic characterization {#sec-optics-characterization}
-
 There are many reasons why people would like to describe the quality of an optical system.  Commercial vendors that sell parts may need to specify the quality and the tolerance of the quality measure.  We may want to optimize the properties of a design, using the image quality measure as a metric for the optimization.  We may wish to simulate the system and learn which signals are preserved by the optics and which are lost to image quality.
 
-If the point spread function can be quantified using a few parameters, such as the Airy Pattern, it can be helpful in system characterization.  But more often than not, the point spread function is an image that has not natural parameterization to quantify system performance.
+The point spread function characterizes the system using many values measured from a single stimulus. The harmonic characterization uses only two parameters, but from multiple stimuli (@fig-optics-harmonic-eigen).  For each harmonic frequency, we measure how much its amplitude is scaled, $s_f$, and how much the image has been shifted $\delta_f$.
 
-The harmonic functions, on the other hand, have a natural set of parameters, and the different frequencies and orientations have a simple intuitive interpretation.  This has led to their widespread use in image quality characterization.
+![A shift invariant linear system transforms a one-dimensional image harmonic by a scale factor and a shift.  ](images/optics/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
 
 ## Optical Transfer Function {#sec-optical-transfer-function}
+The **optical transfer function (OTF)** represents the full effect, both amplitude and phase, of a shift-invariant image system.  The scale factor is a real-value, and the shift (in radians) is in the exponent of the complex exponential
+
+$$
+OTF(f) = s_f ~ e^{-i \delta_f}
+$$ {#eq-otf-definition}
+
+The complex representation is useful because we can use it to calculate how an image, $I(x)$, is transformed to its output $O(x)$.  We do this by writing the image using its Fourier representation $\mathscr{F}(I(x))$. We calculate the final image by multipling the Fourier representation by the OTF, and then inverting the Fourier transform back into spatial coordinates.
+
+$$
+O(x) = \mathscr{F}^{-1}(\mathscr{F}(I(x))~OTF(f))
+$$ {#eq-otf-calculation}
+
+Thus, the OTF contains all of the information needed to describe the system just as the point spread funciton does.
 
 ## Modulation Transfer {#sec-modulation-transfer-function}
+
+
 
 ## Contrast sensitivity {#sec-contrast-sensitivity-function}
 
