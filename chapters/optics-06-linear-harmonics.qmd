@@ -59,7 +59,7 @@ Adding harmonics from $f=0$ to $f=64$ produces the line; adding $f=65$ to $f=128
 ## Harmonic characterization {#sec-optics-characterization}
 There are many reasons why people would like to describe the quality of an optical system.  Commercial vendors that sell parts may need to specify the quality and the tolerance of the quality measure.  We may want to optimize the properties of a design, using the image quality measure as a metric for the optimization.  We may wish to simulate the system and learn which signals are preserved by the optics and which are lost to image quality.
 
-The point spread function characterizes the system using many values measured from a single stimulus. The harmonic characterization uses only two parameters, but from multiple stimuli (@fig-optics-harmonic-eigen).  For each harmonic frequency, we measure how much its amplitude is scaled, $s_f$, and how much the image has been shifted $\delta_f$.
+The point spread function characterizes the system using many values measured from a single stimulus. The harmonic characterization uses only two parameters, but from multiple stimuli (@fig-optics-harmonic-eigen).  For each harmonic frequency, we measure how much its amplitude is scaled, $s(\mathbf{f})$, and how much the image has been shifted $\phi(\mathbf{f})$.
 
 ![A shift invariant linear system transforms a one-dimensional image harmonic into a harmonic image of the same frequency. The output differs by a scale factor and a spatial shift (phase).  The mean levels of the input $M_i$ and output $M_o$ differ by a scale factor, as well. [fise_harmonicsLine.m]()](images/optics/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
 
@@ -70,10 +70,10 @@ For a linear, shift-invariant system, the effect of the optics on any harmonic s
 The **optical transfer function (OTF)** describes the complete effect of a shift-invariant optical system on an image. It is a complex-valued function that captures both the amplitude scaling and phase shift for every spatial frequency, $\mathbf{f}$.
 
 $$
-\mathrm{OTF}(\mathbf{f}) = s_\mathbf{f} \cdot e^{-i \delta_\mathbf{f}}
+\mathrm{OTF}(\mathbf{f}) = s(\mathbf{f}) \cdot e^{-i \phi(\mathbf{f})}
 $${#eq-otf-definition}
 
-Here, $s_\mathbf{f}$ is the real-valued amplitude scaling factor, and $\delta_\mathbf{f}$ is the phase shift (in radians).
+Here, $s(\mathbf{f})$ is the real-valued amplitude scaling factor, and $\phi(\mathbf{f})$ is the phase shift (in radians).
 
 The OTF provides a powerful way to predict the system's output. Using the convolution theorem (@sec-ls-convolution-theorem), we can calculate the output image, $O(x,y)$, by multiplying the Fourier transform of the input image, $I(x,y)$, with the OTF and then taking the inverse Fourier transform:
 
@@ -84,17 +84,35 @@ $${#eq-otf-calculation}
 Just like the point spread function, the OTF completely characterizes a linear, shift-invariant system. In fact, the OTF is the Fourier transform of the point spread function.
 
 ### Modulation Transfer Function {#sec-MTF}
-Often, we are primarily interested in how the system affects the contrast (or modulation) of the input harmonics, without regard to the phase shift. This information is captured by the **modulation transfer function (MTF)**, which is simply the magnitude of the OTF.
+Many times we are primarily interested in how the system affects the contrast (or modulation) of the input harmonics, without regard to the phase shift. This information is captured by the **modulation transfer function (MTF)**. 
 
 $$
-\mathrm{MTF}(\mathbf{f}) = |\mathrm{OTF}(\mathbf{f})| = |s_\mathbf{f} \cdot e^{-i \delta_\mathbf{f}}| = s_\mathbf{f}
+\mathrm{MTF}(\mathbf{f}) = s(\mathbf{f})
 $${#eq-MTF-defined}
 
-The MTF is always a real-valued, non-negative function. For many optical systems, particularly those with symmetric point spread functions, the phase shifts are negligible ($\delta_\mathbf{f} \approx 0$). In these common cases, the OTF is approximately equal to the MTF.
+The MTF is a real-valued, non-negative function. For many optical systems, particularly those with symmetric point spread functions, the phase shifts are negligible ($\delta_\mathbf{f} \approx 0$). In these common cases, the OTF is approximately equal to the MTF.
 
 @fig-optics-harmonics-mtf illustrates the effect of the MTF. An input image with a sweep of spatial frequencies (top) is passed through an optical system. The output image (bottom) shows that the contrast of the high-frequency patterns is significantly reduced, a direct visualization of the MTF's attenuation of higher frequencies.
 
 ![A sweep frequency pattern demonstrates the MTF. The input (top) has uniform contrast across all frequencies. The output (bottom) shows reduced contrast at higher frequencies, as described by the system's MTF. This simulation is for a diffraction-limited lens with an f-number of 4 at a wavelength of 550 nm. [See fise_opticsMTF.m](../code/02Optics/fise_opticsMTF.html){target=_blank}](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
+
+### Phase Transformation Function {#sec-PTF}
+It is always good to check the phase term, as well.  The phase shift (in radians) as a function of frequency is called the **phase transfer function (PTF)** and it is simply
+
+$$
+\mathrm{PTF}(\mathbf{f}) = \phi(\mathbf{f})
+$$ {#eq-phasetransform-definition}
+
+Putting these terms together, we have simply
+
+$$
+\mathrm{OTF}(\mathbf{f}) 
+= \mathrm{MTF}(\mathbf{f}) \, e^{\,i \, \mathrm{PTF}(\mathbf{f})} .
+$$ {#eq-otf-ptf-mtf}
+
+### The OTF and PSF
+
+In which we explain that the PSF and the OTF are related by a Fourier Transform.
 
 ### Contrast Sensitivity Function {#sec-CSF}
 For some systems, we cannot directly measure the output signal. The human visual system is a prime example: we can ask a person what they see, but we cannot easily measure the neural response at the retina or in the cortex. This "black box" problem is common in many fields.
@@ -111,7 +129,6 @@ $$
 
 For example, if a low-frequency pattern is detectable at 1% contrast ($A=0.01$), the contrast sensitivity is $1/0.01 = 100$. If a high-frequency pattern requires 10% contrast ($A=0.10$) to be seen, its sensitivity is $1/0.10 = 10$. The CSF curve plots this sensitivity across all spatial frequencies, providing a comprehensive characterization of the visual system's ability to perceive spatial detail. This same principle can be applied to characterize the end-to-end performance of a complete camera system, from optics to final processed image.
 
-
 ## Two-dimensional Fourier Transforms representation
 
 Start an image of the 2D FFT amplitude, perhaps.  
@@ -121,6 +138,7 @@ Get to image representations of the harmonic images.
 Parts of the Fourier representation (center, edges, and so forth)
 
 ### High frequency fall off.
+
 
 ### Develop the ISO 12233 standard, relating edges and MTF50
 
