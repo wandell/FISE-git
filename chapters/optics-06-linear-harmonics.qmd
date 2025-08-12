@@ -52,7 +52,7 @@ This movie illustrates how the sum converges as harmonics are added one by one. 
 
 Adding harmonics from $f=0$ to $f=64$ produces the line; adding $f=65$ to $f=128$ introduces some ringing, which is eliminated when the sum is complete. This is a special case for even symmetric functions, where only cosines are required.
 
-![A line reconstructed by adding many harmonics at different frequencies. ](images/optics/lineReconstruct.mp4){#fig-optics-reconstruction-movie width="60%" fig-align="center"}
+![Video showing a line reconstructed as we add harmonics (cosines) at different frequencies. I only added the contrast terms, keeping the mean the same. ](images/optics/lineReconstruct.mp4){#fig-optics-reconstruction-movie width="60%" fig-align="center"}
 
 :::
 
@@ -61,7 +61,7 @@ There are many reasons why people would like to describe the quality of an optic
 
 The point spread function characterizes the system using many values measured from a single stimulus. The harmonic characterization uses only two parameters, but from multiple stimuli (@fig-optics-harmonic-eigen).  For each harmonic frequency, we measure how much its amplitude is scaled, $s_f$, and how much the image has been shifted $\delta_f$.
 
-![A shift invariant linear system transforms a one-dimensional image harmonic by a scale factor and a shift.  ](images/optics/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
+![A shift invariant linear system transforms a one-dimensional image harmonic into a harmonic image of the same frequency. The output differs by a scale factor and a spatial shift (phase).  The mean levels of the input $M_i$ and output $M_o$ differ by a scale factor, as well. [fise_harmonicsLine.m]()](images/optics/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
 
 ## Transfer Functions {#sec-optics-transfer-function}
 For a linear, shift-invariant system, the effect of the optics on any harmonic stimulus is simple: the output is also a harmonic of the same frequency, but its amplitude is scaled and its phase is shifted. There is a small collection of **transfer functions** that serve as useful, compact mathematical descriptions of this scaling and shifting across all spatial frequencies.
@@ -94,7 +94,7 @@ The MTF is always a real-valued, non-negative function. For many optical systems
 
 @fig-optics-harmonics-mtf illustrates the effect of the MTF. An input image with a sweep of spatial frequencies (top) is passed through an optical system. The output image (bottom) shows that the contrast of the high-frequency patterns is significantly reduced, a direct visualization of the MTF's attenuation of higher frequencies.
 
-![A sweep frequency pattern demonstrates the MTF. The input (top) has uniform contrast across all frequencies. The output (bottom) shows reduced contrast at higher frequencies, as described by the system's MTF. This simulation is for a diffraction-limited lens with an f-number of 4 at a wavelength of 550 nm.](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
+![A sweep frequency pattern demonstrates the MTF. The input (top) has uniform contrast across all frequencies. The output (bottom) shows reduced contrast at higher frequencies, as described by the system's MTF. This simulation is for a diffraction-limited lens with an f-number of 4 at a wavelength of 550 nm. [See fise_opticsMTF.m](../code/02Optics/fise_opticsMTF.html){target=_blank}](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
 
 ### Contrast Sensitivity Function {#sec-CSF}
 For some systems, we cannot directly measure the output signal. The human visual system is a prime example: we can ask a person what they see, but we cannot easily measure the neural response at the retina or in the cortex. This "black box" problem is common in many fields.

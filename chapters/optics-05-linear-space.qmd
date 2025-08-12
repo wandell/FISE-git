@@ -7,7 +7,9 @@ This approach is especially useful because many optical systems are close to bei
 
 Because many readers will be familiar with the ideas, I put an introduction to linear systems into a linear systems appendix, @sec-appendix-linear-systems.  If you are familiar with linear systems principles and tools, use that appendix to understand the notation and thinking for the image systems engineering simulations in this book.
 
-## Point spread functions {#sec-pointspread-2}
+## Linearity 
+
+### Point spread functions {#sec-pointspread-2}
 In @sec-pointspread I introduced the idea of the point spread function (PSF). It is simply the image of a point of light. If we know the point spread for each location in the scene, and superposition holds, we can predict how any input scene becomes an image. 
 
 The scene is a collection of scene points, $\mathbf{p} = (p_x, p_y, p_z)$, each with its own intensity $S(\mathbf{p})$. Write the point spread function of a scene point as $\text{PSF}_\mathbf{p}(x, y)$, where $(x, y)$ are positions in the image. Using superposition, we calculate the output image, $O(x,y)$ by adding up the weighted point spreads from every scene point. The formula looks like this:
@@ -30,8 +32,20 @@ However, in three-dimensional scenes where objects can block light from those be
 In summary, PSFs provide a powerful and practical framework for image prediction when occlusion can be ignored, but their direct application is limited in scenes with significant three-dimensional structure and occlusion. In those cases, computer graphics techniques based on ray tracing are more appropriate.
 :::
 
-## Linearity:  General vs. shift invariant
+### General linear systems
+There is no guarantee that the point spread is the same everywhere.  In general, it will not be.  This is the case of a **shift-varying** linear system.  We can still represent the system by a matrix, just not a circulant matrix.
 
+If the system is linear, we can already do a lot with a simple calibration to find the system matrix.  
+
+**slidesImageFormationLinearity.mlx**
+
+### Shift invariant linear systems
+
+When the point spread is the same over a region (isoplanatic), we have additional tools.
+
+In that case the system matrix is circulant (shift invariant). Refer to the convolution and shift-invariant parts of the appendix.
+
+Many image systems have locally shift invariant regions.  So, the emphasis on the point spread and shift invariance is central to the field.
 
 ## Common PSFs in simulation {#sec-pointspread-common}
 The PSFs of real systems can be difficult to model using a simple formula. In ISETCam we make it possible to provide an empirical PSF when it is known.  But there are many cases in which the PSF is not yet known, say for a system that is under design and the optics have not yet been selected. In such optical system simulations, a few PSFs are routinely used to approximate image system performance prior to implementation (@fig-psf-graph).
@@ -112,7 +126,7 @@ One of the challenges in image system simulations is to select the wavelength de
 
 One way to make a decision is to measure the wavelength dependence for an existing system, say a system that uses materials with known properties, and use those measurements to guide the simulation. The variations in the PSF caused by these wavelength-dependences are called chromatic aberrations. There are two types of chromatic aberrations, and we describe them and how they might be measured in the next section.
 
-## Chromatic aberration types {#sec-transverse-chromatic-aberration}
+## Accounting for wavelength {#sec-transverse-chromatic-aberration}
 Because the index of refraction of a lens might vary with wavelength, the best focus distance also varies with wavelength (@sec-chromatic-aberration). Even for an ideal lens there is a wavelength dependence arising from the wave nature of light and the size of the aperture or $\text{f}/\#$ (@eq-airy1). 
 
 ### Longitudinal chromatic aberration
