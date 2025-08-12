@@ -1,5 +1,5 @@
 # Linear optics - harmonics {#sec-optics-linear-harmonics}
-We have mainly been analyzingd optical systems using point-based stimuli (impulses and point spread functions). This is one of many useful signal representations (@sec-appendix-linear-systems, ). In this section, we introduce a second class of stimuli: image harmonics. These stimuli are commonly used in the image systems engineering literature for both theory and measurement. They provide a valuable and insightful approach to measuring how image systems behave.
+We have mainly been analyzingd optical systems using point-based stimuli (impulses and point spread functions). This is one of many useful signal representations (@sec-appendix-linear-systems). In this section, we introduce a second class of stimuli: image harmonics. These stimuli are commonly used in the image systems engineering literature for both theory and measurement. They provide a valuable and insightful approach to measuring how image systems behave.
 
 There are two practical motivations for considering alternative stimuli. First, point stimuli are not convenient tool for predicting how finely a system can resolve detail; the spatial resolution of an image system is often easier to analyze using harmonics. Second, point stimuli are photon-inefficient and thus difficult to measure precisely. Extended harmonic targets deliver more light, produce higher signal-to-noise measurements, and allow precise control of spatial frequency, orientation, and phase.
 
@@ -64,44 +64,52 @@ The point spread function characterizes the system using many values measured fr
 ![A shift invariant linear system transforms a one-dimensional image harmonic by a scale factor and a shift.  ](images/optics/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
 
 ## Transfer Functions {#sec-optics-transfer-function}
+For a linear, shift-invariant system, the effect of the optics on any harmonic stimulus is simple: the output is also a harmonic of the same frequency, but its amplitude is scaled and its phase is shifted. There is a small collection of **transfer functions** that serve as useful, compact mathematical descriptions of this scaling and shifting across all spatial frequencies.
 
 ### Optical Transfer Function {#sec-OTF}
-
-The **optical transfer function (OTF)** represents the full effect, both amplitude and phase, of a shift-invariant image system.  The scale factor is a real-value, and the shift (in radians) is in the exponent of the complex exponential
-
-$$
-OTF(f) = s_f ~ e^{-i \delta_f}
-$$ {#eq-otf-definition}
-
-The complex representation is immediately useful because to calculate how an image, $I(x)$, is transformed to its output, $O(x)$. We express the image using its Fourier representation $\mathscr{F}(I(x))$. Then we multiply the Fourier representation by the OTF. Finally, we use the inverse Fourier transform to express the result into spatial coordinates.
+The **optical transfer function (OTF)** describes the complete effect of a shift-invariant optical system on an image. It is a complex-valued function that captures both the amplitude scaling and phase shift for every spatial frequency, $\mathbf{f}$.
 
 $$
-O(x) = \mathscr{F}^{-1}(\mathscr{F}(I(x))~OTF(f))
-$$ {#eq-otf-calculation}
+\mathrm{OTF}(\mathbf{f}) = s_\mathbf{f} \cdot e^{-i \delta_\mathbf{f}}
+$${#eq-otf-definition}
 
-The OTF contains all of the information needed to describe the how the shift invariant linear system transforms the image, just as the point spread function does.
+Here, $s_\mathbf{f}$ is the real-valued amplitude scaling factor, and $\delta_\mathbf{f}$ is the phase shift (in radians).
+
+The OTF provides a powerful way to predict the system's output. Using the convolution theorem (@sec-ls-convolution-theorem), we can calculate the output image, $O(x,y)$, by multiplying the Fourier transform of the input image, $I(x,y)$, with the OTF and then taking the inverse Fourier transform:
+
+$$
+O(x,y) = \mathscr{F}^{-1}\big(\mathscr{F}\{I(x,y)\} \cdot \mathrm{OTF}(\mathbf{f})\big)
+$${#eq-otf-calculation}
+
+Just like the point spread function, the OTF completely characterizes a linear, shift-invariant system. In fact, the OTF is the Fourier transform of the point spread function.
 
 ### Modulation Transfer Function {#sec-MTF}
-Perhaps the most common use of the harmonic analysis is the **modulation transfer function (MTF)**.  The MTF(f) is the scale factors, $s_f$. 
+Often, we are primarily interested in how the system affects the contrast (or modulation) of the input harmonics, without regard to the phase shift. This information is captured by the **modulation transfer function (MTF)**, which is simply the magnitude of the OTF.
 
 $$
-MTF(\mathbf{f}) = \left| OTF(\mathbf{f}) \right| = \left| s_f ~ e^{-i \delta_f} \right|  = s_f
-$$ {#eq-MTF-defined}
+\mathrm{MTF}(\mathbf{f}) = |\mathrm{OTF}(\mathbf{f})| = |s_\mathbf{f} \cdot e^{-i \delta_\mathbf{f}}| = s_\mathbf{f}
+$${#eq-MTF-defined}
 
- It is quite common for systems to have very little phase shift, $\delta_f \approx 0$.  In that case, the OTF is simply $s_f$, which is also the MTF.  This approximation may be good enough for a simulation.
+The MTF is always a real-valued, non-negative function. For many optical systems, particularly those with symmetric point spread functions, the phase shifts are negligible ($\delta_\mathbf{f} \approx 0$). In these common cases, the OTF is approximately equal to the MTF.
 
-![Sweep frequency demonstration of the MTF. Say something about the wavelength (550 nm), the optics, f/# diffraction limited, maybe more.  From the script which is FISE_opticsMTF.m](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
+@fig-optics-harmonics-mtf illustrates the effect of the MTF. An input image with a sweep of spatial frequencies (top) is passed through an optical system. The output image (bottom) shows that the contrast of the high-frequency patterns is significantly reduced, a direct visualization of the MTF's attenuation of higher frequencies.
+
+![A sweep frequency pattern demonstrates the MTF. The input (top) has uniform contrast across all frequencies. The output (bottom) shows reduced contrast at higher frequencies, as described by the system's MTF. This simulation is for a diffraction-limited lens with an f-number of 4 at a wavelength of 550 nm.](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
 
 ### Contrast Sensitivity Function {#sec-CSF}
-There are many systems when we cannot peer inside of them to measure the response.  The human visual system is a good example, but in fact it can be hard to make a measurement in many other instruments.  Say the illuminance at a sensor that is packed behind optics and whose output is influenced by the sampling and post-processing.  Who knows what happens to the illuminance at the sensor before all that.
+For some systems, we cannot directly measure the output signal. The human visual system is a prime example: we can ask a person what they see, but we cannot easily measure the neural response at the retina or in the cortex. This "black box" problem is common in many fields.
 
-In those cases, we can perform an analysis by adjusting the input, rather than measuring the output.  It's a cool idea, and here is how it applies in this context.  Suppose we have a camera, and the only thing we can measure is the that is output by the camera.  The image output might have been transformed in various ways by some clever summer interns at a company.  But GOd knows what they did.
+A clever way to characterize such systems is to measure the input required to produce a constant, predefined output. This general approach is known by various names: "input-referred measurement" in engineering, "action spectrum" in photobiology, and "Type A" experiments in physiology (@brindley1970-book).
 
-To estimate the MTF of the system we might make a measurement with a harmonic of frequency $f$. We might find that we can just detect the modulation of the harmonic when its contrast, $A$, is 0.01 (1 percent). We say this is the contrast detection threshold for frequency $f$.  Now, suppose we make a measurement with a different harmonic, $f \prime$, and we find that we can just detect the modulation from the background when its contrast is 0.05 (5 percent).  The increase in the contrast required to achieve the same result means that there was a reduction in contrast sensitivity. We can conclude that the system has $5x$ less sensitivity to $f \prime$ than $f$ because we need five times as much contrast to detect it.
+In vision science, this method is used to define the **contrast sensitivity function (CSF)**. To measure the CSF, an observer is shown a harmonic pattern of a specific frequency, and the contrast is adjusted until the pattern is just barely visible (at the detection threshold). This process is repeated for many different spatial frequencies.
 
-We define the contrast sensitivity as the inverse of the contrast needed to achieve the detection.  A plot of the contrast sensitivity as a function of the input frequency is called the **contrast sensitivity function (CSF)**. 
+The contrast sensitivity for a given frequency, $\mathbf{f}$, is defined as the reciprocal of the threshold contrast, $A_\mathbf{f}$:
 
-The CSF has been measured for many different types of harmonics in human subjects.  In the context of engineering, this type of measurement is called an input referred measurement.  We measure a constant feature of the system's response, and we ask how we would have to adjust the input (level, contrast, variance) to achieve that output.  For the human case, the output is stimulus detection.
+$$
+\mathrm{CSF}(\mathbf{f}) = \frac{1}{A_\mathbf{f}}
+$$
+
+For example, if a low-frequency pattern is detectable at 1% contrast ($A=0.01$), the contrast sensitivity is $1/0.01 = 100$. If a high-frequency pattern requires 10% contrast ($A=0.10$) to be seen, its sensitivity is $1/0.10 = 10$. The CSF curve plots this sensitivity across all spatial frequencies, providing a comprehensive characterization of the visual system's ability to perceive spatial detail. This same principle can be applied to characterize the end-to-end performance of a complete camera system, from optics to final processed image.
 
 ## Local shift-invariance 
 

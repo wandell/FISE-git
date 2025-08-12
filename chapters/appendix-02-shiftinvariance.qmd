@@ -36,6 +36,17 @@ For computer simulations, there are many details to keep track of, especially is
 
 Have a good look at @fig-ls-circulant-matrix. Feel how simple an SIL system matrix is compared to a general linear system (@sec-ls-matrix-tableau). Linear systems in general are great to work with.  If you are working with an SIL, you are particularly fortunate.  The next section gives another reason why.
 
+## Convolution {#sec-ls-convolution}
+The matrix multiplication for a shift-invariant system, which we visualized as a sum of scaled and shifted point spread functions, is a fundamental operation known as **convolution**.
+
+Formally, the convolution of an input signal $I[n]$ with a point spread function $h[n]$ is written using the asterisk symbol ($*$) and is defined by the summation:
+$$
+O[n] = (I * h)[n] = \sum_{k} I[k]\,h[n-k]
+$$ {#eq-convolution-definition}
+Here, the output at position $n$ is a weighted sum of the input values, where the weights are determined by a "flipped and shifted" version of the PSF. This formula is the mathematical expression of the process shown in the SIL matrix tableau.
+
+Convolution is the essential calculation for determining the output of any SIL system in the spatial domain. The next sections explain why we often prefer to analyze these systems in the frequency domain, where this computationally intensive summation is replaced by simple multiplication.
+
 ## Harmonics:  Eigenvectors for shift-invariance {#sec-ls-harmonics-sil}
 We have reached the observation that is the basis of many calculations in the main chapters in the book: the relationship between harmonics and shift invariant linear systems. These ideas are introduced in the main text in @sec-optics-linear-harmonics, where we develop the Discrete Fourier Series (@sec-optics-fourier-series). The ideas continue to be used in many subsequent chapter.
 
@@ -54,6 +65,35 @@ We all agreed that discrete representations are extremely useful—and today, th
 
 It helps to know that representing problems with vectors and matrices is not a recent development. The importance of linear algebra and matrix methods was recognized nearly 200 years ago. If you’re interested in the history of these ideas, you can read more here: [History of matrices and linear algebra](resources/history-linear-algebra.html){target=_blank}
 :::
+
+## The Convolution Theorem {#sec-ls-convolution-theorem}
+The fact that harmonics are eigenvectors of shift-invariant linear (SIL) systems leads to one of the most powerful results in signal processing: the **Convolution Theorem**.
+
+In the spatial domain, calculating the output of an SIL system requires performing a convolution—summing the input signal with shifted and scaled versions of the point spread function (PSF). This operation can be computationally intensive.
+
+The Convolution Theorem provides an elegant and highly efficient alternative. It states that **convolution in the spatial domain is equivalent to simple multiplication in the frequency domain.**
+
+Let's formalize this. If the output image $O[n]$ is the convolution of the input image $I[n]$ and the system's point spread function $h[n]$:
+$$
+O[n] = (I * h)[n]
+$$
+Then, taking the Discrete Fourier Transform (DFT) of each term gives:
+$$
+\text{DFT}\{O[n]\} = \text{DFT}\{I[n]\} \cdot \text{DFT}\{h[n]\}
+$$
+Using the complex weights notation, where $W_f$ are the DFT coefficients of the input and $H_f$ are the DFT coefficients of the PSF, the output coefficients $Y_f$ are simply:
+$$
+Y_f = W_f \cdot H_f
+$$
+
+This is a profound simplification. A complex convolution is replaced by straightforward, element-wise multiplication. The term $H_f$, the DFT of the point spread function, is so important that it has its own name: the **Optical Transfer Function (OTF)**. The OTF describes how the system scales the amplitude and shifts the phase of each input harmonic.
+
+This theorem is the primary reason why Fourier analysis is indispensable for image systems engineering. It allows us to:
+1.  **Analyze** a system's performance by examining its OTF.
+2.  **Calculate** the output of an SIL system efficiently: transform the input to the frequency domain, multiply by the OTF, and transform back.
+3.  **Design** systems by specifying a desired OTF.
+
+Now that we understand the power of this theorem, we can delve into the details of the tool that makes it possible: the Discrete Fourier Series.
 
 ## Discrete Fourier Series (DFS) {#sec-optics-fourier-series}
 The Discrete Fourier Series (DFS) represents sampled data as sums of harmonics. It’s the frequency-domain counterpart to the point (impulse) basis (@sec-ls-spatial-basis). More background appears in @sec-appendix-linear-systems.
