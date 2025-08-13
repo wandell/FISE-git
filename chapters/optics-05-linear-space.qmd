@@ -1,11 +1,11 @@
-# Linear optics - space {#sec-optics-linear-space}
-Geometric optics helps us understand how lenses work by focusing on things like the shape of the lens, what it’s made of, and how far it is from the sensor. This approach is great for designing lenses and figuring out their basic properties.
+# Linear Optics: The Spatial Domain {#sec-optics-linear-space}
+Geometric optics helps us understand how lenses work by focusing on properties like the lens shape, its material, and its distance from the sensor. This approach is excellent for designing lenses and determining their basic characteristics.
 
-But there’s another way to look at optical systems: as signal processors. In this framing, an optical system takes in light from the scene and transforms it into light at the sensor. The signal processing perspective is powerful because it lets us think about what the system does, without worrying too much about the details of how it’s built. It’s a practical way to develop image systems simulations and to analyze optical systems.
+An alternative way to analyze optical systems is to treat them as signal processors. In this framework, an optical system takes light from a scene as its input and transforms it into an image at the sensor, which is the output. This signal processing perspective is powerful because it allows us to focus on what the system *does*—its transformation—without getting lost in the physical details of its construction. It is a practical approach for developing image system simulations and analyzing optical performance.
 
-This approach is especially useful because many optical systems are close to being linear —they satisfy the **Principle of Superposition**. You can test this property in the lab. There are lots of mathematical tools for working with linear systems, and they are taught in many context across science, technology, engineering and mathematics.
+This method is particularly effective because many optical systems are approximately linear, meaning they satisfy the **Principle of Superposition**. This property can be tested experimentally. A rich set of mathematical tools exists for analyzing linear systems, taught widely across science, technology, engineering, and mathematics.
 
-Because many readers will be familiar with the ideas, I put an introduction to linear systems into a linear systems appendix, @sec-appendix-linear-systems.  If you are familiar with linear systems principles and tools, use that appendix to understand the notation and thinking for the image systems engineering simulations in this book.
+Because many readers will be familiar with linear systems, I have placed a general introduction to these concepts in @sec-appendix-linear-systems. If you are already comfortable with linear systems principles, you can use that appendix to align with the notation and methods used in this book. If these ideas are new to you, I hope you will find the appendix a useful resource.
 
 ## Linearity 
 
@@ -32,16 +32,14 @@ However, in three-dimensional scenes where objects can block light from those be
 In summary, PSFs provide a powerful and practical framework for image prediction when occlusion can be ignored, but their direct application is limited in scenes with significant three-dimensional structure and occlusion. In those cases, computer graphics techniques based on ray tracing are more appropriate.
 :::
 
-### General linear systems
+### General linear analysis
 There is no guarantee that the point spread is the same everywhere in the image, and in general it will not be. This case is called a **shift-varying** linear system, and we represent the linear system by a general matrix (@sec-ls-point-matrix).  In that case each column of the matrix represents the point spread for a different point.  These can be quite broad and irregular, making the image quite unrecognizable. Even so, if we know the matrix, and it is invertible, we can estimate the input. 
 
 The calculation is illustrated in the script [fise_ImageFormationLinearity](../code/02Optics/fise_ImageFormationLinearity.html){target=_blank}.  I created a random image to serve as the PSF for each pixel, and naturally the image looks completely random.  But with knowlege of the PSFs, and thus the system matrix, we can find the inverse of the system matrix and estimate the input from an image that appears to be complete noise.
 
-
-
 There are many details as to how well this works, mostly concerning how robust the calculation is to noise.  I doubt this calculation is of practical interest, though it has been used in interesting ways by **Laura Waller's group**. (Correct me if you know of a case!) The principle of linearity is good to keep in mind because it will help you solve many other problems.
 
-### Shift invariant linear systems
+### Shift invariant linear analysis
 A more common situation for image systems engineering is the shift-invariance: the point spread is the same  over a some region (isoplanatic region). We have many powerful mathematical tools for simulating and analyzing this case (@sec-appendix-shiftinvariance).  This is the case in which we can compute the system transformation using convolution (@sec-ls-convolution) and Fourier tools (@sec-ls-convolution-theorem).
 
 ## Common PSFs in simulation {#sec-pointspread-common}
@@ -206,24 +204,18 @@ Jeff Kuhn describes the Exo-Life Finder (ELF) project.  The quotes below are abo
 -->
 
 ### Microscopy and depth {#sec-psf-depth}
-This second example of PSF engineering moves us from the vast scale of astronomy to the tiny world of microscopy.
+A second excellent application of PSF engineering is found in microscopy, where it is used to determine the three-dimensional position of molecules within biological samples. Biologists often use fluorescent markers to tag specific molecules in tissue. When excited by light of one wavelength, these tags emit light at another, making them visible under a microscope. A single fluorescent molecule is so small that it acts as a point source, and its image through the microscope is a PSF.
 
-Biologists often use fluorescent markers to tag specific molecules in tissue samples. These fluorescent tags can be attached to particular cells or molecules, and when excited by light at one wavelength (usually a short wavelength), they emit light at another (usually longer) wavelength. The emitted photons make the tags visible under a microscope. Because a single molecule is extremely small, it acts as a point source, and its image through the microscope optics is a point spread function (PSF).
+This principle is the foundation for a set of techniques known as Single Molecule Localization Microscopy (SMLM). The origins of SMLM trace back to the work of W.E. Moerner, who first demonstrated that it was possible to detect light from a single fluorescent molecule and that these molecules could be switched on and off with light (@moerner1989-singlemolecule, @dickson1997-gfp-moerner).
 
-In many biological experiments, researchers are interested in finding the $(x, y)$ positions and the number of these tagged molecules. If the tissue is sparsely labeled, each molecule produces a PSF that is well separated from the others. To locate and count the molecules, one can simply detect the PSFs in the image. The $(x, y)$ position of each molecule is estimated by finding the centroid of its PSF. Although there is some uncertainty in this estimate due to photon noise and imperfections in the optics, the centroid can be determined with much higher precision than the width of the PSF itself. This approach is called Single Molecule Localization Microscopy (**SMLM**). SMLM techniques are sometimes said to “break the diffraction limit,” meaning they can localize molecules at a finer scale than the size of the Airy disk. While this sounds magical, it is simply a clever use of statistical estimation and optics.
+Building on this, researchers like Eric Betzig (Photoactivated Localization Microscopy, PALM) and Xiaowei Zhuang (Stochastic Optical Reconstruction Microscopy, STORM) developed methods to create images with unprecedented detail (@betzig2006-PALM, @zhuang2006-STORM). The key idea is to activate only a sparse subset of fluorescent tags at any given moment. Because the active molecules are far apart, their PSFs do not overlap. The center of each PSF can be calculated with high precision, revealing the molecule's $(x, y)$ position. By repeating this process—activating a new sparse set of molecules, localizing them, and then combining all the locations—a complete, high-resolution image is constructed.
+
+These SMLM techniques are often said to "break the diffraction limit" because they can localize molecules on a scale much smaller than the Airy disk. This has revolutionized biological imaging, earning Moerner, Betzig, and Stefan Hell[^hell-sted] a Nobel Prize.
+
+[^hell-sted]: Stefan Hell developed a different but related super-resolution approach called STED microscopy. It uses a special pattern of light to shrink the region where fluorescence occurs, also achieving very high spatial resolution.
+
+While SMLM excels at finding the $(x, y)$ position, determining a molecule's depth ($z$ position) is also critical for understanding 3D biological structures. The PSF of a conventional microscope changes with depth, but usually just by becoming slightly more blurry, which is difficult to measure accurately.
+
+This is where PSF engineering provides a brilliant solution. Rafael Piestun and his collaborators designed an optical system that transforms the PSF into a distinctive shape: two lobes that rotate around a central point as the molecule's depth changes (@pavani2008-3d-dh-tracking). When plotted as a function of depth, the rotating lobes trace out a double helix (@fig-optics-double-helix). For a sparsely labeled sample, an investigator can find the $(x, y)$ position from the PSF's center and estimate the depth ($z$) from the orientation of the two lobes. This clever design enables precise 3D localization of single molecules. Piestun co-founded [Double Helix Optics](https://www.doublehelixoptics.com/) to commercialize this technology.
 
 ![Double-helix point spread. Using a spatial light modulator to control the phase of the light, Piestun and colleagues created an oriented point spread function (images). The angle of the point spread depends on the distance from the optics at a scale of hundreds of nanometers (graph). After @backlund2012-psfengineering [Figure 1].](images/optics/piestun-double-helix.png){#fig-optics-double-helix width=70%}
-
-When the biological sample has some thickness, it is often important to know the depth ($z$ position) of each molecule, in addition to its $(x, y)$ location. Rafael Piestun and collaborators realized that the PSF of a point source changes with depth, especially in the near field. Normally, this change is just a slight increase in blur size, which is hard to measure accurately. However, Piestun’s group engineered an optical system that produces a PSF with a distinctive shape: two lobes that rotate around a central point as the depth ($z$) changes (@pavani2008-3d-dh-tracking). If you plot the PSF as a function of $z$, the pattern traces out a double helix (@fig-optics-double-helix). In practice, this means that for sparsely labeled samples, you can measure the centroid of the PSF to get $(x, y)$ and use the orientation of the lobes to estimate $z$. This clever PSF engineering enables precise 3D localization of single molecules. Piestun co-founded [Double Helix Optics](https://www.doublehelixoptics.com/) to commercialize this technology for 3D imaging and sensing.
-
-::: {.callout-note title="Single Molecule Localization Microscopy" collapse="false"}
-Single Molecule Localization Microscopy (SMLM) is a family of techniques that allow researchers to pinpoint the positions of individual fluorescent molecules with remarkable precision—much finer than the size of the diffraction-limited blur circle of optical microscopy. The Airy Disk size in conventional light microscopy is on the order of a micron. Because SMLM can reveal the position of structures at the nanometer scale, some people refer to these methods as *nanoscopy*.
-
-The origins of SMLM trace back to W.E. Moerner, who first demonstrated that it was possible to detect light from a single fluorescent molecule. He and others later showed that commonly used biological fluorophores could be switched on and off (@moerner1989-singlemolecule, @dickson1997-gfp-moerner). This discovery paved the way for new imaging techniques.
-
-Eric Betzig developed Photoactivated Localization Microscopy (PALM, @betzig2006-PALM), which uses light to activate only a sparse subset of fluorophores at a time. By repeating this process and localizing each molecule’s position with high precision, a detailed map of the sample can be built up over many cycles. Independently, Xiaowei Zhuang introduced a similar approach called Stochastic Optical Reconstruction Microscopy (STORM, @zhuang2006-STORM), which also relies on switching fluorophores on and off to achieve super-resolution.
-
-These advances revolutionized biological imaging. Moerner, Betzig, and Stefan Hell[^hell-sted] were awarded the Nobel Prize in Chemistry for their pioneering work. Xiaowei Zhuang has also received many honors for her contributions to the field. Images from her papers, demonstrating the power of these techniques, are available on [her lab website](https://zhuang.harvard.edu/storm_images.html){target=_blank}.
-
-[^hell-sted]: Stefan Hell developed a different approach, called STED microscopy, which uses a special pattern of light excitation to shrink the region where fluorescence occurs, also achieving very high spatial resolution.
-:::
