@@ -33,19 +33,16 @@ In summary, PSFs provide a powerful and practical framework for image prediction
 :::
 
 ### General linear systems
-There is no guarantee that the point spread is the same everywhere.  In general, it will not be.  This is the case of a **shift-varying** linear system.  We can still represent the system by a matrix, just not a circulant matrix.
+There is no guarantee that the point spread is the same everywhere in the image, and in general it will not be. This case is called a **shift-varying** linear system, and we represent the linear system by a general matrix (@sec-ls-point-matrix).  In that case each column of the matrix represents the point spread for a different point.  These can be quite broad and irregular, making the image quite unrecognizable. Even so, if we know the matrix, and it is invertible, we can estimate the input. 
 
-If the system is linear, we can already do a lot with a simple calibration to find the system matrix.  
+The calculation is illustrated in the script [fise_ImageFormationLinearity](../code/02Optics/fise_ImageFormationLinearity.html){target=_blank}.  I created a random image to serve as the PSF for each pixel, and naturally the image looks completely random.  But with knowlege of the PSFs, and thus the system matrix, we can find the inverse of the system matrix and estimate the input from an image that appears to be complete noise.
 
-**slidesImageFormationLinearity.mlx**
+
+
+There are many details as to how well this works, mostly concerning how robust the calculation is to noise.  I doubt this calculation is of practical interest, though it has been used in interesting ways by **Laura Waller's group**. (Correct me if you know of a case!) The principle of linearity is good to keep in mind because it will help you solve many other problems.
 
 ### Shift invariant linear systems
-
-When the point spread is the same over a region (isoplanatic), we have additional tools.
-
-In that case the system matrix is circulant (shift invariant). Refer to the convolution and shift-invariant parts of the appendix.
-
-Many image systems have locally shift invariant regions.  So, the emphasis on the point spread and shift invariance is central to the field.
+A more common situation for image systems engineering is the shift-invariance: the point spread is the same  over a some region (isoplanatic region). We have many powerful mathematical tools for simulating and analyzing this case (@sec-appendix-shiftinvariance).  This is the case in which we can compute the system transformation using convolution (@sec-ls-convolution) and Fourier tools (@sec-ls-convolution-theorem).
 
 ## Common PSFs in simulation {#sec-pointspread-common}
 The PSFs of real systems can be difficult to model using a simple formula. In ISETCam we make it possible to provide an empirical PSF when it is known.  But there are many cases in which the PSF is not yet known, say for a system that is under design and the optics have not yet been selected. In such optical system simulations, a few PSFs are routinely used to approximate image system performance prior to implementation (@fig-psf-graph).
