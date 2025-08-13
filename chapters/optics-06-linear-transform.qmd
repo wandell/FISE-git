@@ -3,7 +3,7 @@ We have mainly been analyzingd optical systems using point-based stimuli (impuls
 
 There are two practical motivations for considering alternative stimuli. First, point stimuli are not convenient tool for predicting how finely a system can resolve detail; the spatial resolution of an image system is often easier to analyze using harmonics. Second, point stimuli are photon-inefficient and thus difficult to measure precisely. Extended harmonic targets deliver more light, produce higher signal-to-noise measurements, and allow precise control of spatial frequency, orientation, and phase.
 
-The next sections define image harmonics and show how to use them to characterize system performance. The mathematical foundations underpinning this representation appear in @sec-appendix-linear-systems. In brief: for linear, shift-invariant systems, harmonics form a spatial basis for arbitrary stimuli (@sec-ls-spatial-basis) and are nearly eigenfunctions of the system (@sec-ls-eigenfunctions). These properties make harmonics especially valuable for analysis and design.
+The next sections define image harmonics and show how to use them to characterize system performance. The mathematical foundations underpinning this representation appear in @sec-appendix-linear-systems and @sec-appendix-spaceinvariance. In brief: for linear, space-invariant systems, harmonics form a spatial basis for arbitrary stimuli (@sec-ls-spatial-basis) and are nearly eigenfunctions of the system (@sec-ls-eigenfunctions). These properties make harmonics especially valuable for analysis and design.
 
 ## Image harmonics {#sec-optics-harmonics}
 For real-valued signals —such as light intensity— the harmonics are built upon the sine and cosine functions. You likely first met these as one-dimensional functions: they take a single input and produce a single output that varies from $[-1,1]$.
@@ -52,7 +52,7 @@ This movie illustrates how the sum converges as harmonics are added one by one. 
 
 Adding harmonics from $f=0$ to $f=64$ produces the line; adding $f=65$ to $f=128$ introduces some ringing, which is eliminated when the sum is complete. This is a special case for even symmetric functions, where only cosines are required.
 
-![Video showing a line reconstructed as we add harmonics (cosines) at different frequencies. I only added the contrast terms, keeping the mean the same. ](images/optics/lineReconstruct.mp4){#fig-optics-reconstruction-movie width="60%" fig-align="center"}
+![Video showing a line reconstructed as we add harmonics (cosines) at different frequencies. I only added the contrast terms, keeping the mean the same. See [fise_harmonicsLine](../code/02Optics/fise_harmonicsLine.html). ](images/optics/lineReconstruct.mp4){#fig-optics-reconstruction-movie width="60%" fig-align="center"}
 
 :::
 
@@ -64,10 +64,10 @@ The point spread function characterizes the system using many values measured fr
 ![A shift invariant linear system transforms a one-dimensional image harmonic into a harmonic image of the same frequency. The output differs by a scale factor and a spatial shift (phase).  The mean levels of the input $M_i$ and output $M_o$ differ by a scale factor, as well. [fise_harmonicsLine.m]()](images/optics/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
 
 ## Transfer Functions {#sec-optics-transfer-function}
-For a linear, shift-invariant system, the effect of the optics on any harmonic stimulus is simple: the output is also a harmonic of the same frequency, but its amplitude is scaled and its phase is shifted. There is a small collection of **transfer functions** that serve as useful, compact mathematical descriptions of this scaling and shifting across all spatial frequencies.
+For a linear, space-invariant system, the effect of the optics on any harmonic stimulus is simple: the output is also a harmonic of the same frequency, but its amplitude is scaled and its phase is shifted. There is a small collection of **transfer functions** that serve as useful, compact mathematical descriptions of this scaling and shifting across all spatial frequencies.
 
 ### Optical Transfer Function {#sec-OTF}
-The **optical transfer function (OTF)** describes the complete effect of a shift-invariant optical system on an image. It is a complex-valued function that captures both the amplitude scaling and phase shift for every spatial frequency, $\mathbf{f}$.
+The **optical transfer function (OTF)** describes the complete effect of a space-invariant optical system on an image. It is a complex-valued function that captures both the amplitude scaling and phase shift for every spatial frequency, $\mathbf{f}$.
 
 $$
 \mathrm{OTF}(\mathbf{f}) = s(\mathbf{f}) \cdot e^{-i \phi(\mathbf{f})}
@@ -81,7 +81,7 @@ $$
 O(x,y) = \mathscr{F}^{-1}\big(\mathscr{F}\{I(x,y)\} \cdot \mathrm{OTF}(\mathbf{f})\big)
 $${#eq-otf-calculation}
 
-Just like the point spread function, the OTF completely characterizes a linear, shift-invariant system. In fact, the OTF is the Fourier transform of the point spread function.
+Just like the point spread function, the OTF completely characterizes a linear, space-invariant system. In fact, the OTF is the Fourier transform of the point spread function.
 
 ### Modulation Transfer Function {#sec-MTF}
 Many times we are primarily interested in how the system affects the contrast (or modulation) of the input harmonics, without regard to the phase shift. This information is captured by the **modulation transfer function (MTF)**. 
