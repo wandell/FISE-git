@@ -1,4 +1,4 @@
-# Linear Optics: The Spatial Domain {#sec-optics-linear-space}
+# Spatial domain {#sec-optics-linear-space}
 Geometric optics helps us understand how lenses work by focusing on properties like the lens shape, its material, and its distance from the sensor. This approach is excellent for designing lenses and determining their basic characteristics.
 
 An alternative way to analyze optical systems is to treat them as signal processors. In this framework, an optical system takes light from a scene as its input and transforms it into an image at the sensor, which is the output. This signal processing perspective is powerful because it allows us to focus on what the system *does*—its transformation—without getting lost in the physical details of its construction. It is a practical approach for developing image system simulations and analyzing optical performance.
@@ -22,7 +22,7 @@ Here, $O(x, y)$ is the intensity at each image position. Each point in the scene
 
 Point spread functions are an intuitive way to understand the performance of the optical system, andthey are widely used in applications. In @sec-optics-psf-engineering I will describe how scientists and engineers design optics to achieve specific PSF characteristics to estimate depth or to reveal hard-to-see objects.
 
-In the @sec-appendix-linear-systems I describe how the point spread function is used to create the linear system matrix: each column of the linear system matrix is a point spread.  When the system is shift-invariant (@sec-ls-shiftinvariance), the columns of the matrix are shifted copies of that point spread.  We also explain that harmonics are eigenvectors of such matrices.  This section further explores the analysis of optics using PSFs, and  @sec-optics-harmonics we explores applications using harmonics.
+In the @sec-appendix-linear-systems I describe how the point spread function is used to create the linear system matrix: each column of the linear system matrix is a point spread.  When the system is space-invariant (@sec-ls-shiftinvariance), the columns of the matrix are shifted copies of that point spread.  We also explain that harmonics are eigenvectors of such matrices.  This section further explores the analysis of optics using PSFs, and  @sec-optics-harmonics we explores applications using harmonics.
 
 ::: {.callout-note title="A limitation of PSFs" collapse="false"}
 Point spread functions (PSFs) are an excellent tool for modeling optical systems when the scene can be approximated as a flat surface, or when all objects are far enough away that occlusion is negligible. In these cases, each point in the scene contributes independently to the image, and the total image can be predicted by summing the PSFs from each point.
@@ -39,7 +39,7 @@ The calculation is illustrated in the script [fise_ImageFormationLinearity](../c
 
 There are many details as to how well this works, mostly concerning how robust the calculation is to noise.  I doubt this calculation is of practical interest, though it has been used in interesting ways by **Laura Waller's group**. (Correct me if you know of a case!) The principle of linearity is good to keep in mind because it will help you solve many other problems.
 
-### Shift invariant linear analysis
+### Space invariant linear analysis
 A more common situation for image systems engineering is the shift-invariance: the point spread is the same  over a some region (isoplanatic region). We have many powerful mathematical tools for simulating and analyzing this case (@sec-appendix-shiftinvariance).  This is the case in which we can compute the system transformation using convolution (@sec-ls-convolution) and Fourier tools (@sec-ls-convolution-theorem).
 
 ## Common PSFs in simulation {#sec-pointspread-common}

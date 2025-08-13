@@ -1,9 +1,9 @@
-# Linear Shift-Invariant (LSI) Systems {#sec-appendix-shiftinvariance}
+# Linear Space-Invariant (LSI) Systems {#sec-appendix-shiftinvariance}
 Linear models are a cornerstone of science and engineering, and they can be described using different mathematical representations. Two representations are particularly important for image systems.
 
 The first is the **point basis**, which represents an image as a collection of individual points. This is the most intuitive way to think about an image, and we often use it without a second thought. The second is the **harmonic basis**, which represents an image as a sum of sine and cosine waves of different spatial frequencies.
 
-While the point basis is natural, the harmonic basis has a remarkable property: it simplifies the analysis of a special but very common class of systems known as **linear shift-invariant (LSI) systems**. This section explains why harmonics are so valuable for understanding these systems.
+While the point basis is natural, the harmonic basis has a remarkable property: it simplifies the analysis of a special but very common class of systems known as **linear space-invariant (LSI) systems**. This section explains why harmonics are so valuable for understanding these systems.
 
 ::: {.callout-note title="Point vs. Impulse"}
 The analysis here focuses on images, which are spatial signals. For spatial signals, the fundamental input is a **point**. The system's response to a point input is its **point spread function (PSF)**.
@@ -14,14 +14,14 @@ In both cases, the underlying mathematical concept is the **Dirac delta function
 :::
 
 ## Shift-invariance  {#sec-ls-shiftinvariance}
-A practical challenge in characterizing general linear systems is that each input point could have a different point spread function (PSF). That’s a lot to measure! Fortunately, many real systems are much simpler: their PSF is essentially the same, except that it’s shifted to match the shift in input location. In other words, the shape of the PSF doesn’t change—it just translates. We call such systems **shift-invariant**.
+A practical challenge in characterizing general linear systems is that each input point could have a different point spread function (PSF). That’s a lot to measure! Fortunately, many real systems are much simpler: their PSF is essentially the same, except that it’s shifted to match the shift in input location. In other words, the shape of the PSF doesn’t change—it just translates. We call such systems **space-invariant**.
 
-Shift-invariant linear systems are common across science and engineering. Many physical devices and phenomena can be well-approximated as shift-invariant, at least over a useful range. This property makes them much easier to calibrate: we only need to measure a single PSF -the response to a single point!- rather than measure every possible point. You can see why for a shift-invariant system the PSF is the key measurement that characterizes the system. 
+space-invariant linear systems are common across science and engineering. Many physical devices and phenomena can be well-approximated as space-invariant, at least over a useful range. This property makes them much easier to calibrate: we only need to measure a single PSF -the response to a single point!- rather than measure every possible point. You can see why for a space-invariant system the PSF is the key measurement that characterizes the system. 
 
-Because shift invariance simplifies both analysis and computation, many courses on “linear systems” focus almost entirely on the shift-invariant case.
+Because space invariance simplifies both analysis and computation, many courses on “linear systems” focus almost entirely on the space-invariant case.
 
-::: {.callout-note title="Shift invariance notation" collapse="true"}
-Let’s make the idea of shift invariance a bit more precise. Suppose we use $T()$ to represent a shift (translation) operation. If we shift an image $x$ by an amount $\delta$, we write $T(x, \delta)$. A system $L()$ is shift-invariant if shifting the input and then applying the system gives the same result as applying the system first and then shifting the output (possibly by a scaled amount):
+::: {.callout-note title="space invariance notation" collapse="true"}
+Let’s make the idea of space invariance a bit more precise. Suppose we use $T()$ to represent a shift (translation) operation. If we shift an image $x$ by an amount $\delta$, we write $T(x, \delta)$. A system $L()$ is space-invariant if shifting the input and then applying the system gives the same result as applying the system first and then shifting the output (possibly by a scaled amount):
 
 $$
 L(T(x, \delta)) \approx T(L(x), \alpha \delta).
@@ -33,16 +33,16 @@ Here, $\alpha$ is a scale factor that accounts for magnification or other effect
 ## LSI system matrix
 An LSI system's matrix representation, $\mathbf{L}$, has a special, highly structured form. If the input is a single point, represented by a vector with a 1 in one entry and 0s elsewhere, the output is the system's point spread function (PSF). This output corresponds to one column of the matrix $\mathbf{L}$.
 
-Because the system is shift-invariant, the PSF's shape is the same for every input point; it is only shifted. Consequently, the columns of the matrix $\mathbf{L}$ are all shifted versions of a single PSF. If we assume the signal wraps around at the edges (a common practice called periodic boundary conditions), the resulting matrix has a specific structure known as a circulant matrix, as shown in @fig-ls-circulant-matrix.
+Because the system is space-invariant, the PSF's shape is the same for every input point; it is only shifted. Consequently, the columns of the matrix $\mathbf{L}$ are all shifted versions of a single PSF. If we assume the signal wraps around at the edges (a common practice called periodic boundary conditions), the resulting matrix has a specific structure known as a circulant matrix, as shown in @fig-ls-circulant-matrix.
 
-![A circulant matrix, representing a Linear Shift-Invariant (LSI) system with periodic boundary conditions. Each column is a circularly shifted version of the first column, which is the system's point spread function (PSF).](images/linearsystems/circulant-matrix.png){#fig-ls-circulant-matrix width=70%}
+![A circulant matrix, representing a Linear space-invariant (LSI) system with periodic boundary conditions. Each column is a circularly shifted version of the first column, which is the system's point spread function (PSF).](images/linearsystems/circulant-matrix.png){#fig-ls-circulant-matrix width=70%}
 
 For computer simulations, there are many details to keep track of, especially issues relating to the edge and wrapping. For example, we often treat the point spread functions as 'circular', so when a value shifts below the bottom of the matrix, we do not throw it away but we copy it into the missing entry at the top of the column. In @fig-ls-circulant-matrix, the edges of the point spread are all zero, and that made the diagram simpler. 
 
 Have a good look at @fig-ls-circulant-matrix. Feel how simple an LSI system matrix is compared to a general linear system (@sec-ls-matrix-tableau). Linear systems in general are great to work with.  If you are working with an LSI, you are particularly fortunate.  The next section gives another reason why.
 
 ## Convolution {#sec-ls-convolution}
-The matrix multiplication for a shift-invariant system, which we visualized as a sum of scaled and shifted point spread functions, is a fundamental operation known as **convolution**.
+The matrix multiplication for a space-invariant system, which we visualized as a sum of scaled and shifted point spread functions, is a fundamental operation known as **convolution**.
 
 Formally, the convolution of an input signal $I[n]$ with a point spread function $h[n]$ is written using the asterisk symbol ($*$) and is defined by the summation:
 $$
@@ -53,15 +53,15 @@ Here, the output at position $n$ is a weighted sum of the input values, where th
 Convolution is the essential calculation for determining the output of any LSI system in the spatial domain. The next sections explain why we often prefer to analyze these systems in the frequency domain, where this computationally intensive summation is replaced by simple multiplication.
 
 ## Harmonics:  Eigenvectors for shift-invariance {#sec-ls-harmonics-LSI}
-We have reached the observation that is the basis of many calculations in the main chapters in the book: the relationship between harmonics and shift invariant linear systems. These ideas are introduced in the main text in @sec-optics-linear-harmonics, where we develop the Discrete Fourier Series (@sec-optics-fourier-series). The ideas continue to be used in many subsequent chapter.
+We have reached the observation that is the basis of many calculations in the main chapters in the book: the relationship between harmonics and space invariant linear systems. These ideas are introduced in the main text in @sec-optics-linear-harmonics, where we develop the Discrete Fourier Series (@sec-optics-fourier-series). The ideas continue to be used in many subsequent chapter.
 
-Haromonic functions are *almost* eigenfunctions of shift-invariant linear systems. By almost, I mean that when a harmonic is the input, the output is a scaled harmonic with a possible shift in position (phase). It is not exactly an eigenfunction because two parameters, the amplitude and phase, can change.
+Haromonic functions are *almost* eigenfunctions of space-invariant linear systems. By almost, I mean that when a harmonic is the input, the output is a scaled harmonic with a possible shift in position (phase). It is not exactly an eigenfunction because two parameters, the amplitude and phase, can change.
 
-The mathematics of this near-miss is managed by expressing the signal using complex instead of real numbers. For complex numbers, which inherently have two parameters, we can say without any guilt that the complex exponentials are eigenvectors of a shift-invariant linear system. Moreover, the complex exponentials are a complete, orthogonal set of eigenfunctions; any input stimulus can be described as the weighted sum of complex exponentials. We relate the complex exponentials back to the real harmonics, using Euler's formula (@eq-Eulers-formula). [^harmonics-FOV].
+The mathematics of this near-miss is managed by expressing the signal using complex instead of real numbers. For complex numbers, which inherently have two parameters, we can say without any guilt that the complex exponentials are eigenvectors of a space-invariant linear system. Moreover, the complex exponentials are a complete, orthogonal set of eigenfunctions; any input stimulus can be described as the weighted sum of complex exponentials. We relate the complex exponentials back to the real harmonics, using Euler's formula (@eq-Eulers-formula). [^harmonics-FOV].
 
-[^harmonics-FOV]: I explain the relationship between harmonics and shift-invariant linear systems in detail, staying away from complex exponentials, in the Appendix to [Foundations of Vision](https://wandell.github.io/FOV-1995/appendix.html){target=_blank}.
+[^harmonics-FOV]: I explain the relationship between harmonics and space-invariant linear systems in detail, staying away from complex exponentials, in the Appendix to [Foundations of Vision](https://wandell.github.io/FOV-1995/appendix.html){target=_blank}.
 
-Taken together this means shift-invariant linear systems and harmonics can take advantage of the full power and simplicity of the eigenvector calculations (@eq-linear-eigencalculations). When the input to an optical system is a harmonic function at spatial frequency $f$ and unit contrast, the output image will be a harmonic function at the same frequency. The amplitude and of the output will differ from the input, but we only need to measure these two parameters. This input-output simplicity makes the harmonics very useful tools for system characterization.
+Taken together this means space-invariant linear systems and harmonics can take advantage of the full power and simplicity of the eigenvector calculations (@eq-linear-eigencalculations). When the input to an optical system is a harmonic function at spatial frequency $f$ and unit contrast, the output image will be a harmonic function at the same frequency. The amplitude and of the output will differ from the input, but we only need to measure these two parameters. This input-output simplicity makes the harmonics very useful tools for system characterization.
 
 ::: {.callout-note collapse="true" title='History - linear algebra and matrices'}
 As an assistant professor, I had the privilege of attending faculty meetings with senior colleagues I deeply admired—Joe Goodman, Ron Bracewell, Tom Cover, and others. We often discussed how to best teach key mathematical ideas to engineering students. The senior faculty generally favored starting with continuous functions and integrals, arguing these were the true mathematical foundation. The younger faculty, who spent much of their time programming, leaned toward teaching with matrices and vectors. I vividly remember Ron Bracewell remarking that continuous functions are the "reality," and we should only later show students the "vulgar" discrete approximations that our computational tools require.
@@ -72,7 +72,7 @@ It helps to know that representing problems with vectors and matrices is not jus
 :::
 
 ## The Convolution Theorem {#sec-ls-convolution-theorem}
-The fact that harmonics are eigenvectors of shift-invariant linear (LSI) systems leads to one of the most powerful results in signal processing: the **Convolution Theorem**.
+The fact that harmonics are eigenvectors of space-invariant linear (LSI) systems leads to one of the most powerful results in signal processing: the **Convolution Theorem**.
 
 In the spatial domain, calculating the output of an LSI system requires performing a convolution—summing the input signal with shifted and scaled versions of the point spread function (PSF). This operation can be computationally intensive.
 
