@@ -64,30 +64,48 @@ The point spread function characterizes the system using many values measured fr
 ![A shift invariant linear system transforms a one-dimensional image harmonic into a harmonic image of the same frequency. The output differs by a scale factor and a spatial shift (phase).  The mean levels of the input $M_i$ and output $M_o$ differ by a scale factor, as well.](images/optics/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
 
 ## Transfer Functions {#sec-optics-transfer-function}
-For a linear, space-invariant system, the effect of the optics on any harmonic stimulus is simple: the output is also a harmonic of the same frequency, but its amplitude is scaled and its phase is shifted. There is a small collection of **transfer functions** that serve as useful, compact mathematical descriptions of this scaling and shifting across all spatial frequencies.
+For a linear, space-invariant system, the effect of the optics on any harmonic stimulus is simple: the output is also a harmonic of the same frequency, but its amplitude is scaled and its phase is shifted. There is a small collection of **transfer functions** that serve as useful, compact mathematical descriptions of this scaling and shifting across all spatial frequencies.  These transfer functions in the transform domain are all related to the functions in the space domain through the convolution theorem.  
+
+From @sec-ls-convolution-theorem we have for an input, $i$, a point spread $h$, and an output, $g$, the convolution represents the LSI transformation
+$$
+g(x) = h(x) * i (x)
+$$
+
+and the transform domain this is
+$$
+\mathscr{F}(g) = \mathscr{F}(h) \cdot \mathscr{F}(i)
+$$
 
 ### Optical Transfer Function {#sec-OTF}
-The **optical transfer function (OTF)** describes the complete effect of a space-invariant optical system on an image. It is a complex-valued function that captures both the amplitude scaling and phase shift for every spatial frequency, $\mathbf{f}$.
+The **optical transfer function (OTF)** describes the complete effect of a space-invariant optical system on an image. It is a complex-valued function that captures both the amplitude scaling and phase shift for every spatial frequency, $\mathbf{f}$. It is defined as the ratio of the Fourier Transform of the input and output
 
 $$
-\mathrm{OTF}(\mathbf{f}) = s(\mathbf{f}) \cdot e^{-i \phi(\mathbf{f})}
+\mathcal{O}(f) = \frac{\mathscr{F}\{g\}(f)}{\mathscr{F}\{i\}(f)} 
+$$
+
+The OTF is a complex function of spatial frequency 
+$$
+\mathcal{O}(f) = s(f) \cdot e^{-i \phi(f)}
 $${#eq-otf-definition}
 
-Here, $s(\mathbf{f})$ is the real-valued amplitude scaling factor, and $\phi(\mathbf{f})$ is the phase shift (in radians).
+Here, $s(f)$ is the real-valued amplitude scaling factor, and $\phi(f)$ is the phase shift (in radians).
 
-The OTF provides a powerful way to predict the system's output. Using the convolution theorem (@sec-ls-convolution-theorem), we can calculate the output image, $O(x,y)$, by multiplying the Fourier transform of the input image, $I(x,y)$, with the OTF and then taking the inverse Fourier transform:
+The OTF provides a powerful way to predict the system's output. Using the convolution theorem (@sec-ls-convolution-theorem), we can calculate the output image, $g(x,y)$, by multiplying the Fourier transform of the input image, $i(x,y)$, with the OTF and then taking the inverse Fourier transform:
 
 $$
-O(x,y) = \mathscr{F}^{-1}\big(\mathscr{F}\{I(x,y)\} \cdot \mathrm{OTF}(\mathbf{f})\big)
+\begin{aligned}
+g(x)             &= \mathscr{F}^{-1}\big(\mathscr{F}\{i\} \cdot \mathcal{O}(f)\big) \\
+\mathscr{F}\{g\} &= \mathscr{F}\{i\} \cdot \mathcal{O}(f)
+\end{aligned}
 $${#eq-otf-calculation}
 
 Just like the point spread function, the OTF completely characterizes a linear, space-invariant system. In fact, the OTF is the Fourier transform of the point spread function.
 
 ### Modulation Transfer Function {#sec-MTF}
-Many times we are primarily interested in how the system affects the contrast (or modulation) of the input harmonics, without regard to the phase shift. This information is captured by the **modulation transfer function (MTF)**. 
+Many times we are primarily interested in how the system affects the contrast (or modulation) of the input harmonics, without regard to the phase shift. This information is captured by the **modulation transfer function (MTF)**, $\mathcal{M}$. 
 
 $$
-\mathrm{MTF}(\mathbf{f}) = s(\mathbf{f})
+\mathcal{M}(\mathbf{f}) = s(\mathbf{f})
 $${#eq-MTF-defined}
 
 The MTF is a real-valued, non-negative function. For many optical systems, particularly those with symmetric point spread functions, the phase shifts are negligible ($\delta_\mathbf{f} \approx 0$). In these common cases, the OTF is approximately equal to the MTF.
@@ -97,17 +115,17 @@ The MTF is a real-valued, non-negative function. For many optical systems, parti
 ![A sweep frequency pattern demonstrates the MTF. The input (top) has uniform contrast across all frequencies. The output (bottom) shows reduced contrast at higher frequencies, as described by the system's MTF. This simulation is for a diffraction-limited lens with an f-number of 4 at a wavelength of 550 nm. [See fise_opticsMTF.m](../code/02Optics/fise_opticsMTF.html){target=_blank}](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
 
 ### Phase Transformation Function {#sec-PTF}
-It is always good to check the phase term, as well.  The phase shift (in radians) as a function of frequency is called the **phase transfer function (PTF)** and it is simply
+It is always good to check the phase term, as well.  The phase shift (in radians) as a function of frequency is called the **phase transfer function (PTF)**, $\mathcal{P}$ and it is simply
 
 $$
-\mathrm{PTF}(\mathbf{f}) = \phi(\mathbf{f})
+\mathcal{P}(\mathbf{f}) = \phi(\mathbf{f})
 $$ {#eq-phasetransform-definition}
 
 Putting these terms together, we have simply
 
 $$
-\mathrm{OTF}(\mathbf{f}) 
-= \mathrm{MTF}(\mathbf{f}) \, e^{\,i \, \mathrm{PTF}(\mathbf{f})} .
+\mathcal{O}(\mathbf{f}) 
+= \mathcal{M}(\mathbf{f}) \, e^{\,i \, \mathcal{P}(\mathbf{f})} .
 $$ {#eq-otf-ptf-mtf}
 
 ## The OTF and the PSF {#sec-otf-psf}
@@ -126,9 +144,9 @@ We can show this relationship by considering a specific input: an impulse.
 
 1.  **Define the Input**: Let the input image, $i(\mathbf{x})$, be a perfect impulse (a Dirac delta function, $\delta(\mathbf{x})$). An impulse is a single, infinitely bright point at the origin.
 
-2.  **Find the Output**: By definition, the output of a linear, space-invariant system to an impulse input is its point spread function (PSF). So, for our impulse input, the output image is $o(\mathbf{x}) = h(\mathbf{x})$.
+2.  **Find the Output**: By definition, the output of a linear, space-invariant system to an impulse input is its point spread function $h()$. So, for our impulse input, the output image is $o(\mathbf{x}) = h(\mathbf{x})$.
 
-3.  **Transform to the Frequency Domain**: The Optical Transfer Function (OTF) is defined as the ratio of the Fourier transform ($\mathcal{F}$) of the output to the Fourier transform of the input.
+3.  **Transform to the Frequency Domain**: The Optical Transfer Function is the ratio of the Fourier transform ($\mathcal{F}$) of the output to the Fourier transform of the input.
     $$
     \mathcal{O}(\mathbf{f}) = \frac{\mathcal{F}\{o(\mathbf{x})\}}{\mathcal{F}\{i(\mathbf{x})\}}
     $$
