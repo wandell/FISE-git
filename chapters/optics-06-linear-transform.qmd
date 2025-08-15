@@ -110,9 +110,42 @@ $$
 = \mathrm{MTF}(\mathbf{f}) \, e^{\,i \, \mathrm{PTF}(\mathbf{f})} .
 $$ {#eq-otf-ptf-mtf}
 
-### The OTF and PSF
+## The OTF and the PSF {#sec-otf-psf}
+The point spread function (PSF) and the optical transfer function (OTF) are two fundamental ways to describe a linear, space-invariant system. The PSF describes the system's response to a point input, while the OTF describes its response to harmonic inputs. There is a direct mathematical relationship between them: the OTF is the Fourier transform of the PSF.
 
-The point representations and harmonic representations are related by the Fourier Transform.  It is also the case that the two key measures, the PSF and the OTF, are also related by a Fourier Transform.  One way to see this is...
+Let $h$ represent the PSF and $\mathcal{O}$ represent the OTF. Their relationship is given by:
+
+$$
+\mathcal{O}(\mathbf{f}) = \mathcal{F}\{h(\mathbf{x})\}
+$${#eq-otf-psf}
+
+where $\mathcal{F}$ denotes the Fourier transform, $\mathbf{x}$ represents spatial position, and $\mathbf{f}$ represents spatial frequency. This simple and powerful relationship means that if you know one, you can calculate the other.
+
+::: {.callout-note collapse=false title="Derivation: From PSF to OTF"}
+We can show this relationship by considering a specific input: an impulse.
+
+1.  **Define the Input**: Let the input image, $i(\mathbf{x})$, be a perfect impulse (a Dirac delta function, $\delta(\mathbf{x})$). An impulse is a single, infinitely bright point at the origin.
+
+2.  **Find the Output**: By definition, the output of a linear, space-invariant system to an impulse input is its point spread function (PSF). So, for our impulse input, the output image is $o(\mathbf{x}) = h(\mathbf{x})$.
+
+3.  **Transform to the Frequency Domain**: The Optical Transfer Function (OTF) is defined as the ratio of the Fourier transform ($\mathcal{F}$) of the output to the Fourier transform of the input.
+    $$
+    \mathcal{O}(\mathbf{f}) = \frac{\mathcal{F}\{o(\mathbf{x})\}}{\mathcal{F}\{i(\mathbf{x})\}}
+    $$
+
+4.  **Substitute and Simplify**: Now we substitute our specific input and output into this definition.
+    - The Fourier transform of the input impulse is $\mathcal{F}\{\delta(\mathbf{x})\} = 1$.
+    - The Fourier transform of the output is $\mathcal{F}\{h(\mathbf{x})\}$.
+
+    Plugging these into the equation gives:
+    $$
+    \mathcal{O}(\mathbf{f}) = \frac{\mathcal{F}\{h(\mathbf{x})\}}{1} = \mathcal{F}\{h(\mathbf{x})\}
+    $$
+    This confirms that the OTF is the Fourier transform of the PSF, as stated in @eq-otf-psf.
+
+:::
+
+
 
 ### Contrast Sensitivity Function {#sec-CSF}
 For some systems, we cannot directly measure the output signal. The human visual system is a prime example: we can ask a person what they see, but we cannot easily measure the neural response at the retina or in the cortex. This "black box" problem is common in many fields.
