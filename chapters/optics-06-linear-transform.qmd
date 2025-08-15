@@ -36,7 +36,7 @@ $${#eq-harmonics-2d}
 
 For many linear-systems analyses, say when the system is circularly symmetric, it is enough to consider one-dimensional harmonics by fixing $f_y = 0$. The examples in @fig-optics-harmonics-1d vary only along $x$ and illustrate different spatial frequencies $f_x$ and contrasts $A$.
 
-![A set of one-dimensional image harmonics. They vary in $x$ with $f_y = 0$. The contrast $A$ varies from top to bottom $(1, 0.5, 0.1)$. The $x$-range is $(0,1)$, and the spatial frequencies are $f_x = (1, 2, 4, 8)$.](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
+![A set of one-dimensional image harmonics. They vary in $x$ with $f_y = 0$. The contrast $A$ varies from top to bottom $(1, 0.5, 0.1)$. The $x$-range is $(0,1)$, and the spatial frequencies are $f_x = (1, 2, 4, 8)$. [fise_imageHarmonics1d.m](../code/02Optics/fise_imageHarmonics1d.html){target=_blank}](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
 
 ## Harmonics and lines {#eq-optics-harmonics-lines}
 To many people it is counterintuitive that a thin line can be constructed by summing harmonics. The line is very compact, but each harmonic extends across the entire image. How can the sum of these harmonics functions result in such a localized image?
@@ -52,7 +52,7 @@ This movie illustrates how the sum converges as harmonics are added one by one. 
 
 Adding harmonics from $f=0$ to $f=64$ produces the line; adding $f=65$ to $f=128$ introduces some ringing, which is eliminated when the sum is complete. This is a special case for even symmetric functions, where only cosines are required.
 
-![Video showing a line reconstructed as we add harmonics (cosines) at different frequencies. I only added the contrast terms, keeping the mean the same. See [fise_harmonicsLine](../code/02Optics/fise_harmonicsLine.html). ](images/optics/lineReconstruct.mp4){#fig-optics-reconstruction-movie width="60%" fig-align="center"}
+![Video showing a line reconstructed as we add harmonics (cosines) at different frequencies. I only added the contrast terms, keeping the mean the same. See [fise_harmonicsLine](../code/02Optics/fise_harmonicsLine.html){target=_blank}. ](images/optics/lineReconstruct.mp4){#fig-optics-reconstruction-movie width="60%" fig-align="center"}
 
 :::
 
@@ -61,7 +61,7 @@ There are many reasons why people would like to describe the quality of an optic
 
 The point spread function characterizes the system using many values measured from a single stimulus. The harmonic characterization uses only two parameters, but from multiple stimuli (@fig-optics-harmonic-eigen).  For each harmonic frequency, we measure how much its amplitude is scaled, $s(\mathbf{f})$, and how much the image has been shifted $\phi(\mathbf{f})$.
 
-![A shift invariant linear system transforms a one-dimensional image harmonic into a harmonic image of the same frequency. The output differs by a scale factor and a spatial shift (phase).  The mean levels of the input $M_i$ and output $M_o$ differ by a scale factor, as well. [fise_harmonicsLine.m]()](images/optics/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
+![A shift invariant linear system transforms a one-dimensional image harmonic into a harmonic image of the same frequency. The output differs by a scale factor and a spatial shift (phase).  The mean levels of the input $M_i$ and output $M_o$ differ by a scale factor, as well.](images/optics/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
 
 ## Transfer Functions {#sec-optics-transfer-function}
 For a linear, space-invariant system, the effect of the optics on any harmonic stimulus is simple: the output is also a harmonic of the same frequency, but its amplitude is scaled and its phase is shifted. There is a small collection of **transfer functions** that serve as useful, compact mathematical descriptions of this scaling and shifting across all spatial frequencies.
@@ -130,17 +130,15 @@ $$
 For example, if a low-frequency pattern is detectable at 1% contrast ($A=0.01$), the contrast sensitivity is $1/0.01 = 100$. If a high-frequency pattern requires 10% contrast ($A=0.10$) to be seen, its sensitivity is $1/0.10 = 10$. The CSF curve plots this sensitivity across all spatial frequencies, providing a comprehensive characterization of the visual system's ability to perceive spatial detail. This same principle can be applied to characterize the end-to-end performance of a complete camera system, from optics to final processed image.
 
 ## Two-dimensional Fourier Transforms representation
+There are times when we would like to visualize the amplitude of the image harmonics as a function of spatial frequency. The image in @fig-optics-otf2d is a common approach.  The spatial domain images are on the left - two different harmonics. The amplitude of the Fourier coefficients are shown on the right. The center of the image represents the mean value.  The two points, symmetric about the center, represent the amplitude of the Fourier representation.
 
-Start an image of the 2D FFT amplitude, perhaps.  
+![Pictures of 2d FFT Amplitude spectrum. [See fise_harmonicsLine](../code/02Optics/html/fise_harmonicsLine.html){target=_blank}](images/optics/otf2d.png){#fig-optics-otf2d width=70%}
 
-![Pictures of 2d FFT Amplitude spectrum](images/optics/otf2d.png){#fig-optics-otf2d width=70%}
+The axes represent the spatial frequency range.  It is common to render the spatial frequency map with the mean ($M$) value in the middle of the image at $(0,0)$. The spatial frequencies range from $[-f_N,f_N]$, where $N$ is the number of samples. The frequency is with respect to the image size.  If the image size is $1$ degree, then $f_1$ is $1$ cycle per degree; if the image is $10$ deg, then $f_1$ is $1/10$ cycle per degree.  Because the original image is real-valued, the complex coefficients must satisfy the regularity that $F(f_x,f_y) = F^* (-f_x,-f_y)$, where $*$ is the complex conjugate.
 
-Get to image representations of the harmonic images.
+Slow variations across the image are represented in the center of the plot.  If reduce their amplitude and compute the image, as in the middle column, the image reflects mainly the parts that are rapidly changing.  Conversely, if we retain the center part and scale away the higher frequencies, as in the rightmost column, the image is a blurry version of the original.
 
-Parts of the Fourier representation (center, edges, and so forth)
-
-![My favorite singer. 2d FFT Amplitude spectrum and then carved out](images/optics/otf2dParts.png){#fig-optics-otf2dparts width=70%}
-
+![The log10 amplitudes of the two-dimensional Fourier Transform coefficients are shown in the bottom row; the corresponding images are shown in the top row.[fise_otf2dParts](../code/02Optics/fise_otf2d)](images/optics/otf2dParts.png){#fig-optics-otf2dparts width=70%}
 
 ### High frequency fall off.
 
