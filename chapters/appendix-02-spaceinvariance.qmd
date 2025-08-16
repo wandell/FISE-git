@@ -53,7 +53,7 @@ Here, the output at position $n$ is a weighted sum of the input values, where th
 Convolution is the essential calculation for determining the output of any LSI system in the spatial domain. The next sections explain why we often prefer to analyze these systems in the frequency domain, where this computationally intensive summation is replaced by simple multiplication.
 
 ## Harmonics:  Eigenvectors for shift-invariance {#sec-ls-harmonics-LSI}
-We have reached the observation that is the basis of many calculations in the main chapters in the book: the relationship between harmonics and space invariant linear systems. These ideas are introduced in the main text in @sec-optics-linear-harmonics, where we develop the Discrete Fourier Series (@sec-optics-fourier-series). The ideas continue to be used in many subsequent chapter.
+We have reached the observation that is the basis of many calculations in the main chapters: the relationship between harmonics and space invariant linear systems. These ideas are introduced in the main text in @sec-optics-linear-harmonics, where we develop the Discrete Fourier Series (@sec-optics-fourier-series). The ideas continue to be used in many subsequent chapter.
 
 Haromonic functions are *almost* eigenfunctions of space-invariant linear systems. By almost, I mean that when a harmonic is the input, the output is a scaled harmonic with a possible shift in position (phase). It is not exactly an eigenfunction because two parameters, the amplitude and phase, can change.
 
@@ -71,8 +71,12 @@ These were lively debates, rooted in a deep respect for the mathematical foundat
 It helps to know that representing problems with vectors and matrices is not just a modern computational convenience. The importance of linear algebra and matrix methods was recognized nearly 200 years ago. If you’re interested, you can read more about the [history of these powerful ideas](resources/history-linear-algebra.html){target=_blank}.
 :::
 
+## The Fourier Transform
+
+We need to introduce the DFT here before the next section.
+
 ## The Convolution Theorem {#sec-ls-convolution-theorem}
-The fact that harmonics are eigenvectors of space-invariant linear (LSI) systems leads to one of the most powerful results in signal processing: the **Convolution Theorem**.
+The fact that harmonics are eigenvectors of linear, space-invariant (LSI) systems leads to one of the most powerful results in signal processing: the **Convolution Theorem**.
 
 In the spatial domain, calculating the output of an LSI system requires performing a convolution—summing the input signal with shifted and scaled versions of the point spread function (PSF). This operation can be computationally intensive.
 
@@ -80,12 +84,16 @@ The Convolution Theorem provides an elegant and highly efficient alternative. It
 
 Let's formalize this. If the output image $O[n]$ is the convolution of the input image $I[n]$ and the system's point spread function $h[n]$:
 $$
-O[n] = (I * h)[n]
+O[n] = (I * h)[n],
 $$ {#eq-convolution-theorem-1}
-Then, taking the Discrete Fourier Transform (DFT) of each term gives:
+
+then in the Fourier Transform domain the relationship is 
 $$
-\text{DFT}\{O[n]\} = \text{DFT}\{I[n]\} \cdot \text{DFT}\{h[n]\}
+\mathscr{F}\{O\} = \mathscr{F}\{I\} \cdot \mathscr{F}\{h\}
 $$
+
+where $\mathscr{F}$ is the Discrete Fourier Transform.
+
 Using the complex weights notation, where $W_f$ are the DFT coefficients of the input and $H_f$ are the DFT coefficients of the PSF, the output coefficients $Y_f$ are simply:
 $$
 Y_f = W_f \cdot H_f
