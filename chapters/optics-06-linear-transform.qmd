@@ -77,91 +77,54 @@ $$
 $$
 
 ### Optical Transfer Function {#sec-OTF}
-The **optical transfer function (OTF)** describes the complete effect of a space-invariant optical system on an image. It is a complex-valued function that captures both the amplitude scaling and phase shift for every spatial frequency, $\mathbf{f}$. It is defined as the ratio of the Fourier Transform of the input and output
+The **optical transfer function (OTF)**, $\mathscr{O}(f)$, is defined as the Fourier Transform of the output divided by the Fourier Transform of the input. From its definition, we can see it is also the Fourier Transform of the point spread function.
 
 $$
-\mathcal{O}(f) = \frac{\mathscr{F}\{g\}(f)}{\mathscr{F}\{i\}(f)} 
-$$
+\mathcal{O}(f) = \frac{\mathscr{F}\{g\}}{\mathscr{F}\{i\}} = \mathscr{F}\{h\} .
+$$ {#eq-otf-definition}
 
-The OTF is a complex function of spatial frequency 
-$$
-\mathcal{O}(f) = s(f) \cdot e^{-i \phi(f)}
-$${#eq-otf-definition}
+The OTF is a complex function of spatial frequency, and its real and complex components correspond to the amplitude scaling and phase shift,
 
-Here, $s(f)$ is the real-valued amplitude scaling factor, and $\phi(f)$ is the phase shift (in radians).
+$$
+\mathcal{O}(f) = s(f) \cdot e^{-i \phi(f)} .
+$${#eq-otf-definition-complex}
+
+The term $s(f)$ is the real-valued amplitude scaling factor, and $\phi(f)$ is the phase shift (in radians).
 
 The OTF provides a powerful way to predict the system's output. Using the convolution theorem (@sec-ls-convolution-theorem), we can calculate the output image, $g(x,y)$, by multiplying the Fourier transform of the input image, $i(x,y)$, with the OTF and then taking the inverse Fourier transform:
 
 $$
-\begin{aligned}
-g(x)             &= \mathscr{F}^{-1}\big(\mathscr{F}\{i\} \cdot \mathcal{O}(f)\big) \\
-\mathscr{F}\{g\} &= \mathscr{F}\{i\} \cdot \mathcal{O}(f)
-\end{aligned}
+g(x) = \mathscr{F}^{-1}\big( \mathcal{O}(f)  \cdot \mathscr{F}\{i\} \big)\\
 $${#eq-otf-calculation}
 
-Just like the point spread function, the OTF completely characterizes a linear, space-invariant system. In fact, the OTF is the Fourier transform of the point spread function.
+Just like its partner in the space domain, the point spread function, the OTF completely characterizes a linear, space-invariant system.
 
 ### Modulation Transfer Function {#sec-MTF}
 Many times we are primarily interested in how the system affects the contrast (or modulation) of the input harmonics, without regard to the phase shift. This information is captured by the **modulation transfer function (MTF)**, $\mathcal{M}$. 
 
 $$
-\mathcal{M}(\mathbf{f}) = s(\mathbf{f})
-$${#eq-MTF-defined}
+\mathcal{M}(f) = s(f)
+$$ {#eq-MTF-defined}
 
 The MTF is a real-valued, non-negative function. For many optical systems, particularly those with symmetric point spread functions, the phase shifts are negligible ($\delta_\mathbf{f} \approx 0$). In these common cases, the OTF is approximately equal to the MTF.
 
 @fig-optics-harmonics-mtf illustrates the effect of the MTF. An input image with a sweep of spatial frequencies (top) is passed through an optical system. The output image (bottom) shows that the contrast of the high-frequency patterns is significantly reduced, a direct visualization of the MTF's attenuation of higher frequencies.
 
-![A sweep frequency pattern demonstrates the MTF. The input (top) has uniform contrast across all frequencies. The output (bottom) shows reduced contrast at higher frequencies, as described by the system's MTF. This simulation is for a diffraction-limited lens with an f-number of 4 at a wavelength of 550 nm. [See fise_opticsMTF.m](../code/02Optics/fise_opticsMTF.html){target=_blank}](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
+![A sweep frequency pattern demonstrates to illustrate the MTF. The input image (top) is a sweep frequency, from low to high frequency, at 550 nm. The input contrast is the same as the local frequency increases. The simulation passes this image through a diffraction limited lens, $f/\# = 4$. The local contrast decreases at the higher frequencies. The red curve, defined as the envlope of the modulating output response, is the system's MTF, $\mathscr{M}(f)$. [See fise_opticsMTF.m](../code/02Optics/fise_opticsMTF.html){target=_blank}](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
 
 ### Phase Transformation Function {#sec-PTF}
 It is always good to check the phase term, as well.  The phase shift (in radians) as a function of frequency is called the **phase transfer function (PTF)**, $\mathcal{P}$ and it is simply
 
 $$
-\mathcal{P}(\mathbf{f}) = \phi(\mathbf{f})
+\mathcal{P}(f) = \phi(f)
 $$ {#eq-phasetransform-definition}
 
 Putting these terms together, we have simply
 
 $$
-\mathcal{O}(\mathbf{f}) 
-= \mathcal{M}(\mathbf{f}) \, e^{\,i \, \mathcal{P}(\mathbf{f})} .
+\mathcal{O}(f) 
+= \mathcal{M}(f) \, e^{\,i \, \mathcal{P}(f)} .
 $$ {#eq-otf-ptf-mtf}
-
-## The OTF and the PSF {#sec-otf-psf}
-The point spread function (PSF) and the optical transfer function (OTF) are two fundamental ways to describe a linear, space-invariant system. The PSF describes the system's response to a point input, while the OTF describes its response to harmonic inputs. There is a direct mathematical relationship between them: the OTF is the Fourier transform of the PSF.
-
-Let $h$ represent the PSF and $\mathcal{O}$ represent the OTF. Their relationship is given by:
-
-$$
-\mathcal{O}(\mathbf{f}) = \mathcal{F}\{h(\mathbf{x})\}
-$${#eq-otf-psf}
-
-where $\mathcal{F}$ denotes the Fourier transform, $\mathbf{x}$ represents spatial position, and $\mathbf{f}$ represents spatial frequency. This simple and powerful relationship means that if you know one, you can calculate the other.
-
-::: {.callout-note collapse=false title="Derivation: From PSF to OTF"}
-We can show this relationship by considering a specific input: an impulse.
-
-1.  **Define the Input**: Let the input image, $i(\mathbf{x})$, be a perfect impulse (a Dirac delta function, $\delta(\mathbf{x})$). An impulse is a single, infinitely bright point at the origin.
-
-2.  **Find the Output**: By definition, the output of a linear, space-invariant system to an impulse input is its point spread function $h()$. So, for our impulse input, the output image is $o(\mathbf{x}) = h(\mathbf{x})$.
-
-3.  **Transform to the Frequency Domain**: The Optical Transfer Function is the ratio of the Fourier transform ($\mathcal{F}$) of the output to the Fourier transform of the input.
-    $$
-    \mathcal{O}(\mathbf{f}) = \frac{\mathcal{F}\{o(\mathbf{x})\}}{\mathcal{F}\{i(\mathbf{x})\}}
-    $$
-
-4.  **Substitute and Simplify**: Now we substitute our specific input and output into this definition.
-    - The Fourier transform of the input impulse is $\mathcal{F}\{\delta(\mathbf{x})\} = 1$.
-    - The Fourier transform of the output is $\mathcal{F}\{h(\mathbf{x})\}$.
-
-    Plugging these into the equation gives:
-    $$
-    \mathcal{O}(\mathbf{f}) = \frac{\mathcal{F}\{h(\mathbf{x})\}}{1} = \mathcal{F}\{h(\mathbf{x})\}
-    $$
-    This confirms that the OTF is the Fourier transform of the PSF, as stated in @eq-otf-psf.
-
-:::
 
 
 
@@ -170,15 +133,15 @@ For some systems, we cannot directly measure the output signal. The human visual
 
 A clever way to characterize such systems is to measure the input required to produce a constant, predefined output. This general approach is known by various names: "input-referred measurement" in engineering, "action spectrum" in photobiology, and "Type A" experiments in physiology (@brindley1970-book).
 
-In vision science, this method is used to define the **contrast sensitivity function (CSF)**. To measure the CSF, an observer is shown a harmonic pattern of a specific frequency, and the contrast is adjusted until the pattern is just barely visible (at the detection threshold). This process is repeated for many different spatial frequencies.
+In vision science, this method is used to define the **contrast sensitivity function (CSF)**, $\mathscr{C}(f)$. To measure the CSF, an observer is shown a harmonic pattern of a specific frequency, and the contrast is adjusted until the pattern is just barely visible (at the detection threshold). This process is repeated for many different spatial frequencies.
 
-The contrast sensitivity for a given frequency, $\mathbf{f}$, is defined as the reciprocal of the threshold contrast, $A_\mathbf{f}$:
+The contrast sensitivity for a given frequency, $f$, is defined as the reciprocal of the threshold contrast, $A_{f}$:
 
 $$
-\mathrm{CSF}(\mathbf{f}) = \frac{1}{A_\mathbf{f}}
+\mathscr{C}(f) = \frac{1}{A_{f}}
 $$
 
-For example, if a low-frequency pattern is detectable at 1% contrast ($A=0.01$), the contrast sensitivity is $1/0.01 = 100$. If a high-frequency pattern requires 10% contrast ($A=0.10$) to be seen, its sensitivity is $1/0.10 = 10$. The CSF curve plots this sensitivity across all spatial frequencies, providing a comprehensive characterization of the visual system's ability to perceive spatial detail. This same principle can be applied to characterize the end-to-end performance of a complete camera system, from optics to final processed image.
+For example, if a spatial frequency pattern at $f$ is detectable at 1% contrast ($A_f=0.01$), the contrast sensitivity is $1/0.01 = 100$. If a high-frequency pattern requires 10% contrast ($A_f = 0.10$) to be seen, its sensitivity is $1/0.10 = 10$. The CSF curve plots this sensitivity across all spatial frequencies, providing a comprehensive characterization of the visual system's ability to perceive spatial detail. This same principle can be applied to characterize the end-to-end performance of a complete camera system, from optics to final processed image.
 
 ## Two-dimensional Fourier Transforms representation
 There are times when we would like to visualize the amplitude of the image harmonics as a function of spatial frequency. The image in @fig-optics-otf2d is a common approach.  The spatial domain images are on the left - two different harmonics. The amplitude of the Fourier coefficients are shown on the right. The center of the image represents the mean value.  The two points, symmetric about the center, represent the amplitude of the Fourier representation.
@@ -189,7 +152,7 @@ The axes represent the spatial frequency range.  It is common to render the spat
 
 Slow variations across the image are represented in the center of the plot.  If reduce their amplitude and compute the image, as in the middle column, the image reflects mainly the parts that are rapidly changing.  Conversely, if we retain the center part and scale away the higher frequencies, as in the rightmost column, the image is a blurry version of the original.
 
-![The log10 amplitudes of the two-dimensional Fourier Transform coefficients are shown in the bottom row; the corresponding images are shown in the top row.[fise_otf2dFace](../code/02Optics/fise_otf2dFace.html){target=_blank}](images/optics/otf2dParts.png){#fig-optics-otf2dparts width=70%}
+![The log10 amplitudes of the two-dimensional Fourier Transform coefficients are shown in the bottom row; the corresponding images are shown in the top row.[fise_otf2dFace](../code/02Optics/fise_otf2dFace.html){target=_blank}](images/optics/otf2dFace.png){#fig-optics-otf2dparts width=70%}
 
 ### High frequency fall off.
 
