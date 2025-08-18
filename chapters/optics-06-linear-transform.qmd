@@ -37,14 +37,13 @@ For many linear-systems analyses, say when the system is circularly symmetric, i
 
 ![A set of one-dimensional image harmonics. They vary in $x$ with $f_y = 0$. The contrast $A$ varies from top to bottom $(1, 0.5, 0.1)$. The $x$-range is $(0,1)$, and the spatial frequencies are $f_x = (1, 2, 4, 8)$. [fise_imageHarmonics1d.m](../code/02Optics/fise_imageHarmonics1d.html){target=_blank}](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
 
-## Harmonics and lines {#eq-optics-harmonics-lines}
 To many people it is counterintuitive that a thin line can be constructed by summing harmonics. The line is very compact, but each harmonic extends across the entire image. How can the sum of these harmonics functions result in such a localized image?
 
 @fig-optics-reconstruction shows how the image evolves as we sum increasing numbers of harmonics: Starting with just a few, the result is broad and diffuse, but as more harmonics are added, the image becomes increasingly concentrated. The key is that the positive and negative regions of the higher frequency harmonics cancel each other out everywhere except at the center, where all the cosine terms are positive ($\cos(0)$). With enough harmonics, the sum converges to a single, sharp line.
 
-In this example, we reconstruct a line at the center (column 65) of a 129-column image by setting all harmonic weights to $w_f = 1$. Because the target image is even symmetric, only the cosine terms are needed. The red traces in the figure show the intensity profile: as more harmonics are added, the central peak narrows and side ripples diminish. By the 64th harmonic, the line is well-formed; adding more harmonics briefly reintroduces some ringing, which disappears when the full set is included. This phenomenon is a classic result in linear systems—ask your instructor for more details!
+In this example, we reconstruct a line at the center (column 65) of a 129-column image by setting all harmonic weights to $w_f = 1$. Because the target image is even symmetric, only the cosine terms are needed. The red traces in the figure show the intensity profile: as more harmonics are added, the central peak narrows and side ripples diminish. By the $64^{th}$ harmonic, the line is well-formed; adding more harmonics briefly reintroduces some ringing, which disappears when the full set is included. This phenomenon is a classic result in linear systems—ask your instructor for more details!
 
-![Summing harmonics to become a line. The panels show the sum of the first 4, 16, 64, 72, and finally all 128 harmonics. To match a single line in the middle (col=65) of this 129 column image, the weights of each harmonic are all $w_f = 1$. Because the image is even symmetric, we need to sum only the $cos()$ terms. The red traces superimposed on the images are the intensity. The central region becomes thinner and the ripples on the side are eliminated by the 64th harmonic.  They return as we keep going to f = 72, but are eliminated again at f=128.  Ask your linear systems instructor about this; s/he will like you for it.](images/optics/optics-reconstruction.png){#fig-optics-reconstruction width="100%"}
+![Summing harmonics to become a line. The panels show the sum of the first 4, 16, 64, 72, and finally all 128 harmonics. To match a single line in the middle (col=65) of this 129 column image, the weights of each harmonic are all $w_f = 1$. Because the image is even symmetric, we need to sum only the $cos()$ terms. The red traces superimposed on the images are the intensity. The central region becomes thinner and the ripples on the side are eliminated by the $64^{th}$ harmonic.  They return as we keep going to f = 72, but are eliminated again at f=128.  Ask your linear systems instructor about this; s/he will like you for it.](images/optics/optics-reconstruction.png){#fig-optics-reconstruction width="100%"}
 
 ::: {.callout-note collapse="false" title="Line reconstruction: the movie"}
 This movie illustrates how the sum converges as harmonics are added one by one. Initially, the harmonics are distributed across the image. As more are included, their contributions cancel everywhere except at the central position ($0$), where all are positive ($\cos(0)$). 
@@ -76,46 +75,41 @@ $$
 $$
 
 ### Optical Transfer Function {#sec-OTF}
-The **optical transfer function (OTF)**, $\mathscr{O}(f)$, is defined as the Fourier Transform of the output divided by the Fourier Transform of the input. From its definition, we can see it is also the Fourier Transform of the point spread function.
-
+The **optical transfer function (OTF)**, $\mathcal{O}(f)$, is defined as the Fourier transform of the output divided by the Fourier transform of the input. From its definition, it is also the Fourier transform of the point spread function.
 $$
-\mathcal{O}(f) = \frac{\mathscr{F}\{g\}}{\mathscr{F}\{i\}} = \mathscr{F}\{h\} .
+\mathcal{O}(f) = \frac{\mathscr{F}\{g\}}{\mathscr{F}\{i\}} = \mathscr{F}\{h\}.
 $$ {#eq-otf-definition}
 
-The OTF is a complex function of spatial frequency, and its real and complex components correspond to the amplitude scaling and phase shift,
-
+The OTF is a complex function of spatial frequency. It can be written in magnitude–phase form as
 $$
-\mathcal{O}(f) = s(f) \cdot e^{-i \phi(f)} .
-$${#eq-otf-definition-complex}
+\mathcal{O}(f) = \mathcal{M}(f)\, e^{\,i\,\mathcal{P}(f)},
+$$ {#eq-otf-definition-complex}
 
-The term $s(f)$ is the real-valued amplitude scaling factor, and $\phi(f)$ is the phase shift (in radians).
+The term $\mathcal{M}(f)$ is the real-valued amplitude scaling factor, and $\mathcal{P}(f)$ is the phase shift (in radians).
 
 The OTF provides a powerful way to predict the system's output. Using the convolution theorem (@sec-ls-convolution-theorem), we can calculate the output image, $g(x,y)$, by multiplying the Fourier transform of the input image, $i(x,y)$, with the OTF and then taking the inverse Fourier transform:
-
 $$
-g(x) = \mathscr{F}^{-1}\big( \mathcal{O}(f)  \cdot \mathscr{F}\{i\} \big)\\
-$${#eq-otf-calculation}
+g(x) = \mathscr{F}^{-1}\!\big( \mathcal{O}(f)\,\mathscr{F}\{i\} \big).
+$$ {#eq-otf-calculation}
 
 Just like its partner in the space domain, the point spread function, the OTF completely characterizes a linear, space-invariant system.
 
 ### Modulation Transfer Function {#sec-MTF}
-Many times we are primarily interested in how the system affects the contrast (or modulation) of the input harmonics, without regard to the phase shift. This information is captured by the **modulation transfer function (MTF)**, $\mathcal{M}$. 
-
+Many times we are primarily interested in how the system affects the contrast (or modulation) of the input harmonics, without regard to the phase shift. This is captured by the **modulation transfer function (MTF)**:
 $$
-\mathcal{M}(f) = s(f)
+\mathcal{M}(f) = |\mathcal{O}(f)|.
 $$ {#eq-MTF-defined}
 
-The MTF is a real-valued, non-negative function. For many optical systems, particularly those with symmetric point spread functions, the phase shifts are negligible ($\delta_\mathbf{f} \approx 0$). In these common cases, the OTF is approximately equal to the MTF.
+For many optical systems, particularly those with symmetric point spread functions, the phase shifts are small (i.e., $\mathcal{P}(f)\approx 0$), in which case the OTF is approximately real and non‑negative.
 
 @fig-optics-harmonics-mtf illustrates the effect of the MTF. An input image with a sweep of spatial frequencies (top) is passed through an optical system. The output image (bottom) shows that the contrast of the high-frequency patterns is significantly reduced, a direct visualization of the MTF's attenuation of higher frequencies.
 
-![A sweep frequency pattern demonstrates to illustrate the MTF. The input image (top) is a sweep frequency, from low to high frequency, at 550 nm. The input contrast is the same as the local frequency increases. The simulation passes this image through a diffraction limited lens, $f/\# = 4$. The local contrast decreases at the higher frequencies. The red curve, defined as the envlope of the modulating output response, is the system's MTF, $\mathscr{M}(f)$. [See fise_opticsMTF.m](../code/02Optics/fise_opticsMTF.html){target=_blank}](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
+![A sweep frequency pattern demonstrates the MTF. The input image (top) is a sweep frequency, from low to high frequency, at 550 nm. The input contrast is the same as the local frequency increases. The simulation passes this image through a diffraction‑limited lens, $f/\#=4$. The local contrast decreases at the higher frequencies. The red curve, defined as the envelope of the modulating output response, is the system's MTF, $\mathcal{M}(f)$. ...](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
 
-### Phase Transformation Function {#sec-PTF}
-It is always good to check the phase term, as well.  The phase shift (in radians) as a function of frequency is called the **phase transfer function (PTF)**, $\mathcal{P}$ and it is simply
-
+### Phase Transfer Function {#sec-PTF}
+The phase shift (in radians) as a function of frequency is called the **phase transfer function (PTF)**:
 $$
-\mathcal{P}(f) = \phi(f)
+\mathcal{P}(f) = \phi(f).
 $$ {#eq-phasetransform-definition}
 
 Putting these terms together, we have simply
@@ -153,18 +147,15 @@ Slow variations across the image are represented near the center of the spectrum
 
 ![The log10 amplitudes of the two-dimensional Fourier Transform coefficients are shown in the bottom row; the corresponding images are shown in the top row.[fise_otf2dFace](../code/02Optics/fise_otf2dFace.html){target=_blank}](images/optics/otf2dFace.png){#fig-optics-otf2dparts width=70%}
 
-### High frequency fall off.
+## Applications
 
+### Image sharpness: High frequency roll off
+Natural images often exhibit amplitude spectra that decrease roughly as $1/f^{\alpha}$ with $\alpha\in[0.5,1]$. Optical systems further reduce high spatial frequencies due to diffraction and aberrations, reflected in the MTF roll‑off. As frequency approaches the system cutoff (e.g., the diffraction limit), contrast necessarily drops toward zero.
 
-### Develop the ISO 12233 standard, relating edges and MTF50
-
-Not sure we introduce it here or in sensors.
-
-Maybe we illustrate it here in the abstract and then again when we get to the sensors, later.
+### Sharpness measures:  ISO 12233 standard
 
 ### Spatial aliasing
-
-Not sure we introduce it here or in sensors.
+When scene content contains energy above the sensor’s Nyquist frequency, it folds (aliases) into lower frequencies, producing artifacts such as moiré patterns. Anti‑alias strategies include optical prefiltering (defocus/diffusion), CFA design considerations, and oversampling followed by appropriate downsampling.
 
 Maybe we illustrate it here in the abstract and then again when we get to the sensors, later.
 
@@ -176,8 +167,7 @@ F(x,y) = f(x) g(y)
 $$ {#eq-separability-definition}
 
 :::{.callout-note title='2D Fourier Transforms' collapse='false'}
-Bracewell and Goodman for introducing the 2D Fourier transform for image applications.
-
+Bracewell and Goodman were early champions of the 2D Fourier transform for image applications; their texts remain classics.
 [Link to Google resource.](resources/history-2D-fourier-transform.html){target=_blank}
 
 :::
