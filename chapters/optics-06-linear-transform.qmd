@@ -1,5 +1,5 @@
 # Transform domain {#sec-optics-linear-harmonics}
-We have mainly been analyzingd optical systems using point-based stimuli (impulses and point spread functions). This is one of many useful signal representations (@sec-appendix-linear-systems). In this section, we introduce a second class of stimuli: image harmonics. These stimuli are commonly used in the image systems engineering literature for both theory and measurement. They provide a valuable and insightful approach to measuring how image systems behave.
+We have mainly been analyzing optical systems using point-based stimuli (impulses and point spread functions). This is one of many useful signal representations (@sec-appendix-linear-systems). In this section, we introduce a second class of stimuli: image harmonics. These stimuli are commonly used in the image systems engineering literature for both theory and measurement. They provide a valuable and insightful approach to measuring how image systems behave.
 
 There are two practical motivations for considering alternative stimuli. First, point stimuli are not convenient tool for predicting how finely a system can resolve detail; the spatial resolution of an image system is often easier to analyze using harmonics. Second, point stimuli are photon-inefficient and thus difficult to measure precisely. Extended harmonic targets deliver more light, produce higher signal-to-noise measurements, and allow precise control of spatial frequency, orientation, and phase.
 
@@ -18,15 +18,14 @@ $$
 I(x) = 1 + \sin(2\pi f_x x + \phi_x)
 $${#eq-harmonics-1d-v2}
 
-In imaging, we typically need a two-dimensional representation to describe variation across both $x$ and $y$. A useful form that keeps intensities non-negative and includes two dimensions is
-
+In imaging, we typically need a two-dimensional representation to describe variation across both $x$ and $y$. A compact form that keeps intensities non-negative is
 $$
-I(x,y) = M\big(1 + A \sin(2\pi f_x x + \phi_x + 2\pi f_y y + \phi_y)\big).
-$${#eq-harmonics-2d}
+I(x,y) = M\big(1 + A \,\sin\big(2\pi (f_x x + f_y y) + \phi\big)\big).
+$$ {#eq-harmonics-2d}
 
 - $M$ is the mean (DC) intensity.
-- $A$ is the contrast or modulation depth. To ensure $I(x,y) \ge 0$, we require $|A| \le 1$. In practice, we often take $A \in [0,1]$ and absorb any sign into the phase.
-- The pair $(f_x, f_y)$ is the 2D spatial frequency. When both are nonzero, the pattern has an orientation; the bars are perpendicular to the vector $(f_x, f_y)$, with angle $\theta = \mathrm{atan2}(f_y, f_x)$.
+- $A$ is the contrast or modulation depth. To ensure $I(x,y)\ge0$, require $|A|\le 1$ (in practice, take $A\in[0,1]$ and absorb the sign into $\phi$).
+- $(f_x,f_y)$ defines the 2D spatial frequency. The orientation is $\theta=\mathrm{atan2}(f_y,f_x)$ and the radial frequency is $\| \mathbf{f} \| = \sqrt{f_x^2+f_y^2}$.
 
 @fig-optics-harmonics-2d shows four image harmonics. When $f_y = 0$ the pattern is vertical (varies only along $x$); when $f_x = 0$ it is horizontal (varies only along $y$).[^spatial-frequency]
 
@@ -148,9 +147,9 @@ There are times when we would like to visualize the amplitude of the image harmo
 
 ![Pictures of 2d FFT Amplitude spectrum. [See fise_otf2d](../code/02Optics/fise_otf2d.html){target=_blank}](images/optics/otf2d.png){#fig-optics-otf2d width=70%}
 
-The axes represent the spatial frequency range.  It is common to render the spatial frequency map with the mean ($M$) value in the middle of the image at $(0,0)$. The spatial frequencies range from $[-f_N,f_N]$, where $N$ is the number of samples. The frequency is with respect to the image size.  If the image size is $1$ degree, then $f_1$ is $1$ cycle per degree; if the image is $10$ deg, then $f_1$ is $1/10$ cycle per degree.  Because the original image is real-valued, the complex coefficients must satisfy the regularity that $F(f_x,f_y) = F^* (-f_x,-f_y)$, where $*$ is the complex conjugate.
+It is common to render the spatial frequency map with the mean ($M$) at the center $(0,0)$. In physical units, spatial frequencies span $[-f_N, f_N]$ along each axis, where $f_N = 1/(2\Delta x)$ is the Nyquist frequency determined by the sample pitch $\Delta x$. In index (DFT-bin) units for an $N\times N$ image, frequencies run from $-\lfloor N/2\rfloor$ to $\lfloor (N-1)/2\rfloor$. Because the original image is real-valued, the Fourier coefficients obey $F(f_x,f_y)=F^*(-f_x,-f_y)$.
 
-Slow variations across the image are represented in the center of the plot.  If reduce their amplitude and compute the image, as in the middle column, the image reflects mainly the parts that are rapidly changing.  Conversely, if we retain the center part and scale away the higher frequencies, as in the rightmost column, the image is a blurry version of the original.
+Slow variations across the image are represented near the center of the spectrum. If we attenuate those low frequencies, the image emphasizes rapid variations (middle column). Conversely, attenuating high frequencies leaves a blurred version (right column).
 
 ![The log10 amplitudes of the two-dimensional Fourier Transform coefficients are shown in the bottom row; the corresponding images are shown in the top row.[fise_otf2dFace](../code/02Optics/fise_otf2dFace.html){target=_blank}](images/optics/otf2dFace.png){#fig-optics-otf2dparts width=70%}
 

@@ -3,7 +3,7 @@
 ## Linear systems overview
 Linear systems theory is a foundational topic in science, engineering, and mathematics. Each discipline field explains the importance of linear systems a bit differently, and they use it at varying levels of depth. In this appendix I introduce the core ideas of linear systems for image systems engineering.  I have two goals.  First, I hope to provide readers an accessible and intuitive description from the point of view of image systems engineering. Second, I will introduce the general notation used throughout this book. My hope is that both newcomers and those with prior exposure will find this chapter a useful reference for the concepts and tools we use in image systems engineering.
 
-## Principles of Superposition and Homogeneity {#sec-ls-superposition}
+## Superposition and Homogeneity {#sec-ls-superposition}
 A system $L$ is linear if it satisfies the superposition rule:
 
 $$
@@ -110,7 +110,7 @@ Throughout this volume, I am trying to keep the mathematical typography consiste
 
 :::
 
-## Optics: Pointspread matrix {#sec-ls-point-matrix}
+## Pointspread matrix {#sec-ls-point-matrix}
 Image systems engineers often examine system performance by measuring the response to a point of light—this is the point spread function (PSF) introduced in @sec-pointspread.  A point of light, $p_i$, is represented by a vector that has $1$ in a single location and zeros elsewhere.  Each column of the linear transformation, $\mathbf{L}$, is the point spread function corresponding to the sampled point, $\text{PSF}_i$.
 
 ![Matrix tableau of an optical system with the point spreads in the columns.](images/linearsystems/psfmatrix.png){#fig-ls-matrix-psf width=80%}
@@ -124,7 +124,7 @@ A linear model for spatial intensity looks like this:
 
 $$
 S[u,v] = \sum_{i} w[i] B_i[u,v]
-$${#eq-linear-model}
+$${#eq-spatial-linear-model}
 
 The functions $B_i[u,v]$ are called **spatial basis functions**, and the scalars $w[i]$ are the weights for each basis function. The image intensity $S[u,v]$ is just a weighted sum of these basis functions.
 
@@ -132,13 +132,17 @@ If we agree on a set of basis functions, then we can describe any image simply b
 
 
 ## Image transforms {#sec-ls-orthogonal-transforms}
-For a linear model to be useful, we need a way to find the basis weights from the image. A function that maps an image, $S[u,v]$ to the weights $w[i]$ is called an **image transform**. If we choose **orthogonal basis functions** this transform becomes especially simple. Orthogonal means
-
+For a linear model to be useful, we need a way to find the basis weights from the image. A function that maps an image, $S[u,v]$ to the weights $w[i]$ is called an **image transform**. If we choose **orthonormal basis functions** this transform becomes especially simple. Define the inner product
 $$
-0 = \sum_{u,v} B_i[u,v] ~ B_j[u,v]
-$$ {#eq-spatial-orthogonal}
-
-for any two pair of different basis functions $B_i$ and $B_j$.
+\langle A, B \rangle \;=\; \sum_{u,v} A[u,v]\;B[u,v].
+$$
+Orthonormal means
+$$
+\langle B_i, B_j \rangle \;=\; \begin{cases}
+0, & i \ne j \\
+1, & i=j
+\end{cases}
+$$ {#eq-spatial-orthonormal}
 
 To work with these two-dimensional images mathematically, we often “flatten” each basis function $B_i$ (which is a matrix) into a long column vector by stacking its columns. We do the same for the image $S[u,v]$, turning it into a vector $\mathbf{s}$. If we collect all the basis vectors into the columns of a matrix $\mathbf{B}$, and the weights into a vector $\mathbf{w}$, we can write the linear model from @eq-linear-model as a matrix equation:
 
@@ -148,7 +152,7 @@ $$ {#eq-linear-model-matrix}
 
 Here, the $i^{th}$ entry in $\mathbf{w}$ multiplies the $i^{th}$ column of $\mathbf{B}$, and the sum gives us the image vector $\mathbf{s}$. This is just a compact way of writing the weighted sum from before.
 
-Now, if the basis functions are orthogonal, then $\mathbf{B^t B}$ is the identity matrix. This makes it easy to recover the weights from the image:
+Now, if the basis functions are orthonormal, then $\mathbf{B^t B}$ is the identity matrix. This makes it easy to recover the weights from the image:
 
 $$
 \begin{aligned}
@@ -158,21 +162,26 @@ $$
 \end{aligned}
 $$ {#eq-linear-model-inverse}
 
-In words: just multiply the image vector by the transpose of the basis matrix to calculate the weights. That’s all there is to it!
-
-If the basis functions aren’t orthogonal, we have to work a bit harder and use the inverse of $\mathbf{B}$ to solve for the weights. That’s not usually a problem for computers, but it’s much more convenient when the basis is orthogonal and we can just use the transpose.
+In words: just multiply the image vector by the transpose of the basis matrix to calculate the weights. If the basis functions are orthogonal but not normalized, replace $\mathbf{B^t}$ by $(\mathbf{B^t B})^{-1}\mathbf{B^t}$.
 
 
 :::{.callout-note title="Point basis" collapse="false"}
 This seems almost too trivial to mention.  But here we go.
 
-When we describe images as points, $S[u,v]$, we are implicitly using the **point basis**. The points form an orthogonal basis functions—each basis function, $B_i[u,v]$, is zero everywhere except at a single $(u,v)$ location. The weight for each basis function is simply the image intensity at that point, $S[u,v]$. 
-
+When we describe images as points, $S[u,v]$, we are implicitly using the **point basis**. The point basis functions are zero everywhere except at a single location:
 $$
-S[u,v] = \sum_{u,v} S[u,v] B_i[u,v]
-$${#eq-linear-model}
+B_{m,n}[u,v] \;=\; \begin{cases}
+1, & (u,v)=(m,n) \\
+0, & \text{otherwise.}
+\end{cases}
+$$
 
-Because each point basis function is nonzero at only one location, the inner product of any two different point basis functions is zero—they are orthogonal by construction.
+With this basis, the weights are simply the image intensities, and the expansion is
+$$
+S[u,v] \;=\; \sum_{m,n} S[m,n]\; B_{m,n}[u,v].
+$$ {#eq-point-basis-expansion}
+
+Because each $B_{m,n}$ is nonzero at only one location, the basis is orthonormal under the discrete inner product, and the matrix formed by stacking the basis vectors is the identity.
 :::
 
 
@@ -213,7 +222,7 @@ This means take the complex conjugate of each entry ($a + ib \rightarrow a - ib$
 ## Local linearity {#sec-ls-local-linearity}
 No real system is linear for all possible inputs. If you push a system with extremely large signals—say, by shining a laser into a camera or overloading an amplifier—it may behave unpredictably or even break! But for most practical purposes, many systems are linear over a useful range of inputs.
 
-When a system is not linear everywhere, it may still be well-approximated as linear within a limited region of its input space. In other words, the system is **locally linear**: if your keep your signals similar enough to a particular operating point, the system’s behavior is linear, even if it isn’t globally so.
+When a system is not linear everywhere, it may still be well-approximated as linear within a limited region of its input space. In other words, the system is **locally linear**: if you keep your signals similar enough to a particular operating point, the system’s behavior is linear, even if it isn’t globally so.
 
 For a locally linear system, the best linear approximation depends on where you are in the input space. The linear model near $x_1$ might look quite different from the linear model near $x_2$. So, when modeling or analyzing a locally linear system, it’s important to know which region you’re working in.
 

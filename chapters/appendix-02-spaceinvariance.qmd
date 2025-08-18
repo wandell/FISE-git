@@ -5,18 +5,24 @@ The first is the **point basis**, where an image is treated as a collection of i
 
 While the point basis is natural, the harmonic basis is powerful. Harmonics have a special relationship with an important class of systems known as **linear space-invariant (LSI) systems**: they simplify the analysis enormously. This appendix explains this relationship and introduces the key tools, like the Fourier transform, that are built upon it.
 
-::: {.callout-note title="Space and time" collapse=true}
-The analysis here focuses on images, which are spatial signals. For spatial signals, the fundamental input is a **point**. The system's response to a point input is its **point spread function (PSF)**.
-
-In fields that analyze signals over time (like audio or electronics), the equivalent of a point is an **impulse**—a signal that is non-zero for only a very brief instant. The system's response is then called the **impulse response**.
-
-In both cases, the underlying mathematical concept is the **Dirac delta function**, named for the physicist Paul Dirac who formalized its use.
+::: {.callout-note title="Terminology" collapse=true}
+- Linear shift‑invariant (LSI) = linear space‑invariant. “Shift” emphasizes translation; “space” emphasizes domain. We use LSI.
+- Point spread function (PSF) = spatial impulse response (response to a Dirac delta, $\delta[x,y]$). For time signals the term is impulse response.
+- Convolution (circular, length $N$): $(I * h)[n] = \sum_{k=0}^{N-1} I[k]\,h\!\big((n-k)\bmod N\big)$. Linear (non‑wrapping) convolution requires zero‑padding (to at least $N+M-1$) before using the DFT.
+- Correlation vs convolution: convolution flips the kernel; correlation does not. Circular cross‑correlation is
+  $$
+  R_{x,y}[n] = \sum_{k=0}^{N-1} x[k]\;y\!\big((k+n)\bmod N\big)^{*},
+  $$
+  using complex conjugation for complex data (drop ${}^*$ for real signals).
+- Fourier tools: DFS (series on finite, periodic data), DFT (transform between samples and complex weights), FFT (fast algorithm for the DFT). DTFT/CTFT are infinite‑length/continuous counterparts.
+- Sampling and Nyquist: sample pitch $\Delta x \Rightarrow$ sampling rate $f_s=1/\Delta x$; Nyquist $f_N=f_s/2$. Frequencies above $f_N$ alias (fold) into lower bands. Always state units (e.g., cycles/deg, cycles/mm).
+- Boundary conditions: periodic wrap (circular convolution), zero‑padding (linear convolution), or windowing/tapering to control edge artifacts.
 :::
 
 ## Shift-invariance  {#sec-ls-shiftinvariance}
 A practical challenge in characterizing general linear systems is that each input point could have a different point spread function (PSF). That’s a lot to measure! Fortunately, many real systems are much simpler: their PSF is essentially the same, except that it’s shifted to match the shift in input location. In other words, the shape of the PSF doesn’t change—it just translates. We call such systems **space-invariant**.
 
-space-invariant linear systems are common across science and engineering. Many physical devices and phenomena can be well-approximated as space-invariant, at least over a useful range. This property makes them much easier to calibrate: we only need to measure a single PSF -the response to a single point!- rather than measure every possible point. You can see why for a space-invariant system the PSF is the key measurement that characterizes the system. 
+Space-invariant linear systems are common across science and engineering. Many physical devices and phenomena can be well-approximated as space-invariant, at least over a useful range. This property makes them much easier to calibrate: we only need to measure a single PSF -the response to a single point!- rather than measure every possible point. You can see why for a space-invariant system the PSF is the key measurement that characterizes the system. 
 
 Because space invariance simplifies both analysis and computation, many courses on “linear systems” focus almost entirely on the space-invariant case.
 
@@ -44,22 +50,21 @@ Have a good look at @fig-ls-circulant-matrix. Notice how simple an LSI system ma
 ## Convolution {#sec-ls-convolution}
 The matrix multiplication for a space-invariant system, which we visualized as a sum of scaled and shifted point spread functions, is often expressed using a basic formula, known as **convolution**.
 
-Formally, the convolution of an input signal $I[n]$ with a point spread function $h[n]$ is written using the asterisk symbol ($*$) and is defined by the summation:
+Formally, for signals of length $N$ with periodic boundary conditions (circular wrap), the convolution of an input signal $I[n]$ with a point spread function $h[n]$ is
 $$
-O[n] = (I * h)[n] = \sum_{k} I[k]\,h[n-k]
+O[n] = (I * h)[n] = \sum_{k=0}^{N-1} I[k]\,h[(n-k)\ \bmod\ N].
 $$ {#eq-convolution-definition}
+
 Here, the output at position $n$ is a weighted sum of the input values, where the weights are determined by a "flipped and shifted" version of the PSF. This formula is the mathematical expression of the process shown in the LSI matrix tableau.
 
-Convolution is the essential calculation for determining the output of any LSI system in the spatial domain. The next sections explain why we often prefer to analyze these systems in the frequency domain, where this computationally intensive summation is replaced by simple multiplication.
+Convolution is the essential calculation for determining the output of any LSI system in the spatial domain. With periodic boundaries this is circular convolution. To realize linear (non-wrapping) convolution in practice, zero‑pad the signals (to at least $N+M-1$) before transforming.
 
-## Harmonics: Eigenvectors of LSI Systems {#sec-ls-harmonics-LSI}
-We've arrived at a key insight: harmonic functions are the natural language for describing LSI systems. Why? Because they are the **eigenfunctions** of these systems.
+## Eigenvectors of LSI Systems {#sec-ls-harmonics-LSI}
+We've arrived at a key insight: harmonic functions are a very useful basis for describing LSI systems. Why? Because they are (nearly) the **eigenfunctions** of these systems.
 
-Recall that an eigenvector of a matrix is a special vector that, when multiplied by the matrix, is simply scaled—its direction doesn't change. Harmonics play a similar role for LSI systems. When you input a harmonic function (a sine or cosine wave) into an LSI system, the output is always a harmonic of the *same frequency*. The only things that change are its amplitude and its phase (position).
+Recall that an eigenvector of a matrix is a special vector that, when multiplied by the matrix, is simply scaled—its direction doesn't change. Harmonics play a similar role for LSI systems. When you input a harmonic function (a sine or cosine wave) into an LSI system, the output is always a harmonic of the *same frequency*. They aren't quite eigenvectors because two things change: the amplitude and phase (position).
 
-This "output is a scaled and shifted version of the input" property is the hallmark of an eigenfunction relationship. However, dealing with separate amplitude and phase changes for real-valued sine and cosine functions can be a bit clumsy. This is where complex numbers become incredibly useful.
-
-A single complex number elegantly packages both amplitude (as its magnitude) and phase (as its angle). By representing our real-valued harmonics using complex exponentials (via Euler's formula, @eq-Eulers-formula), the "almost an eigenfunction" relationship becomes exact. A complex exponential input to an LSI system produces a complex exponential output, scaled by a single complex number that captures both the amplitude and phase change.
+Dealing with separate amplitude and phase changes for real-valued sine and cosine functions can be a bit clumsy. This is where complex numbers become incredibly useful. A single complex number elegantly packages both amplitude (as its magnitude) and phase (as its angle). By representing our real-valued harmonics using complex exponentials (via Euler's formula, @eq-Eulers-formula), the "almost an eigenfunction" relationship becomes exact. A complex exponential input to an LSI system produces a complex exponential output, scaled by a single complex number that captures both the amplitude and phase change.
 
 So, we can state this powerful fact: **complex exponentials are the eigenvectors of any LSI system.**
 
@@ -84,7 +89,9 @@ It's also worth remembering that matrix methods are not just a modern computatio
 :::
 
 ## Discrete Fourier Series (DFS) {#sec-optics-fourier-series}
-We have now arrived at the tooling related to harmonics.  The first idea is that we can represent stimuli using harmonic functions.  When we work with discrete, sampled data -like images- the representation is called **Discrete Fourier Series (DFS)**.  The DFS represents sampled data as sums of harmonics. To simplify notation I will describe the idea here, for a one-dimensional function, though in practice images are two-dimensional.  More on that in the main chapter.
+We have now arrived at the tooling we use to analyze LSIs with harmonics.  The first idea is to represent image stimuli using harmonic functions.  When we work with discrete, sampled data -like images- the representation is called **Discrete Fourier Series (DFS)**.  The DFS represents sampled data as sums of harmonics[^1d-simplification].
+
+[^1-d simplification]: To simplify notation I will describe the idea here, for a one-dimensional function, though in practice images are two-dimensional.  More on 2D representations in the main chapter.
 
 For a sampled 1D signal we write $I[n]$ with $n = 0,\ldots,N-1$ (there are $N$ samples). The DFS uses integer spatial frequencies $f = 0,\ldots,N-1$ and assumes the signal repeats every $N$ samples (periodic extension). Here are three equivalent forms.
 
@@ -111,10 +118,15 @@ $$ {#eq-fourier-series-complex}
 where the weights $w_f$ are complex and $i = \sqrt{-1}$. 
 
 ## Discrete Fourier transform (DFT) {#sec-dft-defined}
-We need a way to transform the sampled image intensities, $I[n]$, into the Fourier weights, $w_f$. The most common method is the **Discrete Fourier Transform (DFT)**:
+We need a way to transform the sampled image intensities, $I[n]$, into the Fourier weights, $w_f$. The method is called the **Discrete Fourier Transform (DFT)**:
 $$
 w_f = \frac{1}{N} \sum_{n=0}^{N-1} I[n] \, e^{-i 2 \pi f n / N}
 $$ {#eq-discrete-fourier-transform}
+
+Because the basis is orthogonal (@sec-ls-orthogonal-transforms), the inverse can also be expressed directly,
+$$
+I[n] = \sum_{f=0}^{N-1} w_f \, e^{\,i 2 \pi f n / N}.
+$$ {#eq-inverse-dft}
 
 At first glance, because of the use of complex exponentials, this formula might look intimidating. But take a moment, it's actually quite simple. On the right, we have the sampled image values multiplied by a complex exponential. You might imagine this as a matrix multiplication in which we place $I[n]$ into a vector and we place the complex exponentials into the columns of a matrix.  This is the idea we explained in general terms in @sec-ls-spatial-basis. 
 
@@ -152,9 +164,11 @@ There are several equivalent ways to write the Discrete Fourier Series, and it's
 $$
 \begin{align}
 a_f & = \sqrt{{s_f}^2 + {c_f}^2} \\
-\phi_f & = \arctan\left(\frac{c_f}{s_f}\right)
+\phi_f & = \operatorname{atan2}(c_f,\, s_f)
 \end{align}
 $$
+
+Equivalently, $s_f = a_f \cos\phi_f$ and $c_f = a_f \sin\phi_f$. Using $\operatorname{atan2}$ ensures the correct quadrant for $\phi_f \in (-\pi, \pi]$.
 
 - The complex weights $w_f$ are related to the sine and cosine coefficients by
 
@@ -258,11 +272,14 @@ $$
 where $\mathscr{F}$ is the Discrete Fourier Transform.
 
 Using the complex weights notation, where $W_f$ are the DFT coefficients of the input and $H_f$ are the DFT coefficients of the PSF, the output coefficients $Y_f$ are simply:
+
 $$
 Y_f = W_f \cdot H_f
 $$ {#eq-convolution-theorem-2}
 
-This is a profound simplification. A complex convolution is replaced by straightforward, element-wise multiplication. The term $H_f$, the DFT of the point spread function, is so important that it has its own name: the **Optical Transfer Function (OTF)**. The OTF describes how the system scales the amplitude and shifts the phase of each input harmonic.
+This is a profound simplification. A complex convolution is replaced by straightforward, element-wise multiplication[^circular-convolution]. The term $H_f$, the DFT of the point spread function, is so important that it has its own name: the **Optical Transfer Function (OTF)**. The OTF describes how the system scales the amplitude and shifts the phase of each input harmonic.
+
+[^circular-convolution]: Multiplication in the DFT domain corresponds to circular convolution in the spatial domain. To implement linear convolution without wrap‑around, zero‑pad the inputs before applying the DFT.
 
 This theorem is the primary reason why Fourier analysis is indispensable for image systems engineering. It allows us to:
 
@@ -270,6 +287,5 @@ This theorem is the primary reason why Fourier analysis is indispensable for ima
 2.  **Calculate** the output of an LSI system efficiently: transform the input to the frequency domain, multiply by the OTF, and transform back.
 3.  **Design** systems by specifying a desired OTF.
 
-You will see all of these ideas used in various ways in the main chapters of this book.  Fourier series play a role in modeling optics and characterizing optics, modeling sensors, and analyzing pereceived image quality. The harmonic basis is used as a tool in most aspects of science and engineering.
-
+You will see all of these ideas used in various ways in the main chapters of this book. Fourier series play a role in modeling optics and characterizing optics, modeling sensors, and analyzing perceived image quality. The harmonic basis is used as a tool in most aspects of science and engineering.
 
