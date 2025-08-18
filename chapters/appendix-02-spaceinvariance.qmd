@@ -71,43 +71,6 @@ These were lively debates, rooted in a deep respect for the mathematical foundat
 It helps to know that representing problems with vectors and matrices is not just a modern computational convenience. The importance of linear algebra and matrix methods was recognized nearly 200 years ago. If you’re interested, you can read more about the [history of these powerful ideas](resources/history-linear-algebra.html){target=_blank}.
 :::
 
-## The Fourier Transform
-
-We need to introduce the DFT here before the next section.
-
-## The Convolution Theorem {#sec-ls-convolution-theorem}
-The fact that harmonics are eigenvectors of linear, space-invariant (LSI) systems leads to one of the most powerful results in signal processing: the **Convolution Theorem**.
-
-In the spatial domain, calculating the output of an LSI system requires performing a convolution—summing the input signal with shifted and scaled versions of the point spread function (PSF). This operation can be computationally intensive.
-
-The Convolution Theorem provides an elegant and highly efficient alternative. It states that **convolution in the spatial domain is equivalent to simple multiplication in the frequency domain.**
-
-Let's formalize this. If the output image $O[n]$ is the convolution of the input image $I[n]$ and the system's point spread function $h[n]$:
-$$
-O[n] = (I * h)[n],
-$$ {#eq-convolution-theorem-1}
-
-then in the Fourier Transform domain the relationship is 
-$$
-\mathscr{F}\{O\} = \mathscr{F}\{I\} \cdot \mathscr{F}\{h\}
-$$
-
-where $\mathscr{F}$ is the Discrete Fourier Transform.
-
-Using the complex weights notation, where $W_f$ are the DFT coefficients of the input and $H_f$ are the DFT coefficients of the PSF, the output coefficients $Y_f$ are simply:
-$$
-Y_f = W_f \cdot H_f
-$$ {#eq-convolution-theorem-2}
-
-This is a profound simplification. A complex convolution is replaced by straightforward, element-wise multiplication. The term $H_f$, the DFT of the point spread function, is so important that it has its own name: the **Optical Transfer Function (OTF)**. The OTF describes how the system scales the amplitude and shifts the phase of each input harmonic.
-
-This theorem is the primary reason why Fourier analysis is indispensable for image systems engineering. It allows us to:
-1.  **Analyze** a system's performance by examining its OTF.
-2.  **Calculate** the output of an LSI system efficiently: transform the input to the frequency domain, multiply by the OTF, and transform back.
-3.  **Design** systems by specifying a desired OTF.
-
-Now that we understand the power of this theorem, we can delve into the details of the tool that makes it possible: the Discrete Fourier Series.
-
 ## Discrete Fourier Series (DFS) {#sec-optics-fourier-series}
 The Discrete Fourier Series (DFS) represents sampled data as sums of harmonics. It’s the frequency-domain counterpart to the point (impulse) basis (@sec-ls-spatial-basis). More background appears in @sec-appendix-linear-systems.
 
@@ -135,19 +98,21 @@ $$ {#eq-fourier-series-complex}
 
 where the weights $w_f$ are complex and $i = \sqrt{-1}$. 
 
-### Calculating the weights: Discrete Fourier transform (DFT)
+## Discrete Fourier transform (DFT) {#sec-dft-defined}
 We need a way to transform the sampled image intensities, $I[n]$, into the Fourier weights, $w_f$. The most common method is the **Discrete Fourier Transform (DFT)**:
 $$
 w_f = \frac{1}{N} \sum_{n=0}^{N-1} I[n] \, e^{-i 2 \pi f n / N}
 $$ {#eq-discrete-fourier-transform}
 
-At first glance, this formula might look intimidating, but it's actually quite elegant. On the right, we have the sampled image values multiplied by a complex exponential. Thanks to **Euler's formula**, we know that any complex exponential can be written in terms of sine and cosine:
+At first glance, this formula might look intimidating, but it's actually quite simple. On the right, we have the sampled image values multiplied by a complex exponential. You might imagine this as a matrix multiplication in which we place $I[n]$ into a vector and we place the complex exponentials into the columns of a matrix.  This is the idea we explained in general terms in @sec-ls-spatial-basis. 
+
+For some, it is preferable to get rid of the complex notation.  Thanks to **Euler's formula**, we know that any complex exponential can be written in terms of sine and cosine:
 
 $$
 e^{i\theta} = \cos(\theta) + i\sin(\theta).
 $$ {#eq-Eulers-formula}
 
-This means the DFT is really just combining the familiar sine and cosine terms into a single, compact expression using complex numbers. Many people find this complex formulation neater than keeping track of separate sine and cosine coefficients.
+This means the DFT uses the complex exponential as a method to combine the familiar sine and cosine terms into a compact expression. Once you get used to it, this complex formulation will seem neater than keeping track of separate sine and cosine coefficients.
 
 It's important to note that while $I[n]$ is real-valued, the DFT coefficients $w_f$ are generally complex. For a real signal, there is redundancy: the coefficients satisfy $w_{f} = \overline{w_{N-f}}$, where $\overline{w_f}$ is the complex conjugate of $w_f$.[^dft-coefficients]
 
@@ -261,5 +226,39 @@ As we saw in the previous section, because of conjugate symmetry, only about “
     again yielding $N$ real degrees of freedom.
 
 It is common to compute and report only this non‑redundant “half‑spectrum” (plus DC, and the Nyquist bin when $N$ is even). In continuous‑domain sampling language, frequencies above the Nyquist frequency $f_N$ “fold” or alias back; in DFT index terms, information in bins above $N/2$ is redundant with bins below $N/2$ for real‑valued signals. Some authors therefore call the Nyquist frequency the folding frequency.
+
+## The Convolution Theorem {#sec-ls-convolution-theorem}
+The fact that harmonics are eigenvectors of linear, space-invariant (LSI) systems leads to one of the most powerful results in signal processing: the **Convolution Theorem**.
+
+In the spatial domain, calculating the output of an LSI system requires performing a convolution—summing the input signal with shifted and scaled versions of the point spread function (PSF). This operation can be computationally intensive.
+
+The Convolution Theorem provides an elegant and highly efficient alternative. It states that **convolution in the spatial domain is equivalent to simple multiplication in the frequency domain.**
+
+Let's formalize this. If the output image $O[n]$ is the convolution of the input image $I[n]$ and the system's point spread function $h[n]$:
+$$
+O[n] = (I * h)[n],
+$$ {#eq-convolution-theorem-1}
+
+then in the Fourier Transform domain the relationship is 
+$$
+\mathscr{F}\{O\} = \mathscr{F}\{I\} \cdot \mathscr{F}\{h\}
+$$
+
+where $\mathscr{F}$ is the Discrete Fourier Transform.
+
+Using the complex weights notation, where $W_f$ are the DFT coefficients of the input and $H_f$ are the DFT coefficients of the PSF, the output coefficients $Y_f$ are simply:
+$$
+Y_f = W_f \cdot H_f
+$$ {#eq-convolution-theorem-2}
+
+This is a profound simplification. A complex convolution is replaced by straightforward, element-wise multiplication. The term $H_f$, the DFT of the point spread function, is so important that it has its own name: the **Optical Transfer Function (OTF)**. The OTF describes how the system scales the amplitude and shifts the phase of each input harmonic.
+
+This theorem is the primary reason why Fourier analysis is indispensable for image systems engineering. It allows us to:
+
+1.  **Analyze** a system's performance by examining its OTF.
+2.  **Calculate** the output of an LSI system efficiently: transform the input to the frequency domain, multiply by the OTF, and transform back.
+3.  **Design** systems by specifying a desired OTF.
+
+You will see all of these ideas used in various ways in the main chapters of this book.  Fourier series play a role in modeling optics and characterizing optics, modeling sensors, and analyzing pereceived image quality. The harmonic basis is used as a tool in most aspects of science and engineering.
 
 
