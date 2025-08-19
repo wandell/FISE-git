@@ -1,8 +1,12 @@
 # Geometric optics {#sec-geometric-optics}
 
 ## Geometric optics overview 
+Optical modeling of light as rays is a useful and widely used approximation for many calculations.  This method of approximating optical systems relies on many simple geometric calculations, such as the extensive use of similar triangles, that relate the passage of light rays and basic properties of simple lenses. For this reason this modeling approach is also called **geometric optics**.  
 
-Optical modeling of light as rays, also called **geometric optics**, is a useful and widely used approximation for many calculations.  For example, suppose we imagine light as a collection of rays: then, it is easy to understand Leonardo's explanation of why imaging through a pinhole produces an image  (@fig-pinhole-basic). The rays from a distant point, **A**, radiate in a wide range of directions. But only a small portion of those rays arrive at the pinhole aperture. The incident rays from **A** rays will be parallel to one another. According to the ray model of light, this collection of rays will pass straight through the pinhole aperture and form an image of the point on the recording surface (e.g., Leonardo's wall).
+In this chapter we consider the simplest case, pinhole optics. After understanding the implications of rays and pinholes, we identify why it is important to consider the limitations of the ray model and why in many cases we must think about light as waves, rather than rays.
+
+## Pinhole optics
+Suppose we imagine light as a collection of rays: then, it is easy to understand Leonardo's explanation of why imaging through a pinhole produces an image  (@fig-pinhole-basic). The rays from a distant point, **A**, radiate in a wide range of directions. But only a small portion of those rays arrive at the pinhole aperture. The incident rays from **A** rays will be parallel to one another. According to the ray model of light, this collection of rays will pass straight through the pinhole aperture and form an image of the point on the recording surface (e.g., Leonardo's wall).
 
 ![Pinhole camera geometry. (A) The rays from a distant, on-axis point arrive at in parallel at the pinhole. Were there no diffraction, the rays would continue on to form an image the size of the pinhole. (B) Rays from a distant off-axis point also arrive in parallel, but they are at an angle to the pinhole aperture. Hence, fewer rays pass through the aperture, making the image dimmer and the blur smaller. For some pinhole sizes, this design is workable. But at a certain size, diffraction makes this design unworkable.](images/lightfields/pinholePSF.png){#fig-pinhole-basic fig-align="center" width="50%"}
 
@@ -10,12 +14,21 @@ Consider a distant but off-axis point, **B**. Its rays, too, will start in many 
 
 @fig-ayscough illustrates an image formed by a great many points. Each point in the scene is blurred and rendered at a unique position. If the image intensity through the pinhole is adequate -we do not mind the blurring- we will have a satisfactory image.
 
-In @fig-pinhole-chessset I rendered a chess set scene with the pieces, each a few cm tall, positioned about 0.5 meters from the pinhole camera. The four pictures were rendered using different pinhole diameters. The upper left allows only one ray through from each location in the scene. The aperture diameters for the next three pictures are for three different pinhole sizes. The images are brighter as the pinhole size increases. For this example, the image at the two smaller pinhole sizes are tolerable. Depending on your viewing distance from the screen or page, the third pinhole image might be usable. But the largest pinhole, which lets in the most light, loses so much spatial information that the individual pieces blur together in the image (@sec-airy-pattern).
+### Pinhole: Computer graphics
+Pinhole cameras are often used in computer graphics calculations. They offer a very simple computational approach to tracing light from the scene onto the recording surface (film or sensor). In computer graphics it is fairly common to aim to render a nice looking image, rather than a physically accurate image. The pinhole approximation to optics provides a very sharp image with large depth of field that is suitable for many applications.
+
+It is also possible ot use pinhole computations to illustrate the limitations of this model in real image systems. In @fig-pinhole-chessset I rendered a chess set scene with the pieces, each a few cm tall, positioned about 0.5 meters from the pinhole camera. The four pictures were rendered using different pinhole diameters. The upper left allows only one ray through from each location in the scene. The aperture diameters for the next three pictures are for three different pinhole sizes. The images are brighter as the pinhole size increases. For this example, the image at the two smaller pinhole sizes are tolerable. Depending on your viewing distance from the screen or page, the third pinhole image might be usable. But the largest pinhole, which lets in the most light, loses so much spatial information that the individual pieces blur together in the image (@sec-airy-pattern).
 
 ![A simulated scene rendered through a pinhole camera, using only ray tracing. The size of the pinhole diameter increases from the upper left to the lower right. The relative intensity is preserved in the renderings so that the scene becomes brighter as the pinhole diameter increases. Rendered with [@pharrPBRTVersion4] and [@iset3d2022].](images/lightfields/01-pinhole-chessset.png){#fig-pinhole-chessset width="80%" fig-align="center"}
 
-## Diffraction {#sec-lightfields-diffraction}
+### Pinholes: real life
 
+Freeman and Torralba examples in here.
+
+Maybe the video from X, as well.
+
+
+## Diffraction {#sec-lightfields-diffraction}
 Useful as the ray model has been, for more than 300 years scientists have known that geometric optics, describing light as rays, is not completely accurate. Consider the simple prediction of the ray model in @fig-ray-wave. The parallel rays from the point source **A** should pass through the pinhole and continue in a straight line. An image cast on a surface behind the pinhole should have the diameter of the pinhole; a person to the side of the pinhole would see it as dark because no rays are heading to his/her eyes. Try the experiment, and you will be able to see the pinhole. So did the Jesuit scientist, Grimaldi, who worked in the time of Newton. He described this experiment and others in a manuscript [@Grimaldi1665-physico], and he called the phenomenon **diffraction**.
 
 ![@Grimaldi1665-physico introduced a pencil of light into a dark room through a hole. According to the ray theory of light, the image on the wall should be the same size as the pinhole, and the rays should not be visible to an observer looking from the side. Grimaldi found that under some conditions the image on the image plane was larger than the pinhole itself, inconsistent with the ray theory of light. Newton confirmed the experiment but continued to use the ray theory because it remained useful for many purposes (A History of Physics, Cajori, p. 88-89). In modern times, we accept the wave theory but often use the ray theory because it works well in many circumstances.](images/lightfields/01-ray-wave.png){#fig-ray-wave width="80%" fig-align="center"}
