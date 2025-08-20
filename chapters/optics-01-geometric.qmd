@@ -1,14 +1,16 @@
 # Geometric optics {#sec-geometric-optics}
 
 ## Geometric optics overview 
-Optical modeling of light as rays is a useful and widely used approximation for many calculations.  This method of approximating optical systems relies on many simple geometric calculations, such as the extensive use of similar triangles, that relate the passage of light rays and basic properties of simple lenses. For this reason this modeling approach is also called **geometric optics**.  
+Optical modeling of light as rays is a useful and widely used approximation for many calculations.  This method of approximating optical systems relies on many simple geometric calculations, such as the extensive use of similar triangles, that relate the passage of light rays and basic properties of simple lenses. For this reason this modeling approach is also called **geometric optics**.  We will develop the tools of geometric optics in the next few chapters, before we turn to linear systems theory and wavefronts (Fourier optics).
 
-In this chapter we consider the simplest case, pinhole optics. After understanding the implications of rays and pinholes, we identify why it is important to consider the limitations of the ray model and why in many cases we must think about light as waves, rather than rays.
+In this chapter we consider the simplest optics, the **pinhole**. After understanding the logic of modeling using rays and pinholes, I explain why the limitations of the ray model and why we will also be modeling optics using light as waves, rather than rays. Finally, we discuss the key concept of the **point spread function**, which plays a role in all the different modeling approaches.
 
 ## Pinhole optics
 Suppose we imagine light as a collection of rays: then, it is easy to understand Leonardo's explanation of why imaging through a pinhole produces an image  (@fig-pinhole-basic). The rays from a distant point, **A**, radiate in a wide range of directions. But only a small portion of those rays arrive at the pinhole aperture. The incident rays from **A** rays will be parallel to one another. According to the ray model of light, this collection of rays will pass straight through the pinhole aperture and form an image of the point on the recording surface (e.g., Leonardo's wall).
 
 ![Pinhole camera geometry. (A) The rays from a distant, on-axis point arrive at in parallel at the pinhole. Were there no diffraction, the rays would continue on to form an image the size of the pinhole. (B) Rays from a distant off-axis point also arrive in parallel, but they are at an angle to the pinhole aperture. Hence, fewer rays pass through the aperture, making the image dimmer and the blur smaller. For some pinhole sizes, this design is workable. But at a certain size, diffraction makes this design unworkable.](images/lightfields/pinholePSF.png){#fig-pinhole-basic fig-align="center" width="50%"}
+
+MORE IMAGES FROM THE CLASS FIT IN HERE TO MOTIVATE THE PINHOLE.
 
 Consider a distant but off-axis point, **B**. Its rays, too, will start in many directions but only a narrow, collimated subset of rays will arrive at the pinhole aperture. Because of the angle between the collimated rays and the pinhole, a smaller fraction of the rays will pass through the pinhole aperture. The point spread from **B** will be smaller and dimmer. Its location on the image surface will be displaced from **A** by an amount that depends on the positions of the two points in the scene. Thus, the wall records the relative intensity and spectrum from the different points in the scene at different locations on the wall.  Also, why the image is inverted is well-explained by ray-tracing.
 
@@ -111,3 +113,23 @@ Even in pinhole imaging, the PSF is not unique. There are two main diffraction r
 When the point source is close to the pinhole, the wavefront is curved (spherical), and the diffraction pattern changes. This situation is described by **Fresnel diffraction** (or [near-field diffraction](https://en.wikipedia.org/wiki/Fresnel_diffraction)). Here, the PSF depends on the distance from the source to the aperture.
 
 We will explore the role of the PSF in lens simulation, characterization, and computational imaging methods in  @sec-optics-linear-space and the following chapters.
+
+## Pinhole shapes and PSFs
+
+Astigmatism
+
+Non-circular pinholes (e.g., rectangular)
+
+Your own PSF.  Try taking off your glasses or contact lenses and look at a small bright light in the dark. Maybe a night light from across the room, or one of the LED lights on electronic gear.  The image you see is the PSF of your own visual system, and if you are looking in the dark, your pupil is probably wide open. By squinting, you reduce the size of your eye's aperture which probably sharpens the image by reducing how much of the lens is contributing to the image formation, getting closer to diffraction.
+
+Example of a human PSF, from ISETBio.
+
+::: {.callout-note collapse=false title="Animal pupil shapes."}
+
+Mammals eyes aren't usually pinholes - they have a pupil and optics (cornea, lens). But when the pupil is tightly closed down the optics matters little, and the system's optics approach those of a pinhole.  
+
+Cat's slit eye for sure.
+
+Maybe other animals from Marty Banks' paper?
+
+:::
