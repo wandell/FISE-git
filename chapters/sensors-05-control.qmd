@@ -29,7 +29,7 @@ SLR cameras represented a major advance over earlier rangefinder designs, and wh
 
 Because the viewfinder and imaging lens are separate, the viewfinder image can differ slightly from what is captured on film or sensor, making precise framing more challenging.
 
-![Overview of an SLR and its subsystems](images/sensors/03-sensor-slr.png){#fig-sensor-slr width="60%"}
+![Overview of an SLR and its subsystems](images/sensors/17-control/03-sensor-slr.png){#fig-sensor-slr width="60%"}
 
 The innovation of the SLR (Single-Lens Reflex) camera is that it uses a single optical path for composing, focusing, and capturing the image—hence "single lens." Light entering through the lens assembly is directed by a semi-transparent "reflex" mirror (a type of beam splitter). Typically, about 70% of the light is sent to the viewfinder, while the remainder is directed to the autofocus subsystem. When the shutter is pressed, the mirror flips out of the way, allowing all the light to reach the film (SLR) or digital sensor (DSLR) (@fig-sensor-slr).
 
@@ -40,11 +40,11 @@ The SLR design also allows the user to control the aperture size, which directly
 
 DSLRs had a large volume compared to smartphones and other compact devices. These cameras also use much smaller multi-element lenses. Focus is commonly controlled by a voice coil motor (VCM), which is reliable, inexpensive, and widely used in the industry (@fig-sensor-vcm). The small motor moves the entire lens assembly.
 
-![Cell phone optics. The optics themselves are very compact but still multi-element. The position of the optics is usually controlled by a voice-coil motor.](images/sensors/03-sensor-vcm.png){#fig-sensor-vcm width="80%"}
+![Cell phone optics. The optics themselves are very compact but still multi-element. The position of the optics is usually controlled by a voice-coil motor.](images/sensors/17-control/03-sensor-vcm.png){#fig-sensor-vcm width="80%"}
 
 There is also a growing market for lens positioning in cell pones using Micro-Electro-Mechanical Systems (MEMS) devices. These devices offer advantages such as low power consumption, fast response, and miniaturization, making them attractive for mobile imaging systems. The difference, however, is not huge.
 
-![A video showing lens assembly position controlled by a MEMS device.](videos/sensors/MEMS-autofocus.mov){#fig-sensor-mems width="60%"}
+![A video showing lens assembly position controlled by a MEMS device.](videos/sensors/17-control/MEMS-autofocus.mov){#fig-sensor-mems width="60%"}
 
 Conceptually, autofocus methods share similarities with techniques for estimating object distance. Both rely on understanding the optical light field (@sec-optical-lightfield). While the implementation of autofocus algorithms has evolved significantly in recent years, the underlying physical principles remain the same. We begin with the classic autofocus mechanism and then describe more recent implementations that are integrated directly into CMOS sensors.
 
@@ -56,7 +56,7 @@ DPAF: https://www.usa.canon.com/learning/training-articles/training-articles-lis
 
 @fig-focusprinciples-classic illustrates the principle of phase detection autofocus (PDAF). In this system, rays from a point object near the lens travel through different parts of the aperture—red rays from the top and green rays from the bottom—before reaching the sensor. When the lens is correctly focused, these rays converge to a single point on the sensor, producing a sharp image.
 
-![Phase detection autofocus.](images/sensors/03-focusprinciples-2.png){#fig-focusprinciples-classic width="60%"}
+![Phase detection autofocus.](images/sensors/17-control/03-focusprinciples-2.png){#fig-focusprinciples-classic width="60%"}
 
 The classic PDAF design, invented in the 1970s, uses a partially reflective mirror behind the main lens to direct light from the top and bottom of the lens to two separate microlenses. Each microlens focuses the incoming rays onto a linear sensor array. The system is arranged so that, when the image is in focus, the light from both the top and bottom of the lens is centered on their respective arrays. If the image is out of focus, the rays are displaced from the centers of the arrays. The relative displacement—called the phase difference—indicates both the amount and direction of defocus.
 
@@ -78,7 +78,7 @@ Traditional phase detection autofocus (PDAF) systems are difficult to implement 
 
 A major breakthrough came in 2014 with the introduction of **dual pixel autofocus (DPAF)**, which applies the principles of phase detection directly within the CMOS sensor. In DPAF, each pixel (or a subset of pixels) contains two photodiodes beneath a single microlens (@fig-sensor-dpaf). During normal image capture, the signals from both photodiodes are combined. For autofocus, however, the signals are read separately and compared.
 
-![Dual pixel autofocus sensor design.](images/sensors/03-sensor-dpaf.png){#fig-sensor-dpaf width="80%"}
+![Dual pixel autofocus sensor design.](images/sensors/17-control/03-sensor-dpaf.png){#fig-sensor-dpaf width="80%"}
 
 ::: {#sensor-dpaf .callout-note collapse="true" title="Dual pixel autofocus: Canon"}
 Canon introduced DPAF with the EOS 70D in 2013, building on earlier hybrid PDAF/live-view systems like the EOS 650D/T4i-D. Today, many vendors—including Sony and Omnivision—ship sensors with two photodiodes under each microlens, enabling fast, accurate on-sensor phase detection autofocus, especially for video.
@@ -86,7 +86,7 @@ Canon introduced DPAF with the EOS 70D in 2013, building on earlier hybrid PDAF/
 
 The underlying principle is based on the optical light field. For pixels near the center of the sensor, light rays from the left and right sides of the lens arrive at slightly different angles. The microlens directs these rays onto separate photodiodes within the pixel—one on the left, one on the right. When the image is in focus, both photodiodes receive similar signals. If the image is out of focus, the rays from the left and right sides of the lens are displaced, causing the signals from the two photodiodes to differ and shift relative to each other. The amount and direction of this shift indicate the degree and direction of defocus, just as in traditional PDAF.
 
-![Shift from defocus. Needs work. Also, could do it with the Chess Set image and true light field simulation. t_cameraLightField.](images/sensors/03-sensors-lf-shift.png){#fig-sensor-lf-shift width="80%"}
+![Shift from defocus. Needs work. Also, could do it with the Chess Set image and true light field simulation. t_cameraLightField.](images/sensors/17-control/03-sensors-lf-shift.png){#fig-sensor-lf-shift width="80%"}
 
 By using two photodiodes under each microlens, DPAF sensors capture some information about the optical light field—the left and right subpixels sample rays from different parts of the lens. This concept could be extended further: with more subpixels, it may be possible to recover even richer light field information, opening up new possibilities for computational imaging and post-capture refocusing (@sec-sensor-lightfield).
 
