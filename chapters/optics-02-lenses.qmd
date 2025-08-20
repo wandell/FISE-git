@@ -44,7 +44,7 @@ It is useful to draw the connection between geometric and wave representations. 
 (https://www.rp-photonics.com/wavefronts.html).  
 -->
 
-![Relationship between the ray (arrows) and wavefront (dashed) representations. (a) A collimated set of rays is a planar wavefront. (b) Rays from a point source form a spherical wavefront. (The image shows a slice through the sphere). (c) Smoothly varying wavefronts with many different shapes are common. Often these shapes are due to imperfections (aberrations) in the optics.  We reason about them as a collection of rays; the direction of each ray is drawn perpendicular to the tangent of the wavefront. (d) Only a narrow section of the rays from a distant point are incident at the entrance aperture of the imaging device. Hence, the incident light field from the point is close to a planar wavefront.](images/optics/rays-wave.png){#fig-waves-rays fig-cap-location="bottom" fig-align="center" width="75%"}
+![Relationship between the ray (arrows) and wavefront (dashed) representations. (a) A collimated set of rays is a planar wavefront. (b) Rays from a point source form a spherical wavefront. (The image shows a slice through the sphere). (c) Smoothly varying wavefronts with many different shapes are common. Often these shapes are due to imperfections (aberrations) in the optics.  We reason about them as a collection of rays; the direction of each ray is drawn perpendicular to the tangent of the wavefront. (d) Only a narrow section of the rays from a distant point are incident at the entrance aperture of the imaging device. Hence, the incident light field from the point is close to a planar wavefront.](images/optics/07-principles/rays-wave.png){#fig-waves-rays fig-cap-location="bottom" fig-align="center" width="75%"}
 
 It is common for optics tutorials to represent wavefront directions as extended in space, but it is uncommon to represent the amplitude of the wavefront across space. In reality the amplitude of the wavefront will vary across space. For example, a typical laser emits a set of parallel (collimated) rays.  The amplitude of these rays has a Gaussian profile that limits the wavefront in space.  That's why the spot a laser pointer produces is limited in space. In recent years, image systems engineers have had access to **spatial light modulators (SLMs)**.  These devices modulate either the local amplitude or phase of the wavefront at different positions in space, controlling the light field. 
 
@@ -55,11 +55,11 @@ The software calculations that accompany this book use both wavefront and ray me
 ## Material interactions
 When a light rays arrive at the boundary between regions with different optical properties - whether those regions contain matter (like glass or water), air or vacuum - several things can happen (@fig-reflected-scattered).  The rays might be reflected back, as in a mirror.  Or, the rays might enter into the material, undergo a series of internal reflections, and emerge back in one of many different directions.  Also, the rays might enter the material and be absorbed, giving up their energy to the atoms in the material. (Maybe reference the dichromatic reflection model here?)
 
-![When rays arrive at the boundary of two regions, The rays (a) might be reflected, (b) might enter the medium, be internally reflected multiple times, and emerge in one of many different directions (scattering). (Not shown) The ray may might enter the medium and be absorbed.](images/optics/snell-reflected-scattered.png){#fig-reflected-scattered fig-align="center" width="100%"}
+![When rays arrive at the boundary of two regions, The rays (a) might be reflected, (b) might enter the medium, be internally reflected multiple times, and emerge in one of many different directions (scattering). (Not shown) The ray may might enter the medium and be absorbed.](images/optics/07-principles/snell-reflected-scattered.png){#fig-reflected-scattered fig-align="center" width="100%"}
 
 The most important case for controlling the rays, and thus for optical design, is this other possibility: the ray enters the new material and continues on its way. We call this change in direction **refraction**. 
 
-![A ray crossing the boundary between two materials may continue but change direction. The change occurs because the speed of electromagnetic waves differs between the regions. The *refraction index* ($n$ and $n'$) is the material parameter that describes the speed.](images/optics/snell-refraction.png){#fig-snell-law fig-align="center" fig-cap-location="bottom" width="50%"}
+![A ray crossing the boundary between two materials may continue but change direction. The change occurs because the speed of electromagnetic waves differs between the regions. The *refraction index* ($n$ and $n'$) is the material parameter that describes the speed.](images/optics/07-principles/snell-refraction.png){#fig-snell-law fig-align="center" fig-cap-location="bottom" width="50%"}
 
 ### Snell's Law
 Snell's Law quantifies how light changes direction when passing between regions with different optical properties. The mathematical formulation of Snell's Law is defined using the variables shown in @fig-snell-law. A light ray (Incident ray) is shown crossing a planar boundary between one medium (say, air) in a second medium (say, glass). The angle between the incident ray and a line perpendicular to the surface (the surface normal) is $\phi$. The refracted ray changes direction and thus has a different angle, $\phi '$, with respect to the surface normal. Snell's Law captures the relationship between these two ray angles 
@@ -112,20 +112,20 @@ The physicist Christiaan Huygens showed that Snell's Law could be explained by t
 ## Lenses control ray directions
 
 ::: margin
-![The rays from a nearby point that pass through a relatively large pinhole diverge.  They form an image of the point that is larger than the pinhole.](images/optics/pinhole-rays.png){#fig-pinhole-rays fig-align="center" width="75%"}
+![The rays from a nearby point that pass through a relatively large pinhole diverge.  They form an image of the point that is larger than the pinhole.](images/optics/07-principles/pinhole-rays.png){#fig-pinhole-rays fig-align="center" width="75%"}
 :::
 Consider the rays from a point as they pass through a pinhole. The image they form will not be sharp because the ray directions are diverging. Narrowing the pinhole sharpend the image formation by selecting a small subset of the rays. 
 
 We can sharpen the image by redirecting some the rays to converge at the image plane. One way to think about optical devices is that they are built to control the direction of the environmental light field rays at the image system entrance aperture. When forming a sharp image is the goal, we evaluate the optics by asking whether they adjust the ray directions so that the image of a point in the scene is also a point. A useful fact to remember is that diffraction means the best (sharpest) we can do for a circular aperture is defined by the diameter of the Airy disk.
 
 ::: margin
-![Lenses transform the direction of the rays in the incident light field. In this example, the diverging rays from a nearby point are transformed to converge on the image plane. Diffraction imposes a limit on precision of the convergence. ](images/optics/pinhole-lens.png){#fig-pinhole-rays fig-align="center" width="75%"}
+![Lenses transform the direction of the rays in the incident light field. In this example, the diverging rays from a nearby point are transformed to converge on the image plane. Diffraction imposes a limit on precision of the convergence. ](images/optics/07-principles/pinhole-lens.png){#fig-pinhole-rays fig-align="center" width="75%"}
 :::
 
 ## Making a lens
 To make a lens that focuses a light field into an image plane requires changing the direction of many rays. The simple case of rays from one point is easy to see.  
 
-![Refraction transforms the rays diverging from an object point (left) to converging to an image point (right).](images/optics/thinlens-prism.png){#fig-thinlens-prism fig-align="center" width="50%"}
+![Refraction transforms the rays diverging from an object point (left) to converging to an image point (right).](images/optics/07-principles/thinlens-prism.png){#fig-thinlens-prism fig-align="center" width="50%"}
 
 Imagine that the rays are diverging from an object point at the left. Were the rays passing through a pinhole, they would continue to diverge. Refraction by the prism changes the direction of the rays at the  from upward to downward (upper prism). Similarly, refraction changes the ray directions from downward to upward (lower prism). These two prisms converge the rays from the object point onto a point on a properly positioned image plane.
 
@@ -136,7 +136,7 @@ Diffraction limited thin lens issues.  Roughly same as the one above.
 https://chatgpt.com/c/6748e492-0310-8002-8da3-89a1517a6062 
 -->
 
-![A lens can be approximated as many small prisms.  The outline shows a spherical surface on the entrance and exit side.](images/optics/thinlens-assembled.png){#fig-thinlens-prism fig-align="center" width="80%"}
+![A lens can be approximated as many small prisms.  The outline shows a spherical surface on the entrance and exit side.](images/optics/07-principles/thinlens-assembled.png){#fig-thinlens-prism fig-align="center" width="80%"}
 
 Expanding on this idea, we can stack a collection of prisms to gather more of the rays.  Or, more likely, we might polish a glass surface to have two spherical surfaces, forming a continuous form of the stacked prisms. The entrance aperture of this lens can capture much more light than a pinhole, and it guides the rays to converge. Spherical lenses are quite popular because they are easy to manufacture. Using Snell's Law it is relatively straightforward to calculate the refraction for a ray arriving at any location on the sphere [^optics-intro-3].
 

@@ -52,11 +52,11 @@ The PSFs of real systems can be difficult to model using a simple formula. In IS
 
 A graph of the cross-section through these PSFs is a useful way to compare them. 
 
-![Cross-section of four  point spread functions that are widely used in simulation. These point spreads were applied for a lens and sensor configuration with an $f/\#$ of 4 and a focal length of 3.9mm. The radius of the Airy disk for this configuration is 3.4 microns (see the zero-crossing of the Airy pattern).](images/optics/optics-siKernels-graph.png){#fig-psf-graph width="60%"}
+![Cross-section of four  point spread functions that are widely used in simulation. These point spreads were applied for a lens and sensor configuration with an $f/\#$ of 4 and a focal length of 3.9mm. The radius of the Airy disk for this configuration is 3.4 microns (see the zero-crossing of the Airy pattern).](images/optics/10-space/optics-siKernels-graph.png){#fig-psf-graph width="60%"}
 
 We can simulate how the four PSF shapes transform a spectral radiance (@fig-psf-image). We compare the optical images four each of the PSFs for a scene comprising a set of grid lines. The images were calculated using the ISETCam script <a href="../code/fise_opticsPSF.html" target="_blank">fise_opticsPSF.</a>  The Airy and Gaussian PSFs were implemented with wavelength-dependent point spread functions. The Pillbox and Lorentzian PSFs were implemented as wavelength-indepedent.
 
-![The Airy pattern shows the image for a diffraction limited lens with an $f/\# =4$. The Gaussian has a spread that is roughly consistent with the Airy Disk size and a similar wavelength dependency; long-wavelengths spread more than short wavelengths. The high tail of the Lorentzian PSF produces a veiling glare. The Pillbox size is about equal to the Airy disk, but it introduces much more blur because it has a relatively high level over the entire width.](images/optics/optics-siKernels-image.png){#fig-psf-image width="90%"}
+![The Airy pattern shows the image for a diffraction limited lens with an $f/\# =4$. The Gaussian has a spread that is roughly consistent with the Airy Disk size and a similar wavelength dependency; long-wavelengths spread more than short wavelengths. The high tail of the Lorentzian PSF produces a veiling glare. The Pillbox size is about equal to the Airy disk, but it introduces much more blur because it has a relatively high level over the entire width.](images/optics/10-space/optics-siKernels-image.png){#fig-psf-image width="90%"}
 
 These PSFs functions are valuable because they have simple parameters that control the amount of blur or light scatter. Here is a description of the different PSF formulae along with a brief descrition of their properties.
 
@@ -134,7 +134,7 @@ There is noticeable chromatic aberration for many types of lenses and materials.
 ![Typical human line spread functions. The dashed white lines are the relative retinal illuminance.](images/optics/linespread.png){#fig-optics-linespread}
 
 ## Point Spread Function
-![Typical human point spread functions. The large spread for the blue is striking.  Notice that the orientation of the blur differs for this example subject, which is typical.](images/optics/pointspread.png){#fig-optics-pointspread}
+![Typical human point spread functions. The large spread for the blue is striking.  Notice that the orientation of the blur differs for this example subject, which is typical.](images/optics/10-space/pointspread.png){#fig-optics-pointspread}
 :::
 
 <figcaption>
@@ -152,10 +152,10 @@ TCA occurs when the image blur interacts with the position and size of the apert
 
 :::{.panel-tabset}
 ## Longitudinal chromatic aberration
-![With this aperture, there is only longitudinal chromatic aberration (LCA) and no transverse chromatic aberration (TCA).](images/optics/chromatic-notransverse.png){#fig-optics-notransverse width=70%}
+![With this aperture, there is only longitudinal chromatic aberration (LCA) and no transverse chromatic aberration (TCA).](images/optics/10-space/chromatic-notransverse.png){#fig-optics-notransverse width=70%}
 
 ## Transverse chromatic aberration
-![With this pupil aperture, some of the rays from this point will be blocked from entering the lower part of the lens. The absence of these rays has a differential effect on the short- and long-wavelength light. The of the center of the red blur circle will be shifted so it no longer aligns with the center of the blue blur circle (TCA).](images/optics/chromatic-transverse.png){#fig-optics-transverse width=70%}
+![With this pupil aperture, some of the rays from this point will be blocked from entering the lower part of the lens. The absence of these rays has a differential effect on the short- and long-wavelength light. The of the center of the red blur circle will be shifted so it no longer aligns with the center of the blue blur circle (TCA).](images/optics/10-space/chromatic-transverse.png){#fig-optics-transverse width=70%}
 :::
 
 <figcaption>
@@ -183,17 +183,17 @@ The key to a coronagraph is **PSF engineering**: designing the optics so that li
 
 Here’s how the Lyot coronagraph works (@fig-optics-lyot): Parallel rays from a distant star or the sun enter the telescope and are focused by the first lens. At the focal plane, a small opaque disk (the **occulting disk**) blocks the bright central spot. This also introduces some diffraction, as light bends around the edge of the disk. A second lens then reimages the entrance pupil, creating a new pupil plane. In this plane, a **Lyot stop**—a slightly smaller aperture—blocks much of the diffracted light. Finally, a third lens forms the final image, where the bright core is suppressed and the faint corona or nearby objects become visible. Typically, only about 1/200th of the original light makes it through the system.
 
-![Lyot coronagraph concept.](images/optics/optics-lyot-coronagraph.png){#fig-optics-lyot width="80%"}
+![Lyot coronagraph concept.](images/optics/10-space/optics-lyot-coronagraph.png){#fig-optics-lyot width="80%"}
 
 Modern coronagraphs go beyond simple stops. They use specially shaped apertures and optical elements that adjust the phase of the incoming light, creating a PSF with an extremely dark center. One way to design the Lyot stop is to determine the diffraction pattern expected from the occulting stop and then use a Lyot stop that blocks the locations where the diffracted light is most intense.
 
-![A Lyot stop designed to work with a nearly circular occulting stop. The pattern on the left shows the diffraction pattern from a nearly circular occulting stop. The image on the right shows the Lyot stop, which lets light pass (bright regions) where the diffraction intensity is low. (From [JWST documentation, Figure 3](https://tinyurl.com/bp8vmkz8){target=_blank}.](images/optics/optics-lyot-stops.png){#fig-optics-lyot-stops width=60%}
+![A Lyot stop designed to work with a nearly circular occulting stop. The pattern on the left shows the diffraction pattern from a nearly circular occulting stop. The image on the right shows the Lyot stop, which lets light pass (bright regions) where the diffraction intensity is low. (From [JWST documentation, Figure 3](https://tinyurl.com/bp8vmkz8){target=_blank}.](images/optics/10-space/optics-lyot-stops.png){#fig-optics-lyot-stops width=60%}
 
 The PSF engineering first developed for coronagraphs is crucial for direct imaging of exoplanets, which are the planets orbiting other stars. The challenge is to block the overwhelming starlight so that the faint reflected light from a nearby planet can be detected.  One ambitious project, the Exo-Life Finder (ELF), uses advanced coronagraphic PSF engineering to search for signs of life on exoplanets (@kuhn2025-astronomy):
 
 > The telescope we’d like to design and build targets the problem of finding life around planets outside the solar system. To do this requires separating the reflected starlight off the planet from the star. Astronomers call this “direct imaging.” This means we’re interested in optical systems that can have a narrow field-of-view (FOV), perhaps just a few arcseconds, and enormous photometric dynamic range capability. A laudable goal is to achieve raw sensitivity of $10^{-8}$ of the stellar flux in a region within about 1 arcsecond of the central star. A dedicated telescope with this capability could make images of the surface of nearby exoplanets using data inversion techniques, perhaps sufficient to see even signs of advanced exolife civilizations (@kuhn2025-astronomy).
 
-![An image produced from coronagraphic data from the [James Webb Space Telescope](https://tinyurl.com/mr2b67ce){target=_blank} and from coronagraph data from the [Keck Observatory](https://www.caltech.edu/about/news/keck-observatorys-new-planet-imager-delivers-first-science-53770){target=_blank} (@serabyn2017-exoplanet-coronagraph [Figure 5].)](images/optics/optics-coronagraphs.png){#fig-psfengineering-kuhn width=70%}
+![An image produced from coronagraphic data from the [James Webb Space Telescope](https://tinyurl.com/mr2b67ce){target=_blank} and from coronagraph data from the [Keck Observatory](https://www.caltech.edu/about/news/keck-observatorys-new-planet-imager-delivers-first-science-53770){target=_blank} (@serabyn2017-exoplanet-coronagraph [Figure 5].)](images/optics/10-space/optics-coronagraphs.png){#fig-psfengineering-kuhn width=70%}
 
 In very modern designs the simple stops are replaced by optical components that control the phase of the light across the pupil (@kuhn2025-astronomy). This additional control creates a PSF with a central region that is suppressed by eight orders of magnitude or more—an essential requirement for exoplanet imaging. Achieving this level of control in a large instrument is a major technical challenge, involving not just optics, but also mechanical engineering, materials science, signal processing, and even project management and funding.
 
@@ -218,4 +218,4 @@ While SMLM excels at finding the $(x, y)$ position, determining a molecule's dep
 
 This is where PSF engineering provides a brilliant solution. Rafael Piestun and his collaborators designed an optical system that transforms the PSF into a distinctive shape: two lobes that rotate around a central point as the molecule's depth changes (@pavani2008-3d-dh-tracking). When plotted as a function of depth, the rotating lobes trace out a double helix (@fig-optics-double-helix). For a sparsely labeled sample, an investigator can find the $(x, y)$ position from the PSF's center and estimate the depth ($z$) from the orientation of the two lobes. This clever design enables precise 3D localization of single molecules. Piestun co-founded [Double Helix Optics](https://www.doublehelixoptics.com/) to commercialize this technology.
 
-![Double-helix point spread. Using a spatial light modulator to control the phase of the light, Piestun and colleagues created an oriented point spread function (images). The angle of the point spread depends on the distance from the optics at a scale of hundreds of nanometers (graph). After @backlund2012-psfengineering [Figure 1].](images/optics/piestun-double-helix.png){#fig-optics-double-helix width=70%}
+![Double-helix point spread. Using a spatial light modulator to control the phase of the light, Piestun and colleagues created an oriented point spread function (images). The angle of the point spread depends on the distance from the optics at a scale of hundreds of nanometers (graph). After @backlund2012-psfengineering [Figure 1].](images/optics/10-space/piestun-double-helix.png){#fig-optics-double-helix width=70%}

@@ -31,11 +31,11 @@ $$ {#eq-harmonics-2d}
 
 [^spatial-frequency]: Different fields use different terminology. Vision scientists often call these spatial frequency gratings. Engineers sometimes approximate sinusoidal patterns with evenly spaced bars or lines. We use the term harmonics.
 
-![Harmonic images. These have different $f_x$ and $f_y$ values, but all have contrast $A=1$. The image is vertical if $f_y = 0$ and horizontal if $f_x = 0$.](images/optics/optics-harmonics.png){#fig-optics-harmonics-2d width="80%"}
+![Harmonic images. These have different $f_x$ and $f_y$ values, but all have contrast $A=1$. The image is vertical if $f_y = 0$ and horizontal if $f_x = 0$.](images/optics/11-transform/optics-harmonics.png){#fig-optics-harmonics-2d width="80%"}
 
 For many linear-systems analyses, say when the system is circularly symmetric, it is enough to consider one-dimensional harmonics by fixing $f_y = 0$. The examples in @fig-optics-harmonics-1d vary only along $x$ and illustrate different spatial frequencies $f_x$ and contrasts $A$.
 
-![A set of one-dimensional image harmonics. They vary in $x$ with $f_y = 0$. The contrast $A$ varies from top to bottom $(1, 0.5, 0.1)$. The $x$-range is $(0,1)$, and the spatial frequencies are $f_x = (1, 2, 4, 8)$. [fise_imageHarmonics1d.m](../code/02Optics/fise_imageHarmonics1d.html){target=_blank}](images/optics/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
+![A set of one-dimensional image harmonics. They vary in $x$ with $f_y = 0$. The contrast $A$ varies from top to bottom $(1, 0.5, 0.1)$. The $x$-range is $(0,1)$, and the spatial frequencies are $f_x = (1, 2, 4, 8)$. [fise_imageHarmonics1d.m](../code/02Optics/fise_imageHarmonics1d.html){target=_blank}](images/optics/11-transform/optics-harmonics-1d.png){#fig-optics-harmonics-1d width="60%"}
 
 To many people it is counterintuitive that a thin line can be constructed by summing harmonics. The line is very compact, but each harmonic extends across the entire image. How can the sum of these harmonics functions result in such a localized image?
 
@@ -43,14 +43,14 @@ To many people it is counterintuitive that a thin line can be constructed by sum
 
 In this example, we reconstruct a line at the center (column 65) of a 129-column image by setting all harmonic weights to $w_f = 1$. Because the target image is even symmetric, only the cosine terms are needed. The red traces in the figure show the intensity profile: as more harmonics are added, the central peak narrows and side ripples diminish. By the $64^{th}$ harmonic, the line is well-formed; adding more harmonics briefly reintroduces some ringing, which disappears when the full set is included. This phenomenon is a classic result in linear systems—ask your instructor for more details!
 
-![Summing harmonics to become a line. The panels show the sum of the first 4, 16, 64, 72, and finally all 128 harmonics. To match a single line in the middle (col=65) of this 129 column image, the weights of each harmonic are all $w_f = 1$. Because the image is even symmetric, we need to sum only the $cos()$ terms. The red traces superimposed on the images are the intensity. The central region becomes thinner and the ripples on the side are eliminated by the $64^{th}$ harmonic.  They return as we keep going to f = 72, but are eliminated again at f=128.  Ask your linear systems instructor about this; s/he will like you for it.](images/optics/optics-reconstruction.png){#fig-optics-reconstruction width="100%"}
+![Summing harmonics to become a line. The panels show the sum of the first 4, 16, 64, 72, and finally all 128 harmonics. To match a single line in the middle (col=65) of this 129 column image, the weights of each harmonic are all $w_f = 1$. Because the image is even symmetric, we need to sum only the $cos()$ terms. The red traces superimposed on the images are the intensity. The central region becomes thinner and the ripples on the side are eliminated by the $64^{th}$ harmonic.  They return as we keep going to f = 72, but are eliminated again at f=128.  Ask your linear systems instructor about this; s/he will like you for it.](images/optics/11-transform/optics-reconstruction.png){#fig-optics-reconstruction width="100%"}
 
 ::: {.callout-note collapse="false" title="Line reconstruction: the movie"}
 This movie illustrates how the sum converges as harmonics are added one by one. Initially, the harmonics are distributed across the image. As more are included, their contributions cancel everywhere except at the central position ($0$), where all are positive ($\cos(0)$). 
 
 Adding harmonics from $f=0$ to $f=64$ produces the line; adding $f=65$ to $f=128$ introduces some ringing, which is eliminated when the sum is complete. This is a special case for even symmetric functions, where only cosines are required.
 
-![Video showing a line reconstructed as we add harmonics (cosines) at different frequencies. I only added the contrast terms, keeping the mean the same. See [fise_harmonicsLine](../code/02Optics/fise_harmonicsLine.html){target=_blank}. ](images/optics/lineReconstruct.mp4){#fig-optics-reconstruction-movie width="40%" fig-align="center"}
+![Video showing a line reconstructed as we add harmonics (cosines) at different frequencies. I only added the contrast terms, keeping the mean the same. See [fise_harmonicsLine](../code/02Optics/fise_harmonicsLine.html){target=_blank}. ](images/optics/11-transform/lineReconstruct.mp4){#fig-optics-reconstruction-movie width="40%" fig-align="center"}
 
 :::
 
@@ -59,7 +59,7 @@ There are many reasons why people would like to describe the quality of an optic
 
 The point spread function characterizes the system using many values measured from a single stimulus. The harmonic characterization uses only two parameters, but from multiple stimuli (@fig-optics-harmonic-eigen).  For each harmonic frequency, we measure how much its amplitude is scaled, $s(\mathbf{f})$, and how much the image has been shifted $\phi(\mathbf{f})$.
 
-![A shift invariant linear system transforms a one-dimensional image harmonic into a harmonic image of the same frequency. The output differs by a scale factor and a spatial shift (phase).  The mean levels of the input $M_i$ and output $M_o$ differ by a scale factor, as well.](images/optics/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
+![A shift invariant linear system transforms a one-dimensional image harmonic into a harmonic image of the same frequency. The output differs by a scale factor and a spatial shift (phase).  The mean levels of the input $M_i$ and output $M_o$ differ by a scale factor, as well.](images/optics/11-transform/harmonics-eigen.png){#fig-optics-harmonic-eigen width=70%}
 
 ## Transfer Functions {#sec-optics-transfer-function}
 For a linear, space-invariant system, the effect of the optics on any harmonic stimulus is simple: the output is also a harmonic of the same frequency, but its amplitude is scaled and its phase is shifted. There is a small collection of **transfer functions** that serve as useful, compact mathematical descriptions of this scaling and shifting across all spatial frequencies.  These transfer functions in the transform domain are all related to the functions in the space domain through the convolution theorem.  
@@ -104,7 +104,7 @@ For many optical systems, particularly those with symmetric point spread functio
 
 @fig-optics-harmonics-mtf illustrates the effect of the MTF. An input image with a sweep of spatial frequencies (top) is passed through an optical system. The output image (bottom) shows that the contrast of the high-frequency patterns is significantly reduced, a direct visualization of the MTF's attenuation of higher frequencies.
 
-![A sweep frequency pattern demonstrates the MTF. The input image (top) is a sweep frequency, from low to high frequency, at 550 nm. The input contrast is the same as the local frequency increases. The simulation passes this image through a diffraction‑limited lens, $f/\#=4$. The local contrast decreases at the higher frequencies. The red curve, defined as the envelope of the modulating output response, is the system's MTF, $\mathcal{M}(f)$. ...](images/optics/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
+![A sweep frequency pattern demonstrates the MTF. The input image (top) is a sweep frequency, from low to high frequency, at 550 nm. The input contrast is the same as the local frequency increases. The simulation passes this image through a diffraction‑limited lens, $f/\#=4$. The local contrast decreases at the higher frequencies. The red curve, defined as the envelope of the modulating output response, is the system's MTF, $\mathcal{M}(f)$. ...](images/optics/11-transform/harmonics-mtf.png){#fig-optics-harmonics-mtf width=90%}
 
 ### Phase Transfer Function {#sec-PTF}
 The phase shift (in radians) as a function of frequency is called the **phase transfer function (PTF)**:
@@ -139,13 +139,13 @@ For example, if a spatial frequency pattern at $f$ is detectable at 1% contrast 
 ## Two-dimensional Fourier Transforms representation
 There are times when we would like to visualize the amplitude of the image harmonics as a function of spatial frequency. The image in @fig-optics-otf2d is a common approach.  The spatial domain images are on the left - two different harmonics. The amplitude of the Fourier coefficients are shown on the right. The center of the image represents the mean value.  The two points, symmetric about the center, represent the amplitude of the Fourier representation.
 
-![Pictures of 2d FFT Amplitude spectrum. [See fise_otf2d](../code/02Optics/fise_otf2d.html){target=_blank}](images/optics/otf2d.png){#fig-optics-otf2d width=70%}
+![Pictures of 2d FFT Amplitude spectrum. [See fise_otf2d](../code/02Optics/fise_otf2d.html){target=_blank}](images/optics/11-transform/otf2d.png){#fig-optics-otf2d width=70%}
 
 It is common to render the spatial frequency map with the mean ($M$) at the center $(0,0)$. In physical units, spatial frequencies span $[-f_N, f_N]$ along each axis, where $f_N = 1/(2\Delta x)$ is the Nyquist frequency determined by the sample pitch $\Delta x$. In index (DFT-bin) units for an $N\times N$ image, frequencies run from $-\lfloor N/2\rfloor$ to $\lfloor (N-1)/2\rfloor$. Because the original image is real-valued, the Fourier coefficients obey $F(f_x,f_y)=F^*(-f_x,-f_y)$.
 
 Slow variations across the image are represented near the center of the spectrum. If we attenuate those low frequencies, the image emphasizes rapid variations (middle column). Conversely, attenuating high frequencies leaves a blurred version (right column).
 
-![The $\log_{10}$ amplitudes of the two-dimensional Fourier Transform coefficients are shown in the bottom row; the corresponding images are shown in the top row.[fise_otf2dFace](../code/02Optics/fise_otf2dFace.html){target=_blank}](images/optics/otf2dFace.png){#fig-optics-otf2dparts width=70%}
+![The $\log_{10}$ amplitudes of the two-dimensional Fourier Transform coefficients are shown in the bottom row; the corresponding images are shown in the top row.[fise_otf2dFace](../code/02Optics/fise_otf2dFace.html){target=_blank}](images/optics/11-transform/otf2dFace.png){#fig-optics-otf2dparts width=70%}
 
 ## System characteristics
 The transform domain is frequently used in practice to summarize high level properties of image systems. Three important ideas, often expressed in the transform domain, are summarized here.  These ideas have counterparts in the spatial domain as well, as they are system characteristics.  They appear in the transform domain because they are easily expressed in terms of harmonics.
