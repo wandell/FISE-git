@@ -6,11 +6,21 @@ Optical modeling of light as rays is a useful and widely used approximation for 
 In this chapter we consider the simplest optics, the **pinhole**. After understanding the logic of modeling using rays and pinholes, I explain why the limitations of the ray model and why we will also be modeling optics using light as waves, rather than rays. Finally, we discuss the key concept of the **point spread function**, which plays a role in all the different modeling approaches.
 
 ## Pinhole optics
-Suppose we imagine light as a collection of rays: then, it is easy to understand Leonardo's explanation of why imaging through a pinhole produces an image  (@fig-pinhole-basic). The rays from a distant point, **A**, radiate in a wide range of directions. But only a small portion of those rays arrive at the pinhole aperture. The incident rays from **A** rays will be parallel to one another. According to the ray model of light, this collection of rays will pass straight through the pinhole aperture and form an image of the point on the recording surface (e.g., Leonardo's wall).
+Suppose we imagine light as a collection of rays: then, it is easy to understand Leonardo's explanation of why imaging through a pinhole produces an image. Consider a point on the image plane, and draw the ray that can exit through the pinhole into object space (the colored circles). Each point on the image can receive a ray from a different location on the object side.  The image that is formed will be upside down (and right-left inverted).
 
-![Pinhole camera geometry. (A) The rays from a distant, on-axis point arrive at in parallel at the pinhole. Were there no diffraction, the rays would continue on to form an image the size of the pinhole. (B) Rays from a distant off-axis point also arrive in parallel, but they are at an angle to the pinhole aperture. Hence, fewer rays pass through the aperture, making the image dimmer and the blur smaller. For some pinhole sizes, this design is workable. But at a certain size, diffraction makes this design unworkable.](images/optics/06-geometric/pinholePSF.png){#fig-pinhole-basic fig-align="center" width="50%"}
+### Forming an iamge
+![A pinhole makes an image.](images/optics/06-geometric/pinhole-image.png){#fig-pinhole-image width=60%}
 
-MORE IMAGES FROM THE CLASS FIT IN HERE TO MOTIVATE THE PINHOLE.
+@fig-pinhole-image shows the case when the pinhole is fairly small.  In that case, each image point will only receive a ray from a small part of object space.  If we increase the pinhole size, then each image point will receive rays from multiple objects.
+
+![Why enlarging the pinhole increases the blur.](images/optics/06-geometric/pinhole-blur.png){#fig-pinhole-blur width=60%}
+
+When multiple points on the object side contribute to each point on the image side, the result is a blurry version of the world. The general idea, then, is that reducing the pinhole size should -according to the ray model- sharpen the image.
+
+### Parallel rays
+The rays from a point generally radiate in a wide range of directions. In many practical cases, the points we are imaging are relatively far away. Consider the distant point, **A** in @fig-pinhole-distant. Only a small angular bundle of the rays from A arrive at the pinhole aperture. These incident rays will be very nearly parallel to one another. According to the ray model of light, this collection of rays will pass straight through the pinhole aperture and form an image of the point on the recording surface that is about the same size as the pinhole itself.
+
+![Pinhole camera geometry. (A) The rays from a distant, on-axis point arrive at in parallel at the pinhole. Were there no diffraction, the rays would continue on to form an image the size of the pinhole. (B) Rays from a distant off-axis point also arrive in parallel, but they are at an angle to the pinhole aperture. Hence, fewer rays pass through the aperture, making the image dimmer and the blur smaller. For some pinhole sizes, this design is workable. But at a certain size, diffraction makes this design unworkable.](images/optics/06-geometric/pinholePSF.png){#fig-pinhole-distant fig-align="center" width="50%"}
 
 Consider a distant but off-axis point, **B**. Its rays, too, will start in many directions but only a narrow, collimated subset of rays will arrive at the pinhole aperture. Because of the angle between the collimated rays and the pinhole, a smaller fraction of the rays will pass through the pinhole aperture. The point spread from **B** will be smaller and dimmer. Its location on the image surface will be displaced from **A** by an amount that depends on the positions of the two points in the scene. Thus, the wall records the relative intensity and spectrum from the different points in the scene at different locations on the wall.  Also, why the image is inverted is well-explained by ray-tracing.
 
