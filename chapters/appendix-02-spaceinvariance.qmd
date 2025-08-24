@@ -145,11 +145,11 @@ It's important to note that while $I[n]$ is real-valued, the DFT coefficients $w
 If you prefer to work with real numbers, you can compute the sine and cosine coefficients, $s_f$ and $c_f$, directly from the image intensities:
 
 $$
-\begin{align}
+\begin{aligned}
 a_0 &= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \\
 s_f &= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \sin\left(\frac{2\pi f n}{N}\right) \\
 c_f &= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \cos\left(\frac{2\pi f n}{N}\right)
-\end{align}
+\end{aligned}
 $$
 
 Here, $a_0$ gives twice the mean value of $I[n]$, which is why the Discrete Fourier Series (@eq-fourier-series) starts with $\frac{a_0}{2}$.
@@ -162,10 +162,10 @@ There are several equivalent ways to write the Discrete Fourier Series, and it's
 - The amplitude and phase parameters relate to the sine and cosine coefficients as follows:
 
 $$
-\begin{align}
+\begin{aligned}
 a_f & = \sqrt{{s_f}^2 + {c_f}^2} \\
 \phi_f & = \operatorname{atan2}(c_f,\, s_f)
-\end{align}
+\end{aligned}
 $$
 
 Equivalently, $s_f = a_f \cos\phi_f$ and $c_f = a_f \sin\phi_f$. Using $\operatorname{atan2}$ ensures the correct quadrant for $\phi_f \in (-\pi, \pi]$.
