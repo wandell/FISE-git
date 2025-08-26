@@ -140,21 +140,31 @@ When the point source is close to the pinhole, the wavefront is curved (spherica
 We will explore the role of the PSF in lens simulation, characterization, and computational imaging methods in  @sec-optics-linear-space and the following chapters.
 
 ## Pinhole shapes and PSFs
+To this point we have only considered circular pinholes. These are important because the human pupil is close to circular, and we often have camera systems with approximately circular apertures.  With a circular aperture and **circularly symmetric** lenses, we can rotate the camera (or our head) and the image will not change much.  The point spread function will also be circularly symmetric and thus we can describe its shape using only the radial distance from the PSF center.
 
-Astigmatism
+There are cases in nature -and industry- of non-circular apertures.  These lead to point spread functions that must be described as two-dimensional images.  In general, biological optics - inluding most people -are often imperfect and deviate from circular symmety.  In this section I explain how to calculate the diffraction limited point spread for different shapes, and I describe some of the biological pupils from different species.
 
-Non-circular pinholes (e.g., rectangular)
+### Non-circular pinholes 
+
+Create an ISETCam script with a rectangular apodization.  
+
+### Human PSF
+
+Human eyes have approximately circular pupils.  When the pupils are closed down, the PSF is roughly circularly symmetric.  But when the pupil widens, and the imperfections of the human optics (cornea, lens) have a large impact, the PSF is no longer circularly symmetric.  @thibos2020-arvs @thibos2002-statisticalvariationaberration
+
+When the human eye has non-circular PSF, we say the person is **astigmatic**.  We create glasses or contact lenses to counter this astigmatism. Isn't there some notion that the astigmatism can be well-modeled as two types (horizontal and vertical)?  Is that true, or just old fashioned stuff.
+
+::: {.callout-note collapse=false title="Animal pupil shapes."}
+I like these images from the web - there are many of the cat's eye - and from Marty Banks' article of different animal eyes.  @banks2015-animaleyes
+![Animal pupils.  Left is cat from reddit.  Right are examples from Banks Science article.](images/optics/06-geometric/catpupil.png){#fig-cat-pupil width=60%}
+:::
 
 Your own PSF.  Try taking off your glasses or contact lenses and look at a small bright light in the dark. Maybe a night light from across the room, or one of the LED lights on electronic gear.  The image you see is the PSF of your own visual system, and if you are looking in the dark, your pupil is probably wide open. By squinting, you reduce the size of your eye's aperture which probably sharpens the image by reducing how much of the lens is contributing to the image formation, getting closer to diffraction.
 
 Example of a human PSF, from ISETBio.
 
-::: {.callout-note collapse=false title="Animal pupil shapes."}
+![Illustration of astigmatism.  s_wvfAstigmatism.  Top row of the plot.](images/optics/06-geometric/astigmatism-defocus.png){#fig-astigmatism width=100%}
 
-Mammals eyes aren't usually pinholes - they have a pupil and optics (cornea, lens). But when the pupil is tightly closed down the optics matters little, and the system's optics approach those of a pinhole.  
+This is astigmatism caused by the optics and wavefront aberration
 
-Cat's slit eye for sure.
 
-Maybe other animals from Marty Banks' paper?
-
-:::
