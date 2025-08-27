@@ -140,53 +140,56 @@ When the point source is close to the pinhole, the wavefront is curved (spherica
 We will explore the role of the PSF in lens simulation, characterization, and computational imaging methods in  @sec-optics-linear-space and the following chapters.
 
 ## Pinhole shapes and PSFs
-To this point we have only considered circular pinholes. These are important because the human pupil is close to circular, and we often have camera systems with approximately circular apertures. With a circular aperture and **circularly symmetric** lenses, we can rotate the camera (or our head) and the image will not change much.  The point spread function will also be circularly symmetric and thus we can describe its shape using only the radial distance from the PSF center.
+To this point we have only considered circular pinholes. These are important because many apertures, including the human pupil, are close to circular. Also, many camera systems use approximately circular apertures. The nice feature of circular apertures is that rotating the camera (or our head) leaves the optical impact of the aperture unchanged. When the point spread function is circularly symmetric, as for the Airy pattern, we can describe it using only the radial distance from the PSF center.
 
-There are cases in nature -and industry- of non-circular apertures, and these point spread functions must be described as two-dimensional images. In the next two sections I show examples and provide an ISETCam script that calculates the diffraction-limited PSF for some examples.
-
-Biological optics -inluding the optics of most people- are often imperfect and deviate from circular symmety. I use ISETCam to plot typical, on-axis PSFs measured made by opthalmologists (@thibos2002-statisticalvariationaberration). 
+There are cases in nature -and industry- of non-circular apertures, and these point spread functions must be described as two-dimensional images. In the following sections I introduce an ISETCam script that calculates the diffraction-limited PSF for some non-circular diffraction-limited apertures. 
 
 ### Rectangular pinholes 
-Towards the end of the optics section, I will describe how to use wavefront methods to calculate different apertures and lens aberrations.  The code in the script [fise_oiAperture](../code/02Optics/fise_oiAperturemlx.html) calculates the PSF for a rectangular aperture (3 times as high as wide).  When diffraction is the only limitation, being high makes the image sharper, so in this case, the horizontal patterns are higher contrast the than vertical patterns.
+The script [fise_oiAperture](../code/02Optics/fise_oiAperturemlx.html){target=_blank} illustrates how to calculate the PSF for a rectangular aperture in ISETCam. An image computed using the PSF from a diffraction limited rectangular pinhole, and the PSF for that pinhole, are shown in @fig-pinhole-rectangle. The images illustrate a case for the rectangular aperture is three times wider (x) than high (y). The larger vertical height causes less blur in the y-direction, making the image sharper for the horizontal stripes.
 
-![Images and PSF from a rectangular, diffraction limited, aperture.](images/optics/06-geometric/pinhole-shape-rectangle.png){#fig-pinhole-rectangle width="60%""}
+![Simulating a diffraction-limited rectangular pinhole that is 3x higher than wide. The test pattern has spatial frequency increasing from left to right, and orientation varying up to down. The horizontal lines retain their contrast as frequency increases; the vertical lines lose theirs. The PSF (550 nm) for the rectangular aperture is plotted on the right. See [fise_oiAperture](../code/02Optics/fise_oiAperturemlx.html).](images/optics/06-geometric/pinhole-rectangle-both.png){#fig-pinhole-rectangle width="80%"}
+
+There is a formula for the rectangular diffraction-limited PSF, given in terms of distance on the sensor surface.
+
+$$
+\text{PSF}(x',y') \;\propto\;
+\left[\operatorname{sinc}\!\left(\frac{\pi a}{\lambda f}\,x'\right)\right]^2
+\;\left[\operatorname{sinc}\!\left(\frac{\pi b}{\lambda f}\,y'\right)\right]^2,
+$$
+
+where $a$ and $b$ are the aperture widths in the $x$ and $y$ directions, $f$ is the focal length, and $\lambda$ is the wavelength.  We define $\operatorname{sinc}(u) = \tfrac{\sin(u)}{u}$.
+
+In the script, you will see that I didn't use the formula directly.  Rather, I simply defined the shape of the aperture and ran a calculation. In @sec-optics-wavefront I will explain that calculation.  Being able to numerically compute with the wavefront means we can find the PSF for many different shapes.
+
+::: {.callout-note collapse=false title="Animal pupil shapes."}
+Approximately rectangular pupils are fairly common in biology, as well, and the pupil shape is associated with how they live their lives (@banks2015-animaleyes). Vertically elongated pupils are associated with ambush predators that are active both day and night. So beware! Horizontally elongated pupils are more likely to be found in prey, who also have laterally placed eyes that helps them look all around. 
+
+![The cat has a vertical pupil - appropriate for a killing machine.  There are many, many images of the cat pupil on the web. The cat is capable of closing its pupil nearly completely. The images on the right are examples provided by @banks2015-animaleyes.](images/optics/06-geometric/catpupil.png){#fig-cat-pupil width=60%}
+:::
 
 ### Regular polygons
+Classic cameras with mechanical shutters often had regular polygon shapes (left) or the interesting 'leaf' pattern at the right. These apertures introduce structure into the PSF that differs from a circularly symmetric aperture. 
+
+![A sampling of mechanical shutter shapes.  The array on the left are different regular polygons.  The one on the right is called a 'leaf' shutter.  I have wanted to simulate its PSF, but I haven't gotten around to it.  Let me know if you try.  You might start with the script described above, and introduce the aperture shape from an image. Or start with the image and define a mathematical function for the shape.  You can see why I never did it.  I just can't choose.](images/optics/06-geometric/mechanical-shutters.png){#fig-pinhole-polygon width="60%"}
+
 <!--
-This is a mechanical shutter.  This is a leaf
-https://www.photoreview.com.au/tips/shooting/mechanical-vs-electronic-shutters/
-
-% This is a polygon
-https://stackoverflow.com/questions/56467558/trying-to-create-a-camera-shutter-effect-with-divs
+This is a mechanical shutter.  This is a leaf https://www.photoreview.com.au/tips/shooting/mechanical-vs-electronic-shutters/
+This is a polygon https://stackoverflow.com/questions/56467558/trying-to-create-a-camera-shutter-effect-with-divs
 -->
-![Images and PSF from a rectangular, diffraction limited, aperture.](images/optics/06-geometric/polygon-shutter.png){#fig-pinhole-polygon width="60%""}
 
-Rectangular pinhole
+The impact of the regular polygon shape is quite visible in high dynamic range (HDR) scenes that include light sources.  The script [fise_oiAperture](../code/02Optics/fise_oiAperturemlx.html){target=_blank} simulates an HDR scene, superimposing some very bright light sources on the background image.  These apertures produce the flare pattern that one often sees in professional productions, including movies and sports shows. The three images show the flare pattern for polygons with different numbers of sides.
 
-![Images and PSF from a rectangular, diffraction limited, aperture.](images/optics/06-geometric/pinhole-shape-rectangle.png){#fig-pinhole-polygon width="60%""}
+![High dynamic range images simulated through a lens with a regular polygon aperture.](images/optics/06-geometric/pinhole-shape-hdr.png){#fig-pinhole-hdr width="90%"}
 
-HDR images
-
-![Images and PSF from a rectangular, diffraction limited, aperture.](images/optics/06-geometric/pinhole-shape-hdr.png){#fig-pinhole-polygon width="60%""}
-
+ For the simulation in @fig-pinhole-hdr, I also added some scratches and dust on to the lens for realism. The brightest light in each scene (left) is five orders of magnitude ($10^5$) more intense than the dimmest light (right), which is barely visible.  The lights are all the same size, but the bright ones appear larger because of the blurring by the PSF.
 
 ### Human PSF
 
-Human eyes have approximately circular pupils.  When the pupils are closed down, the PSF is roughly circularly symmetric.  But when the pupil widens, and the imperfections of the human optics (cornea, lens) have a large impact, the PSF is no longer circularly symmetric.  @thibos2020-arvs @thibos2002-statisticalvariationaberration
+Human eyes have approximately circular pupils. In bright light the pupil is contracted to about 3 mm diameter, and the PSF can be roughly circularly symmetric. In darker environments, the pupil widens and imperfections of the human optics (cornea, lens) often have a very large and irregular impact on the PSF. The pupil aperture is circular, but the optical imperfections distort the PSF and it takes on a very irregular shape (@thibos2020-arvs @thibos2002-statisticalvariationaberration).
 
-When the human eye has non-circular PSF, we say the person is **astigmatic**.  We create glasses or contact lenses to counter this astigmatism. Isn't there some notion that the astigmatism can be well-modeled as two types (horizontal and vertical)?  Is that true, or just old fashioned stuff.
-
-::: {.callout-note collapse=false title="Animal pupil shapes."}
-I like these images from the web - there are many of the cat's eye - and from Marty Banks' article of different animal eyes.  @banks2015-animaleyes
-![Animal pupils.  Left is cat from reddit.  Right are examples from Banks Science article.](images/optics/06-geometric/catpupil.png){#fig-cat-pupil width=60%}
-:::
-
-Your own PSF.  Try taking off your glasses or contact lenses and look at a small bright light in the dark. Maybe a night light from across the room, or one of the LED lights on electronic gear.  The image you see is the PSF of your own visual system, and if you are looking in the dark, your pupil is probably wide open. By squinting, you reduce the size of your eye's aperture which probably sharpens the image by reducing how much of the lens is contributing to the image formation, getting closer to diffraction.
-
-Example of a human PSF, from ISETBio.
+<!-- Isn't there some notion that the astigmatism can be well-modeled as two types (horizontal and vertical)?  Is that true, or just old fashioned stuff.-->
+Even though the PSF is quite irregular, we often approximate its shape. One approximation summarizes whether or not the PSF is very different in two directions. If it is very different in two perpendicular directions, we say the person is **astigmatic**. @fig-astigmatism shows PSFs with some defocus and astigmatism.  These were simulated using the same wavefront methods I described above and that will be covered in @sec-optics-wavefront.
 
 ![Illustration of astigmatism.  s_wvfAstigmatism.  Top row of the plot.](images/optics/06-geometric/astigmatism-defocus.png){#fig-astigmatism width=100%}
 
-This is astigmatism caused by the optics and wavefront aberration
-
-
+ I will show simulations of a range of human PSFs in @sec-human.  You can assess your own PSF easily.  Glasses or contact lenses are typically designed to sharpen the PSF and counter any astigmatism. To see the PSF of your lens, take off your glasses or contact lenses, and look with one eye at a small spot of light in the dark -maybe a night light from across the room, or one of the LED lights on electronic gear- against in the presence of a uniform background such as a wall. The image you see is the PSF of your own visual system. If you are looking in a dark room, your pupil is probably relatively large. By squinting, you reduce the size of your eye's aperture, and this is likely to sharpen the PSF.  The squinting reduces how much the lens contributes to image formation.  If the aperture is made quite small, say by using an artifical pupile, the image will be diffraction limited.
