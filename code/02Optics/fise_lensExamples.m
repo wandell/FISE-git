@@ -39,6 +39,7 @@ lenses = lensC.list;
 % lensFileName = lenses(23).name;  % Petzval, short focal length for plottings
 % lensFileName = lenses(25).name;  % Petzval, longer focal length for plottings
 lensFileName = lenses(8).name;  % Double Gauss, 
+% lensFileName = lenses(15).name;  % Fish eye
 
 % Small number of samples
 nSamples = 501;   % Number of ray samples that we trace
