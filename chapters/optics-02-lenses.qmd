@@ -22,19 +22,16 @@ A small pinhole renders a perfectly good image. Why do we need to add any optics
 
 Let me tell you what I mean by **small**. Suppose we are in a dim room illuminated with a broad wavelength spectrum (10 $cd/m^2$). Consider a camera with a 1 mm pinhole, a sensor with 1 micron pixels, a focal length of 4mm, and an exposure duration of 50 milliseconds. In that case only about 35 photons arrive at each pixel. If we want to see in color, we must further divide up the wavelength range and the situation worsens. Because of the inescapable photon noise, which I describe later, this signal only permits a reliable intensity discrimination when two pixels differ by more than 20% (i.e., one edge is 20% brighter than the other, see [fise_opticsCountingPhotons](../code/fise_opticsCountingPhotons.html)).
 
-A lens (i.e., optics) is a way to enlarge the entrance aperture to acquire more photons, without paying a penalty in spatial blur. This capability must have great value because the solution has been used by many different animal species.
+A lens, or more generally optics, is a way to enlarge the entrance aperture to acquire more photons, without paying a big penalty in spatial blur or geometric distortions. This ability must have great value because the solution has been used by many different animal species.
 
-::: {.callout-note collapse="true" title="Optics in animals"}
+::: {.callout-note collapse="false" title="Optics in animals"}
+The most primitive animal eyes are called 'pigment cup'. These are made of a small receptor surface, about 0.1mm in diameter, and the eye is simply open. The size of the opening is a bit large to be considered a pinhole. The eyes of some animals, in particular molluscs, have pinhole architectures. The receptor surface itself is 10 mm in diameter, and the opening is 0.4 - 2.8mm. These eyes evolved about 500 million years ago and have little changed.
 
-The most primitive animal eyes are called 'pigment cup'. These are made of a small receptor surface, about 0.1mm in diameter, and the eye is simply open. The size of the opening is a bit large to be considered a pinhole.
+![](images/optics/07-principles/mollusc-pinhole-monterrybay.png){#fig-mollusc width=70%}
 
-The eyes of some animals, in particular mollusks, have more plausible pinhole architectures. The receptor surface itself is 10 mm in diameter, and the opening is 0.4 - 2.8mm. These eyes evolved about 500 million years ago and have little changed.
-
-A few animals species have a visual system based on pinholes. But the vast majority have evolved visual systems with a lens.
+The vast majority of animals have evolved visual systems with a lens. You might enjoy [this lovely article by Michael Land](https://www.britannica.com/science/photoreception/Single-chambered-eyes){target=_blank}, a distinguished vision scientist who taught us much about animal vision systems.
 
 <!--# https://www.perplexity.ai/search/there-are-many-animals-that-ha-QJcp0_O_Ru6a0nVWEFkkmw  Perplexity search about tradeoffs between pinhole optics and lenses, particularly concerning biological systems. -->
-
-<!-- Details https://www.britannica.com/science/photoreception/Single-chambered-eyes Authored by Michael Land.  Detailed on optics and different species.  -->
 :::
 
 ## Rays and wavefronts
@@ -209,12 +206,14 @@ $z(\rho)$ is called the sag of the lens surface.  $R$ is the radius of curvature
 -->
 
 ### Grin lenses
-In 1854 James Clerk Maxwell, noticing that biological eyes are often spherical, suggested that the spherical aberration could be reduced by using lenses with a refraction index that varies from the optical axis to the edge (Maxwell reference here). It was later discovered that some biological eyes have this property (Reference here). Manufactured lenses with a variable gradient refraction index (*GRIN* lenses) are valuable in optical design, although they are more difficult to manufacture than aspherics. 
+In 1854 James Clerk Maxwell, noticing that biological eyes are often spherical, wondered whether there might not be a mechanism to reduce the expected aberration.  He suggested a specific mechanism, namely that spherical aberration could be reduced by varying the refraction index from the [optical axis to the edge](https://archive.org/details/scientificpapers01maxw/page/76/mode/2up?view=theater){target=_blank} (@maxwell1890-scientificpapers). It was later discovered that some biological eyes have this property, and this is generally credited to Ludwig Matthiessen for his work on the general topic (@land1999-encyclopedia-photoreception). 
+
+Manufactured lenses with a variable gradient refraction index (*GRIN* lenses) are valuable in optical design, although they are more difficult to manufacture than aspherics. 
 
 <!-- https://www.britannica.com/science/photoreception/Single-chambered-eyes Michael Land's Brittanic article has the story. Lenses made of homogeneous material (e.g., glass or dry protein) suffer from a defect known as spherical aberration, in which peripheral rays are focused too strongly, resulting in a poor image. 
 -->
 
 ### Metalenses
-The purpose of the lens is to redirect the rays in the incident light field. Suppose we can specify how we would like to redirect the rays.  We would call this specification a *ray transfer function* (Goossens reference).  It would be ideal if we could manufacture a very thin surface whose optical properties implement that function. 
+The purpose of the lens is to redirect the rays in the incident light field. Suppose we can specify how we would like to redirect the rays.  We call this a *ray transfer function* (@goossens2022-raytransferfunctions).  It would be ideal if we could manufacture a very thin surface whose optical properties implemented any specific ray transfer function we might desire.
 
-Advances in material science, optics, and computation are making progress on this goal. They are creating *metalenses*, which are very thin surfaces made up of small elements - smaller even than the wavelengths of light - with different refractive indices. The placement of these elements can produce many different ray transfer functions. Using advanced computational methods and hardware (e.g., GPU clusters), groups are learning how to define these surfaces and build metalenses that implement specific functions.  (References.)
+Advances in material science, optics, and computation are making remarkable progress on this goal. The implementation, called *metalenses*, are very thin surfaces made up of small elements - smaller even than the wavelengths of light - with different refractive indices. Controlling the placement of these elements can produce many different ray transfer functions. Figuring out how to place these elements to achieve a specific goal requires using advanced computational methods and hardware (e.g., GPU clusters). A number of research groups are learning how to define these surfaces and build metalenses that implement specific functions.  In the future, it may be possible to specify how you want to redirect the rays, and even which wavelengths are redirected in which direction (@Catrysse2022-color-router, @Catrysse2023-color-router), and to then build a very thin optics to achieve this goal.  One can dream.
