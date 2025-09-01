@@ -1,29 +1,43 @@
 # Lenses and ray transfer  {#sec-optics-morelenses}
-The methods used to characterize thin lenses (@sec-optics-thinlens) can be extended to more complex optics. This is not an optics text -and I am not an expert in optics- so I won't follow that path deeply here. But, I do want you to know at least a little about those topics. In this section, I will start down the path of using the ideas from thin lenses to characterize more complex optical systems. 
+The basic principles of lens design described in @sec-geometric-optics and @sec-optics-thinlens remain the foundations of multi-element lens analysis. The first lens is traced, and its output is the input to a second lens. We can use the three principles (@sec-optics-3principles) to analyze the lenses in sequence. Using these tools, but with increasing complexity, the methods used to characterize thin lenses (@sec-optics-thinlens) can be extended to many different optical functions. 
 
-The goal for me is to lead you to appreciate the notion of the *ray transfer function (RTF)* (@sec-optics-raytransfer). This idea has you thinking about how it is the rays in the incident light field are transformed into the rays in the optical light field. The concept of transforming the rays between two light fields is a general image systems engineering principle that applies to capture, display. I believe that someday it will apply to image understanding, as well. 
+In this chapter, I will illustrate some of the extensions to thick lenses and multi-element lenses. These have been important historically, and they will continue to be with us for some years.
 
-We are heading to the RTF by building on the ideas of thin lenses and geometric optics. Onward.
+But a main goal is to lead you to the next level of optics, and in particular the notion of the *ray transfer matrix* and the *ray transfer function (RTF)* first introduced in @sec-optics-metalens.  This idea conceptualizes optics in terms of how the rays in the incident light field are transformed into the rays in the optical light field. Characterizing a system in terms of a transformation, in this case a function that transforms the rays from one ight field into another, is an abstraction that is applicable to many aspects of image systems engineering. Conceiving of the pipeline as a series of transformaqtions, from capture to display, organizes how we think of simulations. The approach may even apply to image understanding. 
+
+But let's start here, with increasingly complex optics.
 
 ## Thick lenses 
 A lens that does not qualify as thin is called a **thick lens**. The basic principles of refraction and ray tracing still apply, but there is the added complexity of having to account for the fact that the rays propagate in a straight path within the lens.  This makes many of the formulas more complex.
 
-## Multi-element lenses {#sec-optics-multielement}
+## Famous multi-element lenses {#sec-optics-multielement}
 From the earliest days of optics, using basic understanding of refraction of spherical lenses, scientists began to think about **multi-element lenses** that improved on thin, spherical lenses. 
-
-The great mathematician Gauss implemented proposed a design, the **Gauss lens** for astronomy.  This was improved upon by Alvan Clark and Paul Rudolph, who expanded on Gauss’s idea to introduce the first symmetrical double Gauss arrangement — essentially two of Gauss’s lens pairs, placed symmetrically around the stop .  Paul Rudolph at Zeiss refined this into the famous Planar lens (1896), which became the archetypal “double Gauss” photographic objective. This design, with later improvements (e.g. Taylor & Hobson’s Opic lens, 1920), became the dominant fast normal lens type for photography in the 20th century (@fig-double-gauss).
-
-![Double Gauss multielement lens design. fise_lensExample.m initiated the drawing, which I modified in Affinity Designer. The evolution from Gauss' original lens design to the double Gauss and Planar design is nicely illustrated in [Wikipedia Double-Gauss](https://en.wikipedia.org/wiki/Double-Gauss_lens).](images/optics/09-morelens/double_gauss-wikipedia.png){#fig-double-gauss width="60%"}
-
-The basic principles of lens design described in @sec-optics-lens and @sec-optics-thinlens remain the foundations of multi-element lens analysis. The first lens is traced, and its output is the input to a second lens. We can use the three principles (@sec-optics-3principles) to analyze the lenses in sequence.
 
 <!--
 Jensen and White has good text on this. I will look for text from other sources, such as Goodman. But there are some simplifications that should be mentioned, including the two focal lengths and two nodal points. Propagation.
 -->
 
-## Other famous lenses {#sec-optics-lenses}
+### Double Gauss {#sec-optics-double-gauss}
+The great mathematician Gauss implemented proposed a design, the **Gauss lens** for astronomy.  This was improved upon by Alvan Clark and Paul Rudolph, who expanded on Gauss’s idea to introduce the first symmetrical double Gauss arrangement — essentially two of Gauss’s lens pairs, placed symmetrically around the stop .  Paul Rudolph at Zeiss refined this into the famous Planar lens (1896), which became the archetypal “double Gauss” photographic objective. This design, with later improvements (e.g. Taylor & Hobson’s Opic lens, 1920), became the dominant fast normal lens type for photography in the 20th century (@fig-double-gauss).
 
-We plotted the famous Double Gauss lens above. Other examples of classical lenses, include the Cooke Triplet which evolved into the Tessar.  The fish eye lens is also of interest for its wide field of view.
+![Double Gauss multielement lens design. fise_lensExample.m initiated the drawing, which I modified in Affinity Designer. The evolution from Gauss' original lens design to the double Gauss and Planar design is nicely illustrated in [Wikipedia Double-Gauss](https://en.wikipedia.org/wiki/Double-Gauss_lens).](images/optics/09-morelens/double-gauss-isetlens.png){#fig-double-gauss width="60%"}
+
+### Other famous lens designs {#sec-optics-famous-lenses}
+
+Many of the important early lens designs were purpose driven, such as Gauss' goal of building a telescope.  The Petzval lens was an important break through for enabling photographers to create portraits.  The Cooke Triplet, which evolved into the Petzval design, was important for, ...  The Fisheye lens is important for.  The three tabs in the image below illustrate these designs.  As you can imagine, there is a large university of shapes, spacing, and materials that were open for exploration.  As you might also imagine, the ability to search through this space with a goal in mind, and with increasingly large computers and purpose-built software to compute the properties of the optics, has been important to image systems engineering.
+
+:::{.panel-tabset}
+# Tessar 
+![Cooke became Tessar lens. https://en.wikipedia.org/wiki/Tessar](images/optics/09-morelens/tessar-wikipedia.png){#fig-optics-notransverse width=70%}
+
+# Petzval 
+![Petzval lens for portraits.  Big fight. https://en.wikipedia.org/wiki/Petzval_lens](images/optics/09-morelens/petzval-wikipedia.png){#fig-optics-notransverse width=70%}
+
+# Fisheye 
+
+![The fish eye lens.](images/optics/09-morelens/fisheye-wikipedia.png){#fig-fisheye width=70%}{#fig-optics-transverse width=70%}
+:::
+
 
 ```{=html}
 <!-- 
@@ -41,6 +55,8 @@ Do any of these particularly interest you? I can try to provide more details abo
 -->
 ```
 
+
+
 ## ABCD ray transfer matrix {#sec-optics-abcd}
 
 Near the optical axis.  Do a calculation.  
@@ -49,6 +65,6 @@ Maybe write a new ISETCam script with the ABCD implementation?
 
 Leads nicely into the Ray Transfer Function concept returns to the optical light field in previous
 
-## Ray transfer function {#sec-optics-raytransfer}
+## Ray transfer functions {#sec-optics-raytransfer}
 Use Ray Transfer Function.  Rely on the text from our paper. images here in some way. Maybe introduce the metalens concept. Maybe even the spatial light modulator. They could go in a next section/chapter.
 
