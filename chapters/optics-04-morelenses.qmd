@@ -7,8 +7,49 @@ But a main goal is to lead you to the next level of optics, and in particular th
 
 But let's start here, with increasingly complex optics.
 
-## Thick lenses 
-A lens that does not qualify as thin is called a **thick lens**. The basic principles of refraction and ray tracing still apply, but there is the added complexity of having to account for the fact that the rays propagate in a straight path within the lens.  This makes many of the formulas more complex.
+## Combining two thin lenses
+
+<!--
+Excellent online resource.  Not as nice as mine, but smarter for now.
+
+https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/24%3A_Geometric_Optics/24.3%3A_Lenses#:~:text=The%20focal%20length%20of%20a,surfaces%20are%20convex%20or%20concave.
+-->
+
+[See around equations 24.3.4](https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/24%3A_Geometric_Optics/24.3%3A_Lenses#:~:text=The%20focal%20length%20of%20a,surfaces%20are%20convex%20or%20concave.)
+
+## Thick lens definitions
+If it's not a thin lens, then it is a **thick lens**. The basic principles of refraction and ray tracing still apply, but our optical design calculations must account for the added complexity that the rays propagate in a straight path within the lens. The simplicity of the thin lens calculations is that this extension can be ignored, making the formulas simpler.
+
+Ideas for paraxial optics.  Things get complicated when we move far off axis.  In that case we will require more computational power.
+
+* Six different points comprise the Cardinal points
+* Two Principal points
+* Two focal points
+* Two nodal points
+
+**Principal planes and points**
+The principal planes are found "If you extend the incoming and outgoing rays so they appear to refract at a single plane, those planes are the principal planes."  The principal points are where the planes intersect the optical axis.
+
+The front and back focal length distances are measured from these principal planes.
+
+**Nodal points**
+Defined such that an incident ray directed toward the first nodal point emerges from the system as if from the second nodal point, parallel to the incident ray.  When the surrounding medium is air, the nodal points and principal points coincide.  That makes life easier.
+
+They preserve ray direction through the system.
+
+In air, nodal points coincide with the principal points.
+
+The Sign convention is important.  Light travels from left to right.  Distances on the right are positive.  R is positive if the center of curvature is to the right.  Positive Angles are measured counterclockwise from the axis. 
+
+![Definitions of the cardinal points in air.  The six cardinal points are the front and back focal points, nodal points, and principal points.  When the medium is the same on both sides of the lens, such as air in this case, the two nodal points are at the same position as the principal points, and the two focal points are at the same distance.  The focal point distance is always measured from the principal plane.](images/optics/09-morelens/thick-cardinal-defintions.png){#fig-thick-cardinal width=90%}
+
+When we are modeling thick lenses, we still want formula to calculate properties such as the focal points.  The lensmaker's formula for a thick lens is an extension of the one I described for the thin lens case (@eq-lensmaker).
+
+$$
+\frac{1}{f} = (\frac{n_2}{n_1} - 1) \left ( \frac{1}{R_1} - \frac{1}{R_2} + \frac{(n_2 / n_1 - 1) d}{(n_2 / n_1 ) R_1 R_2} \right ) 
+$$ {#eq-lensmaker-thick}
+
+The new formula really only differs by the extra term that accounts for the thickness of the lens, $d$. If we have only a single lens, the calculation isn't too bad. But if we have multiple lenses on the optical path, repeated calculations with this formula becomes unwieldy. Methods based on matrix multiplication operations have been developed to account for a series of spherical thick lenses.  I will explain those below, after introducing a few more ideas and definitions about thick lenses and multi-element lenses.
 
 ## Multi-element lenses
 From the earliest days of optics, using basic understanding of refraction of spherical lenses, scientists began to think about **multi-element lenses** that improved on thin, spherical lenses. 
@@ -22,9 +63,13 @@ The development of photography, such as daguerrotype in 1839[^daguerrotype], cre
 
 [^daguerrotype]: a photograph using an early photographic process employing an iodine-sensitized silvered plate and mercury vapor.
 
-The development of mathematical methods for predicting the outcome for lenses with different shapes and materials was also important. Both Gauss and Petzval were mathematicians who developed workable methods for simulating the impact of a design prior to construction. In those days, mathematics was the key simulation tool. In the modern era, as this book illustrates in many places, mathematics extended into computable algorithms are the modern tools. But don't sleep on the importance of mathematics!
+The development of mathematical methods for predicting the outcome for lenses with different shapes and materials was also important. Both Gauss and Petzval were mathematicians who developed workable methods for simulating the impact of a design prior to construction. Robert Wood, an American physicist, coined the term “fish-eye” lens to describe how a fish would see the world through a 180° hemisphere of water[^wood-fisheye]. He designed a lens to mimic this — essentially a hemispherical objective producing a circular image. For all of those designers, mathematics was the key simulation tool. In the modern era, as this book illustrates in many places, mathematics is extended into computable algorithms. These are our modern tools, but don't sleep on the importance of mathematics!
 
-Finally, in those days like these, different design goals led to diversity. Gauss was primarily interested in astronomical lenses with low distortion. Petzval proritized light sensitivty for portraiture. Cooke (1893) later produced the famous triplet, which became the Tessar, to achieve a compact lens that balanced aberrations across the field.
+[^wood-fisheye]: "In discussing the peculiar type of refraction which occurs when light from the sky enters the surf'ace of still water, it seems of interest to ascertain how the external world appears to the fish. As is well known, a sublnerged eye directed towards the surface of still water sees the sky compressed into a comparatively small circle of light, the centre of which is always immediately above the observer, the appearance being as if the pond were covered with an opaque roof' provided
+with a circular aperture or window. I f our eyes were adapted to distinct vision under water, it is clear that the objects surrounding the pond, such as trees, horses, fishermen, &c., would appear round the edge of this circle of light. Objects not lnuch
+elevated above the plane of the water would be seen somewhat compressed and distorted, but the circular picture would contain everything embraced within an angle of 180 ~ in every direction, i.e. a complete hemisphere" @wood1906-fisheye
+
+Finally, in those days like these, different design goals led to diversity. Gauss was primarily interested in astronomical lenses with low distortion. Petzval proritized light sensitivty for portraiture. Cooke (1893) later produced the famous triplet, which became the Tessar, to achieve a compact lens that balanced aberrations across the field. Woods' fish-eye became a scientific tool that enabled measurements of the sky, military reconnaisance and artistic architectural overviews.
 
 ### Double Gauss {#sec-optics-double-gauss}
 The great mathematician Gauss implemented proposed a design, the **Gauss lens** for astronomy.  This was improved upon by Alvan Clark and Paul Rudolph, who expanded on Gauss’s idea to introduce the first symmetrical double Gauss arrangement — essentially two of Gauss’s lens pairs, placed symmetrically around the stop .  Paul Rudolph at Zeiss refined this into the famous Planar lens (1896), which became the archetypal “double Gauss” photographic objective. This design, with later improvements (e.g. Taylor & Hobson’s Opic lens, 1920), became the dominant fast normal lens type for photography in the 20th century (@fig-double-gauss).
@@ -33,7 +78,7 @@ The great mathematician Gauss implemented proposed a design, the **Gauss lens** 
 
 ### Tessar, Petzval and Fisheye {#sec-optics-famous-lenses}
 
-Many of the important early lens designs were purpose driven, such as Gauss' goal of building a telescope.  The Petzval lens was an important break through for enabling photographers to create portraits.  The Cooke Triplet, which evolved into the Petzval design, was important for, ...  The Fisheye lens is important for.  The three tabs in the image below illustrate these designs.  As you can imagine, there is a large university of shapes, spacing, and materials that were open for exploration.  As you might also imagine, the ability to search through this space with a goal in mind, and with increasingly large computers and purpose-built software to compute the properties of the optics, has been important to image systems engineering.
+The three tabs in the image below illustrate the Tessar, Petzval and Fisheye designs. As you can imagine from inspecting these lens diagrams, there is a large university of shapes, spacing, and materials that were open for exploration.  As you might also imagine, the ability to search through this space with a goal in mind, and with increasingly large computers and purpose-built software to compute the properties of the optics, has been important to image systems engineering.
 
 :::{.panel-tabset}
 # Tessar 
