@@ -100,13 +100,24 @@ The three tabs in the image below illustrate the Tessar, Petzval and Fisheye des
 :::
 
 ## ABCD ray transfer matrix {#sec-optics-abcd}
-<!-- Maybe write a new ISETCam script with the ABCD implementation? -->
+<!-- Maybe write a new ISETCam script with the ABCD implementation? 
+This is a very simple and nice tutorial: https://youtu.be/FUc1k393FYo?si=2YByUEmtH-ed3S77
+I am uncertain about three things in this tutorial.  
+* The second lens, second surface, should have a curvature that is negative, I think.  He has it as positive.  Yet ...  * n2 and n1 always refer to the IOR of the current material (n1) and the IOR of the next material (n2).  
+* The positive and negative angles w.r.t. the axis.  Positive angles are counter clockwise, as expected.  He doesn't say, and it would be helpful to mention.  
+-->
 
-Ray tracing is a framing that feels very physical.  We can imagine the reality of rays and the way their path is controlled by passing through a sequence of lenses, or reflected by mirrors, or scattered by materials. We are headed to a second, somewhat different, way of thinking about optics. This framing treats optics as a function that takes an input and produces an output. The 
+Ray tracing feels physical -we can imagine and draw rays as they pass through a sequence of surfaces, or as they are reflected by mirrors, or scattered by materials. As designs become complex, however, ray tracing involves a lot of computational steps that can be hard to tedious to calculate accurately. By around 1970, optical engineers began to recognize the value of a purely computational approach that can be performed easily on compouters. This approach, based on  **ray transfer matrix**, apprlies will to the central (paraxial) region of circularly symmetric lenses.
 
-For each optical element, you can describe its effect on a ray of light using a **ray transfer matrix**. The main matrices used are:
+For this simplified case, we can describe each input ray using two variables (@fig-raytransfer-definitions, panel A). The first is the position of the ray with respect to the optical axis ($y$) that is often called its **field height**.  The second is the angle of the ray with respect to the optical axis, ($\theta$). 
 
-### Refraction through a lens
+![Ray transfer matrix parameter defintions](images/optics/09-morelens/definitions.png){#fig-raytransfer-definitions width="70%"}
+ 
+ that is also called an **ABCD** matrix, simplifies the calculations. 
+
+We can describe what happens to a ray of light as it (a) crosses a surface, or (b) continues through the medium, using a. The whole journey, from the object side to the image side, is a sequence of such transforms and can be described by mutiplying the matrices together.  
+
+### Refraction through a series of thin lenses
 
 $$
 M_{\text{lens}} =
@@ -201,6 +212,8 @@ where:
 
 
 ## Ray transfer functions {#sec-optics-raytransfer}
+We are headed to a second, somewhat different, way of thinking about optics. This framing treats optics as a function that takes an input and produces an output. The 
+
 Use Ray Transfer Function.  Rely on the text from our paper. images here in some way. Maybe introduce the metalens concept. Maybe even the spatial light modulator. They could go in a next section/chapter.
 
 Use Goossens text here.
