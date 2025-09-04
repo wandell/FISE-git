@@ -62,23 +62,21 @@ Here, $n$ is the refractive index of the lens material relative to the surroundi
 
 While this formula works for a single thick lens, applying it repeatedly for a multi-element system becomes unwieldy. A more powerful and systematic approach uses matrix multiplication, which I will introduce after we discuss multi-element lenses.
 
-## Multi-element lenses
-From the earliest days of optics, using basic understanding of refraction of spherical lenses, scientists began to think about **multi-element lenses** that improved on thin, spherical lenses. 
-
+## Multi-element thick lenses
 <!--
-Jensen and White has good text on this. I will look for text from other sources, such as Goodman. But there are some simplifications that should be mentioned, including the two focal lengths and two nodal points. Propagation.
+Jensen and White says solving for combinations of lenses of 'appreciable thickness is one of considerable difficulty, but one which can be solved by use of the principles already give'. 
 -->
+The ray tracing principles developed so far are the foundation for the next level of complexity, analyzing combinations of thick lenses. If one has a set of thick lenses in combination, each can be reprointed by a pair of principal planes.  The next step is to combine this pair into a new, single pair, that specifies them jointly.  One then continues along this path, adding in new lenses, taking into account various details such as magnification. (J&W page 93).
 
-## Famous multi-element lenses {#sec-optics-multielement}
-The development of photography, such as daguerrotype in 1839[^daguerrotype], created a significant market for optical design.  People wanted to take pictures of themselves, their family, and their friends.  The low light sensitivity of the recording media made it difficult to create portraits using a pinhole camera. Also, the pinhole camera does not produce a flat field image (SEC REF).  Lens designers set out to make portraits possible.  Much of this was enabled by the development of new types of glass with different optical properties, especially from Fraunhofer's work in Bavaria (SEC FRAUNHOFER REF).  Having a palette of materials to use made the design possible.
+Doing this analysis by hand, and using the various formulae, can be quite difficult. The rise of optical design software tools made it possible for many people to engage in the task. Understanding the principles is important for using these software tools well.  
+
+But even before these tools were available, there was great interest in designing useful optics. For example, the development of photography, such as daguerrotype in 1839[^daguerrotype], created a significant market for optical design.  People wanted to take pictures of themselves, their family, and their friends.  The low light sensitivity of the recording media made it difficult to create portraits using a pinhole camera. Also, the pinhole camera does not produce a flat field image (SEC REF).  Lens designers set out to make portraits possible.  Much of this was enabled by the development of new types of glass with different optical properties, especially from Fraunhofer's work in Bavaria (SEC FRAUNHOFER REF).  Having a palette of materials to use made the design possible.
 
 [^daguerrotype]: a photograph using an early photographic process employing an iodine-sensitized silvered plate and mercury vapor.
 
 The development of mathematical methods for predicting the outcome for lenses with different shapes and materials was also important. Both Gauss and Petzval were mathematicians who developed workable methods for simulating the impact of a design prior to construction. Robert Wood, an American physicist, coined the term “fish-eye” lens to describe how a fish would see the world through a 180° hemisphere of water[^wood-fisheye]. He designed a lens to mimic this — essentially a hemispherical objective producing a circular image. For all of those designers, mathematics was the key simulation tool. In the modern era, as this book illustrates in many places, mathematics is extended into computable algorithms. These are our modern tools, but don't sleep on the importance of mathematics!
 
-[^wood-fisheye]: "In discussing the peculiar type of refraction which occurs when light from the sky enters the surf'ace of still water, it seems of interest to ascertain how the external world appears to the fish. As is well known, a sublnerged eye directed towards the surface of still water sees the sky compressed into a comparatively small circle of light, the centre of which is always immediately above the observer, the appearance being as if the pond were covered with an opaque roof' provided
-with a circular aperture or window. I f our eyes were adapted to distinct vision under water, it is clear that the objects surrounding the pond, such as trees, horses, fishermen, &c., would appear round the edge of this circle of light. Objects not lnuch
-elevated above the plane of the water would be seen somewhat compressed and distorted, but the circular picture would contain everything embraced within an angle of 180 ~ in every direction, i.e. a complete hemisphere" @wood1906-fisheye
+[^wood-fisheye]: "In discussing the peculiar type of refraction which occurs when light from the sky enters the surf'ace of still water, it seems of interest to ascertain how the external world appears to the fish. As is well known, a sublnerged eye directed towards the surface of still water sees the sky compressed into a comparatively small circle of light, the centre of which is always immediately above the observer, the appearance being as if the pond were covered with an opaque roof' provided with a circular aperture or window. I f our eyes were adapted to distinct vision under water, it is clear that the objects surrounding the pond, such as trees, horses, fishermen, &c., would appear round the edge of this circle of light. Objects not much elevated above the plane of the water would be seen somewhat compressed and distorted, but the circular picture would contain everything embraced within an angle of 180 ~ in every direction, i.e. a complete hemisphere" @wood1906-fisheye
 
 Finally, in those days like these, different design goals led to diversity. Gauss was primarily interested in astronomical lenses with low distortion. Petzval proritized light sensitivty for portraiture. Cooke (1893) later produced the famous triplet, which became the Tessar, to achieve a compact lens that balanced aberrations across the field. Woods' fish-eye became a scientific tool that enabled measurements of the sky, military reconnaisance and artistic architectural overviews.
 
@@ -88,7 +86,6 @@ The great mathematician Gauss implemented proposed a design, the **Gauss lens** 
 ![Double Gauss multielement lens design. fise_lensExample.m initiated the drawing, which I modified in Affinity Designer. The evolution from Gauss' original lens design to the double Gauss and Planar design is nicely illustrated in [Wikipedia Double-Gauss](https://en.wikipedia.org/wiki/Double-Gauss_lens).](images/optics/09-morelens/double-gauss-isetlens.png){#fig-double-gauss width="60%"}
 
 ### Tessar, Petzval and Fisheye {#sec-optics-famous-lenses}
-
 The three tabs in the image below illustrate the Tessar, Petzval and Fisheye designs. As you can imagine from inspecting these lens diagrams, there is a large university of shapes, spacing, and materials that were open for exploration.  As you might also imagine, the ability to search through this space with a goal in mind, and with increasingly large computers and purpose-built software to compute the properties of the optics, has been important to image systems engineering.
 
 :::{.panel-tabset}
@@ -103,12 +100,105 @@ The three tabs in the image below illustrate the Tessar, Petzval and Fisheye des
 :::
 
 ## ABCD ray transfer matrix {#sec-optics-abcd}
+<!-- Maybe write a new ISETCam script with the ABCD implementation? -->
 
-Near the optical axis.  Do a calculation.  
+Ray tracing is a framing that feels very physical.  We can imagine the reality of rays and the way their path is controlled by passing through a sequence of lenses, or reflected by mirrors, or scattered by materials. We are headed to a second, somewhat different, way of thinking about optics. This framing treats optics as a function that takes an input and produces an output. The 
 
-Maybe write a new ISETCam script with the ABCD implementation?
+For each optical element, you can describe its effect on a ray of light using a **ray transfer matrix**. The main matrices used are:
 
-Leads into the Ray Transfer Function concept returns to the optical light field in previous
+### Refraction through a lens
+
+$$
+M_{\text{lens}} =
+\begin{pmatrix}
+1 & 0 \\
+-\tfrac{1}{f} & 1
+\end{pmatrix}
+$$
+
+where $f$ is the focal length of the lens.
+
+### Propagation through free space (distance $d$)
+
+$$
+M_{\text{free space}} =
+\begin{pmatrix}
+1 & d \\
+0 & 1
+\end{pmatrix}
+$$
+
+Multiply the matrices for each lens and spacing in sequence from the first element to the last. This will give you an overall system matrix $M$of the form:
+
+$$
+M =
+\begin{pmatrix}
+A & B \\
+C & D
+\end{pmatrix}
+$$
+
+where $(A, B, C, D)$ are the elements of the resulting matrix after multiplication.
+
+### Effective Focal Length
+
+The effective focal length $f_{\text{eff}}$ of the system can be found from the matrix $M$ using:
+
+$$
+f_{\text{eff}} = -\frac{1}{C}
+$$
+
+where $C$ is the element in the bottom-left of the sy
+
+
+## Full Calculation for a Thick Lens
+
+If the lens is thick, meaning it has a non-negligible thickness $t$, the full ray transfer matrix consists of three steps:
+
+### 1. Refraction at the First Surface (radius $ R_1 $)
+
+$$
+M_{\text{refraction 1}} =
+\begin{pmatrix}
+1 & 0 \\
+\dfrac{n_1 - n_2}{R_1} & \dfrac{n_1}{n_2}
+\end{pmatrix}
+$$
+
+where:
+- $n_1$ is the refractive index of the medium on the left (e.g., air),
+- $n_2$ is the refractive index of the lens material,
+- $R_1$ is the radius of curvature of the first surface (positive for convex, negative for concave).
+
+---
+
+### 2. Propagation Through the Lens Material (thickness $ t $)
+
+$$
+M_{\text{propagation}} =
+\begin{pmatrix}
+1 & \tfrac{t}{n_2} \\
+0 & 1
+\end{pmatrix}
+$$
+
+---
+
+### 3. Refraction at the Second Surface (radius $ R_2 $)
+
+$$
+M_{\text{refraction 2}} =
+\begin{pmatrix}
+1 & 0 \\
+\dfrac{n_2 - n_1}{R_2} & \dfrac{n_2}{n_1}
+\end{pmatrix}
+$$
+
+where:
+- $R_2$ is the radius of curvature of the second surface,
+- $n_2$ is the refractive index inside the lens,
+- $n_1$ is the refractive index of the medium outside the lens.
+
 
 ## Ray transfer functions {#sec-optics-raytransfer}
 Use Ray Transfer Function.  Rely on the text from our paper. images here in some way. Maybe introduce the metalens concept. Maybe even the spatial light modulator. They could go in a next section/chapter.
