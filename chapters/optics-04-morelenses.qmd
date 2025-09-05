@@ -121,21 +121,17 @@ The parameters used in the computation are shown in @fig-raytransfer-definitions
 We place these parameters in a 2-vector $\rho = (y, \phi)$. Then we define a series of ray transfer matrices, using the principles we reviewed in @sec-optics-lenses, that follow the journey of the ray through the thick lens.
 
 ### Refraction - First Surface 
-Snell's Law tells us how the rays change direction at the first surface of a spherical lens (@eq-snell). As you can see in @fig-1st-surface, the rays change direction by an amount that depends on their field height.  The critical point -I won't show the derivation- is that the amount of the direction change depends only on field height. Near the optical axis the change is the same, no matter what the original angle may be. 
+Snell's Law tells us how the rays change direction at the first surface of a spherical lens (@eq-snell). As you can see in @fig-1st-surface, the rays change direction by an amount that depends on their field height.  The critical point -I won't show the derivation- is that the amount of change is proportional to field height. In the paraxial regime the change is the same, no matter what the input ray angle. 
 
-![The input rays are parallel to the optic axis, $\theta_1 = 0$. The output ray angles change proportionally to the input ray field field height, $y_1$. According to the sign convention (@fig-raytransfer-definitions), the constant of proportionality is negative.](images/optics/09-morelens/yPhi-1st-surface.png){#fig-1st-surface width=60%}
+![The output ray angles change proportionally to field height, $y_1$. Using the sign convention (@fig-raytransfer-definitions), the constant of proportionality is negative.](images/optics/09-morelens/yPhi-1st-surface.png){#fig-1st-surface width=60%}
 
-$$
-\theta_2 = y_1 \Phi + \theta_1
-$$
-
-Also, notice that there is no change in the field height.  The ray passes through the surface and starts changes direction from the same field height. We can use these two observations to create the ray transfer matrix that describes how the input ray, $\rho_1 = (y_1, \theta_1)$ becomes the output ray, $\rho_2$.
+As the ray passes through the surface, the field height itself does not change. We can use these two observations to create the ray transfer matrix that describes how the input ray, $\rho_1 = (y_1, \theta_1)$ becomes the output ray, $\rho_2$.
 
 $$
 M_{S1} =
 \begin{pmatrix}
 1 & 0 \\
-\dfrac{n_1 - n_2}{R_1 n_2} & \dfrac{n_1}{n_2}
+\dfrac{n_1 - n_2}{R_1 ~ n_2} & \dfrac{n_1}{n_2}
 \end{pmatrix}
 \qquad
 \rho_2 = M_{\text{S1}} \rho_1
@@ -158,7 +154,7 @@ M_{T} =
 $$
 
 ### Refraction - Second Surface
-Finally, as the ray passes through the second surface and back into the surrounding medium we have another ray transfer matrix.
+Finally, as the ray passes the second surface into the surrounding medium, we have a ray transfer matrix with different parameters but the same structure as the first surface.
 
 $$
 M_{S2} =
@@ -174,7 +170,7 @@ where:
 - $n_2$ is the refractive index inside the lens,
 - $n_1$ is the refractive index of the medium outside the lens.
 
-These three matrices describe the ray's journey, and their product is the ray transfer matrix for the thick lens. The matrix $M$ that is 2 x 2, and the optics community enjoys calling it the ABCD matrix,
+These three matrices describe the ray's journey. Their product is the ray transfer matrix of the entire thick lens. The $2 \times 2$ matrix $M$ is called the **ABCD matrix**,
 
 $$
 M =
@@ -184,16 +180,7 @@ C & D
 \end{pmatrix} = M_{S2} M_{T} M_{S1}
 $$
 
-As you can imagine, if we have more surfaces we can continue to apply more matrices to built up a ray transfer matrix for systems with multiple circularly symmetric, spherical lenses.  We only need to know the indices of refraction and the radii of curvature.  And, of course, if the lenses are close to spherical near the optical axis then this can still serve as a reasonable approximation of performance.
-
-### Effective Focal Length
-The effective focal length $f_{\text{eff}}$ of the system can be found from the matrix $M$ using:
-
-$$
-f_{\text{eff}} = -\frac{1}{C}
-$$
-
-where $C$ is the element in the bottom-left of the ray transfer matrix.
+If we have optics with more spherical, circularly symmetric surfaces, we can continue to define and apply more matrices to create the ray transfer matrix for the system. We only need to know the indices of refraction and the radii of curvature of each surface. If the lenses are close to spherical near the optical axis, this approach still serves as an approximation of performance.
 
 ::: {.callout-note title="Thin lens" collapse="false"}
 A useful special case to remember is the ray transfer matrix for a thin spherical lens, with the surrounding medium air, $n_1 = 1$, and the index of refraction of the material is $n$. This case is a bit simpler because the thickness is considered to be $d=0$. For a thin lens, the $y_1$ value of the object side ray is the same as the $y_2$ on the image side. The angle of the input ray angle, $\theta_1$, becomes a new angle, $\theta_2$. 
@@ -236,6 +223,21 @@ M_{\text{lens}}
 $$
 
 :::
+
+### Effective and back focal lengths
+Multi-lens systems are often summarized by their ray transfer matrix. This is a very efficient way to communicate about some of the system properties. Two particularly valuable system properties, the back focal length $f_B$ and effective focal length $f_{E}$, can be calculated from the entries of the ray transfer matrix, $M$
+
+$$
+f_{B} = -\frac{A}{C}
+\qquad
+f_{E} = -\frac{1}{C}
+$$
+
+![Back and Effective focal lengths of a black box system.](images/optics/09-morelens/efl-bfl.png){#fig-efl-bfl width=60%}
+
+<!--
+https://latex.codecogs.com/svg.image?\begin{pmatrix} A & B \\ C & D \end{pmatrix}
+-->
 
 ## Ray transfer functions {#sec-optics-raytransfer}
 In the next section, we will start thinking about optics in a slightly different way. The ray transfer framing is a good way to see the conceptualization. The ray transfer matrix treats the collection of rays as an input, applies a mathematical operator (the ABCD matrix) to the rays, and predicts the output.  In this framework, we think about optics as a function that takes input rays and produces output rays. 
