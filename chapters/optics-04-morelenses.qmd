@@ -1,0 +1,223 @@
+# Lenses and ray transfer  {#sec-optics-morelenses}
+The principles of geometric optics and thin lenses are also critical for thick lenses and multi-element lenses(@sec-geometric-optics). The first lens is traced, and its output is the input to a second lens. We can use the three principles (@sec-optics-3principles) to analyze the lenses in sequence. Using these tools, but with increasing complexity, the methods used to characterize thin lenses (@sec-optics-thinlens) can be extended to many different optical functions. 
+
+In this chapter, I will illustrate some of the extensions to thick lenses and multi-element lenses. These have been important historically, and they will continue to be with us for some years.
+
+But a main goal is to lead you to the next level of optics, and in particular the notion of the *ray transfer matrix* and the *ray transfer function (RTF)* first introduced in @sec-optics-metalens.  This idea conceptualizes optics in terms of how the rays in the incident light field are transformed into the rays in the optical light field. Characterizing a system in terms of a transformation, in this case a function that transforms the rays from one ight field into another, is an abstraction that is applicable to many aspects of image systems engineering. Conceiving of the pipeline as a series of transformaqtions, from capture to display, organizes how we think of simulations. The approach may even apply to image understanding. 
+
+But let's start here, with increasingly complex optics.
+
+## Combining two thin lenses
+Let's take a simple step towards more complex optical systems by combining two thin lenses. When we place two lenses in series, the image formed by the first lens becomes the object for the second.
+
+If the lenses have focal lengths $f_1$ and $f_2$ and are separated by a distance $d$, the *effective focal length* ($f$) of the combination is given by:
+
+$$
+\frac{1}{f} = \frac{1}{f_1} + \frac{1}{f_2} - \frac{d}{f_1 f_2}
+$${#eq-two-thin-lens}
+
+This formula gives the focal length of an *equivalent* single thin lens. However, it's important to remember that this equivalent lens isn't located at the position of either of the original lenses. Its position is defined by the system's principal planes, which we'll discuss more in the context of thick lenses.
+
+Recalling that the power of a lens (in diopters) is the inverse of its focal length, @eq-two-thin-lens shows that:
+*   When the lenses are touching ($d \approx 0$), their powers simply add up: $P = P_1 + P_2$.
+*   As the lenses are separated, the total power changes. If $d = f_1 + f_2$, the total power becomes zero ($f = \infty$). This specific arrangement is called a *focal telescope*, and it collimates light, meaning parallel incoming rays emerge as parallel outgoing rays.
+
+A more practical value is the **back focal length (BFL)**, which is the distance from the back surface of the last lens to the system's final focal point. For our two-lens system, this is:
+
+$$
+\text{BFL} = \frac{f_2 (d - f_1 )}{d - (f_1 + f_2)}
+$$ {#eq-back-focal-length}
+
+The BFL tells you exactly where to place a sensor to capture a sharp image of an object at infinity. Notice that when $d = f_1 + f_2$, the denominator is zero, and the BFL becomes infinite, which is consistent with the parallel rays produced by a focal telescope.
+
+<!--
+Excellent online resource.  Not as nice as mine, but smarter for now.
+https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/24%3A_Geometric_Optics/24.3%3A_Lenses#:~:text=The%20focal%20length%20of%20a,surfaces%20are%20convex%20or%20concave.
+-->
+
+[See around equations 24.3.4](https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/24%3A_Geometric_Optics/24.3%3A_Lenses#:~:text=The%20focal%20length%20of%20a,surfaces%20are%20convex%20or%20concave.)
+
+## Thick lens definitions
+The principles of refraction and ray tracing apply to both thin and thick lenses. However, for a **thick lens**, the optical design calculations must account for the distance rays travel *within* the lens material. This internal propagation distance is assumed to be zero in thin lens calculations, which is a key simplification.
+
+We can extend the three principles used for thin spherical lenses (@sec-optics-3principles) to analyze thick lenses. The concept of the focal point remains the same: Rays arriving parallel to the optical axis converge toward the image-side focal point ($F_2$). Conversely, rays passing through the object-side focal point ($F_1$) emerge parallel to the optical axis.
+
+![Nodal points and principal planes of a thick lens.](images/optics/09-morelens/cardinal-points.png){#fig-cardinal-points width="60%"}
+
+For a thin lens, we noted that a ray passing through the optical center is undeviated. A thick lens has a similar concept, but it involves two **nodal points** ($N_1$ and $N_2$). A ray directed toward the object-side nodal point ($N_1$) emerges from the lens as if it came from the image-side nodal point ($N_2$), traveling parallel to its original direction (Panel A, @fig-cardinal-points).
+
+To handle the ray's path, it is also convenient to define two **principal planes** ($P_1$ and $P_2$). Consider rays parallel to the optical axis entering the lens. They exit the lens converging toward the focal point. If we extend the incoming parallel ray forward and the outgoing converging ray backward, they intersect. The locus of these intersection points for rays near the optical axis forms the image-side principal plane, $P_2$ (Panel B, @fig-cardinal-points). A similar construction using rays from the front focal point defines the object-side principal plane, $P_1$. The intersection of a principal plane with the optical axis is called a **principal point**.
+
+In the general case, a thick lens is characterized by six **cardinal points**: two focal points, two principal points, and two nodal points. However, in the common situation where the medium on both sides of the lens is the same (e.g., air), the nodal points coincide with the principal points. This simplifies the system considerably (@fig-thick-cardinal).
+
+![Thick spherical lens definitions. By convention, light travels from left to right. A general thick lens has six cardinal points: two focal points ($F_1, F_2$), two principal points ($P_1, P_2$), and two nodal points ($N_1, N_2$). The principal planes are perpendicular to the optical axis at the principal points. When the medium on both sides of the lens is the same (e.g., air), the nodal points coincide with the principal points ($N_1=P_1, N_2=P_2$), and the focal lengths are equal.](images/optics/09-morelens/thick-cardinal-defintions.png){#fig-thick-cardinal width=90%}
+
+Just as the thin lens has a lensmaker's formula (@eq-lensmaker), a similar equation exists for a thick spherical lens to calculate its effective focal length:
+
+$$
+\frac{1}{f} = (n - 1) \left ( \frac{1}{R_1} - \frac{1}{R_2} + \frac{(n - 1) d}{n R_1 R_2} \right )
+$$ {#eq-lensmaker-thick}
+
+Here, $n$ is the refractive index of the lens material relative to the surrounding medium, $d$ is the lens thickness, and $R_1$ and $R_2$ are the radii of curvature of the two surfaces. The formula differs from the thin lens version by an extra term that accounts for the lens thickness, $d$.
+
+While this formula works for a single thick lens, applying it repeatedly for a multi-element system becomes unwieldy. A more powerful and systematic approach uses matrix multiplication, which I will introduce after we discuss multi-element lenses.
+
+## Multi-element thick lenses
+<!--
+Jensen and White says solving for combinations of lenses of 'appreciable thickness is one of considerable difficulty, but one which can be solved by use of the principles already give'. 
+-->
+The ray tracing principles developed so far are the foundation for the next level of complexity, analyzing combinations of thick lenses. If one has a set of thick lenses in combination, each can be reprointed by a pair of principal planes.  The next step is to combine this pair into a new, single pair, that specifies them jointly.  One then continues along this path, adding in new lenses, taking into account various details such as magnification. (J&W page 93).
+
+Doing this analysis by hand, and using the various formulae, can be quite difficult. The rise of optical design software tools made it possible for many people to engage in the task. Understanding the principles is important for using these software tools well.  
+
+But even before these tools were available, there was great interest in designing useful optics. For example, the development of photography, such as daguerrotype in 1839[^daguerrotype], created a significant market for optical design.  People wanted to take pictures of themselves, their family, and their friends.  The low light sensitivity of the recording media made it difficult to create portraits using a pinhole camera. Also, the pinhole camera does not produce a flat field image (SEC REF).  Lens designers set out to make portraits possible.  Much of this was enabled by the development of new types of glass with different optical properties, especially from Fraunhofer's work in Bavaria (SEC FRAUNHOFER REF).  Having a palette of materials to use made the design possible.
+
+[^daguerrotype]: a photograph using an early photographic process employing an iodine-sensitized silvered plate and mercury vapor.
+
+The development of mathematical methods for predicting the outcome for lenses with different shapes and materials was also important. Both Gauss and Petzval were mathematicians who developed workable methods for simulating the impact of a design prior to construction. Robert Wood, an American physicist, coined the term “fish-eye” lens to describe how a fish would see the world through a 180° hemisphere of water[^wood-fisheye]. He designed a lens to mimic this — essentially a hemispherical objective producing a circular image. For all of those designers, mathematics was the key simulation tool. In the modern era, as this book illustrates in many places, mathematics is extended into computable algorithms. These are our modern tools, but don't sleep on the importance of mathematics!
+
+[^wood-fisheye]: "In discussing the peculiar type of refraction which occurs when light from the sky enters the surf'ace of still water, it seems of interest to ascertain how the external world appears to the fish. As is well known, a sublnerged eye directed towards the surface of still water sees the sky compressed into a comparatively small circle of light, the centre of which is always immediately above the observer, the appearance being as if the pond were covered with an opaque roof' provided with a circular aperture or window. I f our eyes were adapted to distinct vision under water, it is clear that the objects surrounding the pond, such as trees, horses, fishermen, &c., would appear round the edge of this circle of light. Objects not much elevated above the plane of the water would be seen somewhat compressed and distorted, but the circular picture would contain everything embraced within an angle of 180 ~ in every direction, i.e. a complete hemisphere" @wood1906-fisheye
+
+Finally, in those days like these, different design goals led to diversity. Gauss was primarily interested in astronomical lenses with low distortion. Petzval proritized light sensitivty for portraiture. Cooke (1893) later produced the famous triplet, which became the Tessar, to achieve a compact lens that balanced aberrations across the field. Woods' fish-eye became a scientific tool that enabled measurements of the sky, military reconnaisance and artistic architectural overviews.
+
+### Double Gauss {#sec-optics-double-gauss}
+The great mathematician Gauss implemented proposed a design, the **Gauss lens** for astronomy.  This was improved upon by Alvan Clark and Paul Rudolph, who expanded on Gauss’s idea to introduce the first symmetrical double Gauss arrangement — essentially two of Gauss’s lens pairs, placed symmetrically around the stop .  Paul Rudolph at Zeiss refined this into the famous Planar lens (1896), which became the archetypal “double Gauss” photographic objective. This design, with later improvements (e.g. Taylor & Hobson’s Opic lens, 1920), became the dominant fast normal lens type for photography in the 20th century (@fig-double-gauss).
+
+![Double Gauss multielement lens design. fise_lensExample.m initiated the drawing, which I modified in Affinity Designer. The evolution from Gauss' original lens design to the double Gauss and Planar design is nicely illustrated in [Wikipedia Double-Gauss](https://en.wikipedia.org/wiki/Double-Gauss_lens).](images/optics/09-morelens/double-gauss-isetlens.png){#fig-double-gauss width="60%"}
+
+### Tessar, Petzval and Fisheye {#sec-optics-famous-lenses}
+The three tabs in the image below illustrate the Tessar, Petzval and Fisheye designs. As you can imagine from inspecting these lens diagrams, there is a large university of shapes, spacing, and materials that were open for exploration.  As you might also imagine, the ability to search through this space with a goal in mind, and with increasingly large computers and purpose-built software to compute the properties of the optics, has been important to image systems engineering.
+
+:::{.panel-tabset}
+# Tessar 
+![Cooke became Tessar lens. An evolution of the Cooke Triplet, adding a fourth element to improve performance and correct aberrations https://en.wikipedia.org/wiki/Tessar](images/optics/09-morelens/tessar-wikipedia.png){#fig-optics-notransverse width=70%}
+
+# Petzval 
+![Petzval lens for portraits, known for its large aperture but limited field of view. It's still used in some specialized applications.   Big fight.  Biotar is another portrait lens. https://en.wikipedia.org/wiki/Petzval_lens](images/optics/09-morelens/petzval-wikipedia.png){#fig-optics-notransverse width=70%}
+
+# Fisheye 
+![The fish eye lens.](images/optics/09-morelens/fisheye-wikipedia.png){#fig-fisheye width=70%}{#fig-optics-transverse width=70%}
+:::
+
+## ABCD ray transfer matrix {#sec-optics-abcd}
+<!-- Maybe write a new ISETCam script with the ABCD implementation? 
+This is a very simple and nice tutorial: https://youtu.be/FUc1k393FYo?si=2YByUEmtH-ed3S77
+I am uncertain about three things in this tutorial.  
+* The second lens, second surface, should have a curvature that is negative, I think.  He has it as positive.  Yet ...  * n2 and n1 always refer to the IOR of the current material (n1) and the IOR of the next material (n2).  
+* The positive and negative angles w.r.t. the axis.  Positive angles are counter clockwise, as expected.  He doesn't say, and it would be helpful to mention.  
+-->
+
+Ray tracing feels physical -we can imagine and draw rays as they pass through a sequence of surfaces, or as they are reflected by mirrors, or scattered by materials. As designs become complex, however, ray tracing involves a lot of computational steps that can be hard to tedious to calculate accurately. By around 1970, optical engineers began to recognize the value of a purely computational approach that can be performed easily on compouters. This approach, based on  **ray transfer matrix**, apprlies will to the central (paraxial) region of circularly symmetric lenses.
+
+For this simplified case, we can describe each input ray using two variables (@fig-raytransfer-definitions, panel A). The first is the position of the ray with respect to the optical axis ($y$) that is often called its **field height**.  The second is the angle of the ray with respect to the optical axis, ($\theta$). 
+
+![Ray transfer matrix parameter defintions](images/optics/09-morelens/definitions.png){#fig-raytransfer-definitions width="70%"}
+ 
+ that is also called an **ABCD** matrix, simplifies the calculations. 
+
+We can describe what happens to a ray of light as it (a) crosses a surface, or (b) continues through the medium, using a. The whole journey, from the object side to the image side, is a sequence of such transforms and can be described by mutiplying the matrices together.  
+
+### Refraction through a series of thin lenses
+
+$$
+M_{\text{lens}} =
+\begin{pmatrix}
+1 & 0 \\
+-\tfrac{1}{f} & 1
+\end{pmatrix}
+$$
+
+where $f$ is the focal length of the lens.
+
+### Propagation through free space (distance $d$)
+
+$$
+M_{\text{free space}} =
+\begin{pmatrix}
+1 & d \\
+0 & 1
+\end{pmatrix}
+$$
+
+Multiply the matrices for each lens and spacing in sequence from the first element to the last. This will give you an overall system matrix $M$of the form:
+
+$$
+M =
+\begin{pmatrix}
+A & B \\
+C & D
+\end{pmatrix}
+$$
+
+where $(A, B, C, D)$ are the elements of the resulting matrix after multiplication.
+
+### Effective Focal Length
+
+The effective focal length $f_{\text{eff}}$ of the system can be found from the matrix $M$ using:
+
+$$
+f_{\text{eff}} = -\frac{1}{C}
+$$
+
+where $C$ is the element in the bottom-left of the sy
+
+
+## Full Calculation for a Thick Lens
+
+If the lens is thick, meaning it has a non-negligible thickness $t$, the full ray transfer matrix consists of three steps:
+
+### 1. Refraction at the First Surface (radius $ R_1 $)
+
+$$
+M_{\text{refraction 1}} =
+\begin{pmatrix}
+1 & 0 \\
+\dfrac{n_1 - n_2}{R_1} & \dfrac{n_1}{n_2}
+\end{pmatrix}
+$$
+
+where:
+- $n_1$ is the refractive index of the medium on the left (e.g., air),
+- $n_2$ is the refractive index of the lens material,
+- $R_1$ is the radius of curvature of the first surface (positive for convex, negative for concave).
+
+---
+
+### 2. Propagation Through the Lens Material (thickness $ t $)
+
+$$
+M_{\text{propagation}} =
+\begin{pmatrix}
+1 & \tfrac{t}{n_2} \\
+0 & 1
+\end{pmatrix}
+$$
+
+---
+
+### 3. Refraction at the Second Surface (radius $ R_2 $)
+
+$$
+M_{\text{refraction 2}} =
+\begin{pmatrix}
+1 & 0 \\
+\dfrac{n_2 - n_1}{R_2} & \dfrac{n_2}{n_1}
+\end{pmatrix}
+$$
+
+where:
+- $R_2$ is the radius of curvature of the second surface,
+- $n_2$ is the refractive index inside the lens,
+- $n_1$ is the refractive index of the medium outside the lens.
+
+
+## Ray transfer functions {#sec-optics-raytransfer}
+We are headed to a second, somewhat different, way of thinking about optics. This framing treats optics as a function that takes an input and produces an output. The 
+
+Use Ray Transfer Function.  Rely on the text from our paper. images here in some way. Maybe introduce the metalens concept. Maybe even the spatial light modulator. They could go in a next section/chapter.
+
+Use Goossens text here.
+
+More on metalenses.
+
+

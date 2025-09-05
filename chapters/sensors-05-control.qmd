@@ -29,7 +29,7 @@ SLR cameras represented a major advance over earlier rangefinder designs, and wh
 
 Because the viewfinder and imaging lens are separate, the viewfinder image can differ slightly from what is captured on film or sensor, making precise framing more challenging.
 
-![Overview of an SLR and its subsystems](images/sensors/03-sensor-slr.png){#fig-sensor-slr width="60%"}
+![Overview of an SLR and its subsystems](images/sensors/17-control/03-sensor-slr.png){#fig-sensor-slr width="60%"}
 
 The innovation of the SLR (Single-Lens Reflex) camera is that it uses a single optical path for composing, focusing, and capturing the image—hence "single lens." Light entering through the lens assembly is directed by a semi-transparent "reflex" mirror (a type of beam splitter). Typically, about 70% of the light is sent to the viewfinder, while the remainder is directed to the autofocus subsystem. When the shutter is pressed, the mirror flips out of the way, allowing all the light to reach the film (SLR) or digital sensor (DSLR) (@fig-sensor-slr).
 
@@ -40,11 +40,17 @@ The SLR design also allows the user to control the aperture size, which directly
 
 DSLRs had a large volume compared to smartphones and other compact devices. These cameras also use much smaller multi-element lenses. Focus is commonly controlled by a voice coil motor (VCM), which is reliable, inexpensive, and widely used in the industry (@fig-sensor-vcm). The small motor moves the entire lens assembly.
 
-![Cell phone optics. The optics themselves are very compact but still multi-element. The position of the optics is usually controlled by a voice-coil motor.](images/sensors/03-sensor-vcm.png){#fig-sensor-vcm width="80%"}
+![Cell phone optics. The optics themselves are very compact but still multi-element. The position of the optics is usually controlled by a voice-coil motor.](images/sensors/17-control/03-sensor-vcm.png){#fig-sensor-vcm width="80%"}
 
 There is also a growing market for lens positioning in cell pones using Micro-Electro-Mechanical Systems (MEMS) devices. These devices offer advantages such as low power consumption, fast response, and miniaturization, making them attractive for mobile imaging systems. The difference, however, is not huge.
 
-![A video showing lens assembly position controlled by a MEMS device.](videos/sensors/MEMS-autofocus.mov){#fig-sensor-mems width="60%"}
+::: {.content-visible when-format="html"}
+![A video showing lens assembly position controlled by a MEMS device.](images/sensors/17-control/MEMS-autofocus.mov){#fig-sensor-mems width="60%"}
+:::
+
+::: {.content-visible when-format="pdf"}
+![A video showing lens assembly position controlled by a MEMS device.](images/sensors/17-control/MEMS-autofocus-still.png){#fig-sensor-mems width="60%"}
+:::
 
 Conceptually, autofocus methods share similarities with techniques for estimating object distance. Both rely on understanding the optical light field (@sec-optical-lightfield). While the implementation of autofocus algorithms has evolved significantly in recent years, the underlying physical principles remain the same. We begin with the classic autofocus mechanism and then describe more recent implementations that are integrated directly into CMOS sensors.
 
@@ -56,7 +62,7 @@ DPAF: https://www.usa.canon.com/learning/training-articles/training-articles-lis
 
 @fig-focusprinciples-classic illustrates the principle of phase detection autofocus (PDAF). In this system, rays from a point object near the lens travel through different parts of the aperture—red rays from the top and green rays from the bottom—before reaching the sensor. When the lens is correctly focused, these rays converge to a single point on the sensor, producing a sharp image.
 
-![Phase detection autofocus.](images/sensors/03-focusprinciples-2.png){#fig-focusprinciples-classic width="60%"}
+![Phase detection autofocus.](images/sensors/17-control/03-focusprinciples-2.png){#fig-focusprinciples-classic width="60%"}
 
 The classic PDAF design, invented in the 1970s, uses a partially reflective mirror behind the main lens to direct light from the top and bottom of the lens to two separate microlenses. Each microlens focuses the incoming rays onto a linear sensor array. The system is arranged so that, when the image is in focus, the light from both the top and bottom of the lens is centered on their respective arrays. If the image is out of focus, the rays are displaced from the centers of the arrays. The relative displacement—called the phase difference—indicates both the amount and direction of defocus.
 
@@ -78,7 +84,7 @@ Traditional phase detection autofocus (PDAF) systems are difficult to implement 
 
 A major breakthrough came in 2014 with the introduction of **dual pixel autofocus (DPAF)**, which applies the principles of phase detection directly within the CMOS sensor. In DPAF, each pixel (or a subset of pixels) contains two photodiodes beneath a single microlens (@fig-sensor-dpaf). During normal image capture, the signals from both photodiodes are combined. For autofocus, however, the signals are read separately and compared.
 
-![Dual pixel autofocus sensor design.](images/sensors/03-sensor-dpaf.png){#fig-sensor-dpaf width="80%"}
+![Dual pixel autofocus sensor design.](images/sensors/17-control/03-sensor-dpaf.png){#fig-sensor-dpaf width="80%"}
 
 ::: {#sensor-dpaf .callout-note collapse="true" title="Dual pixel autofocus: Canon"}
 Canon introduced DPAF with the EOS 70D in 2013, building on earlier hybrid PDAF/live-view systems like the EOS 650D/T4i-D. Today, many vendors—including Sony and Omnivision—ship sensors with two photodiodes under each microlens, enabling fast, accurate on-sensor phase detection autofocus, especially for video.
@@ -86,7 +92,7 @@ Canon introduced DPAF with the EOS 70D in 2013, building on earlier hybrid PDAF/
 
 The underlying principle is based on the optical light field. For pixels near the center of the sensor, light rays from the left and right sides of the lens arrive at slightly different angles. The microlens directs these rays onto separate photodiodes within the pixel—one on the left, one on the right. When the image is in focus, both photodiodes receive similar signals. If the image is out of focus, the rays from the left and right sides of the lens are displaced, causing the signals from the two photodiodes to differ and shift relative to each other. The amount and direction of this shift indicate the degree and direction of defocus, just as in traditional PDAF.
 
-![Shift from defocus. Needs work. Also, could do it with the Chess Set image and true light field simulation. t_cameraLightField.](images/sensors/03-sensors-lf-shift.png){#fig-sensor-lf-shift width="80%"}
+![Shift from defocus. Needs work. Also, could do it with the Chess Set image and true light field simulation. t_cameraLightField.](images/sensors/17-control/03-sensors-lf-shift.png){#fig-sensor-lf-shift width="80%"}
 
 By using two photodiodes under each microlens, DPAF sensors capture some information about the optical light field—the left and right subpixels sample rays from different parts of the lens. This concept could be extended further: with more subpixels, it may be possible to recover even richer light field information, opening up new possibilities for computational imaging and post-capture refocusing (@sec-sensor-lightfield).
 
@@ -106,7 +112,7 @@ $$ {#eq-exposure-value}
 
 A lower EV means either a longer exposure time or a wider aperture (smaller $F$), both of which allow more light to reach the sensor. As scene brightness increases, a higher EV is needed to avoid overexposure. For example, if $F = 1$ and $T = 1$ second, then $EV = 0$. If the image is too bright and pixels are saturated, you can either halve the exposure time to $T = 1/2$ second (raising $EV$ to 1), or keep $T = 1$ second and increase the f-number to $F = \sqrt{2}$ (also $EV = 1$). Both changes reduce the light reaching the sensor by half[^exposure-fnumber].
 
-[^exposure-fnumber]: The f-number is the ratio of the focal length to the aperture diameter (@sec-fnumber). For a fixed focal length, increasing the f-number means reducing the aperture diameter, so less light reaches the sensor.
+[^exposure-fnumber]: The f-number is the ratio of the focal length to the aperture diameter (@sec-optics-fnumber). For a fixed focal length, increasing the f-number means reducing the aperture diameter, so less light reaches the sensor.
 
 In film cameras, where each exposure was costly, photographers often used a separate light meter to determine the correct aperture and exposure time. Modern electronic cameras estimate scene brightness automatically, usually by taking continuous measurements just before the main exposure. On DSLRs, this process is typically triggered by pressing the shutter button halfway. In smartphones, exposure estimation usually begins as soon as the camera app is opened.
 
@@ -124,15 +130,13 @@ This approach is particularly effective when sensor read noise is low and shot n
 
 The main advantage of burst photography is that it allows the use of short exposures to avoid saturation in bright regions, while still achieving high image quality by combining multiple frames. However, this method requires accurate alignment of the images. If there is motion in the scene or camera shake—especially if objects move in front of one another (occlusion)—alignment becomes challenging or may fail. Burst photography works best with static scenes and a stable camera, but can still provide benefits in more dynamic situations, even if not every frame can be perfectly aligned.
 
-### Space-varying exposure duration (#sec-exposure-dps)
+### Space-varying exposure duration {#sec-exposure-dps}
 The entire problem of exposure control becomes greatly simplified if there is not one exposure time, but there is a space-varying exposure time. In that case, the pixels in dark parts of the image can have a longer exposure time than pixels in the light part. This idea was implemented by the digital pixel sensor (@sec-digital-pixel). Recall that the voltage on each pixel, or small group of pixels, was measured non-destructively by the ADC. The voltage ($v_i$) and sample time ($t_i$) were recorded for the $i^{th}$ pixel. These two values, together, estimate the effective intensity ($E = v_i / t_i$).
 
 Using only the **last non-saturated read** in a DPS provides a **higher SNR** than combining exponentially spaced earlier reads — particularly when the number of reads is small and the sensor is near saturation.
 
-::: {.callout-note collapse="true" title="Optimal SNR from Exponentially spaced reads"}
+::: {.callout-note collapse="false" title="Optimal SNR from Exponentially spaced reads"}
 <!-- FISE-Sensor: DPS SNR Optimization -->
-
-## Optimal SNR from Exponentially Spaced Reads
 
 In digital pixel sensors (DPS), it is common to sample the photodiode voltage multiple times during exposure. These samples can be taken at exponentially spaced time points to extend dynamic range. Suppose the sample times are given by
 
@@ -146,9 +150,9 @@ $$
 V_i = \alpha t_i + n_i,
 $$
 
-where \( \alpha \) is the photon flux (in electrons per unit time), and \( n_i \sim \mathcal{N}(0, \sigma_r^2) \) is independent Gaussian read noise.
+where $\alpha$ is the photon flux (in electrons per unit time), and $n_i \sim \mathcal{N}(0, \sigma_r^2)$ is independent Gaussian read noise.
 
-We consider two estimators for \( \alpha \):
+We consider two estimators for $\alpha$:
 
 ### Using the Last Valid Read
 
@@ -166,7 +170,7 @@ $$
 
 ### Using Linear Regression
 
-Using all \( k \) samples in a least-squares fit to estimate \( \alpha \), the variance of the slope estimator is
+Using all $k$ samples in a least-squares fit to estimate $\alpha$, the variance of the slope estimator is
 
 $$
 \mathrm{Var}(\hat{\alpha}_{\text{reg}}) = \frac{\sigma_r^2}{\sum_{i=1}^k (t_i - \bar{t})^2},
@@ -198,16 +202,16 @@ $$
 
 ### Numerical Examples
 
-| \( k \) | \( \mathrm{SNR}_{\text{reg}} / \mathrm{SNR}_{\text{last}} \) |
+| $k$ | $\mathrm{SNR}_{\text{reg}} / \mathrm{SNR}_{\text{last}}$ |
 |--------|--------------------------------------------------------------|
 | 2      | 0.35                                                         |
 | 3      | 0.54                                                         |
 | 4      | 0.67                                                         |
 | 5      | 0.75                                                         |
 
-As the table shows, the regression estimator has **lower SNR** than the last sample for small \( k \). When samples are exponentially spaced in time, most of the signal is concentrated in the last read. Early reads contain proportionally less signal but still contribute read noise, diminishing the benefit of regression.
+As the table shows, the regression estimator has lower SNR (ratio less than 1) than the last sample for small $k$. Early reads contain less signal but still contribute read noise, diminishing the benefit of regression.
 
- <!-- You may wish to include a plot of the SNR ratio vs. \( k \) to visualize this result.  
+ <!-- You may wish to include a plot of the SNR ratio vs. $k$ to visualize this result.  
 (See Figure @fig-snr-exponential if added.) -->
 
 :::

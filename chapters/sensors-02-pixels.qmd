@@ -12,7 +12,7 @@ https://scientificimaging.com/knowledge-base/photoelectric-effect/
 ### Bandgap {#sec-bandgap-photon-absorption}
  The minimum energy required for this transition is called the **bandgap**, and it is measured in electron volts (eV). For silicon at room temperature ($21 \deg C$), the bandgap is 1.12 eV. Only photons with energy equal to or greater than this value can generate free electrons in silicon.
 
-![Energy bands in silicon semiconductors. A photon can excite an electron in the Valence band.  If the photon has enough energy, the electron can shift to the conduction band, becoming a free electron that can be stored and counted. ](images/sensors/03-sensor-bandgap.png){#fig-sensor-bandgap width=50%}
+![Energy bands in silicon semiconductors. A photon can excite an electron in the Valence band.  If the photon has enough energy, the electron can shift to the conduction band, becoming a free electron that can be stored and counted. ](images/sensors/14-pixels/03-sensor-bandgap.png){#fig-sensor-bandgap width=50%}
 
 Without special circuitry, the hole and electron will re-combine. To make an image sensor, we need a method to measure the number of electrons. In a CCD an electric field between the bands prevents recombination. In CMOS electrons are trapped in capacitors placed in the silicon. We explain how this is done in @sec-pixels.
 
@@ -34,11 +34,11 @@ CMOS image sensors use photodiodes—and the photoelectric effect—to measure a
 
 The photodiode and this circuitry are critical parts of the pixel; there are other essential components as well (@fig-pixel-overview). For example, effective image sensors place a small lens (microlens) above each pixel.  Color image sensors place a color filter between the microlens and the photodiode that passes certain wavelengths and blocks others. 
 
-![Schematic of the early CMOS pixel architecture.  This image shows a microlens and color filter, which are typically part of the pixel. The microlens is centered over the pixel here, but for pixels at the edge of the sensor array it will be positioned a bit to the side. This color filter passes long wavelength (red-appearing) light, but different pixels will have different color filters. The first layer of silicon, with its photodiode and classic circuitry sharing space, are shown. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>](images/sensors/03-pixel-overview.png){#fig-pixel-overview width="60%"}
+![Schematic of the early CMOS pixel architecture.  This image shows a microlens and color filter, which are typically part of the pixel. The microlens is centered over the pixel here, but for pixels at the edge of the sensor array it will be positioned a bit to the side. This color filter passes long wavelength (red-appearing) light, but different pixels will have different color filters. The first layer of silicon, with its photodiode and classic circuitry sharing space, are shown. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>](images/sensors/14-pixels/03-pixel-overview.png){#fig-pixel-overview width="60%"}
 
  Figure @fig-pixel-overview is a schematic that omits many details. For example, notice the gap between the photodiode and the color filter. In early CMOS imagers, this gap contained many metal lines that carried control and data signals. The metal lines were organized into layers and they are illustrated in  Figure @fig-pixel-layers. In the first generation of image sensors the distance from the microlens at the top to the photodiode at the bottom was fairly large compared to the size of the photodiode. In these early pixels, light from the main lens had to travel through what was effectively a tunnel to reach the photodiode.
 
-![Color imagers use an array of color filters to create pixels with different wavelength selectivity. The color filters are typically arranged in a repeating pattern, and the smallest repeating unit of the color filter array is called a **super pixel**. The image illustrates a super pixel for a sensor with cyan, magenta, and yellow color filters. This image emphasizes the metal lines, omitted in @fig-pixel-overview. In the original CMOS imagers, light from the main imaging lens had to pass through these metal layers before reaching the photodiode.](images/sensors/03-pixel-overview2.png){#fig-pixel-layers width="50%}
+![Color imagers use an array of color filters to create pixels with different wavelength selectivity. The color filters are typically arranged in a repeating pattern, and the smallest repeating unit of the color filter array is called a **super pixel**. The image illustrates a super pixel for a sensor with cyan, magenta, and yellow color filters. This image emphasizes the metal lines, omitted in @fig-pixel-overview. In the original CMOS imagers, light from the main imaging lens had to pass through these metal layers before reaching the photodiode.](images/sensors/14-pixels/03-pixel-overview2.png){#fig-pixel-layers width="50%}
 
 <!-- fig-pixel-layers:  not sure where this image comes from -->
 
@@ -57,7 +57,7 @@ The role of the other essential pixel components, the color filter arrays and mi
 
 ### Three-Transistor (3T) Pixel Design {#sec-3T-pixel-design}
 
-![The original CMOS 3-transistor (3T) circuit design (@Fossum1997-early).](images/sensors/03-3T-circuit.png){#fig-sensor-3T-circuit width="60%"}
+![The original CMOS 3-transistor (3T) circuit design (@Fossum1997-early).](images/sensors/14-pixels/03-3T-circuit.png){#fig-sensor-3T-circuit width="60%"}
 
 The original CMOS pixel design uses a three-transistor (3T) circuit to store and read out the charge collected by the photodiode (@fig-sensor-3T-circuit). Each pixel contains three key transistors: $M_{rst}$ (reset), $M_{sel}$ (select), and $M_{sf}$ (source follower). The $M_{rst}$ transistor resets the photodiode by connecting it to the supply voltage (Vdd), clearing any residual charge before image capture. The $M_{sel}$ transistor selects a specific row of pixels, connecting them to the readout circuitry. The $M_{sf}$ transistor acts as a buffer, transferring the stored charge to the analog-to-digital converter (ADC) for measurement. In most sensors, each column has its own ADC, but some designs use a single ADC shared among multiple columns—a technique known as multiplexing (mux).
 
@@ -74,7 +74,7 @@ Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd 
 
 ### Four-Transistor (4T) pixel design {#sec-4T-pixel-design}
 
-![The 4T pixel circuit introduces a pinned photodiode and an additional transistor. When activated, the new transistor transfers the accumulated charge from the photodiode to a storage capacitor (the floating diffusion node, $C_{fd}$). The rest of the circuit, including readout and row select, is similar to the 3T design.](images/sensors/03-4T-circuit.png){#fig-sensor-4T-circuit width="60%"}
+![The 4T pixel circuit introduces a pinned photodiode and an additional transistor. When activated, the new transistor transfers the accumulated charge from the photodiode to a storage capacitor (the floating diffusion node, $C_{fd}$). The rest of the circuit, including readout and row select, is similar to the 3T design.](images/sensors/14-pixels/03-4T-circuit.png){#fig-sensor-4T-circuit width="60%"}
 
 Since about 2000, most CMOS image sensors have used a four-transistor (4T) pixel circuit [@Fossum2014-pinnedpd]. The 4T pixel adds two important features: a pinned photodiode (PPD) and a transfer gate transistor (@fig-sensor-4T-circuit). The pinned photodiode improves charge storage and reduces noise, while the transfer gate allows precise movement of the collected charge from the photodiode to a storage node called the floating diffusion, which has a capacitance $C_{fd}$. The other circuit elements—reset, row select, and source follower—remain the same as in the 3T design.
 
@@ -88,6 +88,11 @@ There is also Theuwissen diagram, with five transistors that he calls a 4T circu
 The text: "Figure 2 shows the schematic of a typical voltage mode 4T pixel. The pixel circuit consists of a pinned photodiode, a charge
 transfer switch (M1), a reset switch (M2), a source follower (M3) and a row select switch (M4). The current source transistor (M5) is shared by multiple rows of pixels. VDD is the power supply while VPIX is the output voltage of pixel. VLN provides an adjustable bias current. In the following analysis, the nonlinearity caused by the row select transistor (M4) is omitted to simplify the analysis."
 -->
+
+## Multiplex readout
+
+![Multiplex readout explanation](images/sensors/14-pixels/03-CMOS-multiplex-readout.png){#fig-cmos-multiplex width=60%}
+
 ## Sensor evolution {#sec-sensor-evolution}
 
 There has been a large engineering effort to reduce various sources of noise, including temporal and fixed pattern noise, as well as other limitations in the sensor design relating to color and dynamic range. The engineering effort was supported by the enormous demand for CMOS sensors. In 2020, approximately 6.5 billion sensors were shipped.  In 2025, we expect about 13 billion sensors to be produced. That's a lot of sensors and the demand motivates a lot of engineering. This section covers the evolution of the pixel and sensor design.
@@ -154,7 +159,7 @@ Here is a timeline for the key milestones described in the sections below.
 ## Back-side illuminated (BSI) {#sec-sensor-bsi}
 After years of incremental improvements, engineers developed a new architecture to overcome the limitations of front-side illuminated (FSI) sensors. The resulting design, known as **Back-Side illuminated (BSI)** CMOS, rearranges the device layers to improve sensitivity. In BSI sensors, the photodiode and wiring layers are flipped; the light no longer needs to pass through the wires.  
 
-![The back-side illuminated pixel. (a) The front-side illuminated pixel has metal lines above the silicon substrate. (b) The back side illuminated sensor flips the metal lines and silicon substrate.  Source: <a href="https://scientificimaging.com/knowledge-base/front-side-illuminated-and-back-side-illuminated-imagers" target="_blank">Scientific Imaging.</a>](images/sensors/03-sensor-bsi2.png){#fig-sensor-bsi2 width="60%"}
+![The back-side illuminated pixel. (a) The front-side illuminated pixel has metal lines above the silicon substrate. (b) The back side illuminated sensor flips the metal lines and silicon substrate.  Source: <a href="https://scientificimaging.com/knowledge-base/front-side-illuminated-and-back-side-illuminated-imagers" target="_blank">Scientific Imaging.</a>](images/sensors/14-pixels/03-sensor-bsi2.png){#fig-sensor-bsi2 width="60%"}
 
 In addition to flipping the order of the silicon and wires, it was necessary to change the thickness of the substrate (@fig-sensor-bsi2). In the FSI pixel, the photodiode is embedded in a relatively thick layer of silicon. Flipping this structure would require the light to pass through a substantial amount of silicon prior to reaching the photodiode. This is problematic because the silicon absorbs light, and particularly short-wavelength light (@sec-sensor-wavelength). Thus, it was necessary to find a way to thin the silicon substrate and still have a working photodiode and circuitry. 
 
@@ -171,14 +176,14 @@ The concept of back-side illuminated (BSI) CMOS image sensors was first proposed
 
 To overcome these limitations, many vendors invented methods to build photodiodes that extend significantly deeper into the silicon (deep photodiode technology). Increasing the volume of the photodiode has two benefits.  First, the photodiode can gather more charge before saturating.  Second, the photodiode has higher long-wavelength sensitivity. 
 
-![Deep photodiodes in the BSI. (a) A super pixel of a front-side illuminated CMOS sensor, including the microlenses, color filters, metal lines, and silicon. (b) A back-side illuminated super pixel with deep photodiode technology. Source: <a href="https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor/" target="_blank">Skhynix.</a>](images/sensors/03-sensor-bsi.png){#fig-sensor-skhynix width="70%"}
+![Deep photodiodes in the BSI. (a) A super pixel of a front-side illuminated CMOS sensor, including the microlenses, color filters, metal lines, and silicon. (b) A back-side illuminated super pixel with deep photodiode technology. Source: <a href="https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor/" target="_blank">Skhynix.</a>](images/sensors/14-pixels/03-sensor-bsi.png){#fig-sensor-skhynix width="70%"}
 
 ## Stacked sensors {#sec-sensor-stacked}
 In the original planar technology, photodiodes are adjacent to the transistor circuits within the silicon substrate. Thus, photodiodes must compete for space with the transistors.  Reducing the photodiode area means less light efficiency; reducing the transistor size means noisier performance. Youse pays yer money and yer makes yer choice.
 
 The **stacked sensor** architecture overcomes this limitation by physically separating the photodiode layer from the readout and processing circuitry. In a stacked sensor, the photodiodes occupy one silicon layer, while the supporting electronics are fabricated on a separate layer beneath. This structure maximizes the light-sensitive area (fill factor) for each pixel and enables the use of more advanced, lower-noise circuitry without sacrificing pixel size.
 
-![Pixels in the stacked sensor are based on die stacking technology. Several layers of silicon that are bonded and connected using Through-Silicon Via (TSV) technology. The technology began with 2-layers, but when have you ever known Silicon Valley to stop?](images/sensors/03-pixel-stacked.png){#fig-sensor-stacked width="50%"}
+![Pixels in the stacked sensor are based on die stacking technology. Several layers of silicon that are bonded and connected using Through-Silicon Via (TSV) technology. The technology began with 2-layers, but when have you ever known Silicon Valley to stop?](images/sensors/14-pixels/03-pixel-stacked.png){#fig-sensor-stacked width="50%"}
 
 The key enabling technology is called **die stacking**. The silicon layers are bonded together and electrically connected using two main methods. The original approach used **Through-Silicon Vias (TSVs)**—tiny holes etched through the silicon and filled with a conductive material (such as copper or tungsten) to create vertical electrical connections. 
 
@@ -201,9 +206,9 @@ The Digital Pixel Sensor (DPS) was a significant parallel development in image s
 
 Digitizing the signal at the pixel had several advantages for high dynamic range imaging, global shuttering and readout speed @elgamal2005-cmos-imagesensors @kleinfelder2001-10000fps @Wandell2002-CommonPrinciples. An important feature of the original digital pixel sensors was that the pixel voltage was read non-destructively and repeatedly, say at 1 ms, 2 ms, 4 ms, and so forth. As the photon generated electrons increased in the well, the voltage was sampled.  The voltage for each pixel was reported when the pixel had passed one half well capacity, assuring it was much larger than the noise.  It would be reported at a time before the well capacity was reached, so that it was below saturation. The information from each pixel was the a voltage and and the time at which it reached that voltage. Thus, each pixel had its own exposure duration -or put another way, the sensor had a space-varying exposure duration. Pixels in dark regions of the scene had longer exposure times than pixels in the bright regions. We explain the value of this approach for high dynamic range imaging in @sec-exposure-control.  
 
-The DPS concept was introduced at an early point in the development of CMOS imagers, and thus it faced significant hurdles in miniaturization. The idea of an ADC on the sensor foreshadowed an opportunity that has arisen as pixel architecture evolves. The stacked pixel structure offers a remedy by allowing the ADC and memory circuits to be placed in a separate layer underneath the photodiode. This enables higher pixel density and broader application of in-pixel conversion. It is quite possible that the next generation of image sensors will implement the DPS concept (@note-digital-pixel).
+The DPS concept was introduced at an early point in the development of CMOS imagers, and thus it faced significant hurdles in miniaturization. The idea of an ADC on the sensor foreshadowed an opportunity that has arisen as pixel architecture evolves. The stacked pixel structure offers a remedy by allowing the ADC and memory circuits to be placed in a separate layer underneath the photodiode. This enables higher pixel density and broader application of in-pixel conversion. The next generation of image sensors will implement the DPS concept (@fossum2024-arvs).
 
-::: {.callout-note #note-digital-pixel collapse="true" title="Commercialization of the digital pixel sensor"}
+::: {.callout-note collapse="true" title="Commercialization of the digital pixel sensor"}
 El Gamal co-founded Pixim, Inc. in 1998, a fabless semiconductor company that commercialized chipsets for security cameras based on this DPS technology. A challenge for early DPS implementations was the reduced photodiode area in the planar array due to the additional ADC circuitry. This increased the cost of the chip and narrowed the field of potential applications and prevented widespread mainstream adoption for many years. Pixim was acquired by Sony Electronics in 2012.
 
 In 2023 Sony introduced the [Sony a9 iii](https://en.wikipedia.org/wiki/Sony_%CE%B19_III). It has 24.6 Megapixels and a global shutter.  The camera can operate at high frame rates [(120 frames per sec)](https://www.sony.co.uk/interchangeable-lens-cameras/products/ilce-9m3?locale=en_GB). It appears to be using a digital pixel approach. 
