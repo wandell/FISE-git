@@ -133,13 +133,17 @@ $$
 $$
 -->
 
-The important point is this.  I won't show the derivation, but it turns out that we can calculate the new angle, $\theta_2$ as $\Phi + \theta_1$.  The important observation, that makes this whole thing work, is that $\Phi$ doesn't depend on $\theta_1$.  We can calculate $\Phi$ from the indices of refraction and curvatures.
+The important point is this.  I won't show the derivation, but it turns out that we can calculate the new angle, $\theta_2$ as $y_1 \Phi + \theta_1$.  The important observation, that makes this whole thing work, is that $\Phi$ doesn't depend on $\theta_1$ but it does depend on the field height, $y_1$.  Near the optical axis the change in angle will be close to proportional to the field height.
+
+![The input rays are parallel to the optic axis, $\theta_1 = 0$. The output ray angles change proportionally to the input ray field field height, $y_1$. According to the sign convention (@fig-raytransfer-definitions), the constant of proportionality is negative.](images/optics/09-morelens/yPhi-equation.png){#fig-yPhi width=70%}
+
+We can calculate the constant of proportionality $\Phi$ from the lens parameters (indices of refraction and radii of curvature) and medium.  
 
 $$
 \Phi = \frac{n_{2}-n_{1}}{n_{1}} \left(\frac{1}{R_{1}} - \frac{1}{R_{2}}\right)
-$$
+$$ {#eq-Phi-ior}
 
-That means we can express the transformation of the ray $(y_1, \theta_1)$ into $(y_2, \theta_2)$ as 2x2 matrix,
+We can express the transformation of the ray $(y_1, \theta_1)$ into $(y_2, \theta_2)$ as 2x2 matrix, accounting for the sign convention, 
 
 $$
 M_{\text{lens}}
@@ -150,14 +154,14 @@ M_{\text{lens}}
 \end{pmatrix},
 $$
 
-Very cool.  And for a thin lens, even more cool, it turns out that
+That's cool.  And for a thin lens, it's even more cool because really only the focal length really matters. Imagine what happens if the focal length shortens (the angles increase) or lengthens (the angles decrease).  In fact we can express the focal length $f$ in terms of the lens parameters this way.
 
 $$
 \frac{1}{f} =  \left(\frac{n_{2}}{n_{1}} - 1\right)
 \left(\frac{1}{R_{1}} - \frac{1}{R_{2}}\right),
-$$
+$${#eq-f-ior}
 
-so the matrix can also be written this way
+so the thin lens matrix can also be written this way
 
 $$
 M_{\text{lens}}
@@ -168,9 +172,9 @@ M_{\text{lens}}
 \end{pmatrix}.
 $$
 
-where $f$ is the focal length of the lens.
-
 ### Propagation through free space (distance $d$)
+
+
 
 $$
 M_{\text{free space}} =
@@ -180,7 +184,7 @@ M_{\text{free space}} =
 \end{pmatrix}
 $$
 
-Multiply the matrices for each lens and spacing in sequence from the first element to the last. This will give you an overall system matrix $M$of the form:
+Multiply the matrices for each lens and spacing in sequence from the first element to the last. This will give you an overall system matrix $M$ that is 2 x 2, and the optics community enjoys calling it the ABCD matrix,
 
 $$
 M =
@@ -202,12 +206,11 @@ $$
 
 where $C$ is the element in the bottom-left of the sy
 
-
 ## Full Calculation for a Thick Lens
 
-of light as it (a) crosses a surface, or (b) continues through the medium, using a. The whole journey, from the object side to the image side, is a sequence of such transforms and can be described by mutiplying the matrices together. 
+Thinking with respect to rays of light feels intuitive and physical.  We follow the ray as it (a) crosses a surface, or (b) continues through the medium. The journey from the object side to the image side can be expressed as a sequence of transforms that arise at each surface. The whole journey and can be described by mutiplying the matrices together. 
 
-If the lens is thick, meaning it has a non-negligible thickness $t$, the full ray transfer matrix consists of three steps:
+If the lens has a non-negligible thickness $t$, the ray transfer matrix can be calculated in three steps:
 
 ### 1. Refraction at the First Surface (radius $ R_1 $)
 
@@ -220,11 +223,10 @@ M_{\text{refraction 1}} =
 $$
 
 where:
+
 - $n_1$ is the refractive index of the medium on the left (e.g., air),
 - $n_2$ is the refractive index of the lens material,
 - $R_1$ is the radius of curvature of the first surface (positive for convex, negative for concave).
-
----
 
 ### 2. Propagation Through the Lens Material (thickness $ t $)
 
@@ -235,8 +237,6 @@ M_{\text{propagation}} =
 0 & 1
 \end{pmatrix}
 $$
-
----
 
 ### 3. Refraction at the Second Surface (radius $ R_2 $)
 
@@ -249,18 +249,20 @@ M_{\text{refraction 2}} =
 $$
 
 where:
+
 - $R_2$ is the radius of curvature of the second surface,
 - $n_2$ is the refractive index inside the lens,
 - $n_1$ is the refractive index of the medium outside the lens.
 
+The product of these three matrices is the ray transfer matrix for the thick lens.
 
 ## Ray transfer functions {#sec-optics-raytransfer}
-We are headed to a second, somewhat different, way of thinking about optics. This framing treats optics as a function that takes an input and produces an output. The 
+In the next section, we will start thinking about optics in a slightly different way. The ray transfer framing is a good way to see the conceptualization. The ray transfer matrix treats the collection of rays as an input, applies a mathematical operator (the ABCD matrix) to the rays, and predicts the output.  In this framework, we think about optics as a function that takes input rays and produces output rays. 
 
-Use Ray Transfer Function.  Rely on the text from our paper. images here in some way. Maybe introduce the metalens concept. Maybe even the spatial light modulator. They could go in a next section/chapter.
+The ray transfer matrix is a lovely simplification that applies nicely to paraxial, circularly symmetric lenses. Can we use the idea more generally?  Why not. We might consider the general concept as a **Ray Transfer Function** @goossens2022-raytransferfunctions.  
 
 Use Goossens text here.
 
-More on metalenses.
+Relates to metalenses.
 
 
