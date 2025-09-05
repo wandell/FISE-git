@@ -107,24 +107,65 @@ I am uncertain about three things in this tutorial.
 * The positive and negative angles w.r.t. the axis.  Positive angles are counter clockwise, as expected.  He doesn't say, and it would be helpful to mention.  
 -->
 
-Ray tracing feels physical -we can imagine and draw rays as they pass through a sequence of surfaces, or as they are reflected by mirrors, or scattered by materials. As designs become complex, however, ray tracing involves a lot of computational steps that can be hard to tedious to calculate accurately. By around 1970, optical engineers began to recognize the value of a purely computational approach that can be performed easily on compouters. This approach, based on  **ray transfer matrix**, apprlies will to the central (paraxial) region of circularly symmetric lenses.
+Ray tracing feels physical -we can imagine and draw rays as they pass through a sequence of surfaces, or as they are reflected by mirrors, or scattered by materials. As designs become complex, however, ray tracing involves a lot of computational steps that can be hard to tedious to calculate accurately. By around 1970, optical engineers began to recognize the value of a more computational approach that can be implemented on compouters. This approach, based on  **ray transfer matrix**, analyzes the central (paraxial) region of circularly symmetric lenses.
 
-For this simplified case, we can describe each input ray using two variables (@fig-raytransfer-definitions, panel A). The first is the position of the ray with respect to the optical axis ($y$) that is often called its **field height**.  The second is the angle of the ray with respect to the optical axis, ($\theta$). 
+We describe each input ray using two variables (@fig-raytransfer-definitions, panel A) that we place in a vector $(y, \phi)$. The first variable is the distance of the ray from the optical axis ($y$), which is called the **field height**.  The second variable is the angle between the ray and the optical axis, ($\phi$). By convention, counter-clockwise angles are positive.  
 
 ![Ray transfer matrix parameter defintions](images/optics/09-morelens/definitions.png){#fig-raytransfer-definitions width="70%"}
- 
- that is also called an **ABCD** matrix, simplifies the calculations. 
 
-We can describe what happens to a ray of light as it (a) crosses a surface, or (b) continues through the medium, using a. The whole journey, from the object side to the image side, is a sequence of such transforms and can be described by mutiplying the matrices together.  
+### Refraction through a thin lens
+First, consider the case of a ray passing through a thin lens.  We imagine the index of refraction in the medium surrounding the lens is the same on both sides, $n_1$, and the index of refraction of the medium is $n_2$.  For a thin lens, the $y_1$ value of the object side ray is the same as the $y_2$ on the image side. The angle of the input ray, $\theta_1$, becomes a new angle, $\theta_2$. 
 
-### Refraction through a series of thin lenses
+<!--
+We know the new angle, by Snell's Law (@sec-snells-law).  
 
 $$
-M_{\text{lens}} =
+\begin{aligned}
+n_2 \sin(\theta_2) &= n_1 \sin(\theta_1) \\
+\sin(\theta_2) &= \frac{n_1}{n_2} \sin(\theta_1)
+\end{aligned}
+$$
+
+For small angles, $\phi \approx \sin(\phi)$, so the equation becomes
+
+$$
+\theta_2 \approx \frac{n_1}{n_2} \theta_1
+$$
+-->
+
+The important point is this.  I won't show the derivation, but it turns out that we can calculate the new angle, $\theta_2$ as $\Phi + \theta_1$.  The important observation, that makes this whole thing work, is that $\Phi$ doesn't depend on $\theta_1$.  We can calculate $\Phi$ from the indices of refraction and curvatures.
+
+$$
+\Phi = \frac{n_{2}-n_{1}}{n_{1}} \left(\frac{1}{R_{1}} - \frac{1}{R_{2}}\right)
+$$
+
+That means we can express the transformation of the ray $(y_1, \theta_1)$ into $(y_2, \theta_2)$ as 2x2 matrix,
+
+$$
+M_{\text{lens}}
+=
+\begin{pmatrix}
+1 & 0 \\
+-\Phi & 1
+\end{pmatrix},
+$$
+
+Very cool.  And for a thin lens, even more cool, it turns out that
+
+$$
+\frac{1}{f} =  \left(\frac{n_{2}}{n_{1}} - 1\right)
+\left(\frac{1}{R_{1}} - \frac{1}{R_{2}}\right),
+$$
+
+so the matrix can also be written this way
+
+$$
+M_{\text{lens}}
+=
 \begin{pmatrix}
 1 & 0 \\
 -\tfrac{1}{f} & 1
-\end{pmatrix}
+\end{pmatrix}.
 $$
 
 where $f$ is the focal length of the lens.
@@ -163,6 +204,8 @@ where $C$ is the element in the bottom-left of the sy
 
 
 ## Full Calculation for a Thick Lens
+
+of light as it (a) crosses a surface, or (b) continues through the medium, using a. The whole journey, from the object side to the image side, is a sequence of such transforms and can be described by mutiplying the matrices together. 
 
 If the lens is thick, meaning it has a non-negligible thickness $t$, the full ray transfer matrix consists of three steps:
 
