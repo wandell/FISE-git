@@ -72,11 +72,11 @@ Doing this analysis by hand, and using the various formulae, can be quite diffic
 
 But even before these tools were available, there was great interest in designing useful optics. For example, the development of photography, such as daguerrotype in 1839[^daguerrotype], created a significant market for optical design.  People wanted to take pictures of themselves, their family, and their friends.  The low light sensitivity of the recording media made it difficult to create portraits using a pinhole camera. Also, the pinhole camera does not produce a flat field image (SEC REF).  Lens designers set out to make portraits possible.  Much of this was enabled by the development of new types of glass with different optical properties, especially from Fraunhofer's work in Bavaria (SEC FRAUNHOFER REF).  Having a palette of materials to use made the design possible.
 
-[^daguerrotype]: a photograph using an early photographic process employing an iodine-sensitized silvered plate and mercury vapor.
+[^daguerrotype]: an early photographic process employing an iodine-sensitized silvered plate and mercury vapor.
 
 The development of mathematical methods for predicting the outcome for lenses with different shapes and materials was also important. Both Gauss and Petzval were mathematicians who developed workable methods for simulating the impact of a design prior to construction. Robert Wood, an American physicist, coined the term “fish-eye” lens to describe how a fish would see the world through a 180° hemisphere of water[^wood-fisheye]. He designed a lens to mimic this — essentially a hemispherical objective producing a circular image. For all of those designers, mathematics was the key simulation tool. In the modern era, as this book illustrates in many places, mathematics is extended into computable algorithms. These are our modern tools, but don't sleep on the importance of mathematics!
 
-[^wood-fisheye]: "In discussing the peculiar type of refraction which occurs when light from the sky enters the surf'ace of still water, it seems of interest to ascertain how the external world appears to the fish. As is well known, a sublnerged eye directed towards the surface of still water sees the sky compressed into a comparatively small circle of light, the centre of which is always immediately above the observer, the appearance being as if the pond were covered with an opaque roof' provided with a circular aperture or window. I f our eyes were adapted to distinct vision under water, it is clear that the objects surrounding the pond, such as trees, horses, fishermen, &c., would appear round the edge of this circle of light. Objects not much elevated above the plane of the water would be seen somewhat compressed and distorted, but the circular picture would contain everything embraced within an angle of 180 ~ in every direction, i.e. a complete hemisphere" @wood1906-fisheye
+[^wood-fisheye]: "In discussing the peculiar type of refraction which occurs when light from the sky enters the surface of still water, it seems of interest to ascertain how the external world appears to the fish. As is well known, a sublnerged eye directed towards the surface of still water sees the sky compressed into a comparatively small circle of light, the centre of which is always immediately above the observer, the appearance being as if the pond were covered with an opaque roof provided with a circular aperture or window. If our eyes were adapted to distinct vision under water, it is clear that the objects surrounding the pond, such as trees, horses, fishermen, etc., would appear round the edge of this circle of light. Objects not much elevated above the plane of the water would be seen somewhat compressed and distorted, but the circular picture would contain everything embraced within an angle of 180 deg in every direction, i.e. a complete hemisphere" @wood1906-fisheye
 
 Finally, in those days like these, different design goals led to diversity. Gauss was primarily interested in astronomical lenses with low distortion. Petzval proritized light sensitivty for portraiture. Cooke (1893) later produced the famous triplet, which became the Tessar, to achieve a compact lens that balanced aberrations across the field. Woods' fish-eye became a scientific tool that enabled measurements of the sky, military reconnaisance and artistic architectural overviews.
 
@@ -225,18 +225,31 @@ $$
 :::
 
 ### Effective and back focal lengths
-Multi-lens systems are often summarized by their ray transfer matrix. This is a very efficient way to communicate about some of the system properties. Two particularly valuable system properties, the back focal length $f_B$ and effective focal length $f_{E}$, can be calculated from the entries of the ray transfer matrix, $M$
+Multi-lens systems can be summarized by their ray transfer matrix. This is a very efficient way to communicate about system properties, though it is quite incomplete compared to a full specification of the components and their materials. Because these are not computed, the specification in this simpler form is often called a black box model of the optics.
 
-$$
-f_{B} = -\frac{A}{C}
-\qquad
-f_{E} = -\frac{1}{C}
-$$
+We can compute two particularly valuable system properties from the matrix, the back focal length (BFL), $f_B$, and the effective focal length (EFL), $f_E$. BFL is the distance from the system’s output reference plane to the focal point (for an object at infinity). EFL is the distance from the secondary principal plane to the focal point.
 
 ![Back and Effective focal lengths of a black box system.](images/optics/09-morelens/efl-bfl.png){#fig-efl-bfl width=60%}
 
+To determine these focal lengths, we compute where an input ray that is parallel to the optical axis emerges and crosses the optical axis. An input ray parallel to the optical axis has the form $\rho_{\text{in}}=(y_{\text{in}},\theta_{\text{in}})=(y,0)$. Because $\theta_{\text{in}}=0$, the corresponding output ray depends only on $A$ and $C$, $\rho_{\text{out}}=(y_{\text{out}},\theta_{\text{out}})=(A y, C y)$.
+
+The two output parameters determine the line the output ray follows in the $z$-direction. It starts at the output field height and slopes toward the optical axis. The line reaches the optical axis at the $z$ where
+$$
+\begin{aligned}
+0 &= y_{\text{out}} + z\,\theta_{\text{out}} \\
+z &= -\frac{y_{\text{out}}}{\theta_{\text{out}}} = -\frac{A}{C}.
+\end{aligned}
+$$
+
+By definition of the principal planes, we can shift the reference planes so the system behaves like a thin lens there (this choice makes $A=1$, while $C$ is invariant to such shifts). Hence
+$$
+f_{B} = -\frac{A}{C},
+\qquad
+f_{E} = -\frac{1}{C}.
+$$
+
 <!--
-https://latex.codecogs.com/svg.image?\begin{pmatrix} A & B \\ C & D \end{pmatrix}
+Note: These formulas assume the ray state is $(y,\theta)$. If you use the reduced-angle convention $(y,n\,\theta)$, replace $C$ by $C/n_{\text{out}}$. For an afocal system $C=0$ and both focal lengths are infinite.
 -->
 
 ## Ray transfer functions {#sec-optics-raytransfer}
