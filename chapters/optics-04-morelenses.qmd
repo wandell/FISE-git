@@ -70,9 +70,9 @@ The ray tracing principles developed so far are the foundation for the next leve
 
 Doing this analysis by hand, and using the various formulae, can be quite difficult. The rise of optical design software tools made it possible for many people to engage in the task. Understanding the principles is important for using these software tools well.  
 
-But even before these tools were available, there was great interest in designing useful optics. For example, the development of photography, such as daguerrotype in 1839[^daguerrotype], created a significant market for optical design.  People wanted to take pictures of themselves, their family, and their friends.  The low light sensitivity of the recording media made it difficult to create portraits using a pinhole camera. Also, the pinhole camera does not produce a flat field image (SEC REF).  Lens designers set out to make portraits possible.  Much of this was enabled by the development of new types of glass with different optical properties, especially from Fraunhofer's work in Bavaria (SEC FRAUNHOFER REF).  Having a palette of materials to use made the design possible.
+But even before these tools were available, there was great interest in designing useful optics. For example, the development of photography, such as daguerrotype in 1839[^daguerrotype], created a significant market for optical design.  People wanted to take pictures of themselves, their family, and their friends.  The low light sensitivity of the recording media made it difficult to create portraits using a pinhole camera. Also, the pinhole camera does not produce a flat field image (@sec-pinhole-collimated).  Lens designers set out to make portraits possible.  Much of this was enabled by the development of new types of glass with different optical properties, especially from Fraunhofer's work in Bavaria (@sec-fraunhofer).  Having a palette of materials to use made the design possible.
 
-[^daguerrotype]: an early photographic process employing an iodine-sensitized silvered plate and mercury vapor.
+[^daguerrotype]: An early photographic process employing an iodine-sensitized silvered plate and mercury vapor.
 
 The development of mathematical methods for predicting the outcome for lenses with different shapes and materials was also important. Both Gauss and Petzval were mathematicians who developed workable methods for simulating the impact of a design prior to construction. Robert Wood, an American physicist, coined the term “fish-eye” lens to describe how a fish would see the world through a 180° hemisphere of water[^wood-fisheye]. He designed a lens to mimic this — essentially a hemispherical objective producing a circular image. For all of those designers, mathematics was the key simulation tool. In the modern era, as this book illustrates in many places, mathematics is extended into computable algorithms. These are our modern tools, but don't sleep on the importance of mathematics!
 
@@ -107,7 +107,6 @@ I am uncertain about three things in this tutorial.
 * The positive and negative angles w.r.t. the axis.  Positive angles are counter clockwise, as expected.  He doesn't say, and it would be helpful to mention.  
 -->
 
-// ...existing code...
 ## ABCD matrix optics {#sec-optics-abcd}
 
 Ray tracing feels physical -we can imagine and draw rays as they pass through a sequence of surfaces, or as they are reflected by mirrors, or scattered by materials. As designs become complex, however, ray tracing involves a lot of computational steps that can be hard to tedious to calculate accurately. Around 1970, as computers became widespread, optical engineers began to use a computational approach to approximate different designs.  This approach, based on the **ray transfer matrix**, analyzes the central (paraxial) region of circularly symmetric lenses.
@@ -248,17 +247,15 @@ f_{B} = -\frac{A}{C},
 f_{E} = -\frac{1}{C}.
 $$
 
-<!--
-Note: These formulas assume the ray state is $(y,\theta)$. If you use the reduced-angle convention $(y,n\,\theta)$, replace $C$ by $C/n_{\text{out}}$. For an afocal system $C=0$ and both focal lengths are infinite.
--->
+N.B. I use a simple parameterization of the ray state, $(y,\theta)$. There are others -and they can be very smart- who prefer to use the **reduced-angle convention**.  They incorporate the index of refraction into the angle $(y,n\,\theta)$.  In that framing, replace $C$ by $C/n_{\text{out}}$. 
+
 
 ## Ray transfer functions {#sec-optics-raytransfer}
-In the next section, we will start thinking about optics in a slightly different way. The ray transfer framing is a good way to see the conceptualization. The ray transfer matrix treats the collection of rays as an input, applies a mathematical operator (the ABCD matrix) to the rays, and predicts the output.  In this framework, we think about optics as a function that takes input rays and produces output rays. 
+I expect that we will continue to see computational methods based on rays continue to expand. The ray transfer framing is an important conceptualization and it is thrilling to see the roots of linear algebra and optics coordinate so well. The limitation of the approach to circularly symmetric, paraxial analyses is quite significant. It is clear that we would like to be able to broaden the approach, say by developing functions that map the entire set of input rays to the output rays. 
 
-The ray transfer matrix is a lovely simplification that applies nicely to paraxial, circularly symmetric lenses. Can we use the idea more generally?  Why not. We might consider the general concept as a **Ray Transfer Function** @goossens2022-raytransferfunctions.  
+A number of groups have worked to put together functions that extend the ABCD formulation to a much broader mapping, which @goossens2022-raytransferfunctions labeled the **Ray Transfer Function**.  Some groups mapped the rays using polynomials (Hopkins, @Hullin2012-polynomial-optics), and others have worked with neural networks (@Xian2023-neurolens). 
 
-Use Goossens text here.
+The future of lens manufacturing and design is likely to include metalenses (@sec-optics-metalens) based on nanoscale structures that cannot be modeled by ray training, it will become increasingly important to develop tools to specify the ray transfer function of optical components.  The development of this infrastructure is a large, and interesting, task for the future.
 
-Relates to metalenses.
 
 
