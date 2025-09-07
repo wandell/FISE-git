@@ -27,7 +27,7 @@ SLR camera bodies and lenses are relatively large. I lugged quite a few of them 
 -   **Non-Rotating Front Element:** The front of the lens does not move or rotate. This is a huge advantage when using filters like **polarizers** or **graduated neutral density filters**, which must be kept in a specific orientation to work correctly.
 -   **Improved Optical Performance:** By freeing designers from the constraint of moving the entire optical block, internal focusing allows for more complex and better-corrected optical formulas. It can lead to sharper images and better close-focusing capabilities.
 
-::: {#sensor-slr .callout-note collapse="true" title="Single-lens reflex"}
+::: {#sensor-slr .callout-note .callout-history collapse="true" title="Single-lens reflex"}
 SLR cameras represented a major advance over earlier rangefinder designs, and when I was young they were considered super cool. In a rangefinder camera, there are two separate optical paths:
 
 -   **Imaging Lens:** The main lens focuses the image onto the film or sensor, but you do not look through this lens.
@@ -76,7 +76,7 @@ The autofocus subsystem uses this phase difference to determine how to move the 
 
 However, this approach has drawbacks. The mirror, microlenses, and sensor arrays require a relatively large and complex mechanical assembly, making it impractical for compact devices like smartphones. Additionally, the system can only perform focusing or image capture at one time, not both simultaneously. Later technologies addressed these limitations.
 
-::: {#sensor-phasedetect-autofocus .callout-note collapse="true" title="Phase detection autofocus: Commercialization"}
+::: {#sensor-phasedetect-autofocus .callout-note .callout-history collapse="true" title="Phase detection autofocus: Commercialization"}
 Phase detection autofocus (PDAF) for SLR cameras was pioneered by Honeywell, which patented the key concepts in the 1970s (U.S. Patents 3,875,401 and 4,185,191). Their design used a beam-splitting rangefinder rather than the later flip-mirror approach.
 
 The first commercial SLR to feature PDAF was the Minolta Maxxum 7000 (α-7000 in Japan), released in 1985. It integrated in-body PDAF and motorized lens control, using phase differences measured by two linear sensor arrays to drive lens adjustments.
@@ -92,7 +92,7 @@ A major breakthrough came in 2014 with the introduction of **dual pixel autofocu
 
 ![Dual pixel autofocus sensor design.](images/sensors/17-control/03-sensor-dpaf.png){#fig-sensor-dpaf width="80%"}
 
-::: {#sensor-dpaf .callout-note collapse="true" title="Dual pixel autofocus: Canon"}
+::: {#sensor-dpaf .callout-note .callout-link collapse="true" title="Dual pixel autofocus: Canon"}
 Canon introduced DPAF with the EOS 70D in 2013, building on earlier hybrid PDAF/live-view systems like the EOS 650D/T4i-D. Today, many vendors—including Sony and Omnivision—ship sensors with two photodiodes under each microlens, enabling fast, accurate on-sensor phase detection autofocus, especially for video.
 :::
 
@@ -110,7 +110,7 @@ Conversely, if the exposure time is too long, pixels in bright areas may generat
 Proper exposure control adjusts acquisition parameters so that the scene’s dynamic range fits within the sensor’s dynamic range, avoiding both excessive noise and saturation. In a conventional system, two main parameters control this fit: the lens aperture size and the exposure duration. Increasing the aperture allows more light to reach the sensor, raising the signal level. Extending the exposure duration gives the sensor more time to collect photons and convert them to electrons. The classic specification for exposure combines these two parameters, as described below.
 
 ### Exposure value {#sec-exposure-value}
-The [**exposure value (EV)**](https://en.wikipedia.org/wiki/Exposure_value) is a single number that summarizes the combined effect of aperture size and exposure time on image brightness. For a lens with f-number $F$ and exposure time $T$ (in seconds), the exposure value is defined as
+The [**exposure value (EV)**](https://en.wikipedia.org/wiki/Exposure_value){target=_blank} is a single number that summarizes the combined effect of aperture size and exposure time on image brightness. For a lens with f-number $F$ and exposure time $T$ (in seconds), the exposure value is defined as
 
 $$
 \text{EV} = \log_{2}\left(\frac{F^2}{T}\right) = 2 \log_{2}(F) - \log_{2}(T)
@@ -141,7 +141,9 @@ The entire problem of exposure control becomes greatly simplified if there is no
 
 Using only the **last non-saturated read** in a DPS provides a **higher SNR** than combining exponentially spaced earlier reads — particularly when the number of reads is small and the sensor is near saturation.
 
-::: {.callout-note collapse="false" title="Optimal SNR from Exponentially spaced reads"}
+
+::: {.callout-note .callout-comp collapse="false" title="Optimal SNR from Exponentially spaced reads"}
+
 <!-- FISE-Sensor: DPS SNR Optimization -->
 
 In digital pixel sensors (DPS), it is common to sample the photodiode voltage multiple times during exposure. These samples can be taken at exponentially spaced time points to extend dynamic range. Suppose the sample times are given by
