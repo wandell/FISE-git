@@ -3,22 +3,11 @@ date: last-modified
 ---
 
 # Lens principles {#sec-optics-lenses}
+<!-- 
+See notes at end of file
+-->
 
 ## Lens principles overview {#sec-optics-lenses-overview}
-
-<!-- I downloaded these slides. Some good concepts for this book. Overlaps a lot with my class, but additions. Link to PDF http://graphics.cs.cmu.edu/courses/15-463/2020_fall/lectures/lecture3.pdf 
-
-Link to Born and Wolf anniversary edition
-https://www-cambridge-org.stanford.idm.oclc.org/core/books/principles-of-optics/9D54D6FF0317074912CB285C3FF7341C
-
-I used Jenkins and White, which I have in PDF.
-
-This is a nice, but flawed, online book with a lot of good stuff.
-https://pressbooks.online.ucf.edu/osuniversityphysics3/chapter/thin-lenses/
-
-The Feynman lectures have a lot of great stuff about optics.  And color!
-https://www.feynmanlectures.caltech.edu/
--->
 
 A small pinhole renders a perfectly good image. Why do we need to add any optics? The critical reason is that pinhole apertures, by definition, only measure a small amount of electromagnetic radiation.  We often find ourselves in conditions where the amount of radiation passing through the aperture is a limiting factor.  We need more signal!
 
@@ -108,7 +97,6 @@ This is a very nice tutorial from Fermilab about the physical basis of refractio
 
 :::
 
-
 ### Wavelength dependence {#sec-chromatic-aberration}
 <!-- [Abbe Number](https://chatgpt.com/share/676a2564-e72c-8002-923a-d865491f30ed) -->
 For many materials that index of refraction is wavelength dependent. Following Snell's Law, the each wavelengths changes direction by different amount. Consequently, when we set the lens to be in best focus for one wavelength, it will not be in best focus for other wavelengths.  The inability to produce a good focus for all wavelengths simultaenously is called **chromatic aberration**. 
@@ -172,17 +160,71 @@ Expanding on this idea, we can stack a collection of prisms to gather more of th
 [^optics-intro-3]:  Put the formula for refraction of a ray at a spherical lens in here.
 
 The diagram makes it clear that there are many lens design choices. For example, we might change the shape of the lens surfaces. Also, we might use different materials in the prisms. What considerations would guide such choices?
+
+## Innovations in Lens Design
+An overarching goal in optical design is to create a lens that is free from imperfections, known as aberrations. The choices in lens design involve trade-offs between performance, cost, size, and weight. The following sections introduce a range of solutions, from classical to cutting-edge, that address these challenges.
+
+### Spherical Aberration
+Spherical surfaces are relatively easy to manufacture and thus cost-effective. However, they have a fundamental flaw first documented by the 11th-century scientist Alhazen in his "Book of Optics" (*Kitāb al-Manāẓir*). He observed that spherical lenses produce blurry images because they refract light more strongly near their edges than near their center. As a result, rays passing through the periphery of the lens do not converge at the same focal point as rays passing through the center. This imperfection is called **spherical aberration**. The severity of this aberration depends on factors like the lens aperture, curvature, and material.
+
+### Multi-element lens
+A classical solution to spherical and other aberrations is to combine multiple spherical lenses into a single optical system. In these **multi-element optics**, additional lenses are carefully arranged to cancel out the aberrations of the primary lens. Famous designs like the *Double-Gauss* or *Petzval* lens systems use this principle to achieve high image quality. While effective, this approach often results in large, heavy, and complex assemblies, as seen in high-end camera lenses.  I will describe these classic designs in @sec-optics-famous-lenses.  As you will see, in the early days determining how to combine even a few spherical components was an intellectual challenge, and quite important.
+
+Modern optics with multiple elements has achieved very remarkable advances. And, in some important cases, the size and weight are not a limit.  The important company, ASML, working with [Zeiss](https://www.zeiss.com/semiconductor-manufacturing-technology/smt-magazine/duv-lithography.html){target=_blank}, has produced entirely remarkable lenses.  These enable people to use lithography to manufacture of integrated circuits at nanometer resolution.  Now that's a lens.
+
+![ASML-Zeiss lens](images/optics/07-principles/zeiss-lithography.jpg){#fig-zeiss-lithography width="60%"}
+
+### Aspheric Lenses
+Instead of adding more lenses, another approach is to change the shape of the lens surface itself. An **aspheric lens** deviates from a perfect spherical shape, with its curvature changing from the center to the edge. This tailored profile allows it to correct for spherical aberration in a single element, enabling more compact and lightweight designs.
+
+Historically, aspheric lenses were difficult and expensive to produce. However, advances in computer-controlled polishing and glass/plastic molding have made them common in everything from smartphone cameras to research-grade instruments. The surface of an aspheric lens, its *sag* $z$, is often described as a function of the radial distance $\rho$ from the optical axis:
+
+$$
+z(\rho) = \frac{\rho^2 / R}{1 + \sqrt{1 - (1 + k)(\rho/R)^2}} + A_4 \rho^4 + A_6 \rho^6 + \cdots
+$$ {#eq-aspheric}
+
+Here, $R$ is the radius of curvature at the lens vertex, $k$ is the conic constant that defines the basic shape (e.g., parabolic, hyperbolic), and the $A_i$ terms are higher-order coefficients that fine-tune the surface to minimize aberrations.
+
+### GRIN Lenses
+Another way to control light is to vary the material properties within the lens instead of changing its surface shape. A **gradient-index (GRIN)** lens has a refractive index that changes continuously within the material, typically decreasing from the center to the edge.
+
+Long before this became practical, in 1854, James Clerk Maxwell theorized that such a gradient could eliminate spherical aberration in a spherical lens, a design now known as the "Maxwell fisheye." It was later discovered that many animal eyes use this exact principle. While more challenging to manufacture than aspheres, GRIN lenses offer unique design possibilities, especially in compact systems like endoscopes. Maxwell's work in this area -and later when we discuss his work in color- are an example of the interplay between physics, engineering, and biology.
+
+[^grinlens-maxwell]: Michael Land's [Britannica article](https://www.britannica.com/science/photoreception/Single-chambered-eyes){target=_blank} has lots of interesting examples of animal eyes and the story about GRIN lenses and Maxwell.
+
+### Spatial Light Modulators
+What if a lens could be reconfigured on the fly? **Spatial light modulators (SLMs)** are devices that can dynamically control the properties of a light field on a pixel-by-pixel basis. They are essentially programmable optical elements.
+
+*   **Phase SLMs**, often based on liquid crystal arrays, can locally alter the phase of light, effectively acting as a reconfigurable lens or diffraction grating. They can be used to correct for aberrations in real-time or to sculpt a light beam into a complex pattern.
+*   **Amplitude SLMs**, which use technologies like MEMS (micro-electro-mechanical systems) mirrors, modulate the intensity of light at each pixel.
+
+With pixel sizes on the order of microns and arrays containing millions of elements, SLMs are powerful tools in adaptive optics, holography, and advanced imaging systems. This figure shows a recent phase SLM with extremely high resolution.
+
+![Holoeye phase spatial light modulator based on reflective LCOS. Max resolution 4160 x 2464, pixel Pitch 3.74 µm, Active Area 15.56 x 9.22 mm (0.7″ Diagonal, 8 Bit, 60 Hz frame rate). The small part is the SLM; the big part is the electronics. [See Holoeye](https://holoeye.com/products/spatial-light-modulators/gaea-2-phase-only/){target=_blank}](images/optics/07-principles/slm-holoeye.png){#fig-slm-holoeye width="60%"}
  
-## Lens limitations
-Spherical surfaces are relatively easy to manufacture and thus cost-effective. But spherical lenses have a noticeable defect. In the 11th century book, "Kitāb al-Manāẓir" (Book of Optics), Alhazen observed that spherical lenses often produce a blurry image. The reason is that at increasing distance from the optical axis, the refraction is too large. Thus, the rays passing through the edge of the sphere do not converge precisely with those passing near the optical axis. The amount of this *spherical aberration* depends on a number of factors, such as the size of the lens aperture, the curvature, and the distance to the objects.
+### Metalenses
+The most recent revolution in optics miniaturization comes from **metalenses**. These are not lenses in the traditional sense but are flat surfaces, like a sliver of glass, patterned with an array of nanoscale structures ("meta-atoms"). Each nanostructure is smaller than the wavelength of light and is engineered to impart a specific phase shift to the light passing through it.
 
-### Multi-element optics
-To reduce the spherical aberration and improve image sharpness, designers have created multi-element optics. Often, these are additional spherical lenses added to the light path whose purpose is to reduce spherical and other aberrations of the whole system. THere are several famous multi-element optics designs, such as the *double Gauss* and *Petzval* systems. Very high quality multi-element optics can be fairly large. 
+By arranging these meta-atoms in a precise pattern, a metalens can bend light just like a conventional curved lens but without the bulk. This technology promises to replace complex, multi-element systems with a single, ultra-thin optical element. Researchers are developing metalenses that can perform sophisticated tasks, such as focusing different colors to the same point or routing specific wavelengths to different locations (@Catrysse2022-color-router, @Catrysse2023-color-router). While still an active area of research, metalenses have the potential to fundamentally change optical design.
 
-Spherical lenses remain in use in devices that must be low cost, do not require  high spatial resolution, or that can use relatively large optics.  In recent years, other optics have been implemented.
+## Onward
+The next sections will take you through the logical development from the simple thin lens to the analysis of a thick lens, and then to multielement lenses. Those principles are the foundation that has led to these developments.
 
-### Aspherics
-To reduce spherical aberration, we can use a different shape. This was difficult to manufacture, but advances in computer-controlled polishing and the ability to create molded plastics and glass permit designers to implement aspherical lenses.  The use of aspherics accelerated in multiple industries after 2010.  
+
+<!-- I downloaded these slides. Some good concepts for this book. Overlaps a lot with my class, but additions. Link to PDF http://graphics.cs.cmu.edu/courses/15-463/2020_fall/lectures/lecture3.pdf 
+
+Link to Born and Wolf anniversary edition
+https://www-cambridge-org.stanford.idm.oclc.org/core/books/principles-of-optics/9D54D6FF0317074912CB285C3FF7341C
+
+I used Jenkins and White, which I have in PDF.
+
+This is a nice, but flawed, online book with a lot of good stuff.
+https://pressbooks.online.ucf.edu/osuniversityphysics3/chapter/thin-lenses/
+
+The Feynman lectures have a lot of great stuff about optics.  And color!
+https://www.feynmanlectures.caltech.edu/
+-->
+
 <!--
 From Perplexity search
 
@@ -193,29 +235,6 @@ https://www.laserfocusworld.com/directory/finished-optics-coatings-components/le
 https://www.shanghai-optics.com/about-us/resources/technical-articles/optical-revolution-aspheric-lenses-advances-and-solutions/?t
 
 https://avantierinc.com/resources/technical-article/aspheric-lens-breakthroughs/?t
- -->
 
-Designers frequently use a particular class of aspherical lenses.  These are described by a lens surface position, $z$, that is specified as a function of radial distance $\rho$, from the optical axis.
-
-\begin{equation*}
-z(\rho) = \frac{\rho^2 / R}{1 + \sqrt{1 - (1 + k)(\rho/R)^2}} + A_4 \rho^4 + A_6 \rho^6 + A_8 \rho^8 + \cdots
-\end{equation*}
-
-$z(\rho)$ is called the sag of the lens surface.  $R$ is the radius of curvature of the lens at the vertex of the lens.  $k$ is called the  conic constant; it determines the deviation from the spherical shape. The parameters $A_i$ are called higher-order aspheric coefficients; they are adjusted to reduce different types of lens imperfections. Lens design software is used to search through the parameters, given the materials and other design constraints, to create circularly symmetric aspherical lenses with minimal spherical aberration.
-
-<!--
 [See this page and fise_aspherics.m for the shape formula of aspherical lenses.](https://chatgpt.com/c/6748e492-0310-8002-8da3-89a1517a6062).[Also this page.](https://g.co/gemini/share/a89a3d193d26)
 -->
-
-### Grin lenses
-In 1854 James Clerk Maxwell, noticing that biological eyes are often spherical, wondered whether there might not be a mechanism to reduce the expected aberration.  He suggested a specific mechanism, namely that spherical aberration could be reduced by varying the refraction index from the [optical axis to the edge](https://archive.org/details/scientificpapers01maxw/page/76/mode/2up?view=theater){target=_blank} (@maxwell1890-scientificpapers). It was later discovered that some biological eyes have this property, and this is generally credited to Ludwig Matthiessen for his work on the general topic (@land1999-encyclopedia-photoreception). 
-
-Manufactured lenses with a variable gradient refraction index (*GRIN* lenses) are valuable in optical design, although they are more difficult to manufacture than aspherics. 
-
-<!-- https://www.britannica.com/science/photoreception/Single-chambered-eyes Michael Land's Brittanic article has the story. Lenses made of homogeneous material (e.g., glass or dry protein) suffer from a defect known as spherical aberration, in which peripheral rays are focused too strongly, resulting in a poor image. 
--->
-
-### Metalenses {#sec-optics-metalens}
-The purpose of the lens is to redirect the rays in the incident light field. Suppose we can specify how we would like to redirect the rays.  We call this a *ray transfer function* (@goossens2022-raytransferfunctions).  It would be ideal if we could manufacture a very thin surface whose optical properties implemented any specific ray transfer function we might desire.
-
-Advances in material science, optics, and computation are making remarkable progress on this goal. The implementation, called *metalenses*, are very thin surfaces made up of small elements - smaller even than the wavelengths of light - with different refractive indices. Controlling the placement of these elements can produce many different ray transfer functions. Figuring out how to place these elements to achieve a specific goal requires using advanced computational methods and hardware (e.g., GPU clusters). A number of research groups are learning how to define these surfaces and build metalenses that implement specific functions.  In the future, it may be possible to specify how you want to redirect the rays, and even which wavelengths are redirected in which direction (@Catrysse2022-color-router, @Catrysse2023-color-router), and to then build a very thin optics to achieve this goal.  One can dream.
