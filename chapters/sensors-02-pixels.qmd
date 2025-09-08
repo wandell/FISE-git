@@ -1,5 +1,14 @@
+---
+date: last-modified
+---
+
 # Pixels and sensors {#sec-pixels}
+
+## Pixels and sensors {#sec-pixels-overview}
+
 Having established the fundamental physics of light-to-electron conversion, we now examine how these principles are implemented in the design of image sensor pixels. To understand how the photoelectric effect is harnessed in practical devices, we next review the behavior of electrons in semiconductors—the foundation of modern image sensor pixels.
+
+@sec-sensors-photons-electrons
 
 ## Semiconductors and electrons {#sec-semiconductor-physics}
 Atoms in a silicon semiconductor are arranged in a crystalline structure, and their electrons occupy specific energy levels grouped into two main bands: the **valence band** (lower energy) and the **conduction band** (higher energy). Under normal conditions, most electrons remain in the valence band. When a silicon atom absorbs a photon, an electron can be excited from the valence band to the conduction band (@fig-sensor-bandgap).
@@ -51,7 +60,7 @@ The logical flow of the circuitry is as follows:
 -   During readout, the circuitry transfers the stored charge to an analog-to-digital converter (ADC).
 -   The digital image array records the amount of light captured by each pixel.
 
-The role of the other essential pixel components, the color filter arrays and microlenses, is explained in Section @sec-sensor-components.  In @sec-system-modeling I describes how to calibrate and model sensor performance, from the scene light field to image capture.
+The role of the other essential pixel components, the color filter arrays and microlenses, is explained in Section @sec-sensor-components.  In @sensor-system-modeling-overview I describes how to calibrate and model sensor performance, from the scene light field to image capture.
 
 ## CMOS circuits {#sec-sensor-circuits}
 
@@ -90,8 +99,34 @@ transfer switch (M1), a reset switch (M2), a source follower (M3) and a row sele
 -->
 
 ## Multiplex readout
+The use of unity gain amplifiers at the pixel was one important innovation. A second innovation is the way the pixel data are read from the image sensor. In the original CCD devices, the important innovation was to find a way to move the electrons across the silicon array to a single analog-to-digital converter. But the electrons in the CMOS pixels are already converted to voltages on the output lines. How shall we convert all of these separate lines into digital readout values?
 
 ![Multiplex readout explanation](images/sensors/14-pixels/03-CMOS-multiplex-readout.png){#fig-cmos-multiplex width=60%}
+
+The readout process begins with a control signal sent to a specific row of pixels, activating the row and placing the voltage from each pixel onto its corresponding column readout line. These column lines are connected to amplifiers, which buffer and amplify the signals to ensure accurate transmission. These amplified signals are then passed to an analog-to-digital converter (ADC).  The gain settings on the amplifiers, prior to the ADC, are often adjustable allowing gain settings from 1x to 4x.
+
+In most CMOS sensors, ADCs are shared among groups of columns to reduce complexity and save space. This sharing is achieved through a process called **multiplexing**, where the ADC sequentially converts the analog signals from each column in its group into digital values. Typically, ADCs multiplex signals from 8 or 16 columns, depending on the sensor design and application. Once the data from the active row is fully read out, the control signal moves to the next row, and the process repeats. 
+
+So that all of the pixels have the same exposure duration, it is necessary to reset and integrate the pixels in the each row a little before the pixels in the subsequent row.  Thus, the data in each row is captured a little bit before the data in each of the following rows. This sequential row-by-row readout introduces a temporal pattern known as a **rolling shutter** into the image data.  
+
+@fig-rolling-shutter illustrates the impact of this readout timing. The telephone poles captured in by this CMOS camera from a  bullet train in Japan appear slanted. This is because the train is moving quickly, and the rows at the top are captured before the rows at the bottom.  During this time, the telephone pole has shifted position to the right.  The Japanese are very good at construction: the poles are straight.  Very straight.
+
+::: {.content-visible when-format="pdf"}
+![Movie frame illustrating a rolling shutter capture effect.](images/sensors/14-pixels/rollingShutter-still.png){#fig-rolling-shutter width="60%"}
+:::
+
+::: {.content-visible when-format="html"}
+![Movie illustrating a rolling shutter capture effect.](images/sensors/14-pixels/rollingShutter-movie.mp4){#fig-rolling-shutter width="60%"}
+:::
+
+Technology developments described below enable a different capture method. Some memory is put into each pixel, enabling the sensor to store the pixel value locally.  All of the pixels are exposed at the same time, and the data is stored in the local memory.  This design, called a [**global shutter**]{#def-global-shutter} eliminates the rolling shutter effect.  
+
+::: {.callout-note collapse="false" title="Rolling shutter simulation"}
+This [ISETCam script](../code/03Sensor/fise_sensorRollingShutter.html){target=_blank} simulates a rolling shutter. The timing and spatial parameter details of the sensor are included.
+
+![Simulated rolling shutter effect.](images/sensors/14-pixels/rolling-shutter-simulated.png){#fig-rolling-shutter-simulated width="60%"}
+
+:::
 
 ## Sensor evolution {#sec-sensor-evolution}
 
@@ -168,7 +203,6 @@ In addition to flipping the order of the silicon and wires, it was necessary to 
 The concept of back-side illuminated (BSI) CMOS image sensors was first proposed by Eric Fossum in 1994 to address the limitations caused by metal wiring obstructing incoming light and to improve sensitivity. While the benefits of rearranging the sensor layers were clear to many, developing a practical manufacturing process proved challenging. It took more than a decade for BSI technology to become commercially viable. OmniVision Technologies was among the first to introduce a commercial BSI sensor, releasing the OV8810 (1.4 μm pixels, 8 megapixels) in September 2008. Sony soon followed, launching the first widely adopted BSI sensors in 2009.
 
 [Wikipedia article on BSI](https://en.wikipedia.org/wiki/Back-illuminated_sensor)
-
 :::
 
 ## Deep photodiodes {#sec-sensor-deepdiode}
@@ -187,11 +221,12 @@ The **stacked sensor** architecture overcomes this limitation by physically sepa
 
 The key enabling technology is called **die stacking**. The silicon layers are bonded together and electrically connected using two main methods. The original approach used **Through-Silicon Vias (TSVs)**—tiny holes etched through the silicon and filled with a conductive material (such as copper or tungsten) to create vertical electrical connections. 
 
-More recently, **Cu-Cu (copper-to-copper)** direct bonding has become common. In this method, patterned copper pads on each wafer are precisely aligned and bonded under heat and pressure, allowing for dense, fine-pitch interconnects between the pixel and logic layers. Cu-Cu bonding is ideal for high-resolution, high-speed sensors, enabling features like global shutter or per-pixel memory. TSVs are still used for tasks such as power delivery and global I/O routing.
+More recently, **Cu-Cu (copper-to-copper)** direct bonding has become common. In this method, patterned copper pads on each wafer are precisely aligned and bonded under heat and pressure, allowing for dense, fine-pitch interconnects between the pixel and logic layers. Cu-Cu bonding is ideal for high-resolution, high-speed sensors, enabling features like  per-pixel memory used for [global shutters](#def-global-shutter) which are sold by many companies. TSVs are still used for tasks such as power delivery and global I/O routing.
 
 Stacked sensors have unlocked new capabilities in image sensor design. By separating the photodiode and circuitry layers, manufacturers can improve light sensitivity, reduce noise, and add advanced processing features directly beneath the pixel array. This architecture forms the foundation for ongoing innovation in sensor performance and functionality.
 
-<!-- Stacked Sensor Structures Google doc 
+<!-- 
+Stacked Sensor Structures Google doc 
 A significant step towards multi-layer integration was taken by Mitsumasa Koyanagi of Tohoku University, who pioneered the technique of wafer-to-wafer bonding with TSV in 1989
 -->
 

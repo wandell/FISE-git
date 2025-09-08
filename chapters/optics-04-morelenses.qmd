@@ -1,4 +1,11 @@
+---
+date: last-modified
+---
+
 # Lenses and ray transfer  {#sec-optics-morelenses}
+
+## Lenses and ray transfer overview  {#sec-optics-morelenses-overview}
+
 The principles of geometric optics and thin lenses are also critical for thick lenses and multi-element lenses(@sec-geometric-optics). The first lens is traced, and its output is the input to a second lens. We can use the three principles (@sec-optics-3principles) to analyze the lenses in sequence. Using these tools, but with increasing complexity, the methods used to characterize thin lenses (@sec-optics-thinlens) can be extended to many different optical functions. 
 
 In this chapter, I will illustrate some of the extensions to thick lenses and multi-element lenses. These have been important historically, and they will continue to be with us for some years.
@@ -70,13 +77,13 @@ The ray tracing principles developed so far are the foundation for the next leve
 
 Doing this analysis by hand, and using the various formulae, can be quite difficult. The rise of optical design software tools made it possible for many people to engage in the task. Understanding the principles is important for using these software tools well.  
 
-But even before these tools were available, there was great interest in designing useful optics. For example, the development of photography, such as daguerrotype in 1839[^daguerrotype], created a significant market for optical design.  People wanted to take pictures of themselves, their family, and their friends.  The low light sensitivity of the recording media made it difficult to create portraits using a pinhole camera. Also, the pinhole camera does not produce a flat field image (SEC REF).  Lens designers set out to make portraits possible.  Much of this was enabled by the development of new types of glass with different optical properties, especially from Fraunhofer's work in Bavaria (SEC FRAUNHOFER REF).  Having a palette of materials to use made the design possible.
+But even before these tools were available, there was great interest in designing useful optics. For example, the development of photography, such as daguerrotype in 1839[^daguerrotype], created a significant market for optical design.  People wanted to take pictures of themselves, their family, and their friends.  The low light sensitivity of the recording media made it difficult to create portraits using a pinhole camera. Also, the pinhole camera does not produce a flat field image (@sec-pinhole-collimated).  Lens designers set out to make portraits possible.  Much of this was enabled by the development of new types of glass with different optical properties, especially from Fraunhofer's work in Bavaria (@sec-fraunhofer).  Having a palette of materials to use made the design possible.
 
-[^daguerrotype]: a photograph using an early photographic process employing an iodine-sensitized silvered plate and mercury vapor.
+[^daguerrotype]: An early photographic process employing an iodine-sensitized silvered plate and mercury vapor.
 
 The development of mathematical methods for predicting the outcome for lenses with different shapes and materials was also important. Both Gauss and Petzval were mathematicians who developed workable methods for simulating the impact of a design prior to construction. Robert Wood, an American physicist, coined the term “fish-eye” lens to describe how a fish would see the world through a 180° hemisphere of water[^wood-fisheye]. He designed a lens to mimic this — essentially a hemispherical objective producing a circular image. For all of those designers, mathematics was the key simulation tool. In the modern era, as this book illustrates in many places, mathematics is extended into computable algorithms. These are our modern tools, but don't sleep on the importance of mathematics!
 
-[^wood-fisheye]: "In discussing the peculiar type of refraction which occurs when light from the sky enters the surf'ace of still water, it seems of interest to ascertain how the external world appears to the fish. As is well known, a sublnerged eye directed towards the surface of still water sees the sky compressed into a comparatively small circle of light, the centre of which is always immediately above the observer, the appearance being as if the pond were covered with an opaque roof' provided with a circular aperture or window. I f our eyes were adapted to distinct vision under water, it is clear that the objects surrounding the pond, such as trees, horses, fishermen, &c., would appear round the edge of this circle of light. Objects not much elevated above the plane of the water would be seen somewhat compressed and distorted, but the circular picture would contain everything embraced within an angle of 180 ~ in every direction, i.e. a complete hemisphere" @wood1906-fisheye
+[^wood-fisheye]: "In discussing the peculiar type of refraction which occurs when light from the sky enters the surface of still water, it seems of interest to ascertain how the external world appears to the fish. As is well known, a sublnerged eye directed towards the surface of still water sees the sky compressed into a comparatively small circle of light, the centre of which is always immediately above the observer, the appearance being as if the pond were covered with an opaque roof provided with a circular aperture or window. If our eyes were adapted to distinct vision under water, it is clear that the objects surrounding the pond, such as trees, horses, fishermen, etc., would appear round the edge of this circle of light. Objects not much elevated above the plane of the water would be seen somewhat compressed and distorted, but the circular picture would contain everything embraced within an angle of 180 deg in every direction, i.e. a complete hemisphere" @wood1906-fisheye
 
 Finally, in those days like these, different design goals led to diversity. Gauss was primarily interested in astronomical lenses with low distortion. Petzval proritized light sensitivty for portraiture. Cooke (1893) later produced the famous triplet, which became the Tessar, to achieve a compact lens that balanced aberrations across the field. Woods' fish-eye became a scientific tool that enabled measurements of the sky, military reconnaisance and artistic architectural overviews.
 
@@ -107,117 +114,155 @@ I am uncertain about three things in this tutorial.
 * The positive and negative angles w.r.t. the axis.  Positive angles are counter clockwise, as expected.  He doesn't say, and it would be helpful to mention.  
 -->
 
-Ray tracing feels physical -we can imagine and draw rays as they pass through a sequence of surfaces, or as they are reflected by mirrors, or scattered by materials. As designs become complex, however, ray tracing involves a lot of computational steps that can be hard to tedious to calculate accurately. By around 1970, optical engineers began to recognize the value of a purely computational approach that can be performed easily on compouters. This approach, based on  **ray transfer matrix**, apprlies will to the central (paraxial) region of circularly symmetric lenses.
+## ABCD matrix optics {#sec-optics-abcd}
 
-For this simplified case, we can describe each input ray using two variables (@fig-raytransfer-definitions, panel A). The first is the position of the ray with respect to the optical axis ($y$) that is often called its **field height**.  The second is the angle of the ray with respect to the optical axis, ($\theta$). 
+Ray tracing feels physical -we can imagine and draw rays as they pass through a sequence of surfaces, or as they are reflected by mirrors, or scattered by materials. As designs become complex, however, ray tracing involves a lot of computational steps that can be hard to tedious to calculate accurately. Around 1970, as computers became widespread, optical engineers began to use a computational approach to approximate different designs.  This approach, based on the **ray transfer matrix**, analyzes the central (paraxial) region of circularly symmetric lenses.
 
-![Ray transfer matrix parameter defintions](images/optics/09-morelens/definitions.png){#fig-raytransfer-definitions width="70%"}
- 
- that is also called an **ABCD** matrix, simplifies the calculations. 
+This matrix algebra approach, often called ABCD matrix optics, simplifies the analysis by representing each optical element—and even the spaces between them—as a simple 2x2 matrix. By multiplying these matrices together, we can find a single matrix that describes the entire optical system, making it much easier to calculate key properties like focal length and ray position.
 
-We can describe what happens to a ray of light as it (a) crosses a surface, or (b) continues through the medium, using a. The whole journey, from the object side to the image side, is a sequence of such transforms and can be described by mutiplying the matrices together.  
+The parameters used in the computation are shown in @fig-raytransfer-definitions. Each input ray is described by two variables (@fig-raytransfer-definitions, panel A). The first variable is the distance of the ray from the optical axis ($y$), which is called the **field height**.  The second variable is the angle between the ray and the optical axis, ($\theta$). By convention, counter-clockwise angles are positive.  
 
-### Refraction through a series of thin lenses
+![Ray transfer matrix parameter defintions](images/optics/09-morelens/definitions.png){#fig-raytransfer-definitions width="50%"}
+
+We place these parameters in a 2-vector $\rho = (y, \theta)$. Then we define a series of ray transfer matrices, using the principles we reviewed in @sec-optics-lenses, that follow the journey of the ray through the thick lens.
+
+### Refraction - First Surface 
+Snell's Law tells us how the rays change direction at the first surface of a spherical lens (@eq-snell). As you can see in @fig-1st-surface, the rays change direction by an amount that depends on their field height.  The critical point -I won't show the derivation- is that the amount of change is proportional to field height. In the paraxial regime the change is the same, no matter what the input ray angle. 
+
+![The output ray angles change proportionally to field height, $y_1$. Using the sign convention (@fig-raytransfer-definitions), the constant of proportionality is negative.](images/optics/09-morelens/yPhi-1st-surface.png){#fig-1st-surface width=60%}
+
+As the ray passes through the surface, the field height itself does not change. We can use these two observations to create the ray transfer matrix that describes how the input ray, $\rho_1 = (y_1, \theta_1)$ becomes the output ray, $\rho_2$.
 
 $$
-M_{\text{lens}} =
+M_{S1} =
 \begin{pmatrix}
 1 & 0 \\
--\tfrac{1}{f} & 1
+\dfrac{n_1 - n_2}{R_1 ~ n_2} & \dfrac{n_1}{n_2}
 \end{pmatrix}
+\qquad
+\rho_2 = M_{\text{S1}} \rho_1
 $$
 
-where $f$ is the focal length of the lens.
+where:
 
-### Propagation through free space (distance $d$)
+- $n_1$ is the refractive index of the medium on the left (e.g., air),
+- $n_2$ is the refractive index of the lens material,
+- $R_1$ is the radius of curvature of the first surface (positive for convex, negative for concave).
 
+### Translation Through the Lens 
+After a light ray crosses a surface boundary, it continues in a straight path.  In this case, the situation is reversed: the field height $y$ changes but the angle (direction) does not. The change in field height is proportional to the angle, $y = d \theta$.  This makes the ray transfer matrix through a uniform medium quite simple.
 $$
-M_{\text{free space}} =
+M_{T} =
 \begin{pmatrix}
 1 & d \\
 0 & 1
 \end{pmatrix}
 $$
 
-Multiply the matrices for each lens and spacing in sequence from the first element to the last. This will give you an overall system matrix $M$of the form:
+### Refraction - Second Surface
+Finally, as the ray passes the second surface into the surrounding medium, we have a ray transfer matrix with different parameters but the same structure as the first surface.
+
+$$
+M_{S2} =
+\begin{pmatrix}
+1 & 0 \\
+\dfrac{n_2 - n_1}{R_2 n_1} & \dfrac{n_2}{n_1}
+\end{pmatrix}
+$$
+
+where:
+
+- $R_2$ is the radius of curvature of the second surface,
+- $n_2$ is the refractive index inside the lens,
+- $n_1$ is the refractive index of the medium outside the lens.
+
+These three matrices describe the ray's journey. Their product is the ray transfer matrix of the entire thick lens. The $2 \times 2$ matrix $M$ is called the **ABCD matrix**,
 
 $$
 M =
 \begin{pmatrix}
 A & B \\
 C & D
-\end{pmatrix}
+\end{pmatrix} = M_{S2} M_{T} M_{S1}
 $$
 
-where $(A, B, C, D)$ are the elements of the resulting matrix after multiplication.
+If we have optics with more spherical, circularly symmetric surfaces, we can continue to define and apply more matrices to create the ray transfer matrix for the system. We only need to know the indices of refraction and the radii of curvature of each surface. If the lenses are close to spherical near the optical axis, this approach still serves as an approximation of performance.
 
-### Effective Focal Length
+::: {.callout-note title="Thin lens" collapse="false"}
+A useful special case to remember is the ray transfer matrix for a thin spherical lens, with the surrounding medium air, $n_1 = 1$, and the index of refraction of the material is $n$. This case is a bit simpler because the thickness is considered to be $d=0$. For a thin lens, the $y_1$ value of the object side ray is the same as the $y_2$ on the image side. The angle of the input ray angle, $\theta_1$, becomes a new angle, $\theta_2$. 
 
-The effective focal length $f_{\text{eff}}$ of the system can be found from the matrix $M$ using:
+![The input rays are parallel to the optic axis, $\theta_1 = 0$. The output ray angles change proportionally to the input ray field field height, $y_1$. According to the sign convention (@fig-raytransfer-definitions), the constant of proportionality is negative.](images/optics/09-morelens/yPhi-equation.png){#fig-yPhi width=50%}
 
-$$
-f_{\text{eff}} = -\frac{1}{C}
-$$
-
-where $C$ is the element in the bottom-left of the sy
-
-
-## Full Calculation for a Thick Lens
-
-If the lens is thick, meaning it has a non-negligible thickness $t$, the full ray transfer matrix consists of three steps:
-
-### 1. Refraction at the First Surface (radius $ R_1 $)
+We can calculate the constant of proportionality $\Phi$ from the lens parameters (indices of refraction and radii of curvature) and medium.  
 
 $$
-M_{\text{refraction 1}} =
+\Phi = \frac{n_{2}-n_{1}}{n_{1}} \left(\frac{1}{R_{1}} - \frac{1}{R_{2}}\right)
+$$ {#eq-Phi-ior}
+
+We can express the transformation of the ray $(y_1, \theta_1)$ into $(y_2, \theta_2)$ as 2x2 matrix, accounting for the sign convention, 
+
+$$
+M_{\text{lens}}
+=
 \begin{pmatrix}
 1 & 0 \\
-\dfrac{n_1 - n_2}{R_1} & \dfrac{n_1}{n_2}
-\end{pmatrix}
+-\Phi & 1
+\end{pmatrix},
 $$
 
-where:
-- $n_1$ is the refractive index of the medium on the left (e.g., air),
-- $n_2$ is the refractive index of the lens material,
-- $R_1$ is the radius of curvature of the first surface (positive for convex, negative for concave).
-
----
-
-### 2. Propagation Through the Lens Material (thickness $ t $)
+That's cool.  And for a thin lens, it's even more cool because really only the focal length really matters. Imagine what happens if the focal length shortens (the angles increase) or lengthens (the angles decrease).  In fact we can express the focal length $f$ in terms of the lens parameters this way.
 
 $$
-M_{\text{propagation}} =
-\begin{pmatrix}
-1 & \tfrac{t}{n_2} \\
-0 & 1
-\end{pmatrix}
-$$
+\frac{1}{f} =  \left(\frac{n_{2}}{n_{1}} - 1\right)
+\left(\frac{1}{R_{1}} - \frac{1}{R_{2}}\right),
+$${#eq-f-ior}
 
----
-
-### 3. Refraction at the Second Surface (radius $ R_2 $)
+so the thin lens matrix can also be written this way
 
 $$
-M_{\text{refraction 2}} =
+M_{\text{lens}}
+=
 \begin{pmatrix}
 1 & 0 \\
-\dfrac{n_2 - n_1}{R_2} & \dfrac{n_2}{n_1}
-\end{pmatrix}
+-\tfrac{1}{f} & 1
+\end{pmatrix}.
 $$
 
-where:
-- $R_2$ is the radius of curvature of the second surface,
-- $n_2$ is the refractive index inside the lens,
-- $n_1$ is the refractive index of the medium outside the lens.
+:::
+
+### Effective and back focal lengths
+Multi-lens systems can be summarized by their ray transfer matrix. This is a very efficient way to communicate about system properties, though it is quite incomplete compared to a full specification of the components and their materials. Because these are not computed, the specification in this simpler form is often called a black box model of the optics.
+
+We can compute two particularly valuable system properties from the matrix, the back focal length (BFL), $f_B$, and the effective focal length (EFL), $f_E$. BFL is the distance from the system’s output reference plane to the focal point (for an object at infinity). EFL is the distance from the secondary principal plane to the focal point.
+
+![Back and Effective focal lengths of a black box system.](images/optics/09-morelens/efl-bfl.png){#fig-efl-bfl width=60%}
+
+To determine these focal lengths, we compute where an input ray that is parallel to the optical axis emerges and crosses the optical axis. An input ray parallel to the optical axis has the form $\rho_{\text{in}}=(y_{\text{in}},\theta_{\text{in}})=(y,0)$. Because $\theta_{\text{in}}=0$, the corresponding output ray depends only on $A$ and $C$, $\rho_{\text{out}}=(y_{\text{out}},\theta_{\text{out}})=(A y, C y)$.
+
+The two output parameters determine the line the output ray follows in the $z$-direction. It starts at the output field height and slopes toward the optical axis. The line reaches the optical axis at the $z$ where
+$$
+\begin{aligned}
+0 &= y_{\text{out}} + z\,\theta_{\text{out}} \\
+z &= -\frac{y_{\text{out}}}{\theta_{\text{out}}} = -\frac{A}{C}.
+\end{aligned}
+$$
+
+By definition of the principal planes, we can shift the reference planes so the system behaves like a thin lens there (this choice makes $A=1$, while $C$ is invariant to such shifts). Hence
+$$
+f_{B} = -\frac{A}{C},
+\qquad
+f_{E} = -\frac{1}{C}.
+$$
+
+N.B. I use a simple parameterization of the ray state, $(y,\theta)$. There are others -and they can be very smart- who prefer to use the **reduced-angle convention**.  They incorporate the index of refraction into the angle $(y,n\,\theta)$.  In that framing, replace $C$ by $C/n_{\text{out}}$. 
 
 
 ## Ray transfer functions {#sec-optics-raytransfer}
-We are headed to a second, somewhat different, way of thinking about optics. This framing treats optics as a function that takes an input and produces an output. The 
+I expect that we will continue to see computational methods based on rays continue to expand. The ray transfer framing is an important conceptualization and it is thrilling to see the roots of linear algebra and optics coordinate so well. The limitation of the approach to circularly symmetric, paraxial analyses is quite significant. It is clear that we would like to be able to broaden the approach, say by developing functions that map the entire set of input rays to the output rays. 
 
-Use Ray Transfer Function.  Rely on the text from our paper. images here in some way. Maybe introduce the metalens concept. Maybe even the spatial light modulator. They could go in a next section/chapter.
+A number of groups have worked to put together functions that extend the ABCD formulation to a much broader mapping, which @goossens2022-raytransferfunctions labeled the **Ray Transfer Function**.  Some groups mapped the rays using polynomials (Hopkins, @Hullin2012-polynomial-optics), and others have worked with neural networks (@Xian2023-neurolens). 
 
-Use Goossens text here.
+The future of lens manufacturing and design is likely to include metalenses (@sec-optics-metalens) based on nanoscale structures that cannot be modeled by ray training, it will become increasingly important to develop tools to specify the ray transfer function of optical components.  The development of this infrastructure is a large, and interesting, task for the future.
 
-More on metalenses.
 
 
