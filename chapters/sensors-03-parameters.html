@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-08">
+<meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
+
+<title>16&nbsp; Sensor parameters – Foundations of Image Systems Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/sensors-04-components.html" rel="next">
+<link href="../chapters/sensors-02-pixels.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/hover.css">
+<link rel="stylesheet" href="../styles/callouts.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/sensors-01-photoelectric.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/sensors-03-parameters.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Foundations of Image Systems Engineering</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scenes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-03-properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light field properties</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-04-properties-spectral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Optics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-02-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lens principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-03-thinlens.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-04-morelenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-05-linear-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-06-linear-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-07-wavefront.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sensors</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-01-photoelectric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-02-pixels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-03-parameters.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-04-components.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">System components</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-05-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Control systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-06-characterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image system modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-07-innovations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sensor innovations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Human</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/human-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Human vision</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Displays</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Image processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/imgprocessing-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-system-parameters-overview" id="toc-sec-system-parameters-overview" class="nav-link active" data-scroll-target="#sec-system-parameters-overview"><span class="header-section-number">16.1</span> Sensor parameters</a></li>
+  <li><a href="#sec-pixel-sensitivity-fillfactor" id="toc-sec-pixel-sensitivity-fillfactor" class="nav-link" data-scroll-target="#sec-pixel-sensitivity-fillfactor"><span class="header-section-number">16.2</span> Pixel sensitivity and fill factor</a></li>
+  <li><a href="#sec-wellcapacity-dynamicrange" id="toc-sec-wellcapacity-dynamicrange" class="nav-link" data-scroll-target="#sec-wellcapacity-dynamicrange"><span class="header-section-number">16.3</span> Well capacity and dynamic range</a></li>
+  <li><a href="#sec-pixel-responsecurve" id="toc-sec-pixel-responsecurve" class="nav-link" data-scroll-target="#sec-pixel-responsecurve"><span class="header-section-number">16.4</span> Pixel response curve</a></li>
+  <li><a href="#sec-pixel-gain" id="toc-sec-pixel-gain" class="nav-link" data-scroll-target="#sec-pixel-gain"><span class="header-section-number">16.5</span> Pixel gain</a></li>
+  <li><a href="#sec-pixel-noise" id="toc-sec-pixel-noise" class="nav-link" data-scroll-target="#sec-pixel-noise"><span class="header-section-number">16.6</span> Pixel noise</a>
+  <ul class="collapse">
+  <li><a href="#sec-reset-noise-cds" id="toc-sec-reset-noise-cds" class="nav-link" data-scroll-target="#sec-reset-noise-cds"><span class="header-section-number">16.6.1</span> Reset noise and correlated double sampling</a></li>
+  <li><a href="#sec-dark-current" id="toc-sec-dark-current" class="nav-link" data-scroll-target="#sec-dark-current"><span class="header-section-number">16.6.2</span> Dark current</a></li>
+  <li><a href="#sec-temperature-effects" id="toc-sec-temperature-effects" class="nav-link" data-scroll-target="#sec-temperature-effects"><span class="header-section-number">16.6.3</span> Temperature effects</a></li>
+  </ul></li>
+  <li><a href="#sec-array-noise" id="toc-sec-array-noise" class="nav-link" data-scroll-target="#sec-array-noise"><span class="header-section-number">16.7</span> Array noise</a>
+  <ul class="collapse">
+  <li><a href="#sec-dark-signal-nonuniformity" id="toc-sec-dark-signal-nonuniformity" class="nav-link" data-scroll-target="#sec-dark-signal-nonuniformity"><span class="header-section-number">16.7.1</span> Dark signal nonuniformity (DSNU)</a></li>
+  <li><a href="#sec-photoresponse-nonuniformity" id="toc-sec-photoresponse-nonuniformity" class="nav-link" data-scroll-target="#sec-photoresponse-nonuniformity"><span class="header-section-number">16.7.2</span> Photoresponse nonuniformity (PRNU)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/sensors-01-photoelectric.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/sensors-03-parameters.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-system-parameters" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Work in Progress
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
+<p>Last updated: September 8, 2025</p>
+</div>
+</div>
+</div>
+<section id="sec-system-parameters-overview" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="sec-system-parameters-overview"><span class="header-section-number">16.1</span> Sensor parameters</h2>
+<p>Simulations of the CMOS circuitry can -and do- become very complex during the design phase. Engineers use specialized software that incorporates the foundry’s design rules that account for material properties and feature sizes. This design software helps circuit designers achieve a working system from the foundry.</p>
+<p>After the chip is built, it is impractical to characterize each different line, device and junction. Designers may place certain test circuits within the chip. But more generally systems are evaluated with respect to a set of objective measurements using images as input and digital values of output. This process is called called <strong>system characterization</strong> or <strong>system calibration</strong>. The characterization measurements specify the limitations of system performance, including light sensitivity, system noise, dynamic range, and color accuracy.</p>
+<p>The ability to improve a system requires that we have parameters that are practical to measure and insightful about potential system imperfections. The parameters described in this section are designed to characterize key system limitations based on knowledge of the pixel, sensor, and circuit properties. Certain fundamental parameters will remain the same, even as structures and circuits evolve. This section first introduces the fundamental parameters that should apply to pixels and sensors across all technologies. The next section introduces the limitations and noise associated with each of these types of parameters.</p>
+<p>With the new advances in circuits and algorithms, new parameters and noise analyses will be needed. The parameters introduced here are fundamental, and I expect they will be an important part of image systems engineering for a long time.</p>
+</section>
+<section id="sec-pixel-sensitivity-fillfactor" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="sec-pixel-sensitivity-fillfactor"><span class="header-section-number">16.2</span> Pixel sensitivity and fill factor</h2>
+<p>Because modern pixels are so small, each photodiode often collects only a modest number of photons—even under good lighting. For example, a <span class="math inline">\(1~\mu\text{m}^2\)</span> pixel in a dim scene (with a fast f/2 lens) might receive just 200 photons during an exposure. Photon arrivals follow Poisson statistics, so the standard deviation is <span class="math inline">\(\sqrt{200} \approx 14\)</span>, or about 7% of the mean. This photon noise is a fundamental limit: it sets the minimum possible noise level and constrains the signal-to-noise ratio (SNR) in low-light conditions.</p>
+<p>The photodiode occupies only a portion of the pixel area; some of the pixel area is taken up by the circuitry. The proportion of the pixel area that is sensitive to light—the photodiode area—further limits light sensitivity. This proportion is called the <strong>fill factor</strong>. A higher fill factor means more of the pixel is used to detect light, increasing sensitivity. Fill factor is usually expressed as a value between 0 and 1, or as a percentage between 0% and 100%. The first-generation of CMOS image sensors were built with semiconductor technology with feature size on the order of 350 nm, and thus the circuitry might occupy as much as half of the pixel area (fill factor of 0.5). Over years the feature size has shrunk considerably and the fill factor of modern pixels can be greater than 0.9. The fill factor combined with the light sensitivity of the photodiode might result in about 150 electrons generated from the 200 photons. This number, too, is Poisson distributed so the short noise will be about <span class="math inline">\(\sqrt{150} \approx 14\)</span>, about 8% of the mean.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Photons per pixel">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Photons per pixel
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The number of photons arriving at a pixel depends on many factors, including the light intensity, the optics, and the size of the pixel. ISETCam is a useful tool for estimating quantities such as the number of incident photons. The variance in the number of photons at a <span class="math inline">\(1~\mu\text{m}^2\)</span> pixel under moderate to dim lighting is considerable. Here is an image calculated using ISETCam, showing the Poisson variation in the number of photons across a small region.</p>
+<p><img src="images/sensors/15-parameters/03-photonimage.png" id="fig-photonimage" class="img-fluid" style="width:60.0%" alt="Poisson noise in a uniform region of a dim scene. Each pixel is $1~\mu\text{m}^2$ and the scene intensity is 50 nits.">.</p>
+<p>This <a href="../code/fise_opticsCountingPhotons.html">ISETCam script</a> illustrates the calculation. Nearly every sensor simulation we run in ISETCam includes calculations like this.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-wellcapacity-dynamicrange" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="sec-wellcapacity-dynamicrange"><span class="header-section-number">16.3</span> Well capacity and dynamic range</h2>
+<p>The photodiode and floating diffusion node in each pixel act as charge storage devices, often referred to as <strong>storage wells</strong>. The maximum number of electrons that can be stored in these wells is called the <strong>well capacity</strong> or <strong>full-well capacity</strong>. When the number of photo-generated electrons exceeds this capacity, any additional electrons cannot be stored, and the pixel output no longer increases with light intensity. Well capacity is therefore a key factor in determining the pixel’s dynamic range and the point at which it stops responding to additional light.</p>
+<p>The <strong>dynamic range</strong> of a pixel is defined as the ratio between the largest and smallest amounts of light that can be reliably measured. Specifically, we measure the minimum detectable light level (<span class="math inline">\(L_{min}\)</span>) and the maximum light level (<span class="math inline">\(L_{max}\)</span>) that fills the well just below saturation. The dynamic range is then calculated as:</p>
+<p><span class="math display">\[
+\text{DR} = 20~\log_{10}\left(\frac{L_{max}}{L_{min}}\right)
+\]</span></p>
+<p>The logarithm compresses the range into more manageable numbers, typically between 60 and 100. The factor of 20 comes from conventions in audio engineering, where dynamic range is measured in decibels (dB). Image scientists use the same convention, so dynamic range is usually reported in dB.</p>
+</section>
+<section id="sec-pixel-responsecurve" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="sec-pixel-responsecurve"><span class="header-section-number">16.4</span> Pixel response curve</h2>
+<p>The finite well capacity can also have an impact on how the response increases with intensity. <a href="#fig-sensor-linearity" class="quarto-xref">Figure&nbsp;<span>16.1</span></a> shows an estimate of the number of stored electrons as a function of number of incident photons for a real sensor. The number of stored electrons increases linearly over a large part of the range. Beyond a certain level, as we approach the storage limit, the curve starts to saturate. As the light intensity increases even further, the curve completely flattens at the well capacity, in this example about 70,000 electrons.</p>
+<div id="fig-sensor-linearity" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sensor-linearity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/sensors/15-parameters/03-responselinearity.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensor-linearity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.1: A CMOS sensor response curve, showing the number of electrons captured as function of the number of incident photons. From Figure 7 in that paper.
+</figcaption>
+</figure>
+</div>
+<p>This pattern can be understood in terms of the physics. At low and moderate light levels, nearly all photo-generated electrons are successfully stored in the well. The photoelectric effect is linear and thus there is a linear increase in stored charge with increasing light intensity.</p>
+<p>As the well nears its full capacity, several effects cause the response to become sublinear and eventually saturate. First, when the storage well is almost full, some newly generated electrons cannot be stored and may leak out or recombine, reducing the efficiency of charge collection. Second, some electrons generated by photons may diffuse into neighboring regions of the sensor substrate rather than being stored in the intended circuit element (e.g., floating diffusion noise). Both leakage and diffusion become more significant at higher light intensities, causing the response curve to flatten out as it approaches saturation.</p>
+<p>The exact onset and severity of this nonlinearity depend on the specific circuit design and material properties of the sensor. In certain designs the nonlinearity is negligible, with only some degree of nonlinearity as the well capacity is approached. Understanding the response curve is important for accurately interpreting sensor measurements, especially in applications that require high dynamic range or precise quantitative imaging.</p>
+</section>
+<section id="sec-pixel-gain" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="sec-pixel-gain"><span class="header-section-number">16.5</span> Pixel gain</h2>
+<!--
+FISE-Sensor
+4T CMOS Conversion Gain; ISO Speed and Gain 
+-->
+<p>The electrons in the floating diffusion node create a voltage that is read out. The size of the voltage depends on the capacitance of the node. The quantity that relates the voltage per electron is called the conversion gain, <span class="math inline">\(CG\)</span>. It specifies how much the voltage changes for a given change in charge.</p>
+<p><span id="eq-conversion-gain"><span class="math display">\[
+CG = \frac{\Delta V}{\Delta Q}
+\tag{16.1}\]</span></span></p>
+<p>The units of conversion gain are volts per electron. Thus, if we store 100 electrons in the diffusion node, the readout voltage will be <span class="math inline">\(100 \times CG\)</span>.</p>
+<p>Furthermore, recall that the capacitor voltage depends is proportional to the number of electrons it holds divided by its capacitance (farads). Thus, <span class="math inline">\(\Delta V = \Delta Q / C\)</span> were <span class="math inline">\(C\)</span> is capacitance in <strong>farads</strong>.</p>
+<p><span id="eq-conversion-gain-capacitance"><span class="math display">\[
+CG = 1 / C
+\tag{16.2}\]</span></span></p>
+<p>In film photography, light sensitivity was controlled by the film chemistry. The sensitivity was specified by a variable called its <strong>speed</strong>, and an international standard, <strong>ISO speed</strong>, was created to measure this sensitivity.</p>
+<p>Digital sensors control their relative sensitivity by circuitry that modulates the conversion gain. One widely used approach, <strong>dual conversion gain</strong>, adjusts the floating diffusion node capacitance. This is implemented using a switchable capacitor that can be connected, or not, to the node. The connection is controlled by a switchable transistor signal. In low conversion gain (<strong>LCG</strong>) mode, the capacitor is connected to the floating diffusion node; this increases the total capacitance and lowers the conversion gain (<a href="#eq-conversion-gain-capacitance" class="quarto-xref">Equation&nbsp;<span>16.2</span></a>). In high conversion gain (<strong>HCG</strong>) mode, the capacitor is disconnected; this reduces the total capacitance and increases the conversion gain.</p>
+<p>The LCG mode is used under normal or bright scene illumination. The HCG is useful when the scene is dark and there are relatively few photon generated electrons. The well capacity varies between these modes, so that the dynamic range of the sensor is reduced when it is in HCG mode. Of course, once an engineer builds a system with dual conversion modes you can expect another engineer to build a system with four or eight nodes (<strong>multi-capacitor gain switching</strong>).</p>
+<div id="note-sensor-speed" class="callout callout-style-default callout-note callout-titled" title="Sensor speed">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Sensor speed
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The dual conversion gain method is a true sensitivity adjustment: the conversion gain genuinely changes and the signal-to-noise of the sensor increases, while the well capacity decreases.</p>
+<p>Commercial vendors use other methods to approximate ISO speed. In one approach, after the charge is converted to a voltage the signal is amplified by an analog amplifier prior to ADC. This approach amplifies both the signal and noise. Its value is that in low light conditions the output spans the full bit depth.</p>
+<p>In desperate times, some vendors simply scale the digital values. In this case the rendered image will be brighter because the digital values span the full range. But the approach isn’t great - it amplifies signal, noise, and quantization artifacts.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-pixel-noise" class="level2" data-number="16.6">
+<h2 data-number="16.6" class="anchored" data-anchor-id="sec-pixel-noise"><span class="header-section-number">16.6</span> Pixel noise</h2>
+<p>All real systems have the potential for imperfections. Eliminating these imperfections is a fundamental goal of engineering, and image systems are no exception.</p>
+<p>If we acquire the same image repeatedly, even with no change in the scene, there will be fluctuations in a pixel’s output. The difference in a pixel’s output across time is called <strong>temporal noise</strong>. There are several contributors to this variation. We have already reviewed one important contributor, the Poisson distribution of the electrons at the photodiode (Section <a href="sensors-01-photoelectric.html#sec-shot-noise" class="quarto-xref"><span>Section 14.6</span></a>). Each of the different components of the pixel are potential sources of temporal noise. Here is a list.</p>
+<section id="sec-reset-noise-cds" class="level3" data-number="16.6.1">
+<h3 data-number="16.6.1" class="anchored" data-anchor-id="sec-reset-noise-cds"><span class="header-section-number">16.6.1</span> Reset noise and correlated double sampling</h3>
+<p>In the 3T and 4T circuits, we must transfer the electrons from the photodiode (in 3T) or from the floating diffusion node (in 4T). In both cases, there is the possibility that as we start to collect the electrons there will be a random number of electrons left over from the prior image capture. This variable number of unwanted electrons is a failure to reset the storage to exactly the same state, thus it is called <strong>reset noise</strong>.</p>
+<p>This noise is present in both 3T and 4T circuits, but it has different properties because the storage location differs (<a href="sensors-02-pixels.html#sec-4T-pixel-design" class="quarto-xref"><span>Section 15.4.2</span></a>). An important feature of the 4T circuit is that the floating diffusion noise can be read just prior to transferring the electrons from the photodiode, and then again after electrons have been transferred. The difference is read out as the pixel value. This process is called <strong>correlated double sampling (CDS)</strong>, and it significantly reduces reset noise.</p>
+<p>In a 3T pixel, reading the voltage on the photodiode disturbs the accumulated charge. CDS relies on making two non-destructive measurements, which is not possible on the photodiode itself in the 3T circuit.</p>
+<p>Reset noise is also known as <span class="math inline">\(kTC\)</span> noise because its size depends on a formula related to the capacitance of the floating diffusion node. The most common representation of the noise is with respect to the pixel voltage.</p>
+<p><span id="eq-ktc-volts"><span class="math display">\[
+{\sigma_V}^2 = \frac{kT}{C}
+\tag{16.3}\]</span></span></p>
+<p>The units of these parameters are:</p>
+<ul>
+<li><span class="math inline">\(k\)</span> - Boltzmann constant - Joules per Kelvin</li>
+<li><span class="math inline">\(T\)</span> - Temperature - Kelvin</li>
+<li><span class="math inline">\(C\)</span> - Capacitance Farads = Coulombs per volt</li>
+</ul>
+<p>The formula above shows that reset noise increases with temperature (<span class="math inline">\(T\)</span>). As a result, sensors in colder environments (such as ski slopes) experience less reset noise than those in warmer settings (like beaches in summer). To address this, many cameras use temperature sensors and adjust their image processing to compensate for temperature-dependent noise, helping to maintain consistent image quality in different conditions.</p>
+<p>In the 4T pixel, the circuit first measures the voltage on the floating diffusion node before transferring charge from the photodiode (capturing a baseline), and then again after the charge is transferred. The difference between these two measurements represents the pixel signal. This subtraction cancels much of the reset noise, improving signal-to-noise ratio.</p>
+<p>The 4T design is now standard due to its superior noise performance. Further innovations, such as dual conversion gain and stacked pixel structures have also expanded the dynamic range of CMOS sensors. We will explore some of these developments in <a href="sensors-07-innovations.html" class="quarto-xref"><span>Chapter 20</span></a>.</p>
+<div id="sensor-ktc" class="callout callout-style-default callout-note callout-titled" title="Reset noise units">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reset noise units
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The reset noise formula in <a href="#eq-ktc-volts" class="quarto-xref">Equation&nbsp;<span>16.3</span></a> gives the noise variance in units of volts. However, it is often more useful to express reset noise in terms of the number of electrons. The equivalent formula for the variance in charge is</p>
+<p><span id="eq-ktc-electrons"><span class="math display">\[
+{\sigma_Q}^2 = k T C
+\tag{16.4}\]</span></span></p>
+<p>Here, <span class="math inline">\({\sigma_Q}\)</span> is in Coulombs. To convert this to electrons, divide by the elementary charge (<span class="math inline">\(1.602 \times 10^{-19}\)</span> Coulombs per electron):</p>
+<p><span class="math display">\[
+\sigma_e \approx \frac{\sqrt{k T C}}{1.602 \times 10^{-19}}
+\]</span></p>
+<p>Reset noise is typically modeled as a Gaussian distribution with zero mean and standard deviation <span class="math inline">\(\sigma_e\)</span> electrons.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-dark-current" class="level3" data-number="16.6.2">
+<h3 data-number="16.6.2" class="anchored" data-anchor-id="sec-dark-current"><span class="header-section-number">16.6.2</span> Dark current</h3>
+<p>Even in the absence of light, electrons are generated within the semiconductor material. These electrons make up the <strong>dark current</strong>. The size of the dark current depends on factors such as the temperature and the bandgap of the material. The number of accumulated dark electrons increases over time.</p>
+<p>Dark electrons accumulate in the same storage as photon-generated electrons and are indistinguishable from them in the readout. But the dark electrons are not informative about the scene; in fact, they interfere with inferences one would make about the scene.</p>
+<p>There is a relatively large impact of temperature on dark current <span class="math inline">\(I_d\)</span>. The scaling of the current with temperature is specified by this standard formula:</p>
+<p><span id="eq-sensor-darkcurrent"><span class="math display">\[
+I_d(T) \propto T^3 e^{-E_g/kT}
+\tag{16.5}\]</span></span></p>
+<p>We can convert the dark current (in <span class="math inline">\(C/s\)</span>) to a rate of electrons per second by dividing by the elementary charge (<span class="math inline">\(1.602 \times 10^{-19}~C/e^-\)</span>). The symbol <span class="math inline">\(C\)</span> is Coulombs. The number of dark electrons is random and follows a Poisson distribution with a mean equal to the expected number of dark electrons for the exposure time.</p>
+<p>The dark current level depends on multiple features of the circuit and is hard to predict from first principles. The dark current level is usually determined empirically and reported in the data sheets describing the sensor.</p>
+<div id="sensor-dark-current" class="callout callout-style-default callout-note callout-titled" title="Dark current units">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Dark current units
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<!-- https://www.onsemi.com/pdf/datasheet/noii4sm6600a-d.pdf -->
+<p>A data sheet for a (discontinued) ON Semiconductor sensor specifies a dark current of <span class="math inline">\(78~e^{-}/\text{s}\)</span> at <span class="math inline">\(T = 21^\circ\text{C} = 294.15~\text{K}\)</span>. If we take a picture with a 0.03 second exposure, we expect an average of <span class="math inline">\(2.34\)</span> dark electrons per pixel. If the temperature rises by <span class="math inline">\(30\)</span> Kelvin, to <span class="math inline">\(324.15~\text{K}\)</span>, the mean number of dark electrons increases to <span class="math inline">\(3.13\)</span>. The number of dark electrons is Poisson distributed, so the variance equals the mean.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-temperature-effects" class="level3" data-number="16.6.3">
+<h3 data-number="16.6.3" class="anchored" data-anchor-id="sec-temperature-effects"><span class="header-section-number">16.6.3</span> Temperature effects</h3>
+<p>The sections on reset noise and dark current were two examples of how noise depends on temperature. CMOS image sensors are sensitive to temperature in other ways as well, because many of their key physical processes depend on thermal energy. Here is a summary of the factors that change as temperature rises:</p>
+<ul>
+<li><strong>Dark current increases exponentially</strong>, adding background signal and noise even in the absence of light.</li>
+<li><strong>Reset noise</strong> (kTC noise) grows linearly with temperature, especially affecting sensors without correlated double sampling.</li>
+<li><strong>Analog circuit offsets and gain</strong> can drift, altering pixel output levels and introducing fixed-pattern noise.</li>
+<li><strong>Leakage currents and charge transfer inefficiencies</strong> rise, degrading low-light performance and introducing artifacts.</li>
+</ul>
+<p>Together, these effects cause image quality to degrade—particularly in precision applications like scientific imaging or long exposures. To mitigate these issues, sensors often include:</p>
+<ul>
+<li><strong>Real-time temperature sensors</strong></li>
+<li><strong>Calibration tables</strong> for dark current, gain, and noise</li>
+<li><strong>Active cooling systems</strong></li>
+<li><strong>Post-processing corrections</strong> such as dark-frame subtraction and flat-field normalization</li>
+</ul>
+<p>Temperature compensation by cooling helps maintain consistent signal-to-noise ratio, dynamic range, and color accuracy across operating conditions. If cooling is not possible, knowledge of how noise depends on temperature is important when processing and interpreting camera data.</p>
+</section>
+</section>
+<section id="sec-array-noise" class="level2" data-number="16.7">
+<h2 data-number="16.7" class="anchored" data-anchor-id="sec-array-noise"><span class="header-section-number">16.7</span> Array noise</h2>
+<p>The discussion so far has focused on the properties of CMOS imagers at the level of individual pixels. When manufacturing an array comprising millions of pixels, there will be minor differences between the pixels in the array. For example, the area of the photodiode might differ, or the capacitance of the floating diffusion node, or perhaps the material doping concentration. Although modern foundries achieve remarkable uniformity, some variation is inevitable.</p>
+<p>These are variations between pixels and are often referred to as <strong>sensor noise</strong>. Some of the sensor variations do not change over time; for example, the relative photodiode area of different pixels. These variations across the sensor are called <strong>fixed pattern noise (FPN)</strong>.</p>
+<div id="fig-sensor-noise" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sensor-noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/sensors/15-parameters/03-sensor-noise.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensor-noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.2: Sensor fixed pattern noise. On average, the pixel response is linear, but manufacturing variations introduce slight differences in the offset and slope. Dark signal nonuniformities (DSNU) are variations in the offset. These can be due to different amounts of dark current or unaccounted for bias in the reset noise. Photoresponse nonuniformities (PRNU) are variations in the slope of the response. These can be due to differences in the photodiode area or in the transparency of the path from the imaging lens to the pixel.
+</figcaption>
+</figure>
+</div>
+<section id="sec-dark-signal-nonuniformity" class="level3" data-number="16.7.1">
+<h3 data-number="16.7.1" class="anchored" data-anchor-id="sec-dark-signal-nonuniformity"><span class="header-section-number">16.7.1</span> Dark signal nonuniformity (DSNU)</h3>
+<p><strong>Dark signal nonuniformity (DSNU)</strong> refers to the variation in the dark current across the pixels. Some pixels may accumulate dark current at slightly different rates. As a result, when we consider their response to increasing amounts of light, they will start at slightly different levels. This is illustrated in the variation of the starting positions at zero illumination level in Figure <a href="#fig-sensor-noise" class="quarto-xref">Figure&nbsp;<span>16.2</span></a>. Recall that the pixel dark current depends on several factors, including temperature and exposure time (<a href="#sec-dark-current" class="quarto-xref"><span>Section 16.6.2</span></a>). Hence, the DSNU will also depend on these factors.</p>
+</section>
+<section id="sec-photoresponse-nonuniformity" class="level3" data-number="16.7.2">
+<h3 data-number="16.7.2" class="anchored" data-anchor-id="sec-photoresponse-nonuniformity"><span class="header-section-number">16.7.2</span> Photoresponse nonuniformity (PRNU)</h3>
+<p>The <strong>photoresponse nonuniformity (PRNU)</strong> refers to the variation in the slope (gain) of the pixel responses (<a href="#fig-sensor-noise" class="quarto-xref">Figure&nbsp;<span>16.2</span></a>). There are various reasons why the response curve might differ between pixels. The photodiode area might be slightly larger in one pixel than another, or the effectiveness of the microlens at focusing the light on the photodiode might be slightly different. Also, the media, such as the color filter, may differ slightly between two pixels of the same type.</p>
+
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/sensors-02-pixels.html" class="pagination-link" aria-label="Pixels and sensors">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/sensors-04-components.html" class="pagination-link" aria-label="System components">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">System components</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

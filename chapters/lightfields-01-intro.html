@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-08">
+<meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
+
+<title>2&nbsp; Light and seeing – Foundations of Image Systems Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/lightfields-02-measurement.html" rel="next">
+<link href="../index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/hover.css">
+<link rel="stylesheet" href="../styles/callouts.css">
+</head>
+
+<body class="nav-sidebar floating slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/lightfields-01-intro.html">Scenes</a></li><li class="breadcrumb-item"><a href="../chapters/lightfields-01-intro.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Foundations of Image Systems Engineering</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scenes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-01-intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-03-properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light field properties</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-04-properties-spectral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Optics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-02-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lens principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-03-thinlens.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-04-morelenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-05-linear-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-06-linear-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-07-wavefront.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sensors</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-01-photoelectric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-02-pixels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-03-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-04-components.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">System components</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-05-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Control systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-06-characterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image system modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-07-innovations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sensor innovations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Human</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/human-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Human vision</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Displays</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Image processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/imgprocessing-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-light-overview" id="toc-sec-light-overview" class="nav-link active" data-scroll-target="#sec-light-overview"><span class="header-section-number">2.1</span> Light and seeing overview</a></li>
+  <li><a href="#sec-light-em-spectrum" id="toc-sec-light-em-spectrum" class="nav-link" data-scroll-target="#sec-light-em-spectrum"><span class="header-section-number">2.2</span> Light and the electromagnetic spectrum</a></li>
+  <li><a href="#sec-lightfields-types" id="toc-sec-lightfields-types" class="nav-link" data-scroll-target="#sec-lightfields-types"><span class="header-section-number">2.3</span> The environmental light field</a></li>
+  <li><a href="#sec-incident-lightfield" id="toc-sec-incident-lightfield" class="nav-link" data-scroll-target="#sec-incident-lightfield"><span class="header-section-number">2.4</span> Incident light field</a></li>
+  <li><a href="#sec-optical-lightfield" id="toc-sec-optical-lightfield" class="nav-link" data-scroll-target="#sec-optical-lightfield"><span class="header-section-number">2.5</span> Optical light field</a></li>
+  <li><a href="#interpreting-the-light-field" id="toc-interpreting-the-light-field" class="nav-link" data-scroll-target="#interpreting-the-light-field"><span class="header-section-number">2.6</span> Interpreting the light field</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/lightfields-01-intro.html">Scenes</a></li><li class="breadcrumb-item"><a href="../chapters/lightfields-01-intro.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-light" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Work in Progress
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
+<p>Last updated: September 8, 2025</p>
+</div>
+</div>
+</div>
+<section id="sec-light-overview" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="sec-light-overview"><span class="header-section-number">2.1</span> Light and seeing overview</h2>
+<p>Electromagnetic radiation fills the world around us, providing a rich and reliable stream of information. Mobile organisms — whether a hawk, a rabbit, or a human — have implemented ways to record and interpret this information. They use the radiation to make decisions and generally interact with their surroundings. We call the sensing and interpretation of the radiation <strong>visual perception</strong> or more simply, <strong>seeing</strong>.</p>
+<p>Visual perception is fundamental for guiding movement, enabling animals to locate resources, avoid threats, and navigate their environments. The use of radiation for mobility and decision-making by mobile organisms is in contrast to immobile life forms, such as trees and plants. For these organisms the ambient radiation serves primarily as a source of energy, rather than information.</p>
+<p>In robotics and most computer applications, visual sensing serves a similar purpose: to enable actions and movement within dynamic and complex environments. Robots with imaging systems identify and manipulate parts. Cars with image systems navigate through their surroundings. Medical imaging provides diagnostic information to guide interventions. For both artificial and biological systems image systems provide information that enables goal-oriented actions.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Who needs a brain?">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Who needs a brain?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>The deep connection between mobility, visual sensing, and the brain is illustrated by the remarkable life path of the <a href="https://movementum.co.uk/journal/sea-squirts" target="_blank">sea squirt</a>. It begins life as tadpole-like larvae, equipped with a brain and a tail for swimming. Once the tadpole finds a suitable spot to settle, it attaches to a hard surface like a rock or coral and becomes immobile.</p>
+<p>As soon as the sea squirt fixes itself to the rock, with no more navigation or swimming, its brain is no longer needed. In a truly bizarre twist, the sea squirt digest its own brain. This adaptation reallocates energy resources from the now unnecessary brain to more vital functions.</p>
+<div id="fig-seasquirt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-seasquirt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/01-lightfields/seasquirt.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-seasquirt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: A sea squirt image from <a href="https://goodheartextremescience.wordpress.com/2010/01/27/meet-the-creature-that-eats-its-own-brain/">this nice site</a>. This one is from Papua New Guinea. Plenty more images (and sea squirts) over there.
+</figcaption>
+</figure>
+</div>
+<p>My Stanford colleague, Irv Weissmann, and his group wrote many papers about neurodegeneration using the sea squirt.</p>
+</div>
+</div>
+</div>
+<p>Consumer photography - a large and important image system application - is an important exception. Consumer photographs are created to store memories and evoke emotions, not to guide navigation or immediate decisions. As I discuss in later chapters, the technologies for evaluating consumer photography differ from standard engineering metrics because of their heavy reliance on the properties of human perception.</p>
+<p>In summary, some image systems measure electromagnetic radiation because the signal is useful for movement or interacting with objects. Other image systems measure radiation to record a moment, enabling us to reproduce the signals at a later time. And finally, some image systems measure electromagnetic radiation at wavelengths we do not see, enabling us to explore domains that are beyond our senses <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. This section of the book is devoted to understanding the signal.</p>
+</section>
+<section id="sec-light-em-spectrum" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="sec-light-em-spectrum"><span class="header-section-number">2.2</span> Light and the electromagnetic spectrum</h2>
+<p>One of the great achievements of science is the realization that seemingly different phenomena are deeply connected. By the early 1800s, scientists had uncovered links between electricity and magnetism: <span class="citation" data-cites="Øersted1820-electricity">Øersted (<a href="references.html#ref-Øersted1820-electricity" role="doc-biblioref">1820</a>)</span> showed that electric currents generate magnetic fields, and <span class="citation" data-cites="Faraday1832-electricity">Faraday (<a href="references.html#ref-Faraday1832-electricity" role="doc-biblioref">1832</a>)</span> demonstrated that changing magnetic fields induce electric currents.</p>
+<p>James Clerk Maxwell unified these discoveries in a set of mathematical equations now known as <strong>Maxwell’s equations</strong>. He demonstrated that oscillating electric and magnetic fields behave as waves that propagate through space. Remarkably, the predicted speed of these waves matched the measured speed of light. Maxwell concluded that light itself is an electromagnetic wave, thereby uniting electricity, magnetism, and optics into a single theoretical framework: electromagnetic radiation spanning a range of wavelengths.</p>
+<p>Not all electromagnetic wavelengths are equally useful for vision. The human eye detects electromagnetic radiation within a specific range, approximately 380 nm to 770 nm. This range is referred to as <em>light</em>—electromagnetic radiation that is visible to the human eye. Radiation in this range is particularly useful for vision because it is strongly absorbed and reflected by objects in the environment, making it ideal for detecting and interpreting the world around us.</p>
+<p>In contrast, high-energy radiation, such as X-rays (0.01–10 nm) and gamma rays (&lt; 0.01 nm), tends to pass through most objects without significant interaction. On the other end of the spectrum, low-frequency radiation (&gt; 1500 nm) provides lower spatial resolution and is heavily influenced by thermal effects, limiting its utility for detailed imaging. The visible spectrum occupies a unique and advantageous position for vision and perception.</p>
+</section>
+<section id="sec-lightfields-types" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-lightfields-types"><span class="header-section-number">2.3</span> The environmental light field</h2>
+<p>Electromagnetic radiation fills the environment, traveling in many directions and often interacting with materials. We call the environmental radiation field in the visible wavelength band the <em>environmental light field</em>.</p>
+<p>Leonardo Da Vinci’s notebook <span class="citation" data-cites="davinciNotebooksLeonardoVinci1970">(<a href="references.html#ref-davinciNotebooksLeonardoVinci1970" role="doc-biblioref">Da Vinci 1970</a>)</span> describes why he concluded that light fills the environment. He placed a small hole in a wall of a windowless room that was adjacent to a brightly illuminated piazza (<a href="#fig-ayscough" class="quarto-xref">Figure&nbsp;<span>2.2</span></a>). This produced an (inverted) image of the piazza on the wall within the room. Leonardo observed that one can place the pinhole anywhere in the wall and an image of the same objects is produced. He concluded that the light field is “all everywhere and all in each part”<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<div id="fig-ayscough" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="James Ayscough's drawing of Da Vinci's concept.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ayscough-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/01-lightfields/Ayscough-1755-small-wikipedia.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" alt="James Ayscough's drawing of Da Vinci's concept.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ayscough-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: Ayscough’s book <span class="citation" data-cites="ayscoughShortAccountEye1755">Ayscough (<a href="references.html#ref-ayscoughShortAccountEye1755" role="doc-biblioref">1755</a>)</span> (“A short account of the eye and nature of vision. Chiefly … to illustrate the use and advantage of spectacles”) opens with this illustration of Da Vinci’s pinhole camera. I superimposed the colored lines to indicate the courtyard light rays, emitted in all directions. The solid lines are selected by the pinhole and form the image in the dark room. The full collection of rays, solid and dotted, represents the <em>environment light field</em>. <a href="https://en.wikipedia.org/wiki/Camera_obscura#/media/File:1755_james_ayscough.jpg">Source: Wikipedia Camera Obscura</a>.
+</figcaption>
+</figure>
+</div>
+<p>For the moment, it is convenient to consider the light field as comprising a large set of rays. We can describe the light field in the environment, <span class="math inline">\(L_E\)</span>, by the intensity of each ray, expressing the intensity as an explicit function of its various parameters. At each point in the volume of space, <span class="math inline">\((x,y,z)\)</span>, there are rays traveling in many directions. We specify these directions by two direction angles <span class="math inline">\((\alpha,\beta)\)</span>, the azimuth and elevation. Each ray has wavelength <span class="math inline">\(\lambda\)</span> and polarization <span class="math inline">\(\rho\)</span>. The ray intensities are described by the function:</p>
+<p><span class="math display">\[
+L_E(x,y,z,\alpha,\beta,\lambda,\rho)
+\]</span></p>
+<p>People in many fields are familiar with the concept of the light field, but they use different terminology. Physicists often describe the environmental light field as the spectral radiance of the environment (see this <a href="https://youtu.be/FjHJ7FmV0M4?si=wi2twZVYjF9KJGRY">lovely description from Feynman</a>). The general <em>light field</em> terminology was introduced into optical engineering by <span class="citation" data-cites="gershunLightField1939">Gershun (<a href="references.html#ref-gershunLightField1939" role="doc-biblioref">1939</a>)</span> as part of his work in understanding how to design lighting environments, such as the lighting in school rooms and public places<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Ted Adelson and Jim Bergen <span class="citation" data-cites="adelson-plenoptic-1991">(<a href="references.html#ref-adelson-plenoptic-1991" role="doc-biblioref">1991</a>)</span> used the term <em>plenoptic function</em> to describe the same idea<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. The great value of the light field concept in computer graphics was explained by Marc Levoy and Pat Hanrahan <span class="citation" data-cites="Levoy-1996-light-field">(<a href="references.html#ref-Levoy-1996-light-field" role="doc-biblioref">1996</a>)</span>. I will use the light field terminology because I find it more familiar and engaging than spectral radiance, electromagnetic radiation, or plenoptic.</p>
+</section>
+<section id="sec-incident-lightfield" class="level2 page-columns page-full" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="sec-incident-lightfield"><span class="header-section-number">2.4</span> Incident light field</h2>
+<p>An imaging system, say the eye or a pinhole, records only the portion of the environmental light field that arrives at its entrance pupil (<a href="#fig-incident-lightfield" class="quarto-xref">Figure&nbsp;<span>2.3</span></a>). It is worth distinguishing that part of the environmental light field with a name: <em>incident light field</em>.</p>
+<div id="fig-incident-lightfield" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-incident-lightfield-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/01-lightfields/01-incident-lightfield.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-incident-lightfield-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.3: The incident light field is the subset of environmental light field rays that arrive at the image systems’ entrance pupil.
+</figcaption>
+</figure>
+</div>
+<p>The rays of the incident light field can be described with one fewer parameter than the environmental light field because the entrance pupil is just a two-dimensional surface. Thus, the three dimensional position is replaced by the two-dimensional position in the entrance pupil, <span class="math inline">\((u,v)\)</span>. We need, however, additional parameters to define the image system: The aperture has a position in space <span class="math inline">\(\mathbf{p}\)</span> and and a viewing direction <span class="math inline">\(\mathbf{n}\)</span>. We include these as a side-condition in the parameters that describe the ray intensities of the incident light field</p>
+<p><span class="math display">\[
+L_I(u,v,\alpha,\beta,\lambda,\rho; ~\mathbf{p},\mathbf{n}) .
+\]</span></p>
+<p>To acquire full information about the environmental light field, we must follow Leonardo and measure the incident light field at multiple locations and directions. Many animals have two eyes and thus acquire two simultaneous measurements of the light field. This has the benefit of acquiring more information about the light field, as well as providing one remaining eye in the case of disease or damage. Some animals point the two eyes in very different directions and thus sample the environmental light field very broadly (e.g., rabbits, and animals that are prey). Other animals overlap the visual field of the two eyes to acquire information useful for estimating distance (stereo vision, animals that are predators). Even more information about the environmental light field is measured, over time, as the head moves heads and the eyes rotate (motion parallax).</p>
+<!-- Feynman comment about this?  I searched but couldn't find it. I even searched for anyone commenting on it.  Oh well.
+I find it remarkable, as many others must, that measuring just the local intensities in a small part of a scene we can estimate the properties of many objects in the whole scene volume.  We can make inferences about the object shapes, their distance, their surface reflectance and texture. -->
+<p>Engineers have built camera arrays that capture more than two incident light fields. Measuring from multiple positions and directions, enables us to create displays that reproduce the experience of being in the environment as a person changes position and direction of gaze. (If the environment is unchanging, a single camera that moves around can be used.) These systems rely on the principle Leonardo identified: the light field is everywhere, and we can measure it by recording images at many different positions using cameras at many positions and pointing in many different directions.</p>
+<p>A large, rectangular camera array to measure the light field was built by my colleagues at the Stanford Graphics Lab <span class="citation" data-cites="Levoy-1996-light-field">(<a href="references.html#ref-Levoy-1996-light-field" role="doc-biblioref">Levoy and Hanrahan 1996</a>, <a href="references.html#fig-camera-array" class="quarto-xref" role="doc-biblioref">Figure&nbsp;<span>2.4</span></a>)</span>. The cameras measure multiple views; all the cameras point in the same direction. Arrays with different camera configuration, at the bottom of the figure, capture multiple directions from a particular position. These camera arrays acquire enough information so that we can render images that match what a person would see if they look around. Camera arrays that acquire enough information for both 360 deg and slightly different positions, sometimes called stacked omnistereo, have also been built <span class="citation" data-cites="thatte-2017-6dof">(<a href="references.html#ref-thatte-2017-6dof" role="doc-biblioref">Thatte et al. 2017</a>)</span>. From these data, along with an interpolation strategy, we can calculate images from a range of viewpoints.</p>
+<div id="fig-camera-array" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-camera-array-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/01-lightfields/01-camera-array.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig margin-caption" id="fig-camera-array-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.4: The Stanford Multi-Camera Array (top) comprised 128 cameras that measured the environmental light field from many positions. With this configuration one can recreate the experience of moving side to side as well as back and forth. Other array configurations (bottom) have cameras pointing outward from a point. These capture the light field from many directions and can recreate the experience of looking around the room from the point.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-optical-lightfield" class="level2 page-columns page-full" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="sec-optical-lightfield"><span class="header-section-number">2.5</span> Optical light field</h2>
+<p>The image system optics, whether a pinhole, thin lens, or multi-element lens, transforms the incident light field into a new light field within the camera. This <em>optical light field</em> exists between the exit pupil of the optics and the sensor. The optical light field originates in the environment, is reduced to the incident light field, and then transformed by the optics. The camera sensor, or the retina, measures the optical light field<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
+<div id="fig-optical-lightfield" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-optical-lightfield-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/01-lightfields/01-optical-lightfield.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig margin-caption" id="fig-optical-lightfield-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.5: The rays emerging from the exit pupil of the optics are captured by the sensor (or film). These rays form a light field within the camera, the optical light field <span class="math inline">\(L_O\)</span>. The only rays of this light field that matter for the image system are those that are captured by sensor.
+</figcaption>
+</figure>
+</div>
+<p>The environmental and incident light fields use parameters of position and angle for each ray. For the optical light field, however, we only measure rays that arrive at the sensor (or film). It is helpful, therefore, to parameterize the optical light field using two spatial parameters: where the ray exits the lens (<span class="math inline">\((u,v)\)</span>) and the position it arrives at the sensor, <span class="math inline">\((w,z)\)</span>. These four spatial parameters substitute for the positions and angles we use in the other light fields. It is possible, of course, to convert the sensor position parameters into angular parameters at the exit pupil.</p>
+<p><span class="math display">\[L_O(u,v,w,z,\lambda,\rho)\]</span></p>
+<p>The data recorded by the sensor is used to create a reproduction of the image, or as information for interpreting the scene. The sensing and perception systems that derive information from the light field are designed to account for which information in the environmental light field makes it all the way through to the optical light field.</p>
+<p>The most common sensors in cameras record only partial information about the optical light field. The rays arriving at a point on the sensor surface are summed together, no matter where the ray exited the optics. This type of sensor does not not preserve information about where the rays arise in the exit pupil<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
+<p>This implementation at the sensor is a decision, not a requirement. Various authors pointed out that measuring more information about the optical light field would enable us to know more about the environmental light field. For example, <span class="citation" data-cites="adelson-wang-1992">Adelson and Wang (<a href="references.html#ref-adelson-wang-1992" role="doc-biblioref">1992</a>)</span> built a camera that measures the ray intensity at multiple angles at each location on the sensor, and they used this information to estimate depth. Ren Ng’s company, Lytro, developed a commercial sensor to measure the optical light field <span class="citation" data-cites="ng2005-lightfield">(<a href="references.html#ref-ng2005-lightfield" role="doc-biblioref">Ng et al. 2005</a>)</span>; they also developed algorithms to enable users to refocus images or change the depth of field after capture. In <a href="sensors-05-control.html#sec-focus-control" class="quarto-xref"><span>Section 18.2</span></a> I describe how modern sensors use light field information for camera autofocus, and in <a href="sensors-07-innovations.html#sec-sensor-lightfield" class="quarto-xref"><span>Section 20.3</span></a> I describe how light field sensors capture a more complete version of the optical light field.</p>
+</section>
+<section id="interpreting-the-light-field" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="interpreting-the-light-field"><span class="header-section-number">2.6</span> Interpreting the light field</h2>
+<p>Encoding the light field data is a first step in seeing. A next step is interpreting the measurements. The invention of algorithms that interpret the light field is a central to building computers that see. Discovering how the brain interprets the encoded signal is an important part of vision science.</p>
+<p>Building an internal model of the scene from the encoded light field has long been believed to be what people do. Nearly two centuries ago by the great vision scientist, Helmholtz, wrote:</p>
+<blockquote class="blockquote">
+<p>The general rule determining the ideas of vision that are formed whenever an impression is made on the eye, is that <em>such objects are always imagined as being present in the field of vision as would have to be there in order to produce the same impression on the nervous mechanism</em> [Italics in the original; Southall, Physiological Optics, Vol. III, p.&nbsp;2, 1865]</p>
+</blockquote>
+<p>Understanding the light field and the instruments that measure it will help us achieve that goal.</p>
+
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-adelson-plenoptic-1991" class="csl-entry" role="listitem">
+Adelson EH, Bergen JR (1991) The plenoptic function and the elements of early vision. In: Landy MS, Movshon JA (eds) Computational <span>Models</span> of <span>Visual Processing</span>. MIT Press, Cambridge, pp 3–20
+</div>
+<div id="ref-adelson-wang-1992" class="csl-entry" role="listitem">
+Adelson EH, Wang JYA (1992) Single lens stereo with a plenoptic camera. IEEE Transactions on Pattern Analysis and Machine Intelligence 14:99–106
+</div>
+<div id="ref-ayscoughShortAccountEye1755" class="csl-entry" role="listitem">
+Ayscough J (1755) <span>A short account of the eye and nature of vision. Chiefly designed to illustrate the use and advantage of spectacles. ... By James Ayscough, optician. ... - The fourth edition. 1755</span>
+</div>
+<div id="ref-davinciNotebooksLeonardoVinci1970" class="csl-entry" role="listitem">
+Da Vinci L (1970) The <span>Notebooks</span> of <span>Leonardo Da Vinci</span>. Dover, New York
+</div>
+<div id="ref-Faraday1832-electricity" class="csl-entry" role="listitem">
+Faraday M (1832) <a href="http://dx.doi.org/10.1098/rstl.1832.0006"><span>V</span>. Experimental researches in electricity</a>. Philos Trans R Soc Lond 122:125–162
+</div>
+<div id="ref-gershunLightField1939" class="csl-entry" role="listitem">
+Gershun A (1939) The <span>Light Field</span>. Journal of Mathematical Physics 18:51–151
+</div>
+<div id="ref-Levoy-1996-light-field" class="csl-entry" role="listitem">
+Levoy M, Hanrahan P (1996) <a href="https://doi.org/10.1145/237170.237199">Light field rendering</a>. Association for Computing Machinery, New York, NY, USA, pp 31–42
+</div>
+<div id="ref-ng2005-lightfield" class="csl-entry" role="listitem">
+Ng R, Levoy M, Brédif M, et al (2005) <a href="'https://hal.science/hal-02551481'">Light field photography with a hand-held plenoptic camera</a>. PhD thesis, Stanford university
+</div>
+<div id="ref-Øersted1820-electricity" class="csl-entry" role="listitem">
+Øersted HC (1820) Experiments on the effect of a current of electricity on the magnetic needle. Annals of Philosophy
+</div>
+<div id="ref-thatte-2017-6dof" class="csl-entry" role="listitem">
+Thatte J, Lian T, Wandell B, Girod B (2017) <a href="http://dx.doi.org/10.1109/vcip.2017.8305085">Stacked omnistereo for virtual reality with six degrees of freedom</a>. In: 2017 IEEE visual communications and image processing (VCIP). IEEE
+</div>
+<div id="ref-Wandell2021-Principles-Ashby" class="csl-entry" role="listitem">
+Wandell BA, Brainard D (2021) Principles and consequences of the initial visual encoding. In: F. Gregory Ashby HC, Dzhafarov EN (eds) New handbook of mathematical psychology
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>There are instruments that use different wavebands of the electromagnetic spectrum. <a href="resources/lightfields-wavebands.html" target="_blank">A brief introduction is here.</a>. More examples of instruments will be presented in later chapters.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong>PROVE HOW ALL OBJECTS, PLACED IN ONE POSITION, ARE ALL EVERYWHERE AND ALL IN EACH PART</strong> <br> “I say that if the front of a building—or any open piazza or field—which is illuminated by the sun has a dwelling opposite to it, and if, in the front which does not face the sun, you make a small round hole, all the illuminated objects will project their images through that hole and be visible inside the dwelling on the opposite wall which may be made white; and there, in fact, they will be upside down, and if you make similar openings in several places in the same wall you will have the same result from each. Hence the images of the illuminated objects are all everywhere on this wall and all in each minutest part of it. The reason, as we clearly know, is that this hole must admit some light to the said dwelling, and the light admitted by it is derived from one or many luminous bodies. If these bodies are of various colours and shapes the rays forming the images are of various colours and shapes, and so will the representations be on the wall. (Leonardo’s 1509 Notebook, curated by John Paul Richter)”<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>I enjoyed the first sentence in the 1939 translation of Gershun’s <span class="citation" data-cites="gershunLightField1939">(<a href="references.html#ref-gershunLightField1939" role="doc-biblioref">1939</a>)</span> paper. The translators, Moon and Timoshenko, express frustration with the pace of advances in photometry. “Theoretical photometry constitutes a case of ‘arrested development’, and has remained basically unchanged since 1760 while the rest of physics has swept triumphantly ahead.” Gershun himself expresses the same sentiment: “The problems of theoretical photometry were pushed aside from the main path of the development of physics.”<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><span class="citation" data-cites="adelson-plenoptic-1991">Adelson and Bergen (<a href="references.html#ref-adelson-plenoptic-1991" role="doc-biblioref">1991</a>)</span> introduced the plenoptic function for a pinhole camera and a sensor, making it more closely related to the incident light field. (<a href="#sec-incident-lightfield" class="quarto-xref"><span>Section 2.4</span></a>). They explained it using a pinhole camera model, so that the two parameters describing the aperture position were not needed. With these restrictions, the plenoptic function is equivalent to the spectral irradiance at the image sensor <span class="citation" data-cites="Wandell2021-Principles-Ashby">(<a href="references.html#ref-Wandell2021-Principles-Ashby" role="doc-biblioref">Wandell and Brainard 2021</a>)</span>. The authors clearly had the idea of the environmental and incident light fields in mind.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><span class="citation" data-cites="ng2005-lightfield">Ng et al. (<a href="references.html#ref-ng2005-lightfield" role="doc-biblioref">2005</a>)</span> used the phrase ‘in-camera light field.’ I like that expression, too.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Or, equivalently, they sum across the angles of the rays arriving at the sensor.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/lightfields-02-measurement.html" class="pagination-link" aria-label="Measuring light fields">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

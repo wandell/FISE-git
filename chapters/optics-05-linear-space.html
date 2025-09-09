@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-08">
+<meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
+
+<title>11&nbsp; Spatial domain – Foundations of Image Systems Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/optics-06-linear-transform.html" rel="next">
+<link href="../chapters/optics-04-morelenses.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/hover.css">
+<link rel="stylesheet" href="../styles/callouts.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/optics-01-geometric.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-05-linear-space.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Foundations of Image Systems Engineering</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scenes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-03-properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light field properties</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-04-properties-spectral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Optics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-02-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lens principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-03-thinlens.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-04-morelenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-05-linear-space.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-06-linear-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-07-wavefront.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sensors</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-01-photoelectric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-02-pixels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-03-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-04-components.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">System components</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-05-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Control systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-06-characterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image system modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-07-innovations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sensor innovations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Human</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/human-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Human vision</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Displays</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Image processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/imgprocessing-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-optics-linear-space-overview" id="toc-sec-optics-linear-space-overview" class="nav-link active" data-scroll-target="#sec-optics-linear-space-overview"><span class="header-section-number">11.1</span> Spatial domain</a></li>
+  <li><a href="#linearity" id="toc-linearity" class="nav-link" data-scroll-target="#linearity"><span class="header-section-number">11.2</span> Linearity</a>
+  <ul class="collapse">
+  <li><a href="#sec-pointspread-2" id="toc-sec-pointspread-2" class="nav-link" data-scroll-target="#sec-pointspread-2"><span class="header-section-number">11.2.1</span> Point spread functions</a></li>
+  <li><a href="#general-linear-analysis" id="toc-general-linear-analysis" class="nav-link" data-scroll-target="#general-linear-analysis"><span class="header-section-number">11.2.2</span> General linear analysis</a></li>
+  <li><a href="#space-invariant-linear-analysis" id="toc-space-invariant-linear-analysis" class="nav-link" data-scroll-target="#space-invariant-linear-analysis"><span class="header-section-number">11.2.3</span> Space invariant linear analysis</a></li>
+  </ul></li>
+  <li><a href="#sec-pointspread-common" id="toc-sec-pointspread-common" class="nav-link" data-scroll-target="#sec-pointspread-common"><span class="header-section-number">11.3</span> Common PSFs in simulation</a>
+  <ul class="collapse">
+  <li><a href="#the-airy-pattern" id="toc-the-airy-pattern" class="nav-link" data-scroll-target="#the-airy-pattern"><span class="header-section-number">11.3.1</span> The Airy pattern</a></li>
+  <li><a href="#gaussian" id="toc-gaussian" class="nav-link" data-scroll-target="#gaussian"><span class="header-section-number">11.3.2</span> Gaussian</a></li>
+  <li><a href="#lorentzian-cauchy" id="toc-lorentzian-cauchy" class="nav-link" data-scroll-target="#lorentzian-cauchy"><span class="header-section-number">11.3.3</span> Lorentzian (Cauchy)</a></li>
+  </ul></li>
+  <li><a href="#sec-transverse-chromatic-aberration" id="toc-sec-transverse-chromatic-aberration" class="nav-link" data-scroll-target="#sec-transverse-chromatic-aberration"><span class="header-section-number">11.4</span> Accounting for wavelength</a>
+  <ul class="collapse">
+  <li><a href="#longitudinal-chromatic-aberration" id="toc-longitudinal-chromatic-aberration" class="nav-link" data-scroll-target="#longitudinal-chromatic-aberration"><span class="header-section-number">11.4.1</span> Longitudinal chromatic aberration</a></li>
+  <li><a href="#transverse-chromatic-aberration" id="toc-transverse-chromatic-aberration" class="nav-link" data-scroll-target="#transverse-chromatic-aberration"><span class="header-section-number">11.4.2</span> Transverse chromatic aberration</a></li>
+  </ul></li>
+  <li><a href="#sec-optics-psf-engineering" id="toc-sec-optics-psf-engineering" class="nav-link" data-scroll-target="#sec-optics-psf-engineering"><span class="header-section-number">11.5</span> PSF engineering</a>
+  <ul class="collapse">
+  <li><a href="#sec-psf-expolanets" id="toc-sec-psf-expolanets" class="nav-link" data-scroll-target="#sec-psf-expolanets"><span class="header-section-number">11.5.1</span> Exoplanets</a></li>
+  <li><a href="#sec-psf-depth" id="toc-sec-psf-depth" class="nav-link" data-scroll-target="#sec-psf-depth"><span class="header-section-number">11.5.2</span> Microscopy and depth</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/optics-01-geometric.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-05-linear-space.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-optics-linear-space" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Work in Progress
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
+<p>Last updated: September 8, 2025</p>
+</div>
+</div>
+</div>
+<section id="sec-optics-linear-space-overview" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="sec-optics-linear-space-overview"><span class="header-section-number">11.1</span> Spatial domain</h2>
+<p>Geometric optics helps us understand how lenses work by focusing on properties like the lens shape, its material, and its distance from the sensor. This approach is excellent for designing lenses and determining their basic characteristics.</p>
+<p>An alternative way to analyze optical systems is to treat them as signal processors. In this framework, an optical system takes light from a scene as its input and transforms it into an image at the sensor, which is the output. This signal processing perspective is powerful because it allows us to focus on what the system <em>does</em>—its transformation—without getting lost in the physical details of its construction. It is a practical approach for developing image system simulations and analyzing optical performance.</p>
+<p>This method is particularly effective because many optical systems are approximately linear, meaning they satisfy the <strong>Principle of Superposition</strong>. This property can be tested experimentally. A rich set of mathematical tools exists for analyzing linear systems, taught widely across science, technology, engineering, and mathematics.</p>
+<p>Because many readers will be familiar with linear systems, I have placed a general introduction to these concepts in <a href="appendix-01-linearsystems.html" class="quarto-xref"><span>Chapter 24</span></a>. If you are already comfortable with linear systems principles, you can use that appendix to align with the notation and methods used in this book. If these ideas are new to you, I hope you will find the appendix a useful resource.</p>
+</section>
+<section id="linearity" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="linearity"><span class="header-section-number">11.2</span> Linearity</h2>
+<section id="sec-pointspread-2" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="sec-pointspread-2"><span class="header-section-number">11.2.1</span> Point spread functions</h3>
+<p>In <a href="optics-01-geometric.html#sec-pointspread" class="quarto-xref"><span>Section 7.6</span></a> I introduced the idea of the point spread function (PSF). It is simply the image of a point of light. If we know the point spread for each location in the scene, and superposition holds, we can predict how any input scene becomes an image.</p>
+<p>The scene is a collection of scene points, <span class="math inline">\(\mathbf{p} = (p_x, p_y, p_z)\)</span>, each with its own intensity <span class="math inline">\(S(\mathbf{p})\)</span>. Write the point spread function of a scene point as <span class="math inline">\(\text{PSF}_{\mathbf{p}(x, y)}\)</span>, where <span class="math inline">\((x, y)\)</span> are positions in the image. Using superposition, we calculate the output image, <span class="math inline">\(O(x,y)\)</span> by adding up the weighted point spreads from every scene point. The formula looks like this:</p>
+<p><span id="eq-pointspread-1"><span class="math display">\[
+O(x, y) = \sum_{\mathbf{p}} s(\mathbf{p})\, \text{PSF}_{\mathbf{p}}(x, y)
+\tag{11.1}\]</span></span></p>
+<p>Here, <span class="math inline">\(O(x, y)\)</span> is the intensity at each image position. Each point in the scene contributes a scaled version of its PSF. The output image is the weighted sum of all those PSFs.</p>
+<p>Point spread functions are an intuitive way to understand the performance of the optical system, andthey are widely used in applications. In <a href="#sec-optics-psf-engineering" class="quarto-xref"><span>Section 11.5</span></a> I will describe how scientists and engineers design optics to achieve specific PSF characteristics to estimate depth or to reveal hard-to-see objects.</p>
+<p>In the <a href="appendix-01-linearsystems.html" class="quarto-xref"><span>Chapter 24</span></a> I describe how the point spread function is used to create the linear system matrix: each column of the linear system matrix is a point spread. When the system is space-invariant (<a href="appendix-02-spaceinvariance.html#sec-ls-shiftinvariance" class="quarto-xref"><span>Section 26.1</span></a>), the columns of the matrix are shifted copies of that point spread. We also explain that harmonics are eigenvectors of such matrices. This section further explores the analysis of optics using PSFs, and <a href="optics-06-linear-transform.html#sec-optics-harmonics" class="quarto-xref"><span>Section 12.2</span></a> we explores applications using harmonics.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="A limitation of PSFs">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A limitation of PSFs
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Point spread functions (PSFs) are an excellent tool for modeling optical systems when the scene can be approximated as a flat surface, or when all objects are far enough away that occlusion is negligible. In these cases, each point in the scene contributes independently to the image, and the total image can be predicted by summing the PSFs from each point.</p>
+<p>However, in three-dimensional scenes where objects can block light from those behind them (<strong>occlusion</strong>), the situation becomes more complex. The contribution of a point to the image may be partially or completely blocked by closer objects. As a result, the effective point spread depends on the arrangement of objects in the scene, and cannot be characterized by a single, scene-independent PSF. Accurately modeling these effects requires more advanced techniques, such as those used in computer graphics, and often involves recalculating the image formation for each specific scene.</p>
+<p>In summary, PSFs provide a powerful and practical framework for image prediction when occlusion can be ignored, but their direct application is limited in scenes with significant three-dimensional structure and occlusion. In those cases, computer graphics techniques based on ray tracing are more appropriate.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="general-linear-analysis" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="general-linear-analysis"><span class="header-section-number">11.2.2</span> General linear analysis</h3>
+<p>There is no guarantee that the point spread is the same everywhere in the image, and in general it will not be. This case is called a <strong>shift-varying</strong> linear system, and we represent the linear system by a general matrix (<a href="appendix-01-linearsystems.html#sec-ls-point-matrix" class="quarto-xref"><span>Section 24.4</span></a>). In that case each column of the matrix represents the point spread for a different point. These can be quite broad and irregular, making the image quite unrecognizable. Even so, if we know the matrix, and it is invertible, we can estimate the input.</p>
+<p>The calculation is illustrated in the script <a href="../code/02Optics/fise_ImageFormationLinearity.html" target="_blank">fise_ImageFormationLinearity</a>. I created a random image to serve as the PSF for each pixel, and naturally the image looks completely random. But with knowlege of the PSFs, and thus the system matrix, we can find the inverse of the system matrix and estimate the input from an image that appears to be complete noise.</p>
+<p>There are many details as to how well this works, mostly concerning how robust the calculation is to noise. I doubt this calculation is of practical interest, though it has been used in interesting ways by <strong>Laura Waller’s group</strong>. (Correct me if you know of a case!) The principle of linearity is good to keep in mind because it will help you solve many other problems.</p>
+</section>
+<section id="space-invariant-linear-analysis" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="space-invariant-linear-analysis"><span class="header-section-number">11.2.3</span> Space invariant linear analysis</h3>
+<p>A more common situation for image systems engineering is the shift-invariance: the point spread is the same over a some region (isoplanatic region). We have many powerful mathematical tools for simulating and analyzing this case (<span class="quarto-unresolved-ref">?sec-appendix-shiftinvariance</span>). This is the case in which we can compute the system transformation using convolution (<a href="appendix-02-spaceinvariance.html#sec-ls-convolution" class="quarto-xref"><span>Section 26.3</span></a>) and Fourier tools (<a href="appendix-02-spaceinvariance.html#sec-ls-convolution-theorem" class="quarto-xref"><span>Section 26.8</span></a>).</p>
+</section>
+</section>
+<section id="sec-pointspread-common" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="sec-pointspread-common"><span class="header-section-number">11.3</span> Common PSFs in simulation</h2>
+<p>The PSFs of real systems can be difficult to model using a simple formula. In ISETCam we make it possible to provide an empirical PSF when it is known. But there are many cases in which the PSF is not yet known, say for a system that is under design and the optics have not yet been selected. In such optical system simulations, a few PSFs are routinely used to approximate image system performance prior to implementation (<a href="#fig-psf-graph" class="quarto-xref">Figure&nbsp;<span>11.1</span></a>).</p>
+<ul>
+<li><strong>Airy pattern</strong> is the only one of these PSFs that is based on the physics of light waves. This is the PSF we measure for a perfect, diffraction-limited lens imaging a point at a distance (<a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.5</span></a> and <a href="optics-01-geometric.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>7.12</span></a>). The Airy pattern depends on wavelength and represents a best case limit. The optics you use will not be better than this.</li>
+<li><strong>Gaussian</strong> is popular because it’s easy to work with in calculations.</li>
+<li><strong>Lorentzian</strong> (also called Cauchy) has higher tails than the Gaussian. This makes it better for modeling systems where light gets scattered a lot—like if the lens is scratched or there are many internal reflections from a multi-element lens assembly.</li>
+<li><strong>Pillbox</strong> A square region with constant values that averages the values over the region. Who doesn’t like a simple average? Well, I don’t - but apart from me?</li>
+</ul>
+<p>A graph of the cross-section through these PSFs is a useful way to compare them.</p>
+<div id="fig-psf-graph" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-psf-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/10-space/optics-siKernels-graph.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-psf-graph-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.1: Cross-section of four point spread functions that are widely used in simulation. These point spreads were applied for a lens and sensor configuration with an <span class="math inline">\(f/\#\)</span> of 4 and a focal length of 3.9mm. The radius of the Airy disk for this configuration is 3.4 microns (see the zero-crossing of the Airy pattern).
+</figcaption>
+</figure>
+</div>
+<p>We can simulate how the four PSF shapes transform a spectral radiance (<a href="#fig-psf-image" class="quarto-xref">Figure&nbsp;<span>11.2</span></a>). We compare the optical images four each of the PSFs for a scene comprising a set of grid lines. The images were calculated using the ISETCam script <a href="../code/fise_opticsPSF.html" target="_blank">fise_opticsPSF.</a> The Airy and Gaussian PSFs were implemented with wavelength-dependent point spread functions. The Pillbox and Lorentzian PSFs were implemented as wavelength-indepedent.</p>
+<div id="fig-psf-image" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-psf-image-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/10-space/optics-siKernels-image.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-psf-image-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.2: The Airy pattern shows the image for a diffraction limited lens with an <span class="math inline">\(f/\# =4\)</span>. The Gaussian has a spread that is roughly consistent with the Airy Disk size and a similar wavelength dependency; long-wavelengths spread more than short wavelengths. The high tail of the Lorentzian PSF produces a veiling glare. The Pillbox size is about equal to the Airy disk, but it introduces much more blur because it has a relatively high level over the entire width.
+</figcaption>
+</figure>
+</div>
+<p>These PSFs functions are valuable because they have simple parameters that control the amount of blur or light scatter. Here is a description of the different PSF formulae along with a brief descrition of their properties.</p>
+<section id="the-airy-pattern" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="the-airy-pattern"><span class="header-section-number">11.3.1</span> The Airy pattern</h3>
+<p>The Airy pattern is circularly symmetric, so you only need to know the distance from the center, <span class="math inline">\(r\)</span>, to describe it. The intensity at a distance <span class="math inline">\(r\)</span> from the center is:</p>
+<p><span class="math display">\[
+I(r) = I_0 \left[ \frac{2 J_1\left( \frac{\pi r}{\lambda N} \right)}{ \frac{\pi r}{\lambda N} } \right]^2
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(I_0\)</span> is the peak intensity at the center</li>
+<li><span class="math inline">\(J_1\)</span> is the first-order Bessel function</li>
+<li><span class="math inline">\(N\)</span> is the <span class="math inline">\(f/\#\)</span> of the lens</li>
+<li><span class="math inline">\(\lambda\)</span> is the wavelength of light</li>
+</ul>
+<p>The first dark ring defines the Airy disk (<a href="optics-01-geometric.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>7.12</span></a> , <a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.5</span></a>). It is the diameter where the intensity drops to zero, and defines the smallest spot size.</p>
+<p><span id="eq-airydisk3"><span class="math display">\[
+d = \arcsin(2.44 \, \lambda N) \approx 2.44 \, \lambda N
+\tag{11.2}\]</span></span></p>
+<p>For <span class="math inline">\(f/\# = 4\)</span> the diameter ranges from 3.9 <span class="math inline">\(\mu\text{m}\)</span> (400 nm) to 6.83 <span class="math inline">\(\mu\text{m}\)</span> (700nm). See the ISETCam function <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/optics/airyDisk.m" target="_blank"><code>airyDisk</code></a></p>
+</section>
+<section id="gaussian" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="gaussian"><span class="header-section-number">11.3.2</span> Gaussian</h3>
+<p>The Gaussian is the classic “bell curve.” It’s simple and often a used as an approximation for optical systems. <span class="math display">\[
+I(r) = I_0 \exp\left( -\frac{r^2}{2\sigma^2} \right)
+\]</span></p>
+<p>Here, <span class="math inline">\(\sigma\)</span> sets how spread out the blur is. Larger <span class="math inline">\(\sigma\)</span> means a blurrier image.</p>
+</section>
+<section id="lorentzian-cauchy" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="lorentzian-cauchy"><span class="header-section-number">11.3.3</span> Lorentzian (Cauchy)</h3>
+<p>The Lorentzian function appears in physics and probability theory. It’s famous for its “fat tails”—meaning it doesn’t drop off as quickly as a Gaussian. This makes it handy for modeling blur when there’s a lot of stray light or scattering.</p>
+<p><span class="math display">\[
+I(r) = \frac{I_0}{1 + \left( \frac{r}{\gamma} \right)^2}
+\]</span></p>
+<p>Here, <span class="math inline">\(\gamma\)</span> controls how wide the central peak is. A bigger <span class="math inline">\(\gamma\)</span> means a wider, flatter blur with more light in the tails.</p>
+<p>All of these PSFs are simulated in <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/optics/shiftinvariant/siSynthetic.m" target="_blank"><code>siSynthetic.m</code>.</a></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Linespread functions">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Linespread functions
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>The impact of different point spreads can be easier to measure and visualize using line inputs rather than points. The image created by a very thin line is called the <strong>line spread function (LSF)</strong>.</p>
+<p>To find the LSF from the PSF, we simply sum along the direction (<a href="https://github.com/ISET/isetcam/blob/main/opticalimage/wavefront/psf/psf2lsf.m" target="_blank">psf2lsf.m</a>). The LSF is the same in any direction when the PSF is cicularly symmetric. Otherwise, the LSF differs with direction.</p>
+<p>The formula to calculate the PSF in a direction, in this case the <span class="math inline">\(y\)</span> direction, is very simple. We just sum across the <span class="math inline">\(x\)</span> direction.</p>
+<p><span class="math display">\[
+LSF = \sum_x PSF(x,y)
+\]</span></p>
+<p>Here are the linespread functions of the Gaussian and Lorenzian.</p>
+<p>Given an LSF, it is possible to recover a unique circularly symmetric PSF using <a href="https://github.com/ISET/isetcam/blob/main/opticalimage/wavefront/psf/lsf2circularpsf.m" target="_blank">lsf2circularpsf.m</a>. The Airy pattern is circularly symmetric; the Gaussian and Lorentz are usually implemented as circularly symmetric. The pillbox is not.</p>
+</div>
+</div>
+</div>
+<p>One of the challenges in image system simulations is to select the wavelength dependence of the PSF. This dependence is formally specified for the Airy pattern, based on the wavelength of light and the size of the circular, pinhole aperture. But for the Gaussian and Lorentzian, we must make a choice.</p>
+<p>One way to make a decision is to measure the wavelength dependence for an existing system, say a system that uses materials with known properties, and use those measurements to guide the simulation. The variations in the PSF caused by these wavelength-dependences are called chromatic aberrations. There are two types of chromatic aberrations, and we describe them and how they might be measured in the next section.</p>
+</section>
+</section>
+<section id="sec-transverse-chromatic-aberration" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="sec-transverse-chromatic-aberration"><span class="header-section-number">11.4</span> Accounting for wavelength</h2>
+<p>Because the index of refraction of a lens might vary with wavelength, the best focus distance also varies with wavelength (<a href="optics-02-lenses.html#sec-chromatic-aberration" class="quarto-xref"><span>Section 8.3.2</span></a>). Even for an ideal lens there is a wavelength dependence arising from the wave nature of light and the size of the aperture or <span class="math inline">\(\text{f}/\#\)</span> (<a href="optics-01-geometric.html#eq-airy1" class="quarto-xref">Equation&nbsp;<span>7.1</span></a>).</p>
+<section id="longitudinal-chromatic-aberration" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="longitudinal-chromatic-aberration"><span class="header-section-number">11.4.1</span> Longitudinal chromatic aberration</h3>
+<p>A consequence of this wavelength-dependence is that for a given image distance will be in best focus (small PSF) for one wavelength, but not all. The wavelength-dependent defocus is called <strong>longitudinal chromatic aberration (LCA)</strong>.</p>
+<p>There is noticeable chromatic aberration for many types of lenses and materials. The most surprising optical system with a large amount of chromatic aberration is the human eye! The line spread and point spread functions measured at the human retina both vary considerably as we change the stimulus wavelength.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Line Spread Function</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Point Spread Function</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="fig-optics-linespread" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-linespread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/10-space/linespread.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-linespread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.3: Typical human line spread functions. The dashed white lines are the relative retinal illuminance.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="fig-optics-pointspread" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-pointspread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/10-space/pointspread.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-pointspread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.4: Typical human point spread functions. The large spread for the blue is striking. Notice that the orientation of the blur differs for this example subject, which is typical.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption>
+<p>Click on the tabs at the top to see typical human line spread functions or point spread functions for stimuli with equal energy, 425 nm, 525 nm, and 625 nm. See <a href="../code/02Optics/fise_humanLSF.html" target="_blank">Human LSF</a> for how ISETBio/ISETCam implements that calculation.</p>
+</figcaption>
+<p>The very large LCA of the human eye has consequences for many aspects of the human visual system and image systems engineering technology. We will describe it quantitatively and explain why it matters to technology in <a href="human-01.html" class="quarto-xref"><span>Chapter 21</span></a>.</p>
+</section>
+<section id="transverse-chromatic-aberration" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="transverse-chromatic-aberration"><span class="header-section-number">11.4.2</span> Transverse chromatic aberration</h3>
+<p>A second type of chromatic aberration, called <strong>transverse chromatic aberration (TCA)</strong>, is also common in real imaging systems. While it is related to LCA, its physical cause is different.</p>
+<p>TCA occurs when the image blur interacts with the position and size of the aperture. The two panels of the figure below show short wavelength (blue) and long wavelength (red) rays, originating from a point at the lower left. The blue rays are in focus, forming a tight spot on the image plane. The red rays, however, come to focus behind the image plane, creating a larger, blurred red circle.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Longitudinal chromatic aberration</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Transverse chromatic aberration</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="fig-optics-notransverse" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-notransverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/10-space/chromatic-notransverse.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-notransverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.5: With this aperture, there is only longitudinal chromatic aberration (LCA) and no transverse chromatic aberration (TCA).
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="fig-optics-transverse" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-transverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/10-space/chromatic-transverse.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-transverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.6: With this pupil aperture, some of the rays from this point will be blocked from entering the lower part of the lens. The absence of these rays has a differential effect on the short- and long-wavelength light. The of the center of the red blur circle will be shifted so it no longer aligns with the center of the blue blur circle (TCA).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption>
+<p>The images illustrate short wavelength (blue) and long wavelength (red) rays a single point. The blue rays are in good focus, but the red rays have a large blur circle. The two panels illustrate how changing the aperture position interacts with defocus to create transverse chromatic aberration. See the text for details.</p>
+</figcaption>
+<!-- keep the empty lines for spacing in the rendered image -->
+<p>Now, imagine reducing the aperture size and moving it in front of the lens. This new aperture position blocks some of the rays from both wavelengths. For the blue rays, which were already converging to a tight focus, the effect is minimal —the spot gets a little dimmer. But for the red rays, which form a large blur circle already, the new aperture blocks rays that would have formed the lower part of their blur circle. As a result, the red blur circle is clipped at the bottom, and its center shifts upward. The red and blue circles are no longer aligned. Th displacement of the red blur circle is transverse chromatic aberration.</p>
+<p>The size and position of the aperture determines the amount of TCA. The physical factors that cause the transverse shift are different from those that produce LCA. Both effects are related to the different wavelengths focus. Were there no LCA, there would be no TCA.</p>
+</section>
+</section>
+<section id="sec-optics-psf-engineering" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="sec-optics-psf-engineering"><span class="header-section-number">11.5</span> PSF engineering</h2>
+<p>The usual goal of optical design for consumer photography is to create a lens that has a very compact point spread function (sharp image) that is the same for all wavelengths (no chromatic aberration). This makes sense because people want their photographs to be sharp and free of the kind of chromatic fringing you can see in <a href="#fig-optics-linespread" class="quarto-xref">Figure&nbsp;<span>11.3</span></a> and <a href="#fig-optics-pointspread" class="quarto-xref">Figure&nbsp;<span>11.4</span></a>.</p>
+<p>The goal of optical design can differ, of course, for different applications. In the sections below, I describe two cases that I found to be very interesting. The first case designs optics for telescopes that are looking for planets in other star systems (exoplanets). The second case designs optics that can be helpful in estimating the depth of objects in an image. For example, in microscopy we might be interested to measure the tissue layer where a particular glowing molecule resides. These two examples are drawn from the literature of PSF engineering.</p>
+<section id="sec-psf-expolanets" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="sec-psf-expolanets"><span class="header-section-number">11.5.1</span> Exoplanets</h3>
+<p>When we see a solar eclipse, the moon blocks the bright center of the sun, revealing the faint outer atmosphere called the <em>corona</em>. For centuries, scientists could only study the corona during these rare events. That changed in the 1930s, when Bernard Lyot invented the <strong>coronagraph</strong>—an optical instrument designed to block out the sun’s bright disk and make the corona visible at any time.</p>
+<p>The key to a coronagraph is <strong>PSF engineering</strong>: designing the optics so that light from a bright central source (like the sun or a star) is strongly suppressed in the image. By shaping the point spread function (PSF) to have a dark center, the instrument allows much fainter features near the bright source to be detected. Lyot’s original design remains influential and is still used in modern telescopes, including the James Webb Space Telescope’s <a href="https://jwst-docs.stsci.edu/jwst-mid-infrared-instrument/miri-instrumentation/miri-coronagraphs#gsc.tab=0" target="_blank">coronagraphic instruments</a>. The basic layout is shown in <a href="#fig-optics-lyot" class="quarto-xref">Figure&nbsp;<span>11.7</span></a>. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Here’s how the Lyot coronagraph works (<a href="#fig-optics-lyot" class="quarto-xref">Figure&nbsp;<span>11.7</span></a>): Parallel rays from a distant star or the sun enter the telescope and are focused by the first lens. At the focal plane, a small opaque disk (the <strong>occulting disk</strong>) blocks the bright central spot. This also introduces some diffraction, as light bends around the edge of the disk. A second lens then reimages the entrance pupil, creating a new pupil plane. In this plane, a <strong>Lyot stop</strong>—a slightly smaller aperture—blocks much of the diffracted light. Finally, a third lens forms the final image, where the bright core is suppressed and the faint corona or nearby objects become visible. Typically, only about 1/200th of the original light makes it through the system.</p>
+<div id="fig-optics-lyot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-lyot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/10-space/optics-lyot-coronagraph.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-lyot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.7: Lyot coronagraph concept.
+</figcaption>
+</figure>
+</div>
+<p>Modern coronagraphs go beyond simple stops. They use specially shaped apertures and optical elements that adjust the phase of the incoming light, creating a PSF with an extremely dark center. One way to design the Lyot stop is to determine the diffraction pattern expected from the occulting stop and then use a Lyot stop that blocks the locations where the diffracted light is most intense.</p>
+<div id="fig-optics-lyot-stops" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-lyot-stops-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/10-space/optics-lyot-stops.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-lyot-stops-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.8: A Lyot stop designed to work with a nearly circular occulting stop. The pattern on the left shows the diffraction pattern from a nearly circular occulting stop. The image on the right shows the Lyot stop, which lets light pass (bright regions) where the diffraction intensity is low. (From <a href="https://tinyurl.com/bp8vmkz8" target="_blank">JWST documentation, Figure 3</a>.
+</figcaption>
+</figure>
+</div>
+<p>The PSF engineering first developed for coronagraphs is crucial for direct imaging of exoplanets, which are the planets orbiting other stars. The challenge is to block the overwhelming starlight so that the faint reflected light from a nearby planet can be detected. One ambitious project, the Exo-Life Finder (ELF), uses advanced coronagraphic PSF engineering to search for signs of life on exoplanets (<span class="citation" data-cites="kuhn2025-astronomy">Kuhn et al. (<a href="references.html#ref-kuhn2025-astronomy" role="doc-biblioref">2025</a>)</span>):</p>
+<blockquote class="blockquote">
+<p>The telescope we’d like to design and build targets the problem of finding life around planets outside the solar system. To do this requires separating the reflected starlight off the planet from the star. Astronomers call this “direct imaging.” This means we’re interested in optical systems that can have a narrow field-of-view (FOV), perhaps just a few arcseconds, and enormous photometric dynamic range capability. A laudable goal is to achieve raw sensitivity of <span class="math inline">\(10^{-8}\)</span> of the stellar flux in a region within about 1 arcsecond of the central star. A dedicated telescope with this capability could make images of the surface of nearby exoplanets using data inversion techniques, perhaps sufficient to see even signs of advanced exolife civilizations (<span class="citation" data-cites="kuhn2025-astronomy">Kuhn et al. (<a href="references.html#ref-kuhn2025-astronomy" role="doc-biblioref">2025</a>)</span>).</p>
+</blockquote>
+<div id="fig-psfengineering-kuhn" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-psfengineering-kuhn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/10-space/optics-coronagraphs.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-psfengineering-kuhn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.9: An image produced from coronagraphic data from the <a href="https://tinyurl.com/mr2b67ce" target="_blank">James Webb Space Telescope</a> and from coronagraph data from the <a href="https://www.caltech.edu/about/news/keck-observatorys-new-planet-imager-delivers-first-science-53770" target="_blank">Keck Observatory</a> (<span class="citation" data-cites="serabyn2017-exoplanet-coronagraph">Serabyn et al. (<a href="references.html#ref-serabyn2017-exoplanet-coronagraph" role="doc-biblioref">2017, fig. 5</a>)</span>.)
+</figcaption>
+</figure>
+</div>
+<p>In very modern designs the simple stops are replaced by optical components that control the phase of the light across the pupil (<span class="citation" data-cites="kuhn2025-astronomy">Kuhn et al. (<a href="references.html#ref-kuhn2025-astronomy" role="doc-biblioref">2025</a>)</span>). This additional control creates a PSF with a central region that is suppressed by eight orders of magnitude or more—an essential requirement for exoplanet imaging. Achieving this level of control in a large instrument is a major technical challenge, involving not just optics, but also mechanical engineering, materials science, signal processing, and even project management and funding.</p>
+<p>The search for exoplanets is a striking example of how PSF engineering can be used to push the limits of what we can observe, revealing new worlds that would otherwise remain hidden in the glare of their parent stars.</p>
+<!-- https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12182/121820G/The-small-ELF-project--toward-an-ultra-large-coronagraphic/10.1117/12.2629645.full 
+Jeff Kuhn describes the Exo-Life Finder (ELF) project.  The quotes below are about the Small ELF (SELF) prototype. Kuhn is an astronomer at the University of Hawaiʻi's Institute for Astronomy and has a long history of working on instruments and technologies for both solar observation and exoplanet detection. Kuhn is a key figure in the development of a special type of telescope called the Exo-Life Finder (ELF), which is designed to directly image exoplanets. The technology behind this, as you describe, involves creating a coronagraphic point spread function (PSF) that effectively blocks the light from the central star, allowing the much fainter light from nearby planets to be detected. This is a form of PSF engineering with a "black in the middle" design, specifically for the purpose of finding exoplanets. He has also been involved in other projects with similar goals, such as the Kermit camera for the Lyot Project Coronagraph, which was designed for "companion searches close to bright stars."  https://www.light-am.com/article/doi/10.37188/lam.2025.033
+-->
+</section>
+<section id="sec-psf-depth" class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="sec-psf-depth"><span class="header-section-number">11.5.2</span> Microscopy and depth</h3>
+<p>A second excellent application of PSF engineering is found in microscopy, where it is used to determine the three-dimensional position of molecules within biological samples. Biologists often use fluorescent markers to tag specific molecules in tissue. When excited by light of one wavelength, these tags emit light at another, making them visible under a microscope. A single fluorescent molecule is so small that it acts as a point source, and its image through the microscope is a PSF.</p>
+<p>This principle is the foundation for a set of techniques known as Single Molecule Localization Microscopy (SMLM). The origins of SMLM trace back to the work of W.E. Moerner, who first demonstrated that it was possible to detect light from a single fluorescent molecule and that these molecules could be switched on and off with light (<span class="citation" data-cites="moerner1989-singlemolecule">Moerner and Kador (<a href="references.html#ref-moerner1989-singlemolecule" role="doc-biblioref">1989</a>)</span>, <span class="citation" data-cites="dickson1997-gfp-moerner">Dickson et al. (<a href="references.html#ref-dickson1997-gfp-moerner" role="doc-biblioref">1997</a>)</span>).</p>
+<p>Building on this, researchers like Eric Betzig (Photoactivated Localization Microscopy, PALM) and Xiaowei Zhuang (Stochastic Optical Reconstruction Microscopy, STORM) developed methods to create images with unprecedented detail (<span class="citation" data-cites="betzig2006-PALM">Betzig et al. (<a href="references.html#ref-betzig2006-PALM" role="doc-biblioref">2006</a>)</span>, <span class="citation" data-cites="zhuang2006-STORM">Rust et al. (<a href="references.html#ref-zhuang2006-STORM" role="doc-biblioref">2006</a>)</span>). The key idea is to activate only a sparse subset of fluorescent tags at any given moment. Because the active molecules are far apart, their PSFs do not overlap. The center of each PSF can be calculated with high precision, revealing the molecule’s <span class="math inline">\((x, y)\)</span> position. By repeating this process—activating a new sparse set of molecules, localizing them, and then combining all the locations—a complete, high-resolution image is constructed.</p>
+<p>These SMLM techniques are often said to “break the diffraction limit” because they can localize molecules on a scale much smaller than the Airy disk. This has revolutionized biological imaging, earning Moerner, Betzig, and Stefan Hell<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> a Nobel Prize.</p>
+<p>While SMLM excels at finding the <span class="math inline">\((x, y)\)</span> position, determining a molecule’s depth (<span class="math inline">\(z\)</span> position) is also critical for understanding 3D biological structures. The PSF of a conventional microscope changes with depth, but usually just by becoming slightly more blurry, which is difficult to measure accurately.</p>
+<p>This is where PSF engineering provides a brilliant solution. Rafael Piestun and his collaborators designed an optical system that transforms the PSF into a distinctive shape: two lobes that rotate around a central point as the molecule’s depth changes (<span class="citation" data-cites="pavani2008-3d-dh-tracking">Pavani and Piestun (<a href="references.html#ref-pavani2008-3d-dh-tracking" role="doc-biblioref">2008</a>)</span>). When plotted as a function of depth, the rotating lobes trace out a double helix (<a href="#fig-optics-double-helix" class="quarto-xref">Figure&nbsp;<span>11.10</span></a>). For a sparsely labeled sample, an investigator can find the <span class="math inline">\((x, y)\)</span> position from the PSF’s center and estimate the depth (<span class="math inline">\(z\)</span>) from the orientation of the two lobes. This clever design enables precise 3D localization of single molecules. Piestun co-founded <a href="https://www.doublehelixoptics.com/">Double Helix Optics</a> to commercialize this technology.</p>
+<div id="fig-optics-double-helix" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-double-helix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/10-space/piestun-double-helix.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-double-helix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.10: Double-helix point spread. Using a spatial light modulator to control the phase of the light, Piestun and colleagues created an oriented point spread function (images). The angle of the point spread depends on the distance from the optics at a scale of hundreds of nanometers (graph). After <span class="citation" data-cites="backlund2012-psfengineering">Backlund et al. (<a href="references.html#ref-backlund2012-psfengineering" role="doc-biblioref">2012, fig. 1</a>)</span>.
+</figcaption>
+</figure>
+</div>
+
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-backlund2012-psfengineering" class="csl-entry" role="listitem">
+Backlund MP, Lew MD, Backer AS, et al (2012) <a href="http://dx.doi.org/10.1073/pnas.1216687109">Simultaneous, accurate measurement of the <span>3D</span> position and orientation of single molecules</a>. Proc Natl Acad Sci U S A 109:19087–19092
+</div>
+<div id="ref-betzig2006-PALM" class="csl-entry" role="listitem">
+Betzig E, Patterson GH, Sougrat R, et al (2006) <a href="http://dx.doi.org/10.1126/science.1127344">Imaging intracellular fluorescent proteins at nanometer resolution</a>. Science 313:1642–1645
+</div>
+<div id="ref-dickson1997-gfp-moerner" class="csl-entry" role="listitem">
+Dickson R, Cubitt AB, Tsien R, Moerner W (1997) <a href="http://dx.doi.org/10.1038/41048">On/off blinking and switching behaviour of single molecules of green fluorescent protein</a>. Nature 388:355–358
+</div>
+<div id="ref-kuhn2025-astronomy" class="csl-entry" role="listitem">
+Kuhn J, Lodieu N, López RR, et al (2025) <a href="http://dx.doi.org/10.37188/lam.2025.033">Creating ground-based telescopes for imaging interferometry: <span>SELF</span> and <span>ELF</span></a>. gxjzz 6:1
+</div>
+<div id="ref-moerner1989-singlemolecule" class="csl-entry" role="listitem">
+Moerner WE, Kador L (1989) <a href="http://dx.doi.org/10.1103/physrevlett.62.2535">Optical detection and spectroscopy of single molecules in a solid</a>. Phys Rev Lett 62:2535–2538
+</div>
+<div id="ref-pavani2008-3d-dh-tracking" class="csl-entry" role="listitem">
+Pavani SRP, Piestun R (2008) <a href="http://dx.doi.org/10.1364/OE.16.022048">Three dimensional tracking of fluorescent microparticles using a photon-limited double-helix response system</a>. Opt Express 16:22048–22057
+</div>
+<div id="ref-zhuang2006-STORM" class="csl-entry" role="listitem">
+Rust MJ, Bates M, Zhuang X (2006) <a href="http://dx.doi.org/10.1038/nmeth929">Sub-diffraction-limit imaging by stochastic optical reconstruction microscopy (<span>STORM</span>)</a>. Nat Methods 3:793–795
+</div>
+<div id="ref-serabyn2017-exoplanet-coronagraph" class="csl-entry" role="listitem">
+Serabyn E, Huby E, Matthews K, et al (2017) <a href="http://dx.doi.org/10.3847/1538-3881/153/1/43">The w. <span>M</span>. Keck observatory infrared vortex coronagraph and a first image of hip 79124 b</a>. Astron J 153:43
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The image formation in a coronagraph involves a sequence of Fourier Transforms between pupil and image planes. This mathematical framework allows us to predict how well the system will suppress unwanted light. We’ll explore these calculations in later sections. <a href="https://chatgpt.com/share/6892d701-54d0-8002-8137-ec17287ab549" target="_blank">See this ISETCam script for more details.</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Stefan Hell developed a different but related super-resolution approach called STED microscopy. It uses a special pattern of light to shrink the region where fluorescence occurs, also achieving very high spatial resolution.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/optics-04-morelenses.html" class="pagination-link" aria-label="Lenses and ray transfer">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/optics-06-linear-transform.html" class="pagination-link" aria-label="Transform domain">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

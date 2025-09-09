@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-08">
+<meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
+
+<title>14&nbsp; Photons and Electrons – Foundations of Image Systems Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/sensors-02-pixels.html" rel="next">
+<link href="../chapters/optics-07-wavefront.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/hover.css">
+<link rel="stylesheet" href="../styles/callouts.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/sensors-01-photoelectric.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/sensors-01-photoelectric.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Foundations of Image Systems Engineering</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scenes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-03-properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light field properties</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-04-properties-spectral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Optics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-02-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lens principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-03-thinlens.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-04-morelenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-05-linear-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-06-linear-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-07-wavefront.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sensors</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-01-photoelectric.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-02-pixels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-03-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-04-components.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">System components</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-05-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Control systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-06-characterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image system modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-07-innovations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sensor innovations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Human</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/human-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Human vision</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Displays</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Image processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/imgprocessing-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-sensors-photons-electrons-overview" id="toc-sec-sensors-photons-electrons-overview" class="nav-link active" data-scroll-target="#sec-sensors-photons-electrons-overview"><span class="header-section-number">14.1</span> Photons and Electrons overview</a></li>
+  <li><a href="#photoelectric-effect" id="toc-photoelectric-effect" class="nav-link" data-scroll-target="#photoelectric-effect"><span class="header-section-number">14.2</span> Photoelectric effect</a></li>
+  <li><a href="#sec-photon-discovered" id="toc-sec-photon-discovered" class="nav-link" data-scroll-target="#sec-photon-discovered"><span class="header-section-number">14.3</span> Discovery of the photon</a></li>
+  <li><a href="#wave-particle-duality" id="toc-wave-particle-duality" class="nav-link" data-scroll-target="#wave-particle-duality"><span class="header-section-number">14.4</span> Wave-particle duality</a></li>
+  <li><a href="#quantifying-the-photoelectric-effect" id="toc-quantifying-the-photoelectric-effect" class="nav-link" data-scroll-target="#quantifying-the-photoelectric-effect"><span class="header-section-number">14.5</span> Quantifying the photoelectric effect</a></li>
+  <li><a href="#sec-shot-noise" id="toc-sec-shot-noise" class="nav-link" data-scroll-target="#sec-shot-noise"><span class="header-section-number">14.6</span> Statistics of the photoelectric effect</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/sensors-01-photoelectric.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/sensors-01-photoelectric.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-sensors-photons-electrons" class="quarto-section-identifier"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Work in Progress
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
+<p>Last updated: September 8, 2025</p>
+</div>
+</div>
+</div>
+<section id="sec-sensors-photons-electrons-overview" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="sec-sensors-photons-electrons-overview"><span class="header-section-number">14.1</span> Photons and Electrons overview</h2>
+<p>The transition from film to digital imaging, enabled by semiconductor technology, has profoundly changed how we record and process images (<span class="citation" data-cites="boyle1970-ccd-first">Boyle and Smith (<a href="references.html#ref-boyle1970-ccd-first" role="doc-biblioref">1970</a>)</span>; see <a href="../index.html#sec-preface">Preface</a>). Digital image sensors use arrays of tiny, light-sensitive elements called <strong>photodiodes</strong>.These are semiconductor devices that convert incoming light into electrical current. Photodiodes are the essential building block of all modern image sensors.</p>
+<p>The earliest digital image sensors, known as charge-coupled devices (CCD), were built using metal-oxide semiconductor technology (MOS). Measuring the electrons captured by the array of photodiodes in a CCD requires significant power, making them unsuitable for mobile devices and limiting their early adoption to scientific and other high-end applications.</p>
+<p>A major breakthrough came with Eric Fossum’s invention of the Complementary Metal-Oxide Semiconductor (CMOS) image sensor (<span class="citation" data-cites="fossum1993-ccd-dinosaurs">Fossum (<a href="references.html#ref-fossum1993-ccd-dinosaurs" role="doc-biblioref">1993</a>)</span>; <span class="citation" data-cites="fossum1995-patent">Fossum et al. (<a href="references.html#ref-fossum1995-patent" role="doc-biblioref">1995</a>)</span>). By implementing an active pixel sensor (APS) circuit in CMOS, Fossum enabled image sensors to be manufactured using mainstream microelectronics processes. This dramatically reduced power consumption and allowed integration of light-sensing pixels with timing, control, and signal processing circuitry on the same chip (<a href="#fig-olympus-overview" class="quarto-xref">Figure&nbsp;<span>14.1</span></a>). These advances paved the way for the widespread adoption of electronic image sensors in mobile devices and many other applications.</p>
+<div id="fig-olympus-overview" class="quarto-float quarto-figure quarto-figure-center anchored" style=".float-right">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-olympus-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/sensors/13-photons/olympusCMOSSensorImage.png" class="img-fluid figure-img" style=".float-right;width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-olympus-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14.1: CMOS image sensors (CIS) incorporate integrated circuitry and multiple subsystems. The circuitry and subsystems, together, enable the capture, transfer and digital encoding of the image. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="photoelectric-effect" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="photoelectric-effect"><span class="header-section-number">14.2</span> Photoelectric effect</h2>
+<p>The physical principle underlying the photodiode operation —converting light into electrons— is called the <strong>photoelectric effect</strong>. Understanding how materials convert light into electrical signals is a fascinating chapter in the history of physics and engineering, shaped by groundbreaking experiments and theories that changed our thinking about the world.</p>
+<p>Heinrich Hertz was the first to report an unexpected phenomenon related to electromagnetic waves that would later be known as the photoelectric effect <span class="citation" data-cites="Hertz1887-photoelectric2 Hertz1887-photoelectric1">(<a href="references.html#ref-Hertz1887-photoelectric2" role="doc-biblioref">Hertz 1887a</a>, <a href="references.html#ref-Hertz1887-photoelectric1" role="doc-biblioref">b</a>)</span>. His primary goal was to measure the electromagnetic waves predicted by Maxwell’s theory. For this, he used a two-part apparatus:</p>
+<ol type="1">
+<li><p><strong>The Transmitter:</strong> This consisted of a large induction coil connected to a spark gap (often with attached metal plates acting as a dipole antenna). The induction coil produced high-voltage pulses, causing powerful, oscillating sparks to jump across this gap. These sparks were the source of the electromagnetic radiation (radio waves) that Hertz aimed to study.</p></li>
+<li><p><strong>The Receiver:</strong> This was a separate, much smaller loop of wire, also containing a small spark gap. The receiver was placed at a distance from the transmitter. When the electromagnetic waves from the transmitter propagated to the receiver, they induced an oscillating current in the receiver loop. If the induced current was strong enough, a tiny spark would jump across the receiver’s gap, signaling the detection of the electromagnetic waves.</p></li>
+</ol>
+<p>During these experiments Hertz made a crucial incidental observation: a spark in the <em>receiver</em> gap was significantly enhanced – jumping a longer distance – when the receiver gap was illuminated by the ultraviolet (UV) light emanating from the <em>transmitter’s</em> spark. Conversely, placing a glass plate (which blocks UV) between the transmitter and receiver diminished the receiver spark. A quartz plate (which transmits UV) did not impact the spark.</p>
+<p>Hertz correctly concluded that UV light was somehow facilitating the spark in the receiver gap. This observation was the first report of the photoelectric effect – the phenomenon where electromagnetic radiation, specifically UV light in this case, causes the emission of charged particles (later identified as electrons) from a material surface, thereby influencing electrical signals. <!--
+He also noticed that glass, which blocks UV light, eliminated the effect. Quartz (which transmits UV light) did not.
+
+https://g.co/gemini/share/4d34e0260c7f
+
+--></p>
+<p>The central challenge of the photoelectric effect is to model how electromagnetic radiation—light—interacts with a material to generate an electrical signal.</p>
+</section>
+<section id="sec-photon-discovered" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="sec-photon-discovered"><span class="header-section-number">14.3</span> Discovery of the photon</h2>
+<p>It was not until 1897 that JJ Thomson conclusively demonstrated that electrons are discrete, countable particles. Thomson’s experiments revealed that cathode rays are composed of negatively charged particles with a specific mass and charge, much smaller than that of an atom.</p>
+<p>In 1902, armed with knowledge of electrons, Philipp Lenard carried out a series of important experiments. He observed that increasing the intensity of the incident light increased the number of emitted electrons but <strong>did not</strong> increase their kinetic energy. Instead, the energy of the emitted electrons depended on the <strong>wavelength</strong> of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also identified a <strong>threshold wavelength</strong>—if the light’s wavelength was too long (i.e., its frequency too low), no electrons were emitted, regardless of how intense the light was. These results posed a serious challenge to classical wave theory, which predicted that energy should increase smoothly with intensity, not depend on frequency.</p>
+<p>At the same time, physicists were trying to explain the spectrum of light emitted by a blackbody—a perfect absorber and emitter of radiation. In 1900, <strong>Max Planck</strong> tackled this problem. He found a formula that matched the observed spectrum, but only if he assumed that energy exchange (joules) between matter and radiation occurred in discrete amounts.</p>
+<p><span class="math display">\[
+E = n h \nu
+\]</span></p>
+<p>Here, <span class="math inline">\(n\)</span> is an integer; <span class="math inline">\(\nu\)</span> is the frequency (<span class="math inline">\(1/sec\)</span>) of the radiation; and <span class="math inline">\(h\)</span> is a constant — now called Planck’s constant (<span class="math inline">\(h = 6.62607015 \times 10^{-34}\)</span> joule-seconds). Planck proposed that the oscillators in the material’s walls could only transfer energies in discrete steps. This quantization explained why the measured absorption and emission of light matched the observed spectrum, even though the light field itself was continuous.</p>
+<p>In 1905, Albert Einstein went further. He proposed that we should not think of light as a continuous wave that becomes quantized through an interaction with the material. Rather, he argued, light itself <strong>quantized</strong> into discrete packets of energy—later called <strong>photons</strong>. The energy of each photon is proportional to its frequency, and inversely proportional to its wavelength</p>
+<p><span id="eq-plancks-formula"><span class="math display">\[
+E = \frac{h c}{\lambda}
+\tag{14.1}\]</span></span></p>
+<p>where</p>
+<ul>
+<li><span class="math inline">\(h\)</span> = Planck’s constant (<span class="math inline">\(6.626 \times 10^{-34}\)</span> J·s)</li>
+<li><span class="math inline">\(c\)</span> = speed of light in vacuum (<span class="math inline">\(3.00 \times 10^8\)</span> m/s)</li>
+<li><span class="math inline">\(\lambda\)</span> = wavelength (in meters)</li>
+</ul>
+<p>This hypothesis went beyond Max Planck’s work, which assumed the quantization was part of the exchange between matter and radiation — not that light itself came in packets. Einstein suggested that <strong>light in free space</strong> behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained both Planck’s observations and all of Lenard’s experiments. His photoelectric theory laid the groundwork for the next generation’s work in quantum physics.</p>
+</section>
+<section id="wave-particle-duality" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="wave-particle-duality"><span class="header-section-number">14.4</span> Wave-particle duality</h2>
+<p>For much of the 19th century, Newton’s idea that light was made of tiny particles (corpuscles) was set aside, as experiments overwhelmingly supported the wave theory of light—interference and diffraction patterns provided strong evidence for wave-like behavior. However, the photoelectric effect presented results that could not be explained by wave theory alone, forcing physicists to recognize that light sometimes behaves as a particle as well. This is the essence of the <strong>wave-particle duality</strong>.</p>
+<p>Einstein did not ignore the wave phenomena. For much of his career, he worked towards a new set of principles that might be called a “statistical wave-particle” model, in which photons retain a wave-like “guiding field” or statistical distribution that determines their path. He imaginged that individual photons are particles, but their collective behavior is governed by an emergent, wave-like probability distributions that creates the familiar diffraction patterns.</p>
+<!-- Einstein and diffraction
+https://g.co/gemini/share/48fba5e2af5a
+-->
+<p>A different, revolutionary theory sprung forth from the next generation, including Neils Bohr. This theory, <strong>quantum mechanics</strong> describes electromagnetic radiation by a mathematical object called the <strong>wavefunction</strong>, which provides the probabilities of different outcomes. When experiments are designed to reveal wave-like effects (such as interference), light behaves as a wave. When experiments probe particle-like effects (such as the photoelectric effect), light behaves as a particle.</p>
+<div id="fig-bohr-einstein" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bohr-einstein-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/people/bohr-einstein.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bohr-einstein-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14.2: Niels Bohr was an important figure in developing and advocating for the statistical wave-particle model in quantum mechanics. As a central architect of quantum theory, and advocate for the probabilistic interpretation of quantum mechanics, he viewed the statistical nature of quantum events as a fundamental aspect of reality. Bohr’s debates with Einstein helped clarify and popularize these concepts.
+</figcaption>
+</figure>
+</div>
+<p>The young theorists argued that both descriptions are necessary, and neither alone is sufficient to fully describe the nature of light. Einstein was reluctant to accept this framing calling it implausible; Bohr argued that Einstein was clinging to classical intuitions about reality that quantum mechanics had shown to be inadequate. From Bohr’s perspective, the probabilistic nature of quantum mechanics wasn’t a sign of incomplete knowledge - it was a fundamental feature of nature at the microscopic scale. Bohr believed that concepts like “determinism” and “objective reality independent of observation” were classical prejudices that had to be abandoned. He argued that quantum mechanics was complete precisely because it recognized the fundamental role of measurement and the impossibility of simultaneously knowing all properties of a quantum system.</p>
+<p>This duality remains a central and intriguing feature of quantum physics. If you don’t find all of this a bit puzzling, you may not be paying enough attention: <a href="https://www.nature.com/articles/d41586-025-02342-y?utm_source=Live+Audience&amp;utm_campaign=a8d315930b-nature-briefing-daily-20250730&amp;utm_medium=email&amp;utm_term=0_-33f35e09ea-49658492">Physicists disagree wildly on what quantum mechanics says about reality</a>.</p>
+<div id="einstein-lenard-bohr" class="callout callout-style-default callout-note callout-titled" title="Einstein, Bohr, and Lenard">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Einstein, Bohr, and Lenard
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Einstein’s proposal of the photon was initially met with skepticism, as the wave theory of light was deeply established in physics. Even Einstein himself was uneasy with the resulting <strong>wave-particle duality</strong> and especially with the probabilistic foundations of quantum mechanics; he believed it pointed to an incomplete understanding of nature. He famously rejected this probabilistic view, remarking that “God does not play dice.” Niels Bohr responded, “Einstein, don’t tell God what to do.” The tension between wave and particle descriptions remains a central—and still unresolved—theme in physics.</p>
+<p>In 1905—Einstein’s <em>annus mirabilis</em>—he published four groundbreaking papers that reshaped modern physics. In addition to the photoelectric effect, for which he was awarded the Nobel Prize, he introduced Special Relativity, showing that <strong>simultaneity is relative</strong> depending on the observer’s frame of reference. The excellent biography of Einstein by Walter Isaacson <span class="citation" data-cites="Isaacson2008-einstein">(<a href="references.html#ref-Isaacson2008-einstein" role="doc-biblioref">2008</a>)</span> provides an accessible account of these discoveries and the broader scientific context.</p>
+<p>Isaacson also details how Lenard, whose experimental work was important to Einstein’s theory became an outspoken anti-Semite. Lenard, who was awarded a Nobel Prize prior to Einstein, actively opposed Einstein’s recognition in the scientific community. As Isaacson also chronicles, Bohr and Einstein maintained a deep mutual respect and professional friendship throughout their careers.</p>
+<!--
+![Lenard made measurements that defined important properties of the photoelectric effect. Einstein offered a bold theoretical idea, what we now call the photon, that explained Lenard's and Planck's measurements. Einstein, who was Jewish, had a complex personal relationship with Planck, as they navigated Hitler's rise to power. Lenard became strongly anti-Semitic.](images/people/03-Lenard-Einstein.png){#fig-lenard-einstein fig-cap-location="bottom" fig-align="center" width="35%"}
+-->
+<p><!--
+Photoelectric effect and Lenard
+https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF728iVpg 
+--></p>
+</div>
+</div>
+</div>
+</section>
+<section id="quantifying-the-photoelectric-effect" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="quantifying-the-photoelectric-effect"><span class="header-section-number">14.5</span> Quantifying the photoelectric effect</h2>
+<p>When we model light as a wavefunction, we can only predict the probability that a photon will generate an electron. This means that even with a perfectly stable light source, the number of electrons generated in a photodiode will fluctuate from one measurement to the next. These statistical fluctuations are a key feature of how light interacts with matter and are central to quantum optics.</p>
+<p>The number of photon absorptions in a photodiode follows the Poisson probability distribution. This statistical property was formalized in the 1950s by two groups: one studying visual sensitivity in the retina (<span class="citation" data-cites="Pirenne1951-poisson">Pirenne (<a href="references.html#ref-Pirenne1951-poisson" role="doc-biblioref">1951</a>)</span>, <span class="citation" data-cites="Barlow1956-retinalnoise">Barlow (<a href="references.html#ref-Barlow1956-retinalnoise" role="doc-biblioref">1956</a>)</span>), and another investigating the physics of electromagnetic radiation and image sensors (<span class="citation" data-cites="Mandel1959-poissonabsorptions">Mandel (<a href="references.html#ref-Mandel1959-poissonabsorptions" role="doc-biblioref">1959</a>)</span>).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The <strong>mean</strong> number of electrons generated is proportional to the light intensity: doubling the light intensity doubles the mean number of electrons (<span class="citation" data-cites="Preece2022-photontransfer">Preece and Haefner (<a href="references.html#ref-Preece2022-photontransfer" role="doc-biblioref">2022</a>)</span>). This linear relationship holds over a wide range, until the sensor material saturates. However, because photon arrivals and electron generation are random processes, the actual number of electrons generated in each measurement fluctuates around this mean. These fluctuations are described by Poisson statistics.</p>
+<p>Not every photon generates an electron. The ratio of generated electrons to incident photons is called the photodiode’s <strong>quantum efficiency (QE)</strong>. QE can be measured as the slope of the line relating the number of incident photons (x-axis) to the number of generated electrons (y-axis). A QE of 1 (or 100%) means every photon generates one electron; a QE of 0.5 means, on average, half of the photons generate an electron.</p>
+<p><span class="math display">\[
+\mathrm{QE}(\lambda) = \frac{\text{number of electrons generated}}{\text{number of incident photons at wavelength } \lambda}
+\]</span></p>
+<p>In practice, QE depends on wavelength due to the sensor material and device design. Manufacturers often provide QE curves showing efficiency as a function of wavelength, and we will examine examples later.</p>
+<p>The photodiode is part of a circuit that stores and reads out the generated charge. While this circuitry can introduce nonlinearities and additional noise (<span class="citation" data-cites="Bohndiek2008-sensorlinearity">Bohndiek et al. (<a href="references.html#ref-Bohndiek2008-sensorlinearity" role="doc-biblioref">2008</a>)</span>), the initial conversion from light to electrons is linear over a large range. Understanding this linear process is fundamental to CMOS image sensor operation; understanding the full system requires further study of the sensor’s electronic components, which we discuss in later sections.</p>
+<!--
+Bohndiek2008-sensorlinearity paper has figures.  Notice how nonlinear Figures 7 and 17 are.  But earlier figures (e.g., I probably have class data with response linearity and nonlinearity.  The Thieuwissen paper has an analysis of the impact of floating diffusion.
+-->
+</section>
+<section id="sec-shot-noise" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="sec-shot-noise"><span class="header-section-number">14.6</span> Statistics of the photoelectric effect</h2>
+<p>The principles underlying the Poisson distribution of electrons are straightforward. Suppose we have a <strong>steady source</strong> of photons, all with the same wavelength. The probability of a photon arriving in any given small time interval, <span class="math inline">\(\delta t\)</span>, is constant. This is the defining property of a Poisson process: events occur independently, with a constant average rate.</p>
+<p>If the probability that a photon generates an electron is also constant (equal to the quantum efficiency, QE), then each photon arrival is an independent chance to generate an electron. The resulting number of electrons generated in a given interval is also Poisson distributed, with a mean scaled by the quantum efficiency. This statistical fluctuation in the number of electrons is known as the <strong>shot noise</strong> of the sensor.</p>
+<div id="photoelectric-poisson" class="callout callout-style-default callout-note callout-titled" title="Siméon Denis Poisson">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Siméon Denis Poisson
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>I referred to Poisson earlier - he was the French academician who tried to disprove Fresnel’s wave theory calculations. He predicted <a href="https://en.wikipedia.org/wiki/Arago_spot">a bright point that appears at the center of a circular object’s shadow</a> based on Fresnel’s theory—thinking it impossible. But experiments showed that the spot was present!</p>
+<div id="fig-image-poisson" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-image-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/people/poisson.png" class="img-fluid figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-image-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14.3: Siméon Denis Poisson.
+</figcaption>
+</figure>
+</div>
+<p>I refer to Poisson here for an entirely different reason: the famous probability distribution with his name. He developed the mathematics for the distribution in his 1837 work “Recherches sur la probabilité des jugements en matière criminelle et en matière civile (Researches on the Probability of Judgments in Criminal and Civil Matters)”. The goal of this work was to describe the number of discrete events occurring in a fixed interval of time or space, given a known constant mean rate and independence between events. His applications included jurisprudence and statistics such as the number of soldiers killed by horse kicks in the Prussian army.</p>
+<p>Although it was developed for a completely different purpose, the mathematical framework he established applies directly to the arrival of photons from a constant light source. In imaging, each electron generation is considered an ‘event’, all events are identical, and the probability of an event in any small time interval is the same.</p>
+</div>
+</div>
+</div>
+<p>The Poisson formula describes the probability of observing <span class="math inline">\(n\)</span> electron events, given a mean <span class="math inline">\(\lambda\)</span>: <span class="math display">\[
+P(n; \lambda) = \frac{\lambda^n e^{-\lambda}}{n!}
+\]</span></p>
+<p>Here, <span class="math inline">\(\lambda\)</span> is both the expected (mean) number of events and the variance of the distribution. For large <span class="math inline">\(\lambda\)</span> (greater than about 15 or 20), the Poisson distribution closely resembles the Normal (Gaussian) distribution (<a href="#fig-sensor-poisson" class="quarto-xref">Figure&nbsp;<span>14.4</span></a>). The main differences are that the Poisson distribution only takes integer values and is skewed for small <span class="math inline">\(\lambda\)</span>. As <span class="math inline">\(\lambda\)</span> increases, the distribution becomes more symmetric and approaches the Normal distribution.</p>
+<div id="fig-sensor-poisson" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sensor-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/sensors/13-photons/03-Poisson.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensor-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14.4: Poisson distribution examples. The Poisson formula (red lines) and simulations of Poisson counts (bars) are shown for three mean levels.
+</figcaption>
+</figure>
+</div>
+<p>A key fact we will use later: for a Poisson distribution, the mean and variance are equal. This property distinguishes Poisson noise from other types of noise.</p>
+<div id="shotnoise-poisson" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+ISETCam: shot noise
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You can see a step-by-step statistical explanation of photon arrivals followed by electron generation in the <a href="../code/fise_photonsElectrons.html">ISETCam script</a>. The script demonstrates why, in conventional CMOS image sensors, both the incident photons and the resulting electrons follow Poisson statistics.</p>
+<p>This relationship -Poisson distribution followed by another Poisson distribution- does not apply to other sensor types. When a photon absorption generates multiple electrons (photomultipliers and SPADs), the statistical distribution of the output requires some more thought (<a href="sensors-07-innovations.html#sec-sensor-spad" class="quarto-xref"><span>Section 20.10</span></a>).</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Barlow1956-retinalnoise" class="csl-entry" role="listitem">
+Barlow HB (1956) <a href="http://dx.doi.org/10.1364/JOSA.46.000634">Retinal noise and absolute threshold</a>. J Opt Soc Am 46:634–639
+</div>
+<div id="ref-Bohndiek2008-sensorlinearity" class="csl-entry" role="listitem">
+Bohndiek SE, Blue A, Clark AT, et al (2008) <a href="http://dx.doi.org/10.1109/jsen.2008.2004296">Comparison of methods for estimating the conversion gain of <span>CMOS</span> active pixel sensors</a>. IEEE Sens J 8:1734–1744
+</div>
+<div id="ref-boyle1970-ccd-first" class="csl-entry" role="listitem">
+Boyle WS, Smith GE (1970) <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/j.1538-7305.1970.tb01790.x">Charge coupled semiconductor devices</a>. Bell Syst Tech J 49:587–593
+</div>
+<div id="ref-fossum1993-ccd-dinosaurs" class="csl-entry" role="listitem">
+Fossum ER (1993) <a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/1900/0000/Active-pixel-sensors-are-CCDs-dinosaurs/10.1117/12.148585.short">Active pixel sensors: Are <span>CCDs</span> dinosaurs?</a> In: Blouke MM (ed) Charge-coupled devices and solid state optical sensors III. SPIE, pp 2–14
+</div>
+<div id="ref-fossum1995-patent" class="csl-entry" role="listitem">
+Fossum ER, Mendis S, Kemeny SE (1995) <a href="https://patents.google.com/patent/US5471515A/en">Active pixel sensor with intra-pixel charge transfer</a>. US Patent
+</div>
+<div id="ref-Hertz1887-photoelectric1" class="csl-entry" role="listitem">
+Hertz H (1887b) <a href="http://dx.doi.org/10.1002/andp.18872670707">Ueber sehr schnelle electrische schwingungen</a>. Ann Phys 267:421–448
+</div>
+<div id="ref-Hertz1887-photoelectric2" class="csl-entry" role="listitem">
+Hertz H (1887a) <a href="http://dx.doi.org/10.1002/andp.18872670827">Ueber einen einfluss des ultravioletten lichtes auf die electrische entladung</a>. Ann Phys 267:983–1000
+</div>
+<div id="ref-Isaacson2008-einstein" class="csl-entry" role="listitem">
+Isaacson W (2008) Einstein: His life and universe. Simon; Schuster
+</div>
+<div id="ref-Mandel1959-poissonabsorptions" class="csl-entry" role="listitem">
+Mandel L (1959) <a href="http://dx.doi.org/10.1088/0370-1328/74/3/301">Fluctuations of photon beams: The distribution of the photo-electrons</a>. Proc Phys Soc 74:233–243
+</div>
+<div id="ref-Pirenne1951-poisson" class="csl-entry" role="listitem">
+Pirenne MH (1951) <a href="http://dx.doi.org/10.1016/s0096-4174(18)30026-x">Quantum physics of vision theoretical discussion</a>. Prog Biophys Biophys Chem 2:193–223
+</div>
+<div id="ref-Preece2022-photontransfer" class="csl-entry" role="listitem">
+Preece BL, Haefner DP (2022) <a href="http://dx.doi.org/10.1364/AO.452166"><span>3D</span> noise photon transfer curve</a>. Appl Opt 61:6202–6212
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The history of these discoveries is fascinating but too detailed to cover here. For more, see <a href="resources/Poisson-history.html">these notes</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/optics-07-wavefront.html" class="pagination-link" aria-label="Wavefronts">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/sensors-02-pixels.html" class="pagination-link" aria-label="Pixels and sensors">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

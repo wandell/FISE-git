@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-08">
+<meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
+
+<title>9&nbsp; Thin lenses – Foundations of Image Systems Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/optics-04-morelenses.html" rel="next">
+<link href="../chapters/optics-02-lenses.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/hover.css">
+<link rel="stylesheet" href="../styles/callouts.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/optics-01-geometric.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-03-thinlens.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Foundations of Image Systems Engineering</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scenes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-03-properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light field properties</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-04-properties-spectral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Optics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-02-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lens principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-03-thinlens.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-04-morelenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-05-linear-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-06-linear-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-07-wavefront.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sensors</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-01-photoelectric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-02-pixels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-03-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-04-components.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">System components</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-05-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Control systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-06-characterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image system modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-07-innovations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sensor innovations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Human</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/human-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Human vision</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Displays</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Image processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/imgprocessing-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-optics-thinlens-overview" id="toc-sec-optics-thinlens-overview" class="nav-link active" data-scroll-target="#sec-optics-thinlens-overview"><span class="header-section-number">9.1</span> Thin lenses overview</a></li>
+  <li><a href="#sec-optics-thinlensdefined" id="toc-sec-optics-thinlensdefined" class="nav-link" data-scroll-target="#sec-optics-thinlensdefined"><span class="header-section-number">9.2</span> What is a thin lens</a></li>
+  <li><a href="#sec-optics-focalpoints" id="toc-sec-optics-focalpoints" class="nav-link" data-scroll-target="#sec-optics-focalpoints"><span class="header-section-number">9.3</span> Focal points</a></li>
+  <li><a href="#sec-optics-3principles" id="toc-sec-optics-3principles" class="nav-link" data-scroll-target="#sec-optics-3principles"><span class="header-section-number">9.4</span> Three ray tracing principles</a></li>
+  <li><a href="#sec-optics-imageplane" id="toc-sec-optics-imageplane" class="nav-link" data-scroll-target="#sec-optics-imageplane"><span class="header-section-number">9.5</span> Image plane</a></li>
+  <li><a href="#sec-optics-lenspower" id="toc-sec-optics-lenspower" class="nav-link" data-scroll-target="#sec-optics-lenspower"><span class="header-section-number">9.6</span> Lens power (diopters)</a></li>
+  <li><a href="#sec-lens-formula" id="toc-sec-lens-formula" class="nav-link" data-scroll-target="#sec-lens-formula"><span class="header-section-number">9.7</span> The lens formula</a></li>
+  <li><a href="#sec-optics-imagedistance" id="toc-sec-optics-imagedistance" class="nav-link" data-scroll-target="#sec-optics-imagedistance"><span class="header-section-number">9.8</span> Image distance formula</a></li>
+  <li><a href="#sec-optics-lensmaker" id="toc-sec-optics-lensmaker" class="nav-link" data-scroll-target="#sec-optics-lensmaker"><span class="header-section-number">9.9</span> Lensmaker equation</a></li>
+  <li><a href="#sec-optics-biconvex" id="toc-sec-optics-biconvex" class="nav-link" data-scroll-target="#sec-optics-biconvex"><span class="header-section-number">9.10</span> Biconvex lenses</a></li>
+  <li><a href="#sec-optics-fnumber" id="toc-sec-optics-fnumber" class="nav-link" data-scroll-target="#sec-optics-fnumber"><span class="header-section-number">9.11</span> The <span class="math inline">\(\mathrm{f}/\#\)</span> (f-number)</a></li>
+  <li><a href="#sec-optics-zoom" id="toc-sec-optics-zoom" class="nav-link" data-scroll-target="#sec-optics-zoom"><span class="header-section-number">9.12</span> Magnification and zoom</a></li>
+  <li><a href="#sec-optics-fnumberintensity" id="toc-sec-optics-fnumberintensity" class="nav-link" data-scroll-target="#sec-optics-fnumberintensity"><span class="header-section-number">9.13</span> <span class="math inline">\(\mathrm{f}/\#\)</span> and image intensity</a></li>
+  <li><a href="#sec-optics-dof" id="toc-sec-optics-dof" class="nav-link" data-scroll-target="#sec-optics-dof"><span class="header-section-number">9.14</span> Depth of field</a>
+  <ul class="collapse">
+  <li><a href="#sec-optics-coc" id="toc-sec-optics-coc" class="nav-link" data-scroll-target="#sec-optics-coc"><span class="header-section-number">9.14.1</span> Circle of confusion</a></li>
+  <li><a href="#sec-optics-dof-formula" id="toc-sec-optics-dof-formula" class="nav-link" data-scroll-target="#sec-optics-dof-formula"><span class="header-section-number">9.14.2</span> Depth of field formula</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/optics-01-geometric.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-03-thinlens.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-optics-thinlens" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Work in Progress
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
+<p>Last updated: September 8, 2025</p>
+</div>
+</div>
+</div>
+<section id="sec-optics-thinlens-overview" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-optics-thinlens-overview"><span class="header-section-number">9.1</span> Thin lenses overview</h2>
+<p>Many image system properties can be summarized by the geometric optics of ray tracing. This analysis characterizes important performance characteristics of an optical system, such as its focal length, magnification, and depth of field. These optical properties can be analyzed in a particularly simple and clear way if we consider very simple thin lenses.</p>
+<p>Starting with an analysis of a thin lens has much practical value. First, many people, including both engineers and photographers, rely on the thin lens ideas when they describe optical system characteristics. Familiarity with these ray trace characterizations is important for anyone working in the field of image systems engineering. Second, even more complex image systems are often made from lenses that are well approximated by a collection thin lenses. We will go on to see how to extend the thin lens ideas to more complex systems in <a href="optics-04-morelenses.html" class="quarto-xref"><span>Chapter 10</span></a>.</p>
+<p>This section explains ways to understand image system optics by ray tracing. Important as it is, ray tracing is not up to the task of a full image systems simulation. As we saw in <a href="optics-01-geometric.html" class="quarto-xref"><span>Chapter 7</span></a>, we will need to account for the wave properties of light, for example to incorporate diffraction. We will explain the methods used for simulating the spectral irradiance at the sensor in subsequent chapters about linear systems (<a href="optics-05-linear-space.html" class="quarto-xref"><span>Chapter 11</span></a>) and wavefront calculations (<a href="optics-07-wavefront.html" class="quarto-xref"><span>Chapter 13</span></a>).</p>
+</section>
+<section id="sec-optics-thinlensdefined" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-optics-thinlensdefined"><span class="header-section-number">9.2</span> What is a thin lens</h2>
+<p>If a lens width is much smaller than the <em>radius of curvature</em> of its two surfaces, it is called a <em>thin lens</em>. The radius of the circle that (at least approximately) conforms to the surface of the lens is the radius of curvature. There is no universally agreed upon numerical value for what is meant by much smaller, but it is common to consider a lens whose width is one-tenth or less of the radius of curvature to be a thin lens.</p>
+<div id="fig-thinlens-definition" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-thinlens-definition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/thinlens-definition.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-thinlens-definition-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: (a) This lens width is smaller than the radius of the circle that matches its surface. The lens might be considered thin. (b) This lens width is approximately equal to the radius of curvature. It is not be a thin lens.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-optics-focalpoints" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="sec-optics-focalpoints"><span class="header-section-number">9.3</span> Focal points</h2>
+<p><a href="#fig-thinlens-focalpoints" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> shows the important concept of the primary and secondary focal points of a convex and concave thin lens. The primary focal point (F) is the location on the optical axis such that any ray coming from it towards the lens travels parallel to the axis after refraction. The distance from that point to the middle of the lens is called the <em>focal length</em>. The secondary focal point The secondary focal point (F’) is the axial point such that any incident ray traveling parallel to the axis will, after refraction, proceed toward, or appear to come from it. The secondary focal point has its own focal length.</p>
+<div id="fig-thinlens-focalpoints" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-thinlens-focalpoints-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/thinlens-focalpoints.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-thinlens-focalpoints-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: (a) The primary (F) and secondary (F’) focal points of a convex (left) and concave (right) thin lens. Read the diagram with the light rays (dark, solid lines) traveling from left to right. The dashed lines drawn on the concave lens are virtual rays that are shown to clarify how the focal point is found. See the text for an explanation.
+</figcaption>
+</figure>
+</div>
+<p>When examining the behavior of an equiconvex lens, two primary scenarios emerge. In the first scenario, rays emanating from the primary focal point (F) enter the lens and are refracted in such a way that they exit traveling parallel to the main optical axis. Conversely, when parallel rays enter the lens, they are refracted and converge towards the secondary focal point (F’), demonstrating the lens’s ability to redirect light.</p>
+<p>The equiconcave lens presents a contrasting optical behavior. When incident rays enter the lens at various angles with the intention of producing parallel rays, these rays converge at the primary focal point (F) on the opposite side of the lens. Dashed lines can be used to trace and illustrate this convergence. In a separate scenario, when parallel rays enter the equiconcave lens, they diverge after refraction. If these diverging rays are extended backward using dashed lines, they appear to originate from the secondary focal point (F’) on the opposite side of the lens.</p>
+<p>There are many useful calculations that one can explore with simple lenses and ray tracing. Here, we cover the basics to give the reader some of the terminology and a sense of how these systems are analyzed. For a deeper dive, I suggest the reader look into some of the excellent textbooks on optics (References here. Usually Goodman; Born and Wolf; I like Jenkins and White.)</p>
+</section>
+<section id="sec-optics-3principles" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="sec-optics-3principles"><span class="header-section-number">9.4</span> Three ray tracing principles</h2>
+<p>Consider the vector object on the left of <a href="#fig-lensmaker-center" class="quarto-xref">Figure&nbsp;<span>9.3</span></a>. A ray from the arrowhead that is parallel to the axis will be refracted through the focal point. A ray from origin of the vector, which is on the optical axis, will also pass through the focal point. Finally, a ray from the arrowhead - and this is new - that passes through the center of the lens will continue on a straight path.</p>
+<div id="fig-lensmaker-center" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lensmaker-center-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/lensmaker-center.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lensmaker-center-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: Tracing an object through the lens to an image.
+</figcaption>
+</figure>
+</div>
+<p>In summary, rays that</p>
+<ul>
+<li>Enter parallel to the optical axis and pass through the focal point on the opposite side.</li>
+<li>Pass through the center of the lens do not deviate (refract).</li>
+<li>Pass through the primary focal point toward the lens exit parallel to the optical axis.</li>
+</ul>
+</section>
+<section id="sec-optics-imageplane" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="sec-optics-imageplane"><span class="header-section-number">9.5</span> Image plane</h2>
+<p>They rays from a distant point off the optical approach the entrance as parallel to one another but oblique to the optical axis. The ray that passes through the center of the lens is called the <em>chief ray</em>. There will also be a ray that passes through the primary focal point. It will be refracted by the lens and emerge as parallel to the optical axis. These two rays intersect where the image of the point will be formed.</p>
+<div id="fig-optics-focalplane" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-focalplane-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/thinlens-obliquerays.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-focalplane-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: The image plane for distant points is perpendicular to the optical axis and passes through the secondary focal point (blue dashed line).
+</figcaption>
+</figure>
+</div>
+<!-- 
+We need to establish the image plane.  Oblique parallel rays.  The chief ray angle.  This book (a pressbook!) does a nice job.
+https://pressbooks.online.ucf.edu/osuniversityphysics3/chapter/thin-lenses/?t 
+-->
+</section>
+<section id="sec-optics-lenspower" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="sec-optics-lenspower"><span class="header-section-number">9.6</span> Lens power (diopters)</h2>
+<p>The <em>power</em> of a lens is the inverse of the focal length, in meters. The unit for lens power, <span class="math inline">\(1/m\)</span> is the <em>diopter</em>. A short focal length implies large power, either due to the curvature of the lens surface or the refractive index of the lens material.</p>
+<div id="fig-thinlens-power" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-thinlens-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/lensparameters-power.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-thinlens-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.5: Lens power is the inverse of focal length. The unit of lens power is diopter.
+</figcaption>
+</figure>
+</div>
+<p>To measure the focal length of a lens we use a light source that produces parallel rays at the entrance aperture of the lens. We then slide the image plane back and forth, searching for the distance where the spot is smallest. We can create parallel rays using many methods. Perhaps the simplest is to use a small point source (e.g., an LED) at a distance from the lens. The rays arriving at the lens will be a small angular sliver of the emitted rays, and if the source is far from the lens the rays will be very close to parallel (e.g., <span class="quarto-unresolved-ref">?fig-pinhole-basic</span>). An alternative, is to go outside on a sunny day and use the sun as a source. The sun isn’t small, but it is really far away. By the time the rays from the disk of the sun arrive at your lens, the rays will be parallel.</p>
+<p>The optics in the human eye has multiple elements. Even so, we can measure its focal length, which is about 0.016 m (~60 diopters). To bring objects at different distances into focus the optics adjusts its power, a process called <em>accommodation</em>. If it cannot adjust adequately, we wear lenses (glasses, contact lenses) that increase or decrease the optical power, say by 1-8 diopters, so that a good image can be focused on the retina.</p>
+<p>Young people can accommodate easily. As people age, we lose the ability to change the optical power of the optics, a condition called <em>presbyopia</em>. This happens to everyone. This biological fact is a consideration for the design of near field displays (<a href="displays-01.html" class="quarto-xref"><span>Chapter 22</span></a>).</p>
+</section>
+<section id="sec-lens-formula" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="sec-lens-formula"><span class="header-section-number">9.7</span> The lens formula</h2>
+<p>When an object is far away, the rays arriving at the lens are parallel. The image of the object will be in focus at the focal length. When the object is closer, we can use the <em>Lens formula</em> to find the plane where the object will be in focus. This is called the <strong>image distance</strong>. The equation, which was derived by Halley in 1693, relies on the three ray tracing properties of symmetric thin lenses (<a href="#sec-optics-3principles" class="quarto-xref"><span>Section 9.4</span></a>). Using these principles, we can locate where the object at a distance <span class="math inline">\(d_o\)</span> will be in focused on the image side; call that distance <span class="math inline">\(d_i\)</span>.</p>
+<div id="fig-lens-formula-similartriangles" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lens-formula-similartriangles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/lensmaker-similartriangles.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lens-formula-similartriangles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.6: Similar triangles for the lens formula.
+</figcaption>
+</figure>
+</div>
+<p>The rays in <a href="#fig-lens-formula-similartriangles" class="quarto-xref">Figure&nbsp;<span>9.6</span></a> identify two pairs of similar triangles (cyan and yellow). On the left, we can see that the triangles imply <span class="math inline">\(h_i/h_o = d_i/d_o\)</span>. On the right, we can see that the triangle similarity implies <span class="math inline">\(h_i/h_o = \frac{d_i - f}{f}\)</span>. Combining the two equalities, we have</p>
+<p><span class="math display">\[\frac{d_i}{d_o} = \frac{d_i - f}{f} = \frac{d_i}{f} - 1 \]</span></p>
+<p>rearranging terms, <span class="math display">\[
+\frac{d_i}{f}  = 1 + \frac{d_i}{d_o}
+\]</span></p>
+<p>and dividing by <span class="math inline">\(d_i\)</span> we have the lens formula</p>
+<p><span id="eq-lensformula"><span class="math display">\[
+\frac{1}{f}    = \frac{1}{d_i} + \frac{1}{d_o}
+\tag{9.1}\]</span></span></p>
+<p>The common names for these variables are</p>
+<ul>
+<li><span class="math inline">\(d_o\)</span> - Object distance</li>
+<li><span class="math inline">\(d_i\)</span> - Image distance</li>
+<li><span class="math inline">\(f\)</span> - Lens focal length</li>
+</ul>
+</section>
+<section id="sec-optics-imagedistance" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="sec-optics-imagedistance"><span class="header-section-number">9.8</span> Image distance formula</h2>
+<p><a href="#eq-lensformula" class="quarto-xref">Equation&nbsp;<span>9.1</span></a> defines a relationship between the object distance and the image distance for a thin lens. We can rearrange the terms.</p>
+<p><span class="math display">\[
+\frac{-1}{d_i} = \frac{1}{d_o} - \frac{1}{f}
+\]</span></p>
+<p>Notice that when <span class="math inline">\(d_o = \infty\)</span>, then <span class="math inline">\(d_i = f\)</span>. We can re-write the formula to calculate the image distance explicitly.</p>
+<p><span id="eq-imagedistance"><span class="math display">\[
+d_i = \frac{1}{\frac{1}{f} - \frac{1}{d_o}} = \frac{f~d_o}{d_o - f}
+\tag{9.2}\]</span></span></p>
+<p>You can see from <a href="#eq-imagedistance" class="quarto-xref">Equation&nbsp;<span>9.3</span></a> that as <span class="math inline">\(d_o\)</span> becomes much larger than <span class="math inline">\(f\)</span>, <span class="math inline">\(d_i\)</span> becomes approximately <span class="math inline">\(f\)</span>. Specifically, if we express <span class="math inline">\(d_o\)</span> in terms of the focal length of the lens, <span class="math inline">\(k f\)</span>, we have</p>
+<p><span id="eq-imagedistance"><span class="math display">\[
+d_i = \frac{f k f}{(k-1) f} = f \frac{k}{k-1}
+\tag{9.3}\]</span></span></p>
+<p>This script plots the image distance as a function of object distance expressed as a multiple of focal length.</p>
+</section>
+<section id="sec-optics-lensmaker" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="sec-optics-lensmaker"><span class="header-section-number">9.9</span> Lensmaker equation</h2>
+<p>The lens formula (<a href="#eq-imagedistance" class="quarto-xref">Equation&nbsp;<span>9.3</span></a>) relates the image distance, object distance, and focal length. The <strong>lens maker equation</strong> explains how to calculate the focal length of a thin lens. The formula applies to a thin lens with two spherical sides embedded in a homogeneous environment. To apply the formula, we must know the radius of curvature of the two sides of the lens as well as the index of refraction of the lens material and its surrounding medium.</p>
+<p>Here is the formula:</p>
+<p><span id="eq-lensmaker"><span class="math display">\[
+\frac{1}{f} = (\frac{n_2}{n_1} - 1) ( \frac{1}{R_1} - \frac{1}{R_2})
+\tag{9.4}\]</span></span></p>
+<p>Where - <span class="math inline">\(n_2\)</span> is the refractive index of the lens - <span class="math inline">\(n_1\)</span> is the refractive index of the surrounding medium - <span class="math inline">\(R_1\)</span>, <span class="math inline">\(R_2\)</span> are the radii of curvature of the two surfaces</p>
+<p>Here is a link to a very nice <a href="https://www.khanacademy.org/science/in-in-class-12th-physics-india/in-in-ray-optics-and-optical-instruments/in-in-refraction-in-thin-lenses/v/lens-makers-formula" target="_blank">Khan Academy video derivation of the formula</a>.</p>
+</section>
+<section id="sec-optics-biconvex" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="sec-optics-biconvex"><span class="header-section-number">9.10</span> Biconvex lenses</h2>
+<p>The lenses drawn in <a href="#fig-thinlens-focalpoints" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> are symmetric (i.e., equiconvex and equiconcave), so it is not surprising, therefore, that the focal lengths of the primary and secondary focal points are equal. It is more surprising to learn that even if a thin lens has a different curvature on the two sides, the two focal lengths will still be equal <a href="#fig-thinlens-asymmetric" class="quarto-xref">Figure&nbsp;<span>9.7</span></a>. Such lenses are called <strong>biconvex</strong>.</p>
+<p>The symmetry follows from the formula in <a href="#eq-lensmaker" class="quarto-xref">Equation&nbsp;<span>9.4</span></a>. Exchanging the two radii of curvature simply changes the sign of the focal length.</p>
+<div id="fig-thinlens-asymmetric" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-thinlens-asymmetric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/thinlens-asymmetric.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-thinlens-asymmetric-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.7: Different radii of curvature for a thin lens.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-optics-fnumber" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="sec-optics-fnumber"><span class="header-section-number">9.11</span> The <span class="math inline">\(\mathrm{f}/\#\)</span> (f-number)</h2>
+<p>The <span class="math inline">\(~\mathrm{f}/\#\)</span> of a thin lens is the ratio of its focal length and entrance aperture diameter (<a href="#fig-fnumber" class="quarto-xref">Figure&nbsp;<span>9.8</span></a>). For example, when we write f/4, it means that the focal length is 4x the aperture diameter.</p>
+<div id="fig-fnumber" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fnumber-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/lensparameters-fnumber.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fnumber-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.8: Graphic of the <span class="math inline">\(\mathrm{f}/\#\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>The <span class="math inline">\(~\mathrm{f}/\#\)</span> is an important parameter for all thin lenses; this ratio appears in many formulae describing lens performance. It is the key parameter that defines many properties of a circular, diffraction-limited thin lens. Studying diffraction-limited lenses is an important case for evaluating image system performance because it represents an upper bound on the optical component; we cannot improve the image system performance by using better optics.</p>
+<p>As an example, remember the formula for the Airy disk diameter (meters) on the image plane of a diffraction limited lens (<a href="optics-01-geometric.html#eq-airy1" class="quarto-xref">Equation&nbsp;<span>7.1</span></a>) in <span class="quarto-unresolved-ref">?sec-lightfields-diffraction</span>. That equation depends on the wavelength of light and the ratio of the focal length and aperture, which is the <span class="math inline">\(\mathrm{f}/\#\)</span>. Re-writing that formula, for a wavelength of <span class="math inline">\(\lambda\)</span> and an <span class="math inline">\(~\mathrm{f}/\#\)</span>, we have</p>
+<p><span id="eq-airy2"><span class="math display">\[
+d = 2.44 ~ \lambda ~ N
+\tag{9.5}\]</span></span></p>
+</section>
+<section id="sec-optics-zoom" class="level2" data-number="9.12">
+<h2 data-number="9.12" class="anchored" data-anchor-id="sec-optics-zoom"><span class="header-section-number">9.12</span> Magnification and zoom</h2>
+<p>Consider the simple thin lens in <a href="#fig-optics-magnification" class="quarto-xref">Figure&nbsp;<span>9.9</span></a> with a image distance of <span class="math inline">\(f = 0.1m\)</span>. We draw the rays to the image plane for an object at a distance of <span class="math inline">\(d_o = 0.3m\)</span>.</p>
+<div id="fig-optics-magnification" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-magnification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/lensparameters-magnification.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-magnification-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.9: Ray tracing lenses with different focal lengths. Suppose focal length of the lens in the bluish box is <span class="math inline">\(0.1 m\)</span> and the distance to the object as <span class="math inline">\(0.3m\)</span>. And suppose the focal length in the greenish box is <span class="math inline">\(0.2 m\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>Using the lens formula, the image distance for the lens in the bluish box is</p>
+<p><span class="math display">\[
+d_i = \frac{f \times d_o}{d_o - f} = \frac{0.1 \times 0.3}{0.3 - 0.1} = 0.15 m
+\]</span></p>
+<p>The image distance for the lens in the greenish box, with twice the focal length, <span class="math inline">\(f' = 0.2m\)</span>, is</p>
+<p><span class="math display">\[
+d_{iL} = \frac{0.2 \times 0.3}{0.3 - 0.2} = 0.60 \text{m}
+\]</span></p>
+<p>The image distance and image size both increase by a factor of <span class="math inline">\(4\)</span>. The two lenses have the same entrance aperture, so they capture the same amount of light. Because the longer focal length lens spreads the image over a larger area, the amount of light per unit area (irradiance) in the image is reduced.</p>
+<p>Some camera optics with an adjustable focal length, and this enables the user to adjust the image magnification. The image sensor size, however, is usually fixed. Thus, if we increase the image magnification, the fixed sensor captures a smaller portion of the image, but with the same sensor spatial resolution. The effect is to produce an image that appears to zoom into a portion of the image. This technique, called <strong>optical zoom</strong> is very effective as long as there is no loss of spatial resolution in the magnified image.</p>
+<div id="fig-optics-zoom" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-zoom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/lensparameters-zoom.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-zoom-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.10: Optical zoom. (a) A small image that just fits onto the sensor (dashed lines). (b) If we magnify the image, say by increasing the focal length and image distance, the sensor measures a smaller portion of the image. This is optical zoom.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-optics-fnumberintensity" class="level2" data-number="9.13">
+<h2 data-number="9.13" class="anchored" data-anchor-id="sec-optics-fnumberintensity"><span class="header-section-number">9.13</span> <span class="math inline">\(\mathrm{f}/\#\)</span> and image intensity</h2>
+<p>Suppose we wish to magnify the image, but we want to maintain the image irradiance level. In that case, we must capture <span class="math inline">\(4\)</span> times as much light. We do this by increasing the lens diameter, <span class="math inline">\(D\)</span>. The formula for the area of the aperture is <span class="math inline">\(\pi (D/2)^2\)</span>; thus, doubling the diameter, <span class="math inline">\(D\)</span>, increases the area by a factor of <span class="math inline">\(4\)</span>.</p>
+<p>The size of the lens with the larger diameter is sketched by the dashed ellipse in the green section of <a href="#fig-optics-magnification" class="quarto-xref">Figure&nbsp;<span>9.9</span></a>. Increasing the focal length expands the image size and reduces the image intensity. Increasing the lens diameter compensates for the reduced intensity. Doubling the focal length and entrance diameter preserves the f/# (ratio of the focal length and the aperture diameter). This example illustrates that lenses with the same f/# produce images with the same image intensity.</p>
+</section>
+<section id="sec-optics-dof" class="level2" data-number="9.14">
+<h2 data-number="9.14" class="anchored" data-anchor-id="sec-optics-dof"><span class="header-section-number">9.14</span> Depth of field</h2>
+<p><a href="#eq-imagedistance" class="quarto-xref">Equation&nbsp;<span>9.3</span></a> tells us how to set the distance between the optics and image plane, <span class="math inline">\(d_i\)</span>, to bring an object at distance <span class="math inline">\(d_o\)</span> into focus. We might also be interested to answer the related question: Given that an object at <span class="math inline">\(d_o\)</span> is in focus, what will the blur be for objects nearer or further? The range of distances over which the objects remain in good focus is called the <strong>depth of field</strong>.</p>
+<p>The size of the depth of field can be controlled by adjusting the size of the lens aperture. As it becomes smaller, the lens becomes closer to a pinhole, the depth of field increases. The depth of field can become quite narrow for a large aperture. Controlling the depth of field can create visually interesting images (<a href="#fig-optics-bokeh" class="quarto-xref">Figure&nbsp;<span>9.11</span></a>). Photographers and cinematographers often use settings to bring the main object of interest into good focus and blurring the rest. The depth of field is a quantitative description of the lens setting. Photographers use the term <strong>bokeh</strong> to describe the aesthetic impact one can achieve by adjusting the depth of field. This quality depends on the optics as well as the scene contents.</p>
+<div id="fig-optics-bokeh" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-bokeh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/optics-bokeh.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-bokeh-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.11: The depth of field is controlled by the size of the lens aperture. (A) Photographers often adjust the depth of field to bring the main object into focus, allowing other parts of the scene to become defocused. (B) If we fix the image distance, increasing the <span class="math inline">\(\mathrm{f}/\#\)</span> decreases the aperture, making the lens increasingly like a pinhole camera. For a large <span class="math inline">\(\mathrm{f}/\#\)</span>, the depth of field becomes quite larger.
+</figcaption>
+</figure>
+</div>
+<!--
+https://en.wikipedia.org/wiki/Depth_of_field
+http://www.rags-int-inc.com/PhotoTechStuff/DoF/
+http://www.rags-int-inc.com/PhotoTechStuff/DoF_Calculator/DoF_Calculator.html
+-->
+<section id="sec-optics-coc" class="level3" data-number="9.14.1">
+<h3 data-number="9.14.1" class="anchored" data-anchor-id="sec-optics-coc"><span class="header-section-number">9.14.1</span> Circle of confusion</h3>
+<p>Consider an image formed with a thin lens that is kept at a fixed distance from the image plane (<a href="#fig-optics-coc1" class="quarto-xref">Figure&nbsp;<span>9.12</span></a>). The middle image panel an object in excellent focus, and the other two panels show points that are too near or too far. As the point moves away from the in-focus object distsance, in either direction, the image will be a roughly circular region increases in diameter. This is the circle of confusion. This is the <strong>circle of confusion</strong>. It is a useful concept that is specifically helpful for understanding and quantifying the depth of field.</p>
+<div id="fig-optics-coc1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-coc1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/optics-coc-1.png" class="img-fluid figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-coc1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.12: Circle of confusion
+</figcaption>
+</figure>
+</div>
+<p>Notice that narrowing the aperture reduces the angle of the rays that arrive at the sensor (<a href="#fig-optics-coc2" class="quarto-xref">Figure&nbsp;<span>9.13</span></a>). As the angle narrows, the image size of an out-of-focus point shrinks. If the point is already in focus, however, the rays are arriving at the same point and the image size is little changed. This is the same idea we observed in <span class="quarto-unresolved-ref">?sec-lightfields-diffraction</span> when we explained pinhole cameras. This diagram makes clear that a pinhole camera has a very large depth of field. No Bokeh for the pinhole afficianados!</p>
+<div id="fig-optics-coc2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-coc2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/optics-coc-2.png" class="img-fluid figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-coc2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.13: Narrowing the aperture changes the angular range of the rays at the image plane. The original rays are shown in gray and the rays that pass through the aperture are again shown in blue. Because of the reduction in angle, the image blur is reduced (shown at the right). Thus, the diameter of the circle of confusion is reduced as well.
+</figcaption>
+</figure>
+</div>
+<p>We can use the diameter of the circle of confusion to quantify the depth of field. The diameter depends on the parameters of the lens and image plane (<a href="#fig-optics-coc3" class="quarto-xref">Figure&nbsp;<span>9.14</span></a>). The size of the circle of confusion is computed by the ISETCam function <a href="https://github.com/iset/ISETCam/blob/main/opticalimage/optics/opticsCoC.m" target="_blank">opticsCoC</a>.</p>
+<div id="fig-optics-coc3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-coc3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/optics-coc-3.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-coc3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.14: Narrowing the aperture reduces the size of the circle of confusion. Notice that the vertical axis is logarithmic, so that the change in diameter is substantial. Both lenses have a 50 mm distance to the image plane. One lens has an <span class="math inline">\(\mathrm{f}/\#\)</span> of 2 (aperture=25 mm). The other lens has an <span class="math inline">\(\mathrm{f}/\#\)</span> of 8 (aperture=6.25 mm).
+</figcaption>
+</figure>
+</div>
+<p>Suppose we select a circle of confusion diameter that we consider to be good focus. From the curves in <a href="#fig-optics-coc3" class="quarto-xref">Figure&nbsp;<span>9.14</span></a>, the depth range of good focus will be relatively narrow for the large aperture compared to the small aperture.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Deriving the CoC formula">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Deriving the CoC formula
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>The diameter of the circle confusion can be calculated using this geometry. Suppose the image plane is placed so that a point <span class="math inline">\(P\)</span> is in focus, so that the distance to the image plane is <span class="math inline">\(f_P\)</span>. Another point, <span class="math inline">\(X\)</span>, is closer and thus its focus would be beyond the image plane, say at <span class="math inline">\(f_X\)</span>.</p>
+<div id="fig-optics-coc-callout" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-coc-callout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/optics-coc-callout.png" class="img-fluid figure-img" style="width:40.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-coc-callout-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.15: Geometric demonstration of the circle of confusion size.
+</figcaption>
+</figure>
+</div>
+<p>There will be two similar right triangles. One is formed with the sides <span class="math inline">\(A/2\)</span> (half the aperture) and <span class="math inline">\(f_X\)</span>; the similar triangle (blue) has sides <span class="math inline">\(f_X - f_P\)</span> and <span class="math inline">\(C_r\)</span> (the radius of the circle of confusion). Because the right triangles are similar, the sides must satisfy <span class="math display">\[
+\frac{C_r}{A/2} = \frac{f_X - f_P}{f_X}
+\]</span></p>
+<p>The diameter of the circle of confusion is twice the radius, <span class="math inline">\(C = 2*C_r = A \frac{f_X - f_P}{f_X}\)</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-optics-dof-formula" class="level3" data-number="9.14.2">
+<h3 data-number="9.14.2" class="anchored" data-anchor-id="sec-optics-dof-formula"><span class="header-section-number">9.14.2</span> Depth of field formula</h3>
+<p>The depth of field formula quantifies the range of object distances that appear acceptably sharp in an image. It is widely used as an approximation, as we approximate an optical system as a thin lens:</p>
+<p><span id="eq-optics-depthoffield"><span class="math display">\[
+\text{DOF} \approx 2 N C ({\frac{d_o}{f}})^2
+\tag{9.6}\]</span></span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(N\)</span> is the lens <span class="math inline">\(\mathrm{f}/\#\)</span> (focal ratio, dimensionless)</li>
+<li><span class="math inline">\(C\)</span> is the acceptable diameter of the circle of confusion (in meters)</li>
+<li><span class="math inline">\(d_o\)</span> is the object distance (in meters)</li>
+<li><span class="math inline">\(f\)</span> is the lens focal length (in meters)</li>
+</ul>
+<p>Recall that <span class="math inline">\(N = f/A\)</span>, where <span class="math inline">\(A\)</span> is the aperture diameter. Substituting this into the formula gives:</p>
+<p><span class="math display">\[
+\frac{N}{f^2} = \frac{f}{A} \cdot \frac{1}{f^2} = \frac{1}{A f}
+\]</span></p>
+<p>So, the DOF formula can also be written as:</p>
+<p><span class="math display">\[
+\text{DOF} \approx \frac{2 C (d_o)^2}{A f}
+\]</span></p>
+<p>This relationship shows:</p>
+<ul>
+<li>DOF increases with object distance (<span class="math inline">\(d_o\)</span>)</li>
+<li>DOF increases with the allowable circle of confusion (<span class="math inline">\(C\)</span>)</li>
+<li>DOF decreases as aperture diameter (<span class="math inline">\(A\)</span>) increases (i.e., with a larger aperture)</li>
+<li>DOF decreases as focal length (<span class="math inline">\(f\)</span>) increases</li>
+</ul>
+<p><strong>Example:</strong><br>
+The plot below shows the DOF for a 100 mm focal length, diffraction-limited lens, as a function of <span class="math inline">\(\mathrm{f}/\#\)</span> and object distance. The calculations use the ISETCam script <a href="https://github.com/iset/ISETCam/blob/main/scripts/optics/focus_dof/s_opticsDoF.m" target="_blank">s_opticsDoF</a>, which calls <a href="https://github.com/iset/ISETCam/blob/main/opticalimage/optics/opticsDoF.m" target="_blank">opticsDoF</a> to implement <a href="#eq-optics-depthoffield" class="quarto-xref">Equation&nbsp;<span>9.6</span></a>.</p>
+<div id="fig-optics-dof" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-dof-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/08-thinlens/optics-dof-image.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-dof-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.16: Depth of field in meters (z-axis) at different object distances and thin lens approximation <span class="math inline">\(\mathrm{f}/\#\)</span> values.
+</figcaption>
+</figure>
+</div>
+
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/optics-02-lenses.html" class="pagination-link" aria-label="Lens principles">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lens principles</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/optics-04-morelenses.html" class="pagination-link" aria-label="Lenses and ray transfer">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-08">
+<meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
+
+<title>5&nbsp; Spectral regularities – Foundations of Image Systems Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/lightfields-05-properties-spatial.html" rel="next">
+<link href="../chapters/lightfields-03-properties.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/hover.css">
+<link rel="stylesheet" href="../styles/callouts.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/lightfields-01-intro.html">Scenes</a></li><li class="breadcrumb-item"><a href="../chapters/lightfields-04-properties-spectral.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Foundations of Image Systems Engineering</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scenes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-03-properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light field properties</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-04-properties-spectral.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Optics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-02-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lens principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-03-thinlens.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-04-morelenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-05-linear-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-06-linear-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-07-wavefront.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sensors</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-01-photoelectric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-02-pixels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-03-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-04-components.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">System components</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-05-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Control systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-06-characterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image system modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-07-innovations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sensor innovations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Human</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/human-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Human vision</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Displays</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Image processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/imgprocessing-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-spectral-regularities-overview" id="toc-sec-spectral-regularities-overview" class="nav-link active" data-scroll-target="#sec-spectral-regularities-overview"><span class="header-section-number">5.1</span> Spectral regularities overview</a></li>
+  <li><a href="#solar-radiation" id="toc-solar-radiation" class="nav-link" data-scroll-target="#solar-radiation"><span class="header-section-number">5.2</span> Solar Radiation</a></li>
+  <li><a href="#atmospheric-effects" id="toc-atmospheric-effects" class="nav-link" data-scroll-target="#atmospheric-effects"><span class="header-section-number">5.3</span> Atmospheric Effects</a></li>
+  <li><a href="#surface-spectral-reflectance-regularities" id="toc-surface-spectral-reflectance-regularities" class="nav-link" data-scroll-target="#surface-spectral-reflectance-regularities"><span class="header-section-number">5.4</span> Surface spectral reflectance regularities</a></li>
+  <li><a href="#diffuse-reflectance" id="toc-diffuse-reflectance" class="nav-link" data-scroll-target="#diffuse-reflectance"><span class="header-section-number">5.5</span> Diffuse reflectance</a></li>
+  <li><a href="#specular-reflection-mirror" id="toc-specular-reflection-mirror" class="nav-link" data-scroll-target="#specular-reflection-mirror"><span class="header-section-number">5.6</span> Specular reflection (mirror)</a></li>
+  <li><a href="#dichromatic-reflectance-model-drm" id="toc-dichromatic-reflectance-model-drm" class="nav-link" data-scroll-target="#dichromatic-reflectance-model-drm"><span class="header-section-number">5.7</span> Dichromatic reflectance model (DRM)</a></li>
+  <li><a href="#sec-properties-brdf" id="toc-sec-properties-brdf" class="nav-link" data-scroll-target="#sec-properties-brdf"><span class="header-section-number">5.8</span> Bidrectional reflectance distribution function (BRDF)</a>
+  <ul class="collapse">
+  <li><a href="#theoretical-brdf" id="toc-theoretical-brdf" class="nav-link" data-scroll-target="#theoretical-brdf"><span class="header-section-number">5.8.1</span> Theoretical BRDF</a></li>
+  <li><a href="#data-driven-brdf" id="toc-data-driven-brdf" class="nav-link" data-scroll-target="#data-driven-brdf"><span class="header-section-number">5.8.2</span> Data driven BRDF</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/lightfields-01-intro.html">Scenes</a></li><li class="breadcrumb-item"><a href="../chapters/lightfields-04-properties-spectral.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-spectral-regularities" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Work in Progress
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
+<p>Last updated: September 8, 2025</p>
+</div>
+</div>
+</div>
+<section id="sec-spectral-regularities-overview" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="sec-spectral-regularities-overview"><span class="header-section-number">5.1</span> Spectral regularities overview</h2>
+<!-- 
+ Fiete book.
+ 
+ [https://chatgpt.com/share/679ebc49-5a7c-8002-a282-598e7f1bbb30 ]
+Solar spectrum. Fraunhofer lines.  Stability of the solar spectrum 
+
+https://chatgpt.com/c/679ebbfc-b510-8002-b372-489cd173d5d0
+
+CIE Data downloaded to ISETCam from here.  Placed in data/lights/daylight and data/lights/solar  These appear to be distinguished, for now, based on Earth's surface or Sun's surface.
+
+https://cie.co.at/datatable/components-relative-spectral-distribution-daylight
+-->
+</section>
+<section id="solar-radiation" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="solar-radiation"><span class="header-section-number">5.2</span> Solar Radiation</h2>
+<!-- 
+Define blackbody radiation.  Formula here first.  It may come up again later in photons and electrons 
+-->
+<p>The Sun serves as Earth’s primary radiation source. The radiation emitted from the Sun’s surface in the visible spectrum remains relatively consistent over time. Due to its significance for imaging and human vision, skylight became an early subject of scientific investigation.</p>
+<p>In 1814, Joseph Fraunhofer observed and carefully documented numerous dark lines in the solar spectrum, now known as <strong>Fraunhofer lines</strong> It was subsequently discovered that these lines are present because light generated in the Sun’s hot, dense interior (photosphere) travels through its cooler outer layers (chromosphere and corona). During this passage, atoms and ions absorb specific wavelengths of light that correspond precisely to their electron transitions. The reliability of these solar absorption lines allows scientists to use them as reference points to calibrate laboratory instruments for spectral measurements. For example, James Clerk Maxwell used these lines to calibrate the first experimental rig for human color-matching (<span class="citation" data-cites="maxwell1860-IVTheoryCompound">Maxwell (<a href="references.html#ref-maxwell1860-IVTheoryCompound" role="doc-biblioref">1860</a>)</span>,<span class="citation" data-cites="maxwell1993-ReprintTheoryCompoundColours">Maxwell and Zaidi (<a href="references.html#ref-maxwell1993-ReprintTheoryCompoundColours" role="doc-biblioref">1993</a>)</span>).</p>
+<div id="fig-solarspectrum" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-solarspectrum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/01-solar-lines.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-solarspectrum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.1: The black curve displays the relative solar spectrum, which is stable over time. The red lines indicate are drawn at wavelengths where the spectrum exhibits narrow intensity reductions, known as Fraunhofer lines, that originate from ions and atoms in the Sun’s outer layers. The blue dotted lines mark intensity reductions caused by atmospheric water vapor.
+</figcaption>
+</figure>
+</div>
+<div id="fraunhofer" class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<a href="https://en.wikipedia.org/wiki/Joseph_von_Fraunhofer" id="sec-fraunhofer">Joseph Fraunhofer (1787-1826)</a>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Fraunhofer was a brilliant applied researcher who worked on the physical properties of materials, particularly glass. He also made important contributions to the theory of image formation and optics.</p>
+<p>The Fraunhofer lines, which he discovered while building a device to measure the spectral transmissivity of glass, are reported in a paper reviewing the properties of glass. These relative intensity of these lines are determined by the material composition of the stars, and these measurements are stilled used in astronomy to determine the composition of celestial bodies. Fraunhofer died at the age of 39, poisoned by heavy metal vapors used in his material research. Europe’s largest body for the advancement of applied research, the Fraunhofer Society, is named to honor him.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/people/Fraunhofer.png" class="img-fluid figure-img" width="391"></p>
+<figcaption>Joseph Fraunhofer.</figcaption>
+</figure>
+</div>
+<p>This is a good historical review of the <a href="https://joachimweise.github.io/post/2020-10-20-fraunhofer-lines/">Fraunhofer lines</a> and subsequent work.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="atmospheric-effects" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="atmospheric-effects"><span class="header-section-number">5.3</span> Atmospheric Effects</h2>
+<p>Some of the spectral absorption lines observed at Earth’s surface originate from a different source: water vapor (H₂O) and other molecules in Earth’s atmosphere. Unlike the stable solar absorption lines, these atmospheric absorptions fluctuate relatively quickly with changing weather conditions. There is also atmospheric variation in the skylight spectral power with the time of day, as the radiation’s path length through the atmosphere varies. Longer path lengths — such as during sunrise or sunset — modify the spectral composition of radiation reaching Earth’s surface.</p>
+<p>A number of different groups have reported measurements of solar radiation at the Earth’s surface at varying times of day and weather conditions <span class="citation" data-cites="Judd1964-daylight">(<a href="references.html#ref-Judd1964-daylight" role="doc-biblioref">Judd et al. 1964</a>)</span>. Figure #fig-daylights shows examples of typical variation in the shape of the spectral power distribution in Granada, Spain <span class="citation" data-cites="Hernandez2001-daylight">(<a href="references.html#ref-Hernandez2001-daylight" role="doc-biblioref">Hernández-Andrés et al. 2001</a>)</span> and Stanford, California <span class="citation" data-cites="DiCarlo2000-daylight">(<a href="references.html#ref-DiCarlo2000-daylight" role="doc-biblioref">DiCarlo and Wandell 2000</a>)</span>.</p>
+<div id="fig-daylights" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-daylights-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/01-solar-samples.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daylights-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.2: The spectral power distribution of daylights sampled at the Earth’s surface in Granada, Spain (left) and Stanford, California (right) at different times of day and weather conditions. The spectra have been scaled to be equal at 450 nm. The curves have different slopes, and their shapes vary with weather and time-of-day. Identifiable Fraunhofer lines and water vapor lines are present in the measurements.
+</figcaption>
+</figure>
+</div>
+<p>These combined factors—atmospheric composition and path length variations—create a complex, but restricted, distribution of sky radiances at the Earth’s surface. To summarize the regularities, scientists and engineers have created linear models that can represent the natural variations. The original model was introduced by Judd, Macadam and Wyszecki <span class="citation" data-cites="Judd1964-daylight">(<a href="references.html#ref-Judd1964-daylight" role="doc-biblioref">Judd et al. 1964</a>)</span>. They analyzed skylight at the Earth’s surface using about 650 different measurements. They found that the spectral power distributions, normalized to remove absolute radiance level, could be modeled as the weighted sum of three terms: a mean and two basis functions (Figure <a href="#fig-ciedaylight" class="quarto-xref">Figure&nbsp;<span>5.3</span></a>). Such a model is useful because it enables us to represent any particular sample using just three numbers, the two weights and an overall scalar to match the level. The model is also useful for applications in which a scene is acquired under full sky illumination, and we would like to estimate the spectral power distribution of the skylight. We only need to estimate the weights, and from those we can make a good estimate of the full spectrum.</p>
+<div id="fig-ciedaylight" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ciedaylight-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/01-solar-basis.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ciedaylight-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.3: The solid curve shows the mean daylight spectrum measured by Judd, Macadam and Wyszecki <span class="citation" data-cites="Judd1964-daylight">Judd et al. (<a href="references.html#ref-Judd1964-daylight" role="doc-biblioref">1964</a>)</span>. Their measurements evolved into a CIE standard linear model for daylights. The solid circles are placed at the wavelengths of Fraunhofer and atmospheric water vapor lines. The dotted and dashed curves are basis functions. Together with the mean, they form a linear model of daylight spectral power distributions.
+</figcaption>
+</figure>
+</div>
+<!--
+Moonlight regularities. Used for space travel.https://chatgpt.com/share/67410dd0-ff54-8002-9b73-65294a849fe6 “The Potential of Moonlight Remote Sensing: A Systematic Assessment” explores the potential of using moonlight in remote sensing for nighttime Earth observation. The study uses data from VIIRS, the ISS, and UAV systems to evaluate moonlight’s capabilities.“Simulation Study of the Lunar Spectral Irradiances and the Earth-Based Moon Observation Geometry” focuses on modeling the spectral irradiance of moonlight using the Hapke model and its applications in satellite radiometric calibration.
+-->
+<div id="california-sun" class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Do it yourself daylight spectra
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>When he was a student at Stanford, Jeff DiCarlo decided to measure the daylight outside his office for himself <span class="citation" data-cites="DiCarlo2000-daylight">(<a href="references.html#ref-DiCarlo2000-daylight" role="doc-biblioref">DiCarlo and Wandell 2000</a>)</span>. Checking things for himself is in his nature. Jeff pointed a spectral radiometer at a calibrated surface outside his window and configured a computer to make about ten thousand measurements, one a minute, during the course of a few rainy weeks in California (January 28, 2000 to February 16, 2000). I included a sample of 1000 of these measurements in ISETCam, and I have the whole group along with time stamps if you want them.</p>
+<div id="fig-stanfordsun" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" data-fig-cap-location="bottom">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-stanfordsun-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/01-solar-stanford.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" data-fig-cap-location="bottom">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stanfordsun-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.4: Average daylight measurements on the Stanford campus (solid) and CIE daylight basis fit to the measured average (dotted). The solid circles are placed at the locations of Fraunhofer and water vapor wavelengths.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-stanfordsun" class="quarto-xref">Figure&nbsp;<span>5.4</span></a> shows the mean spectral power distribution of these measurements. You can see that the instrument recorded several ‘notches’ the spectrum at wavelengths corresponding to the Fraunhofer and water vapor lines. We also asked whether these data could be fit by the CIE linear model - and the least-squares fit is shown by the dotted line. I suspect there is an instrument calibration error of a few nanometers at wavelengths above 700nm, and were I to write a research paper based on these data, I would probably introduce the correction because I believe the physics on the locations of these wavelengths is secure. This analysis might provide you with a sense of the relative accuracy of measuring and approximating spectra with conventional lab equipment.</p>
+</div>
+</div>
+</div>
+<!-- Later in the book use these daylights to show the appearance (chromaticity) of the different daylights.  The Granada paper does this nicely. "Color and spectral analysis of daylight in southern Europe"
+-->
+<p>The regularities in the sky radiance are even more constrained than the linear model. First, the weights are correlated: When you know one of the weights, you can make a reasonable guess about the other weight. Also, some weights are impossible because they would produce negative values in the spectrum <span class="citation" data-cites="DiCarlo2000-daylight">DiCarlo and Wandell (<a href="references.html#ref-DiCarlo2000-daylight" role="doc-biblioref">2000</a>)</span>. Thus, the linear model gets us part of the way to establishing the regularities, but there is even more to be measured.</p>
+<div class="callout callout-style-simple callout-note callout-titled" title="Daylight weights">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Daylight weights
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<section id="correlated-weights" class="level3 callout-body-container callout-body" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="correlated-weights"><span class="header-section-number">5.3.1</span> Correlated weights</h3>
+<div id="fig-dayweights" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" data-format="pdf">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dayweights-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/01-dayweights3d-still.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-format="pdf" width="372">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dayweights-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.5: (PDF Snapshot): The daylight basis weights from the Granada and Stanford data sets. The weights are clustered within a plane, although there are occasional outliers. The orthogonality of the basis functions does not imply independence or orthogonality of the measured basis weights.
+</figcaption>
+</figure>
+</div>
+</section>
+</div>
+</div>
+<!--
+
+![(HTML Animated): The daylight basis weights from the Granada and Stanford data sets. The weights are clustered within a plane, although there are occasional outliers. The orthogonality of the basis functions does not imply independence or orthogonality of the measured basis weights.](images/lightfields/04-spectral/01-dayweights3d.gif){#fig-dayweights format=html width=372 fig-align=center}
+
+```{=include-graphics}
+path: images/lightfields/04-spectral/01-dayweights3d.gif
+format: html
+fig-cap: "(HTML Animated): The daylight basis weights from the Granada and Stanford data sets. The weights are clustered within a plane, although there are occasional outliers. The orthogonality of the basis functions does not imply independence or orthogonality of the measured basis weights."
+fig-align: center
+width: 372
+id: fig-dayweights
+```
+
+```{=include-graphics}
+path: images/lightfields/04-spectral/01-dayweights3d-still.png
+format: pdf
+fig-cap: "(PDF Snapshot): The daylight basis weights from the Granada and Stanford data sets. The weights are clustered within a plane, although there are occasional outliers. The orthogonality of the basis functions does not imply independence or orthogonality of the measured basis weights."
+fig-align: center
+width: 372
+id: fig-dayweights
+```
+
+
+### Correlated weights
+
+::: {.html}
+
+![(HTML Animated): The daylight basis weights from the Granada and Stanford data sets.](images/lightfields/04-spectral/01-dayweights3d.gif){#fig-dayweights width=372 fig-align=center}
+
+:::
+
+::: {.pdf}
+
+![(PDF Snapshot): The daylight basis weights from the Granada and Stanford data sets.](images/lightfields/04-spectral/01-dayweights3d-still.png){#fig-dayweights width=372 fig-align=center}
+
+:::
+
+-->
+</section>
+<section id="surface-spectral-reflectance-regularities" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="surface-spectral-reflectance-regularities"><span class="header-section-number">5.4</span> Surface spectral reflectance regularities</h2>
+<p>Vision enables us to interpret the environment by recording the how the ambient illumination interacts with things (e.g., objects) and stuff (e.g., water). Four things can happen when electromagnetic radiation interacts with a surface. The radiation arriving at a surface might be (a) reflected, (b) absorbed, (c) pass through, or (d) interact with the material and generate new radiation (fluorescence). We will consider each of these interactions in different sections of this book. Here, we describe some regularities how light is reflected from many common materials.</p>
+<div id="Things-stuff" class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Things and Stuff
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>I am fond of a distinction that Ted Adelson introduced to help think about the environment: <em>things and stuff</em>” <span class="citation" data-cites="Adelson2001-stuff">Adelson (<a href="references.html#ref-Adelson2001-stuff" role="doc-biblioref">2001</a>)</span>. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these categories also helps us set computational goals.</p>
+<div id="fig-things-stuff" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-things-stuff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/01-things-stuff.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-things-stuff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.6: The distinction between <em>things</em> and <em>stuff</em> plays a role in vision science and now computer vision. These images, from <span class="citation" data-cites="schmidt2025-stuff">Schmidt et al. (<a href="references.html#ref-schmidt2025-stuff" role="doc-biblioref">2025</a>)</span>, illustrate what is meant by stuff. The authors explored the appearance of materials and stuff, in contrast to much other work aimed at identifying things.
+</figcaption>
+</figure>
+</div>
+<p>The distinction helps separate out the types of algorithms we might apply to understand the environment. Segmentation applies to <em>things</em> which are analyzed for object identity and function; in contrast, <em>stuff</em> is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. We wish to be able to recognize such things whatever their material might be. A vision system must also be able to make judgments about a sandy beach, a cloudy sky, a grassy hillside. We wish to be able to recognize such stuff whatever its shape might be.</p>
+<p>A related challenge in human vision is quantifying the appearance of things and stuff, and for this challenge surface reflectance, texture, and context (e.g., ambient illumination, or what things and stuff are nearby) all play a role <span class="citation" data-cites="schmid2023-materialperception">Schmid et al. (<a href="references.html#ref-schmid2023-materialperception" role="doc-biblioref">2023</a>)</span>. A corresponding concept - something we might call appearance for a computer vision system - seems desirable. One way to formulate the problem of appearance for a computer vision system is to use and estimate of material reflectance and texture to mean appearance for the computer.</p>
+<p><a href="https://datasetninja.com/cocostuff164k">The COCO-Stuff 164k dataset</a> has many images categorized in terms of ‘things’ and stuff.</p>
+</div>
+</div>
+</div>
+<p>The radiation incident on a small, planar patch of material can come from different directions, which we can specify by two angles. The intensity of the reflected radiation will also vary with direction (two more dimensions). The incident and reflected light can be measured as the intensity for different wavelengths and polarizations (two more dimensions). We will set aside fluorescence for the present, returning to it later. Hence, a full description of surface spectral reflectance requires specifying multiple parameters.</p>
+<p>Despite this potential complexity, there are many relatively simple cases that are simpler to describe and still useful. We will work our way up from the simplest case to increasingly complex descriptions, identifying regularities along the way.</p>
+</section>
+<section id="diffuse-reflectance" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="diffuse-reflectance"><span class="header-section-number">5.5</span> Diffuse reflectance</h2>
+<p>An important type of reflectance, <em>diffuse reflectance</em>, or <em>Lambertian reflectance</em>. The incident light is reflected with roughly equal intensity in all directions within the hemisphere above the surface. This occurs when the surface is rough at a microscopic level, comprising many little facets. When the incident light arrives, it will be reflected by one of the facets which are oriented equally in all different directions. Importantly, not all of the incident light is scattered; some of it is absorbed. The fraction that is absorbed varies with wavelength. The fraction that is scattered is called the diffuse spectral reflectance function.</p>
+<p>Many objects, like paper, clothing, and walls, are mainly diffuse reflectors, and the spectral reflectance function is a dominant factor in how we perceive surface color. You can judge to what extent a material is a diffuse reflectance by viewing it from different positions, say by moving your head or walking around the room. For diffuse materials the reflected light will be about the same. Other materials, such as the highlights reflected from a car, vary in intensity and color appearance as you move around, appearing bright from some positions but not others. Such materials are not diffuse.</p>
+<div id="Lambert" class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Johan Lambert
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The term Lambertian surface honors the Swiss physicist, <a href="https://en.wikipedia.org/wiki/Johann_Heinrich_Lambert">Johann Lambert</a> (1728-1777) who formalized the mathematical description. Many surfaces are modeled as Lambertian in computer graphics, or assumed to be Lambertian in computer vision estimates of the environment. Examples of materials with Lambertian reflectance include chalk, plaster, uncoated paper, matte paints made from pigments.</p>
+<p>Adding additional details about the surface reflectance can improve the system performance, but it is common to start with a Lambertian approximation.</p>
+<div id="fig-lambert" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lambert-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/people/Lambert.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="180">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lambert-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.7: Johann Lambert. His ideas were spread widely.
+</figcaption>
+</figure>
+</div>
+<p>Lambert worked on many topics concerning geometric optics, and he contributed an important book <strong>Photometria</strong> that incorporated many important geometric ideas, explaining the relative brightness of objects as seen from different points of view. Using his excellent mathematics, and the assumption that light travels in straight lines, he showed that illumination is - proportional to the strength of the source, - inversely proportional to - the square of the distance of the illuminated surface, and - the <a href="https://en.wikipedia.org/wiki/Lambert%27s_cosine_law" title="Lambert's cosine law">sine of the angle</a> of inclination of the light’s direction to that of the surface. He also wrote a classic work on <a href="https://en.wikipedia.org/wiki/Perspective_(visual)" title="Perspective (visual)">perspective</a> and contributed to <a href="https://en.wikipedia.org/wiki/Geometrical_optics" title="Geometrical optics">geometrical optics</a>.</p>
+<p>I was interested to learn that Lambert was the first to show that <span class="math inline">\(\pi\)</span> is an irrational number, a claim that the great Euler sought to prove as well.</p>
+</div>
+</div>
+</div>
+<div id="fig-reflectance-cloths" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reflectance-cloths-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/01-reflectance-clothes.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reflectance-cloths-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.8: Sample spectral reflectance functions of clothing. The fraction of reflected light, wavelength-by-wavelength, is between 0 and 1. Such smooth spectral reflectance curves are typical of many surfaces. Surfaces that are not diffuse can be modeled as having a diffuse component with a smooth spectral reflectance.
+</figcaption>
+</figure>
+</div>
+<p>We can summarize the spectral reflectance of a diffuse material relatively simply because we do not need to specify the input and output angles. We only need to measure the fraction of incident light, for each wavelength, is reflected. This is called the spectral reflectance function. In the visible band these functions are often smooth, and it is possible to summarize them using only a few parameters. It is not realistic to sample all possible surfaces, but we can consider surfaces in a particular context (e.g, walking in a forest, clothing, the interior of a commercial office building, driving on a highway, or medical images of the body). The likely surfaces in any particular context can be usefully summarized with a linear model <span class="citation" data-cites="Cohen1964-linearmodel">Hardeberg (<a href="references.html#ref-Hardeberg2002-reflectancedimensionalty" role="doc-biblioref">2002</a>)</span>. The number of basis functions needed will depend on the task requirements (e.g., 5% or 1% accuracy). But the general usefulness of a linear model approximation as a computational tool is not in doubt.</p>
+<p>Over the decades a number of imaging groups have measured the reflectance of many types of materials, including paints, minerals, plants, clothing, and various biological specimen such as skin and teeth. Government agencies, particularly those involved in remote sensing, have measured the reflectance of many materials that might be seen in satellite images. As a general rule, the spectral reflectances of the samples reported in the literature are approximated to an accuracy of a few percent by linear models using between 3 and 8 basis functions.</p>
+<p>A Finnish group, for example, measured 1269 different color swatches from the Munsell Book of Colors. This widely used book spans a wide range of color samples that provides designers with a method for identifying, selecting, matching, and communicating about color. <span class="citation" data-cites="Parkkinen1989-munsellspectra">Parkkinen et al. (<a href="references.html#ref-Parkkinen1989-munsellspectra" role="doc-biblioref">1989</a>)</span> made their spectral measurements at 1 nm resolution. A linear model using three basis functions fits all the measurements with an error of about 2.5%. A linear model with 5 basis functions fits the data to within about 1%. This accuracy is usually often enough for image systems applications (<a href="#fig-reflectance-bases" class="quarto-xref">Figure&nbsp;<span>5.9</span></a> A).</p>
+<p>The linear models for diffuse surface reflectance of several types of common materials are similar (<a href="#fig-reflectance-bases" class="quarto-xref">Figure&nbsp;<span>5.9</span></a>). The data from Vrhel and colleagues <span class="citation" data-cites="Vrhel1994-MeasurementAnalysisObject">Vrhel et al. (<a href="references.html#ref-Vrhel1994-MeasurementAnalysisObject" role="doc-biblioref">1994</a>)</span>, included in ISETCam, measures a few dozen surfaces from several different groups (paint, natural objects, man-made objects, food). It is likely the authors chose the samples to have similar means and a broad representation of color appearances. For this sampling strategy, the first component will necessarily be similar. BUt the 2nd and 3rd basis functions are also similar, and this is less likely to be a selection artifact. Rather, the similarity arises because the diffuse spectral reflectance functions are very smooth functions wavelength <span class="citation" data-cites="Maloney1986-linearmodels-surface">Maloney (<a href="references.html#ref-Maloney1986-linearmodels-surface" role="doc-biblioref">1986</a>)</span>.</p>
+<div id="fig-reflectance-bases" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reflectance-bases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/01-reflectance-bases.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reflectance-bases-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.9: Three basis functions comparing the basis functions derived from the <span class="citation" data-cites="Parkkinen1989-munsellspectra">Parkkinen et al. (<a href="references.html#ref-Parkkinen1989-munsellspectra" role="doc-biblioref">1989</a>)</span> Munsell Color Book data (upper left) and three different categories of materials. The basis functions are not identical, but they have many similarities, including the wavelengths of the zero-crossings of the 2nd and 3rd basis functions. Data from <span class="citation" data-cites="Vrhel1994-MeasurementAnalysisObject">Vrhel et al. (<a href="references.html#ref-Vrhel1994-MeasurementAnalysisObject" role="doc-biblioref">1994</a>)</span> and distributed in ISETCam.
+</figcaption>
+</figure>
+</div>
+<!-- 
+Scripts to look over: s_surfaceMunsell, s_reflectanceBasis, s_sceneReflectanceChartBasisFunctions 
+Maybe illustrate the visual size of the errors, as I have in other scripts.\
+-->
+</section>
+<section id="specular-reflection-mirror" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="specular-reflection-mirror"><span class="header-section-number">5.6</span> Specular reflection (mirror)</h2>
+<p>The conceptual opposite of diffuse reflection is mirror reflection. In this case, an incident light ray from one direction reflects from the surface in just one direction. The geometry of mirror reflection is shown in <a href="#fig-mirror-reflection" class="quarto-xref">Figure&nbsp;<span>5.10</span></a>. The incident ray, reflected ray, and surface normal all lie in the same plane (the <strong>plane of incidence</strong>). The angle of incidence is equal to the angle of reflection, and the surface normal acts as a line of symmetry in the plane of incidence.</p>
+<div id="fig-mirror-reflection" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mirror-reflection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/mirror-reflection.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mirror-reflection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.10: Geometry of mirror reflection. The incident (blue) and reflected (red) ray have a component parallel to the surface normal and a component in the surface plane. The component in the surface plane is the same; but the component in the normal direction is sign-reversed (points in the opposite direction). The ray angles with respect to the surface normal of the two rays is matched <span class="math inline">\(\theta_i\)</span> = <span class="math inline">\(\theta_r\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>It is useful to consider vector components of the incident and reflected ray separately. Suppose that the incident light comes from a direction represented by the unit vector <span class="math inline">\(\mathbf{i}\)</span>, and the surface normal vector is <span class="math inline">\(\mathbf{n}\)</span>. The direction of the reflected ray, <span class="math inline">\(\mathbf{r}\)</span> is calculated this way:</p>
+<p><span id="eq-mirror"><span class="math display">\[
+\mathbf{r} = \mathbf{i} − 2 (\mathbf{i} \cdot \mathbf{n}) \mathbf{n}
+\tag{5.1}\]</span></span></p>
+<p>The term (<span class="math inline">\(\mathbf{i} \cdot \mathbf{n}\)</span>) is the projection of the incident ray onto the normal ray. We subtract twice that amount from the incident ray, which flips this component. The component of the incident and reflected rays that is parallel to the surface are the same. The net effect is that the incident and reflected rays form equal angles on opposite sides of the surface normal.</p>
+<p>The light reflected at the interface of the surface does not interact with the material. Thus the spectral power distribution of a mirror reflection is approximately equal to the spectral power distribution of the incident radiance.</p>
+<p>Common mirrors are close to perfect specular reflectors in the sense that a very small set of collimated rays is reflected over a very small angle of output rays. There are only small deviations from slight surface imperfections. For scientific applications this approximation may not be adequate, and additional steps are taken to polish mirrors, making them increasingly perfect.</p>
+<p>Many materials are approximately specular, but not perfectly so. In these materials a narrow bundle of incident rays is reflected mainly in the specular direction, but there is some spread of the reflected rays. <a href="#fig-specular-diffuse-retro" class="quarto-xref">Figure&nbsp;<span>5.11</span></a> compares different conditions, including a diffuse reflectance, nearly perfect specular, and mostly specular case.</p>
+<div id="fig-specular-diffuse-retro" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-specular-diffuse-retro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/specular-diffuse-retro.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-specular-diffuse-retro-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.11: Comparisons of (a) diffuse, (b) glossy specular, (c) perfect specular, and (d) retroreflective materials. Figure 9.1 from PBR book. https://www.pbr-book.org/4ed/Reflection_Models
+</figcaption>
+</figure>
+</div>
+<p>The figure includes a fourth interesting case: retroreflective materials. For these materials the reflected ray is sent back in the same direction as the incident ray. These materials can be created by embedding small, spherical, glass beads with a metallic back surface into the material <a href="#fig-retroreflective-glass-beads" class="quarto-xref">Figure&nbsp;<span>5.12</span></a>. The glass beads refract the incident ray, the metallic surface returns the ray, which is again refracted, so that the net effect effect is the reflected ray is returned in the direction of the incident ray. Glass beads with a metallic backing are often built into road markings and road signs. Light from a car’s headlight is scattered back towards the driver, increasing the visibility of the road marking or sign during nighttime driving.</p>
+<!--
+    https://roadmarkingsupplies.com/reflective-glass-beads-wholesale-for-road-marking-paints/
+
+    To apply reflective beads for road markings, follow these steps:
+
+    Prepare the surface: Clean and dry the road surface.
+    Apply road marking material: Use the chosen material according to instructions.
+    Apply beads with glass beads dispenser: Sprinkle or broadcast the beads onto the wet paint or heated thermoplastic.
+    Embed the beads: Use an embedder or apply a thin layer of material over the beads.
+    Allow drying/curing: Follow the manufacturer’s instructions for sufficient drying or curing time.
+    Clear excess beads: Remove loose beads using brooms or sweepers.
+-->
+<div id="fig-retroreflective-glass-beads" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-retroreflective-glass-beads-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/01-retroreflective-glass-beads.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-retroreflective-glass-beads-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.12: Comparisons of (a) diffuse, (b) glossy specular, (c) perfect specular, and (d) retroreflective materials. Figure 9.1 from PBR book. https://www.pbr-book.org/4ed/Reflection_Models. https://tccfcct.com/blogs/equipment/all-you-need-to-know-about-reflective-materials-in-high-visibility-safety-apparel
+</figcaption>
+</figure>
+</div>
+<p>https://docs.google.com/document/d/1BtxldFF14EY4eC9x6KI9cy1RF4GJAy-e7UAgdJ5YsfI/edit?usp=sharing</p>
+</section>
+<section id="dichromatic-reflectance-model-drm" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="dichromatic-reflectance-model-drm"><span class="header-section-number">5.7</span> Dichromatic reflectance model (DRM)</h2>
+<!--
+The DRM model and related images come from the nice Korean MS student blog
+https://leeyngdo.github.io/blog/computer-graphics/2024-03-22-reflection-model/?utm_source=chatgpt.com
+-->
+<p>The dichromatic reflectance model (DRM) is another useful surface reflectance model that serves as an approximation for light reflected from <strong>inhomogeneous dielectric materials</strong> (non-conductors like plastics, paints, wood, skin, etc.). The model approximates reflectance as a weighted sum of a diffuse term and a glossy specular term. This model is used in computer vision applications where the user would like to identify specular reflections.</p>
+<p>A fraction of the incident light is reflected at the surface (<strong>interface</strong>). This light has a mirror-like reflectance that preserves the spectral power distribution and glossy specular spatial distribution. The remaining fraction of the light passes through the interface into the (<strong>subsurface</strong>) where it interacts with the material’s pigments, both by diffuse scattering and absorption. The subsurface reflectance is usually assumed to be Lambertian, as the subsurface pigments are randomly positioned and oriented. The reflected light, <span class="math inline">\(C(\lambda)\)</span> is the sum of the interface and subsurface terms</p>
+<p><span id="eq-DRM"><span class="math display">\[
+C(\lambda) = m_s(g) I(\lambda) E(\lambda) + m_d(g) D(\lambda) E(\lambda)
+\tag{5.2}\]</span></span></p>
+<p><span class="math inline">\(E(\lambda)\)</span> is the spectral power distribution of the light; <span class="math inline">\(D(\lambda)\)</span> is the diffuse subsurface reflectance, which is characteristic of the material. The terms <span class="math inline">\(m_s(g)\)</span> and <span class="math inline">\(m_d(g)\)</span> are geometric scaling factors whose values depend on the illumination and viewing angles. These angles are ordinarily represented with respect to the surface normal at the surface point <span class="math inline">\(g\)</span>. The reflected light, <span class="math inline">\(C(\lambda)\)</span> is sometimes called the <em>color signal</em> because this spectral radiance is an important contributor to the visual system’s color judgment. (Though, I have friends who object to this term). <span class="math inline">\(I(\lambda)\)</span> is the interface spectral reflectance is often assumed to be constant across wavelengths, which further simplifies the formula</p>
+<p><span id="eq-DRM-simplified"><span class="math display">\[
+C(\lambda) = m_s(g) E(\lambda) + m_d(g) D(\lambda) E(\lambda)
+\tag{5.3}\]</span></span></p>
+<p>The DRM is used in computer vision algorithms such as illuminant estimation, specular highlight identification and removal, and material classification. It is, however, limited because it does not accurately model complex surfaces. Also, it is difficult to apply to scenes with multiple light sources or very large light sources, such as scenes with light sources that span the sky.</p>
+<div id="DRM-illuminant-estimation" class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+DRM Illuminant estimation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Suppose the interface reflectance, <span class="math inline">\(I(\lambda)\)</span> is approximately constant so that we accept <a href="#eq-DRM-simplified" class="quarto-xref">Equation&nbsp;<span>5.3</span></a>. If we measure the reflected light from a DRM material at a few angles, we will obtain values that differ because of the geometric terms, <span class="math inline">\(m_s\)</span> and <span class="math inline">\(m_d\)</span>. These different estimates can be represented as a two-dimensional linear model.</p>
+<p>The linear terms we estimate from any single surface, say using principal components, may not be precisely aligned with <span class="math inline">\(E(\lambda)\)</span> and <span class="math inline">\(D(\lambda) E(\lambda)\)</span>. But if there are two or more different dichromatic reflectance type materials near one another, their linear models must have a shared dimension, <span class="math inline">\(E(\lambda)\)</span>. Thus, we can estimate the principal components of both surfaces, and then find the vector equal to the intersection of these linear models, we will recover the local spectral power distribution of the illuminant.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-properties-brdf" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="sec-properties-brdf"><span class="header-section-number">5.8</span> Bidrectional reflectance distribution function (BRDF)</h2>
+<p>The <em>bidirectional reflectance distribution function</em> (BRDF) characterizes how light rays of wavelength <span class="math inline">\(\lambda\)</span>, incident at the surface at an angle <span class="math inline">\(\omega_i\)</span>, are reflected. The reflected, outgoing light is specified at all angles <span class="math inline">\(\omega_o\)</span>. Both <span class="math inline">\(\omega_i\)</span> and <span class="math inline">\(\omega_o\)</span> are measured with respect to the surface normal. We can write the intensity as a function of input and output angles as the function <span class="math inline">\(B(\omega_i,\omega_o,\lambda)\)</span>. The reciprocity of principle of light<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> implies that the BRDFs, with only a few exceptions, obey this symmetry relationship.</p>
+<p><span id="eq-BRDF1"><span class="math display">\[
+B(\omega_i,\omega_o,\lambda) = B(\omega_o,\omega_i,\lambda)
+\tag{5.4}\]</span></span></p>
+<p>Each of the direction vectors is specified by two parameters, typically defined with respect to the surface normal. One parameter is the angle around the surface normal (azimuth) <span class="math inline">\(\phi_i, \phi_o\)</span>, and the second is the elevation <span class="math inline">\(\theta_i, \theta_o\)</span> of the ray. We conventionally describe the BRDF with three parameters, but there are really five parameters in there. That makes the BRDF tedious to measure.</p>
+<p>The instrument used to measure the BRDF is called a gonioreflectometer. The instrument has a light source that can be positioned to illuminate the surface at many different angles (typically on a sphere), and a detector that can be positioned at many locations on the sphere. There are many different designs for <em>gonioreflectometers</em>. The one in <a href="#fig-gonioreflectometer" class="quarto-xref">Figure&nbsp;<span>5.13</span></a> shows a surface is placed on a stage that can be rotated. The light and camera are on two arms whose positions can be controlled, sweeping out the possible angles for the incident and reflected light. To measure the reflectance of a surface requires calibrating the amount of incident light, say by making a measurement with a perfect, white diffusing surface, and then making a second measurement with the material of interest. The ratio of the responses is the reflectance. The same calibration measurement can be re-used for multiple materials of interest.</p>
+<div id="fig-gonioreflectometer" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-gonioreflectometer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/01-gonioreflectometer.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gonioreflectometer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5.13: Example of a <strong>gonioreflectometer</strong>. The light source and detector are on robot arms that can be positioned around the surface. If we fix the wavelength and angle of the incident light ray, we can specify the relative intensity of the reflected light as an image that spans the two angle parameters
+</figcaption>
+</figure>
+</div>
+<p>The input and output angles are 2-vectors and the BRDF is a scalar function. We can make all of the angles explicit this way.</p>
+<p><span id="eq-BRDF2"><span class="math display">\[
+B(\omega_i, \omega_o, \lambda) = f_r(\phi_i,\theta_i,\phi_o,\theta_o,\lambda)
+\tag{5.5}\]</span></span></p>
+<!-- 
+[Document on data-driven BRDFs](https://docs.google.com/document/d/1Wy2ygwu30i5quFX21kgz34OGSszNwUXn39Dfh4ypavA/edit?usp=sharing)
+
+[Source for spherical azimuth and elevation and zenith.](https://www.researchgate.net/publication/334197029_A_new_model_for_reduction_of_Azimuth_asymmetry_biases_of_tropospheric_delay/figures?lo=1)
+
+ -->
+<section id="theoretical-brdf" class="level3" data-number="5.8.1">
+<h3 data-number="5.8.1" class="anchored" data-anchor-id="theoretical-brdf"><span class="header-section-number">5.8.1</span> Theoretical BRDF</h3>
+<p>Cook Torrance mainly here.</p>
+<!--
+
+Sand, reasonable figures. 
+
+Tongbuasirilai2020-BRDF
+ - https://opg.optica.org/ao/fulltext.cfm?uri=ao-54-31-F243&id=330097
+
+Excellent source for material models and some simple formula of reflection.  Introduces dielectrics (Plastic, Stone, Wood, Leather, Glass, Water, Air), and conductors (metals)
+https://leeyngdo.github.io/blog/computer-graphics/2024-03-22-reflection-model/?utm_source=chatgpt.com
+
+Fermat's principle: light will follow the path that requires the least amount of time, as compared to other nearby paths, to pass between two points.
+
+This web page has no graphs illustrating the microfacet theory from Ken Torrance and his students.  It has a nice introduction to the formulae for Cook Torrance, from Sparrow Torrance, as well.
+
+-->
+</section>
+<section id="data-driven-brdf" class="level3" data-number="5.8.2">
+<h3 data-number="5.8.2" class="anchored" data-anchor-id="data-driven-brdf"><span class="header-section-number">5.8.2</span> Data driven BRDF</h3>
+<p>There are papers measuring BRDFs and modeling them using linear models and nonlinear models. Data driven approach.</p>
+<p><span class="citation" data-cites="Matusik2003-datadrivenBRDF">Matusik et al. (<a href="references.html#ref-Matusik2003-datadrivenBRDF" role="doc-biblioref">2003</a>)</span> <span class="citation" data-cites="Tongbuasirilai2020-BRDF">Tongbuasirilai et al. (<a href="references.html#ref-Tongbuasirilai2020-BRDF" role="doc-biblioref">2020</a>)</span></p>
+<p>There is a MERL database online. <span class="citation" data-cites="MERL-BRDF-Website"></span></p>
+
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-MERL-BRDF-Website" class="csl-entry" role="listitem">
+Software &amp; data downloads — <span>BRDF</span>
+</div>
+<div id="ref-Adelson2001-stuff" class="csl-entry" role="listitem">
+Adelson EH (2001) On seeing stuff: <span>The</span> perception of materials by humans and machines. In: Human vision and electronic imaging <span>VI</span>. SPIE, pp 1–12
+</div>
+<div id="ref-Cohen1964-linearmodel" class="csl-entry" role="listitem">
+Cohen J (1964) <a href="https://link.springer.com/article/10.3758/BF03342963">Dependency of the spectral reflectance curves of the munsell color chips</a>. Bull Psychon Soc 1:369–370
+</div>
+<div id="ref-DiCarlo2000-daylight" class="csl-entry" role="listitem">
+DiCarlo JM, Wandell B (2000) <a href="https://library.imaging.org/cic/articles/8/1/art00018">Illuminant estimation: Beyond the bases</a>. Color Imaging Conf 91–96
+</div>
+<div id="ref-Hardeberg2002-reflectancedimensionalty" class="csl-entry" role="listitem">
+Hardeberg JY (2002) <a href="https://library.imaging.org/cgiv/articles/1/1/art00101">On the spectral dimensionality of object colours</a>. In: Conference on colour in graphics, imaging, and vision. Society of Imaging Science; Technology, pp 480–485
+</div>
+<div id="ref-helmholtz1896" class="csl-entry" role="listitem">
+Helmholtz H (1896) Physiological optics. Dover Publications, Inc., New York
+</div>
+<div id="ref-Hernandez2001-daylight" class="csl-entry" role="listitem">
+Hernández-Andrés J, Romero J, Nieves JL, Lee RL Jr (2001) <a href="https://colorimaginglab.ugr.es/pages/pdfs/josaa_2001_1325/%21">Color and spectral analysis of daylight in southern europe</a>. J Opt Soc Am A Opt Image Sci Vis 18:1325–1335
+</div>
+<div id="ref-Judd1964-daylight" class="csl-entry" role="listitem">
+Judd DB, MacAdam DL, Wyszecki G, et al (1964) Spectral distribution of typical daylight as a function of correlated color temperature. Journal of The Optical Society of America 54:1031
+</div>
+<div id="ref-Maloney1986-linearmodels-surface" class="csl-entry" role="listitem">
+Maloney LT (1986) Evaluation of linear models of surface spectral reflectance with small numbers of parameters. Journal of The Optical Society of America A 3:1673–1683
+</div>
+<div id="ref-Matusik2003-datadrivenBRDF" class="csl-entry" role="listitem">
+Matusik W, Pfister H, Brand M, McMillan L (2003) <a href="https://dl.acm.org/doi/10.1145/882262.882343">A data-driven reflectance model</a>. ACM Trans Graph 22:759–769
+</div>
+<div id="ref-maxwell1860-IVTheoryCompound" class="csl-entry" role="listitem">
+Maxwell JC (1860) <span>IV</span>. <span>On</span> the theory of compound colours, and the relations of the colours of the spectrum. 150:57–84
+</div>
+<div id="ref-maxwell1993-ReprintTheoryCompoundColours" class="csl-entry" role="listitem">
+Maxwell JC, Zaidi Q (1993) On the theory of compound colours, and the relations of the colours of the spectrum. Color Research and Application 18:270–287
+</div>
+<div id="ref-Parkkinen1989-munsellspectra" class="csl-entry" role="listitem">
+Parkkinen JPS, Hallikainen J, Jaaskelainen T (1989) <a href="https://opg.optica.org/abstract.cfm?uri=josaa-6-2-318">Characteristic spectra of munsell colors</a>. J Opt Soc Am A, JOSAA 6:318–322
+</div>
+<div id="ref-schmid2023-materialperception" class="csl-entry" role="listitem">
+Schmid AC, Barla P, Doerschner K (2023) <a href="https://www.nature.com/articles/s41562-023-01601-0">Material category of visual objects computed from specular image structure</a>. Nat Hum Behav 7:1152–1169
+</div>
+<div id="ref-schmidt2025-stuff" class="csl-entry" role="listitem">
+Schmidt F, Hebart MN, Schmid AC, Fleming RW (2025) <a href="http://dx.doi.org/10.1073/pnas.2417202122">Core dimensions of human material perception</a>. Proc Natl Acad Sci U S A 122:e2417202122
+</div>
+<div id="ref-Tongbuasirilai2020-BRDF" class="csl-entry" role="listitem">
+Tongbuasirilai T, Unger J, Kronander J, Kurt M (2020) <a href="https://link.springer.com/article/10.1007/s00371-019-01664-z">Compact and intuitive data-driven <span>BRDF</span> models</a>. Vis Comput 36:855–872
+</div>
+<div id="ref-Vrhel1994-MeasurementAnalysisObject" class="csl-entry" role="listitem">
+Vrhel MJ, Gershon R, Iwan LS (1994) Measurement and analysis of object reflectance spectra. Color Research And Application 19:4–9
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The principle states that if a ray of light travels from point A to point B through any optical system, then the same ray can travel in the reverse direction from B to A, following the same path. This remains true regardless of the complexity of the optical system, including reflections, refractions, and scattering. The concept is often attributed to Hermann von Helmholtz, who formally stated it in his 1856 book Handbook of Physiological Optics <span class="citation" data-cites="helmholtz1896">Helmholtz (<a href="references.html#ref-helmholtz1896" role="doc-biblioref">1896</a>)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/lightfields-03-properties.html" class="pagination-link" aria-label="Light field properties">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light field properties</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/lightfields-05-properties-spatial.html" class="pagination-link" aria-label="Spatial regularities">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

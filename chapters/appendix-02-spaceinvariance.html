@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-08">
+<meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
+
+<title>25&nbsp; Linear Space-Invariant (LSI) Systems – Foundations of Image Systems Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/appendix-03-isetcam.html" rel="next">
+<link href="../chapters/appendix-01-linearsystems.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/hover.css">
+<link rel="stylesheet" href="../styles/callouts.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-01-linearsystems.html">Appendix</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-02-spaceinvariance.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Foundations of Image Systems Engineering</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scenes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-03-properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light field properties</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-04-properties-spectral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Optics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-02-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lens principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-03-thinlens.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-04-morelenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-05-linear-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-06-linear-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-07-wavefront.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sensors</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-01-photoelectric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-02-pixels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-03-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-04-components.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">System components</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-05-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Control systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-06-characterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image system modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-07-innovations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sensor innovations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Human</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/human-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Human vision</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Displays</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Image processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/imgprocessing-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-appendix-spaceinvariance-overview" id="toc-sec-appendix-spaceinvariance-overview" class="nav-link active" data-scroll-target="#sec-appendix-spaceinvariance-overview"><span class="header-section-number">26</span> Linear Space-Invariant (LSI) Systems overview</a>
+  <ul class="collapse">
+  <li><a href="#sec-ls-shiftinvariance" id="toc-sec-ls-shiftinvariance" class="nav-link" data-scroll-target="#sec-ls-shiftinvariance"><span class="header-section-number">26.1</span> Shift-invariance</a></li>
+  <li><a href="#lsi-system-matrix" id="toc-lsi-system-matrix" class="nav-link" data-scroll-target="#lsi-system-matrix"><span class="header-section-number">26.2</span> LSI system matrix</a></li>
+  <li><a href="#sec-ls-convolution" id="toc-sec-ls-convolution" class="nav-link" data-scroll-target="#sec-ls-convolution"><span class="header-section-number">26.3</span> Convolution</a></li>
+  <li><a href="#sec-ls-harmonics-LSI" id="toc-sec-ls-harmonics-LSI" class="nav-link" data-scroll-target="#sec-ls-harmonics-LSI"><span class="header-section-number">26.4</span> Eigenvectors of LSI Systems</a></li>
+  <li><a href="#sec-optics-fourier-series" id="toc-sec-optics-fourier-series" class="nav-link" data-scroll-target="#sec-optics-fourier-series"><span class="header-section-number">26.5</span> Discrete Fourier Series (DFS)</a></li>
+  <li><a href="#sec-dft-defined" id="toc-sec-dft-defined" class="nav-link" data-scroll-target="#sec-dft-defined"><span class="header-section-number">26.6</span> Discrete Fourier transform (DFT)</a></li>
+  <li><a href="#relating-the-dfs-representations" id="toc-relating-the-dfs-representations" class="nav-link" data-scroll-target="#relating-the-dfs-representations"><span class="header-section-number">26.7</span> Relating the DFS representations</a>
+  <ul class="collapse">
+  <li><a href="#counting-parameters" id="toc-counting-parameters" class="nav-link" data-scroll-target="#counting-parameters"><span class="header-section-number">26.7.1</span> Counting parameters</a></li>
+  <li><a href="#sampling-rate-and-nyquist-frequency" id="toc-sampling-rate-and-nyquist-frequency" class="nav-link" data-scroll-target="#sampling-rate-and-nyquist-frequency"><span class="header-section-number">26.7.2</span> Sampling rate and Nyquist frequency</a></li>
+  </ul></li>
+  <li><a href="#sec-ls-convolution-theorem" id="toc-sec-ls-convolution-theorem" class="nav-link" data-scroll-target="#sec-ls-convolution-theorem"><span class="header-section-number">26.8</span> The Convolution Theorem</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-01-linearsystems.html">Appendix</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-02-spaceinvariance.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-appendix-spaceinvariance" class="quarto-section-identifier"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Work in Progress
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
+<p>Last updated: September 8, 2025</p>
+</div>
+</div>
+</div>
+<section id="sec-appendix-spaceinvariance-overview" class="level1" data-number="26">
+<h1 data-number="26"><span class="header-section-number">26</span> Linear Space-Invariant (LSI) Systems overview</h1>
+<p>Linear models are a cornerstone of science and engineering. For image systems, we can describe these models using different mathematical representations, or <strong>basis functions</strong>. Two are particularly important.</p>
+<p>The first is the <strong>point basis</strong>, where an image is treated as a collection of individual points (pixels). This is the most intuitive representation. The second is the <strong>harmonic basis</strong>, which represents an image as a sum of sine and cosine waves of different spatial frequencies.</p>
+<p>While the point basis is natural, the harmonic basis is powerful. Harmonics have a special relationship with an important class of systems known as <strong>linear space-invariant (LSI) systems</strong>: they simplify the analysis enormously. This appendix explains this relationship and introduces the key tools, like the Fourier transform, that are built upon it.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Terminology">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Terminology
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ul>
+<li>Linear shift‑invariant (LSI) = linear space‑invariant. “Shift” emphasizes translation; “space” emphasizes domain. We use LSI.</li>
+<li>Point spread function (PSF) = spatial impulse response (response to a Dirac delta, <span class="math inline">\(\delta[x,y]\)</span>). For time signals the term is impulse response.</li>
+<li>Convolution (circular, length <span class="math inline">\(N\)</span>): <span class="math inline">\((I * h)[n] = \sum_{k=0}^{N-1} I[k]\,h\!\big((n-k)\bmod N\big)\)</span>. Linear (non‑wrapping) convolution requires zero‑padding (to at least <span class="math inline">\(N+M-1\)</span>) before using the DFT.</li>
+<li>Correlation vs convolution: convolution flips the kernel; correlation does not. Circular cross‑correlation is <span class="math display">\[
+R_{x,y}[n] = \sum_{k=0}^{N-1} x[k]\;y\!\big((k+n)\bmod N\big)^{*},
+\]</span> using complex conjugation for complex data (drop <span class="math inline">\({}^*\)</span> for real signals).</li>
+<li>Fourier tools: DFS (series on finite, periodic data), DFT (transform between samples and complex weights), FFT (fast algorithm for the DFT). DTFT/CTFT are infinite‑length/continuous counterparts.</li>
+<li>Sampling and Nyquist: sample pitch <span class="math inline">\(\Delta x \Rightarrow\)</span> sampling rate <span class="math inline">\(f_s=1/\Delta x\)</span>; Nyquist <span class="math inline">\(f_N=f_s/2\)</span>. Frequencies above <span class="math inline">\(f_N\)</span> alias (fold) into lower bands. Always state units (e.g., cycles/deg, cycles/mm).</li>
+<li>Boundary conditions: periodic wrap (circular convolution), zero‑padding (linear convolution), or windowing/tapering to control edge artifacts.</li>
+</ul>
+</div>
+</div>
+</div>
+<section id="sec-ls-shiftinvariance" class="level2" data-number="26.1">
+<h2 data-number="26.1" class="anchored" data-anchor-id="sec-ls-shiftinvariance"><span class="header-section-number">26.1</span> Shift-invariance</h2>
+<p>A practical challenge in characterizing general linear systems is that each input point could have a different point spread function (PSF). That’s a lot to measure! Fortunately, many real systems are much simpler: their PSF is essentially the same, except that it’s shifted to match the shift in input location. In other words, the shape of the PSF doesn’t change—it just translates. We call such systems <strong>space-invariant</strong>.</p>
+<p>Space-invariant linear systems are common across science and engineering. Many physical devices and phenomena can be well-approximated as space-invariant, at least over a useful range. This property makes them much easier to calibrate: we only need to measure a single PSF -the response to a single point!- rather than measure every possible point. You can see why for a space-invariant system the PSF is the key measurement that characterizes the system.</p>
+<p>Because space invariance simplifies both analysis and computation, many courses on “linear systems” focus almost entirely on the space-invariant case.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Space invariance: notation">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Space invariance: notation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Let’s make the idea of space invariance a bit more precise. Suppose we use <span class="math inline">\(T()\)</span> to represent a shift (translation) operation. If we shift an image <span class="math inline">\(x\)</span> by an amount <span class="math inline">\(\delta\)</span>, we write <span class="math inline">\(T(x, \delta)\)</span>. A system <span class="math inline">\(L()\)</span> is space-invariant if shifting the input and then applying the system gives the same result as applying the system first and then shifting the output (possibly by a scaled amount):</p>
+<p><span id="eq-shiftinvariance-defined"><span class="math display">\[
+L(T(x, \delta)) \approx T(L(x), \alpha \delta).
+\tag{26.1}\]</span></span></p>
+<p>Here, <span class="math inline">\(\alpha\)</span> is a scale factor that accounts for magnification or other effects. For example, if you move an object by <span class="math inline">\(\delta\)</span> meters, its image might move by <span class="math inline">\(\alpha \delta\)</span> meters on the sensor.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="lsi-system-matrix" class="level2" data-number="26.2">
+<h2 data-number="26.2" class="anchored" data-anchor-id="lsi-system-matrix"><span class="header-section-number">26.2</span> LSI system matrix</h2>
+<p>An LSI system’s matrix representation, <span class="math inline">\(\mathbf{L}\)</span>, has a special, highly structured form. If the input is a single point, represented by a vector with a 1 in one entry and 0s elsewhere, the output is the system’s point spread function (PSF). This output corresponds to one column of the matrix <span class="math inline">\(\mathbf{L}\)</span>.</p>
+<p>Because the system is space-invariant, the PSF’s shape is the same for every input point; it is only shifted. Consequently, the columns of the matrix <span class="math inline">\(\mathbf{L}\)</span> are all shifted versions of a single PSF. If we assume the signal wraps around at the edges (a common practice called periodic boundary conditions), the resulting matrix has a specific structure known as a circulant matrix, as shown in <a href="#fig-ls-circulant-matrix" class="quarto-xref">Figure&nbsp;<span>26.1</span></a>.</p>
+<div id="fig-ls-circulant-matrix" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ls-circulant-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/appendix/24-lsi/circulant-matrix.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ls-circulant-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;26.1: The matrix representation of a linear space-invariant (LSI) system. Each column is a shifted version of the system’s point spread function (PSF). When periodic boundary conditions are assumed, the matrix becomes <strong>circulant</strong>: as the PSF is shifted, values that move past one edge “wrap around” and reappear at the opposite edge.
+</figcaption>
+</figure>
+</div>
+<p>For computer simulations, there are many details to keep track of, especially issues relating to the edge and wrapping. For example, we often treat the point spread functions as ‘circular’, so when a value shifts below the bottom of the matrix, we do not throw it away but we copy it into the missing entry at the top of the column. In <a href="#fig-ls-circulant-matrix" class="quarto-xref">Figure&nbsp;<span>26.1</span></a>, the edges of the point spread are all zero, and that made the diagram simpler.</p>
+<p>Have a good look at <a href="#fig-ls-circulant-matrix" class="quarto-xref">Figure&nbsp;<span>26.1</span></a>. Notice how simple an LSI system matrix is compared to a general linear system <a href="appendix-01-linearsystems.html#fig-ls-matrix-tableau" class="quarto-xref">Figure&nbsp;<span>24.1</span></a>. Linear systems are great to work with, and if you are working with an LSI consider yourself particularly fortunate. The next section gives another reason why.</p>
+</section>
+<section id="sec-ls-convolution" class="level2" data-number="26.3">
+<h2 data-number="26.3" class="anchored" data-anchor-id="sec-ls-convolution"><span class="header-section-number">26.3</span> Convolution</h2>
+<p>The matrix multiplication for a space-invariant system, which we visualized as a sum of scaled and shifted point spread functions, is often expressed using a basic formula, known as <strong>convolution</strong>.</p>
+<p>Formally, for signals of length <span class="math inline">\(N\)</span> with periodic boundary conditions (circular wrap), the convolution of an input signal <span class="math inline">\(I[n]\)</span> with a point spread function <span class="math inline">\(h[n]\)</span> is <span id="eq-convolution-definition"><span class="math display">\[
+O[n] = (I * h)[n] = \sum_{k=0}^{N-1} I[k]\,h[(n-k)\ \bmod\ N].
+\tag{26.2}\]</span></span></p>
+<p>Here, the output at position <span class="math inline">\(n\)</span> is a weighted sum of the input values, where the weights are determined by a “flipped and shifted” version of the PSF. This formula is the mathematical expression of the process shown in the LSI matrix tableau.</p>
+<p>Convolution is the essential calculation for determining the output of any LSI system in the spatial domain. With periodic boundaries this is circular convolution. To realize linear (non-wrapping) convolution in practice, zero‑pad the signals (to at least <span class="math inline">\(N+M-1\)</span>) before transforming.</p>
+</section>
+<section id="sec-ls-harmonics-LSI" class="level2" data-number="26.4">
+<h2 data-number="26.4" class="anchored" data-anchor-id="sec-ls-harmonics-LSI"><span class="header-section-number">26.4</span> Eigenvectors of LSI Systems</h2>
+<p>We’ve arrived at a key insight: harmonic functions are a very useful basis for describing LSI systems. Why? Because they are (nearly) the <strong>eigenfunctions</strong> of these systems.</p>
+<p>Recall that an eigenvector of a matrix is a special vector that, when multiplied by the matrix, is simply scaled—its direction doesn’t change. Harmonics play a similar role for LSI systems. When you input a harmonic function (a sine or cosine wave) into an LSI system, the output is always a harmonic of the <em>same frequency</em>. They aren’t quite eigenvectors because two things change: the amplitude and phase (position).</p>
+<p>Dealing with separate amplitude and phase changes for real-valued sine and cosine functions can be a bit clumsy. This is where complex numbers become incredibly useful. A single complex number elegantly packages both amplitude (as its magnitude) and phase (as its angle). By representing our real-valued harmonics using complex exponentials (via Euler’s formula, <a href="#eq-Eulers-formula" class="quarto-xref">Equation&nbsp;<span>26.8</span></a>), the “almost an eigenfunction” relationship becomes exact. A complex exponential input to an LSI system produces a complex exponential output, scaled by a single complex number that captures both the amplitude and phase change.</p>
+<p>So, we can state this powerful fact: <strong>complex exponentials are the eigenvectors of any LSI system.</strong></p>
+<p>This is more than a mathematical curiosity. The complex exponentials form a complete, orthogonal basis (<a href="appendix-01-linearsystems.html#sec-ls-spatial-basis" class="quarto-xref"><span>Section 24.5</span></a>). This means any image can be perfectly represented as a weighted sum of these functions, and we can efficiently transform between the point representation and the harmonic representation (<a href="#sec-dft-defined" class="quarto-xref"><span>Section 26.6</span></a>).</p>
+<p>I’ll admit, using complex numbers can feel strange at first. After all, our lab instruments measure real-valued signals, not imaginary ones. I often find it helpful to remember that complex exponentials are just a convenient way to handle the sine and cosine components simultaneously. They are a powerful mathematical tool, not a physical reality.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The bottom line is that the eigenvector relationship between harmonics and LSI systems simplifies everything. Instead of tracking how every single point in an image is transformed, we only need to know how the system scales the amplitude and shifts the phase of each harmonic frequency. This simplification is the foundation of Fourier analysis in image systems.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="A Note on Pedagogy: Continuous vs. Discrete">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+A Note on Pedagogy: Continuous vs.&nbsp;Discrete
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>As a young assistant professor, I had the privilege of being in faculty meetings with senior colleagues I deeply admired—Joe Goodman, Ron Bracewell, Tom Cover, and others. We often debated how to best teach core mathematical concepts to engineering students.</p>
+<p>A recurring topic was whether to start with continuous functions and calculus or with discrete signals and linear algebra. The senior faculty, steeped in the classical tradition, generally argued for the continuous case. They saw functions and integrals as the fundamental “reality.” I vividly remember Ron Bracewell describing the discrete, matrix-based methods we use for computation as a “vulgar” but necessary approximation of this underlying truth.</p>
+<p>The younger faculty, who spent most of our time programming, tended to favor starting with vectors and matrices. This approach felt more direct and intuitive for building computational tools.</p>
+<p>These were spirited debates, born from a shared passion for teaching. Today, linear algebra is the language of modern computational science, from machine learning to the image systems in this book. That’s why I’ve chosen the matrix-first approach here. Still, I often think of Ron’s advice and the importance of understanding the continuous-domain theory that these discrete methods represent.</p>
+<p>It’s also worth remembering that matrix methods are not just a modern computational fad; they have a rich history stretching back nearly two centuries. If you’re interested, you can read more about the <a href="resources/history-linear-algebra.html" target="_blank">history of these powerful ideas</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-optics-fourier-series" class="level2" data-number="26.5">
+<h2 data-number="26.5" class="anchored" data-anchor-id="sec-optics-fourier-series"><span class="header-section-number">26.5</span> Discrete Fourier Series (DFS)</h2>
+<p>We have now arrived at the tooling we use to analyze LSIs with harmonics. The first idea is to represent image stimuli using harmonic functions. When we work with discrete, sampled data -like images- the representation is called <strong>Discrete Fourier Series (DFS)</strong>. The DFS represents sampled data as sums of harmonics[^1d-simplification].</p>
+<p>For a sampled 1D signal we write <span class="math inline">\(I[n]\)</span> with <span class="math inline">\(n = 0,\ldots,N-1\)</span> (there are <span class="math inline">\(N\)</span> samples). The DFS uses integer spatial frequencies <span class="math inline">\(f = 0,\ldots,N-1\)</span> and assumes the signal repeats every <span class="math inline">\(N\)</span> samples (periodic extension). Here are three equivalent forms.</p>
+<ol type="1">
+<li>Sine–cosine form</li>
+</ol>
+<p><span id="eq-fourier-series"><span class="math display">\[
+I[n] = \frac{a_0}{2} + \sum_{f=1}^{N-1} \, s_f \,\sin\!\left(\frac{2 \pi f n}{N}\right) + c_f \,\cos\!\left(\frac{2 \pi f n}{N}\right)
+\tag{26.3}\]</span></span></p>
+<ol start="2" type="1">
+<li>Amplitude–phase form</li>
+</ol>
+<p><span id="eq-fourier-series-phase"><span class="math display">\[
+I[n] = \frac{a_0}{2} + \sum_{f=1}^{N-1} a_f \,\sin\!\left(\frac{2 \pi f n}{N} + \phi_f\right),
+\qquad a_f \ge 0
+\tag{26.4}\]</span></span></p>
+<ol start="3" type="1">
+<li>Complex exponential form</li>
+</ol>
+<p><span id="eq-fourier-series-complex"><span class="math display">\[
+I[n] = \sum_{f=0}^{N-1} w_f \, e^{\,i \, 2 \pi f n / N},
+\tag{26.5}\]</span></span></p>
+<p>where the weights <span class="math inline">\(w_f\)</span> are complex and <span class="math inline">\(i = \sqrt{-1}\)</span>.</p>
+</section>
+<section id="sec-dft-defined" class="level2" data-number="26.6">
+<h2 data-number="26.6" class="anchored" data-anchor-id="sec-dft-defined"><span class="header-section-number">26.6</span> Discrete Fourier transform (DFT)</h2>
+<p>We need a way to transform the sampled image intensities, <span class="math inline">\(I[n]\)</span>, into the Fourier weights, <span class="math inline">\(w_f\)</span>. The method is called the <strong>Discrete Fourier Transform (DFT)</strong>: <span id="eq-discrete-fourier-transform"><span class="math display">\[
+w_f = \frac{1}{N} \sum_{n=0}^{N-1} I[n] \, e^{-i 2 \pi f n / N}
+\tag{26.6}\]</span></span></p>
+<p>Because the basis is orthogonal (<a href="appendix-01-linearsystems.html#sec-ls-orthogonal-transforms" class="quarto-xref"><span>Section 24.6</span></a>), the inverse can also be expressed directly, <span id="eq-inverse-dft"><span class="math display">\[
+I[n] = \sum_{f=0}^{N-1} w_f \, e^{\,i 2 \pi f n / N}.
+\tag{26.7}\]</span></span></p>
+<p>At first glance, because of the use of complex exponentials, this formula might look intimidating. But take a moment, it’s actually quite simple. On the right, we have the sampled image values multiplied by a complex exponential. You might imagine this as a matrix multiplication in which we place <span class="math inline">\(I[n]\)</span> into a vector and we place the complex exponentials into the columns of a matrix. This is the idea we explained in general terms in <a href="appendix-01-linearsystems.html#sec-ls-spatial-basis" class="quarto-xref"><span>Section 24.5</span></a>.</p>
+<p>For some, it is preferable to get rid of the complex notation. Thanks to <strong>Euler’s formula</strong>, we know that any complex exponential can be written in terms of sine and cosine:</p>
+<p><span id="eq-Eulers-formula"><span class="math display">\[
+e^{i\theta} = \cos(\theta) + i\sin(\theta).
+\tag{26.8}\]</span></span></p>
+<p>This means the DFT uses the complex exponential as a method to combine the familiar sine and cosine terms into a compact expression. Once you get used to it, this complex formulation will seem neater than keeping track of separate sine and cosine coefficients.</p>
+<p>It’s important to note that while <span class="math inline">\(I[n]\)</span> is real-valued, the DFT coefficients <span class="math inline">\(w_f\)</span> are generally complex. For a real signal, there is redundancy: the coefficients satisfy <span class="math inline">\(w_{f} = \overline{w_{N-f}}\)</span>, where <span class="math inline">\(\overline{w_f}\)</span> is the complex conjugate of <span class="math inline">\(w_f\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>If you prefer to work with real numbers, you can compute the sine and cosine coefficients, <span class="math inline">\(s_f\)</span> and <span class="math inline">\(c_f\)</span>, directly from the image intensities:</p>
+<p><span class="math display">\[
+\begin{aligned}
+a_0 &amp;= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \\
+s_f &amp;= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \sin\left(\frac{2\pi f n}{N}\right) \\
+c_f &amp;= \frac{2}{N} \sum_{n=0}^{N-1} I[n] \cos\left(\frac{2\pi f n}{N}\right)
+\end{aligned}
+\]</span></p>
+<p>Here, <span class="math inline">\(a_0\)</span> gives twice the mean value of <span class="math inline">\(I[n]\)</span>, which is why the Discrete Fourier Series (<a href="#eq-fourier-series" class="quarto-xref">Equation&nbsp;<span>26.3</span></a>) starts with <span class="math inline">\(\frac{a_0}{2}\)</span>.</p>
+</section>
+<section id="relating-the-dfs-representations" class="level2" data-number="26.7">
+<h2 data-number="26.7" class="anchored" data-anchor-id="relating-the-dfs-representations"><span class="header-section-number">26.7</span> Relating the DFS representations</h2>
+<p>There are several equivalent ways to write the Discrete Fourier Series, and it’s helpful to know how the parameters relate:</p>
+<ul>
+<li><p><span class="math inline">\(\frac{a_0}{2}\)</span> and <span class="math inline">\(w_0\)</span> both represent the mean value of the signal <span class="math inline">\(I[n]\)</span>.</p></li>
+<li><p>The amplitude and phase parameters relate to the sine and cosine coefficients as follows:</p></li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+a_f &amp; = \sqrt{{s_f}^2 + {c_f}^2} \\
+\phi_f &amp; = \operatorname{atan2}(c_f,\, s_f)
+\end{aligned}
+\]</span></p>
+<p>Equivalently, <span class="math inline">\(s_f = a_f \cos\phi_f\)</span> and <span class="math inline">\(c_f = a_f \sin\phi_f\)</span>. Using <span class="math inline">\(\operatorname{atan2}\)</span> ensures the correct quadrant for <span class="math inline">\(\phi_f \in (-\pi, \pi]\)</span>.</p>
+<ul>
+<li>The complex weights <span class="math inline">\(w_f\)</span> are related to the sine and cosine coefficients by</li>
+</ul>
+<p><span class="math display">\[
+w_f  = \frac{1}{2} (c_f - i s_f ) \qquad \text{for } f &gt; 0
+\]</span></p>
+<ul>
+<li>And the complex weights <span class="math inline">\(w_f\)</span> are related to the amplitude and phase by</li>
+</ul>
+<p><span class="math display">\[
+w_f = \frac{a_f}{2} e^{i (\phi_f - \pi/2)} \qquad \text{for } f &gt; 0
+\]</span></p>
+<p>So, whether you prefer to think in terms of sines and cosines, amplitudes and phases, or complex exponentials, you can always translate between these forms.</p>
+<div id="fourier-history" class="callout callout-style-default callout-note callout-titled" title="About Jean Baptiste Joseph Fourier">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+About Jean Baptiste Joseph Fourier
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>See <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Fourier/" target="_blank">a brief biography of Fourier</a>, who had a fascinating life. He served as a scientific adviser on Bonaparte’s Egyptian expedition and later as Prefect of Isère in Grenoble, where he pursued his theory of heat conduction and the use of trigonometric series.</p>
+<p>In 1807 Fourier presented his heat memoir to the Paris Institute. The committee (Lagrange, Laplace, Monge, Lacroix) balked at representing arbitrary functions by trigonometric series and questioned the rigor; Biot and Poisson added objections. Fourier won the Institute’s 1811 prize, but publication lagged until 1822—evidence of the Academy’s initial resistance to what we now call Fourier series.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Son of a tailor; Orphaned at 9</li>
+<li>Educated by Benedictines</li>
+<li>Supported the Revolution, becoming an adviser to Bonaparte in Egypt</li>
+<li>A statue of Fourier, erected in Grenoble, was later melted for armaments</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div id="fig-optics-fourier" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-fourier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/people/optics-fourier.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-fourier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;26.2: Jean Baptiste Joseph Fourier
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section id="counting-parameters" class="level3" data-number="26.7.1">
+<h3 data-number="26.7.1" class="anchored" data-anchor-id="counting-parameters"><span class="header-section-number">26.7.1</span> Counting parameters</h3>
+<p>A length‑<span class="math inline">\(N\)</span> real signal <span class="math inline">\(I[n]\)</span> has <span class="math inline">\(N\)</span> real values. The complex-valued DFS parameterization, however, seems to use more than <span class="math inline">\(N\)</span> parameters. For example, the sine–cosine form has both <span class="math inline">\(s_f\)</span> and <span class="math inline">\(c_f\)</span> for each <span class="math inline">\(f\)</span>, and the complex exponential form uses <span class="math inline">\(N\)</span> complex weights <span class="math inline">\(w_f\)</span> (that’s <span class="math inline">\(2N\)</span> real numbers). How can that be?</p>
+<p>The resolution is that for real signals the Fourier coefficients obey symmetries that reduce the number of independent values back to <span class="math inline">\(N\)</span> real degrees of freedom.</p>
+<p>The cleanest way to see this is in the complex form. For real <span class="math inline">\(I[n]\)</span>, <span class="math display">\[
+w_{f} \;=\; \overline{w}_{\,N-f}, \qquad f=1,\ldots,N-1,
+\]</span> so the coefficients come in complex‑conjugate pairs. Using Euler’s formula (<a href="#eq-Eulers-formula" class="quarto-xref">Equation&nbsp;<span>26.8</span></a>), these relate to the sine–cosine and amplitude–phase parameters as <span id="eq-nyquist-1"><span class="math display">\[
+w_f = \tfrac{1}{2}\,(c_f - i\,s_f), \qquad
+w_{N-f} = \tfrac{1}{2}\,(c_f + i\,s_f),
+\tag{26.9}\]</span></span> and <span id="eq-nyquist-2"><span class="math display">\[
+w_f = \tfrac{a_f}{2}\,e^{\,i(\phi_f - \pi/2)}, \qquad
+w_{N-f} = \tfrac{a_f}{2}\,e^{\,-i(\phi_f - \pi/2)}.
+\tag{26.10}\]</span></span></p>
+<p>Two special bins are purely real for real signals: - DC (<span class="math inline">\(f=0\)</span>): only the cosine term contributes; this is the mean. - When <span class="math inline">\(N\)</span> is even, the Nyquist bin (<span class="math inline">\(f=N/2\)</span>): <span class="math inline">\(\sin(\pi n)=0\)</span> for all integers <span class="math inline">\(n\)</span>, so only cosine remains. This bin is also purely real.</p>
+<p>These symmetries remove the apparent over‑parameterization.</p>
+</section>
+<section id="sampling-rate-and-nyquist-frequency" class="level3" data-number="26.7.2">
+<h3 data-number="26.7.2" class="anchored" data-anchor-id="sampling-rate-and-nyquist-frequency"><span class="header-section-number">26.7.2</span> Sampling rate and Nyquist frequency</h3>
+<p>If image samples are spaced every <span class="math inline">\(\Delta x\)</span>, we say the sampling rate is <span class="math inline">\(f_s = 1/\Delta x\)</span> (samples per unit). The Nyquist frequency is half the sampling rate, <span class="math display">\[
+f_N \;=\; \frac{f_s}{2} \;=\; \frac{1}{2\,\Delta x},
+\]</span> and is measured in cycles per unit (e.g., cycles/degree or cycles/mm for spatial signals). In DFT index units (dimensionless bin indices), <span class="math inline">\(f_N\)</span> aligns with the bin at index <span class="math inline">\(N/2\)</span> when <span class="math inline">\(N\)</span> is even; when <span class="math inline">\(N\)</span> is odd there is no bin exactly at <span class="math inline">\(f_N\)</span>.</p>
+<p>As we saw in the previous section, because of conjugate symmetry, only about “half” of the spectrum is unique:</p>
+<ul>
+<li><p>Even <span class="math inline">\(N\)</span>: There are two special, real bins—DC (<span class="math inline">\(f=0\)</span>) and Nyquist (<span class="math inline">\(f=N/2\)</span>). The remaining bins form conjugate pairs <span class="math inline">\((f,\,N-f)\)</span> for <span class="math inline">\(f=1,\ldots,N/2-1\)</span>. The count of distinct frequency bins is <span class="math display">\[
+  1 \text{ (DC)} \;+\; (N/2-1) \text{ pairs} \;+\; 1 \text{ (Nyquist)} \;=\; N/2 + 1.
+  \]</span> Each conjugate pair contributes two real degrees of freedom (real and imaginary parts), and the two special bins contribute one each, totaling <span class="math inline">\(N\)</span> real degrees of freedom.</p></li>
+<li><p>Odd <span class="math inline">\(N\)</span>: There is no Nyquist bin. We have DC (<span class="math inline">\(f=0\)</span>) plus conjugate pairs <span class="math inline">\((f,\,N-f)\)</span> for <span class="math inline">\(f=1,\ldots,(N-1)/2\)</span>. The count of distinct bins is <span class="math display">\[
+  1 \text{ (DC)} \;+\; (N-1)/2 \text{ pairs} \;=\; (N+1)/2,
+  \]</span> again yielding <span class="math inline">\(N\)</span> real degrees of freedom.</p></li>
+</ul>
+<p>It is common to compute and report only this non‑redundant “half‑spectrum” (plus DC, and the Nyquist bin when <span class="math inline">\(N\)</span> is even). In continuous‑domain sampling language, frequencies above the Nyquist frequency <span class="math inline">\(f_N\)</span> “fold” or alias back; in DFT index terms, information in bins above <span class="math inline">\(N/2\)</span> is redundant with bins below <span class="math inline">\(N/2\)</span> for real‑valued signals. Some authors therefore call the Nyquist frequency the folding frequency.</p>
+</section>
+</section>
+<section id="sec-ls-convolution-theorem" class="level2" data-number="26.8">
+<h2 data-number="26.8" class="anchored" data-anchor-id="sec-ls-convolution-theorem"><span class="header-section-number">26.8</span> The Convolution Theorem</h2>
+<p>The fact that harmonics are eigenvectors of linear, space-invariant (LSI) systems leads to one of the most powerful results in signal processing: the <strong>Convolution Theorem</strong>.</p>
+<p>In the spatial domain, calculating the output of an LSI system requires performing a convolution—summing the input signal with shifted and scaled versions of the point spread function (PSF). This operation can be computationally intensive.</p>
+<p>The Convolution Theorem provides an elegant and highly efficient alternative. It states that <strong>convolution in the spatial domain is equivalent to simple multiplication in the frequency domain.</strong></p>
+<p>Let’s formalize this. If the output image <span class="math inline">\(O[n]\)</span> is the convolution of the input image <span class="math inline">\(I[n]\)</span> and the system’s point spread function <span class="math inline">\(h[n]\)</span>: <span id="eq-convolution-theorem-1"><span class="math display">\[
+O[n] = (I * h)[n],
+\tag{26.11}\]</span></span></p>
+<p>then in the Fourier Transform domain the relationship is <span class="math display">\[
+\mathscr{F}\{O\} = \mathscr{F}\{I\} \cdot \mathscr{F}\{h\}
+\]</span></p>
+<p>where <span class="math inline">\(\mathscr{F}\)</span> is the Discrete Fourier Transform.</p>
+<p>Using the complex weights notation, where <span class="math inline">\(W_f\)</span> are the DFT coefficients of the input and <span class="math inline">\(H_f\)</span> are the DFT coefficients of the PSF, the output coefficients <span class="math inline">\(Y_f\)</span> are simply:</p>
+<p><span id="eq-convolution-theorem-2"><span class="math display">\[
+Y_f = W_f \cdot H_f
+\tag{26.12}\]</span></span></p>
+<p>This is a profound simplification. A complex convolution is replaced by straightforward, element-wise multiplication<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The term <span class="math inline">\(H_f\)</span>, the DFT of the point spread function, is so important that it has its own name: the <strong>Optical Transfer Function (OTF)</strong>. The OTF describes how the system scales the amplitude and shifts the phase of each input harmonic.</p>
+<p>This theorem is the primary reason why Fourier analysis is indispensable for image systems engineering. It allows us to:</p>
+<ol type="1">
+<li><strong>Analyze</strong> a system’s performance by examining its OTF.</li>
+<li><strong>Calculate</strong> the output of an LSI system efficiently: transform the input to the frequency domain, multiply by the OTF, and transform back.</li>
+<li><strong>Design</strong> systems by specifying a desired OTF.</li>
+</ol>
+<p>You will see all of these ideas used in various ways in the main chapters of this book. Fourier series play a role in modeling optics and characterizing optics, modeling sensors, and analyzing perceived image quality. The harmonic basis is used as a tool in most aspects of science and engineering.</p>
+
+
+
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>I also explain the relationship between harmonics and space-invariant linear systems in detail, staying away from complex exponentials, in the Appendix to <a href="https://wandell.github.io/FOV-1995/appendix.html" target="_blank">Foundations of Vision</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The complex conjugate of <span class="math inline">\(a + i b\)</span> is <span class="math inline">\(a - i b\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Multiplication in the DFT domain corresponds to circular convolution in the spatial domain. To implement linear convolution without wrap‑around, zero‑pad the inputs before applying the DFT.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/appendix-01-linearsystems.html" class="pagination-link" aria-label="Linear systems">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/appendix-03-isetcam.html" class="pagination-link" aria-label="Image Systems Simulation">
+        <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

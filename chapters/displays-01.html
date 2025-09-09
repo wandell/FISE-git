@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-08">
+<meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
+
+<title>22&nbsp; Displays – Foundations of Image Systems Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/imgprocessing-01.html" rel="next">
+<link href="../chapters/human-01.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/hover.css">
+<link rel="stylesheet" href="../styles/callouts.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/displays-01.html">Displays</a></li><li class="breadcrumb-item"><a href="../chapters/displays-01.html"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Foundations of Image Systems Engineering</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scenes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-03-properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light field properties</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-04-properties-spectral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Optics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-02-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lens principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-03-thinlens.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-04-morelenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-05-linear-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-06-linear-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-07-wavefront.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sensors</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-01-photoelectric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-02-pixels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-03-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-04-components.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">System components</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-05-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Control systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-06-characterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image system modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-07-innovations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sensor innovations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Human</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/human-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Human vision</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Displays</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-01.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Image processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/imgprocessing-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-displays-overview" id="toc-sec-displays-overview" class="nav-link active" data-scroll-target="#sec-displays-overview"><span class="header-section-number">22.1</span> Displays overview</a></li>
+  <li><a href="#characterization-of-visual-stimuli-using-the-standard-display-model" id="toc-characterization-of-visual-stimuli-using-the-standard-display-model" class="nav-link" data-scroll-target="#characterization-of-visual-stimuli-using-the-standard-display-model"><span class="header-section-number">22.2</span> Characterization of Visual Stimuli using the Standard Display Model</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">22.3</span> Introduction</a></li>
+  <li><a href="#display-technologies-for-vision-science" id="toc-display-technologies-for-vision-science" class="nav-link" data-scroll-target="#display-technologies-for-vision-science"><span class="header-section-number">22.4</span> Display technologies for vision science</a>
+  <ul class="collapse">
+  <li><a href="#cathode-ray-tubes-crt" id="toc-cathode-ray-tubes-crt" class="nav-link" data-scroll-target="#cathode-ray-tubes-crt"><span class="header-section-number">22.4.1</span> Cathode Ray Tubes (CRT)</a></li>
+  <li><a href="#sec-displays-lcd" id="toc-sec-displays-lcd" class="nav-link" data-scroll-target="#sec-displays-lcd"><span class="header-section-number">22.4.2</span> Liquid Crystal Displays</a></li>
+  <li><a href="#organic-light-emitting-diodes-oled" id="toc-organic-light-emitting-diodes-oled" class="nav-link" data-scroll-target="#organic-light-emitting-diodes-oled"><span class="header-section-number">22.4.3</span> Organic Light emitting diodes (OLED)</a></li>
+  <li><a href="#digital-light-projectors" id="toc-digital-light-projectors" class="nav-link" data-scroll-target="#digital-light-projectors"><span class="header-section-number">22.4.4</span> Digital light projectors</a></li>
+  <li><a href="#microleds" id="toc-microleds" class="nav-link" data-scroll-target="#microleds"><span class="header-section-number">22.4.5</span> MicroLEDs</a></li>
+  </ul></li>
+  <li><a href="#the-standard-display-model-and-stimulus-characterization" id="toc-the-standard-display-model-and-stimulus-characterization" class="nav-link" data-scroll-target="#the-standard-display-model-and-stimulus-characterization"><span class="header-section-number">22.5</span> The standard display model and stimulus characterization</a>
+  <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">22.5.1</span> Overview</a></li>
+  <li><a href="#spectral-radiance-and-gamma-curves" id="toc-spectral-radiance-and-gamma-curves" class="nav-link" data-scroll-target="#spectral-radiance-and-gamma-curves"><span class="header-section-number">22.5.2</span> Spectral radiance and gamma curves</a></li>
+  <li><a href="#the-subpixel-point-spread-functions" id="toc-the-subpixel-point-spread-functions" class="nav-link" data-scroll-target="#the-subpixel-point-spread-functions"><span class="header-section-number">22.5.3</span> The subpixel point spread functions</a></li>
+  <li><a href="#linearity" id="toc-linearity" class="nav-link" data-scroll-target="#linearity"><span class="header-section-number">22.5.4</span> <strong>Linearity</strong></a></li>
+  <li><a href="#model-summary" id="toc-model-summary" class="nav-link" data-scroll-target="#model-summary"><span class="header-section-number">22.5.5</span> Model summary</a></li>
+  </ul></li>
+  <li><a href="#display-calibration" id="toc-display-calibration" class="nav-link" data-scroll-target="#display-calibration"><span class="header-section-number">22.6</span> Display calibration</a>
+  <ul class="collapse">
+  <li><a href="#pixel-independence" id="toc-pixel-independence" class="nav-link" data-scroll-target="#pixel-independence"><span class="header-section-number">22.6.1</span> Pixel independence</a></li>
+  <li><a href="#spectral-homogeneity" id="toc-spectral-homogeneity" class="nav-link" data-scroll-target="#spectral-homogeneity"><span class="header-section-number">22.6.2</span> Spectral homogeneity</a></li>
+  <li><a href="#spatial-homogeneity-shift-invariance" id="toc-spatial-homogeneity-shift-invariance" class="nav-link" data-scroll-target="#spatial-homogeneity-shift-invariance"><span class="header-section-number">22.6.3</span> Spatial homogeneity (shift invariance)</a></li>
+  </ul></li>
+  <li><a href="#display-simulations" id="toc-display-simulations" class="nav-link" data-scroll-target="#display-simulations"><span class="header-section-number">22.7</span> Display simulations</a>
+  <ul class="collapse">
+  <li><a href="#color-discriminations-the-impact-of-bit-depth" id="toc-color-discriminations-the-impact-of-bit-depth" class="nav-link" data-scroll-target="#color-discriminations-the-impact-of-bit-depth"><span class="header-section-number">22.7.1</span> Color discriminations: the impact of bit-depth</a></li>
+  <li><a href="#spatial-spectral-discriminations" id="toc-spatial-spectral-discriminations" class="nav-link" data-scroll-target="#spatial-spectral-discriminations"><span class="header-section-number">22.7.2</span> Spatial-spectral discriminations</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">22.8</span> Summary</a>
+  <ul class="collapse">
+  <li><a href="#applications-of-the-standard-display-model" id="toc-applications-of-the-standard-display-model" class="nav-link" data-scroll-target="#applications-of-the-standard-display-model"><span class="header-section-number">22.8.1</span> Applications of the standard display model</a></li>
+  <li><a href="#future-display-technologies" id="toc-future-display-technologies" class="nav-link" data-scroll-target="#future-display-technologies"><span class="header-section-number">22.8.2</span> Future display technologies</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">22.9</span> References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/displays-01.html">Displays</a></li><li class="breadcrumb-item"><a href="../chapters/displays-01.html"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-displays" class="quarto-section-identifier"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Work in Progress
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
+<p>Last updated: September 8, 2025</p>
+</div>
+</div>
+</div>
+<p><a href="resources/characterizing-artal.qmd">Display chapter from the Artal Handbook</a></p>
+<!--
+Read some Bernard Kress for near eye displays.
+
+## Display devices
+Refer to light field concepts as in the chapter
+
+## LCD OLED CRT
+ I have OLED review papers in Paperpile on technology.  Tsujimura for example.  See chapter.
+
+## AR/VR
+
+## Lightfield displays
+I wonder if the Wetzstein work with LCDs should go in here?
+
+## Artal chapter text below
+
+(Needs updating because I kept writing after this.  The standard display model should go in here for calibration, for sure.)
+-->
+<section id="sec-displays-overview" class="level2" data-number="22.1">
+<h2 data-number="22.1" class="anchored" data-anchor-id="sec-displays-overview"><span class="header-section-number">22.1</span> Displays overview</h2>
+<p>For now, this chapter reference.</p>
+</section>
+<section id="characterization-of-visual-stimuli-using-the-standard-display-model" class="level2" data-number="22.2">
+<h2 data-number="22.2" class="anchored" data-anchor-id="characterization-of-visual-stimuli-using-the-standard-display-model"><span class="header-section-number">22.2</span> Characterization of Visual Stimuli using the Standard Display Model</h2>
+<p>Joyce E. Farrell, Haomiao Jiang, and Brian A. Wandell</p>
+<p>Psychology and Department of Electrical Engineering, Stanford University, Stanford, CA 94305</p>
+<p><strong>Corresponding author:</strong> J.E. Farrell, <a href="mailto:joyce_farrell@stanford.edu">joyce_farrell@stanford.edu</a></p>
+<p><strong>Key Words:</strong> Display technology, calibration, modeling, simulation, visual stimuli, psychophysics, pixel pointspread function, spectral power distribution</p>
+<p>(Version 2, Updated, 2024, to be fully integrated into the book over time)</p>
+</section>
+<section id="introduction" class="level2" data-number="22.3">
+<h2 data-number="22.3" class="anchored" data-anchor-id="introduction"><span class="header-section-number">22.3</span> Introduction</h2>
+<p>Visual psychophysics advances by experiments that measure how sensations and perceptions arise from carefully controlled visual stimuli. Progress depends in large part on the type of display technology that is available to generate stimuli. In this chapter, we first describe the strengths and limitations of the display technologies that are currently used to study human vision. We then describe a standard display model that guides the calibration and characterization of visual stimuli on these displays (Brainard et al, 2002; Post, 1992). We illustrate how to use the standard display model to specify the spatial-spectral radiance of any stimulus rendered on a calibrated display. This model can be used by engineers to assess the tradeoffs in display design, and by scientists to specify stimuli so that others can replicate experimental measurements and develop computational models that begin with a physically accurate description of the experimental stimulus.</p>
+</section>
+<section id="display-technologies-for-vision-science" class="level2" data-number="22.4">
+<h2 data-number="22.4" class="anchored" data-anchor-id="display-technologies-for-vision-science"><span class="header-section-number">22.4</span> Display technologies for vision science</h2>
+<p>An ideal display system for science and commerce would deliver the complete spectral, spatial, directional, and temporal distribution of light rays, as if these rays arose from a real three-dimensional scene. The full radiometric description of light rays in the three-dimensional scene is called the “light field” (Gershun, 1936). For vision science, the simplified and related representation is the irradiance the scene produces at the cornea - this is the only part of the scene radiance that the retina encodes. The complete radiometric description of the rays at the cornea, sometimes referred to as the plenoptic function (Adelson and Bergen, 1991), specifies the rate of incident photons from every direction at each point in the pupil plane. To achieve an accurate dynamic reproduction of a scene, the plenoptic function must change as the head and eyes move.</p>
+<p>Commonly used scientific displays do not approach this ideal. Instead, most displays emit light rays from a planar surface in a wide range of directions, and the spectral radiance is invariant as the subject changes head and eye position. The displays themselves are limited in various ways; for example, the pixels produce a limited range of spectral power distributions, typically being formed as the weighted sum of three spectral primaries. Despite these limitations, modern displays create a very compelling perceptual experience that captures many important elements of the original scene. The ability to program these displays with computers and digital frame buffers has greatly enlarged the range of stimuli used in visual psychophysics compared to the optical benches and tachistoscopes used by previous generations.</p>
+<p>The vast majority of modern displays comprise a two-dimensional matrix of picture elements (pixels) at a density of 100-400 pixels per inch (4-16 pixels per mm). Each pixel typically contains three different light sources (subpixels, Figure 1). The pixels are intended to be identical across the display surface (spatial homogeneity).</p>
+<p>Most displays are designed with three types of subpixels with spectral power distributions (SPD) that peak in the long-, middle- and short-wavelength regions of the visible spectrum (Figure 2). Each type of subpixel is called a display primary. The relative SPD of each primary is designed to be invariant as its intensity is varied (spectral homogeneity). In normal operation, the three subpixel intensities are controlled to match the color appearance of an experimental stimulus. Three primaries are used because experiments show that subjects can match the color appearance of a wide range of spectral power distributions using the mixture of just three independent light sources (Wandell 1995, Chapter 4; Wyszecki and Stiles, 1967). Modern displays effectively comprise a very large number of color-matching experiments, one for each pixel on every frame.</p>
+<p>Display architectures are distinguished by (a) the physical process that produces the light, and (b) the spatial arrangement of the pixels and subpixels. Key design parameters of commercial displays are energy efficiency, brightness, spatial resolution, darkness, color range, temporal refresh and update rates. The relative importance of these parameters depends on the application.</p>
+<p>The three main display technologies used in vision experiments today are CRTs (cathode ray tubes), LCDs (liquid-crystal displays) and OLEDs (organic light emitting diodes). Color CRTs were developed by RCA in the 1950s (Law, 1976) and were the nearly universal display technology for several decades. They remain an important display technology for vision researchers, although now they are rarely sold as consumer products. Invented at RCA labs in the 1970s (Kawamoto, 2002), LCDs were introduced as small mobile displays in digital watches, calculators and other handheld devices; later they enabled the widespread adoption of laptop computers. OLEDs were invented at Kodak in the 1980s (Tang and Van Slyke, 1987) and were first introduced as displays for digital cameras. Large OLED displays are expensive, but they have some advantages over LCDs: they achieve a deeper black and they have better temporal resolution.</p>
+<p>Since CRTs are no longer mass produced, researchers are increasingly using LCD and OLED monitors for stimulus creation. Several companies have developed software to control LCD monitors specifically for vision research (e.g ViewPixx and Display++). OLED displays have higher contrast and refresh rates than LCDs, making them particularly well-suited for experiments requiring highly accurate and temporally precise visual stimuli. Even so, CRTs continue to be used in multiple scientific labs. Thus, we begin with an overview of how to control and calibrate the light from a CRT display. Despite the fact that LCDs have displaced CRTs in the market, CRTs are still widely used in vision science. A recent sampling from the Journal of Vision suggests that scientists mainly use CRTs and with some use of LCDs, while the OLEDs are not yet common. One reason CRTs are preferred is that the intensity of each primary can be accurately controlled beyond 10 bits (Brainard et al, 2002). As show by simulation later, this intensity precision is valuable for visual psychophysical experiments that measure detection or discrimination thresholds.</p>
+<section id="cathode-ray-tubes-crt" class="level3" data-number="22.4.1">
+<h3 data-number="22.4.1" class="anchored" data-anchor-id="cathode-ray-tubes-crt"><span class="header-section-number">22.4.1</span> Cathode Ray Tubes (CRT)</h3>
+<p>CRTs create light by directing an electron beam onto one of three different types of phosphors (Castellano, 1992). When irradiated by electrons, each of the three phosphors emits light with a spectral radiance distribution that is unique to that phosphor. CRT phosphors are painted on a transparent glass surface in a pattern of alternating dots or stripes, and they are selected to emit predominantly in the long (red), middle (green) and short (blue) wavebands (Figures 1A and 2A). The amount of light from each type of phosphor is controlled by the intensity of the electron beam that is incident on the phosphor. The spatial properties of the display are determined by the size and spacing of the phosphor dots or stripes.</p>
+<p>The temporal properties of the display are determined by the frequency with which each phosphor is stimulated by electrons and the rate at which the phosphorescence decays (see Figure 3B). The refresh rate is determined by how fast an electron beam can scan across the many rows of pixels in a display. The more rows there are, the more time it takes for the electron beam to return to the same phosphor dot. When the refresh rate is slow and the phosphor decay is fast, the display appears to flicker. Longer phosphor decay times reduce the visibility of flicker, but increase the visibility of motion blur (Farrell, 1986; Zhang et al, 2007).</p>
+<p>In addition to scanning through many rows of pixels, the electron beam intensity modulates as the beam traverses phosphors within each row. The electron beam modulation rate, referred to as slew rate, is not fast enough to change perfectly as the beam moves between adjacent pixels. Consequently, the ability to control the light from adjacent pixels within a row is not perfectly independent (Lyons and Farrell, 1987). We will explain the consequence of this slew rate limitation later in this chapter.</p>
+</section>
+<section id="sec-displays-lcd" class="level3" data-number="22.4.2">
+<h3 data-number="22.4.2" class="anchored" data-anchor-id="sec-displays-lcd"><span class="header-section-number">22.4.2</span> Liquid Crystal Displays</h3>
+<p>LCD displays are a large array of light valves that control the amount of light that passes from a backlight, that is constantly on, to the viewer (Figure 4, Silverstein and Wandell Handbook Chapter). The backlight is usually a fluorescent tube or sometimes a row of LEDs positioned at the edge of the LC array (edge-lit), or finally a matrix of LEDs covering most of the back of the LCD panel (direct-lit). The photons from the backlight are spread uniformly across the back of the display using diffusing filters. The backlight passes through a polarization filter, a layer of liquid crystal material, a second polarization filter, and then a color filter. The ability of photons to traverse this path is controlled by the alignment of the liquid crystals which determines the polarization of the photons and thus how much light passes between the two polarization filters. The state of the liquid crystal is determined by an electric field that is controlled by digital values in a frame-buffer, under software control. Even when the liquid crystal is in a state that permits transmission (open), only a small fraction (about 3 percent) of the backlight photons pass through the two polarizers, color filter, and electronics.</p>
+<p>The spectral radiance of an LCD pixel is determined by the SPD of the backlight and the transmissivity of the optical elements (polarizers, LC, and color filters). The spatial properties of an LCD are determined by the dimensions of a panel of thin film transistors (TFT) that controls the voltage for each pixel component and the size and arrangement of each individual filter in the color filter array. The temporal properties of an LCD are determined by the modulation rate of the backlight and the temporal response of the liquid crystal (Yang and Wu 2006). LCDs use sample and hold circuitry that keep the liquid crystals in their “open” or “closed” state (see Figure 4B). This means that flicker is not visible, but a negative consequence of the slow dynamics is that LCDs can produce visible motion blur. Furthermore, liquid crystals respond faster to an increase in voltage (changing the alignment of the liquid crystals) than they do to a decrease in voltage (returning towards its natural state). Consequently, a change from white to black is faster than a change from black to white. Some LCD manufacturers have introduced circuitry to “overdrive” and “undershoot” the voltage delivered to each pixel. This additional circuitry reduces the visible motion blur, but it makes it impossible to separately control the spatial and temporal properties of the display. The slow and asymmetric changes in the state of liquid crystals also makes it difficult to have precise control in the timing of visual stimuli (Elze and Tanner, 2012).</p>
+<p>Another limitation of LCDs is that in the “off” state, photons from the backlight find their way through the filters to the viewer. Consequently, LCDs do not achieve a complete black background. Manufacturers introduced LED backlit panels that can be locally dimmed in different regions. In this way, one portion of the image can be much brighter than another, and a portion of the display can be nearly black. This design extends the image dynamic range. Such LCD displays are difficult to use in calibrated experiments because of the proprietary software and control circuitry that can vary with the displayed image.</p>
+</section>
+<section id="organic-light-emitting-diodes-oled" class="level3" data-number="22.4.3">
+<h3 data-number="22.4.3" class="anchored" data-anchor-id="organic-light-emitting-diodes-oled"><span class="header-section-number">22.4.3</span> Organic Light emitting diodes (OLED)</h3>
+<p>OLEDs are a much simpler display technology. Rather than being a light valve, each pixel in an OLED display is a light source. Each OLED pixel consists of two layers of organic molecules that are sandwiched between a cathode and an anode (Figure 5). OLED pixels emit light when an electric current is applied to the electroluminescent layer of organic molecules. There are several ways to produce the different primaries: (1) Each diode can be made from a different substance that emits light in a distinct wavelength band, (2) color filters can be placed in front of a single type of diode, or (3) the emissions from a single type of OLED can be used to excite different types of phosphors (Tsujimura, 2012). OLEDs do not require a backlight. Because each pixel can be black, emitting only light that is scattered from nearby pixels, these displays can achieve a very high dynamic range.</p>
+<p>The spatial properties of an OLED display are determined by the arrangement of OLEDs that are deposited onto glass. Some types of OLEDs (polymer OLEDs or PLEDs) can be printed onto plastic using a modified inkjet printer (Carter et al, 2006), or a 3D printer with a spray nozzle (Su et al 2022).</p>
+<p>The temporal properties of an OLED display are determined by the rate at which the pixel intensities can be changed (update rate) and the rate at which the screen is refreshed (refresh rate). OLEDs can be turned on and off extremely rapidly (update rate). Hence, the refresh rate limits the motion velocities that can be represented (Watson et al, 1986). To reduce the visibility of flicker and motion blur, OLEDs can be refreshed at a rate that exceeds the update rate (see Figure 5B).</p>
+</section>
+<section id="digital-light-projectors" class="level3" data-number="22.4.4">
+<h3 data-number="22.4.4" class="anchored" data-anchor-id="digital-light-projectors"><span class="header-section-number">22.4.4</span> Digital light projectors</h3>
+<p>The digital light projector (DLP) display technology is a micro-electro-mechanical system (MEMS) consisting of an array of microscopically small mirrors arranged in a matrix on a semiconductor chip- one mirror for each pixel (Younse, 1993, Florence and Yoder, 1996). Each mirror is on the order of 15 microns in size, and the deformable mirror arrays can have many different formats (e.g., 4K, 1080p, etc.). The system includes a constant backlight, and each mirror can be in one of two states: it either reflects the backlight photons towards or away from the viewer.</p>
+<p>The mirrors can alternate states very rapidly (kilohertz), and the light intensity at each pixel is controlled by varying the percentage of time the mirror is directing light towards the viewer. In the single-chip DLP, color is controlled using a rapidly spinning color wheel that interposes different color filters between the light source. The single-chip DLP design uses a color wheel whose rotation is synchronized with the control signals sent to the chip. While most display technologies use subpixel primaries that are adjacent in space, the DLP color primaries are adjacent in time - a technique called field-sequential color. Some DLP devices include only three (red, green and blue) primaries, while others include a fourth (white or clear) primary. The white primary increases the maximum display brightness, but at the highest brightness levels the display has a vanishingly small color gamut (Kelley et al, 2009).</p>
+<p>A problem with the single-chip DLP design is that field-sequential color can produce visible color artifacts when the eye moves rapidly across the image. High speed eye movements cause the sequential red, green and blue images to project to different retinal positions (Zhang and Farrell, 2003 ). A more expensive three-chip DLP design is often used in home and movie theatres. The three-chip design simultaneously projects red, green and blue images that are co-registered; hence, these DLPs do not produce the sequential color artifacts.</p>
+<p>While DLP displays are not used widely in visual psychophysics, they have been adapted for use in studies of color constancy (Brainard et al 1997), in vitro primate retina intracellular recordings (Packer et al, 2001), and functional magnetic resonance imaging (Engel et al, 1997).</p>
+</section>
+<section id="microleds" class="level3" data-number="22.4.5">
+<h3 data-number="22.4.5" class="anchored" data-anchor-id="microleds"><span class="header-section-number">22.4.5</span> MicroLEDs</h3>
+<p>MicroLED displays are constructed by precisely positioning tiny light-emitting diodes (LEDs). Unlike OLEDs, the miniature LEDs are made from inorganic semiconducting materials, such as gallium nitride (GaN). Light is emitted when an electric current causes electrons and holes to recombine within the semiconductor material. Each MicroLED pixel is independently controlled by a thin-film transistor (TFT) in the display’s backplane, which regulates the current applied to specific coordinates on the semiconductor layer.</p>
+<p>To produce full-color images, MicroLED displays typically use one of two methods. The first method involves arranging distinct red, green, and blue MicroLEDs side-by-side for direct color emission. The second method utilizes blue MicroLEDs in combination with a quantum dot layer, which converts some of the blue light into red and green through fluorescence. This latter approach can simplify manufacturing while still achieving a wide color gamut.</p>
+<p>MicroLEDs offer several advantages over OLEDs. They have a significantly longer lifespan, lasting much longer than OLEDs. Additionally, MicroLEDs are much brighter and faster than their OLED counterparts. They also feature much smaller pixel sizes compared to OLED pixels, allowing for more compact displays.</p>
+<p>Although MicroLED technology is not yet widely available in consumer products, several display manufacturers have demonstrated the capability to produce large displays using this technology. MicroLEDs are also being utilized in prototypes for small displays in smartphones and head-mounted devices. Current efforts are focused on reducing manufacturing costs to make these displays more accessible to consumers and vision researchers alike.</p>
+</section>
+</section>
+<section id="the-standard-display-model-and-stimulus-characterization" class="level2" data-number="22.5">
+<h2 data-number="22.5" class="anchored" data-anchor-id="the-standard-display-model-and-stimulus-characterization"><span class="header-section-number">22.5</span> The standard display model and stimulus characterization</h2>
+<section id="overview" class="level3" data-number="22.5.1">
+<h3 data-number="22.5.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">22.5.1</span> Overview</h3>
+<p>Displays emit light in different ways. Nonetheless, it is possible to characterize a few general principles that describe the relationship between the electronic control signals and the display spectral radiance. These widely adopted principles are the basis of a standard display model (Post 1992; Brainard-Pelli-Robson, 2003). To calibrate a display effectively means establishing the parameters of the standard display model and using the model and calibration data to control the display spectral radiance.</p>
+<p>A model is necessary because there are far too many images to calibrate individually (Brainard, 1989). For example, a static image on an 8-bit display has 2^(24) different (RGB) settings. A 1024x1024 (2^20 pixels) display can render 2^(480) images. The standard display model defines a relatively small set of calibration measurements that can be used to calculate the expected spectral radiance for many of these images.</p>
+<p>Several key measurements are necessary to specify a model for any particular display. First, each subpixel type has a characteristic spectral power distribution (SPD, Figure 2). The model assumes that the SPD is the same for all subpixels of a given type and is invariant when normalized for intensity level. Thus, the normalized SPD can be measured using a spectroradiometer that averages the spectral radiance emitted from a region of the display surface.</p>
+<p>Second, the absolute level (peak radiance) of the SPD is set by the frame buffer value. The relationship between the frame buffer value and the SPD level is referred to as the gamma-curve. The gamma-curve is assumed to be the same for all subpixels of a given type (shift-invariant), independent of the image content, and monotone increasing.</p>
+<p>Third, the standard display model describes the spatial distribution of light emitted by each type of subpixel, called the point spread function (PSF). The standard display model assumes that the PSF is the same for subpixels of a given type (shift-invariant) and independent of the image content.</p>
+<p>Finally, most displays refresh the image (frame) at a rate between 30 and 240 times per second. Within each frame, the subpixel intensity can rise and fall, and the frame repetitions and pixel dynamics influence the visibility of motion and flicker. The standard display model assumes that each subpixel has a simple time-invariant impulse response function that is independent of image content. This assumption is frequently violated because of the extensive engineering to control the dynamics of displays (see previous sections on LCDs and CRTs). Characterizing the display dynamics is particularly important for experiments involving rapidly changing high contrast targets (e.g.&nbsp;random dots).</p>
+<p>The standard display model clarifies the measurements needed to calibrate a display. The first two are to measure (a) the normalized spectral radiance distributions for each of the display primaries, and (b) the gamma-curve that specifies the absolute level of the spectral radiance given a particular frame buffer value. It is less common for scientists to measure the subpixel PSFs. These can be measured using a macro-lens and the linear output of a calibrated digital camera (Farrell et al, 2008), but in most cases the function is treated as a single point (impulse). Characterizing the PSF can be meaningful for measurements of fine spatial resolution (e.g., quality of fonts, vernier resolution) where there are significant effects of human optics on retinal image formation. In the next, section, we offer specific advice about making these calibration measurements and combining them into a computational implementation of the standard display model.</p>
+</section>
+<section id="spectral-radiance-and-gamma-curves" class="level3" data-number="22.5.2">
+<h3 data-number="22.5.2" class="anchored" data-anchor-id="spectral-radiance-and-gamma-curves"><span class="header-section-number">22.5.2</span> Spectral radiance and gamma curves</h3>
+<p>It is common to use a spectral radiometer to measure the spectral radiance emitted by each of the three types of primaries. The standard display model assumes that for each primary the spectral power distribution takes the form I(F) P(), where P()is the spectral power distribution of the display when the frame buffer is set to its maximum value and 0 &lt; I(F) &lt; 1 is the relative intensity for a frame buffer value of f.</p>
+<p>To estimate I(F)and P(), we measure the spectral radiance for a series of different frame buffer levels. An important detail is this: In most displays there is some stray light present even when F=0. This light is usually treated as a fixed offset, B()and subtracted from the calibration data (Brainard et al, 2002). Hence, the measured spectral radiance curves have the form</p>
+<p>R(,F)=I(F)P() + B()</p>
+<p>The term I is the relative intensity of the primary and F is the frame buffer value. When F is set to the maximum value, the value of I is equal to 1. If one subtracts the background spectral power distribution, then when I(0)=0 and the relative intensity is typically modeled as a simple power law (Poynton,2013) which gives the curve its name.</p>
+<p>I=F [1]</p>
+<p>For most displays B()is difficult to measure because it is small and negligible compared to the experimental stimuli. In such cases, the radiance is modeled by including a small, wavelength-independent, offset in the gamma curve</p>
+<p>R(,F)=I(F)P() [2]<br>
+I=F+B0 [3]</p>
+<p>Historically, the value of ɣ in manufactured displays been between 1.8 and 2.4, which is quite significant. If one changes the ɣ of a display from 1.8 to 2.4, the same frame buffer values will produce very different spectral radiance distributions. Pixels set to the same frame buffer (R,G,B) produce spectral radiances that differ by as much as 10 CIELAB ΔE units (median ~ 6 ΔE). In recent years, manufacturers have converged to a function that is linear at small values, close to ɣ = 2.4 at high values, and overall similar to ɣ = 2.2 (sRGB 2015).</p>
+<p>The analytical gamma function is an approximation to the true I(F). In modern computers, this approximation can be avoided by building a lookup table that stores the nonlinear relationship between the digital control values and the display output, I(F).</p>
+<p>This nonlinearity will continue across technologies because programmers prefer that equal spacing of the digital frame buffer values correspond to equal perceptual spacing (Poynton, 1993; Poynton and Funt, 2014). To maintain this relationship, the display intensity must be nonlinearly related to the frame buffer value (Stevens 1957; Wandell, 1995).</p>
+</section>
+<section id="the-subpixel-point-spread-functions" class="level3" data-number="22.5.3">
+<h3 data-number="22.5.3" class="anchored" data-anchor-id="the-subpixel-point-spread-functions"><span class="header-section-number">22.5.3</span> The subpixel point spread functions</h3>
+<p>The spatial distribution of light from each subpixel is described by a point spread function, P(x,y,). The spatial spread of the light from each subpixel can be measured using a high resolution digital camera with a close-up lens (Figure 1, Farrell et al, 2008 ). Furthermore, the spectral and spatial parts of the point spread function are separable.</p>
+<p>P(x,y,)=s(x,y)w() [4]</p>
+<p>The subpixel point spread is assumed to have the same form across display positions, that is the subpixel point spread function at pixel (u,v) is s(x-u,y-v)w(). And finally, the shape scales with intensity I s(x-u,y-v)w().</p>
+<p>The standard display model assumes that point spread functions from adjacent pixels sum. This linearity is an ideal - no display is precisely linear. But display designs generally aim to satisfy these principles and implementations are close enough so that these principles are a good basis for display characterization and simulation.</p>
+</section>
+<section id="linearity" class="level3" data-number="22.5.4">
+<h3 data-number="22.5.4" class="anchored" data-anchor-id="linearity"><span class="header-section-number">22.5.4</span> <strong>Linearity</strong></h3>
+<p>Apart from the static, nonlinear gamma curve, the standard display model is a shift-invariant linear system. That is, given the intensity of each subpixel we compute the expected display spectral radiance as the weighted sum of the subpixel point spread functions. If the subpixel intensities for one image are I1with corresponding spectral radiance R1(x,y,), and a second image is I2with corresponding spectral radiance R2(x,y,), then the radiance when the image is I1 + I2 will be R1(x,y,) + R2(x,y,).</p>
+<p>The calibration process should test the additivity assumption. Simple tests include checking that the light emitted from the <em>i</em>th subpixel does not depend on the intensity of other subpixels (Lyons and Farrell, 1989; Pelli, 1997, Farrell et al, 2008).</p>
+</section>
+<section id="model-summary" class="level3" data-number="22.5.5">
+<h3 data-number="22.5.5" class="anchored" data-anchor-id="model-summary"><span class="header-section-number">22.5.5</span> Model summary</h3>
+<p>The standard display model for a steady-state image can be expressed as a simple formula that maps the frame buffer values, F, to the display spatial-spectral radiance R(x,y,).</p>
+<p>Suppose the gamma function, point spread function, and spectral power distribution of the jth subpixel type are Ij (v), pj (x,y), and wj (). Suppose the frame buffer values for the jth subpixel type is Fj(u,v). Then the display spectral radiance across space is predicted to be</p>
+<p>R(x,y,)=u,vj Ij(Fj(u,v)) sj(x-u,y-v) wj() [5]</p>
+</section>
+</section>
+<section id="display-calibration" class="level2" data-number="22.6">
+<h2 data-number="22.6" class="anchored" data-anchor-id="display-calibration"><span class="header-section-number">22.6</span> Display calibration</h2>
+<p>If the standard display model describes the device under test, then calibration requires a very small set of display measurements - gamma, spd, psf and temporal response - to fully describe the physical radiance of displayed stimuli. Display calibration can be conceived as (a) measuring how well the key model assumptions hold (spectral homogeneity, pixel independence, spatial homogeneity), and (b) using the measurements to estimate the model parameters.</p>
+<section id="pixel-independence" class="level3" data-number="22.6.1">
+<h3 data-number="22.6.1" class="anchored" data-anchor-id="pixel-independence"><span class="header-section-number">22.6.1</span> Pixel independence</h3>
+<p>The radiance emitted by a subpixel should depend only on the digital frame buffer value controlling that subpixel. Equivalently, the radiance emitted by a collection of pixels must not change as the digital values of other pixels change. Displays often satisfy this pixel independence principle for a large range of stimuli (Farrell et al, 2008, Cooper et al, 2013), but there are displays and certain types of stimuli that fail this test (Lyons and Farrell, 1989; Else and Tanner, 2012).</p>
+<p>For example, CRTs must sweep the intensity of the electron beam very rapidly across each row of pixels. There are limits to how rapidly the beam intensity can change (a maximum “slew rate”). If a very different intensity is required for a pair of adjacent row pixels, the beam may not be able to adjust in time and independence is violated, and the standard display model will not be useful for characterizing the spatial-spectral radiance of such stimuli (Lyons and Farrell, 1989; Naiman and Makous, 1992).</p>
+<p>LCDs are limited by the rate at which liquid crystals can change their state in response to a change in voltage polarity, as well as the asymmetry in their response to the “on” or “off” states. LCDs typically combine sample and hold circuitry to switch between different LC states and a flickering backlight to minimize the visibility of both motion blur. LCDs with these features (sample and hold circuitry with flickering LED or fluorescent backlights) can be modeled as a linear system (Farrell et al, 2008). Departure from display linearity occurs, however, when LCD manufacturers introduce “overdrive” and “undershoot” circuitry to minimize the visibility of motion blur or when they locally dim LED backlight panels to increase dynamic range. These new features make it very difficult to control and calibrate visual stimuli, particularly for studies that require precise control of timing (Elze and Tanner, 2012).</p>
+<p>There are several ways to test pixel independence (Lyons and Farrell, 1989; Pelli, 1997; Farrell et al, 2008), but the general principle is simple. Separately measure the radiance from the middle of a large patch of pixels. Make the measurement with a few different digital values. Then create spatial patterns that are made up with half the pixels at one digital value and half at the other. The radiance from these mixed patches should be the average of the radiance from the large patches, measured individually.</p>
+<p>A key assessment is to evaluate how well independence is satisfied for the planned experimental stimuli. For example, CRTs often fail pixel independence for high spatial frequency stimuli because of the finite slew rate of the electron beam. Nonetheless, CRTs are very useful for visual experiments that use low frequency stimuli, such as studies of human color vision. The standard display model, like any useful model, will have some compliance range, and the practical question is whether the model can be used given a specific experimental plan.</p>
+<p>OLEDs are excellent devices for vision research because they can meet the requirements of the standard display model (Cooper et al, 2013). Display electronics control the rate at which the pixel intensities can be changed (the update rate), but OLED pixels can be rapidly turned on and off. Thus while the update rate limits the motion velocities that can be represented, the higher refresh rates minimize the visibility of motion blur and flicker. And, unlike the LCDs that modulate the intensity of a backlight, OLED pixels can be turned off, creating a very dark background.<br>
+Given these benefits, and the fact that the cost of manufacturing OLED displays is decreasing, one might consider these displays to be ideal devices for vision research. There is, however, one potentially problematic aspect of OLED development for vision research. OLED display manufacturers are experimenting with different types of color pixel patterns and developing proprietary methods for rendering images on these new displays. Unless it is possible to turn off or at least control the proprietary display rendering, which may vary depending on the presented image, it may be difficult to know the spatial distribution of the spectral energy in displayed stimuli.</p>
+<p>Head-mounted displays that use graphics engines for display rendering also pose challenges for vision researchers. ….</p>
+</section>
+<section id="spectral-homogeneity" class="level3" data-number="22.6.2">
+<h3 data-number="22.6.2" class="anchored" data-anchor-id="spectral-homogeneity"><span class="header-section-number">22.6.2</span> Spectral homogeneity</h3>
+<p>The relative spectral radiance from a subpixel should be the same as its intensity is varied. Any change in the relative spectral radiance will be manifest as an unwanted color shift, and the display will be difficult to calibrate. Recall that the intensity of the light from an LC display depends on the rotation of the polarization angle caused by the birefringent liquid crystal. In some displays, the polarization effect is wavelength dependent and this violates the spectral homogeneity assumption (Wandell and Silverstein, 2003). These failure occurs because the LC polarization is not precisely<br>
+the same for all wavelengths and also as a result of spectral variations in polarizer extinction.</p>
+<p>A second deviation from the standard display model occurs when the display emission is angle-dependent. In fact, the first-generation of LCDs had a very large angle-dependence so that even small changes in the viewing position had a large impact on the spectral radiance at the cornea. The reason for this strong dependence is that the path followed by a ray through the LC and the polarizers has an influence on the likelihood of transmission, and this function is wavelength dependent (Silverstein and Fiske, 1993). Manufacturers have reduced these viewing angle dependencies by placing retardation films in the optical path (Yakovlev et al, 2015}.</p>
+<p>For visual psychophysics experiments, it is typical to fix the subject’s head position relative to the screen, typically by using a chin-rest or a bite bar placed on-axis facing the middle of the display. Instruments used for display calibration should be placed at this position. If the spectrophotometer and the eye are located at any other angle, the spectral radiance from the display may different.</p>
+</section>
+<section id="spatial-homogeneity-shift-invariance" class="level3" data-number="22.6.3">
+<h3 data-number="22.6.3" class="anchored" data-anchor-id="spatial-homogeneity-shift-invariance"><span class="header-section-number">22.6.3</span> Spatial homogeneity (shift invariance)</h3>
+<p>When a subject is close to the display surface, the angle-dependence of the spectral radiance appears as a spatial inhomogeneity: the spectral radiance at the cornea differs between on-axis (center) and off-axis (edge) pixels. At further distances, say 1m away, the angle between the center and edge is smaller and the spatial homogeneity is better.</p>
+<p>A second source of spatial inhomogeneity arises from the fact that it is difficult to maintain perfect uniformity of the pixels across the relatively large display surfaces. Such non-uniformities are referred to as “mura”, which is a Japanese word for “unevenness”. For LCDs, there are several sources of mura, including non-uniformity in the TFT thickness, LC material density, color filter variations, backlight illumination, and variations in the optical filters. Additional possible sources are impurities in the LC material, non-uniform gap between substrates and warped light guides.</p>
+<p>On LCDs, mura appears as blemishes and dark spots; manufacturers attempt to eliminate these sources during the manufacturing process. For OLEDs, mura is mainly due to non-uniformity in the currents in spatially adjacent diodes that appear as black lines, blotches, dots, and faint stains that are more visible in the dark areas of an image. This can be mitigated during the manufacturing process by introducing feedback circuitry that adjusts the pixel transistor current during a calibration procedure (McCreary, 2014).</p>
+</section>
+</section>
+<section id="display-simulations" class="level2" data-number="22.7">
+<h2 data-number="22.7" class="anchored" data-anchor-id="display-simulations"><span class="header-section-number">22.7</span> Display simulations</h2>
+<p>The standard display model serves as a foundation for the display simulation technology. The model is implemented in the open-source ISETBIO distribution<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. In this section, we present two examples that couple simulation with standard color image metrics. The examples illustrate the use of display simulation to answer questions about the appropriate use of display technology in vision research.</p>
+<section id="color-discriminations-the-impact-of-bit-depth" class="level3" data-number="22.7.1">
+<h3 data-number="22.7.1" class="anchored" data-anchor-id="color-discriminations-the-impact-of-bit-depth"><span class="header-section-number">22.7.1</span> Color discriminations: the impact of bit-depth</h3>
+<p>First, we consider how the number of digital steps (frame buffer levels) limits the ability to make threshold color and luminance discrimination measurements. Using the simulator, we calculated the CIE XYZ values for each of 27 different RGB levels, and we then calculated the CIELAB ΔE value between each of these 27 points and all of its neighbors within 2 digital steps. We repeated this calculation simulation assuming a frame buffer with 10-bits (1024 levels), the actual display resolution, and a coarser step size of 8-bits (256 levels) but equivalent gamma.</p>
+<p>The distributions of CIELAB ΔE differences for the 10-bit and 8-bit displays are shown in the upper and lower histograms of Figure 6, respectively. For a 10-bit display, the signals within two digital steps are below ΔE=1. In this case, the visual discriminability is small enough to measure a psychophysical discrimination curve. If the display has only 8-bits of intensity resolution, the two digital steps frequently exceed ΔE=1. This explains why threshold measurements are impractical on 8-bit displays. For commercial purposes, however, one step is about ΔE=1, which explains why 8-bits renders a reasonable reproduction.</p>
+</section>
+<section id="spatial-spectral-discriminations" class="level3" data-number="22.7.2">
+<h3 data-number="22.7.2" class="anchored" data-anchor-id="spatial-spectral-discriminations"><span class="header-section-number">22.7.2</span> Spatial-spectral discriminations</h3>
+<p>Next, we analyzed the visual impact of changing the subpixel point spread function (see Figure 1). In this example, we compared two displays with the same primaries and spatial resolution (96 dots per inch), but with different pixel point spread functions. In one case, the point spread function is the conventional set of three parallel stripes (Dell LCD Display Model 1905FP), while in the second case the point spread is three adjacent chevrons (Dell LCD Display Model 1907FPc). We used the standard display model to calculate the spatial-spectral radiance of the 52 upper and lower case letters on both displays. The spatial-spectral radiance image data are represented as 3D matrices or hypercubes where each plane in the hypercube contains the stimulus intensity for points sampled across the display (x,y) for each of the sampled wavelengths (ƛ). To visualize the data, we map the vector describing the spectral radiance for each pixel into CIE XYZ values and convert these into sRGB display values (see inset in Figure 7).</p>
+<p>We used the spatial-spectral radiance data to calculate the Spatial CIELAB (SCIELAB) ΔE difference (Zhang and Wandell, 1997) between each letter simulated on the two displays and viewed from different distances. Figure 7 plots the median SCIELAB ΔE value as a function of viewing distance. The analysis predicts no visible differences between pairs of letters rendered on the two displays at any of the viewing distances. And indeed, we did not find significant differences between subject’s judgments about the quality of letters rendered on the two different displays (Farrell et al, 2009).</p>
+</section>
+</section>
+<section id="summary" class="level2" data-number="22.8">
+<h2 data-number="22.8" class="anchored" data-anchor-id="summary"><span class="header-section-number">22.8</span> Summary</h2>
+<section id="applications-of-the-standard-display-model" class="level3" data-number="22.8.1">
+<h3 data-number="22.8.1" class="anchored" data-anchor-id="applications-of-the-standard-display-model"><span class="header-section-number">22.8.1</span> Applications of the standard display model</h3>
+<p>The standard display model guides both the calibration and simulation of visual stimuli. The model can be used to characterize visual stimuli so that others can replicate vision experiments. It can be used to simulate different types of displays and rendering algorithms and, in this way, makes it possible to evaluate the capabilities of displays during the engineering design process (Farrell et al, 2008). Finally, the standard display model supports the development of computational models for human vision by making it possible to calculate the irradiance incident at the eye (Farrell et al, 2014).</p>
+<p>The standard display model assumes that the light generated by each subpixel is additive, independent and shift invariant. These assumptions, referred to as spectral homogeneity, pixel independence and spatial homogeneity, can be tested in the calibration process. A particular display may not meet these conditions for all stimuli, yet the model may still be used to predict the spatial-spectral radiance of a restricted class of visual stimuli. As an example, the standard display model does not predict the spectral radiance of high frequency gratings presented on a CRT (Lyons and Farrell, 1989; Pelli, 1997, Farrell et al, 2008), but the model does predict the spectral-spectral radiance of large uniform colors (Brainard et al, 2002; Post, 1992). The standard display model can predict the the steady-state spatial-spectral radiance of high frequency gratings and text rendered on many LCD displays (Farrell et al, 2008), particularly in the absence of complex circuitry to overdrive or undershoot pixel intensity<br>
+(Lee et al 2001, Lee et al, 2006) and locally dim LED backlights (Seetzen et al, 2004) .</p>
+<p>We present two examples that illustrate how to analyze display capabilities by coupling the standard model with color discrimination metrics. The first example shows why 10-bit intensity resolution is necessary to measure a psychophysical discrimination function. The second example analyzes the effect that different subpixel PSFs have on font discriminations. These examples illustrate how the standard display model can be used to analyze display capabilities in specific experimental conditions.</p>
+<p>A further benefit of the standard model is to support reproducible research. Scientists can communicate about experimental stimuli by sharing the calibration parameters and a simulation of the standard display model. For the data and simulation, other scientists can reproduce and analyze experimental measurements by beginning with a complete spatial-spectral radiance of the experimental stimulus.</p>
+</section>
+<section id="future-display-technologies" class="level3" data-number="22.8.2">
+<h3 data-number="22.8.2" class="anchored" data-anchor-id="future-display-technologies"><span class="header-section-number">22.8.2</span> Future display technologies</h3>
+<p>Advances in display technology transformed vision science over the past two decades. The growth in computing power continues to drive the development of display technologies that will influence visual psychophysics by broadening the scope of what we can control and study. Perhaps the most exciting new developments are methods that expand the display from a passive device that emits a pre-determined set of images to an interactive device that displays images that depend on continuous measurements of the viewer’s head position. A number of companies are developing head-mounted displays that are coupled with computer vision systems that sense the position and orientation of the head (Kress and Starner, 2013). These systems comprise a pair of high quality displays, one for each eye, and a set of external cameras and algorithms that monitor the viewer’s head position. The images presented to the two displays are approximations of what the viewer would see at each eye in a three-dimensional environment. When the images are rapidly updated, and the computer graphics representation of the environment is detailed, the user has a compelling experience of being immersed within a virtual world. These systems - which include the displays, computer graphics programs, and head position-sensing systems - provide a “virtual reality” experience. A number of companies have developed products based on this technology and one hopes that these systems will be commercially viable products that can be controlled for scientific applications.</p>
+<p>Virtual Reality (VR), Augmented Reality (AR), and Mixed Reality (MR) represent different approaches to blending digital content with the real world. VR fully immerses users in a computer-generated environment, completely replacing their real-world view. AR overlays digital information onto the user’s direct view of the physical world. MR combines real-time video capture of the environment with digital content. Currently, the best examples of these technologies on the market are: for VR, the Meta Quest series (formerly Oculus); for AR, the Microsoft HoloLens; and for MR, the Apple Vision Pro. Significant research and development efforts are underway to minimize both the size of head-mounted displays (HMDs) and enhance the experience of augmented reality (AR). Two promising approaches in this field are light field projection and wavefront holography.</p>
+<p>Near-eye light field projection displays simulate the way light emanates from objects in our environment by modulating light ray angles, using microlenses (references), multilayer liquid crystal displays (references), or mirror scanners (references). The success of these different methods hinges on advancements in key areas such as high-resolution microdisplays, microlens array fabrication, optical design, and the development of sophisticated computational algorithms and hardware.</p>
+<p>Near-eye wavefront holography displays take a different approach by recreating the entire wavefront of light from a 3D scene. These displays typically utilize spatial light modulators (SLMs) and coherent light sources, such as lasers, to generate computer-generated holograms (references). The evolution of this technology relies heavily on improvements in spatial light modulators, more efficient algorithms for hologram generation, the development of miniaturized coherent light sources, and advancements in optical materials for waveguides and diffractive elements.</p>
+<p>There are also new ideas about how to build displays that provide a relatively complete approximation of a full light field without using head-mounted displays (Liu and Li, 2014). The goal of these “light field displays” is to control the intensity and color in each direction. The ability to control the rays in all directions generates a signal that is much closer to the physical reality. With light field displays, as one moves back and forth or side-to-side, the rays incident at the cornea change and match the experience of seeing through the window into a real three-dimensional world, similar to looking at the scene through a window. Two viewers can stand next to one another and both see the same world, each from their own point of view. This type of display eliminates the need for head-tracking and computationally intensive methods for rapidly updating the displayed image based on the viewer’s head-position. Such light field displays exist in early prototype form, and there is the hope that further engineering technology will produce viable commercial ventures.</p>
+<p>To take advantage of these technologies in scientific applications will require further development of display calibration and simulation. The standard display model we explained here is woefully inadequate to characterize the stimuli delivered by head-mounted displays or free-standing light field displays. The opportunities for using these systems for new scientific discovery is very great, and we are sure that scientists will develop principled approaches to calibration and simulation that will incorporate these new technologies into scientific practice and produce new insights about vision and the mind.</p>
+</section>
+</section>
+<section id="references" class="level2" data-number="22.9">
+<h2 data-number="22.9" class="anchored" data-anchor-id="references"><span class="header-section-number">22.9</span> References</h2>
+<p>Adelson, E.H. and Bergen, J. R. (1991) ‘The Plenoptic Function and the Elements of Early Vision’, in Computational Models of Image Processing, (ed.&nbsp;M. L. a J. A. Movshon) MIT Press: Cambridge, MA. pp.&nbsp;3 - 20.</p>
+<p>Bale, M. , Carter, J. C., Creighton, C. J., Gregory, H. J., Lyon, P. H., Ng, P. , Webb, L., Wehrum, A. (2006), “Ink-Jet Printing: The Route to Production of Full-Color P-OLED Displays”. Journal of the Society for Information Display 14.5, pp 453-459.</p>
+<p>Brainard, D. H. (1989) “Calibration of a Computer Controlled Color Monitor”, Color Research &amp; Application 14.1, pp.&nbsp;23-34</p>
+<p>Brainard, D. H., and B. A. Wandell (1990) “Calibrated Processing of Image Color” , Color Research &amp; Application, 15.5, pp.&nbsp;266-71</p>
+<p>Brainard, D. H., Brunt, W. A., and Speigle, J.M. (1997). “Color constancy in the nearly natural image. 1. Asymmetric matches”, Journal of the Optical Society of America A, 14, pp.&nbsp;2091-2110.<br>
+Brainard, David H., Wendy A. Brunt, and Jon M. Speigle (1997) “Color Constancy in the Nearly Natural Image. 1. Asymmetric Matches.” J. Opt. Soc. Am. A Journal of the Optical Society of America A, 14.9 2091..<br>
+Brainard, David H. (1997), “The Psychophysics Toolbox.” Spatial Vision 10.4, pp.&nbsp;433–436<br>
+Brainard, D. H., Pelli, D. G., &amp; Robson, T. (2002) Display characterization. In: J. Hornak (Ed.) Encyclopedia of Imaging Science and Technology , pp.&nbsp;172-188, Wiley<br>
+Castellano, Joseph A. (1992), Handbook Of Display Technology. San Diego: Academic Press<br>
+Cooper, E. A., H. Jiang, V. Vildavski, J. E. Farrell, and A. M. Norcia. (2013), “Assessment of OLED Displays for Vision Research.” Journal of Vision, 13.12. #16.<br>
+Engel, S. (1997) “Retinotopic Organization in Human Visual Cortex and the Spatial Precision of Functional MRI.” Cerebral Cortex 7.2, pp.&nbsp;181–192<br>
+Farrell, J. E. (1986) An analytical method for predicting perceived flicker, Behavior and Information Technology, vol 5, no 4, pp.&nbsp;349-358<br>
+Farrell, J., G. Ng, Xiaowei Ding, K. Larson, and B. Wandell. (2008), “A Display Simulation Toolbox for Image Quality Evaluation.” Journal of Display Technology, Vol 4, No.&nbsp;2, pp.&nbsp;262-70<br>
+Florence, James M., and Lars A. Yoder. (1996), “Display System Architectures for Digital Micromirror Device (DMD)-Based Projectors” , Proceedings of the SPIE, Vol. 2650, pp.&nbsp;193-208.<br>
+Gershun, A. (1939), “The Light Field” Translated by P. Moon and G. Timoshenko in Journal of Mathematics and Physics <strong>18</strong>, pp.&nbsp;55 - 151, p.&nbsp;51-151.</p>
+<p>Holliman, Nicolas S. et al.&nbsp;(2011), “Three-Dimensional Displays: A Review And Applications Analysis.” IEEE Trans. on Broadcast. IEEE Transactions on Broadcasting 57.2 , pp.&nbsp;362–371.</p>
+<p>Kawamoto, H. (2002), “The History of Liquid-crystal Displays.” Proceedings of the IEEE , Vol. 90, No.&nbsp;4, pp.&nbsp;460-500<br>
+Kelley, E. F., Lang, K., Silverstein, L. D. , Brill, M. H. (2009). “Projector Flux from Color Primaries”, SID Symposium Digest of Technical Papers, Volume 40, Issue 1, pages 224–227.<br>
+Kress, B., and Starner, T. (2013) “A review of head-mounted displays (HMD) technologies and applications for consumer electronics.” Proceedings of the SPIE, Vol, 8720, Photonic Applications for Aerospace, Commercial, and Harsh Environments IV, 87200A (May 31, 2013); doi:10.1117/12.2015654.<br>
+Law, H.B. (1976) “The Shadow Mask Color Picture Tube: How It Began: An Eyewitness Account of Its Early History.” IEEE Transactions on Electron Devices, Vol 23, No.&nbsp;7 , pp.&nbsp;752-59<br>
+Lee, B-W., Park, C., Kim, S., Jeon, M., Heo, J., Sagong, D., Kim, J. and Souk, J. (2001) “Reducing gray-level response to one frame: dynamic capacitance compensation,” SID Symposium Digest Tech Papers Vol. 32, pp.&nbsp;1260–1263.<br>
+Lee, S-W., Kim, M., Souk, J. H. and Kim, S. S. (2006). “Motion artifact elimination technology for liquid-crystal-display monitors: Advanced dynamic capacitance compensation method”. Journal of the Society for Information Display, Vol. 14, No.&nbsp;4, pp 387-394.<br>
+Liu, X. and Li, H. (2014) “The Progress of Light-Field 3-D Displays”, Information Display, June, 2014, pp.&nbsp;6-13<br>
+Lyons, N. P and Farrell, J. E. (1989) <em>Linear systems analysis of CRT displays</em>, SID Digest, Vol. 10, pp.&nbsp;220-223.<br>
+McCreary, J. L.(2014). “Correction of TFT Non-uniformity in AMOLED Display”, Siliconfile Technologies Inc, assignee US Patent 8624805, Jan 7, 2014<br>
+Naiman, Avi C., and Walter Makous. (1992). “Spatial nonlinearities of gray-scale CRT pixels”, Proceedings of the SPIE, Vol 1666 , pp.&nbsp;41-56.<br>
+Packer, O. , Diller, L. C. , Verweij, J. , Lee, B. B., Pokorny,J. , Williams, D. R. , Dacey, D. M., and Brainard,D. H.. (2001) “Characterization and Use of a Digital Light Projector for Vision Research.” Vision Research Vol. 41, No.4 , pp.&nbsp;427-39.<br>
+Pelli, D. G. (1997) “Pixel independence: measuring spatial interactions on a CRT display”, Spatial Vision, Vol. 10, No.&nbsp;4, pp.&nbsp;443-336.<br>
+Post, D. L. (1992). “Colorimetric measurement, calibration and characterization of self-luminous displays”, in H. Widdel and D. L. Post , eds.&nbsp;Color in Electronic Displays, Plenum, NY, pp.&nbsp;299 - 312.<br>
+Poynton, C. A. (1993) “Gamma’ And Its Disguises: The Nonlinear Mappings of Intensity in Perception, CRTs, Film, and Video.” SMPTE Motion Imaging Journal, Vol.102 , No.12, pp.&nbsp;1099–1108<br>
+Poynton, Charles. (2003) “Digital Video Interfaces.” Digital Video and HDTV, pp.&nbsp;127–138.<br>
+Poynton, Charles, and Brian Funt. (2013) “Perceptual Uniformity in Digital Image Representation and Display.” Color Res. Appl Color Research &amp; Application Vol. 39, No.&nbsp;1, pp.&nbsp;6–15.<br>
+Seetzen, H., Heidrich, W., Stuerzlinger, W., Ward, G., Whitehead, L., Trentacoste, M., Ghosh, A. and Vorozcovs,A. (2004). High dynamic range display systems. In ACM SIGGRAPH 2004 , ACM, New York, NY, USA, pp.&nbsp;760-768.<br>
+Silverstein, L. D., and Thomas G. Fiske. (1993) “Colorimetric and photometric modeling of liquid crystal displays.” Color and Imaging Conference. Vol. 1993. No.&nbsp;1. Society for Imaging Science and Technology, 1993.<br>
+Stevens, S. S. (1957) “On The Psychophysical Law.” Psychological Review 64.3, pp.&nbsp;153–181.<br>
+Tang, C. W., and S. A. Vanslyke.(1987) “Organic Electroluminescent Diodes.” Applied Physics Letters, Vol. 51, 913</p>
+<p>Tobias, E. and Tanner. T. G. (2012) “Temporal Properties of Liquid Crystal Displays: Implications for Vision Science Experiments.” Ed. Bart Krekelberg. PLoS ONE 7.9, E44048<br>
+Tsujimura, Takatoshi. (2012). OLED Display: Fundamentals and Applications. Hoboken, NJ: Wiley<br>
+Wandell and Silverstein <a href="http://white.stanford.edu/~brian/papers/pdc/OsaHandBookChapter.pdf">(2003), Digital Color Reproduction</a> in The Science of Color 2nd edition, Ed. S. Shevell, published by the Optical Society of America.<br>
+Watson, A. B., Jr.&nbsp;A. J. Ahumada, and J. E. Farrell. (1986) “Window of Visibility: A Psychophysical Theory of Fidelity in Time-sampled Visual Motion Displays.” Journal of the Optical Society of America A ,Vol 2., No.&nbsp;2, pp 300-307<br>
+Wyszecki G., and Stiles,W. S. (1969) .Color Science: Concepts and Methods, Quantitative Data and Formulas. New York: Wiley, 1967<br>
+Yakovlev, D. A., Vladimir G. C. and Kwok, H-S. (2015) Modeling and Optimization of LCD Optical Performance. John Wiley &amp; Sons<br>
+Yang, Deng-Ke, and Shin-Tson Wu. (2006) Fundamentals Of Liquid Crystal Devices. Chichester: John Wiley, 2006.<br>
+Younse, J.M. (1993) “Mirrors On a Chip.” IEEE Spectrum 30.11 (1993): pp.&nbsp;27–31.<br>
+Zhang, X., and Wandell, B. A. (1997). “A Spatial Extension of CIELAB for Digital Color-image Reproduction.” Journal of the Society for Information Display, Vol. 5, No.&nbsp;1 61<br>
+Zhang, X., and Wandell, B. A. (1998). “Color Image Fidelity Metrics Evaluated Using Image Distortion Maps.” Signal Processing, Vol. 70., No.&nbsp;3, pp.&nbsp;201-14.<br>
+Zhang. X. and Farrell, J. E. (2003) “Sequential color breakup measured with induced saccades,” Proceedings of the ISET/SPIE 15th Annual Symposium on Electronic Imaging, Volume 5007, pp.&nbsp;210–217<br>
+Zhang, Y., Song,W., and Kees ,K., (2008) “A tradeoff between motion blur and flicker visibility of electronic display devices<strong>”,</strong> International Symposium on Photoelectronic Detection and Imaging 2007: Related Technologies and Applications, edited by Liwei Zhou, Proc. of SPIE Vol. 6625, 662503<br>
+“SRGB.” <em>sRGB</em>. N.p., n.d. Web. 24 May 2015. &lt;http://web.archive.org/web/20030124233043/http://www.srgb.com/&gt;</p>
+
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p><a href="https://github.com/isetbio/isetbio">https://github.com/isetbio/isetbio</a>: Tools for modeling image systems engineering in the human visual system front end<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/human-01.html" class="pagination-link" aria-label="Human vision">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Human vision</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/imgprocessing-01.html" class="pagination-link" aria-label="Image processing">
+        <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

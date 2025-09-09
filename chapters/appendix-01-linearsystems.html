@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-08">
+<meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
+
+<title>24&nbsp; Linear systems – Foundations of Image Systems Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/appendix-02-spaceinvariance.html" rel="next">
+<link href="../chapters/imgprocessing-01.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/hover.css">
+<link rel="stylesheet" href="../styles/callouts.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-01-linearsystems.html">Appendix</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-01-linearsystems.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Foundations of Image Systems Engineering</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scenes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-03-properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light field properties</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-04-properties-spectral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Optics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-02-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lens principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-03-thinlens.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-04-morelenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-05-linear-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-06-linear-transform.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-07-wavefront.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sensors</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-01-photoelectric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-02-pixels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-03-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-04-components.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">System components</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-05-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Control systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-06-characterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image system modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-07-innovations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sensor innovations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Human</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/human-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Human vision</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Displays</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Image processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/imgprocessing-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-appendix-linear-systems-overview" id="toc-sec-appendix-linear-systems-overview" class="nav-link active" data-scroll-target="#sec-appendix-linear-systems-overview"><span class="header-section-number">24.1</span> Linear systems overview</a></li>
+  <li><a href="#sec-ls-superposition" id="toc-sec-ls-superposition" class="nav-link" data-scroll-target="#sec-ls-superposition"><span class="header-section-number">24.2</span> Superposition and Homogeneity</a></li>
+  <li><a href="#sec-ls-discrete" id="toc-sec-ls-discrete" class="nav-link" data-scroll-target="#sec-ls-discrete"><span class="header-section-number">24.3</span> Discrete linear systems</a></li>
+  <li><a href="#sec-ls-point-matrix" id="toc-sec-ls-point-matrix" class="nav-link" data-scroll-target="#sec-ls-point-matrix"><span class="header-section-number">24.4</span> Pointspread matrix</a></li>
+  <li><a href="#sec-ls-spatial-basis" id="toc-sec-ls-spatial-basis" class="nav-link" data-scroll-target="#sec-ls-spatial-basis"><span class="header-section-number">24.5</span> Spatial basis functions</a></li>
+  <li><a href="#sec-ls-orthogonal-transforms" id="toc-sec-ls-orthogonal-transforms" class="nav-link" data-scroll-target="#sec-ls-orthogonal-transforms"><span class="header-section-number">24.6</span> Image transforms</a></li>
+  <li><a href="#sec-ls-eigenfunctions" id="toc-sec-ls-eigenfunctions" class="nav-link" data-scroll-target="#sec-ls-eigenfunctions"><span class="header-section-number">24.7</span> Eigenfunctions</a></li>
+  <li><a href="#sec-ls-local-linearity" id="toc-sec-ls-local-linearity" class="nav-link" data-scroll-target="#sec-ls-local-linearity"><span class="header-section-number">24.8</span> Local linearity</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/appendix-01-linearsystems.html">Appendix</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-01-linearsystems.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-appendix-linear-systems" class="quarto-section-identifier"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Work in Progress
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
+<p>Last updated: September 8, 2025</p>
+</div>
+</div>
+</div>
+<section id="sec-appendix-linear-systems-overview" class="level2" data-number="24.1">
+<h2 data-number="24.1" class="anchored" data-anchor-id="sec-appendix-linear-systems-overview"><span class="header-section-number">24.1</span> Linear systems overview</h2>
+<p>Linear systems theory is a foundational topic in science, engineering, and mathematics. Each discipline field explains the importance of linear systems a bit differently, and they use it at varying levels of depth. In this appendix I introduce the core ideas of linear systems for image systems engineering. I have two goals. First, I hope to provide readers an accessible and intuitive description from the point of view of image systems engineering. Second, I will introduce the general notation used throughout this book. My hope is that both newcomers and those with prior exposure will find this chapter a useful reference for the concepts and tools we use in image systems engineering.</p>
+</section>
+<section id="sec-ls-superposition" class="level2" data-number="24.2">
+<h2 data-number="24.2" class="anchored" data-anchor-id="sec-ls-superposition"><span class="header-section-number">24.2</span> Superposition and Homogeneity</h2>
+<p>A system <span class="math inline">\(L\)</span> is linear if it satisfies the superposition rule:</p>
+<p><span id="eq-superposition"><span class="math display">\[
+L(x + y) = L(x) + L(y).
+\tag{24.1}\]</span></span></p>
+<p>Here, <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are two possible inputs, and <span class="math inline">\(L(x)\)</span> is the system’s response to the input <span class="math inline">\(x\)</span>. The input variable can be a scalar, vector, matrix, or tensor. For example, in an optical system, <span class="math inline">\(x\)</span> might represent the incident light field at the entrance aperture, and <span class="math inline">\(L(x)\)</span> could be the spectral irradiance measured at the sensor. For modeling an image sensor, <span class="math inline">\(x\)</span> could be the irradiance at the sensor and <span class="math inline">\(L(x)\)</span> would be the electrons accumulated in the pixels. For human vision, <span class="math inline">\(x\)</span> might be the spectral power distribution of the incident light field and <span class="math inline">\(L(x)\)</span> the photon absorptions in the three types of cone photoreceptors.</p>
+<p><strong>Homogeneity</strong> is special case of superposition:</p>
+<p><span id="eq-homogeneity"><span class="math display">\[
+L(\alpha x) = \alpha L(x)
+\tag{24.2}\]</span></span></p>
+<p>Homogeneity follows from superposition. For example, adding an input to itself,</p>
+<p><span class="math display">\[\begin{aligned}
+L(x + x) &amp;= L(2x) \nonumber  \\
+&amp;= L(x) + L(x) \nonumber \\
+&amp;= 2L(x) . \nonumber
+\end{aligned}
+\]</span></p>
+<p>Perhaps you can see how this generalizes to any integer <span class="math inline">\(m\)</span>:</p>
+<p><span class="math display">\[
+L(m x) = m L(x).
+\]</span></p>
+<p>Homogeneity is also noted as a special case because a system can be homogeneous without being linear. For example the absolute value, <span class="math inline">\(f(x) = |x|\)</span>, and the vector length function</p>
+<p><span class="math display">\[
+f(\mathbf{x}) = \|\mathbf{x}\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
+\]</span></p>
+<p>are both homogeneous but not linear. The function <span class="math inline">\(ReLU(x) = \max(0, x)\)</span>, widely used in neural networks, is also homogeneous for <span class="math inline">\(\alpha &gt; 0\)</span> but not linear:</p>
+<p><span class="math display">\[
+1 = ReLU(2 + -1) \neq ReLU(2) + ReLU(-1) = 2 + 0.
+\]</span></p>
+<p>Remembering that such cases exist may be of use to you in the future.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Extension to Rational Numbers">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Extension to Rational Numbers
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>For real-valued systems that obey superposition, homogeneity holds for any rational number. If <span class="math inline">\(\alpha = \frac{p}{q}\)</span> is rational:</p>
+<p><span class="math display">\[
+L(\alpha x) = L\left(\frac{p}{q}x\right) = p L\left(\frac{x}{q}\right).
+\]</span></p>
+<p>Let <span class="math inline">\(x' = x/q\)</span>, so</p>
+<p><span class="math display">\[
+L(x) = L(q x') = q L(x') \implies L(x') = \frac{1}{q} L(x).
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+L(\alpha x) = p L(x') = p \frac{1}{q} L(x) = \frac{p}{q} L(x) = \alpha L(x).
+\]</span></p>
+<p>To extend this to all real numbers, continuity and far more extensive proof is required. But how about we just work with the rationals and be engineers for now?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-ls-discrete" class="level2" data-number="24.3">
+<h2 data-number="24.3" class="anchored" data-anchor-id="sec-ls-discrete"><span class="header-section-number">24.3</span> Discrete linear systems</h2>
+<p>The ISETCam simulations rely on <strong>discrete</strong> representations of linear systems.</p>
+<p>We convert a continuous stimulus—such as a spatial pattern or a spectrum—by sampling it at a set of points. In general, a continuous signal <span class="math inline">\(s(x)\)</span> becomes a vector of sampled values, <span class="math inline">\(\mathbf{s}\)</span>, by sampling it at a set of values, <span class="math inline">\(x_i\)</span>. We might write the entries as <span class="math inline">\(s[x_i]\)</span>, where <span class="math inline">\(i\)</span> is an integer index, or simply <span class="math inline">\(s[i]\)</span>. The square brackets are a reminder that the signal is discretely sampled.</p>
+<p>Any discrete linear system can be represented as a matrix, <span class="math inline">\(\mathbf{L}\)</span>, which maps the input vector to an output vector, <span class="math inline">\(\mathbf{o}\)</span>:</p>
+<p><span id="eq-linear-matrix"><span class="math display">\[
+\mathbf{o} = \mathbf{L} \mathbf{s}
+\tag{24.3}\]</span></span></p>
+<p>This can also be written as a summation:</p>
+<p><span id="eq-linear-matrix-summation"><span class="math display">\[
+o[i] = \sum_j L[i,j] s[j]
+\tag{24.4}\]</span></span></p>
+<p>It’s helpful to visualize this as a matrix tableau: each column of <span class="math inline">\(\mathbf{L}\)</span> is scaled by the corresponding entry in <span class="math inline">\(\mathbf{s}\)</span>, and the output vector is the sum of these scaled columns.</p>
+<div id="fig-ls-matrix-tableau" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ls-matrix-tableau-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/appendix/23-linear/matrixTableau-1.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ls-matrix-tableau-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;24.1: Visualization of a matrix multiplication. This is called a matrix tableau. It emphasizes the matrix as a set of columns, and the signal (<span class="math inline">\(s\)</span>) and output (<span class="math inline">\(o\)</span>) as two column vectors. The linear transformation, <span class="math inline">\(L\)</span>, in this case is a square matrix (<span class="math inline">\(N \times N\)</span>).
+</figcaption>
+</figure>
+</div>
+<p>Some matrices have an inverse, and for these we can estimate the input by measuring the output. Square matrices are particularly simple to work with, and a square matrix means we are matching the sample spacing of the inputs with the sample spacing of the outputs. Some matrices are not invertible, and the best we can do from the measurements is constrain the set of possible inputs.</p>
+<p>The notation we use for the vectors and matrices may vary—sometimes the input is naturally an image (a matrix), and we “flatten” it into a vector; other times, we use tricks to keep the image structure intact and still carry out the computation. But the key idea is always the same: in the discrete world, linear systems are matrices that map input vectors to output vectors.</p>
+<p>Throughout this volume, I am trying to keep the mathematical typography consistent with this table.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Some matrix notation">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Some matrix notation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 52%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Notation</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Bold capital letter</strong> (<span class="math inline">\(\mathbf{B}\)</span>)</td>
+<td>Matrix</td>
+</tr>
+<tr class="even">
+<td><strong>Bold lower case</strong> (<span class="math inline">\(\mathbf{s}\)</span>)</td>
+<td>Vector (column, <span class="math inline">\(N \times 1\)</span>)</td>
+</tr>
+<tr class="odd">
+<td><em>Ordinary lower case</em> (<span class="math inline">\(\alpha\)</span>, <span class="math inline">\(s\)</span>)</td>
+<td>Scalar (Latin or Greek)</td>
+</tr>
+<tr class="even">
+<td><em>Ordinary upper case</em> (<span class="math inline">\(L(u,v)\)</span>)</td>
+<td>2D matrix or image (continuous)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(L[\text{row},\text{col}]\)</span></td>
+<td>Discrete image or matrix (row, col ordering)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\mathbf{B^t}\)</span></td>
+<td>Matrix or vector transpose (superscript <span class="math inline">\(t\)</span>)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-ls-point-matrix" class="level2" data-number="24.4">
+<h2 data-number="24.4" class="anchored" data-anchor-id="sec-ls-point-matrix"><span class="header-section-number">24.4</span> Pointspread matrix</h2>
+<p>Image systems engineers often examine system performance by measuring the response to a point of light—this is the point spread function (PSF) introduced in <a href="optics-01-geometric.html#sec-pointspread" class="quarto-xref"><span>Section 7.6</span></a>. A point of light, <span class="math inline">\(p_i\)</span>, is represented by a vector that has <span class="math inline">\(1\)</span> in a single location and zeros elsewhere. Each column of the linear transformation, <span class="math inline">\(\mathbf{L}\)</span>, is the point spread function corresponding to the sampled point, <span class="math inline">\(\text{PSF}_i\)</span>.</p>
+<div id="fig-ls-matrix-psf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ls-matrix-psf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/appendix/23-linear/psfmatrix.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ls-matrix-psf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;24.2: Matrix tableau of an optical system with the point spreads in the columns.
+</figcaption>
+</figure>
+</div>
+<p>I drew this tableau for a one-dimensional point spread, to make the idea clear. For two-dimensional images, we would have to flatten the image data into columns. But only complexity would be added, and the principles would be unchanged.</p>
+</section>
+<section id="sec-ls-spatial-basis" class="level2" data-number="24.5">
+<h2 data-number="24.5" class="anchored" data-anchor-id="sec-ls-spatial-basis"><span class="header-section-number">24.5</span> Spatial basis functions</h2>
+<p>The PSF is a fundamental tool, but it has limitations: using a point of light involves very few photons, and PSFs can vary in complex ways that are hard to summarize with just a few parameters. A key insight is that we can use linear models to describe images in many different ways, not just as a collection of points. Some alternative representations are especially useful for analyzing the optical performance of imaging systems. Here, we use linear models to create alternative representations of the spatial intensity of images, <span class="math inline">\(S[u,v]\)</span>.</p>
+<p>A linear model for spatial intensity looks like this:</p>
+<p><span id="eq-spatial-linear-model"><span class="math display">\[
+S[u,v] = \sum_{i} w[i] B_i[u,v]
+\tag{24.5}\]</span></span></p>
+<p>The functions <span class="math inline">\(B_i[u,v]\)</span> are called <strong>spatial basis functions</strong>, and the scalars <span class="math inline">\(w[i]\)</span> are the weights for each basis function. The image intensity <span class="math inline">\(S[u,v]\)</span> is just a weighted sum of these basis functions.</p>
+<p>If we agree on a set of basis functions, then we can describe any image simply by specifying the weights. In fact, when we describe an image as a grid of intensity values, we’re implicitly using a set of <strong>point basis</strong> functions—each one nonzero at a single location and zero everywhere else.</p>
+</section>
+<section id="sec-ls-orthogonal-transforms" class="level2" data-number="24.6">
+<h2 data-number="24.6" class="anchored" data-anchor-id="sec-ls-orthogonal-transforms"><span class="header-section-number">24.6</span> Image transforms</h2>
+<p>For a linear model to be useful, we need a way to find the basis weights from the image. A function that maps an image, <span class="math inline">\(S[u,v]\)</span> to the weights <span class="math inline">\(w[i]\)</span> is called an <strong>image transform</strong>. If we choose <strong>orthonormal basis functions</strong> this transform becomes especially simple. Define the inner product <span class="math display">\[
+\langle A, B \rangle \;=\; \sum_{u,v} A[u,v]\;B[u,v].
+\]</span> Orthonormal means <span id="eq-spatial-orthonormal"><span class="math display">\[
+\langle B_i, B_j \rangle \;=\; \begin{cases}
+0, &amp; i \ne j \\
+1, &amp; i=j
+\end{cases}
+\tag{24.6}\]</span></span></p>
+<p>To work with these two-dimensional images mathematically, we often “flatten” each basis function <span class="math inline">\(B_i\)</span> (which is a matrix) into a long column vector by stacking its columns. We do the same for the image <span class="math inline">\(S[u,v]\)</span>, turning it into a vector <span class="math inline">\(\mathbf{s}\)</span>. If we collect all the basis vectors into the columns of a matrix <span class="math inline">\(\mathbf{B}\)</span>, and the weights into a vector <span class="math inline">\(\mathbf{w}\)</span>, we can write the linear model from <span class="quarto-unresolved-ref">?eq-linear-model</span> as a matrix equation:</p>
+<p><span id="eq-linear-model-matrix"><span class="math display">\[
+\mathbf{s} = \mathbf{B w}
+\tag{24.7}\]</span></span></p>
+<p>Here, the <span class="math inline">\(i^{th}\)</span> entry in <span class="math inline">\(\mathbf{w}\)</span> multiplies the <span class="math inline">\(i^{th}\)</span> column of <span class="math inline">\(\mathbf{B}\)</span>, and the sum gives us the image vector <span class="math inline">\(\mathbf{s}\)</span>. This is just a compact way of writing the weighted sum from before.</p>
+<p>Now, if the basis functions are orthonormal, then <span class="math inline">\(\mathbf{B^t B}\)</span> is the identity matrix. This makes it easy to recover the weights from the image:</p>
+<p><span id="eq-linear-model-inverse"><span class="math display">\[
+\begin{aligned}
+\mathbf{s} &amp;= \mathbf{B w} \\
+\mathbf{B^t s} &amp;= \mathbf{B^t B w} \\
+\mathbf{B^t s} &amp;= \mathbf{w}
+\end{aligned}
+\tag{24.8}\]</span></span></p>
+<p>In words: just multiply the image vector by the transpose of the basis matrix to calculate the weights. If the basis functions are orthogonal but not normalized, replace <span class="math inline">\(\mathbf{B^t}\)</span> by <span class="math inline">\((\mathbf{B^t B})^{-1}\mathbf{B^t}\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Point basis">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Point basis
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This seems almost too trivial to mention. But here we go.</p>
+<p>When we describe images as points, <span class="math inline">\(S[u,v]\)</span>, we are implicitly using the <strong>point basis</strong>. The point basis functions are zero everywhere except at a single location: <span class="math display">\[
+B_{m,n}[u,v] \;=\; \begin{cases}
+1, &amp; (u,v)=(m,n) \\
+0, &amp; \text{otherwise.}
+\end{cases}
+\]</span></p>
+<p>With this basis, the weights are simply the image intensities, and the expansion is <span id="eq-point-basis-expansion"><span class="math display">\[
+S[u,v] \;=\; \sum_{m,n} S[m,n]\; B_{m,n}[u,v].
+\tag{24.9}\]</span></span></p>
+<p>Because each <span class="math inline">\(B_{m,n}\)</span> is nonzero at only one location, the basis is orthonormal under the discrete inner product, and the matrix formed by stacking the basis vectors is the identity.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-ls-eigenfunctions" class="level2" data-number="24.7">
+<h2 data-number="24.7" class="anchored" data-anchor-id="sec-ls-eigenfunctions"><span class="header-section-number">24.7</span> Eigenfunctions</h2>
+<p>An <strong>eigenfunction</strong> (or, in the discrete case, an <strong>eigenvector</strong>) of a system is a special input that produces an output that is simply a scaled version of itself. In other words, when you feed an eigenfunction into a linear system, the system just scales it—nothing else changes. This property is incredibly useful, because it means we can predict exactly what will happen to these inputs.</p>
+<p>For a discrete linear system represented by a matrix <span class="math inline">\(\mathbf{L}\)</span>, a column vector <span class="math inline">\(\mathbf{e}_i\)</span> is an eigenvector if</p>
+<p><span id="eq-eigenfunction-definition"><span class="math display">\[
+\mathbf{L} \mathbf{e}_i = \alpha_i \mathbf{e}_i
+\tag{24.10}\]</span></span></p>
+<p>where <span class="math inline">\(\alpha_i\)</span> is the <strong>eigenvalue</strong> associated with <span class="math inline">\(\mathbf{e}_i\)</span>. The eigenvalue tells us how much the eigenvector is stretched or shrunk by the transformation.</p>
+<p>Many image systems we describe in this book have a <strong>complete set</strong> of orthogonal eigenvectors. By a complete set, I mean (a) the eigenvectors of the system are a basis for the input (<a href="#sec-ls-spatial-basis" class="quarto-xref"><span>Section 24.5</span></a>), and (b) the eigenvectors are orthogonal to one another (<a href="#sec-ls-orthogonal-transforms" class="quarto-xref"><span>Section 24.6</span></a>). This means we can express any input vector (stimulus) as a weighted sum of the image system’s eigenvectors. The power of this observation is that measuring the system response to an eigenvector input is very simple:</p>
+<p><span id="eq-linear-eigencalculations"><span class="math display">\[
+\begin{aligned}
+\mathbf{o} &amp; = \mathbf{L} \mathbf{s} \\
+       &amp; = \mathbf{L} \left(\sum_i \sigma_i \mathbf{e}_i \right) \\
+       &amp; = \sum_i \sigma_i \mathbf{L} \mathbf{e}_i \\
+       &amp; = \sum_i \sigma_i \alpha_i \mathbf{e}_i
+\end{aligned}
+\tag{24.11}\]</span></span></p>
+<p>Here, <span class="math inline">\(\mathbf{s}\)</span> is the input, written as a sum of eigenvectors with weights <span class="math inline">\(\sigma_i\)</span>. The output <span class="math inline">\(\mathbf{o}\)</span> is just the sum of the same eigenvectors, but now each one is scaled by its eigenvalue <span class="math inline">\(\alpha_i\)</span>. This makes analyzing and understanding the system much easier.</p>
+<p>Not all linear systems have a complete set of eigenvectors. Only discrete linear systems represented by <strong>normal matrices</strong> are guaranteed to have an orthogonal set of eigenvectors. The definition of a normal matrix is<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p><span id="eq-normal-matrix-definition"><span class="math display">\[
+\mathbf{L L^* = L^* L} .
+\tag{24.12}\]</span></span></p>
+</section>
+<section id="sec-ls-local-linearity" class="level2" data-number="24.8">
+<h2 data-number="24.8" class="anchored" data-anchor-id="sec-ls-local-linearity"><span class="header-section-number">24.8</span> Local linearity</h2>
+<p>No real system is linear for all possible inputs. If you push a system with extremely large signals—say, by shining a laser into a camera or overloading an amplifier—it may behave unpredictably or even break! But for most practical purposes, many systems are linear over a useful range of inputs.</p>
+<p>When a system is not linear everywhere, it may still be well-approximated as linear within a limited region of its input space. In other words, the system is <strong>locally linear</strong>: if you keep your signals similar enough to a particular operating point, the system’s behavior is linear, even if it isn’t globally so.</p>
+<p>For a locally linear system, the best linear approximation depends on where you are in the input space. The linear model near <span class="math inline">\(x_1\)</span> might look quite different from the linear model near <span class="math inline">\(x_2\)</span>. So, when modeling or analyzing a locally linear system, it’s important to know which region you’re working in.</p>
+<p>In practice, the optics of most imaging systems are linear over a large range, but they are shift-invariant over a smaller input range, only within a limited region of the field of view. This is called <strong>local shift invariance</strong>. Such a region is known as an <strong>isoplanatic</strong> patch. The shift-invariant analysis applies well to such local regions, and degrades if we measure over larger regions.</p>
+<p>This principle of local linearity, or local shift-invariance, is fundamental in mathematics, physics, and engineering.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> It’s the reason why linear models are so widely used, even for systems that aren’t truly linear everywhere.</p>
+
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The <span class="math inline">\(*\)</span>-operator means <strong>conjugate transpose</strong>. This means take the complex conjugate of each entry (<span class="math inline">\(a + ib \rightarrow a - ib\)</span>), and transpose the matrix. For a real matrix, the <span class="math inline">\(*\)</span>-operator amounts to the usual matrix transpose.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>If you’ve seen the Taylor series expansion in calculus, you’ve already encountered local linearity. Near a point <span class="math inline">\(x\)</span>, you can approximate a function by its value at <span class="math inline">\(x\)</span> plus a correction that depends on how far you are from <span class="math inline">\(x\)</span> and the derivative at <span class="math inline">\(x\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/imgprocessing-01.html" class="pagination-link" aria-label="Image processing">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/appendix-02-spaceinvariance.html" class="pagination-link" aria-label="Linear Space-Invariant (LSI) Systems">
+        <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

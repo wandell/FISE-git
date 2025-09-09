@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2025-09-08">
+<meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
+
+<title>12&nbsp; Transform domain – Foundations of Image Systems Engineering</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/optics-07-wavefront.html" rel="next">
+<link href="../chapters/optics-05-linear-space.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/hover.css">
+<link rel="stylesheet" href="../styles/callouts.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/optics-01-geometric.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-06-linear-transform.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Foundations of Image Systems Engineering</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Preface</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Scenes</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Light and seeing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-03-properties.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Light field properties</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-04-properties-spectral.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Optics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-02-lenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lens principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-03-thinlens.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Thin lenses</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-04-morelenses.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-05-linear-space.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-06-linear-transform.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/optics-07-wavefront.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Sensors</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-01-photoelectric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-02-pixels.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Pixels and sensors</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-03-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Sensor parameters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-04-components.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">System components</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-05-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Control systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-06-characterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Image system modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/sensors-07-innovations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Sensor innovations</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Human</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/human-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Human vision</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Displays</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Displays</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Image processing</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/imgprocessing-01.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Image processing</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-optics-linear-harmonics-overview" id="toc-sec-optics-linear-harmonics-overview" class="nav-link active" data-scroll-target="#sec-optics-linear-harmonics-overview"><span class="header-section-number">12.1</span> Transform domain overview</a></li>
+  <li><a href="#sec-optics-harmonics" id="toc-sec-optics-harmonics" class="nav-link" data-scroll-target="#sec-optics-harmonics"><span class="header-section-number">12.2</span> Image harmonics</a></li>
+  <li><a href="#sec-optics-characterization" id="toc-sec-optics-characterization" class="nav-link" data-scroll-target="#sec-optics-characterization"><span class="header-section-number">12.3</span> Harmonic characterization</a></li>
+  <li><a href="#sec-optics-transfer-function" id="toc-sec-optics-transfer-function" class="nav-link" data-scroll-target="#sec-optics-transfer-function"><span class="header-section-number">12.4</span> Transfer Functions</a>
+  <ul class="collapse">
+  <li><a href="#sec-OTF" id="toc-sec-OTF" class="nav-link" data-scroll-target="#sec-OTF"><span class="header-section-number">12.4.1</span> Optical Transfer Function</a></li>
+  <li><a href="#sec-MTF" id="toc-sec-MTF" class="nav-link" data-scroll-target="#sec-MTF"><span class="header-section-number">12.4.2</span> Modulation Transfer Function</a></li>
+  <li><a href="#sec-PTF" id="toc-sec-PTF" class="nav-link" data-scroll-target="#sec-PTF"><span class="header-section-number">12.4.3</span> Phase Transfer Function</a></li>
+  <li><a href="#sec-CSF" id="toc-sec-CSF" class="nav-link" data-scroll-target="#sec-CSF"><span class="header-section-number">12.4.4</span> Contrast Sensitivity Function</a></li>
+  </ul></li>
+  <li><a href="#two-dimensional-fourier-transforms-representation" id="toc-two-dimensional-fourier-transforms-representation" class="nav-link" data-scroll-target="#two-dimensional-fourier-transforms-representation"><span class="header-section-number">12.5</span> Two-dimensional Fourier Transforms representation</a></li>
+  <li><a href="#system-characteristics" id="toc-system-characteristics" class="nav-link" data-scroll-target="#system-characteristics"><span class="header-section-number">12.6</span> System characteristics</a>
+  <ul class="collapse">
+  <li><a href="#image-sharpness-high-frequency-roll-off" id="toc-image-sharpness-high-frequency-roll-off" class="nav-link" data-scroll-target="#image-sharpness-high-frequency-roll-off"><span class="header-section-number">12.6.1</span> Image sharpness: High frequency roll off</a></li>
+  <li><a href="#spatial-aliasing" id="toc-spatial-aliasing" class="nav-link" data-scroll-target="#spatial-aliasing"><span class="header-section-number">12.6.2</span> Spatial aliasing</a></li>
+  <li><a href="#separability" id="toc-separability" class="nav-link" data-scroll-target="#separability"><span class="header-section-number">12.6.3</span> Separability</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/optics-01-geometric.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-06-linear-transform.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-optics-linear-harmonics" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Transform domain</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">September 8, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Work in Progress
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
+<p>Last updated: September 8, 2025</p>
+</div>
+</div>
+</div>
+<section id="sec-optics-linear-harmonics-overview" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="sec-optics-linear-harmonics-overview"><span class="header-section-number">12.1</span> Transform domain overview</h2>
+<p>We have mainly been analyzing optical systems using point-based stimuli (impulses and point spread functions). This is one of many useful signal representations (<a href="appendix-01-linearsystems.html" class="quarto-xref"><span>Chapter 24</span></a>). In this section, we introduce a second class of stimuli: image harmonics. These stimuli are commonly used in the image systems engineering literature for both theory and measurement. They provide a valuable and insightful approach to measuring how image systems behave.</p>
+<p>There are two practical motivations for considering alternative stimuli. First, point stimuli are not convenient tool for predicting how finely a system can resolve detail; the spatial resolution of an image system is often easier to analyze using harmonics. Second, point stimuli are photon-inefficient and thus difficult to measure precisely. Extended harmonic targets deliver more light, produce higher signal-to-noise measurements, and allow precise control of spatial frequency, orientation, and phase.</p>
+<p>The next sections define image harmonics and show how to use them to characterize system performance. The mathematical foundations underpinning this representation appear in <a href="appendix-01-linearsystems.html" class="quarto-xref"><span>Chapter 24</span></a> and <a href="appendix-02-spaceinvariance.html" class="quarto-xref"><span>Chapter 25</span></a>. In brief: for linear, space-invariant systems, harmonics form a spatial basis for arbitrary stimuli (<a href="appendix-01-linearsystems.html#sec-ls-spatial-basis" class="quarto-xref"><span>Section 24.5</span></a>) and are nearly eigenfunctions of the system (<a href="appendix-01-linearsystems.html#sec-ls-eigenfunctions" class="quarto-xref"><span>Section 24.7</span></a>). These properties make harmonics especially valuable for analysis and design.</p>
+</section>
+<section id="sec-optics-harmonics" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="sec-optics-harmonics"><span class="header-section-number">12.2</span> Image harmonics</h2>
+<p>For real-valued signals —such as light intensity— the harmonics are built upon the sine and cosine functions. You likely first met these as one-dimensional functions: they take a single input and produce a single output that varies from <span class="math inline">\([-1,1]\)</span>.</p>
+<p><span id="eq-harmonics-1d"><span class="math display">\[
+I(x) = \sin(2\pi f_x x + \phi_x)
+\tag{12.1}\]</span></span></p>
+<p>Here, <span class="math inline">\(f_x\)</span> is the spatial frequency (in cycles per unit distance) and <span class="math inline">\(\phi_x\)</span> is the phase (a spatial shift). Image intensities are positive numbers, so to model them with harmonics we add <span class="math inline">\(1\)</span> to the value.</p>
+<p><span id="eq-harmonics-1d-v2"><span class="math display">\[
+I(x) = 1 + \sin(2\pi f_x x + \phi_x)
+\tag{12.2}\]</span></span></p>
+<p>In imaging, we typically need a two-dimensional representation to describe variation across both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. A compact form that keeps intensities non-negative is <span id="eq-harmonics-2d"><span class="math display">\[
+I(x,y) = M\big(1 + A \,\sin\big(2\pi (f_x x + f_y y) + \phi\big)\big).
+\tag{12.3}\]</span></span></p>
+<ul>
+<li><span class="math inline">\(M\)</span> is the mean (DC) intensity.</li>
+<li><span class="math inline">\(A\)</span> is the contrast or modulation depth. To ensure <span class="math inline">\(I(x,y)\ge0\)</span>, require <span class="math inline">\(|A|\le 1\)</span> (in practice, take <span class="math inline">\(A\in[0,1]\)</span> and absorb the sign into <span class="math inline">\(\phi\)</span>).</li>
+<li><span class="math inline">\((f_x,f_y)\)</span> defines the 2D spatial frequency. The orientation is <span class="math inline">\(\theta=\mathrm{atan2}(f_y,f_x)\)</span> and the radial frequency is <span class="math inline">\(\| \mathbf{f} \| = \sqrt{f_x^2+f_y^2}\)</span>.</li>
+</ul>
+<p><a href="#fig-optics-harmonics-2d" class="quarto-xref">Figure&nbsp;<span>12.1</span></a> shows four image harmonics. When <span class="math inline">\(f_y = 0\)</span> the pattern is vertical (varies only along <span class="math inline">\(x\)</span>); when <span class="math inline">\(f_x = 0\)</span> it is horizontal (varies only along <span class="math inline">\(y\)</span>).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div id="fig-optics-harmonics-2d" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-harmonics-2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/11-transform/optics-harmonics.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-harmonics-2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.1: Harmonic images. These have different <span class="math inline">\(f_x\)</span> and <span class="math inline">\(f_y\)</span> values, but all have contrast <span class="math inline">\(A=1\)</span>. The image is vertical if <span class="math inline">\(f_y = 0\)</span> and horizontal if <span class="math inline">\(f_x = 0\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>For many linear-systems analyses, say when the system is circularly symmetric, it is enough to consider one-dimensional harmonics by fixing <span class="math inline">\(f_y = 0\)</span>. The examples in <a href="#fig-optics-harmonics-1d" class="quarto-xref">Figure&nbsp;<span>12.2</span></a> vary only along <span class="math inline">\(x\)</span> and illustrate different spatial frequencies <span class="math inline">\(f_x\)</span> and contrasts <span class="math inline">\(A\)</span>.</p>
+<div id="fig-optics-harmonics-1d" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-harmonics-1d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/11-transform/optics-harmonics-1d.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-harmonics-1d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.2: A set of one-dimensional image harmonics. They vary in <span class="math inline">\(x\)</span> with <span class="math inline">\(f_y = 0\)</span>. The contrast <span class="math inline">\(A\)</span> varies from top to bottom <span class="math inline">\((1, 0.5, 0.1)\)</span>. The <span class="math inline">\(x\)</span>-range is <span class="math inline">\((0,1)\)</span>, and the spatial frequencies are <span class="math inline">\(f_x = (1, 2, 4, 8)\)</span>. <a href="../code/02Optics/fise_imageHarmonics1d.html" target="_blank">fise_imageHarmonics1d.m</a>
+</figcaption>
+</figure>
+</div>
+<p>To many people it is counterintuitive that a thin line can be constructed by summing harmonics. The line is very compact, but each harmonic extends across the entire image. How can the sum of these harmonics functions result in such a localized image?</p>
+<p><a href="#fig-optics-reconstruction" class="quarto-xref">Figure&nbsp;<span>12.3</span></a> shows how the image evolves as we sum increasing numbers of harmonics: Starting with just a few, the result is broad and diffuse, but as more harmonics are added, the image becomes increasingly concentrated. The key is that the positive and negative regions of the higher frequency harmonics cancel each other out everywhere except at the center, where all the cosine terms are positive (<span class="math inline">\(\cos(0)\)</span>). With enough harmonics, the sum converges to a single, sharp line.</p>
+<p>In this example, we reconstruct a line at the center (column 65) of a 129-column image by setting all harmonic weights to <span class="math inline">\(w_f = 1\)</span>. Because the target image is even symmetric, only the cosine terms are needed. The red traces in the figure show the intensity profile: as more harmonics are added, the central peak narrows and side ripples diminish. By the <span class="math inline">\(64^{th}\)</span> harmonic, the line is well-formed; adding more harmonics briefly reintroduces some ringing, which disappears when the full set is included. This phenomenon is a classic result in linear systems—ask your instructor for more details!</p>
+<div id="fig-optics-reconstruction" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-reconstruction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/11-transform/optics-reconstruction.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-reconstruction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.3: Summing harmonics to become a line. The panels show the sum of the first 4, 16, 64, 72, and finally all 128 harmonics. To match a single line in the middle (col=65) of this 129 column image, the weights of each harmonic are all <span class="math inline">\(w_f = 1\)</span>. Because the image is even symmetric, we need to sum only the <span class="math inline">\(cos()\)</span> terms. The red traces superimposed on the images are the intensity. The central region becomes thinner and the ripples on the side are eliminated by the <span class="math inline">\(64^{th}\)</span> harmonic. They return as we keep going to f = 72, but are eliminated again at f=128. Ask your linear systems instructor about this; s/he will like you for it.
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Line reconstruction: the movie">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Line reconstruction: the movie
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>This movie illustrates how the sum converges as harmonics are added one by one. Initially, the harmonics are distributed across the image. As more are included, their contributions cancel everywhere except at the central position (<span class="math inline">\(0\)</span>), where all are positive (<span class="math inline">\(\cos(0)\)</span>).</p>
+<p>Adding harmonics from <span class="math inline">\(f=0\)</span> to <span class="math inline">\(f=64\)</span> produces the line; adding <span class="math inline">\(f=65\)</span> to <span class="math inline">\(f=128\)</span> introduces some ringing, which is eliminated when the sum is complete. This is a special case for even symmetric functions, where only cosines are required.</p>
+<div id="fig-optics-reconstruction-movie" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-reconstruction-movie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<video src="images/optics/11-transform/lineReconstruct.mp4" class="img-fluid quarto-figure quarto-figure-center" style="width:40.0%" controls=""><a href="images/optics/11-transform/lineReconstruct.mp4">Video</a></video>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-reconstruction-movie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.4: Video showing a line reconstructed as we add harmonics (cosines) at different frequencies. I only added the contrast terms, keeping the mean the same. See <a href="../code/02Optics/fise_harmonicsLine.html" target="_blank">fise_harmonicsLine</a>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-optics-characterization" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="sec-optics-characterization"><span class="header-section-number">12.3</span> Harmonic characterization</h2>
+<p>There are many reasons why people would like to describe the quality of an optical system. Commercial vendors that sell parts may need to specify the quality and the tolerance of the quality measure. We may want to optimize the properties of a design, using the image quality measure as a metric for the optimization. We may wish to simulate the system and learn which signals are preserved by the optics and which are lost to image quality.</p>
+<p>The point spread function characterizes the system using many values measured from a single stimulus. The harmonic characterization uses only two parameters, but from multiple stimuli (<a href="#fig-optics-harmonic-eigen" class="quarto-xref">Figure&nbsp;<span>12.5</span></a>). For each harmonic frequency, we measure how much its amplitude is scaled, <span class="math inline">\(s(\mathbf{f})\)</span>, and how much the image has been shifted <span class="math inline">\(\phi(\mathbf{f})\)</span>.</p>
+<div id="fig-optics-harmonic-eigen" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-harmonic-eigen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/11-transform/harmonics-eigen.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-harmonic-eigen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.5: A shift invariant linear system transforms a one-dimensional image harmonic into a harmonic image of the same frequency. The output differs by a scale factor and a spatial shift (phase). The mean levels of the input <span class="math inline">\(M_i\)</span> and output <span class="math inline">\(M_o\)</span> differ by a scale factor, as well.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-optics-transfer-function" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="sec-optics-transfer-function"><span class="header-section-number">12.4</span> Transfer Functions</h2>
+<p>For a linear, space-invariant system, the effect of the optics on any harmonic stimulus is simple: the output is also a harmonic of the same frequency, but its amplitude is scaled and its phase is shifted. There is a small collection of <strong>transfer functions</strong> that serve as useful, compact mathematical descriptions of this scaling and shifting across all spatial frequencies. These transfer functions in the transform domain are all related to the functions in the space domain through the convolution theorem.</p>
+<p>From <a href="appendix-02-spaceinvariance.html#sec-ls-convolution-theorem" class="quarto-xref"><span>Section 26.8</span></a> we have for an input, <span class="math inline">\(i\)</span>, a point spread <span class="math inline">\(h\)</span>, and an output, <span class="math inline">\(g\)</span>, the convolution represents the LSI transformation <span class="math display">\[
+g(x) = h(x) * i (x)
+\]</span></p>
+<p>and the transform domain this is <span class="math display">\[
+\mathscr{F}(g) = \mathscr{F}(h) \cdot \mathscr{F}(i)
+\]</span></p>
+<section id="sec-OTF" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="sec-OTF"><span class="header-section-number">12.4.1</span> Optical Transfer Function</h3>
+<p>The <strong>optical transfer function (OTF)</strong>, <span class="math inline">\(\mathcal{O}(f)\)</span>, is defined as the Fourier transform of the output divided by the Fourier transform of the input. From its definition, it is also the Fourier transform of the point spread function. <span id="eq-otf-definition"><span class="math display">\[
+\mathcal{O}(f) = \frac{\mathscr{F}\{g\}}{\mathscr{F}\{i\}} = \mathscr{F}\{h\}.
+\tag{12.4}\]</span></span></p>
+<p>The OTF is a complex function of spatial frequency. It can be written in magnitude–phase form as <span id="eq-otf-definition-complex"><span class="math display">\[
+\mathcal{O}(f) = \mathcal{M}(f)\, e^{\,i\,\mathcal{P}(f)},
+\tag{12.5}\]</span></span></p>
+<p>The term <span class="math inline">\(\mathcal{M}(f)\)</span> is the real-valued amplitude scaling factor, and <span class="math inline">\(\mathcal{P}(f)\)</span> is the phase shift (in radians).</p>
+<p>The OTF provides a powerful way to predict the system’s output. Using the convolution theorem (<a href="appendix-02-spaceinvariance.html#sec-ls-convolution-theorem" class="quarto-xref"><span>Section 26.8</span></a>), we can calculate the output image, <span class="math inline">\(g(x,y)\)</span>, by multiplying the Fourier transform of the input image, <span class="math inline">\(i(x,y)\)</span>, with the OTF and then taking the inverse Fourier transform: <span id="eq-otf-calculation"><span class="math display">\[
+g(x) = \mathscr{F}^{-1}\!\big( \mathcal{O}(f)\,\mathscr{F}\{i\} \big).
+\tag{12.6}\]</span></span></p>
+<p>Just like its partner in the space domain, the point spread function, the OTF completely characterizes a linear, space-invariant system.</p>
+</section>
+<section id="sec-MTF" class="level3" data-number="12.4.2">
+<h3 data-number="12.4.2" class="anchored" data-anchor-id="sec-MTF"><span class="header-section-number">12.4.2</span> Modulation Transfer Function</h3>
+<p>Many times we are primarily interested in how the system affects the contrast (or modulation) of the input harmonics, without regard to the phase shift. This is captured by the <strong>modulation transfer function (MTF)</strong>: <span id="eq-MTF-defined"><span class="math display">\[
+\mathcal{M}(f) = |\mathcal{O}(f)|.
+\tag{12.7}\]</span></span></p>
+<p>For many optical systems, particularly those with symmetric point spread functions, the phase shifts are small (i.e., <span class="math inline">\(\mathcal{P}(f)\approx 0\)</span>), in which case the OTF is approximately real and non‑negative.</p>
+<p><a href="#fig-optics-harmonics-mtf" class="quarto-xref">Figure&nbsp;<span>12.6</span></a> illustrates the effect of the MTF. An input image with a sweep of spatial frequencies (top) is passed through an optical system. The output image (bottom) shows that the contrast of the high-frequency patterns is significantly reduced, a direct visualization of the MTF’s attenuation of higher frequencies.</p>
+<div id="fig-optics-harmonics-mtf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-harmonics-mtf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/11-transform/harmonics-mtf.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-harmonics-mtf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.6: A sweep frequency pattern demonstrates the MTF. The input image (top) is a sweep frequency, from low to high frequency, at 550 nm. The input contrast is the same as the local frequency increases. The simulation passes this image through a diffraction‑limited lens, <span class="math inline">\(f/\#=4\)</span>. The local contrast decreases at the higher frequencies. The red curve, defined as the envelope of the modulating output response, is the system’s MTF, <span class="math inline">\(\mathcal{M}(f)\)</span>. …
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="sec-PTF" class="level3" data-number="12.4.3">
+<h3 data-number="12.4.3" class="anchored" data-anchor-id="sec-PTF"><span class="header-section-number">12.4.3</span> Phase Transfer Function</h3>
+<p>The phase shift (in radians) as a function of frequency is called the <strong>phase transfer function (PTF)</strong>: <span id="eq-phasetransform-definition"><span class="math display">\[
+\mathcal{P}(f) = \phi(f).
+\tag{12.8}\]</span></span></p>
+<p>Putting these terms together, we have simply</p>
+<p><span id="eq-otf-ptf-mtf"><span class="math display">\[
+\mathcal{O}(f)
+= \mathcal{M}(f) \, e^{\,i \, \mathcal{P}(f)} .
+\tag{12.9}\]</span></span></p>
+</section>
+<section id="sec-CSF" class="level3" data-number="12.4.4">
+<h3 data-number="12.4.4" class="anchored" data-anchor-id="sec-CSF"><span class="header-section-number">12.4.4</span> Contrast Sensitivity Function</h3>
+<p>For some systems, we cannot directly measure the output signal. The human visual system is a prime example: we can ask a person what they see, but we cannot easily measure the neural response at the retina or in the cortex. This “black box” problem is common in many fields.</p>
+<p>A clever way to characterize such systems is to measure the input required to produce a constant, predefined output. This general approach is known by various names: “input-referred measurement” in engineering, “action spectrum” in photobiology, and “Type A” experiments in physiology (<span class="citation" data-cites="brindley1970-book">Brindley (<a href="references.html#ref-brindley1970-book" role="doc-biblioref">1970</a>)</span>).</p>
+<p>In vision science, this method is used to define the <strong>contrast sensitivity function (CSF)</strong>, <span class="math inline">\(\mathscr{C}(f)\)</span>. To measure the CSF, an observer is shown a harmonic pattern of a specific frequency, and the contrast is adjusted until the pattern is just barely visible (at the detection threshold). This process is repeated for many different spatial frequencies.</p>
+<p>The contrast sensitivity for a given frequency, <span class="math inline">\(f\)</span>, is defined as the reciprocal of the threshold contrast, <span class="math inline">\(A_{f}\)</span>:</p>
+<p><span class="math display">\[
+\mathscr{C}(f) = \frac{1}{A_{f}}
+\]</span></p>
+<p>For example, if a spatial frequency pattern at <span class="math inline">\(f\)</span> is detectable at 1% contrast (<span class="math inline">\(A_f=0.01\)</span>), the contrast sensitivity is <span class="math inline">\(1/0.01 = 100\)</span>. If a high-frequency pattern requires 10% contrast (<span class="math inline">\(A_f = 0.10\)</span>) to be seen, its sensitivity is <span class="math inline">\(1/0.10 = 10\)</span>. The CSF curve plots this sensitivity across all spatial frequencies, providing a comprehensive characterization of the visual system’s ability to perceive spatial detail. This same principle can be applied to characterize the end-to-end performance of a complete camera system, from optics to final processed image.</p>
+</section>
+</section>
+<section id="two-dimensional-fourier-transforms-representation" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="two-dimensional-fourier-transforms-representation"><span class="header-section-number">12.5</span> Two-dimensional Fourier Transforms representation</h2>
+<p>There are times when we would like to visualize the amplitude of the image harmonics as a function of spatial frequency. The image in <a href="#fig-optics-otf2d" class="quarto-xref">Figure&nbsp;<span>12.7</span></a> is a common approach. The spatial domain images are on the left - two different harmonics. The amplitude of the Fourier coefficients are shown on the right. The center of the image represents the mean value. The two points, symmetric about the center, represent the amplitude of the Fourier representation.</p>
+<div id="fig-optics-otf2d" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-otf2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/11-transform/otf2d.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-otf2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.7: Pictures of 2d FFT Amplitude spectrum. <a href="../code/02Optics/fise_otf2d.html" target="_blank">See fise_otf2d</a>
+</figcaption>
+</figure>
+</div>
+<p>It is common to render the spatial frequency map with the mean (<span class="math inline">\(M\)</span>) at the center <span class="math inline">\((0,0)\)</span>. In physical units, spatial frequencies span <span class="math inline">\([-f_N, f_N]\)</span> along each axis, where <span class="math inline">\(f_N = 1/(2\Delta x)\)</span> is the Nyquist frequency determined by the sample pitch <span class="math inline">\(\Delta x\)</span>. In index (DFT-bin) units for an <span class="math inline">\(N\times N\)</span> image, frequencies run from <span class="math inline">\(-\lfloor N/2\rfloor\)</span> to <span class="math inline">\(\lfloor (N-1)/2\rfloor\)</span>. Because the original image is real-valued, the Fourier coefficients obey <span class="math inline">\(F(f_x,f_y)=F^*(-f_x,-f_y)\)</span>.</p>
+<p>Slow variations across the image are represented near the center of the spectrum. If we attenuate those low frequencies, the image emphasizes rapid variations (middle column). Conversely, attenuating high frequencies leaves a blurred version (right column).</p>
+<div id="fig-optics-otf2dparts" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-otf2dparts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/11-transform/otf2dFace.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-otf2dparts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.8: The <span class="math inline">\(\log_{10}\)</span> amplitudes of the two-dimensional Fourier Transform coefficients are shown in the bottom row; the corresponding images are shown in the top row.<a href="../code/02Optics/fise_otf2dFace.html" target="_blank">fise_otf2dFace</a>
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="system-characteristics" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="system-characteristics"><span class="header-section-number">12.6</span> System characteristics</h2>
+<p>The transform domain is frequently used in practice to summarize high level properties of image systems. Three important ideas, often expressed in the transform domain, are summarized here. These ideas have counterparts in the spatial domain as well, as they are system characteristics. They appear in the transform domain because they are easily expressed in terms of harmonics.</p>
+<section id="image-sharpness-high-frequency-roll-off" class="level3" data-number="12.6.1">
+<h3 data-number="12.6.1" class="anchored" data-anchor-id="image-sharpness-high-frequency-roll-off"><span class="header-section-number">12.6.1</span> Image sharpness: High frequency roll off</h3>
+<p>The apparent sharpness of an image is important in consumer photography applications. And the ability to resolve fine spatial details can be important in driving, robotics and other industrial applications. The system’s spatial resolution is usually determined by how well it encodes the high spatial frequency components of the image (<a href="#fig-optics-otf2dparts" class="quarto-xref">Figure&nbsp;<span>12.8</span></a>).</p>
+<p>Natural images often exhibit amplitude spectra that decrease roughly as <span class="math inline">\(1/f^{\alpha}\)</span> with <span class="math inline">\(\alpha\in[0.5,1]\)</span>. Optical systems further reduce high spatial frequencies due to diffraction and aberrations, reflected in the MTF roll‑off. As frequency approaches the system cutoff (e.g., the diffraction limit), contrast necessarily drops toward zero.</p>
+</section>
+<section id="spatial-aliasing" class="level3" data-number="12.6.2">
+<h3 data-number="12.6.2" class="anchored" data-anchor-id="spatial-aliasing"><span class="header-section-number">12.6.2</span> Spatial aliasing</h3>
+<p>When scene content contains energy above the sensor’s Nyquist frequency, it folds (aliases) into lower frequencies, producing artifacts such as moiré patterns. Anti‑alias strategies include optical prefiltering (defocus/diffusion), CFA design considerations, and oversampling followed by appropriate downsampling.</p>
+<p>Maybe we illustrate it here in the abstract and then again when we get to the sensors, later.</p>
+</section>
+<section id="separability" class="level3" data-number="12.6.3">
+<h3 data-number="12.6.3" class="anchored" data-anchor-id="separability"><span class="header-section-number">12.6.3</span> Separability</h3>
+<p>One of the more interesting features of mathematical reasoning is the fact that there are properties present in higher dimensional analyses that have no counterpart in lower dimensions. A very simple, but important, example is the property of <strong>separability</strong>.</p>
+<p><span id="eq-separability-definition"><span class="math display">\[
+F(x,y) = f(x) g(y)
+\tag{12.10}\]</span></span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="2D Fourier Transforms">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+2D Fourier Transforms
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>How did we get to the close connection of imaging and the 2D Fourier Transform?</p>
+<p>Sir William Bragg and Sir William Bragg (father and son) demonstrated that the pattern of X-rays scattered by a crystal is directly related to the crystal’s internal periodic structure. This led people to the understanding that dthe iffraction pattern is, in fact, the Fourier transform of the crystal’s electron density. This insight became a fundamental part of studying the 3D atomic structure of molecules. In fact, it led them to measuring the 3D diffraction pattern (the frequency domain data) and then performing an inverse 3D Fourier transform to get back to the spatial domain structure. A large part of crystallography became a practical problem of applied Fourier analysis.</p>
+<p><a href="https://trees.stanford.edu/bracewell.htm">Ron Bracewell</a> a physicist and engineer, working in radio astronomy at Stanford, wrote an important book, <em>The Fourier Transform and Its Applications [1965]</em>, which popularized the Projection-Slice theorem<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, gave it a clear and elegant statement, and demonstrated it in the context of radio astronomy aperture synthesis. <a href="https://youtu.be/Aoj-JfaXcfw?si=t3dirvqJcwU6BYH5">Joe Goodman</a>, a physicists and engineer in optics at Stanford, wrote another important book, <em>Introduction to Fourier Optics</em>. He educated a generation of physicists and engineers, cementing the 2D Fourier transform as the standard tool for analyzing optical systems, filters, and image formation.</p>
+<div id="fig-bracewell-goodman" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bracewell-goodman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/people/Bracewell_Goodman_Dish.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bracewell-goodman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.9: Also, how could I miss the chance of including pictures of Joe Goodman (left) and Ron Bracewell (right) in this book? For those of you who know the area, Ron’s radio telescope built to search for extraterrestrial intelligence -known to all of us who hike the Stanford hills as <em>the Dish</em>- is shown at the bottom.
+</figcaption>
+</figure>
+</div>
+<!--
+https://www.sfgate.com/bayarea/article/Scientific-innovator-Stanford-engineer-Ronald-2546679.php
+
+[Link to Google resource.](resources/history-2D-fourier-transform.html){target=_blank}
+-->
+</div>
+</div>
+</div>
+
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-brindley1970-book" class="csl-entry" role="listitem">
+Brindley GS (1970) Physiology of the <span>Retina</span> and <span>Visual Pathway</span>. Williams &amp; Wilkins
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Different fields use different terminology. Vision scientists often call these spatial frequency gratings. Engineers sometimes approximate sinusoidal patterns with evenly spaced bars or lines. We use the term harmonics.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The 1D Fourier transform of a projection of a 2D function is equal to a slice through the 2D Fourier transform of the function.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/optics-05-linear-space.html" class="pagination-link" aria-label="Spatial domain">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Spatial domain</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/optics-07-wavefront.html" class="pagination-link" aria-label="Wavefronts">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Wavefronts</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
