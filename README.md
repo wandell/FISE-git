@@ -16,11 +16,17 @@ My attempts to control the Quarto and VSCode tools are described below.  Still l
 PDF file size is too big.  Not sure why it is that big.
 The default github pages name is not being correctly taken from the yaml file.
 
-### Quarot publishing to gh-pages
+### Quarto publishing to gh-pages
+
+Lately I have been skipping the PDF and just publishing the HTML pages.  It is finding the code subdirectory.  Not sure about resources, but I don't seem to be doing much with that.
+
+```
 quarto render --to html
 quarto publish gh-pages
+```
 
 ## vscode (from uSoft)
+
 The software for writing the book is implemented within [vscode](https://code.visualstudio.com/download).
 
 Quarto has extensions for vscode to 
