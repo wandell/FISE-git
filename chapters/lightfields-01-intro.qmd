@@ -58,7 +58,7 @@ For the moment, it is convenient to consider the light field as comprising a lar
 
 $$
 L_E(x,y,z,\alpha,\beta,\lambda,\rho)
-$$
+$$ {#eq-lightfield-environment}
 
 People in many fields are familiar with the concept of the light field, but they use different terminology. Physicists often describe the environmental light field as the spectral radiance of the environment (see this [lovely description from Feynman](https://youtu.be/FjHJ7FmV0M4?si=wi2twZVYjF9KJGRY)). The general *light field* terminology was introduced into optical engineering by @gershunLightField1939 as part of his work in understanding how to design lighting environments, such as the lighting in school rooms and public places[^lightfields-intro-3]. Ted Adelson and Jim Bergen [-@adelson-plenoptic-1991] used the term *plenoptic function* to describe the same idea[^adelson-plenoptic]. The great value of the light field concept in computer graphics was explained by Marc Levoy and Pat Hanrahan [-@Levoy-1996-light-field]. I will use the light field terminology because I find it more familiar and engaging than spectral radiance, electromagnetic radiation, or plenoptic.
 
@@ -75,7 +75,7 @@ The rays of the incident light field can be described with one fewer parameter t
 
 $$
 L_I(u,v,\alpha,\beta,\lambda,\rho; ~\mathbf{p},\mathbf{n}) .
-$$
+$$ {#eq-lightfield-incident}
 
 To acquire full information about the environmental light field, we must follow Leonardo and measure the incident light field at multiple locations and directions. Many animals have two eyes and thus acquire two simultaneous measurements of the light field. This has the benefit of acquiring more information about the light field, as well as providing one remaining eye in the case of disease or damage. Some animals point the two eyes in very different directions and thus sample the environmental light field very broadly (e.g., rabbits, and animals that are prey). Other animals overlap the visual field of the two eyes to acquire information useful for estimating distance (stereo vision, animals that are predators). Even more information about the environmental light field is measured, over time, as the head moves heads and the eyes rotate (motion parallax).
 
@@ -99,7 +99,9 @@ The image system optics, whether a pinhole, thin lens, or multi-element lens, tr
 
 The environmental and incident light fields use parameters of position and angle for each ray. For the optical light field, however, we only measure rays that arrive at the sensor (or film). It is helpful, therefore, to parameterize the optical light field using two spatial parameters: where the ray exits the lens ($(u,v)$) and the position it arrives at the sensor, $(w,z)$. These four spatial parameters substitute for the positions and angles we use in the other light fields. It is possible, of course, to convert the sensor position parameters into angular parameters at the exit pupil.
 
-$$L_O(u,v,w,z,\lambda,\rho)$$
+$$
+L_O(u,v,w,z,\lambda,\rho)
+$$ {#eq-lightfield-optical}
 
 The data recorded by the sensor is used to create a reproduction of the image, or as information for interpreting the scene. The sensing and perception systems that derive information from the light field are designed to account for which information in the environmental light field makes it all the way through to the optical light field.
 
@@ -108,6 +110,22 @@ The most common sensors in cameras record only partial information about the opt
 This implementation at the sensor is a decision, not a requirement. Various authors pointed out that measuring more information about the optical light field would enable us to know more about the environmental light field. For example, @adelson-wang-1992 built a camera that measures the ray intensity at multiple angles at each location on the sensor, and they used this information to estimate depth. Ren Ng's company, Lytro, developed a commercial sensor to measure the optical light field [@ng2005-lightfield]; they also developed algorithms to enable users to refocus images or change the depth of field after capture. In  @sec-focus-control I describe how modern sensors use light field information for camera autofocus, and in @sec-sensor-lightfield I describe how light field sensors capture a more complete version of the optical light field. 
 
 [^sum-optical-angle]:  Or, equivalently, they sum across the angles of the rays arriving at the sensor.
+
+## Measuring the light field
+
+
+
+### Shack–Hartmann wavefront sensor {#sec-wavefront-sensor}
+
+The Raskar version in which you put spots behind the lenslet array and adjust the spots to make the array uniform is kind of funny.  It is intended to measure. 
+https://en.wikipedia.org/wiki/Shack%E2%80%93Hartmann_wavefront_sensor
+
+### Adaptive optics  {#sec-adaptive-optics}
+
+### Ground-based telescopes {#sec-telescopes}
+
+These same technologies can be used to look inward, within the eye, rather than outward toward the stars. Realizing this was a very important insight that continues to lead to important insights about the peripheral human visual system (@sec-human). 
+
 
 ## Interpreting the light field
 
