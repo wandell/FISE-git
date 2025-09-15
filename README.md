@@ -141,13 +141,18 @@ I don't have wrapping around images or even scaling image sizes working yet.  I 
 I have been using resources from my prior work, including class notes and published papers.  This has involved file type conversion.  Here are notes.
 
 ## Google doc
-I saved a Google doc chapter (Artal handbook chapter on displays) as an HTML zip file.  Google produced both the HTML and the images directory for the HTML, within the zip file.
-I then used pandoc to convert the HTML to markdown.
+I saved a Google doc chapter (Artal handbook chapter on displays) as an HTML zip file.  Google produced both the HTML and the images directory for the HTML, within the zip file.  It is possible to view the HTML as a resource without any further conversion to Quarto qmd format.
+
+### HTML to QMD
+If you want to convert and edit as a quarto qmd, you can. But I am a unsure about how to incorporate this without making it a chapter.  ChatGPT tells me to turn it back into an HTML file within resources. So, ...
+
+But anyway, you can do this:
+
+Use pandoc to convert the HTML to markdown.
 
     pandoc CharacterizationofVisualStimuli_Version2_.html -o characterization.md
 
-I then moved the md file to qmd.  And I added the YAML header
-
+I then moved the md file to qmd.  And I added the YAML header. 
 ```
 ---
 title: "My Report"
@@ -155,7 +160,9 @@ format: html
 ---
 ```
 
-The figures appeared in the subdirectory.  The math and images rendered in vscode from the md file with the quarto preview command.
+But the .qmd file was pretty ugly.  The math and images rendered in vscode from the md file with the quarto preview command.  
+
+The figures appeared in the subdirectory.  (Not sure what this means - they were already in an HTML subdirectory.)
 
 ## Overleaf
 I also managed to download an Overleaf LaTeX project  (20250102 in the Ashby Book Chapter) and then run on the master tex file
