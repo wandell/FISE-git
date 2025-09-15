@@ -168,7 +168,7 @@ That produced an md file. I renamed 'qmd' and put in vscode.  It came up well, w
 I have been trying to use pandoc to convert some of my published review papers into markdown from pdf.  On the mac this involved 
 
 * installing pandoc from their github repository, (https://github.com/jgm/pandoc/releases/tag/3.6.1)
-* installing poppler using "brew install poppler".  This gets you pdf2text.
+* installing poppler using "brew install poppler".  This gets you pdftotext.
 * Convert the pdf to text using (e.g., pdftotext -layout Principles_and_Consequences_Color.pdf PCC.txt)
 * Convert the text to markdown (e.g., pandoc PCC.txt -t markdown -o PCC.md)
 
