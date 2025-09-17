@@ -24,7 +24,7 @@ The deep connection between mobility, visual sensing, and the brain is illustrat
 
 As soon as the sea squirt fixes itself to the rock, with no more navigation or swimming, its brain is no longer needed. In a truly bizarre twist, the sea squirt digest its own brain. This adaptation reallocates energy resources from the now unnecessary brain to more vital functions.
 
-![A sea squirt image from [this nice site](https://goodheartextremescience.wordpress.com/2010/01/27/meet-the-creature-that-eats-its-own-brain/). This one is from Papua New Guinea. Plenty more images (and sea squirts) over there.](images/lightfields/01-lightfields/seasquirt.png){#fig-seasquirt width=50%}
+![A sea squirt image from [this nice site](https://goodheartextremescience.wordpress.com/2010/01/27/meet-the-creature-that-eats-its-own-brain/). This one is from Papua New Guinea. Plenty more images (and sea squirts) over there.](images/lightfields/01-lightfields/seasquirt.png){#fig-seasquirt width=50% .margin-caption}
 
 My Stanford colleague, Irv Weissmann, and his group wrote many papers about neurodegeneration using the sea squirt.  
 
@@ -69,7 +69,7 @@ People in many fields are familiar with the concept of the light field, but they
 ## Incident light field {#sec-incident-lightfield}
 An imaging system, say the eye or a pinhole, records only the portion of the environmental light field that arrives at its entrance pupil (@fig-incident-lightfield). It is worth distinguishing that part of the environmental light field with a name: *incident light field*.
 
-![The incident light field is the subset of environmental light field rays that arrive at the image systems’ entrance pupil.](images/lightfields/01-lightfields/01-incident-lightfield.png){#fig-incident-lightfield width="80%" fig-align="center"}
+![The incident light field is the subset of environmental light field rays that arrive at the image systems’ entrance pupil.](images/lightfields/01-lightfields/01-incident-lightfield.png){#fig-incident-lightfield width="80%" fig-align="center" .margin-caption}
 
 The rays of the incident light field can be described with one fewer parameter than the environmental light field because the entrance pupil is just a two-dimensional surface. Thus, the three dimensional position is replaced by the two-dimensional position in the entrance pupil, $(u,v)$. We need, however, additional parameters to define the image system: The aperture has a position in space $\mathbf{p}$ and and a viewing direction $\mathbf{n}$. We include these as a side-condition in the parameters that describe the ray intensities of the incident light field
 
@@ -105,33 +105,18 @@ $$ {#eq-lightfield-optical}
 
 The data recorded by the sensor is used to create a reproduction of the image, or as information for interpreting the scene. The sensing and perception systems that derive information from the light field are designed to account for which information in the environmental light field makes it all the way through to the optical light field.
 
-The most common sensors in cameras record only partial information about the optical light field. The rays arriving at a point on the sensor surface are summed together, no matter where the ray exited the optics. This type of sensor does not not preserve information about where the rays arise in the exit pupil[^sum-optical-angle]. 
-
-This implementation at the sensor is a decision, not a requirement. Various authors pointed out that measuring more information about the optical light field would enable us to know more about the environmental light field. For example, @adelson-wang-1992 built a camera that measures the ray intensity at multiple angles at each location on the sensor, and they used this information to estimate depth. Ren Ng's company, Lytro, developed a commercial sensor to measure the optical light field [@ng2005-lightfield]; they also developed algorithms to enable users to refocus images or change the depth of field after capture. In  @sec-focus-control I describe how modern sensors use light field information for camera autofocus, and in @sec-sensor-lightfield I describe how light field sensors capture a more complete version of the optical light field. 
-
-[^sum-optical-angle]:  Or, equivalently, they sum across the angles of the rays arriving at the sensor.
-
 ## Measuring the light field {#sec-lightfield-measurement}
 How do we measure a light field (@eq-lightfield-environment, @eq-lightfield-incident, @eq-lightfield-optical)? Using the ray model of light, the image from a pinhole camera is a measurement of the incident light field at a single location. The intensity at each point in the image measures a small bundle of rays from a single direction. By moving the pinhole or using an array of pinholes, we can sample many locations and accumulate information about the environmental light field.
 
 The camera array in @fig-camera-array measures an incident light field at each camera position, and the array as a whole coarsely samples the environmental light field. These cameras use lenses, not pinholes, which adds a complication: the light at each image point is the sum of rays arriving from across the lens aperture. For the computer graphics application of rendering new views, this integration was not a problem because the goal was to interpolate between the captured images.
 
-In other applications, however, a more precise measurement of the light field is necessary. A particularly important case is characterizing how a lens transforms the incident light field into the optical light field (@eq-lightfield-optical). For example, astronomers measure the light from a distant star to understand how parallel rays are transformed by the atmosphere and their telescope optics. They use this information to design adaptive optics systems that correct for distortions, ensuring that rays from a point source converge to a sharp point in the image. Measuring the optical light field is also valuable in consumer photography, enabling features like post-capture refocusing, as we will see in @sec-sensor-lightfield.
+In many scientific applications a more precise measurement of the light field is necessary. A particularly important case is characterizing how a lens transforms the incident light field into the optical light field (@eq-lightfield-optical). For example, astronomers measure the light from a distant star to understand how parallel rays are transformed by the atmosphere and their telescope optics. They use this information to design adaptive optics systems that correct for distortions, ensuring that rays from a point source converge to a sharp point in the image. Measuring the optical light field is also valuable in consumer photography, enabling features like post-capture refocusing, as we will see in @sec-sensor-lightfield.
 
-### Shack–Hartmann wavefront sensor {#sec-wavefront-sensor}
-Johannes Franz Hartmann suggested a simple and clear way to measure the optical light field. He created a screen comprising an array of pinholes behind the lens. As I observed above, the image behind each pinhole measures the intensity of the rays incident at different angles. Because there is an array of these pinholes, the accumulation of pinhole images measures the rays at multiple angles at multiple positions. By performing this measurement for different wavelengths and polarizations, we sample the optical light field (@eq-lightfield-optical).
+The most common sensors in cameras record only partial information about the optical light field. The rays arriving at a point on the sensor surface are summed together, no matter where the ray exited the optics. This type of sensor does not not preserve information about where the rays arise in the exit pupil[^sum-optical-angle]. 
 
-Hartmann was a German astronomer and his goal was to look for optical defects in telescope objectives.  His reasoning was based on the ray theory of light, without considering light to be a wave (@hartmann1900-wavefront).
+[^sum-optical-angle]:  Or, equivalently, they sum across the angles of the rays arriving at the sensor.
 
-The Raskar version in which you put spots behind the lenslet array and adjust the spots to make the array uniform is kind of funny.  It is intended to measure. 
-https://en.wikipedia.org/wiki/Shack%E2%80%93Hartmann_wavefront_sensor
-
-### Adaptive optics  {#sec-adaptive-optics}
-
-### Ground-based telescopes {#sec-telescopes}
-
-These same technologies can be used to look inward, within the eye, rather than outward toward the stars. Realizing this was a very important insight that continues to lead to important insights about the peripheral human visual system (@sec-human). 
-
+This implementation at the sensor is a decision, not a requirement. Various authors pointed out that measuring more information about the optical light field would enable us to know more about the environmental light field. For example, @adelson-wang-1992 built a camera that measures the ray intensity at multiple angles at each location on the sensor, and they used this information to estimate depth. Ren Ng's company, Lytro, developed a commercial sensor to measure the optical light field [@ng2005-lightfield]; they also developed algorithms to enable users to refocus images or change the depth of field after capture. In  @sec-focus-control I describe how modern sensors use light field information for camera autofocus, and in @sec-sensor-lightfield I describe how light field sensors capture a more complete version of the optical light field, and also how this information can be used in interesting ways in post-processing.
 
 ## Interpreting the light field
 
