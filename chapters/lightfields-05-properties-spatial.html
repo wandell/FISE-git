@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-10">
+<meta name="dcterms.date" content="2025-09-19">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>6&nbsp; Spatial regularities – Foundations of Image Systems Engineering</title>
@@ -182,7 +182,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -407,12 +407,11 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-spatial-regularities-overview" id="toc-sec-spatial-regularities-overview" class="nav-link active" data-scroll-target="#sec-spatial-regularities-overview"><span class="header-section-number">6.1</span> Spatial regularities overview</a>
-  <ul class="collapse">
-  <li><a href="#sec-fractals" id="toc-sec-fractals" class="nav-link" data-scroll-target="#sec-fractals"><span class="header-section-number">6.1.1</span> Fractals and Power Spectra scale invariance</a></li>
-  <li><a href="#natural-scenes-and-the-1f-spatial-frequency-falloff" id="toc-natural-scenes-and-the-1f-spatial-frequency-falloff" class="nav-link" data-scroll-target="#natural-scenes-and-the-1f-spatial-frequency-falloff"><span class="header-section-number">6.1.2</span> Natural scenes and the 1/f spatial frequency falloff</a></li>
-  <li><a href="#natural-scenes-the-dead-leaves-model" id="toc-natural-scenes-the-dead-leaves-model" class="nav-link" data-scroll-target="#natural-scenes-the-dead-leaves-model"><span class="header-section-number">6.1.3</span> Natural scenes: The dead leaves model</a></li>
-  </ul></li>
+  <li><a href="#sec-spatial-regularities-overview" id="toc-sec-spatial-regularities-overview" class="nav-link active" data-scroll-target="#sec-spatial-regularities-overview"><span class="header-section-number">6.1</span> Spatial regularities overview</a></li>
+  <li><a href="#sec-fractals" id="toc-sec-fractals" class="nav-link" data-scroll-target="#sec-fractals"><span class="header-section-number">6.2</span> Spatial correlations and fractals</a></li>
+  <li><a href="#natural-scenes-and-the-1f-spatial-frequency-falloff" id="toc-natural-scenes-and-the-1f-spatial-frequency-falloff" class="nav-link" data-scroll-target="#natural-scenes-and-the-1f-spatial-frequency-falloff"><span class="header-section-number">6.3</span> Natural scenes and the 1/f spatial frequency falloff</a></li>
+  <li><a href="#natural-scenes-the-dead-leaves-model" id="toc-natural-scenes-the-dead-leaves-model" class="nav-link" data-scroll-target="#natural-scenes-the-dead-leaves-model"><span class="header-section-number">6.4</span> Natural scenes: The dead leaves model</a></li>
+  <li><a href="#diffusion-models" id="toc-diffusion-models" class="nav-link" data-scroll-target="#diffusion-models"><span class="header-section-number">6.5</span> Diffusion models</a></li>
   </ul>
 </nav>
     </div>
@@ -432,7 +431,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 10, 2025</p>
+      <p class="date">September 19, 2025</p>
     </div>
   </div>
   
@@ -457,21 +456,27 @@ Work in Progress
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
-<p>Last updated: September 10, 2025</p>
+<p>Last updated: September 19, 2025</p>
 </div>
 </div>
 </div>
 <section id="sec-spatial-regularities-overview" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="sec-spatial-regularities-overview"><span class="header-section-number">6.1</span> Spatial regularities overview</h2>
-<p>Something about fractals. Textures. Other stuff. <span class="citation" data-cites="Simoncelli2001-imagestats">Simoncelli and Olshausen (<a href="references.html#ref-Simoncelli2001-imagestats" role="doc-biblioref">2001</a>)</span> <span class="citation" data-cites="Geisler2008-imagestats">Geisler (<a href="references.html#ref-Geisler2008-imagestats" role="doc-biblioref">2008</a>)</span> <span class="citation" data-cites="Ruderman1994-imagestats">Ruderman and Bialek (<a href="references.html#ref-Ruderman1994-imagestats" role="doc-biblioref">1994</a>)</span></p>
-<section id="sec-fractals" class="level3" data-number="6.1.1">
-<h3 data-number="6.1.1" class="anchored" data-anchor-id="sec-fractals"><span class="header-section-number">6.1.1</span> Fractals and Power Spectra scale invariance</h3>
+<p>We can immediately recognize whether an image is natural or not. Example of, say, random noise, line drawing, natural image.</p>
+<p>Why?</p>
+<p>The set of natural images has a spatial statistical characterization. Knowing how to quantify whether an image is likely to be a natural image -or not- has been a longstanding goal of image systems engineering and vision science. The reason is simple: the more wew know about the range of possible inputs, the better we will do at making inferences about the objects in the scene (<a href="lightfields-03-properties.html#sec-image-regularities" class="quarto-xref"><span>Section 4.2</span></a>).</p>
+<!--
+Something about fractals. Textures. Other stuff. @Simoncelli2001-imagestats @Geisler2008-imagestats @Ruderman1994-imagestats
+-->
+</section>
+<section id="sec-fractals" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="sec-fractals"><span class="header-section-number">6.2</span> Spatial correlations and fractals</h2>
 <p>The scale invariance of natural images arises from their power-law spectral decay, which mathematically ensures statistical consistency across spatial scales. The connection between 1/f^α spectra and scale invariance can be expressed through:</p>
 <p>The power spectrum of natural images follows:</p>
 <p><span class="math display">\[
 P(\omega) \propto \frac{1}{|\omega|^{2-\eta}} \quad \text{where } \eta \approx 0.8\text{--}1.5
 \]</span></p>
-<p>Here, <span class="math inline">\(\omega\)</span> represents spatial frequency magnitude, and <span class="math inline">\(\eta\)</span> controls the decay rate<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>Here, <span class="math inline">\(\omega\)</span> represents spatial frequency magnitude, and <span class="math inline">\(\eta\)</span> controls the decay rate<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 <p>For scale invariance under spatial scaling <span class="math inline">\(x \to \lambda x\)</span>, the power spectrum must satisfy:</p>
 <p><span class="math display">\[
 P(\lambda\omega) = \lambda^{-\kappa}P(\omega)
@@ -480,46 +485,37 @@ P(\lambda\omega) = \lambda^{-\kappa}P(\omega)
 <p><span class="math display">\[
 P(\lambda\omega) = \frac{1}{|\lambda\omega|^{2-\eta}} = \lambda^{-(2-\eta)}P(\omega)
 \]</span></p>
-<p>This matches the scale-invariance condition with <span class="math inline">\(\kappa = 2-\eta\)</span>, demonstrating that statistical properties remain consistent across scales<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
+<p>This matches the scale-invariance condition with <span class="math inline">\(\kappa = 2-\eta\)</span>, demonstrating that statistical properties remain consistent across scales<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
 <p><strong>Fractal connection</strong> The power-law exponent relates to fractal dimension <span class="math inline">\(D\)</span> through:</p>
 <p><span class="math display">\[
 D = 3 - \frac{\eta}{2}
 \]</span></p>
-<p>where <span class="math inline">\(D\)</span> quantifies space-filling characteristics. Natural images typically exhibit <span class="math inline">\(D \approx 2.2\text{--}2.6\)</span>, consistent with their 1/f^α spectra<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a><a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.</p>
-<p>This mathematical framework shows that 1/f^α spectra inherently encode fractal, scale-invariant structure - the same statistical regularities appear whether analyzing fine details or coarse features of natural scenes<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a><a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a><a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>.</p>
-<div style="text-align: center">
-<p>⁂</p>
-</div>
+<p>where <span class="math inline">\(D\)</span> quantifies space-filling characteristics. Natural images typically exhibit <span class="math inline">\(D \approx 2.2\text{--}2.6\)</span>, consistent with their 1/f^α spectra<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>,<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.</p>
+<p>This mathematical framework shows that 1/f^α spectra inherently encode fractal, scale-invariant structure - the same statistical regularities appear whether analyzing fine details or coarse features of natural scenes<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>,<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>,<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>.</p>
 </section>
-<section id="natural-scenes-and-the-1f-spatial-frequency-falloff" class="level3" data-number="6.1.2">
-<h3 data-number="6.1.2" class="anchored" data-anchor-id="natural-scenes-and-the-1f-spatial-frequency-falloff"><span class="header-section-number">6.1.2</span> Natural scenes and the 1/f spatial frequency falloff</h3>
+<section id="natural-scenes-and-the-1f-spatial-frequency-falloff" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="natural-scenes-and-the-1f-spatial-frequency-falloff"><span class="header-section-number">6.3</span> Natural scenes and the 1/f spatial frequency falloff</h2>
 <p>Who first pointed this out? Relationship to the scale invariant idea of fractals, and the fractal nature of many things.</p>
 <p>Ruderman and Bialek paper on natural image statistics.</p>
 <p>Field, Olshausen</p>
-<p><span class="citation" data-cites="lee2001-deadleaves">Lee et al. (<a href="references.html#ref-lee2001-deadleaves" role="doc-biblioref">2001</a>)</span></p>
 </section>
-<section id="natural-scenes-the-dead-leaves-model" class="level3" data-number="6.1.3">
-<h3 data-number="6.1.3" class="anchored" data-anchor-id="natural-scenes-the-dead-leaves-model"><span class="header-section-number">6.1.3</span> Natural scenes: The dead leaves model</h3>
+<section id="natural-scenes-the-dead-leaves-model" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="natural-scenes-the-dead-leaves-model"><span class="header-section-number">6.4</span> Natural scenes: The dead leaves model</h2>
+<p><span class="citation" data-cites="lee2001-deadleaves">Lee et al. (<a href="references.html#ref-lee2001-deadleaves" role="doc-biblioref">2001</a>)</span></p>
 <p>Jon’s Matlab script as a basis for discussing this. <a href="https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m">Software from Jon showing 1/f issues.</a></p>
 <p>Also, the deadleaves function in ISETCam.</p>
+</section>
+<section id="diffusion-models" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="diffusion-models"><span class="header-section-number">6.5</span> Diffusion models</h2>
+<p>Eero’s analysis of the statistical properties of images using diffusion models.</p>
 
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
-<div id="ref-Geisler2008-imagestats" class="csl-entry" role="listitem">
-Geisler WS (2008) <a href="http://dx.doi.org/10.1146/annurev.psych.58.110405.085632">Visual perception and the statistical properties of natural scenes</a>. Annu Rev Psychol 59:167–192
-</div>
 <div id="ref-lee2001-deadleaves" class="csl-entry" role="listitem">
 Lee AB, Mumford D, Huang J (2001) <a href="http://dx.doi.org/10.1023/a:1011109015675">Occlusion models for natural images: A statistical study of a scale-invariant dead leaves model</a>. Int J Comput Vis 41:35–59
 </div>
-<div id="ref-Ruderman1994-imagestats" class="csl-entry" role="listitem">
-Ruderman DL, Bialek W (1994) <a href="http://dx.doi.org/10.1103/PhysRevLett.73.814">Statistics of natural images: Scaling in the woods</a>. Phys Rev Lett 73:814–817
 </div>
-<div id="ref-Simoncelli2001-imagestats" class="csl-entry" role="listitem">
-Simoncelli EP, Olshausen BA (2001) Natural image statistics and neural representation. Annual Review of Neuroscience, Vol 34 24:1193–1216
-</div>
-</div>
-</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
@@ -534,7 +530,7 @@ Simoncelli EP, Olshausen BA (2001) Natural image statistics and neural represent
 <li id="fn8"><p>https://www.nature.com/articles/srep46672<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn9"><p>https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn10"><p>https://web.mit.edu/torralba/www/ne3302.pdf<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>http://vigir.missouri.edu/~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>http://vigir.missouri.edu/~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf –&gt;<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

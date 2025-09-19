@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-10">
+<meta name="dcterms.date" content="2025-09-19">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
-<title>3&nbsp; Measuring light fields – Foundations of Image Systems Engineering</title>
+<title>3&nbsp; Measuring light – Foundations of Image Systems Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -105,7 +124,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles/callouts.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -114,7 +133,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/lightfields-01-intro.html">Scenes</a></li><li class="breadcrumb-item"><a href="../chapters/lightfields-02-measurement.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/lightfields-01-intro.html">Scenes</a></li><li class="breadcrumb-item"><a href="../chapters/lightfields-02-measurement.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -163,7 +182,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/lightfields-02-measurement.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -388,21 +407,22 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-lfmeasurement-overview" id="toc-sec-lfmeasurement-overview" class="nav-link active" data-scroll-target="#sec-lfmeasurement-overview"><span class="header-section-number">3.1</span> Measuring light fields - overview</a></li>
+  <li><a href="#sec-lfmeasurement-overview" id="toc-sec-lfmeasurement-overview" class="nav-link active" data-scroll-target="#sec-lfmeasurement-overview"><span class="header-section-number">3.1</span> Measuring light: An overview</a></li>
   <li><a href="#radiometric-units" id="toc-radiometric-units" class="nav-link" data-scroll-target="#radiometric-units"><span class="header-section-number">3.2</span> Radiometric units</a></li>
   <li><a href="#radiance-from-a-point" id="toc-radiance-from-a-point" class="nav-link" data-scroll-target="#radiance-from-a-point"><span class="header-section-number">3.3</span> Radiance from a point</a></li>
   <li><a href="#radiance-from-a-surface" id="toc-radiance-from-a-surface" class="nav-link" data-scroll-target="#radiance-from-a-surface"><span class="header-section-number">3.4</span> Radiance from a surface</a></li>
   <li><a href="#irradiance" id="toc-irradiance" class="nav-link" data-scroll-target="#irradiance"><span class="header-section-number">3.5</span> Irradiance</a></li>
   <li><a href="#radiometric-units-1" id="toc-radiometric-units-1" class="nav-link" data-scroll-target="#radiometric-units-1"><span class="header-section-number">3.6</span> Radiometric units</a></li>
+  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions"><span class="header-section-number">3.7</span> Extensions</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/lightfields-01-intro.html">Scenes</a></li><li class="breadcrumb-item"><a href="../chapters/lightfields-02-measurement.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/lightfields-01-intro.html">Scenes</a></li><li class="breadcrumb-item"><a href="../chapters/lightfields-02-measurement.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-lfmeasurement" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light fields</span></span></h1>
+<h1 class="title"><span id="sec-lfmeasurement" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Measuring light</span></span></h1>
 </div>
 
 
@@ -413,7 +433,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 10, 2025</p>
+      <p class="date">September 19, 2025</p>
     </div>
   </div>
   
@@ -438,16 +458,15 @@ Work in Progress
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
-<p>Last updated: September 10, 2025</p>
+<p>Last updated: September 19, 2025</p>
 </div>
 </div>
 </div>
 <section id="sec-lfmeasurement-overview" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="sec-lfmeasurement-overview"><span class="header-section-number">3.1</span> Measuring light fields - overview</h2>
-<p>When we quantify the electromagnetic radiation, we are making a <strong>radiometric</strong> measurement. The amount can be specified in units of energy or the number of photons. If we measure how the amount over an array of sampled locations, we are measuring an image. The image might represent the radiation incident on a surface (such as a photograph) or encoded by a sensor array. The title of this book, foundations of <strong>image</strong> systems engineering, acknowledges the importance of measuring light intensity as an image is central to the field.</p>
-<p>Many aspects of image systems engineering are framed in terms of the radiance image, rather than think about the radiation as rays or waves. For example, suppose we measure the image at two planes: the plane just prior to the optics and the plane just prior to the image sensor surface. The relationship between these two images will depend upon the optics, of course. We would like to model the transformation between these two images; this transformation characterizes the optics.</p>
-<p>As a second example, we may wish to know the light intensity emitted from a display and the corresponding intensity that will arrive at the eye. Or we may want to know how the intensity of radiance that is incident on a surface, and the intensity of the radiance that is reflected by the surface. These calculations do not require us to think of rays or waves. We can develop tools and models based entirely on measurements of intensities from radiance sensors.</p>
-<p>The key principles for defining systematic measurement of image intensities are from <strong>Radiometry</strong>, the field that specializes in quantifying the light intensity at different positions. This section introduces basic concepts of Radiometry, along with the standard units used for quantifying the intensity. Radiometric units are an important part of image representation in the ISETCam simulation software. In <a href="optics-05-linear-space.html" class="quarto-xref"><span>Chapter 11</span></a> we introduce models of the intensity transformations, particularly for the important case of characterizing optics. Those radiance calculations rely on the properties of images and rely heavily on linear systems theory.</p>
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-lfmeasurement-overview"><span class="header-section-number">3.1</span> Measuring light: An overview</h2>
+<p>So far, we have described the light field as a collection of rays, focusing mainly on their direction. Now, we turn to measuring the energy carried by those rays.</p>
+<p>A single light ray is a useful geometric abstraction, but it is infinitely thin and carries no energy. Any practical measurement must capture a bundle of rays that occupies a finite amount of space and angle. We might measure a bundle of rays spreading out from a light source or a bundle of rays converging on a surface. The principles for quantifying the energy in these bundles come from <strong>radiometry</strong>, the science of measuring electromagnetic radiation, including light.</p>
+<p>This section introduces the fundamental concepts and units of radiometry. These units are essential for understanding how software, such as ISETCam, represents light and for modeling how optics transform light, which we will discuss in <a href="optics-05-linear-space.html" class="quarto-xref"><span>Chapter 11</span></a>.</p>
 </section>
 <section id="radiometric-units" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="radiometric-units"><span class="header-section-number">3.2</span> Radiometric units</h2>
@@ -455,21 +474,21 @@ Work in Progress
 <p>We describe the energy separately for each wavelength because, in most cases, the energy at different electromagnetic wavelengths act independently: we can measure the energy at two wavelengths separately, mix the two lights, and the result is simply the sum of the individual measurements. This additivity is a critical feature of light behavior in many cases <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <p>Radiometry defines units that are helpful for different types of geometry. The radiometric measures can be divided with respect to those from a source (radiance) and those arriving at a surface (irradiance). These can be further divided with respect to measures from a small (point) source, or from an extended surface.</p>
 <p>Finally, adjacent to the radiometric measurements there is a set of units that summarize the impact of the radiation on the human visual system. These measurements begin with the spectral radiometry units, and they are then reduced by calculating a weighted sum across wavelengths. The weights are selected to represent (roughly) the relative visibility of each wavelength. These <strong>photometric</strong> units parallel the radiometric units; for example, radiance and irradiance correspond to luminance and illuminance. In this section, we will describe the radiometric quantities.</p>
-<p>The reader might consult <a href="https://wandell.github.io/FOV-1995">Foundations of Vision</a> for more information about human vision; a summary of critical aspects of human vision for image systems engineering is presented in <a href="human-01.html" class="quarto-xref"><span>Chapter 21</span></a>. The experimental basis of photometry for the weighted sum across wavelengths -the key step to spectral radiometric quantities into photometric quantities- is explained in <span class="quarto-unresolved-ref">?sec-human-imagequality</span>.</p>
+<p>The reader might consult <a href="https://wandell.github.io/FOV-1995">Foundations of Vision</a> for more information about human vision; a summary of critical aspects of human vision for image systems engineering is presented in <a href="human-01.html" class="quarto-xref"><span>Chapter 21</span></a>. The experimental basis of photometry for the weighted sum across wavelengths -the key step to spectral radiometric quantities into photometric quantities- is explained in <a href="human-01.html" class="quarto-xref"><span>Chapter 21</span></a>.</p>
 </section>
-<section id="radiance-from-a-point" class="level2" data-number="3.3">
+<section id="radiance-from-a-point" class="level2 page-columns page-full" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="radiance-from-a-point"><span class="header-section-number">3.3</span> Radiance from a point</h2>
-<div id="fig-radiometry" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-cap-location="bottom" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
+<div id="fig-radiometry" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-cap-location="bottom" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-radiometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/lightfields/02-measuring/01-radiometry.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" data-fig-cap-location="bottom">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-radiometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.1: <strong>The geometry of four radiometric measures.</strong>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig margin-caption" id="fig-radiometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: The geometry of four, fundamental, radiometric measures.
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-radiometry" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> illustrates the geometry of four radiometric measures. The upper left illustrates a point source. The <em>radiant flux</em> measures the total energy emitted from the point in all directions. As for all radiometric measurements, the energy (watts) is specified as a function of wavelength (watts/nm).</p>
+<p><a href="#fig-radiometry" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> illustrates the geometry of four basic radiometric measures. The upper left illustrates a point source. The <em>radiant flux</em> measures the total energy emitted from the point in all directions. As for all radiometric measurements, the energy (watts) is specified as a function of wavelength (watts/nm).</p>
 <p>Often, we measure the light emitted by a point source in a particular direction, the <em>radiant intensity</em>. In that case we measure the energy within a cone of rays in a particular direction. The standard unit for angles in three-dimensions is the <em>steradian</em>, just as the radian is the standard unit for angles in two-dimensions. The radiant intensity has units of watts per steradian per nanometer (watts/sr/nm). Thus, if the measurement instrument measures energy over an angle of 0.5 steradians, we divide the measurement by 0.5. If the instrument sums over 10 nm bands, we divide the energy by 10. In this way, the radiant intensity normalizes the angle we measure to the unit steradian and per nanometer. The standard symbol for radiant intensity is <span class="math inline">\(I(\lambda)\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Steradians">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
@@ -579,10 +598,20 @@ Surface or point?
 </div>
 </div>
 </div>
+</section>
+<section id="extensions" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="extensions"><span class="header-section-number">3.7</span> Extensions</h2>
 <p>After considering the four fundamental radiometric measurements presented here, it might occur to you that there is additional information we could represent. For example, it would be possible to measure the radiance of a patch of an extended surface at many different viewing angles. This would produce a function whose value depends on the two parameters, azimuth (<span class="math inline">\(\alpha\)</span>) and elevation (<span class="math inline">\(\beta\)</span>) that define the viewing angle. Similarly, we might decide to measure the irradiance as a function of these two incident angles. We will return to these more advanced specifications when we introduce the bidirection reflectance distribution function in <a href="lightfields-04-properties-spectral.html#sec-properties-brdf" class="quarto-xref"><span>Section 5.8</span></a>.</p>
+<p>Perhaps most important for image systems engineering is to think about the data collected by an image sensor. For many years, the most common types of sensors were comprised of many small regions (<strong>pixels</strong>) that spatially sampled the irradiance at the sensor surface. Each pixel would sum the energy from the rays in all direction, and it would also sum across rays of a selected band of wavelengths. The number of spatial samples has increased steadily over the decades, starting with about <span class="math inline">\(256 \times 256\)</span> samples and now containing tens of millions of samples. Even from the earliest days, engineers and scientists realized that it might be beneficial to measure the rays from different directions separately (<a href="lightfields-01-intro.html#fig-adelson-wang" class="quarto-xref">Figure&nbsp;<span>2.6</span></a>), and it was immediately recognized that to reproduce color photographs required pixels with different wavelength sensitivities (<span class="citation" data-cites="maxwell1872-colorvision">Maxwell (<a href="references.html#ref-maxwell1872-colorvision" role="doc-biblioref">1872</a>)</span>).</p>
+<p>To some extent, image systems all comprise some method of measuring the light field combined with algorithms to interpret the light field. There are many ways to both acquire and interpret, and the remainder of the book is filled with examples.</p>
 
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-maxwell1872-colorvision" class="csl-entry" role="listitem">
+Maxwell JC (1872) On color vision. 75–83
+</div>
+</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
