@@ -11,15 +11,13 @@ This is a **draft** version of *Foundations of Image Systems Engineering*. Conte
 
 Last updated: {{< meta date >}}
 :::
+## Measuring light: An overview {#sec-lfmeasurement-overview}
 
-## Measuring light - overview {#sec-lfmeasurement-overview}
-Up to now we have been thinking about the full light field.  There are many cases, however, in which we wish to measure how the amount varies over an array of sampled locations.  In that case, we are measuring an image. The image might represent the radiation incident on a surface (such as a photograph) or encoded by a sensor array. The title of this book, foundations of **image** systems engineering, acknowledges that measuring light intensity as an image is central to the field.
+So far, we have described the light field as a collection of rays, focusing mainly on their direction. Now, we turn to measuring the energy carried by those rays.
 
-Many aspects of image systems engineering are framed in terms of images, rather than radiation as rays or waves. For example, suppose we measure the image at two planes: the plane just prior to the optics and the plane just prior to the image sensor surface. The relationship between these two images depends upon the optics. We would like to model how the optics transforms one image into the other. This transformation characterizes the optics. 
+A single light ray is a useful geometric abstraction, but it is infinitely thin and carries no energy. Any practical measurement must capture a bundle of rays that occupies a finite amount of space and angle. We might measure a bundle of rays spreading out from a light source or a bundle of rays converging on a surface. The principles for quantifying the energy in these bundles come from **radiometry**, the science of measuring electromagnetic radiation, including light.
 
-As a second example, we may wish to know the correspondence between the image emitted from a display and the corresponding image that arrives at the retina. Or we may want to know how the intensity of radiance that is incident on a surface, and the intensity of the radiance that is reflected by the surface. These calculations do not require us to think of rays or waves. We can develop tools and models based entirely on measurements of intensity made by radiance sensors.
-
-The key principles for defining systematic measurement of image intensities are from **Radiometry**, the field that specializes in quantifying the light intensity at different positions. This section introduces basic concepts of Radiometry, along with the standard units used for quantifying the intensity. Radiometric units are an important part of image representation in the ISETCam simulation software. In @sec-optics-linear-space we introduce models of the intensity transformations, particularly for the important case of characterizing optics. Those radiance calculations rely on the properties of images and rely heavily on linear systems theory.
+This section introduces the fundamental concepts and units of radiometry. These units are essential for understanding how software, such as ISETCam, represents light and for modeling how optics transform light, which we will discuss in @sec-optics-linear-space.
 
 ## Radiometric units
 
@@ -35,13 +33,13 @@ Radiometry defines units that are helpful for different types of geometry. The r
 
 Finally, adjacent to the radiometric measurements there is a set of units that summarize the impact of the radiation on the human visual system. These measurements begin with the spectral radiometry units, and they are then reduced by calculating a weighted sum across wavelengths. The weights are selected to represent (roughly) the relative visibility of each wavelength. These **photometric** units parallel the radiometric units; for example, radiance and irradiance correspond to luminance and illuminance. In this section, we will describe the radiometric quantities. 
 
-The reader might consult [Foundations of Vision](https://wandell.github.io/FOV-1995) for more information about human vision; a summary of critical aspects of human vision for image systems engineering is presented in @sec-human. The experimental basis of photometry for the weighted sum across wavelengths -the key step to spectral radiometric quantities into photometric quantities- is explained in @sec-human-imagequality.
+The reader might consult [Foundations of Vision](https://wandell.github.io/FOV-1995) for more information about human vision; a summary of critical aspects of human vision for image systems engineering is presented in @sec-human. The experimental basis of photometry for the weighted sum across wavelengths -the key step to spectral radiometric quantities into photometric quantities- is explained in @sec-human.
 
 ## Radiance from a point
 
-![**The geometry of four radiometric measures.**](images/lightfields/02-measuring/01-radiometry.png){#fig-radiometry fig-cap-location="bottom" width="100%" fig-align="center"}
+![The geometry of four, fundamental, radiometric measures.](images/lightfields/02-measuring/01-radiometry.png){#fig-radiometry fig-cap-location="bottom" width="100%" fig-align="center" .margin-caption}
 
-@fig-radiometry illustrates the geometry of four radiometric measures. The upper left illustrates a point source. The *radiant flux* measures the total energy emitted from the point in all directions. As for all radiometric measurements, the energy (watts) is specified as a function of wavelength (watts/nm).
+@fig-radiometry illustrates the geometry of four basic radiometric measures. The upper left illustrates a point source. The *radiant flux* measures the total energy emitted from the point in all directions. As for all radiometric measurements, the energy (watts) is specified as a function of wavelength (watts/nm).
 
 Often, we measure the light emitted by a point source in a particular direction, the *radiant intensity*. In that case we measure the energy within a cone of rays in a particular direction. The standard unit for angles in three-dimensions is the *steradian*, just as the radian is the standard unit for angles in two-dimensions. The radiant intensity has units of watts per steradian per nanometer (watts/sr/nm). Thus, if the measurement instrument measures energy over an angle of 0.5 steradians, we divide the measurement by 0.5. If the instrument sums over 10 nm bands, we divide the energy by 10. In this way, the radiant intensity normalizes the angle we measure to the unit steradian and per nanometer. The standard symbol for radiant intensity is $I(\lambda)$.
 
@@ -85,6 +83,10 @@ How do we determine whether we are measuring a part of a surface or a point? The
 These recommendations are filled with imprecision that I always try to remove. They contain words, like 'small', 'large', 'high', and 'low' because there is no fixed threshold at which a surface definitively becomes a point source. It is your decision whether to treat the source as a point. What is important is to tell people exactly what you did. If they don't like your choice, they can do it their own way. Or they can ask you - nicely - to try it another way.
 :::
 
+## Extensions
+
 After considering the four fundamental radiometric measurements presented here, it might occur to you that there is additional information we could represent. For example, it would be possible to measure the radiance of a patch of an extended surface at many different viewing angles. This would produce a function whose value depends on the two parameters, azimuth ($\alpha$) and elevation ($\beta$) that define the viewing angle. Similarly, we might decide to measure the irradiance as a function of these two incident angles. We will return to these more advanced specifications when we introduce the bidirection reflectance distribution function in @sec-properties-brdf. 
 
+Perhaps most important for image systems engineering is to think about the data collected by an image sensor. For many years, the most common types of sensors were comprised of many small regions (**pixels**) that spatially sampled the irradiance at the sensor surface. Each pixel would sum the energy from the rays in all direction, and it would also sum across rays of a selected band of wavelengths. The number of spatial samples has increased steadily over the decades, starting with about $256 \times 256$ samples and now containing tens of millions of samples. Even from the earliest days, engineers and scientists realized that it might be beneficial to measure the rays from different directions separately (@fig-adelson-wang), and it was immediately recognized that to reproduce color photographs required pixels with different wavelength sensitivities (@maxwell1872-colorvision).
 
+To some extent, image systems all comprise some method of measuring the light field combined with algorithms to interpret the light field. There are many ways to both acquire and interpret, and the remainder of the book is filled with examples.
