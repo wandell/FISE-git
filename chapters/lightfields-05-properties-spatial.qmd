@@ -3,6 +3,7 @@ date: last-modified
 ---
 
 # Spatial regularities {#sec-spatial-regularities}
+
 ::: {.callout-warning collapse="false"}
 ## Work in Progress
 
@@ -10,11 +11,20 @@ This is a **draft** version of *Foundations of Image Systems Engineering*. Conte
 
 Last updated: {{< meta date >}}
 :::
+
 ## Spatial regularities overview {#sec-spatial-regularities-overview}
 
-Something about fractals. Textures. Other stuff. @Simoncelli2001-imagestats @Geisler2008-imagestats @Ruderman1994-imagestats
+We can immediately recognize whether an image is natural or not.  Example of, say, random noise, line drawing, natural image.
 
-### Fractals and Power Spectra scale invariance {#sec-fractals}
+Why? 
+
+The set of natural images has a spatial statistical characterization. Knowing how to quantify whether an image is likely to be a natural image -or not- has been a longstanding goal of image systems engineering and vision science.  The reason is simple:  the more wew know about the range of possible inputs, the better we will do at making inferences about the objects in the scene (@sec-image-regularities).
+
+<!--
+Something about fractals. Textures. Other stuff. @Simoncelli2001-imagestats @Geisler2008-imagestats @Ruderman1994-imagestats
+-->
+
+## Spatial correlations and fractals {#sec-fractals}
 
 The scale invariance of natural images arises from their power-law spectral decay, which mathematically ensures statistical consistency across spatial scales. The connection between 1/f\^α spectra and scale invariance can be expressed through:
 
@@ -24,7 +34,7 @@ $$
 P(\omega) \propto \frac{1}{|\omega|^{2-\eta}} \quad \text{where } \eta \approx 0.8\text{--}1.5
 $$
 
-Here, $\omega$ represents spatial frequency magnitude, and $\eta$ controls the decay rate[^lightfields-properties-3][^lightfields-properties-4][^lightfields-properties-5].
+Here, $\omega$ represents spatial frequency magnitude, and $\eta$ controls the decay rate[^lightfields-properties-3],[^lightfields-properties-4],[^lightfields-properties-5].
 
 [^lightfields-properties-3]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
 
@@ -44,7 +54,7 @@ $$
 P(\lambda\omega) = \frac{1}{|\lambda\omega|^{2-\eta}} = \lambda^{-(2-\eta)}P(\omega)
 $$
 
-This matches the scale-invariance condition with $\kappa = 2-\eta$, demonstrating that statistical properties remain consistent across scales[^lightfields-properties-6][^lightfields-properties-7][^lightfields-properties-8].
+This matches the scale-invariance condition with $\kappa = 2-\eta$, demonstrating that statistical properties remain consistent across scales[^lightfields-properties-6],[^lightfields-properties-7],[^lightfields-properties-8].
 
 [^lightfields-properties-6]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
 
@@ -58,25 +68,22 @@ $$
 D = 3 - \frac{\eta}{2}
 $$
 
-where $D$ quantifies space-filling characteristics. Natural images typically exhibit $D \approx 2.2\text{--}2.6$, consistent with their 1/f\^α spectra[^lightfields-properties-9][^lightfields-properties-10].
+where $D$ quantifies space-filling characteristics. Natural images typically exhibit $D \approx 2.2\text{--}2.6$, consistent with their 1/f\^α spectra[^lightfields-properties-9],[^lightfields-properties-10].
 
 [^lightfields-properties-9]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
 
 [^lightfields-properties-10]: https://www.nature.com/articles/srep46672
 
-This mathematical framework shows that 1/f\^α spectra inherently encode fractal, scale-invariant structure - the same statistical regularities appear whether analyzing fine details or coarse features of natural scenes[^lightfields-properties-11][^lightfields-properties-12][^lightfields-properties-13].
+This mathematical framework shows that 1/f\^α spectra inherently encode fractal, scale-invariant structure - the same statistical regularities appear whether analyzing fine details or coarse features of natural scenes[^lightfields-properties-11],[^lightfields-properties-12],[^lightfields-properties-13].
 
 [^lightfields-properties-11]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
 
 [^lightfields-properties-12]: https://web.mit.edu/torralba/www/ne3302.pdf
 
 [^lightfields-properties-13]: http://vigir.missouri.edu/\~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf
+-->
 
-::: {style="text-align: center"}
-⁂
-:::
-
-### Natural scenes and the 1/f spatial frequency falloff
+## Natural scenes and the 1/f spatial frequency falloff
 
 Who first pointed this out? Relationship to the scale invariant idea of fractals, and the fractal nature of many things.
 
@@ -84,10 +91,16 @@ Ruderman and Bialek paper on natural image statistics.
 
 Field, Olshausen
 
-@lee2001-deadleaves
 
-### Natural scenes: The dead leaves model
+## Natural scenes: The dead leaves model
+
+@lee2001-deadleaves
 
 Jon's Matlab script as a basis for discussing this. [Software from Jon showing 1/f issues.](https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m)
 
 Also, the deadleaves function in ISETCam.
+
+## Diffusion models
+
+Eero's analysis of the statistical properties of images using diffusion models.
+
