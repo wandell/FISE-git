@@ -489,7 +489,7 @@ Work in Progress
 <h2 data-number="11.2" class="anchored" data-anchor-id="linearity"><span class="header-section-number">11.2</span> Linearity</h2>
 <section id="sec-pointspread-2" class="level3" data-number="11.2.1">
 <h3 data-number="11.2.1" class="anchored" data-anchor-id="sec-pointspread-2"><span class="header-section-number">11.2.1</span> Point spread functions</h3>
-<p>In <a href="optics-01-geometric.html#sec-pointspread" class="quarto-xref"><span>Section 7.6</span></a> I introduced the idea of the point spread function (PSF). It is simply the image of a point of light. If we know the point spread for each location in the scene, and superposition holds, we can predict how any input scene becomes an image.</p>
+<p>In <a href="optics-01-geometric.html#sec-pointspread" class="quarto-xref"><span>Section 7.7</span></a> I introduced the idea of the point spread function (PSF). It is simply the image of a point of light. If we know the point spread for each location in the scene, and superposition holds, we can predict how any input scene becomes an image.</p>
 <p>The scene is a collection of scene points, <span class="math inline">\(\mathbf{p} = (p_x, p_y, p_z)\)</span>, each with its own intensity <span class="math inline">\(S(\mathbf{p})\)</span>. Write the point spread function of a scene point as <span class="math inline">\(\text{PSF}_{\mathbf{p}(x, y)}\)</span>, where <span class="math inline">\((x, y)\)</span> are positions in the image. Using superposition, we calculate the output image, <span class="math inline">\(O(x,y)\)</span> by adding up the weighted point spreads from every scene point. The formula looks like this:</p>
 <p><span id="eq-pointspread-1"><span class="math display">\[
 O(x, y) = \sum_{\mathbf{p}} s(\mathbf{p})\, \text{PSF}_{\mathbf{p}}(x, y)
@@ -531,7 +531,7 @@ A limitation of PSFs
 <h2 data-number="11.3" class="anchored" data-anchor-id="sec-pointspread-common"><span class="header-section-number">11.3</span> Common PSFs in simulation</h2>
 <p>The PSFs of real systems can be difficult to model using a simple formula. In ISETCam we make it possible to provide an empirical PSF when it is known. But there are many cases in which the PSF is not yet known, say for a system that is under design and the optics have not yet been selected. In such optical system simulations, a few PSFs are routinely used to approximate image system performance prior to implementation (<a href="#fig-psf-graph" class="quarto-xref">Figure&nbsp;<span>11.1</span></a>).</p>
 <ul>
-<li><strong>Airy pattern</strong> is the only one of these PSFs that is based on the physics of light waves. This is the PSF we measure for a perfect, diffraction-limited lens imaging a point at a distance (<a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.5</span></a> and <a href="optics-01-geometric.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>7.12</span></a>). The Airy pattern depends on wavelength and represents a best case limit. The optics you use will not be better than this.</li>
+<li><strong>Airy pattern</strong> is the only one of these PSFs that is based on the physics of light waves. This is the PSF we measure for a perfect, diffraction-limited lens imaging a point at a distance (<a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.6</span></a> and <a href="optics-01-geometric.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>7.12</span></a>). The Airy pattern depends on wavelength and represents a best case limit. The optics you use will not be better than this.</li>
 <li><strong>Gaussian</strong> is popular because it’s easy to work with in calculations.</li>
 <li><strong>Lorentzian</strong> (also called Cauchy) has higher tails than the Gaussian. This makes it better for modeling systems where light gets scattered a lot—like if the lens is scratched or there are many internal reflections from a multi-element lens assembly.</li>
 <li><strong>Pillbox</strong> A square region with constant values that averages the values over the region. Who doesn’t like a simple average? Well, I don’t - but apart from me?</li>
@@ -572,7 +572,7 @@ I(r) = I_0 \left[ \frac{2 J_1\left( \frac{\pi r}{\lambda N} \right)}{ \frac{\pi 
 <li><span class="math inline">\(N\)</span> is the <span class="math inline">\(f/\#\)</span> of the lens</li>
 <li><span class="math inline">\(\lambda\)</span> is the wavelength of light</li>
 </ul>
-<p>The first dark ring defines the Airy disk (<a href="optics-01-geometric.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>7.12</span></a> , <a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.5</span></a>). It is the diameter where the intensity drops to zero, and defines the smallest spot size.</p>
+<p>The first dark ring defines the Airy disk (<a href="optics-01-geometric.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>7.12</span></a> , <a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.6</span></a>). It is the diameter where the intensity drops to zero, and defines the smallest spot size.</p>
 <p><span id="eq-airydisk3"><span class="math display">\[
 d = \arcsin(2.44 \, \lambda N) \approx 2.44 \, \lambda N
 \tag{11.2}\]</span></span></p>

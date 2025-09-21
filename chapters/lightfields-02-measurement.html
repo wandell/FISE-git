@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-19">
+<meta name="dcterms.date" content="2025-09-21">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>3&nbsp; Measuring light – Foundations of Image Systems Engineering</title>
@@ -413,7 +413,7 @@ window.Quarto = {
   <li><a href="#radiance-from-a-surface" id="toc-radiance-from-a-surface" class="nav-link" data-scroll-target="#radiance-from-a-surface"><span class="header-section-number">3.4</span> Radiance from a surface</a></li>
   <li><a href="#irradiance" id="toc-irradiance" class="nav-link" data-scroll-target="#irradiance"><span class="header-section-number">3.5</span> Irradiance</a></li>
   <li><a href="#radiometric-units-1" id="toc-radiometric-units-1" class="nav-link" data-scroll-target="#radiometric-units-1"><span class="header-section-number">3.6</span> Radiometric units</a></li>
-  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions"><span class="header-section-number">3.7</span> Extensions</a></li>
+  <li><a href="#beyond-the-basics" id="toc-beyond-the-basics" class="nav-link" data-scroll-target="#beyond-the-basics"><span class="header-section-number">3.7</span> Beyond the basics</a></li>
   </ul>
 </nav>
     </div>
@@ -433,7 +433,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 19, 2025</p>
+      <p class="date">September 21, 2025</p>
     </div>
   </div>
   
@@ -458,14 +458,14 @@ Work in Progress
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>This is a <strong>draft</strong> version of <em>Foundations of Image Systems Engineering</em>. Content is actively evolving. Please send comments or corrections via <a href="https://github.com/wandell/FISE-git/issues">GitHub Issues</a>.</p>
-<p>Last updated: September 19, 2025</p>
+<p>Last updated: September 21, 2025</p>
 </div>
 </div>
 </div>
 <section id="sec-lfmeasurement-overview" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-lfmeasurement-overview"><span class="header-section-number">3.1</span> Measuring light: An overview</h2>
-<p>So far, we have described the light field as a collection of rays, focusing mainly on their direction. Now, we turn to measuring the energy carried by those rays.</p>
-<p>A single light ray is a useful geometric abstraction, but it is infinitely thin and carries no energy. Any practical measurement must capture a bundle of rays that occupies a finite amount of space and angle. We might measure a bundle of rays spreading out from a light source or a bundle of rays converging on a surface. The principles for quantifying the energy in these bundles come from <strong>radiometry</strong>, the science of measuring electromagnetic radiation, including light.</p>
+<p>So far, we have described the light field as a collection of rays, mainly paying attention to the ray directions. Now, we turn to measuring the energy carried by those rays.</p>
+<p>A single light ray is a useful geometric abstraction, but it is infinitely thin and thus has no energy. Any real measurement of light must capture a bundle of rays that occupies a finite amount of space and angle. We might measure a bundle of rays spreading out from a light source or a bundle of rays converging on a surface. The principles for quantifying the energy in these bundles come from <strong>radiometry</strong>, the science of measuring electromagnetic radiation, including light.</p>
 <p>This section introduces the fundamental concepts and units of radiometry. These units are essential for understanding how software, such as ISETCam, represents light and for modeling how optics transform light, which we will discuss in <a href="optics-05-linear-space.html" class="quarto-xref"><span>Chapter 11</span></a>.</p>
 </section>
 <section id="radiometric-units" class="level2" data-number="3.2">
@@ -599,11 +599,13 @@ Surface or point?
 </div>
 </div>
 </section>
-<section id="extensions" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="extensions"><span class="header-section-number">3.7</span> Extensions</h2>
-<p>After considering the four fundamental radiometric measurements presented here, it might occur to you that there is additional information we could represent. For example, it would be possible to measure the radiance of a patch of an extended surface at many different viewing angles. This would produce a function whose value depends on the two parameters, azimuth (<span class="math inline">\(\alpha\)</span>) and elevation (<span class="math inline">\(\beta\)</span>) that define the viewing angle. Similarly, we might decide to measure the irradiance as a function of these two incident angles. We will return to these more advanced specifications when we introduce the bidirection reflectance distribution function in <a href="lightfields-04-properties-spectral.html#sec-properties-brdf" class="quarto-xref"><span>Section 5.8</span></a>.</p>
-<p>Perhaps most important for image systems engineering is to think about the data collected by an image sensor. For many years, the most common types of sensors were comprised of many small regions (<strong>pixels</strong>) that spatially sampled the irradiance at the sensor surface. Each pixel would sum the energy from the rays in all direction, and it would also sum across rays of a selected band of wavelengths. The number of spatial samples has increased steadily over the decades, starting with about <span class="math inline">\(256 \times 256\)</span> samples and now containing tens of millions of samples. Even from the earliest days, engineers and scientists realized that it might be beneficial to measure the rays from different directions separately (<a href="lightfields-01-intro.html#fig-adelson-wang" class="quarto-xref">Figure&nbsp;<span>2.6</span></a>), and it was immediately recognized that to reproduce color photographs required pixels with different wavelength sensitivities (<span class="citation" data-cites="maxwell1872-colorvision">Maxwell (<a href="references.html#ref-maxwell1872-colorvision" role="doc-biblioref">1872</a>)</span>).</p>
-<p>To some extent, image systems all comprise some method of measuring the light field combined with algorithms to interpret the light field. There are many ways to both acquire and interpret, and the remainder of the book is filled with examples.</p>
+<section id="beyond-the-basics" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="beyond-the-basics"><span class="header-section-number">3.7</span> Beyond the basics</h2>
+<p>The four fundamental radiometric measurements provide a foundation for understanding light. In later chapters, we will expand on these concepts by introducing additional dependencies and variables.</p>
+<p>For instance, radiance from a surface patch can be measured not just in a single direction but as a function of the viewing angle, described by azimuth (<span class="math inline">\(\alpha\)</span>) and elevation (<span class="math inline">\(\beta\)</span>). Similarly, irradiance arriving at a surface can be analyzed as a function of the incident angle. These angle-dependent measurements are crucial for understanding how light interacts with materials. We will delve deeper into this topic when we discuss the bidirectional reflectance distribution function (BRDF) in <a href="lightfields-04-properties-spectral.html#sec-properties-brdf" class="quarto-xref"><span>Section 5.8</span></a>.</p>
+<p>One of the most significant extensions for image systems engineering involves understanding the data captured by image sensors. Modern sensors are typically arrays of small light-sensitive elements called <strong>pixels</strong>, which spatially sample the irradiance at the sensor surface. Each pixel integrates energy from rays arriving from all directions within a specific wavelength band. Over time, the number of pixels in sensors has grown dramatically, from early arrays with about <span class="math inline">\(256 \times 256\)</span> pixels to today’s sensors with tens of millions.</p>
+<p>From the outset, researchers recognized the value of capturing more detailed information. Measuring rays from different directions separately, as illustrated in <a href="lightfields-01-intro.html#fig-adelson-wang" class="quarto-xref">Figure&nbsp;<span>2.7</span></a>, provides richer data and forms the basis of light field imaging. Similarly, reproducing color requires pixels with different wavelength sensitivities, a concept first formalized in <span class="citation" data-cites="maxwell1872-colorvision">Maxwell (<a href="references.html#ref-maxwell1872-colorvision" role="doc-biblioref">1872</a>)</span>. This understanding gave rise to the field of <strong>photometry</strong>, which we will explore further in <a href="human-01.html#sec-human-overview" class="quarto-xref"><span>Section 21.1</span></a>.</p>
+<p>A solid grasp of the physics of light is essential for image systems engineering. An imaging system consists of two interconnected components: the <strong>acquisition hardware</strong>, which measures specific aspects of the light field, and the <strong>processing algorithms</strong>, which interpret or transform that data. Effective system design requires these components to work in harmony. By understanding the information captured by the hardware, we can develop algorithms that interpret the data effectively, often incorporating prior knowledge about the behavior of light and the characteristics of natural images. This synergy between acquisition and processing is a cornerstone of modern imaging system design.</p>
 
 
 
