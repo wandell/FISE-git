@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-21">
+<meta name="dcterms.date" content="2025-09-22">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
-<title>28&nbsp; Linear systems – Foundations of Image Systems Engineering</title>
+<title>27&nbsp; Rendering – Foundations of Image Systems Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,8 +32,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/appendix-02-spaceinvariance.html" rel="next">
-<link href="../chapters/part-appendix.html" rel="prev">
+<link href="../chapters/part-appendix.html" rel="next">
+<link href="../chapters/imgprocessing-01-hardware.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -114,7 +114,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-appendix.html">Appendix</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-01-linearsystems.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Linear systems</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-processing.html">Image processing</a></li><li class="breadcrumb-item"><a href="../chapters/imgprocessing-02-rendering.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Rendering</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -397,7 +397,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/imgprocessing-02-rendering.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/imgprocessing-02-rendering.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Rendering</span></span></a>
   </div>
 </li>
@@ -420,7 +420,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link active">
+  <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
   </div>
 </li>
@@ -454,23 +454,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-appendix-linear-systems-overview" id="toc-sec-appendix-linear-systems-overview" class="nav-link active" data-scroll-target="#sec-appendix-linear-systems-overview"><span class="header-section-number">28.1</span> Linear systems overview</a></li>
-  <li><a href="#sec-ls-superposition" id="toc-sec-ls-superposition" class="nav-link" data-scroll-target="#sec-ls-superposition"><span class="header-section-number">28.2</span> Superposition and Homogeneity</a></li>
-  <li><a href="#sec-ls-discrete" id="toc-sec-ls-discrete" class="nav-link" data-scroll-target="#sec-ls-discrete"><span class="header-section-number">28.3</span> Discrete linear systems</a></li>
-  <li><a href="#sec-ls-point-matrix" id="toc-sec-ls-point-matrix" class="nav-link" data-scroll-target="#sec-ls-point-matrix"><span class="header-section-number">28.4</span> Pointspread matrix</a></li>
-  <li><a href="#sec-ls-spatial-basis" id="toc-sec-ls-spatial-basis" class="nav-link" data-scroll-target="#sec-ls-spatial-basis"><span class="header-section-number">28.5</span> Spatial basis functions</a></li>
-  <li><a href="#sec-ls-orthogonal-transforms" id="toc-sec-ls-orthogonal-transforms" class="nav-link" data-scroll-target="#sec-ls-orthogonal-transforms"><span class="header-section-number">28.6</span> Image transforms</a></li>
-  <li><a href="#sec-ls-eigenfunctions" id="toc-sec-ls-eigenfunctions" class="nav-link" data-scroll-target="#sec-ls-eigenfunctions"><span class="header-section-number">28.7</span> Eigenfunctions</a></li>
-  <li><a href="#sec-ls-local-linearity" id="toc-sec-ls-local-linearity" class="nav-link" data-scroll-target="#sec-ls-local-linearity"><span class="header-section-number">28.8</span> Local linearity</a></li>
+  <li><a href="#sec-rendering-overview" id="toc-sec-rendering-overview" class="nav-link active" data-scroll-target="#sec-rendering-overview"><span class="header-section-number">27.1</span> Rendering overview</a></li>
+  <li><a href="#image-compression" id="toc-image-compression" class="nav-link" data-scroll-target="#image-compression"><span class="header-section-number">27.2</span> Image compression</a></li>
+  <li><a href="#color-management" id="toc-color-management" class="nav-link" data-scroll-target="#color-management"><span class="header-section-number">27.3</span> Color management</a></li>
+  <li><a href="#display-modeling" id="toc-display-modeling" class="nav-link" data-scroll-target="#display-modeling"><span class="header-section-number">27.4</span> Display modeling</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-appendix.html">Appendix</a></li><li class="breadcrumb-item"><a href="../chapters/appendix-01-linearsystems.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Linear systems</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-processing.html">Image processing</a></li><li class="breadcrumb-item"><a href="../chapters/imgprocessing-02-rendering.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Rendering</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-appendix-linear-systems" class="quarto-section-identifier"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Linear systems</span></span></h1>
+<h1 class="title"><span id="sec-rendering" class="quarto-section-identifier"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Rendering</span></span></h1>
 </div>
 
 
@@ -481,7 +477,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 21, 2025</p>
+      <p class="date">September 22, 2025</p>
     </div>
   </div>
   
@@ -508,270 +504,26 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: September 21, 2025</p>
+<p>Last updated: September 22, 2025</p>
 </div>
 </div>
 </div>
-<section id="sec-appendix-linear-systems-overview" class="level2" data-number="28.1">
-<h2 data-number="28.1" class="anchored" data-anchor-id="sec-appendix-linear-systems-overview"><span class="header-section-number">28.1</span> Linear systems overview</h2>
-<p>Linear systems theory is a foundational topic in science, engineering, and mathematics. Each discipline field explains the importance of linear systems a bit differently, and they use it at varying levels of depth. In this appendix I introduce the core ideas of linear systems for image systems engineering. I have two goals. First, I hope to provide readers an accessible and intuitive description from the point of view of image systems engineering. Second, I will introduce the general notation used throughout this book. My hope is that both newcomers and those with prior exposure will find this chapter a useful reference for the concepts and tools we use in image systems engineering.</p>
+<section id="sec-rendering-overview" class="level2" data-number="27.1">
+<h2 data-number="27.1" class="anchored" data-anchor-id="sec-rendering-overview"><span class="header-section-number">27.1</span> Rendering overview</h2>
+<p>These are processing steps that are designed principally for human visual consumption. Rendering to a person.</p>
+<p>Maybe I will add another processing for rendering for machine vision applications.</p>
 </section>
-<section id="sec-ls-superposition" class="level2" data-number="28.2">
-<h2 data-number="28.2" class="anchored" data-anchor-id="sec-ls-superposition"><span class="header-section-number">28.2</span> Superposition and Homogeneity</h2>
-<p>A system <span class="math inline">\(L\)</span> is linear if it satisfies the superposition rule:</p>
-<p><span id="eq-superposition"><span class="math display">\[
-L(x + y) = L(x) + L(y).
-\tag{28.1}\]</span></span></p>
-<p>Here, <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are two possible inputs, and <span class="math inline">\(L(x)\)</span> is the system’s response to the input <span class="math inline">\(x\)</span>. The input variable can be a scalar, vector, matrix, or tensor. For example, in an optical system, <span class="math inline">\(x\)</span> might represent the incident light field at the entrance aperture, and <span class="math inline">\(L(x)\)</span> could be the spectral irradiance measured at the sensor. For modeling an image sensor, <span class="math inline">\(x\)</span> could be the irradiance at the sensor and <span class="math inline">\(L(x)\)</span> would be the electrons accumulated in the pixels. For human vision, <span class="math inline">\(x\)</span> might be the spectral power distribution of the incident light field and <span class="math inline">\(L(x)\)</span> the photon absorptions in the three types of cone photoreceptors.</p>
-<p><strong>Homogeneity</strong> is special case of superposition:</p>
-<p><span id="eq-homogeneity"><span class="math display">\[
-L(\alpha x) = \alpha L(x)
-\tag{28.2}\]</span></span></p>
-<p>Homogeneity follows from superposition. For example, adding an input to itself,</p>
-<p><span class="math display">\[\begin{aligned}
-L(x + x) &amp;= L(2x) \nonumber  \\
-&amp;= L(x) + L(x) \nonumber \\
-&amp;= 2L(x) . \nonumber
-\end{aligned}
-\]</span></p>
-<p>Perhaps you can see how this generalizes to any integer <span class="math inline">\(m\)</span>:</p>
-<p><span class="math display">\[
-L(m x) = m L(x).
-\]</span></p>
-<p>Homogeneity is also noted as a special case because a system can be homogeneous without being linear. For example the absolute value, <span class="math inline">\(f(x) = |x|\)</span>, and the vector length function</p>
-<p><span class="math display">\[
-f(\mathbf{x}) = \|\mathbf{x}\|_2 = \sqrt{x_1^2 + x_2^2 + \cdots + x_n^2}
-\]</span></p>
-<p>are both homogeneous but not linear. The function <span class="math inline">\(ReLU(x) = \max(0, x)\)</span>, widely used in neural networks, is also homogeneous for <span class="math inline">\(\alpha &gt; 0\)</span> but not linear:</p>
-<p><span class="math display">\[
-1 = ReLU(2 + -1) \neq ReLU(2) + ReLU(-1) = 2 + 0.
-\]</span></p>
-<p>Remembering that such cases exist may be of use to you in the future.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Extension to Rational Numbers">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Extension to Rational Numbers
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>For real-valued systems that obey superposition, homogeneity holds for any rational number. If <span class="math inline">\(\alpha = \frac{p}{q}\)</span> is rational:</p>
-<p><span class="math display">\[
-L(\alpha x) = L\left(\frac{p}{q}x\right) = p L\left(\frac{x}{q}\right).
-\]</span></p>
-<p>Let <span class="math inline">\(x' = x/q\)</span>, so</p>
-<p><span class="math display">\[
-L(x) = L(q x') = q L(x') \implies L(x') = \frac{1}{q} L(x).
-\]</span></p>
-<p>Therefore,</p>
-<p><span class="math display">\[
-L(\alpha x) = p L(x') = p \frac{1}{q} L(x) = \frac{p}{q} L(x) = \alpha L(x).
-\]</span></p>
-<p>To extend this to all real numbers, continuity and far more extensive proof is required. But how about we just work with the rationals and be engineers for now?</p>
-</div>
-</div>
-</div>
+<section id="image-compression" class="level2" data-number="27.2">
+<h2 data-number="27.2" class="anchored" data-anchor-id="image-compression"><span class="header-section-number">27.2</span> Image compression</h2>
 </section>
-<section id="sec-ls-discrete" class="level2" data-number="28.3">
-<h2 data-number="28.3" class="anchored" data-anchor-id="sec-ls-discrete"><span class="header-section-number">28.3</span> Discrete linear systems</h2>
-<p>The ISETCam simulations rely on <strong>discrete</strong> representations of linear systems.</p>
-<p>We convert a continuous stimulus—such as a spatial pattern or a spectrum—by sampling it at a set of points. In general, a continuous signal <span class="math inline">\(s(x)\)</span> becomes a vector of sampled values, <span class="math inline">\(\mathbf{s}\)</span>, by sampling it at a set of values, <span class="math inline">\(x_i\)</span>. We might write the entries as <span class="math inline">\(s[x_i]\)</span>, where <span class="math inline">\(i\)</span> is an integer index, or simply <span class="math inline">\(s[i]\)</span>. The square brackets are a reminder that the signal is discretely sampled.</p>
-<p>Any discrete linear system can be represented as a matrix, <span class="math inline">\(\mathbf{L}\)</span>, which maps the input vector to an output vector, <span class="math inline">\(\mathbf{o}\)</span>:</p>
-<p><span id="eq-linear-matrix"><span class="math display">\[
-\mathbf{o} = \mathbf{L} \mathbf{s}
-\tag{28.3}\]</span></span></p>
-<p>This can also be written as a summation:</p>
-<p><span id="eq-linear-matrix-summation"><span class="math display">\[
-o[i] = \sum_j L[i,j] s[j]
-\tag{28.4}\]</span></span></p>
-<p>It’s helpful to visualize this as a matrix tableau: each column of <span class="math inline">\(\mathbf{L}\)</span> is scaled by the corresponding entry in <span class="math inline">\(\mathbf{s}\)</span>, and the output vector is the sum of these scaled columns.</p>
-<div id="fig-ls-matrix-tableau" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-ls-matrix-tableau-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/appendix/23-linear/matrixTableau-1.png" class="img-fluid figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ls-matrix-tableau-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;28.1: Visualization of a matrix multiplication. This is called a matrix tableau. It emphasizes the matrix as a set of columns, and the signal (<span class="math inline">\(s\)</span>) and output (<span class="math inline">\(o\)</span>) as two column vectors. The linear transformation, <span class="math inline">\(L\)</span>, in this case is a square matrix (<span class="math inline">\(N \times N\)</span>).
-</figcaption>
-</figure>
-</div>
-<p>Some matrices have an inverse, and for these we can estimate the input by measuring the output. Square matrices are particularly simple to work with, and a square matrix means we are matching the sample spacing of the inputs with the sample spacing of the outputs. Some matrices are not invertible, and the best we can do from the measurements is constrain the set of possible inputs.</p>
-<p>The notation we use for the vectors and matrices may vary—sometimes the input is naturally an image (a matrix), and we “flatten” it into a vector; other times, we use tricks to keep the image structure intact and still carry out the computation. But the key idea is always the same: in the discrete world, linear systems are matrices that map input vectors to output vectors.</p>
-<p>Throughout this volume, I am trying to keep the mathematical typography consistent with this table.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Some matrix notation">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Some matrix notation
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 52%">
-<col style="width: 47%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Notation</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Bold capital letter</strong> (<span class="math inline">\(\mathbf{B}\)</span>)</td>
-<td>Matrix</td>
-</tr>
-<tr class="even">
-<td><strong>Bold lower case</strong> (<span class="math inline">\(\mathbf{s}\)</span>)</td>
-<td>Vector (column, <span class="math inline">\(N \times 1\)</span>)</td>
-</tr>
-<tr class="odd">
-<td><em>Ordinary lower case</em> (<span class="math inline">\(\alpha\)</span>, <span class="math inline">\(s\)</span>)</td>
-<td>Scalar (Latin or Greek)</td>
-</tr>
-<tr class="even">
-<td><em>Ordinary upper case</em> (<span class="math inline">\(L(u,v)\)</span>)</td>
-<td>2D matrix or image (continuous)</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(L[\text{row},\text{col}]\)</span></td>
-<td>Discrete image or matrix (row, col ordering)</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\mathbf{B^t}\)</span></td>
-<td>Matrix or vector transpose (superscript <span class="math inline">\(t\)</span>)</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
+<section id="color-management" class="level2" data-number="27.3">
+<h2 data-number="27.3" class="anchored" data-anchor-id="color-management"><span class="header-section-number">27.3</span> Color management</h2>
 </section>
-<section id="sec-ls-point-matrix" class="level2" data-number="28.4">
-<h2 data-number="28.4" class="anchored" data-anchor-id="sec-ls-point-matrix"><span class="header-section-number">28.4</span> Pointspread matrix</h2>
-<p>Image systems engineers often examine system performance by measuring the response to a point of light—this is the point spread function (PSF) introduced in <a href="optics-01-geometric.html#sec-pointspread" class="quarto-xref"><span>Section 7.7</span></a>. A point of light, <span class="math inline">\(p_i\)</span>, is represented by a vector that has <span class="math inline">\(1\)</span> in a single location and zeros elsewhere. Each column of the linear transformation, <span class="math inline">\(\mathbf{L}\)</span>, is the point spread function corresponding to the sampled point, <span class="math inline">\(\text{PSF}_i\)</span>.</p>
-<div id="fig-ls-matrix-psf" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-ls-matrix-psf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/appendix/23-linear/psfmatrix.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ls-matrix-psf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;28.2: Matrix tableau of an optical system with the point spreads in the columns.
-</figcaption>
-</figure>
-</div>
-<p>I drew this tableau for a one-dimensional point spread, to make the idea clear. For two-dimensional images, we would have to flatten the image data into columns. But only complexity would be added, and the principles would be unchanged.</p>
-</section>
-<section id="sec-ls-spatial-basis" class="level2" data-number="28.5">
-<h2 data-number="28.5" class="anchored" data-anchor-id="sec-ls-spatial-basis"><span class="header-section-number">28.5</span> Spatial basis functions</h2>
-<p>The PSF is a fundamental tool, but it has limitations: using a point of light involves very few photons, and PSFs can vary in complex ways that are hard to summarize with just a few parameters. A key insight is that we can use linear models to describe images in many different ways, not just as a collection of points. Some alternative representations are especially useful for analyzing the optical performance of imaging systems. Here, we use linear models to create alternative representations of the spatial intensity of images, <span class="math inline">\(S[u,v]\)</span>.</p>
-<p>A linear model for spatial intensity looks like this:</p>
-<p><span id="eq-spatial-linear-model"><span class="math display">\[
-S[u,v] = \sum_{i} w[i] B_i[u,v]
-\tag{28.5}\]</span></span></p>
-<p>The functions <span class="math inline">\(B_i[u,v]\)</span> are called <strong>spatial basis functions</strong>, and the scalars <span class="math inline">\(w[i]\)</span> are the weights for each basis function. The image intensity <span class="math inline">\(S[u,v]\)</span> is just a weighted sum of these basis functions.</p>
-<p>If we agree on a set of basis functions, then we can describe any image simply by specifying the weights. In fact, when we describe an image as a grid of intensity values, we’re implicitly using a set of <strong>point basis</strong> functions—each one nonzero at a single location and zero everywhere else.</p>
-</section>
-<section id="sec-ls-orthogonal-transforms" class="level2" data-number="28.6">
-<h2 data-number="28.6" class="anchored" data-anchor-id="sec-ls-orthogonal-transforms"><span class="header-section-number">28.6</span> Image transforms</h2>
-<p>For a linear model to be useful, we need a way to find the basis weights from the image. A function that maps an image, <span class="math inline">\(S[u,v]\)</span> to the weights <span class="math inline">\(w[i]\)</span> is called an <strong>image transform</strong>. If we choose <strong>orthonormal basis functions</strong> this transform becomes especially simple. Define the inner product <span class="math display">\[
-\langle A, B \rangle \;=\; \sum_{u,v} A[u,v]\;B[u,v].
-\]</span> Orthonormal means <span id="eq-spatial-orthonormal"><span class="math display">\[
-\langle B_i, B_j \rangle \;=\; \begin{cases}
-0, &amp; i \ne j \\
-1, &amp; i=j
-\end{cases}
-\tag{28.6}\]</span></span></p>
-<p>To work with these two-dimensional images mathematically, we often “flatten” each basis function <span class="math inline">\(B_i\)</span> (which is a matrix) into a long column vector by stacking its columns. We do the same for the image <span class="math inline">\(S[u,v]\)</span>, turning it into a vector <span class="math inline">\(\mathbf{s}\)</span>. If we collect all the basis vectors into the columns of a matrix <span class="math inline">\(\mathbf{B}\)</span>, and the weights into a vector <span class="math inline">\(\mathbf{w}\)</span>, we can write the linear model from <a href="#eq-spatial-linear-model" class="quarto-xref">Equation&nbsp;<span>28.5</span></a> as a matrix equation:</p>
-<p><span id="eq-linear-model-matrix"><span class="math display">\[
-\mathbf{s} = \mathbf{B w}
-\tag{28.7}\]</span></span></p>
-<p>Here, the <span class="math inline">\(i^{th}\)</span> entry in <span class="math inline">\(\mathbf{w}\)</span> multiplies the <span class="math inline">\(i^{th}\)</span> column of <span class="math inline">\(\mathbf{B}\)</span>, and the sum gives us the image vector <span class="math inline">\(\mathbf{s}\)</span>. This is just a compact way of writing the weighted sum from before.</p>
-<p>Now, if the basis functions are orthonormal, then <span class="math inline">\(\mathbf{B^t B}\)</span> is the identity matrix. This makes it easy to recover the weights from the image:</p>
-<p><span id="eq-linear-model-inverse"><span class="math display">\[
-\begin{aligned}
-\mathbf{s} &amp;= \mathbf{B w} \\
-\mathbf{B^t s} &amp;= \mathbf{B^t B w} \\
-\mathbf{B^t s} &amp;= \mathbf{w}
-\end{aligned}
-\tag{28.8}\]</span></span></p>
-<p>In words: just multiply the image vector by the transpose of the basis matrix to calculate the weights. If the basis functions are orthogonal but not normalized, replace <span class="math inline">\(\mathbf{B^t}\)</span> by <span class="math inline">\((\mathbf{B^t B})^{-1}\mathbf{B^t}\)</span>.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Point basis">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Point basis
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>This seems almost too trivial to mention. But here we go.</p>
-<p>When we describe images as points, <span class="math inline">\(S[u,v]\)</span>, we are implicitly using the <strong>point basis</strong>. The point basis functions are zero everywhere except at a single location: <span class="math display">\[
-B_{m,n}[u,v] \;=\; \begin{cases}
-1, &amp; (u,v)=(m,n) \\
-0, &amp; \text{otherwise.}
-\end{cases}
-\]</span></p>
-<p>With this basis, the weights are simply the image intensities, and the expansion is <span id="eq-point-basis-expansion"><span class="math display">\[
-S[u,v] \;=\; \sum_{m,n} S[m,n]\; B_{m,n}[u,v].
-\tag{28.9}\]</span></span></p>
-<p>Because each <span class="math inline">\(B_{m,n}\)</span> is nonzero at only one location, the basis is orthonormal under the discrete inner product, and the matrix formed by stacking the basis vectors is the identity.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="sec-ls-eigenfunctions" class="level2" data-number="28.7">
-<h2 data-number="28.7" class="anchored" data-anchor-id="sec-ls-eigenfunctions"><span class="header-section-number">28.7</span> Eigenfunctions</h2>
-<p>An <strong>eigenfunction</strong> (or, in the discrete case, an <strong>eigenvector</strong>) of a system is a special input that produces an output that is simply a scaled version of itself. In other words, when you feed an eigenfunction into a linear system, the system just scales it—nothing else changes. This property is incredibly useful, because it means we can predict exactly what will happen to these inputs.</p>
-<p>For a discrete linear system represented by a matrix <span class="math inline">\(\mathbf{L}\)</span>, a column vector <span class="math inline">\(\mathbf{e}_i\)</span> is an eigenvector if</p>
-<p><span id="eq-eigenfunction-definition"><span class="math display">\[
-\mathbf{L} \mathbf{e}_i = \alpha_i \mathbf{e}_i
-\tag{28.10}\]</span></span></p>
-<p>where <span class="math inline">\(\alpha_i\)</span> is the <strong>eigenvalue</strong> associated with <span class="math inline">\(\mathbf{e}_i\)</span>. The eigenvalue tells us how much the eigenvector is stretched or shrunk by the transformation.</p>
-<p>Many image systems we describe in this book have a <strong>complete set</strong> of orthogonal eigenvectors. By a complete set, I mean (a) the eigenvectors of the system are a basis for the input (<a href="#sec-ls-spatial-basis" class="quarto-xref"><span>Section 28.5</span></a>), and (b) the eigenvectors are orthogonal to one another (<a href="#sec-ls-orthogonal-transforms" class="quarto-xref"><span>Section 28.6</span></a>). This means we can express any input vector (stimulus) as a weighted sum of the image system’s eigenvectors. The power of this observation is that measuring the system response to an eigenvector input is very simple:</p>
-<p><span id="eq-linear-eigencalculations"><span class="math display">\[
-\begin{aligned}
-\mathbf{o} &amp; = \mathbf{L} \mathbf{s} \\
-       &amp; = \mathbf{L} \left(\sum_i \sigma_i \mathbf{e}_i \right) \\
-       &amp; = \sum_i \sigma_i \mathbf{L} \mathbf{e}_i \\
-       &amp; = \sum_i \sigma_i \alpha_i \mathbf{e}_i
-\end{aligned}
-\tag{28.11}\]</span></span></p>
-<p>Here, <span class="math inline">\(\mathbf{s}\)</span> is the input, written as a sum of eigenvectors with weights <span class="math inline">\(\sigma_i\)</span>. The output <span class="math inline">\(\mathbf{o}\)</span> is just the sum of the same eigenvectors, but now each one is scaled by its eigenvalue <span class="math inline">\(\alpha_i\)</span>. This makes analyzing and understanding the system much easier.</p>
-<p>Not all linear systems have a complete set of eigenvectors. Only discrete linear systems represented by <strong>normal matrices</strong> are guaranteed to have an orthogonal set of eigenvectors. The definition of a normal matrix is<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
-<p><span id="eq-normal-matrix-definition"><span class="math display">\[
-\mathbf{L L^* = L^* L} .
-\tag{28.12}\]</span></span></p>
-</section>
-<section id="sec-ls-local-linearity" class="level2" data-number="28.8">
-<h2 data-number="28.8" class="anchored" data-anchor-id="sec-ls-local-linearity"><span class="header-section-number">28.8</span> Local linearity</h2>
-<p>No real system is linear for all possible inputs. If you push a system with extremely large signals—say, by shining a laser into a camera or overloading an amplifier—it may behave unpredictably or even break! But for most practical purposes, many systems are linear over a useful range of inputs.</p>
-<p>When a system is not linear everywhere, it may still be well-approximated as linear within a limited region of its input space. In other words, the system is <strong>locally linear</strong>: if you keep your signals similar enough to a particular operating point, the system’s behavior is linear, even if it isn’t globally so.</p>
-<p>For a locally linear system, the best linear approximation depends on where you are in the input space. The linear model near <span class="math inline">\(x_1\)</span> might look quite different from the linear model near <span class="math inline">\(x_2\)</span>. So, when modeling or analyzing a locally linear system, it’s important to know which region you’re working in.</p>
-<p>In practice, the optics of most imaging systems are linear over a large range, but they are shift-invariant over a smaller input range, only within a limited region of the field of view. This is called <strong>local shift invariance</strong>. Such a region is known as an <strong>isoplanatic</strong> patch. The shift-invariant analysis applies well to such local regions, and degrades if we measure over larger regions.</p>
-<p>This principle of local linearity, or local shift-invariance, is fundamental in mathematics, physics, and engineering.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> It’s the reason why linear models are so widely used, even for systems that aren’t truly linear everywhere.</p>
+<section id="display-modeling" class="level2" data-number="27.4">
+<h2 data-number="27.4" class="anchored" data-anchor-id="display-modeling"><span class="header-section-number">27.4</span> Display modeling</h2>
 
 
 
-</section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p>The <span class="math inline">\(*\)</span>-operator means <strong>conjugate transpose</strong>. This means take the complex conjugate of each entry (<span class="math inline">\(a + ib \rightarrow a - ib\)</span>), and transpose the matrix. For a real matrix, the <span class="math inline">\(*\)</span>-operator amounts to the usual matrix transpose.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>If you’ve seen the Taylor series expansion in calculus, you’ve already encountered local linearity. Near a point <span class="math inline">\(x\)</span>, you can approximate a function by its value at <span class="math inline">\(x\)</span> plus a correction that depends on how far you are from <span class="math inline">\(x\)</span> and the derivative at <span class="math inline">\(x\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
 </section>
 
 </main> <!-- /main -->
@@ -1197,13 +949,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/part-appendix.html" class="pagination-link" aria-label="Part VII:  Appendix">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Part VII: Appendix</span>
+      <a href="../chapters/imgprocessing-01-hardware.html" class="pagination-link" aria-label="Hardware processing">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Hardware processing</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/appendix-02-spaceinvariance.html" class="pagination-link" aria-label="Linear Space-Invariant (LSI) Systems">
-        <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/part-appendix.html" class="pagination-link" aria-label="Part VII:  Appendix">
+        <span class="nav-page-text">Part VII: Appendix</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

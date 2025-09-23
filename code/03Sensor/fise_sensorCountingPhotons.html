@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,IE=9,chrome=1"><meta name="generator" content="MATLAB 2024b"><title>Counting photons </title><style type="text/css">.rtcContent { padding: 30px; } .S0 { margin: 3px 10px 5px 4px; padding: 0px; line-height: 28.8px; min-height: 0px; white-space: pre-wrap; color: rgb(192, 76, 11); font-family: Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif; font-style: normal; font-size: 24px; font-weight: 400; text-align: left;  }
+.S1 { margin: 2px 10px 9px 4px; padding: 0px; line-height: 24px; min-height: 0px; white-space: pre-wrap; color: rgb(33, 33, 33); font-family: Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif; font-style: normal; font-size: 16px; font-weight: 400; text-align: left;  }
+.CodeBlock { background-color: #F5F5F5; margin: 10px 15px 10px 0; display: inline-block }
+.S2 { border-left: 0.994318px solid rgb(217, 217, 217); border-right: 0.994318px solid rgb(217, 217, 217); border-top: 0.994318px solid rgb(217, 217, 217); border-bottom: 0.994318px solid rgb(217, 217, 217); border-radius: 4px; padding: 6px 45px 4px 13px; line-height: 18.004px; min-height: 0px; white-space: nowrap; color: rgb(33, 33, 33); font-family: Menlo, Monaco, Consolas, "Courier New", monospace, Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S3 { margin: 3px 10px 5px 4px; padding: 0px; line-height: 25px; min-height: 0px; white-space: pre-wrap; color: rgb(33, 33, 33); font-family: Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif; font-style: normal; font-size: 20px; font-weight: 700; text-align: left;  }
+.S4 { border-left: 0.994318px solid rgb(217, 217, 217); border-right: 0.994318px solid rgb(217, 217, 217); border-top: 0.994318px solid rgb(217, 217, 217); border-bottom: 0px none rgb(33, 33, 33); border-radius: 4px 4px 0px 0px; padding: 6px 45px 0px 13px; line-height: 18.004px; min-height: 0px; white-space: nowrap; color: rgb(33, 33, 33); font-family: Menlo, Monaco, Consolas, "Courier New", monospace, Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S5 { border-left: 0.994318px solid rgb(217, 217, 217); border-right: 0.994318px solid rgb(217, 217, 217); border-top: 0px none rgb(33, 33, 33); border-bottom: 0px none rgb(33, 33, 33); border-radius: 0px; padding: 0px 45px 0px 13px; line-height: 18.004px; min-height: 0px; white-space: nowrap; color: rgb(33, 33, 33); font-family: Menlo, Monaco, Consolas, "Courier New", monospace, Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S6 { border-left: 0.994318px solid rgb(217, 217, 217); border-right: 0.994318px solid rgb(217, 217, 217); border-top: 0px none rgb(33, 33, 33); border-bottom: 0.994318px solid rgb(217, 217, 217); border-radius: 0px 0px 4px 4px; padding: 0px 45px 4px 13px; line-height: 18.004px; min-height: 0px; white-space: nowrap; color: rgb(33, 33, 33); font-family: Menlo, Monaco, Consolas, "Courier New", monospace, Menlo, Monaco, Consolas, "Courier New", monospace; font-size: 14px;  }
+.S7 { margin: 10px 10px 9px 4px; padding: 0px; line-height: 24px; min-height: 0px; white-space: pre-wrap; color: rgb(33, 33, 33); font-family: Helvetica, Arial, sans-serif, Helvetica, Arial, sans-serif; font-style: normal; font-size: 16px; font-weight: 400; text-align: left;  }</style></head><body><div class = rtcContent><h1  class = 'S0'><span>Counting photons </span></h1><div  class = 'S1'><span>We learn a great deal about image quality and noise limits by counting the </span><span>(</span><span style=' font-weight: bold;'>Poisson</span><span>) arrival of photons at each pixel. ISETCam uses physical units throughout, making it straightforward to calculate the number of incident photons at a pixel.</span></div><div  class = 'S1'><span>Used in FISE-git</span></div><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S2'><span style="white-space: pre"><span >ieInit</span></span></div></div></div><h2  class = 'S3'><span>Load up a simple uniform scene, just to count</span></h2><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre"><span style="color: #008013;">% To just count, it is easy to use a uniform scene.  The luminance</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #008013;">% level is set to A moderately lit living room at night: Imagine a</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #008013;">% room with a few lamps on, but not overly bright. If you're reading a</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #008013;">% book with a standard table lamp, the page might be closer to 50-100</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #008013;">% nits, but the overall average luminance of the entire room (walls,</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #008013;">% furniture, shadows) could easily be around 10 nits.    </span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >scene = sceneCreate(</span><span style="color: #a709f5;">'uniform equal photon'</span><span >,[512 512]);</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre"><span >scene = sceneSet(scene,</span><span style="color: #a709f5;">'mean luminance'</span><span >,10);</span></span></div></div></div><h2  class = 'S3'><span>Create spectral irradiance at the sensor for optics with a range of f#</span></h2><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre"><span >oi = oiCreate(</span><span style="color: #a709f5;">'diffraction limited'</span><span >);  </span><span style="color: #008013;">% Basic diffraction-limited optics</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'>&nbsp;</div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #008013;">% Region in the OI we use to measure</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >roiRect = [291 202 16 23];</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'>&nbsp;</div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #008013;">% Loop for different f numbers</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >fnumbers = 2:16;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'>&nbsp;</div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #008013;">% Store the photon count here</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >totalQ = zeros(1,length(fnumbers));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'>&nbsp;</div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #008013;">% Store the aperture diameter here</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >apertureD = zeros(size(totalQ));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'>&nbsp;</div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #0e00ff;">for </span><span >ff = 1:length(fnumbers)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >    oi = oiSet(oi,</span><span style="color: #a709f5;">'optics fnumber'</span><span >,fnumbers(ff));</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >    oi = oiCompute(oi,scene);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >    apertureD(ff) = oiGet(oi,</span><span style="color: #a709f5;">'optics aperture diameter'</span><span >,</span><span style="color: #a709f5;">'mm'</span><span >);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >    spectralIrradiance = oiGet(oi,</span><span style="color: #a709f5;">'roi mean photons'</span><span >,roiRect);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >    totalQ(ff) = sum(spectralIrradiance);</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre"><span style="color: #0e00ff;">end</span></span></div></div></div><h2  class = 'S3'><span>Plot one spectral irradiance</span></h2><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre"><span >ieFigure;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >plot(oiGet(oi,</span><span style="color: #a709f5;">'wave'</span><span >),spectralIrradiance,</span><span style="color: #a709f5;">'--'</span><span >);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >grid </span><span style="color: #a709f5;">on</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >xlabel(</span><span style="color: #a709f5;">'Wavelength (nm)'</span><span >); ylabel(</span><span style="color: #a709f5;">'Photons/s/nm/m^2'</span><span >);</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre"><span >title(sprintf(</span><span style="color: #a709f5;">'Spectral irradiance (f# %d)'</span><span >,fnumbers(end)));</span></span></div></div></div><h2  class = 'S3'><span>Plot the number of photons as a function of f#</span></h2><div  class = 'S1'><span>{ Per second per square micron</span></div><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre"><span >ieFigure;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >plot(fnumbers,totalQ*1e-12,</span><span style="color: #a709f5;">'-o'</span><span >);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >grid </span><span style="color: #a709f5;">on</span><span >;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >xlabel(</span><span style="color: #a709f5;">'F/#'</span><span >); ylabel(</span><span style="color: #a709f5;">'Photons/s/{um}^2'</span><span >)</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >title(</span><span style="color: #a709f5;">'Total photons vs. f#'</span><span >)</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre"><span style="color: #008013;">%}</span></span></div></div></div><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre"><span >ieFigure;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #008013;">% Suppose a micron pixel aperture and a 50 ms time period</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >sFactor = (1e-6)^2*50e-3;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >plot(apertureD,totalQ*sFactor,</span><span style="color: #a709f5;">'-o'</span><span >);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >grid </span><span style="color: #a709f5;">on</span><span >;</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre"><span >xlabel(</span><span style="color: #a709f5;">'Aperture diameter (mm)'</span><span >); ylabel(</span><span style="color: #a709f5;">'Photons/{50 ms}/{um}^2'</span><span >)</span></span></div></div></div><h2  class = 'S3'><span>Signal-to-noise</span></h2><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre"><span style="color: #008013;">% How many standard deviations of signal at the level?  This tells us</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span style="color: #008013;">% how many steps of intensity we can reliably discriminate.</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >SNR = totalQ*sFactor ./ sqrt(totalQ*sFactor);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'>&nbsp;</div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >ieFigure;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >plot(apertureD,SNR,</span><span style="color: #a709f5;">'-o'</span><span >);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >grid </span><span style="color: #a709f5;">on</span><span >;</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre"><span >xlabel(</span><span style="color: #a709f5;">'Aperture diameter (mm)'</span><span >); ylabel(</span><span style="color: #a709f5;">'Signal-to-noise ratio'</span><span >)</span></span></div></div></div><h2  class = 'S3'><span>Signal-to-noise</span></h2><div class="CodeBlock"><div class="inlineWrapper"><div  class = 'S4'><span style="white-space: pre"><span >ieFigure;</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >plot(fnumbers,SNR,</span><span style="color: #a709f5;">'-o'</span><span >);</span></span></div></div><div class="inlineWrapper"><div  class = 'S5'><span style="white-space: pre"><span >grid </span><span style="color: #a709f5;">on</span><span >;</span></span></div></div><div class="inlineWrapper"><div  class = 'S6'><span style="white-space: pre"><span >xlabel(</span><span style="color: #a709f5;">'F/#'</span><span >); ylabel(</span><span style="color: #a709f5;">'Signal-to-noise ratio'</span><span >)</span></span></div></div></div><div  class = 'S7'></div>
+<br>
+<!-- 
+##### SOURCE BEGIN #####
+%% Counting photons 
+% We learn a great deal about image quality and noise limits by counting the 
+% (*Poisson*) arrival of photons at each pixel. ISETCam uses physical units throughout, 
+% making it straightforward to calculate the number of incident photons at a pixel.
+% 
+% Used in FISE-git
+
+ieInit
+%% Load up a simple uniform scene, just to count
+
+% To just count, it is easy to use a uniform scene.  The luminance
+% level is set to A moderately lit living room at night: Imagine a
+% room with a few lamps on, but not overly bright. If you're reading a
+% book with a standard table lamp, the page might be closer to 50-100
+% nits, but the overall average luminance of the entire room (walls,
+% furniture, shadows) could easily be around 10 nits.    
+scene = sceneCreate('uniform equal photon',[512 512]);
+scene = sceneSet(scene,'mean luminance',10);
+%% Create spectral irradiance at the sensor for optics with a range of f#
+
+oi = oiCreate('diffraction limited');  % Basic diffraction-limited optics
+
+% Region in the OI we use to measure
+roiRect = [291 202 16 23];
+
+% Loop for different f numbers
+fnumbers = 2:16;
+
+% Store the photon count here
+totalQ = zeros(1,length(fnumbers));
+
+% Store the aperture diameter here
+apertureD = zeros(size(totalQ));
+
+for ff = 1:length(fnumbers)
+    oi = oiSet(oi,'optics fnumber',fnumbers(ff));
+    oi = oiCompute(oi,scene);
+    apertureD(ff) = oiGet(oi,'optics aperture diameter','mm');
+    spectralIrradiance = oiGet(oi,'roi mean photons',roiRect);
+    totalQ(ff) = sum(spectralIrradiance);
+end
+%% Plot one spectral irradiance
+
+ieFigure;
+plot(oiGet(oi,'wave'),spectralIrradiance,'REPLACE_WITH_DASH_DASH');
+grid on
+xlabel('Wavelength (nm)'); ylabel('Photons/s/nm/m^2');
+title(sprintf('Spectral irradiance (f# %d)',fnumbers(end)));
+%% Plot the number of photons as a function of f#
+% { Per second per square micron
+
+ieFigure;
+plot(fnumbers,totalQ*1e-12,'-o');
+grid on;
+xlabel('F/#'); ylabel('Photons/s/{um}^2')
+title('Total photons vs. f#')
+%}
+%%
+ieFigure;
+% Suppose a micron pixel aperture and a 50 ms time period
+sFactor = (1e-6)^2*50e-3;
+plot(apertureD,totalQ*sFactor,'-o');
+grid on;
+xlabel('Aperture diameter (mm)'); ylabel('Photons/{50 ms}/{um}^2')
+%% Signal-to-noise
+
+% How many standard deviations of signal at the level?  This tells us
+% how many steps of intensity we can reliably discriminate.
+SNR = totalQ*sFactor ./ sqrt(totalQ*sFactor);
+
+ieFigure;
+plot(apertureD,SNR,'-o');
+grid on;
+xlabel('Aperture diameter (mm)'); ylabel('Signal-to-noise ratio')
+%% Signal-to-noise
+
+ieFigure;
+plot(fnumbers,SNR,'-o');
+grid on;
+xlabel('F/#'); ylabel('Signal-to-noise ratio')
+%% 
+%
+##### SOURCE END #####
+-->
+</div></body></html>
