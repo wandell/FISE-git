@@ -6,29 +6,48 @@ date: last-modified
 {{< include "includes/WIP-callout.qmd" >}}
 
 ## Seeing overview {#sec-human-seeing-overview}
-The science of human vision -spanning behavior to neuroscience- is fascinating and huge.  I wrote [a book](https://foundationsofvision.stanford.edu) covering the foundations of vision (@Wandell1995-FOV); I plan to update that book after the writing for this one has matured. There is no need to duplicate that writing here.  Instead, this book covers only those aspects of human vision that are directly relevant to image systems engineering. I consider these topics to be the limits of spatial, temporal and wavelength encoding, and a range of image quality metrics. I chose these topics because there are computable models that engineers can use in all of those domains, and I believe that the insights surrounding the encoding are firmly established.
+The science of human vision—spanning behavior, perception, and neuroscience—is fascinating and highly significant for image systems engineers. This book does not aim for comprehensive coverage of vision science; that material is covered in my earlier book, [Foundations of Vision](https://foundationsofvision.stanford.edu) (@Wandell1995-FOV), which I plan to update after this book matures.
 
-There is only one area that I am going to break this rule: it is the question of what it means to "see". We often quote Helmholtz on this topic (@sec-vision-inference). He forcefully observed that we do not see the world directly, but rather our perception is an inference that we draw from the measurements by encoding a portion of the electromagnetic spectrum. We are not generally aware of these inferences, and thus Helmholtz referred to these processes as *unconscious inference*. The important point is that our perception is a set of (usually good) guesses from partial information. Nothing illustrates this fact quite as clearly, or pleasurably, as the phenomena we call **visual illusions**.  Helmholtz might (rightly) say that all of vision is an illusion. This section, which parallels the chapter entitled 'Seeing' in @Wandell1995-FOV, uses illusions to make this point again.
+Instead, this chapter focuses on aspects of human vision immediately relevant to image systems engineering. We will cover the limits of spatial, temporal, and wavelength encoding by the eye, along with a variety of practical, computable image quality metrics. These metrics are widely used by engineers, and the principles behind them are well-established. We will also explore how to improve upon these tools.
 
-The illusions in this section each illustrate a principle that the visual system uses to draw an inference about the world. Whether they are illusions, or simply interesting demonstrations, is something I will leave to the philosophers[^debate].  I choose them because they are informative.
+I will, however, deviate slightly to explore the question of what it means to "see." As mentioned earlier (@sec-vision-inference), Hermann von Helmholtz was among the first to argue that we do not perceive the world directly. Instead, what we "see" is an inference based on the portion of the light field our eyes encode.
+
+When Helmholtz proposed this, he challenged the prevailing belief that introspection was a valid scientific method for understanding visual interpretation. He argued that we are largely unaware of the underlying neural processing, which he termed *unconscious inferences*. This term was not an explanation of the process itself, but a counterargument to the idea that we can understand vision simply by thinking about our own perceptions.
+
+The key takeaway is that our percepts are essentially educated guesses about the state of the world. The term *inference* is a sophisticated way of saying we are making guesses, not logical *deductions*. How do we understand the principles behind these guesses? A crucial source of insight comes from **visual illusions**. One might argue, as Helmholtz did, that all vision is an illusion. The instances where our visual guesses are incorrect are particularly instructive, as they help reveal the principles that also guide our correct perceptions. This section uses illusions to illustrate this point, ensuring we don't let technical details obscure the [Big Picture](https://youtu.be/N0xjPZs0C6g?si=bDlSuwbgW74kpKEJ).
+
+Each illusion presented here demonstrates a principle the visual system uses to infer the state of the world. I leave the philosophical debate about whether these are true illusions or simply compelling demonstrations to others[^debate]. I have selected them for what they reveal about the principles embedded in our visual inferences. For a more extensive collection, I highly recommend the work of [Akiyoshi Kitaoka](https://www.ritsumei.ac.jp/~akitaoka/index-e.html) and the remarkable entries in the [Illusion of the Year](https://illusionoftheyear.com/) contest.
 
 [^debate]:  Yes, I have had people I respect challenge whether some of these are really illusions or not.
 
 ### The world is three-dimensional
 
-![R.N. Shepard turning the tables.](images/human/01-seeing/Shepard-turning-tables.png)
+![R.N. Shepard's illusion is called Turning the Tables. As measured in the image, the two table tops are the same. This is just an accident, however, of the way they are projected into the image.  If we could measure them in the three-dimensional form they would not be the same.  Your visual system nearly inescapably interprets images as three-dimensional objects. The table tops don't look the same, even though they are the same in the page.](images/human/01-seeing/Shepard-turning-tables.png)
 
 ### Certain expectations are 
 
-Needs a when-format type representation.
+::: {.content-visible when-format="html"}
+![R.L. Gregory the hollow mask demonstration.  The mask is rotating on a stick.  As you see the inside of the mask, it appears to have the three-dimensional structure one would expect of a face, with the nose nearest you. Because it is not, encoding conflicts with the motion. Hence, the mask appears to be rotating in a direction opposite to its true direction. There are certain objects that are deeply biased to be seen in a certain way -face have their noses pointing towards you!- by the visual system.](images/human/01-seeing/Chaplin.wmv.mp4)
+:::
 
-![R.L. Gregory the hollow mask](images/human/01-seeing/Chaplin.wmv.mp4)
+::: {.content-visible when-format="pdf"}
+![R.L. Gregory the hollow mask video seen at three different frames.  Even in static view, the inside of the hollow mask appears to have the proper three-dimensional shape of a face.  In fact, you are seeing the inside of the mask in which the nose is inverted.](images/human/01-seeing/Chaplin.wmv.png)
+:::
 
-### Global context matters
+### Context matters
 
-![Ted Adelson Checker Shadow illusion](images/human/01-seeing/Adelson-shadow-checkers.png)
 
-![Lotto version also](images/human/01-seeing/Lotto-illumination.png)
+:::{.panel-tabset}
+# Local contrast
+![We make even simple judgments, such as the brightness of a square, with respect to their context.  The absolute level is not as important. This tab illustrates the principle using a version from [Akiyoshi Kitaoka.  The squares labeled A and B have the same absolute level.  But the shading across the checkerboard pattern makes it appear that the A square is darker than the B square.](https://www.ritsumei.ac.jp/~akitaoka/index-e.html)](images/human/01-seeing/local-contrast.png){#fig-basic-contrast width="70%"}
+
+# Adelson: Checkered shadow
+![Ted Adelson created this illusion to showing why the local contrast is a good basis for judging surface brightness.  He gives us a physical reason for the shading, a cast shadow.  Again the squares labeled A and B are the same intensity.](images/human/01-seeing/Adelson-shadow-checkers.png){#fig-adelson-contrast width="70%"}
+
+# Lotto and Purves
+![Beau Lotto and Dale Purves glammed it up with this very compelling and striking image. The two tiles on the floor, one that appears white and the other dark gray, are the same.  One is in shadow, andthe other directly illuminated. Local contrast is informative about the surface property. The visual system wants you to see the surface, not the number of photons from the surface. Cite their book here.](images/human/01-seeing/Lotto-illumination.png){#fig-lotto-contrast width="70%"}
+
+:::
 
 <!--
 when-format
