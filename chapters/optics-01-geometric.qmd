@@ -83,7 +83,7 @@ This directly explains diffraction. A very small pinhole allows only a tiny port
 
 <!-- History.  https://chatgpt.com/c/67098b1d-ae24-8002-be3d-d55f2bc87045 -->
 
-Although the ray and wave theories were proposed at about the same time, Newton's 1704 framing of light as rays was widely accepted for roughly a century. Widespread recognition of the accuracy of Huygen's wave theory was delayed until Thomas Young's 1804 demonstration of the interference pattern created by light from two coherent, nearby sources. I find it interesting to learn about the [the history of these ideas.](../resources/optics-diffraction.html).
+Although the ray and wave theories were proposed at about the same time, Newton's 1704 framing of light as rays was widely accepted for roughly a century. Widespread recognition of the accuracy of Huygen's wave theory was delayed until Thomas Young's 1804 demonstration of the interference pattern created by light from two coherent, nearby sources. I find it interesting to learn about the [the history of these ideas.](resources/optics-diffraction.html).
 
 I have worked in fields where scientists rely mainly on hypothesis testing: they perform experiments to see if a theory is provably wrong. Surely Newton's theory of light as a ray is provably wrong, and it was so proved more than 300 years ago! And yet, we use rays to describe light routinely. This is because in many cases the ray theory is an excellent approximation, and we use it as a simple way to reason about radiation - approximately.
 
@@ -112,7 +112,7 @@ The experiment requires some precision, but it is fairly straightforward to inst
 
 Even after Young's presentations to the Royal Society, the wave theory met resistance.  The loudest was from Henry Brougham who made personal attacks on Young[^Brougham]. But serious thinkers also wondered whether a wave theory could be right.  What was the medium that supported the waves?  Huygens referred to it, but the so-called 'ether' had not been measured[^huygens-ether].  And if the waves were propagating through a medium, wouldn't inhomogeneities cause them to deviate from straight lines?  
 
-[^Brougham]: Henry Brougham was a particularly fierce critique of Young's entire research program and an ardent defender of Newton's work. His strongest attacks were against Young's important -and accurate!- observations about human color vision.  More on that, including Young's response (@young1804-reply) in @sec-human-color.
+[^Brougham]: Henry Brougham was a particularly fierce critique of Young's entire research program and an ardent defender of Newton's work. His strongest attacks were against Young's important -and accurate!- observations about human color vision.  More on that, including Young's response (@young1804-reply) in @sec-human-encoding.
 
 [^huygens-ether]: "Now there is no doubt at all that light also comes from the luminous body to our eyes by some movement impressed on the
 matter which is between the two."—Christiaan Huygens
@@ -158,7 +158,7 @@ The diffraction spread is larger than the pinhole spread when $d$ exceeds $D$. W
 -->
 ```
 
-The diffraction spread exceeds the pinhole spread when $d$ exceeds $D$. We do the calculation for different assumptions about the distance to the image plane [ISETCam script](/code/fise_diffraction.html). As an example, we find that when the distance to the image plane is $L = 1m$, the pinhole blur is larger than the diffraction blur for a pinhole diameter of about $1 mm$. When the image plane distance, $L$, is closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
+The diffraction spread exceeds the pinhole spread when $d$ exceeds $D$. We do the calculation for different assumptions about the distance to the image plane [ISETCam:fise_diffraction](../code/02Optics/fise_diffraction.html). As an example, we find that when the distance to the image plane is $L = 1m$, the pinhole blur is larger than the diffraction blur for a pinhole diameter of about $1 mm$. When the image plane distance, $L$, is closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
 
 ::: {.callout-note collapse="false" title="The diameter of the diffraction point spread"}
 
@@ -194,7 +194,7 @@ To this point we have only considered circular pinholes. These are important bec
 There are cases in nature -and industry- of non-circular apertures, and these point spread functions must be described as two-dimensional images. In the following sections I introduce an ISETCam script that calculates the diffraction-limited PSF for some non-circular diffraction-limited apertures. 
 
 ### Rectangular pinholes 
-The script [fise_oiAperture](../code/02Optics/fise_oiAperturemlx.html){target=_blank} illustrates how to calculate the PSF for a rectangular aperture in ISETCam. An image computed using the PSF from a diffraction limited rectangular pinhole, and the PSF for that pinhole, are shown in @fig-pinhole-rectangle. The images illustrate a case for the rectangular aperture is three times wider (x) than high (y). The larger vertical height causes less blur in the y-direction, making the image sharper for the horizontal stripes.
+The script [fise_oiAperture](../code/02Optics/fise_oiAperture.html){target=_blank} illustrates how to calculate the PSF for a rectangular aperture in ISETCam. An image computed using the PSF from a diffraction limited rectangular pinhole, and the PSF for that pinhole, are shown in @fig-pinhole-rectangle. The images illustrate a case for the rectangular aperture is three times wider (x) than high (y). The larger vertical height causes less blur in the y-direction, making the image sharper for the horizontal stripes.
 
 ![Simulating a diffraction-limited rectangular pinhole that is 3x higher than wide. The test pattern has spatial frequency increasing from left to right, and orientation varying up to down. The horizontal lines retain their contrast as frequency increases; the vertical lines lose theirs. The PSF (550 nm) for the rectangular aperture is plotted on the right. See [fise_oiAperture](../code/02Optics/fise_oiAperturemlx.html).](images/optics/06-geometric/pinhole-rectangle-both.png){#fig-pinhole-rectangle width="80%"}
 
@@ -226,7 +226,7 @@ This is a mechanical shutter.  This is a leaf https://www.photoreview.com.au/tip
 This is a polygon https://stackoverflow.com/questions/56467558/trying-to-create-a-camera-shutter-effect-with-divs
 -->
 
-The impact of the regular polygon shape is quite visible in high dynamic range (HDR) scenes that include light sources.  The script [fise_oiAperture](../code/02Optics/fise_oiAperturemlx.html){target=_blank} simulates an HDR scene, superimposing some very bright light sources on the background image.  These apertures produce the flare pattern that one often sees in professional productions, including movies and sports shows. The three images show the flare pattern for polygons with different numbers of sides.
+The impact of the regular polygon shape is quite visible in high dynamic range (HDR) scenes that include light sources.  The script [fise_oiAperture](../code/02Optics/fise_oiAperture.html){target=_blank} simulates an HDR scene, superimposing some very bright light sources on the background image.  These apertures produce the flare pattern that one often sees in professional productions, including movies and sports shows. The three images show the flare pattern for polygons with different numbers of sides.
 
 ![High dynamic range images simulated through a lens with a regular polygon aperture.](images/optics/06-geometric/pinhole-shape-hdr.png){#fig-pinhole-hdr width="90%"}
 
