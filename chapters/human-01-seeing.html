@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-22">
+<meta name="dcterms.date" content="2025-09-27">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>21&nbsp; Seeing – Foundations of Image Systems Engineering</title>
@@ -22,7 +22,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -32,7 +51,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/human-02-optics.html" rel="next">
+<link href="../chapters/human-02-encoding.html" rel="next">
 <link href="../chapters/part-human.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -333,20 +352,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/human-02-optics.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/human-02-encoding.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Human optics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/human-03-color.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Human color</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../chapters/human-04-spacetime.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Human space-time</span></span></a>
+  <a href="../chapters/human-03-metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Human visual metrics</span></span></a>
   </div>
 </li>
       </ul>
@@ -369,7 +382,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/displays-01-principles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Display Principles</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Display Principles</span></span></a>
   </div>
 </li>
       </ul>
@@ -392,13 +405,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/imgprocessing-01-hardware.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Hardware processing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Hardware processing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/imgprocessing-02-rendering.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Rendering</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Rendering</span></span></a>
   </div>
 </li>
       </ul>
@@ -421,19 +434,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
   </div>
 </li>
       </ul>
@@ -454,8 +467,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-human-seeing-overview" id="toc-sec-human-seeing-overview" class="nav-link active" data-scroll-target="#sec-human-seeing-overview"><span class="header-section-number">21.1</span> Seeing overview</a></li>
-  <li><a href="#illusions" id="toc-illusions" class="nav-link" data-scroll-target="#illusions"><span class="header-section-number">21.2</span> Illusions</a></li>
+  <li><a href="#sec-human-seeing-overview" id="toc-sec-human-seeing-overview" class="nav-link active" data-scroll-target="#sec-human-seeing-overview"><span class="header-section-number">21.1</span> Seeing overview</a>
+  <ul class="collapse">
+  <li><a href="#the-world-is-three-dimensional" id="toc-the-world-is-three-dimensional" class="nav-link" data-scroll-target="#the-world-is-three-dimensional"><span class="header-section-number">21.1.1</span> The world is three-dimensional</a></li>
+  <li><a href="#expectations-of-likely-shapes" id="toc-expectations-of-likely-shapes" class="nav-link" data-scroll-target="#expectations-of-likely-shapes"><span class="header-section-number">21.1.2</span> Expectations of likely shapes</a></li>
+  <li><a href="#regional-comparisons" id="toc-regional-comparisons" class="nav-link" data-scroll-target="#regional-comparisons"><span class="header-section-number">21.1.3</span> Regional comparisons</a></li>
+  <li><a href="#edges-matter" id="toc-edges-matter" class="nav-link" data-scroll-target="#edges-matter"><span class="header-section-number">21.1.4</span> Edges matter</a></li>
+  <li><a href="#nd-order-contrast" id="toc-nd-order-contrast" class="nav-link" data-scroll-target="#nd-order-contrast"><span class="header-section-number">21.1.5</span> 2nd order contrast?</a></li>
+  <li><a href="#motion-pattern-and-color-combine" id="toc-motion-pattern-and-color-combine" class="nav-link" data-scroll-target="#motion-pattern-and-color-combine"><span class="header-section-number">21.1.6</span> Motion, pattern, and color combine</a></li>
+  <li><a href="#seeing-without-light" id="toc-seeing-without-light" class="nav-link" data-scroll-target="#seeing-without-light"><span class="header-section-number">21.1.7</span> Seeing without light</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -475,7 +496,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 22, 2025</p>
+      <p class="date">September 27, 2025</p>
     </div>
   </div>
   
@@ -502,165 +523,164 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: September 22, 2025</p>
+<p>Last updated: September 27, 2025</p>
 </div>
 </div>
 </div>
 <section id="sec-human-seeing-overview" class="level2" data-number="21.1">
 <h2 data-number="21.1" class="anchored" data-anchor-id="sec-human-seeing-overview"><span class="header-section-number">21.1</span> Seeing overview</h2>
-<p>Less thorough than the FOV volume, but enough to teach about why illusions are valuable. We learn sometimes about hardware limitations and sometimes about processing algorithm.s</p>
+<p>The science of human vision—spanning behavior, perception, and neuroscience—is fascinating and highly significant for image systems engineers. This book does not aim for comprehensive coverage of vision science; that material is covered in my earlier book, <a href="https://foundationsofvision.stanford.edu">Foundations of Vision</a> (<span class="citation" data-cites="Wandell1995-FOV">Wandell (<a href="references.html#ref-Wandell1995-FOV" role="doc-biblioref">1995</a>)</span>), which I plan to update after this book matures.</p>
+<p>Instead, this chapter focuses on aspects of human vision immediately relevant to image systems engineering. We will cover the limits of spatial, temporal, and wavelength encoding by the eye, along with a variety of practical, computable image quality metrics. These metrics are widely used by engineers, and the principles behind them are well-established. We will also explore how to improve upon these tools.</p>
+<p>I will, however, deviate slightly to explore the question of what it means to “see.” As mentioned earlier (<a href="../index.html#sec-vision-inference" class="quarto-xref"><span>Section 1.3</span></a>), Hermann von Helmholtz was among the first to argue that we do not perceive the world directly. Instead, what we “see” is an inference based on the portion of the light field our eyes encode.</p>
+<p>When Helmholtz proposed this, he challenged the prevailing belief that introspection was a valid scientific method for understanding visual interpretation. He argued that we are largely unaware of the underlying neural processing, which he termed <em>unconscious inferences</em>. This term was not an explanation of the process itself, but a counterargument to the idea that we can understand vision simply by thinking about our own perceptions.</p>
+<p>The key takeaway is that our percepts are essentially educated guesses about the state of the world. The term <em>inference</em> is a sophisticated way of saying we are making guesses, not logical <em>deductions</em>. How do we understand the principles behind these guesses? A crucial source of insight comes from <strong>visual illusions</strong>. One might argue, as Helmholtz did, that all vision is an illusion. The instances where our visual guesses are incorrect are particularly instructive, as they help reveal the principles that also guide our correct perceptions. This section uses illusions to illustrate this point, ensuring we don’t let technical details obscure the <a href="https://youtu.be/N0xjPZs0C6g?si=bDlSuwbgW74kpKEJ">Big Picture</a>.</p>
+<p>Each illusion presented here demonstrates a principle the visual system uses to infer the state of the world. I leave the philosophical debate about whether these are true illusions or simply compelling demonstrations to others<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. I have selected them for what they reveal about the principles embedded in our visual inferences. For a more extensive collection, I highly recommend the work of <a href="https://www.ritsumei.ac.jp/~akitaoka/index-e.html">Akiyoshi Kitaoka</a> and the remarkable entries in the <a href="https://illusionoftheyear.com/">Illusion of the Year</a> contest.</p>
+<section id="the-world-is-three-dimensional" class="level3" data-number="21.1.1">
+<h3 data-number="21.1.1" class="anchored" data-anchor-id="the-world-is-three-dimensional"><span class="header-section-number">21.1.1</span> The world is three-dimensional</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/human/01-seeing/Shepard-turning-tables.png" class="img-fluid figure-img"></p>
+<figcaption>R.N. Shepard’s illusion is called Turning the Tables. As measured in the image, the two table tops are the same. This is just an accident, however, of the way they are projected into the image. If we could measure them in the three-dimensional form they would not be the same. Your visual system nearly inescapably interprets images as three-dimensional objects. The table tops don’t look the same, even though they are the same in the page.</figcaption>
+</figure>
+</div>
 </section>
-<section id="illusions" class="level2" data-number="21.2">
-<h2 data-number="21.2" class="anchored" data-anchor-id="illusions"><span class="header-section-number">21.2</span> Illusions</h2>
-<p>Engineering course illusions and some discussion.</p>
+<section id="expectations-of-likely-shapes" class="level3" data-number="21.1.2">
+<h3 data-number="21.1.2" class="anchored" data-anchor-id="expectations-of-likely-shapes"><span class="header-section-number">21.1.2</span> Expectations of likely shapes</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><video src="images/human/01-seeing/Chaplin.wmv.mp4" class="img-fluid" controls=""><a href="images/human/01-seeing/Chaplin.wmv.mp4">Video</a></video></p>
+<figcaption>R.L. Gregory the hollow mask demonstration. The mask is rotating on a stick. As you see the inside of the mask, it appears to have the three-dimensional structure one would expect of a face, with the nose nearest you. Because it is not, encoding conflicts with the motion. Hence, the mask appears to be rotating in a direction opposite to its true direction. There are certain objects that are deeply biased to be seen in a certain way -face have their noses pointing towards you!- by the visual system.</figcaption>
+</figure>
+</div>
+</section>
+<section id="regional-comparisons" class="level3" data-number="21.1.3">
+<h3 data-number="21.1.3" class="anchored" data-anchor-id="regional-comparisons"><span class="header-section-number">21.1.3</span> Regional comparisons</h3>
+<p>Text goes here.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Local contrast</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Adelson: Checkered shadow</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Lotto and Purves</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="fig-basic-contrast" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-basic-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/01-seeing/local-contrast.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-basic-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.1: We make even simple judgments, such as the brightness of a square, with respect to their context. The absolute level is not as important. This tab illustrates the principle using a version from <a href="https://www.ritsumei.ac.jp/~akitaoka/index-e.html">Akiyoshi Kitaoka. The squares labeled A and B have the same absolute level. But the shading across the checkerboard pattern makes it appear that the A square is darker than the B square.</a>
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="fig-adelson-contrast" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-adelson-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/01-seeing/Adelson-shadow-checkers.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-adelson-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.2: Ted Adelson created this illusion to showing why the local contrast is a good basis for judging surface brightness. He gives us a physical reason for the shading, a cast shadow. Again the squares labeled A and B are the same intensity.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div id="fig-lotto-contrast" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lotto-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/01-seeing/Lotto-illumination.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lotto-contrast-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.3: Beau Lotto and Dale Purves glammed it up with this very compelling and striking image. The two tiles on the floor, one that appears white and the other dark gray, are the same. One is in shadow, andthe other directly illuminated. Local contrast is informative about the surface property. The visual system wants you to see the surface, not the number of photons from the surface. Cite their book here.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
 <!--
-https://chatgpt.com/s/t_68af5af69c688191b21118844094d0b5
-
-By Henry Brougham in Edinburgh Review, an ardent admirer of Newton, criticizing Thomas Young’s Bakerian Lectures.
-
->  ...this paper contains nothing which deserves the name, either of experiment or of discovery, and as it is, in fact, destitute of every species of merit. We now dismiss, for the present, the feeble lucubrations of this author, in which we have searched without success for some traces of learning, acuteness, and ingenuity, that might compensate his evident deficiency in the powers of solid thinking, calm and patient investigation … 
-
-Thomas Young wrote a reply (@young1804-reply)
-
- > A MAN who has a proper regard for the dignity of his own character, although his sensibility may sometimes be awakened by the unjust attacks of interested malevolence, will esteem it ingeneral more advisable to bear, in silence, the temporary effects of a short lived injury, than to suffer his own pursuits to be interrupted, in making an effort to repel the invective, and to punish the aggressor. 
-
-<!--# https://library.brown.edu/create/libnews/victorian-optics/  
-
-TODO: Remember the Newton bodnick pressure on the eye. https://cudl.lib.cam.ac.uk/view/MS-ADD-03975/21 a tip until he saw ‘several white darke and colored circles. Which circles were plainest when I continued to rub my eye with the point of the bodkin.’ Yet when he held both eyes and bodkin still, the circles would begin to fade. Was light a manifestation of pressure, then? Almost as recklessly, he stared with one eye at the sun, reflected in a looking glass, for as long as he could bear. He sensed that color—perhaps more than any of the other qualities of things—depends on imagination and fantasy and invention. He looked away at a dark wall and saw circles of color. There was a motion of spirits in his eye. These slowly decayed and finally vanished. Were they real or phantasm? Could such colors ever be real, like the colors he had learned to make from crushed berries or sheep’s blood? After looking at the sun he seemed to perceive light objects as red and dark objects as blue.” (Gleick, James. Isaac Newton. New York: Pantheon Books, 2003:61–2.)
-
-From Gemini.
-Around 1665 or 1666, a young Isaac Newton, in his pursuit of understanding how the eye perceives light, took a "bodkin" (a blunt needle, often used for piercing fabric or threading ribbons) and very carefully inserted it between his eye and the bone of his eye socket, pushing it as close to the back of his eye as he could.
-
-He then pressed on his eyeball with the end of the bodkin, deliberately altering its curvature. As he did this, he observed and meticulously recorded the visual phenomena that appeared. He noted "several white, dark, & coloured circles" which were most vivid when he continued to rub his eye with the bodkin, but would fade if he held it still.
-
-He also varied the conditions, performing the experiment in both a light room (with eyes shut, so some light would get through) and a very dark room, observing different patterns and colors of circles and spots.
-
-Newton's aims and observations:
-
-Newton's motivation for this extreme self-experiment was to explore the origins of color perception. He was trying to determine if color was an external property of light itself, or if it was, in part, a product of the eye's internal mechanisms and the pressure applied to it.
-
-His observations, though seemingly odd and somewhat disturbing, were aimed at understanding how the physical manipulation of the retina (the light-sensitive layer at the back of the eye) could produce visual sensations even in the absence of external light. He noted that the colors and patterns he saw changed depending on the pressure and how the eye was deformed.
-
-While this particular experiment didn't directly lead to his groundbreaking discoveries about the spectrum of light (which came from his famous prism experiments), it was part of his broader, often daring, inquiry into optics and vision. It highlights Newton's extreme dedication and willingness to use himself as a subject in his scientific pursuits.
+when-format
+![Maybe the Dan Kerstein shadow](images/human/01-seeing/Kersten-shadow.mp4)
 -->
-<!--
-Image systems for consumer photography are designed to capture the light field and transform it into display images that are visually compelling to people. Because the output is delivered to people, both the capture and display components are engineered with quantitative properties of the human visual system in mind.
-
-This chapter describes visual system properties that guide the implementation of image systems for consumer photography. We particularly highlight the visual system metrics that are industry standards, or at least widely used. Qualifying a system with these metrics shows how accurately - with respect to human visusal system - the system can reproduce an image. The scientific basis for these standards often have biological origins, and this book includes brief insights into this material. If you are seeking a more detailed exploration of vision science, please refer to *Foundations of Vision* [@wandellFoundationsVision2024].
-
-When image systems are designed for computer vision and machine applications, the ability to recover quantitative properties of the input scene may be paramount. Also, image systems designed for commercial goals such as advertising, require high fidelity to the original image (e.g., the color of a shirt or dress). But for consumer photography images are not generally valued for their precision. Rather, they are appreciated their ability to evoke memories, emotions, and connections. The importance of technical accuracy in consumer photography systems is to show that we can control the pipeline and present what we want to present. The purpose of consumer photography is not to slavishly reproduce the scene, but to convey the essence of a scene, preserving the emotions and memories that make an image meaningful. The great expert in consumer photography, Robert Hunt, emphasized that in photography color reproduction is not about accuracy of side-by-side comparisons. Reproductions are often viewed separately from the original, sometimes after significant time has passed. He emphasized that people often feel competent to judge colors in images of objects they've never seen. The quality of consumer photography systems is subjective. Image systems engineers use these metrics to determine how well they can control the system, and ultimately use this control to render beautiful photographs,.
-
-<!--
-
-# Thinking about Bob Hunt.  https://www.perplexity.ai/search/robert-hunt-from-kodak-researc-pIEYaPICQzWNhpK4mWIcCQ -->
-<!--
-# The chapters with David have a lot of the material for this chapter.
--->
+</section>
+<section id="edges-matter" class="level3" data-number="21.1.4">
+<h3 data-number="21.1.4" class="anchored" data-anchor-id="edges-matter"><span class="header-section-number">21.1.4</span> Edges matter</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Cornsweet-Craik</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Daikin-Bex</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="fig-cornsweet" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cornsweet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/01-seeing/Cornsweet_illusion.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cornsweet-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.4: Cornsweet Craik O’Brien illusion. Better to have a narrower dipole.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="fig-daikin-bex" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-daikin-bex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/01-seeing/Daikin-local-contrast.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-daikin-bex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.5: Daikin and Bex. The forehead and the hair are the same intensity. There are dipoles everywhere.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="nd-order-contrast" class="level3" data-number="21.1.5">
+<h3 data-number="21.1.5" class="anchored" data-anchor-id="nd-order-contrast"><span class="header-section-number">21.1.5</span> 2nd order contrast?</h3>
+<p>I am looking for a fundamental 2nd order contrast illusion.</p>
 <!-- 
 2nd order contrast, contrast of the contrast, should appear somewhere in the new FOV and possibly here.  
+
+https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2020.612153/full
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC7699437/
+
+https://www.sciencedirect.com/science/article/pii/0042698995001395?via%3Dihub
+
+Neuroscience version.  Maybe there is an illusion in there?  https://www.jneurosci.org/content/17/21/8621.long
 -->
-<!--
-## The eye
-
-Some image systems components are designed mainly to acquire information about the light field (cameras), and others are designed to reproduce the light field (displays). Because display systems deliver their output to the human visual system, their design is particularly dependent on human vision. There are also certain features of the human visual system can be important for camera design. For example, if the system is intended to capture a signal that will be displayed to people, then the camera should capture the same portion of the electromagnetic spectrum that we see. In this section, we review the anatomical and functional properties of the eye. Many properties of the eye have clear and strong implications for the design of image systems.
-
-### Physiological optics
-
-The eye includes two functional systems [@fig-retina-color]. The physiological optics (cornea and lens) converts the incident light field into the optical light field, forming an image at the retina. The light sensitive cells in the retina (principally cones and rods) convert the optical light field into a neural signal that is transmitted via the optic nerve to multiple locations in the brain. There is no feedback from the brain to the retina. But there is feedback from the brain that controls body, head and eye movements, which guide how we acquire the light field. The importance of eye and head movements for the human visual system is one reason why direct comparisons between the eye and a camera are not great.
-
-The cornea and flexible lens, together, control the transformation of the incident light field to the optical light field. Even for a fixed head and eye position, the physiological optics are dynamic: the size of the entrance pupil can change and the shape of the lens, and thus its optical power, can vary. The pupil size is not controlled willfully; it changes depending on the ambient light conditions and as well as some non-visual events in the brain. Just as the direction of gaze depends on the viewer's intention, so too does the shape of the lens. Signals sent to the ciliary muscles cause them to relax to make the lens thinner and thus focus on objects at a distance. Signals that cause the muscles to contract result in a thicker lens, enabling focus on nearby objects. The system for bringing objects into focus at the retina is called *accommodation*. As I recall from a younger age, this is a wonderful system when it works. Unfortunately, lens flexibility is lost with age - for everybody. The gradual loss of your eyes' ability to focus on nearby objects is called *presbyopia*. It's a natural, often annoying part of aging. Presbyopia usually becomes noticeable in your early to mid-40s and continues to worsen until around age 65. To compensate for this reduced flexibility, we use reading glasses. And it will happen to you.
-
-We now have many measurements of the quality of the physiological optics. In the sections below, I will summarize these measurements and explain how to simulate how the incident light field is transformed into the retinal image by ISETBio.
-
-### Retina
-
-The neural tissue of the retina lines the curved surface at the back of the eye. The retina is about 5 x 5 cm, and its properties vary considerably across space. The retinal image is converted into a neural signal by a special class of neurons, the photoreceptors. The retina contains many types of specialized cells that combine into stereotypical local circuits. Multiple copies of these local circuits, but usually with different parameters, are present throughout the retina. The circuit outputs leave the retina via the optic nerve. One of the ways we can identify these circuits is that their outputs are transmitted to multiple brain regions. The circuit properties are dynamic in the sense that the circuit response to a simple stimulus, say a small flashed spot, varies with changes in the mean and variance of the retinal image.
-
-There are some similarities between the eye and a conventional camera. For example, the optics and light sensing components are integrated into a single package, and the components are adaptive with respect to light level and focus. But there are lots of differences, as well. One major difference is that the retinal encoding does not sample the image uniformly; it is very inhomogeneous compared to modern cameras. The central human retina is specialized for the cone photoreceptors, which have small (\~ 1.5 um) apertures and are tightly packed. The size of the photoreceptor apertures increases significantly from fovea to periphery, and the receptors for nighttime vision (rods) are inserted between the cones, further increasing their center-to-center spacing. This spatial sampling is quite unlike a typical image sensor whose pixels are all of the same size. Finally, the human visual system relies on eye movements to bring regions of interest into focus at the fovea. The keep integration of eye movements is very important for such a spatially inhomogeneous system.
-
-![Overview of the eye.](images/human/retina-fovea-color.png){#fig-retina-color width="100%" fig-align="center" width="75%"}
-
-I will describe measurements of the optics and encoding in several sections below. These are selected to support calculations of image quality and engineering design. For more about the biology and the scientific methods used to derive these measurements, consult [@wandellFoundationsVision2024]
-
-## Pointspread functions
-
-Where should the adaptive optics measurement method be? Here or FOV? Adaptive optics measurements of wavefront aberrations, expressed as point spread functions. Thibos and Artal data.
-
-### Adaptive optics
-
-The ability to measure certain properties of the optics was revolutionized by adpative optics - a method that makes real time measurements of the wavefront aberrations of the physiological optics using a Shack-Hartmann wavefront sensor. Just the measurement of the aberrations alone is useful. In addition, it has proben possible to engineer systems that correct for these aberrations in real time, and thus visualize the apertures of the photoreceptors (1-5 $\mu \text{m}$ diameter) cells in the retina. Further, using video tracking of the eye movements it has proven possible to deliver stimuli to specific, targeted photoreceptors.
-
-First order approximations of the human optics. Simulations with ISETBio of maybe the Westheimer or Ijspeert functions. Eye models?
-
-### Chromatic aberrations
-
-Wavelength dependence (chromatic aberration)
-
-### Field height dependence
-
-Artal data. Point to ISETBio and maybe the other book.
-
-## The retina
-
-The retina is a 200-300 micron thick layered structure of neural tissue that lines the back of the eye (5 cm x 5 cm). There are about 80 different cell types that can be identified through their genetic expression. Specific retinal cell types form stereotypical connections that make up specific, identifiable circuits. There are about 20 known circuits, and these are likely to account for nearly all of the circuits in the retina. The output signals from these circuits are carried on axons in the optic nerve that project to a variety of locations in the brain.
-
-The vast majority of light-driven activity is initiated in the photoreceptors (rods and cones). The rods are the dominant source under very low light levels, and the cones are the dominant source under moderate to high light levels. The typical retinal circuit is driven by activity that starts in a local region of the photoreceptors. The same basic circuit will be present throughout the retina, tiling the photoreceptor mosaic, though the absolute size of the cells and their input regions generally vary as one measures across the retina. The size of the region increases as one measures from the highly specialized central fovea into the periphery.
-
-### Photoreceptor spatial sampling
-
-Maybe point mainly to the other book. Image showing the fovea and inhomogeneous sampling of the photoreceptor mosaics. Maybe Curcio. Maybe the S-cone image sampling mosaic. Adaptive optics measurements of retinal sampling Rods, ipRGCs, too in here. Other book - ISETBio: Examples of simulation. David also has these new measurements.
-
-### Photoreceptor wavelength encoding
-
-## Overall human sensitivity
-
-### Pattern
-
-spatial MTF - Look through modern measurements of the spatial MTF.
-
-### Time and Motion
-
-temporal MTF
-
-## Image quality metrics {#sec-human-imagequality}
-
-SSIM. Simpler ones. Pyramid from Beau? But earlier single channel, multiple channel.
-
-SSIM and MS-SSIM
-
-Sharpness metrics
-
-I forget the guy with a B, I think
-
-temporal MTF. Flicker.
-
-## Color
-
-<!--# What about the color matching experiment? Maybe James Clerk Maxwell mentioned but referred to FOV 
+</section>
+<section id="motion-pattern-and-color-combine" class="level3" data-number="21.1.6">
+<h3 data-number="21.1.6" class="anchored" data-anchor-id="motion-pattern-and-color-combine"><span class="header-section-number">21.1.6</span> Motion, pattern, and color combine</h3>
+<p>Not sure</p>
+</section>
+<section id="seeing-without-light" class="level3" data-number="21.1.7">
+<h3 data-number="21.1.7" class="anchored" data-anchor-id="seeing-without-light"><span class="header-section-number">21.1.7</span> Seeing without light</h3>
+<p>Something about Craik, Newton, Brindley personal experiments? Entopic phenomena.</p>
+<!--# https://library.brown.edu/create/libnews/victorian-optics/  
 -->
-<!--
-Color representations: XYZ, luminance, chromaticity, cones
-
-Color discrimination: ellipses
-
-### Color metrics
-
-CIELAB
-
-S-CIELAB
-
-Mark Fairchild contributions. Others?
-
-## Computer vision metrics
-
-They should be described elsewhere.
-
-A lot of these might have been used in those directional cosine errors in Zheng's dissertation
-
--->
+<p>TODO: Remember the Newton bodnick pressure on the eye. https://cudl.lib.cam.ac.uk/view/MS-ADD-03975/21 a tip until he saw ‘several white darke and colored circles. Which circles were plainest when I continued to rub my eye with the point of the bodkin.’ Yet when he held both eyes and bodkin still, the circles would begin to fade. Was light a manifestation of pressure, then? Almost as recklessly, he stared with one eye at the sun, reflected in a looking glass, for as long as he could bear. He sensed that color—perhaps more than any of the other qualities of things—depends on imagination and fantasy and invention. He looked away at a dark wall and saw circles of color. There was a motion of spirits in his eye. These slowly decayed and finally vanished. Were they real or phantasm? Could such colors ever be real, like the colors he had learned to make from crushed berries or sheep’s blood? After looking at the sun he seemed to perceive light objects as red and dark objects as blue.” (Gleick, James. Isaac Newton. New York: Pantheon Books, 2003:61–2.)</p>
+<p>From Gemini. Around 1665 or 1666, a young Isaac Newton, in his pursuit of understanding how the eye perceives light, took a “bodkin” (a blunt needle, often used for piercing fabric or threading ribbons) and very carefully inserted it between his eye and the bone of his eye socket, pushing it as close to the back of his eye as he could.</p>
+<p>He then pressed on his eyeball with the end of the bodkin, deliberately altering its curvature. As he did this, he observed and meticulously recorded the visual phenomena that appeared. He noted “several white, dark, &amp; coloured circles” which were most vivid when he continued to rub his eye with the bodkin, but would fade if he held it still.</p>
+<p>He also varied the conditions, performing the experiment in both a light room (with eyes shut, so some light would get through) and a very dark room, observing different patterns and colors of circles and spots.</p>
+<p>Newton’s aims and observations:</p>
+<p>Newton’s motivation for this extreme self-experiment was to explore the origins of color perception. He was trying to determine if color was an external property of light itself, or if it was, in part, a product of the eye’s internal mechanisms and the pressure applied to it.</p>
+<p>His observations, though seemingly odd and somewhat disturbing, were aimed at understanding how the physical manipulation of the retina (the light-sensitive layer at the back of the eye) could produce visual sensations even in the absence of external light. He noted that the colors and patterns he saw changed depending on the pressure and how the eye was deformed.</p>
+<p>While this particular experiment didn’t directly lead to his groundbreaking discoveries about the spectrum of light (which came from his famous prism experiments), it was part of his broader, often daring, inquiry into optics and vision. It highlights Newton’s extreme dedication and willingness to use himself as a subject in his scientific pursuits. –&gt;</p>
 
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Wandell1995-FOV" class="csl-entry" role="listitem">
+Wandell BA (1995) Foundations of vision: <span>Behaviour</span>, neuroscience, and computation. Sinauer Associates, Sunderland, MA
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Yes, I have had people I respect challenge whether some of these are really illusions or not.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -1091,7 +1111,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/human-02-optics.html" class="pagination-link" aria-label="Human optics">
+      <a href="../chapters/human-02-encoding.html" class="pagination-link" aria-label="Human optics">
         <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Human optics</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
