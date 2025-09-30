@@ -117,18 +117,34 @@ I am uncertain about three things in this tutorial.
 
 * The second lens, second surface, should have a curvature that is negative, I think.  He has it as positive.  Yet ...  * n2 and n1 always refer to the IOR of the current material (n1) and the IOR of the next material (n2).  
 * The positive and negative angles w.r.t. the axis.  Positive angles are counter clockwise, as expected.  He doesn't say, and it would be helpful to mention.  
-
 -->
 
-Ray tracing feels physical -we can imagine and draw rays as they pass through a sequence of surfaces, or as they are reflected by mirrors, or scattered by materials. As designs become complex, however, ray tracing involves a lot of computational steps that can be hard to tedious to calculate accurately. Around 1970, as computers became widespread, optical engineers began to use a computational approach to approximate different designs.  This approach, based on the **ray transfer matrix**, analyzes the central (paraxial) region of circularly symmetric lenses.
+Ray tracing provides a physical and intuitive way to understand how light travels. But the method becomes computationally intensive for complex systems with many surfaces. A powerful and systematic method for analyzing such systems is **ray transfer matrix analysis**, often called **ABCD matrix optics**. This approach simplifies the design process by modeling the effect of each optical component on a light ray using a simple $2 \times 2$ matrix.
 
-This matrix algebra approach, often called ABCD matrix optics, simplifies the analysis by representing each optical element—and even the spaces between them—as a simple 2x2 matrix. By multiplying these matrices together, we can find a single matrix that describes the entire optical system, making it much easier to calculate key properties like focal length and ray position.
+This method is accurate for **paraxial** rays; these are rays that are both close to the optical axis and travel at small angles relative to it. The accuracy of the method depends on these small-angle approximations:
 
-The parameters used in the computation are shown in @fig-raytransfer-definitions. Each input ray is described by two variables (@fig-raytransfer-definitions, panel A). The first variable is the distance of the ray from the optical axis ($y$), which is called the **field height**.  The second variable is the angle between the ray and the optical axis, ($\theta$). By convention, counter-clockwise angles are positive.  
+$$
+\sin(\theta) \approx \theta, \quad \tan(\theta) \approx \theta, \quad \cos(\theta) \approx 1
+$$
 
-![Ray transfer matrix parameter defintions](images/optics/09-morelens/definitions.png){#fig-raytransfer-definitions width="50%"}
+These approximations are accurate for angles up to about $5^\circ$ and can often be stretched to $10^\circ$ depending on the required accuracy. They also apply to rays that are one-third to one-half of the aperture distance, depending on the lens power.
 
-We place these parameters in a 2-vector $\rho = (y, \theta)$. Then we define a series of ray transfer matrices, using the principles we reviewed in @sec-optics-lenses, that follow the journey of the ray through the thick lens.
+A paraxial ray at any point along the optical axis can be described by a vector containing two values: its radial distance ($y$) from the optical axis and its angle ($\theta$) with respect to the axis.
+
+![Ray transfer matrix parameter definitions. (A) A ray is defined by its height $y$ and angle $\theta$. By convention, counter-clockwise angles are positive. (B) A surface is defined by its radius of curvature $R$.](images/optics/09-morelens/definitions.png){#fig-raytransfer-definitions width="50%"}
+
+We represent the ray as a column vector, $\rho = \begin{pmatrix} y \\ \theta \end{pmatrix}$. The journey of this ray through an optical system is described by a series of matrix multiplications, where each matrix represents a single optical element (like a lens surface) or the space between elements. The final output ray $\rho_{\text{out}}$ is found by applying the total system matrix $M$ to the input ray $\rho_{\text{in}}$:
+
+$$
+\rho_{\text{out}} = M \rho_{\text{in}}
+\quad \text{or} \quad
+\begin{pmatrix} y_{\text{out}} \\ \theta_{\text{out}} \end{pmatrix}
+=
+\begin{pmatrix} A & B \\ C & D \end{pmatrix}
+\begin{pmatrix} y_{\text{in}} \\ \theta_{\text{in}} \end{pmatrix}
+$$
+
+Let's build the matrices for a thick lens by following a ray as it refracts at the first surface, travels through the lens material, and refracts again at the second surface.
 
 ### Refraction - First Surface 
 Snell's Law tells us how the rays change direction at the first surface of a spherical lens (@eq-snell). As you can see in @fig-1st-surface, the rays change direction by an amount that depends on their field height.  The critical point -I won't show the derivation- is that the amount of change is proportional to field height. In the paraxial regime the change is the same, no matter what the input ray angle. 
