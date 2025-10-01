@@ -6,20 +6,30 @@ date: last-modified
 
 {{< include "includes/WIP-callout.qmd" >}}
 
-
 ## Spatial regularities overview {#sec-spatial-regularities-overview}
+We can immediately recognize whether an image is natural or not. No reader will have any difficulty judging which of the three parts of the image is a natural image. Why? Plainly the natural image data conform to some spatial statistical rules that make them very distinguishable as a group. 
 
-We can immediately recognize whether an image is natural or not.  Example of, say, random noise, line drawing, natural image.
+![Three images. You have no difficulty knowing which is a natural image](images/lightfields/05-spatial/Gemini_Generated_NoiseSketchNatural.png){#fig-naturalspatial width="70%"}
 
-Why? 
+We have already seen how information about the spectral characteristics of natural images can be helpful in interpreting them. Learning more about the spatial statistics of natural images -or not- has been a longstanding goal of image systems engineering and vision science. The reason is simple: the more we know about these statistics, the better we can do at interpreting the images we measure. For example, we should be able to remove noise more effectively by rewriting a noisy capture in a format that is more natural-like.  We can even hope that we should be able to develop better algorithms to interpret the contents of the images (@sec-image-regularities). 
 
-The set of natural images has a spatial statistical characterization. Knowing how to quantify whether an image is likely to be a natural image -or not- has been a longstanding goal of image systems engineering and vision science.  The reason is simple:  the more wew know about the range of possible inputs, the better we will do at making inferences about the objects in the scene (@sec-image-regularities).
+Over the last four decades, our knowledge about the spatial statistics has grown considerably.  The development of machine learning algorithms, particularly diffusion methods for generating natural images, has been a recent striking advance.  In this chapter we will start with the foundations and work our way towards the most recent insights.
+
+## Spatial correlations  {#sec-spatial-correlations}
+Image scientists were immediately drawn to analyzing the very different spatial statistics of images.  If we examine the three sections of @fig-naturalspatial, one very obvious feature jumps out.  In the first panel, every pixel is completely independent of the other. In natural images, if you know the light at one point there is a good chance that it will be similar to the light at another point. There are various mathematical ways to express this basic insight.  And of course these measures all can be connected to one another, although sometimes with some difficulty.
 
 <!--
 Something about fractals. Textures. Other stuff. @Simoncelli2001-imagestats @Geisler2008-imagestats @Ruderman1994-imagestats
 -->
 
-## Spatial correlations and fractals {#sec-fractals}
+## Natural scenes and the 1/f spatial frequency falloff  {#sec-spectrum-power-law}
+
+Who first pointed this out? Relationship to the scale invariant idea of fractals, and the fractal nature of many things.
+
+Ruderman and Bialek paper on natural image statistics.
+
+Field, Olshausen
+
 
 The scale invariance of natural images arises from their power-law spectral decay, which mathematically ensures statistical consistency across spatial scales. The connection between 1/f\^α spectra and scale invariance can be expressed through:
 
@@ -57,6 +67,17 @@ This matches the scale-invariance condition with $\kappa = 2-\eta$, demonstratin
 
 [^lightfields-properties-8]: http://vigir.missouri.edu/\~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf
 
+## The dead leaves model {#sec-dead-leaves}
+
+@lee2001-deadleaves
+
+Jon's Matlab script as a basis for discussing this. [Software from Jon showing 1/f issues.](https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m)
+
+Also, the deadleaves function in ISETCam.
+
+
+### Scale invariance {#sec-fractals}
+
 **Fractal connection** The power-law exponent relates to fractal dimension $D$ through:
 
 $$
@@ -78,26 +99,14 @@ This mathematical framework shows that 1/f\^α spectra inherently encode fractal
 [^lightfields-properties-13]: http://vigir.missouri.edu/\~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf
 -->
 
-## Natural scenes and the 1/f spatial frequency falloff
-
-Who first pointed this out? Relationship to the scale invariant idea of fractals, and the fractal nature of many things.
-
-Ruderman and Bialek paper on natural image statistics.
-
-Field, Olshausen
-
-
-## Natural scenes: The dead leaves model
-
-@lee2001-deadleaves
-
-Jon's Matlab script as a basis for discussing this. [Software from Jon showing 1/f issues.](https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m)
-
-Also, the deadleaves function in ISETCam.
-
-## Diffusion models
+## Diffusion models {#sec-spatial-diffusion}
 
 Diffusion neural networks.
 
 Eero's analysis of the statistical properties of images using diffusion models.
+
+## Applications
+
+Image compression and JPEG is the big one.  It doesn't get us all the way to objects.  But it sure mattered.
+
 
