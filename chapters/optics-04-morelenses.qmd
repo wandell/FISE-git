@@ -251,13 +251,13 @@ $$
 :::
 
 ### Effective and back focal lengths
-Multi-lens systems can be summarized by their ray transfer matrix. This is a very efficient way to communicate about system properties, though it is quite incomplete compared to a full specification of the components and their materials. Because these are not computed, the specification in this simpler form is often called a black box model of the optics.
+Multi-lens systems can be summarized by their ray transfer matrix. This is a very efficient way to communicate about system properties, though it is quite incomplete compared to a full specification of the components and their materials. Because the lens element are not part of the specification, the this characterization of the lens is often called a **black box model** of the optics.  We know what it does, just not how it does it.
 
-We can compute two particularly valuable system properties from the matrix, the back focal length (BFL), $f_B$, and the effective focal length (EFL), $f_E$. BFL is the distance from the system’s output reference plane to the focal point (for an object at infinity). EFL is the distance from the secondary principal plane to the focal point.
+We can compute two particularly valuable system properties from the system matrix: the **back focal length (BFL)**, $f_B$, and the **effective focal length (EFL)**, $f_E$. The BFL is the distance from the system’s output reference plane to the focal point (for an object at infinity). The EFL is the distance from the secondary principal plane to the focal point.
 
-![Back and Effective focal lengths of a black box system.](images/optics/09-morelens/efl-bfl.png){#fig-efl-bfl width=60%}
+![Back focal length and Effective focal length of a black box system.](images/optics/09-morelens/efl-bfl.png){#fig-efl-bfl width=75%}
 
-To determine these focal lengths, we compute where an input ray that is parallel to the optical axis emerges and crosses the optical axis. An input ray parallel to the optical axis has the form $\rho_{\text{in}}=(y_{\text{in}},\theta_{\text{in}})=(y,0)$. Because $\theta_{\text{in}}=0$, the corresponding output ray depends only on $A$ and $C$, $\rho_{\text{out}}=(y_{\text{out}},\theta_{\text{out}})=(A y, C y)$.
+We determine these focal lengths from the system matrix. We compute where an input ray that is parallel to the optical axis emerges and crosses the optical axis. An input ray parallel to the optical axis has the form $\rho_{\text{in}}=(y_{\text{in}},\theta_{\text{in}})=(y,0)$. Because $\theta_{\text{in}}=0$, the corresponding output ray depends only on $A$ and $C$, $\rho_{\text{out}}=(y_{\text{out}},\theta_{\text{out}})=(A y, C y)$.
 
 The two output parameters determine the line the output ray follows in the $z$-direction. It starts at the output field height and slopes toward the optical axis. The line reaches the optical axis at the $z$ where
 $$
@@ -274,8 +274,7 @@ f_{B} = -\frac{A}{C},
 f_{E} = -\frac{1}{C}.
 $$
 
-N.B. I use a simple parameterization of the ray state, $(y,\theta)$. There are others -and they can be very smart- who prefer to use the **reduced-angle convention**.  They incorporate the index of refraction into the angle $(y,n\,\theta)$.  In that framing, replace $C$ by $C/n_{\text{out}}$. 
-
+N.B. I use a simple parameterization of the ray state, $(y,\theta)$. Others -and they can be very smart- prefer to use the **reduced-angle convention**.  They incorporate the index of refraction into the angle $(y,n\,\theta)$.  In that framing, replace $C$ by $C/n_{\text{out}}$. 
 
 ## Ray transfer functions {#sec-optics-raytransfer}
 I expect that we will continue to see computational methods based on rays continue to expand. The ray transfer framing is an important conceptualization and it is thrilling to see the roots of linear algebra and optics coordinate so well. The limitation of the approach to circularly symmetric, paraxial analyses is quite significant. It is clear that we would like to be able to broaden the approach, say by developing functions that map the entire set of input rays to the output rays. 
