@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-28">
+<meta name="dcterms.date" content="2025-10-02">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>3&nbsp; Measuring light – Foundations of Image Systems Engineering</title>
@@ -493,7 +493,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 28, 2025</p>
+      <p class="date">October 2, 2025</p>
     </div>
   </div>
   
@@ -520,15 +520,15 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: September 28, 2025</p>
+<p>Last updated: October 2, 2025</p>
 </div>
 </div>
 </div>
 <section id="sec-lfmeasurement-overview" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-lfmeasurement-overview"><span class="header-section-number">3.1</span> Measuring light: An overview</h2>
-<p>So far, we have described the light field as a collection of rays, mainly paying attention to the ray directions. Now, we turn to measuring the energy carried by those rays.</p>
-<p>A single light ray is a useful geometric abstraction, but it is infinitely thin and thus has no energy. Any real measurement of light must capture a bundle of rays that occupies a finite amount of space and angle. We might measure a bundle of rays spreading out from a light source or a bundle of rays converging on a surface. The principles for quantifying the energy in these bundles come from <strong>radiometry</strong>, the science of measuring electromagnetic radiation, including light.</p>
-<p>This section introduces the fundamental concepts and units of radiometry. These units are essential for understanding how software, such as ISETCam, represents light and for modeling how optics transform light, which we will discuss in <a href="optics-05-linear-space.html" class="quarto-xref"><span>Chapter 11</span></a>.</p>
+<p>An imaging system consists of two connected components: the <strong>acquisition hardware</strong>, which measures aspects of the light field, and the <strong>processing algorithms</strong>, which interpret or transform that data. Effective system design requires these components to work in harmony. By understanding the information captured by the hardware, we can develop algorithms that interpret the data effectively. Understanding the light signal is essential for designing image systems acquisition hardware. Knowledge about the typical characteristics of light images will be helpful for designing the processing algorithms that interpret the signal. This synergy between acquisition and processing is a cornerstone of modern imaging system design.</p>
+<p>So far, we have described the light field as a collection of rays, mainly paying attention to the ray directions. A single light ray is a useful geometric abstraction, but it is infinitely thin and thus has no energy. Any real measurement of light must capture a bundle of rays that occupies a finite amount of space and angle. We might measure a bundle of rays spreading out from a light source or a bundle of rays converging on a surface. The principles for quantifying the energy in these bundles come from <strong>radiometry</strong>, the science of measuring electromagnetic radiation, including light.</p>
+<p>This section introduces the fundamental concepts and units of radiometry. These units are essential for understanding how optics transforms light from input to output, and how sensors encode light. Image systems simulation software, such as ISETCam, quantifies light using these standard units.</p>
 </section>
 <section id="radiometric-units" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="radiometric-units"><span class="header-section-number">3.2</span> Radiometric units</h2>
@@ -536,7 +536,7 @@ Work in Progress
 <p>We describe the energy separately for each wavelength because, in most cases, the energy at different electromagnetic wavelengths act independently: we can measure the energy at two wavelengths separately, mix the two lights, and the result is simply the sum of the individual measurements. This additivity is a critical feature of light behavior in many cases <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <p>Radiometry defines units that are helpful for different types of geometry. The radiometric measures can be divided with respect to those from a source (radiance) and those arriving at a surface (irradiance). These can be further divided with respect to measurements from a small (point) source, or from an extended surface.</p>
 <p>Finally, adjacent to the radiometric measurements there is a set of units that summarize the impact of the radiation on the human visual system. These measurements begin with the spectral radiometry units, and they are then reduced by calculating a weighted sum across wavelengths. The weights are selected to represent (roughly) the relative visibility of each wavelength. These <strong>photometric</strong> units parallel the radiometric units; for example, radiance and irradiance correspond to luminance and illuminance. In this section, we will describe the radiometric quantities.</p>
-<p>The reader might consult <a href="https://wandell.github.io/FOV-1995" target="_blank">Foundations of Vision</a> for more information about human vision; a summary of critical aspects of human vision for image systems engineering is presented in <a href="part-human.html#sec-human-topics" class="quarto-xref"><span>Section 1</span></a>. The experimental basis of photometry for the weighted sum across wavelengths -the key step to spectral radiometric quantities into photometric quantities- is explained in <span class="quarto-unresolved-ref">?sec-human-color</span>.</p>
+<p>The reader might consult <a href="https://wandell.github.io/FOV-1995" target="_blank">Foundations of Vision</a> for more information about human vision; a summary of critical aspects of human vision for image systems engineering is presented in Part IV: Human Vision. The experimental basis of photometry for the weighted sum across wavelengths -the key step to spectral radiometric quantities into photometric quantities- is explained in <a href="human-02-encoding.html" class="quarto-xref"><span>Chapter 22</span></a>.</p>
 </section>
 <section id="radiance-from-a-point" class="level2 page-columns page-full" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="radiance-from-a-point"><span class="header-section-number">3.3</span> Radiance from a point</h2>
@@ -649,8 +649,7 @@ Surface or point?
 <p>The four fundamental radiometric measurements provide a foundation for understanding light. In later chapters, we will expand on these concepts by introducing additional dependencies and variables.</p>
 <p>For instance, radiance from a surface patch can be measured not just in a single direction but as a function of the viewing angle, described by azimuth (<span class="math inline">\(\alpha\)</span>) and elevation (<span class="math inline">\(\beta\)</span>). Similarly, irradiance arriving at a surface can be analyzed as a function of the incident angle. These angle-dependent measurements are crucial for understanding how light interacts with materials. We will delve deeper into this topic when we discuss the bidirectional reflectance distribution function (BRDF) in <a href="lightfields-04-properties-spectral.html#sec-properties-brdf" class="quarto-xref"><span>Section 5.8</span></a>.</p>
 <p>One of the most significant extensions for image systems engineering involves understanding the data captured by image sensors. Modern sensors are typically arrays of small light-sensitive elements called <strong>pixels</strong>, which spatially sample the irradiance at the sensor surface. Each pixel integrates energy from rays arriving from all directions within a specific wavelength band. Over time, the number of pixels in sensors has grown dramatically, from early arrays with about <span class="math inline">\(256 \times 256\)</span> pixels to today’s sensors with tens of millions.</p>
-<p>From the outset, researchers recognized the value of capturing more detailed information. Measuring rays from different directions separately, as illustrated in <a href="lightfields-01-intro.html#fig-adelson-wang" class="quarto-xref">Figure&nbsp;<span>2.7</span></a>, provides richer data and forms the basis of light field imaging. Similarly, reproducing color requires pixels with different wavelength sensitivities, a concept first formalized in <span class="citation" data-cites="maxwell1872-colorvision">Maxwell (<a href="references.html#ref-maxwell1872-colorvision" role="doc-biblioref">1872</a>)</span>. This understanding gave rise to the field of <strong>photometry</strong>, which we will explore further in Part IV: Human vision.</p>
-<p>A solid grasp of the physics of light is essential for image systems engineering. An imaging system consists of two interconnected components: the <strong>acquisition hardware</strong>, which measures specific aspects of the light field, and the <strong>processing algorithms</strong>, which interpret or transform that data. Effective system design requires these components to work in harmony. By understanding the information captured by the hardware, we can develop algorithms that interpret the data effectively, often incorporating prior knowledge about the behavior of light and the characteristics of natural images. This synergy between acquisition and processing is a cornerstone of modern imaging system design.</p>
+<p>From the outset, researchers recognized the value of capturing more detailed information. Measuring rays from different directions separately, as illustrated in <span class="quarto-unresolved-ref">?fig-adelson-wang</span>, provides richer data and forms the basis of light field imaging. Similarly, reproducing color requires pixels with different wavelength sensitivities, a concept first formalized in <span class="citation" data-cites="maxwell1872-colorvision">Maxwell (<a href="references.html#ref-maxwell1872-colorvision" role="doc-biblioref">1872</a>)</span>. This understanding gave rise to the field of <strong>photometry</strong>, which we will explore further in Part IV: Human vision.</p>
 
 
 

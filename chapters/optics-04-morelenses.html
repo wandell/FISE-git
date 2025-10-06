@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-25">
+<meta name="dcterms.date" content="2025-10-04">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>10&nbsp; Lenses and ray transfer – Foundations of Image Systems Engineering</title>
@@ -502,7 +502,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 25, 2025</p>
+      <p class="date">October 4, 2025</p>
     </div>
   </div>
   
@@ -529,15 +529,14 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: September 25, 2025</p>
+<p>Last updated: October 4, 2025</p>
 </div>
 </div>
 </div>
 <section id="sec-optics-morelenses-overview" class="level2" data-number="10.1">
 <h2 data-number="10.1" class="anchored" data-anchor-id="sec-optics-morelenses-overview"><span class="header-section-number">10.1</span> Lenses and ray transfer overview</h2>
-<p>The principles of geometric optics and thin lenses are also critical for thick lenses and multi-element lenses(<a href="optics-01-geometric.html" class="quarto-xref"><span>Chapter 7</span></a>). The first lens is traced, and its output is the input to a second lens. We can use the three principles (<a href="optics-03-thinlens.html#sec-optics-3principles" class="quarto-xref"><span>Section 9.4</span></a>) to analyze the lenses in sequence. Using these tools, but with increasing complexity, the methods used to characterize thin lenses (<a href="optics-03-thinlens.html" class="quarto-xref"><span>Chapter 9</span></a>) can be extended to many different optical functions.</p>
+<p>The principles of geometric optics and thin lenses are also critical for thick lenses and multi-element lenses(<a href="optics-01-geometric.html" class="quarto-xref"><span>Chapter 7</span></a>). The first lens is traced, and its output is the input to a second lens. We can use the three principles (<a href="optics-03-thinlens.html#sec-optics-3principles" class="quarto-xref"><span>Section 9.5</span></a>) to analyze the lenses in sequence. Using these tools, but with increasing complexity, the methods used to characterize thin lenses (<a href="optics-03-thinlens.html" class="quarto-xref"><span>Chapter 9</span></a>) can be extended to many different optical functions.</p>
 <p>In this chapter, I will illustrate some of the extensions to thick lenses and multi-element lenses. These have been important historically, and they will continue to be with us for some years.</p>
-<p>But a main goal is to lead you to the next level of optics, and in particular the notion of the <em>ray transfer matrix</em> and the <em>ray transfer function (RTF)</em> first introduced in <a href="optics-02-lenses.html#sec-optics-metalens" class="quarto-xref"><span>Section 8.6.6</span></a>. This idea conceptualizes optics in terms of how the rays in the incident light field are transformed into the rays in the optical light field. Characterizing a system in terms of a transformation, in this case a function that transforms the rays from one ight field into another, is an abstraction that is applicable to many aspects of image systems engineering. Conceiving of the pipeline as a series of transformaqtions, from capture to display, organizes how we think of simulations. The approach may even apply to image understanding.</p>
 <p>But let’s start here, with increasingly complex optics.</p>
 </section>
 <section id="combining-two-thin-lenses" class="level2" data-number="10.2">
@@ -563,7 +562,7 @@ https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/2
 <section id="thick-lens-definitions" class="level2" data-number="10.3">
 <h2 data-number="10.3" class="anchored" data-anchor-id="thick-lens-definitions"><span class="header-section-number">10.3</span> Thick lens definitions</h2>
 <p>The principles of refraction and ray tracing apply to both thin and thick lenses. However, for a <strong>thick lens</strong>, the optical design calculations must account for the distance rays travel <em>within</em> the lens material. This internal propagation distance is assumed to be zero in thin lens calculations, which is a key simplification.</p>
-<p>We can extend the three principles used for thin spherical lenses (<a href="optics-03-thinlens.html#sec-optics-3principles" class="quarto-xref"><span>Section 9.4</span></a>) to analyze thick lenses. The concept of the focal point remains the same: Rays arriving parallel to the optical axis converge toward the image-side focal point (<span class="math inline">\(F_2\)</span>). Conversely, rays passing through the object-side focal point (<span class="math inline">\(F_1\)</span>) emerge parallel to the optical axis.</p>
+<p>We can extend the three principles used for thin spherical lenses (<a href="optics-03-thinlens.html#sec-optics-3principles" class="quarto-xref"><span>Section 9.5</span></a>) to analyze thick lenses. The concept of the focal point remains the same: Rays arriving parallel to the optical axis converge toward the image-side focal point (<span class="math inline">\(F_2\)</span>). Conversely, rays passing through the object-side focal point (<span class="math inline">\(F_1\)</span>) emerge parallel to the optical axis.</p>
 <div id="fig-cardinal-points" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cardinal-points-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -599,11 +598,11 @@ Figure&nbsp;10.2: Thick spherical lens definitions. By convention, light travels
 <!--
 Jensen and White says solving for combinations of lenses of 'appreciable thickness is one of considerable difficulty, but one which can be solved by use of the principles already give'. 
 -->
-<p>The ray tracing principles developed so far are the foundation for the next level of complexity, analyzing combinations of thick lenses. If one has a set of thick lenses in combination, each can be reprointed by a pair of principal planes. The next step is to combine this pair into a new, single pair, that specifies them jointly. One then continues along this path, adding in new lenses, taking into account various details such as magnification. (J&amp;W page 93).</p>
+<p>The ray tracing principles developed so far are the foundation for the next level of complexity, analyzing combinations of thick lenses. If one has a set of thick lenses in combination, each can be represented by a pair of principal planes. The next step is to combine this pair into a new, single pair, that specifies them jointly. One then continues along this path, adding in new lenses, taking into account various details such as magnification. (J&amp;W page 93).</p>
 <p>Doing this analysis by hand, and using the various formulae, can be quite difficult. The rise of optical design software tools made it possible for many people to engage in the task. Understanding the principles is important for using these software tools well.</p>
 <p>But even before these tools were available, there was great interest in designing useful optics. For example, the development of photography, such as daguerrotype in 1839<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, created a significant market for optical design. People wanted to take pictures of themselves, their family, and their friends. The low light sensitivity of the recording media made it difficult to create portraits using a pinhole camera. Also, the pinhole camera does not produce a flat field image (<a href="optics-01-geometric.html#sec-pinhole-collimated" class="quarto-xref"><span>Section 7.2.1</span></a>). Lens designers set out to make portraits possible. Much of this was enabled by the development of new types of glass with different optical properties, especially from Fraunhofer’s work in Bavaria (<a href="lightfields-04-properties-spectral.html#sec-solar-fraunhofer" class="quarto-xref"><span>Section 5.2</span></a>). Having a palette of materials to use made the design possible.</p>
 <p>The development of mathematical methods for predicting the outcome for lenses with different shapes and materials was also important. Both Gauss and Petzval were mathematicians who developed workable methods for simulating the impact of a design prior to construction. Robert Wood, an American physicist, coined the term “fish-eye” lens to describe how a fish would see the world through a 180° hemisphere of water<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. He designed a lens to mimic this — essentially a hemispherical objective producing a circular image. For all of those designers, mathematics was the key simulation tool. In the modern era, as this book illustrates in many places, mathematics is extended into computable algorithms. These are our modern tools, but don’t sleep on the importance of mathematics!</p>
-<p>Finally, in those days like these, different design goals led to diversity. Gauss was primarily interested in astronomical lenses with low distortion. Petzval proritized light sensitivty for portraiture. Cooke (1893) later produced the famous triplet, which became the Tessar, to achieve a compact lens that balanced aberrations across the field. Woods’ fish-eye became a scientific tool that enabled measurements of the sky, military reconnaisance and artistic architectural overviews.</p>
+<p>Finally, in those days like these, different design goals led to diversity. Gauss was primarily interested in astronomical lenses with low distortion. Petzval proritized light sensitivty for portraiture. Cooke (1893) later produced the famous triplet, which became the Tessar, to achieve a compact lens that balanced aberrations across the field. Woods’ fish-eye became a scientific tool that enabled measurements of the sky, military reconnaissance and artistic architectural overviews.</p>
 <section id="sec-optics-double-gauss" class="level3" data-number="10.4.1">
 <h3 data-number="10.4.1" class="anchored" data-anchor-id="sec-optics-double-gauss"><span class="header-section-number">10.4.1</span> Double Gauss</h3>
 <p>The great mathematician Gauss implemented proposed a design, the <strong>Gauss lens</strong> for astronomy. This was improved upon by Alvan Clark and Paul Rudolph, who expanded on Gauss’s idea to introduce the first symmetrical double Gauss arrangement — essentially two of Gauss’s lens pairs, placed symmetrically around the stop . Paul Rudolph at Zeiss refined this into the famous Planar lens (1896), which became the archetypal “double Gauss” photographic objective. This design, with later improvements (e.g.&nbsp;Taylor &amp; Hobson’s Opic lens, 1920), became the dominant fast normal lens type for photography in the 20th century (<a href="#fig-double-gauss" class="quarto-xref">Figure&nbsp;<span>10.3</span></a>).</p>
@@ -674,22 +673,34 @@ I am uncertain about three things in this tutorial.
 
 * The second lens, second surface, should have a curvature that is negative, I think.  He has it as positive.  Yet ...  * n2 and n1 always refer to the IOR of the current material (n1) and the IOR of the next material (n2).  
 * The positive and negative angles w.r.t. the axis.  Positive angles are counter clockwise, as expected.  He doesn't say, and it would be helpful to mention.  
-
 -->
-<p>Ray tracing feels physical -we can imagine and draw rays as they pass through a sequence of surfaces, or as they are reflected by mirrors, or scattered by materials. As designs become complex, however, ray tracing involves a lot of computational steps that can be hard to tedious to calculate accurately. Around 1970, as computers became widespread, optical engineers began to use a computational approach to approximate different designs. This approach, based on the <strong>ray transfer matrix</strong>, analyzes the central (paraxial) region of circularly symmetric lenses.</p>
-<p>This matrix algebra approach, often called ABCD matrix optics, simplifies the analysis by representing each optical element—and even the spaces between them—as a simple 2x2 matrix. By multiplying these matrices together, we can find a single matrix that describes the entire optical system, making it much easier to calculate key properties like focal length and ray position.</p>
-<p>The parameters used in the computation are shown in <a href="#fig-raytransfer-definitions" class="quarto-xref">Figure&nbsp;<span>10.7</span></a>. Each input ray is described by two variables (<a href="#fig-raytransfer-definitions" class="quarto-xref">Figure&nbsp;<span>10.7</span></a>, panel A). The first variable is the distance of the ray from the optical axis (<span class="math inline">\(y\)</span>), which is called the <strong>field height</strong>. The second variable is the angle between the ray and the optical axis, (<span class="math inline">\(\theta\)</span>). By convention, counter-clockwise angles are positive.</p>
+<p>Ray tracing provides a physical and intuitive way to understand how light travels. But the method becomes computationally intensive for complex systems with many surfaces. A powerful and systematic method for analyzing such systems is <strong>ray transfer matrix analysis</strong>, often called <strong>ABCD matrix optics</strong>. This approach simplifies the design process by modeling the effect of each optical component on a light ray using a simple <span class="math inline">\(2 \times 2\)</span> matrix.</p>
+<p>This method is accurate for <strong>paraxial</strong> rays; these are rays that are both close to the optical axis and travel at small angles relative to it. The accuracy of the method depends on these small-angle approximations:</p>
+<p><span class="math display">\[
+\sin(\theta) \approx \theta, \quad \tan(\theta) \approx \theta, \quad \cos(\theta) \approx 1
+\]</span></p>
+<p>These approximations are accurate for angles up to about <span class="math inline">\(5^\circ\)</span> and can often be stretched to <span class="math inline">\(10^\circ\)</span> depending on the required accuracy. They also apply to rays that are one-third to one-half of the aperture distance, depending on the lens power.</p>
+<p>A paraxial ray at any point along the optical axis can be described by a vector containing two values: its radial distance (<span class="math inline">\(y\)</span>) from the optical axis and its angle (<span class="math inline">\(\theta\)</span>) with respect to the axis.</p>
 <div id="fig-raytransfer-definitions" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-raytransfer-definitions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/optics/09-morelens/definitions.png" class="img-fluid figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-raytransfer-definitions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.7: Ray transfer matrix parameter defintions
+Figure&nbsp;10.7: Ray transfer matrix parameter definitions. (A) A ray is defined by its height <span class="math inline">\(y\)</span> and angle <span class="math inline">\(\theta\)</span>. By convention, counter-clockwise angles are positive. (B) A surface is defined by its radius of curvature <span class="math inline">\(R\)</span>.
 </figcaption>
 </figure>
 </div>
-<p>We place these parameters in a 2-vector <span class="math inline">\(\rho = (y, \theta)\)</span>. Then we define a series of ray transfer matrices, using the principles we reviewed in <a href="optics-02-lenses.html" class="quarto-xref"><span>Chapter 8</span></a>, that follow the journey of the ray through the thick lens.</p>
+<p>We represent the ray as a column vector, <span class="math inline">\(\rho = \begin{pmatrix} y \\ \theta \end{pmatrix}\)</span>. The journey of this ray through an optical system is described by a series of matrix multiplications, where each matrix represents a single optical element (like a lens surface) or the space between elements. The final output ray <span class="math inline">\(\rho_{\text{out}}\)</span> is found by applying the total system matrix <span class="math inline">\(M\)</span> to the input ray <span class="math inline">\(\rho_{\text{in}}\)</span>:</p>
+<p><span class="math display">\[
+\rho_{\text{out}} = M \rho_{\text{in}}
+\quad \text{or} \quad
+\begin{pmatrix} y_{\text{out}} \\ \theta_{\text{out}} \end{pmatrix}
+=
+\begin{pmatrix} A &amp; B \\ C &amp; D \end{pmatrix}
+\begin{pmatrix} y_{\text{in}} \\ \theta_{\text{in}} \end{pmatrix}
+\]</span></p>
+<p>Let’s build the matrices for a thick lens by following a ray as it refracts at the first surface, travels through the lens material, and refracts again at the second surface.</p>
 <section id="refraction---first-surface" class="level3" data-number="10.5.1">
 <h3 data-number="10.5.1" class="anchored" data-anchor-id="refraction---first-surface"><span class="header-section-number">10.5.1</span> Refraction - First Surface</h3>
 <p>Snell’s Law tells us how the rays change direction at the first surface of a spherical lens (<a href="optics-02-lenses.html#eq-snell" class="quarto-xref">Equation&nbsp;<span>8.1</span></a>). As you can see in <a href="#fig-1st-surface" class="quarto-xref">Figure&nbsp;<span>10.8</span></a>, the rays change direction by an amount that depends on their field height. The critical point -I won’t show the derivation- is that the amount of change is proportional to field height. In the paraxial regime the change is the same, no matter what the input ray angle.</p>
@@ -774,7 +785,7 @@ Thin lens
 <img src="images/optics/09-morelens/yPhi-equation.png" class="img-fluid figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-yPhi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.9: The input rays are parallel to the optic axis, <span class="math inline">\(\theta_1 = 0\)</span>. The output ray angles change proportionally to the input ray field field height, <span class="math inline">\(y_1\)</span>. According to the sign convention (<a href="#fig-raytransfer-definitions" class="quarto-xref">Figure&nbsp;<span>10.7</span></a>), the constant of proportionality is negative.
+Figure&nbsp;10.9: The input rays are parallel to the optic axis, <span class="math inline">\(\theta_1 = 0\)</span>. The output ray angles change proportionally to the input ray field height, <span class="math inline">\(y_1\)</span>. According to the sign convention (<a href="#fig-raytransfer-definitions" class="quarto-xref">Figure&nbsp;<span>10.7</span></a>), the constant of proportionality is negative.
 </figcaption>
 </figure>
 </div>
@@ -811,19 +822,19 @@ M_{\text{lens}}
 </section>
 <section id="effective-and-back-focal-lengths" class="level3" data-number="10.5.4">
 <h3 data-number="10.5.4" class="anchored" data-anchor-id="effective-and-back-focal-lengths"><span class="header-section-number">10.5.4</span> Effective and back focal lengths</h3>
-<p>Multi-lens systems can be summarized by their ray transfer matrix. This is a very efficient way to communicate about system properties, though it is quite incomplete compared to a full specification of the components and their materials. Because these are not computed, the specification in this simpler form is often called a black box model of the optics.</p>
-<p>We can compute two particularly valuable system properties from the matrix, the back focal length (BFL), <span class="math inline">\(f_B\)</span>, and the effective focal length (EFL), <span class="math inline">\(f_E\)</span>. BFL is the distance from the system’s output reference plane to the focal point (for an object at infinity). EFL is the distance from the secondary principal plane to the focal point.</p>
+<p>Multi-lens systems can be summarized by their ray transfer matrix. This is a very efficient way to communicate about system properties, though it is quite incomplete compared to a full specification of the components and their materials. Because the lens element are not part of the specification, the this characterization of the lens is often called a <strong>black box model</strong> of the optics. We know what it does, just not how it does it.</p>
+<p>We can compute two particularly valuable system properties from the system matrix: the <strong>back focal length (BFL)</strong>, <span class="math inline">\(f_B\)</span>, and the <strong>effective focal length (EFL)</strong>, <span class="math inline">\(f_E\)</span>. The BFL is the distance from the system’s output reference plane to the focal point (for an object at infinity). The EFL is the distance from the secondary principal plane to the focal point.</p>
 <div id="fig-efl-bfl" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-efl-bfl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/optics/09-morelens/efl-bfl.png" class="img-fluid figure-img" style="width:60.0%">
+<img src="images/optics/09-morelens/efl-bfl.png" class="img-fluid figure-img" style="width:75.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-efl-bfl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.10: Back and Effective focal lengths of a black box system.
+Figure&nbsp;10.10: Back focal length and Effective focal length of a black box system.
 </figcaption>
 </figure>
 </div>
-<p>To determine these focal lengths, we compute where an input ray that is parallel to the optical axis emerges and crosses the optical axis. An input ray parallel to the optical axis has the form <span class="math inline">\(\rho_{\text{in}}=(y_{\text{in}},\theta_{\text{in}})=(y,0)\)</span>. Because <span class="math inline">\(\theta_{\text{in}}=0\)</span>, the corresponding output ray depends only on <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span>, <span class="math inline">\(\rho_{\text{out}}=(y_{\text{out}},\theta_{\text{out}})=(A y, C y)\)</span>.</p>
+<p>We determine these focal lengths from the system matrix. We compute where an input ray that is parallel to the optical axis emerges and crosses the optical axis. An input ray parallel to the optical axis has the form <span class="math inline">\(\rho_{\text{in}}=(y_{\text{in}},\theta_{\text{in}})=(y,0)\)</span>. Because <span class="math inline">\(\theta_{\text{in}}=0\)</span>, the corresponding output ray depends only on <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span>, <span class="math inline">\(\rho_{\text{out}}=(y_{\text{out}},\theta_{\text{out}})=(A y, C y)\)</span>.</p>
 <p>The two output parameters determine the line the output ray follows in the <span class="math inline">\(z\)</span>-direction. It starts at the output field height and slopes toward the optical axis. The line reaches the optical axis at the <span class="math inline">\(z\)</span> where <span class="math display">\[
 \begin{aligned}
 0 &amp;= y_{\text{out}} + z\,\theta_{\text{out}} \\
@@ -835,7 +846,7 @@ f_{B} = -\frac{A}{C},
 \qquad
 f_{E} = -\frac{1}{C}.
 \]</span></p>
-<p>N.B. I use a simple parameterization of the ray state, <span class="math inline">\((y,\theta)\)</span>. There are others -and they can be very smart- who prefer to use the <strong>reduced-angle convention</strong>. They incorporate the index of refraction into the angle <span class="math inline">\((y,n\,\theta)\)</span>. In that framing, replace <span class="math inline">\(C\)</span> by <span class="math inline">\(C/n_{\text{out}}\)</span>.</p>
+<p>N.B. I use a simple parameterization of the ray state, <span class="math inline">\((y,\theta)\)</span>. Others -and they can be very smart- prefer to use the <strong>reduced-angle convention</strong>. They incorporate the index of refraction into the angle <span class="math inline">\((y,n\,\theta)\)</span>. In that framing, replace <span class="math inline">\(C\)</span> by <span class="math inline">\(C/n_{\text{out}}\)</span>.</p>
 </section>
 </section>
 <section id="sec-optics-raytransfer" class="level2" data-number="10.6">
