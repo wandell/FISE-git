@@ -178,14 +178,15 @@ The size of the spot on the image plane depends on the distance how far away the
 :::
 
 ## The point spread function {#sec-pointspread}
-Throughout this section, we have discussed how an optical system images a single point of light. The resulting image is called the **point spread function (PSF)**, and it is a fundamental measure of optical performance. The Airy pattern, for example, is the PSF for a diffraction-limited circular aperture. We will encounter other types of PSFs when we analyze optical systems using linear systems theory (@sec-optics-linear-space).
+Throughout this section, we have analyzed optical systems by asking a simple question: what does the image of a single point of light look like? The resulting image pattern is called the **point spread function (PSF)**, and it is a fundamental measure of optical performance. The Airy pattern, for example, is the PSF for a diffraction-limited circular aperture. We will encounter other types of PSFs when we analyze optical systems using linear systems theory (@sec-optics-linear-space).
 
-In a simple system, the PSF might be the same everywhere. In most real optical systems, however, the PSF is not fixed; it varies with the point's distance and its position in the field of view. For a circularly symmetric system, we can describe a point's position by its **field height**, which is the angle between the optical axis and the point source.
+The PSF is a cornerstone of lens simulation, characterization, and computational imaging. Its importance stems from a crucial property of many optical systems: they are approximately **linear**. This means that the image of two points added together is the same as the sum of the images of each point individually (a property known as superposition).
 
-### The power of the PSF: Linearity
-The PSF is a cornerstone of lens simulation, characterization, and computational imaging. This is because many optical systems are approximately **linear**. This means that the image of two points added together is the same as the sum of the images of each point individually.
+Because of linearity, we can simulate the image of any complex scene. We can model the scene as a vast collection of individual light points. If we know the PSF, we can calculate the final image by scaling the PSF by the intensity of each point in the scene and summing all the resulting patterns. This process might involve millions of points, but it is a task that modern computers handle with ease.
 
-The principle of linearity is powerful. Any scene can be described as a collection of points. If we know the PSF for every point in the scene, we can calculate the final image by summing the PSFs from all the points. While this might involve millions of points, it's a task that computers handle with ease. This principle of superposition is the foundation for simulating complex images, and we will use the ideas of linear systems throughout this book.  The appendices go into some mathematical detail about general linear systems (@sec-appendix-linear-systems-overview) and the special case of linear, space-invariant systems (@sec-appendix-spaceinvariance-overview). 
+In an idealized system, the PSF might be the same for every point in the scene, merely shifted in position. Such a system is called **linear and space-invariant (LSI)**, and in that case the scaling and summing is called **convolution**.  In most real-world optics, however, the system is **space-variant**: the PSF's shape and size change depending on the point's position in the field of view (e.g., its distance from the center, or **field height**).
+
+The concept of building an image from the sum of PSFs is foundational, and we will use the ideas of linear systems throughout this book. The appendices provide more mathematical detail on general linear systems (@sec-appendix-linear-systems-overview) and the special case of LSI systems (@sec-appendix-spaceinvariance-overview).
 
 ## Pinhole PSFs
 
