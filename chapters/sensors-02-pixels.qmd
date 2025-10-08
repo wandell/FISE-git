@@ -7,7 +7,11 @@ date: last-modified
 
 ## Pixels and sensors {#sec-pixels-overview}
 
-Having established the fundamental physics of light-to-electron conversion, we now examine how these principles are implemented in the design of image sensor pixels. To understand how the photoelectric effect is harnessed in practical devices, we next review the behavior of electrons in semiconductors—the foundation of modern image sensor pixels.
+I now connect the physics of photon-to-electron conversion to the engineering of image sensor pixels. First, we review how electrons behave in semiconductor materials and how photons create mobile charge carriers (@sec-semiconductor-physics). Then I examine how CMOS pixel architectures (e.g., classic 3T and 4T designs, and their modern extensions) store, transfer, and read out that charge.
+
+Subsequent sections explain how pixel structures have evolved (front-side to back-side illumination, deep photodiodes, stacking, and digital pixels) to improve sensitivity, speed, and dynamic range. Finally, I describe how to model and measure sensor performance (@sec-system-modeling-overview) and how additional on-sensor components—such as color filters and microlenses—shape the captured data (@sec-sensor-components).
+
+The goal of these chapters is to build an intuition that links semiconductor physics to practical design trade-offs in modern image sensors.
 
 ## Semiconductors and electrons {#sec-semiconductor-physics}
 Atoms in a silicon semiconductor are arranged in a crystalline structure, and their electrons occupy specific energy levels grouped into two main bands: the **valence band** (lower energy) and the **conduction band** (higher energy). Under normal conditions, most electrons remain in the valence band. When a silicon atom absorbs a photon, an electron can be excited from the valence band to the conduction band (@fig-sensor-bandgap).
@@ -100,7 +104,7 @@ transfer switch (M1), a reset switch (M2), a source follower (M3) and a row sele
 ## Multiplex readout
 The use of unity gain amplifiers at the pixel was one important innovation. A second innovation is the way the pixel data are read from the image sensor. In the original CCD devices, the important innovation was to find a way to move the electrons across the silicon array to a single analog-to-digital converter. But the electrons in the CMOS pixels are already converted to voltages on the output lines. How shall we convert all of these separate lines into digital readout values?
 
-![Multiplex readout explanation](images/sensors/14-pixels/03-CMOS-multiplex-readout.png){#fig-cmos-multiplex width=60%}
+![Multiplex readout of the image sensor.  The analog-to-digital converters are very fast. Each ADC serves to convert the readout voltages from multiple columns during the readout process.](images/sensors/14-pixels/03-CMOS-multiplex-readout.png){#fig-cmos-multiplex width=70%}
 
 The readout process begins with a control signal sent to a specific row of pixels, activating the row and placing the voltage from each pixel onto its corresponding column readout line. These column lines are connected to amplifiers, which buffer and amplify the signals to ensure accurate transmission. These amplified signals are then passed to an analog-to-digital converter (ADC).  The gain settings on the amplifiers, prior to the ADC, are often adjustable allowing gain settings from 1x to 4x.
 
@@ -139,6 +143,9 @@ These challenges, and the huge success of CMOS sensors, were met by a massive, w
 
 <!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
 https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor
+
+https://image-sensors-world.blogspot.com/2023/06/sonys-world-first-two-layer-image.html
+
 -->
 
 :::{.callout-note title="Pixel Evolution timeline" collapse="false"}
@@ -233,6 +240,11 @@ A significant step towards multi-layer integration was taken by Mitsumasa Koyana
 Stacked CMOS sensors build on the BSI CMOS architecture by integrating the pixel array with a separate logic layer. This close integration enables advanced features such as high dynamic range (HDR) imaging, faster frame rates, and on-chip processing—including artificial intelligence (AI) functions.
 
 Some stacked sensors incorporate high-speed DRAM directly beneath the pixel array, allowing for rapid data readout and temporary storage. This architecture made possible innovations like the Sony a9 (2019), which could capture images at 20 frames per second (fps) with a continuous, blackout-free viewfinder experience.
+
+![Scanning electron microscope (SEM) image of a cross section through a Sony stacked CMOS image sensor. The image was published in a [blog post](https://image-sensors-world.blogspot.com/2023/06/sonys-world-first-two-layer-image.html) by Image Sensors World in 2023. The article describes many of the components in detail.](images/sensors/14-pixels/CMOS-stacked-Sony.png){#fig-sem-cmos-stacked width="70%"}
+
+The complexity of the silicon and the multiple functions achieved by these stacked sensors is very impressive; it reminds me of the complexity of the retina. Many important functions for image systems are integrated into these sensing devices, and these functions  are typically localized in space. Many other functions are carried out in the central processing units which have access to the image across larger regions of the visual field.
+
 :::
 
 ## Digital pixel sensor {#sec-digital-pixel}
