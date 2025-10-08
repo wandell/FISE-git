@@ -50,21 +50,31 @@ The Hollow Mask Illusion informs us that we are deeply biased about the three-di
 
 ### Regional comparisons
 
-The three images presented below all inform us that we make even the simplest judgments, such as the brightness of a square, by taking into account the image context. Kitaoka's demonstration shows that the local contrast of the squares matter more than their absolute level.  Adelson's demonstration suggests one reason for this:  we are striving to see surface reflectance.  Cast shadows change the absolute intensity from a surface and this makes the absolute level unreliable about the surface reflectance.  Lotto and Purves glam up the Adelson version with a very realistic rendering.
+These three demonstrations show that even a seemingly simple judgment—how light or dark a square appears—is based on context, not just the raw pixel (retinal) intensity.
+
+Kitaoka: Squares that have the same physical (image) intensity look different because each is compared against its immediate surround. Local contrast (center vs. surround) is weighted more heavily than absolute level.
+
+Adelson (Checkered Shadow): This adds a reason. The visual system tries to estimate surface reflectance rather than raw intensity. Image intensity at a point can be thought of (simplistically) as
+$ I(x) = E(x)\,R(x)$ where $E(x)$ is illumination (which can vary sharply because of shadows) and $R(x)$ is surface reflectance (which is more stable). Because $E(x)$ is unreliable, the system discounts it by using local ratios and edges. Under a smooth shadow, neighboring points share nearly the same $E(x)$, so
+$ \frac{I_1}{I_2} \approx \frac{R_1}{R_2} $. That makes local contrast a better cue to $R$ than the absolute intensity.
+
+Lotto and Purves: A photorealistic version of the same principle. Two floor tiles (one apparently in bright light, one in shadow) have identical image intensities, yet you experience them as different materials (light vs. dark) because your visual system attributes the intensity difference to illumination, preserving a stable reflectance interpretation.
+
+Key idea: You do not directly “see” intensity; you infer surface properties. Context (contrast relations, shadows, surrounds) reshapes the percept to favor a plausible, illumination-invariant reflectance estimate. No equations beyond the simple product model were needed here, and those shown are standard.
 
 (Click on the tabs to see the three different images.)
 
 :::{.panel-tabset}
-# Local contrast
+# Kitaoka
 
-![But the shading makes it appear that the A square is darker than the B square. It is not. Source: [Akiyoshi Kitaoka](https://www.ritsumei.ac.jp/~akitaoka/index-e.html)](images/human/01-seeing/local-contrast.png){#fig-basic-contrast width="70%"}
+![The A square appears darker than the B square, but they are the same. Source: [Akiyoshi Kitaoka](https://www.ritsumei.ac.jp/~akitaoka/index-e.html)](images/human/01-seeing/local-contrast.png){#fig-basic-contrast width="70%"}
 
 
-# Adelson: Checkered shadow
-![Ted Adelson created this illusion to showing why the local contrast is a good basis for judging surface brightness.  He gives us a physical reason for the shading, a cast shadow.  Again the squares labeled A and B are the same intensity.](images/human/01-seeing/Adelson-shadow-checkers.png){#fig-adelson-contrast width="70%"}
+# Adelson
+![Adelson's Checkered Shadow Illusion. Source:  Needed.](images/human/01-seeing/Adelson-shadow-checkers.png){#fig-adelson-contrast width="70%"}
 
 # Lotto and Purves
-![Beau Lotto and Dale Purves glammed it up with this very compelling and striking image. The two tiles on the floor, one that appears white and the other dark gray, are the same.  One is in shadow, andthe other directly illuminated. Local contrast is informative about the surface property. The visual system wants you to see the surface, not the number of photons from the surface. Cite their book here.](images/human/01-seeing/Lotto-illumination.png){#fig-lotto-contrast width="70%"}
+![Lotto and Purves.  Source: Cite their book here.](images/human/01-seeing/Lotto-illumination.png){#fig-lotto-contrast width="70%"}
 
 :::
 
@@ -74,17 +84,22 @@ when-format
 -->
 
 ### Edges matter
-It is rather surprising that the impact of the local edge contrast spreads quite widely across space.  In the classic Cornsweet illusion we see that the two squares appear to be different across their whole extent.  They have the same intensity, but we see them as different  based on just the contrast information at the edge.
+A single local edge can change how you see a wide region. In the Craik–O’Brien–Cornsweet (Cornsweet) illusion the two large adjoining fields have exactly the same physical intensity, yet one looks lighter and the other darker. The only physical difference lies in a narrow luminance gradient (a “dipole”) straddling the shared boundary. Your visual system gives that gradient disproportionate weight and then “fills in” a brightness (or surface reflectance) level across the full interior of each region.
 
-The spreading over space is made very clear in this version from Daikin and Bex.  The large image areas all have the same intensity.  Some regions appear lighter than others only because of the contrast at the edge, between the regions.  Thus, the local information spreads to brightness judgments across quite substantial regions of the visual field. Try moving further and closer to the image, so that these regions come to occupy quite a large part of the visual field.  You will see that the illusion persists.
+The Daikin–Bex variant makes the spatial spreading especially clear: many broad areas all share the same intensity, but they appear different solely because of the contrast polarity and magnitude at their edges. Move closer or farther so that the regions take up more of your visual field—the effect persists, showing it is not a tiny, fovea-only phenomenon.
+
+Intuition: Early spatial filtering emphasizes luminance changes (edges, gradients) and attenuates uniform interiors. The visual system then infers a smooth or piecewise-smooth surface reflectance that is most consistent with the edge signals. A small, signed edge contrast can therefore shift the perceived baseline (offset) over a large area until another edge provides a counteracting constraint.
+
+Key points:
+- Perceived brightness depends more on edge structure than on absolute interior intensity.  
+- Local contrast can propagate its influence globally (“filling-in”).  
+- These illusions warn that large uniform regions are perceptually underconstrained without their borders.
 
 (Click on the tabs to see the two different images).
 
 :::{.panel-tabset}
 # Cornsweet-Craik
 ![Cornsweet Craik O'Brien illusion.  Better to have a narrower dipole.](images/human/01-seeing/Cornsweet_illusion.png){#fig-cornsweet width="70%"}
-
-
 
 # Daikin-Bex
 ![Daikin and Bex.  The forehead and the hair are the same intensity.  There are dipoles everywhere.](images/human/01-seeing/Daikin-local-contrast.png){#fig-daikin-bex width="70%"}
