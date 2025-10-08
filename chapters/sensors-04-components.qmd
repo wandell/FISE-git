@@ -6,15 +6,16 @@ date: last-modified
 {{< include "includes/WIP-callout.qmd" >}}
 
 ## System components overview {#sec-sensor-components-overview}
+Modern CMOS image sensors combine several carefully engineered layers that work together to capture sharp, low-noise, and color-accurate images (@fig-pixel-overview). Light from the scene passes through (1) the main lens, (2) an optional UV/IR blocking filter that limits the spectrum to the visible range, (3) a microlens array that concentrates and redirects the light toward each pixel’s active area, and (4) a color filter array (CFA) that partitions the visible spectrum into broad bands for color reproduction. Beneath these layers, (5) deep trench isolation (DTI) structures reduce optical and electrical crosstalk between neighboring pixels, while (6) the photodiode converts absorbed photons into charge for readout. 
 
-Conventional CMOS imagers include several components that are critical for producing high quality images (@fig-pixel-overview). The microlens array and deep trench isolation both increase sensitivity and reduce unwanted crosstalk between the pixels. Spectral filters, which are included in sensors for consumer photography and many other types of cameras, are used to capture information about the scene spectral radiance. 
+Each element serves a distinct purpose: the microlenses and DTI increase quantum efficiency and preserve spatial detail; the UV/IR filter and CFA shape the spectral sensitivity; and the pixel architecture and readout circuits determine noise performance. In the following sections we describe how these components evolved and how each contributes to image quality.
 
 ## Spatial components {#sec-sensor-space}
 
 ### Microlens arrays {#sec-sensor-microlens}
 The microlens array is a layer of tiny lenses placed above the color filter array. These lenses serve to redirect the light from the main lens onto the photodiode, increasing the light-gathering efficiency. The microlens also reduces **pixel cross-talk**. This refers to the case in which light from the imaging lens might arrive at a relatively large angle at the color filter. A ray may end up generating electrons in a pixel that has a different color filter. Over time, microlens arrays have evolved to support additional functions, such as optimizing focus and enabling advanced imaging techniques for light field capture that I describe later.
 
-![Scanning electron micrograph (SEM) cross section illustrating the position of the color filters and microlenses above the photodiode. The microlens and filters are deposited on top of the photodetector. Source: @elgamal2005-cmos-imagesensors.](images/sensors/16-components/03-microlens-cfa-SEM.png){#fig-components-microlens width="60%"}
+![Scanning electron micrograph (SEM) cross-section of a CMOS imager.  The image shows the position of the color filters and microlenses above the photodiode. The microlens and filters are deposited on top of the photodetector. Source: @elgamal2005-cmos-imagesensors.](images/sensors/16-components/03-microlens-cfa-SEM.png){#fig-components-microlens width="60%"}
 
 At the center of the sensor array, the incidence of the chief ray from the center of the lens is close to perpendicular to the photodiode array. There, a lens centered above the photodiode works well to simply concentrate the rays. At the edges of the array, however, the angle of the chief ray is relatively steep, say 35 degrees. To redirect the rays toward the photodiode, the microlens and the color filter are shifted laterally. The decentering of the microlens and color filters improves the redirection the rays so that more light arrives at the proper photodiode, and less light is incorrectly absorbed by adjacent photodiodes.
 

@@ -6,11 +6,11 @@ date: last-modified
 {{< include "includes/WIP-callout.qmd" >}}
 
 ## Seeing overview {#sec-human-seeing-overview}
-The science of human vision—spanning behavior, perception, and neuroscience—is fascinating and highly significant for image systems engineers. This book does not aim for comprehensive coverage of vision science; that material is covered in my earlier book, [Foundations of Vision](https://foundationsofvision.stanford.edu) (@Wandell1995-FOV), which I plan to update after this book matures.
+The science of human vision—spanning behavior, perception, and neuroscience—is fascinating, and many aspects of human vision are important for image systems design. This is the topic of my earlier book, [Foundations of Vision](https://foundationsofvision.stanford.edu) (@Wandell1995-FOV), which I plan to update after this book matures.
 
-Instead, this chapter focuses on aspects of human vision immediately relevant to image systems engineering. We will cover the limits of spatial, temporal, and wavelength encoding by the eye, along with a variety of practical, computable image quality metrics. These metrics are widely used by engineers, and the principles behind them are well-established. We will also explore how to improve upon these tools.
+This chapter and along with @sec-human-encoding-overview and @sec-human-metrics-overview cover topics in human vision that are immediately relevant to image systems engineering. I cover the limits of spatial, temporal, and wavelength encoding by the eye, along with a variety of practical, computable image quality metrics. These metrics are widely used by engineers, and the principles behind them are well-established. We will also explore how to improve upon these tools.
 
-I will, however, deviate slightly to explore the question of what it means to "see." As mentioned earlier (@sec-vision-inference), Hermann von Helmholtz was among the first to argue that we do not perceive the world directly. Instead, what we "see" is an inference based on the portion of the light field our eyes encode.
+Before we tackle those topics, in this chapter I take just a few pages to explore the question of what it means *to see*. As mentioned earlier (@sec-vision-inference), Hermann von Helmholtz was among the first to argue that we do not perceive the world directly. Instead, what we see is an inference based on the portion of the light field our eyes encode.
 
 When Helmholtz proposed this, he challenged the prevailing belief that introspection was a valid scientific method for understanding visual interpretation. He argued that we are largely unaware of the underlying neural processing, which he termed *unconscious inferences*. This term was not an explanation of the process itself, but a counterargument to the idea that we can understand vision simply by thinking about our own perceptions.
 
@@ -22,25 +22,43 @@ Each illusion presented here demonstrates a principle the visual system uses to 
 
 ### The world is three-dimensional
 
-![R.N. Shepard's illusion is called Turning the Tables. As measured in the image, the two table tops are the same. This is just an accident, however, of the way they are projected into the image.  If we could measure them in the three-dimensional form they would not be the same.  Your visual system nearly inescapably interprets images as three-dimensional objects. The table tops don't look the same, even though they are the same in the page.](images/human/01-seeing/Shepard-turning-tables.png)
+The two tabletops in this picture are the same shape and size in the 2D image. (You can verify this by copying one, rotating it, and placing it over the other.) Yet one looks long and narrow while the other looks short and wide.
+
+Why the strong difference? Your visual system automatically interprets the flat image as a projection of a 3D scene. It applies implicit corrections for depth and slant (foreshortening) suggested by the table legs, the implied perspective, and the contour orientations. Those same corrections that usually help you perceive true 3D structure now drive the illusion.
+
+If we could walk around the actual (imagined) 3D scene the image depicts, the two physical tabletops producing those projections would almost certainly differ. The exact 2D match in the picture is an artifact of viewpoint and Shepard’s careful drawing, not something you normally notice. What you consciously experience is the most plausible 3D interpretation, not the raw 2D geometry falling on the retina.
+
+![R.N. Shepard's illusion: Turning the Tables.](images/human/01-seeing/Shepard-turning-tables.png)
+
+Shepard’s illusion reminds us: for everyday vision, judging the 2D retinal (or image) shape in isolation is difficult. You see an inference about 3D structure, not the un-interpreted projection.
 
 ### Expectations of likely shapes
 
+Richard Gregory's 'Hollow Mask' illusion is a powerful extension of the "Turning the Tables" demonstration.  In this illusion the mask is genuinely three-dimensional, having the same shape as a face. The illusion arises because when you see the inside of the mask the three-dimensional shape is quite unlike the typical three-dimensional shape of a face -the mask is hollow-. Yet, the mask appears to have the three-dimensional structure one would expect of a real face, with the nose nearest you. You do see a three-dimensional shape, but it is the likely (and wrong) shape.
+
+Equally interesting is the how we see the motion of the rotating mask. The interpretation of the depth is wrong. To explain the stimulus on your retina, your brain makes a second wrong interpretation:  the mask appears to be rotating opposite to its true direction. 
+
 ::: {.content-visible when-format="html"}
-![R.L. Gregory the hollow mask demonstration.  The mask is rotating on a stick.  As you see the inside of the mask, it appears to have the three-dimensional structure one would expect of a face, with the nose nearest you. Because it is not, encoding conflicts with the motion. Hence, the mask appears to be rotating in a direction opposite to its true direction. There are certain objects that are deeply biased to be seen in a certain way -face have their noses pointing towards you!- by the visual system.](images/human/01-seeing/Chaplin.wmv.mp4)
+![R.L. Gregory's 'hollow mask' demonstration.](images/human/01-seeing/Chaplin.wmv.mp4){#fig-hollow-mask width="70%"}
 :::
 
 ::: {.content-visible when-format="pdf"}
-![R.L. Gregory the hollow mask video seen at three different frames.  Even in static view, the inside of the hollow mask appears to have the proper three-dimensional shape of a face.  In fact, you are seeing the inside of the mask in which the nose is inverted.](images/human/01-seeing/Chaplin.wmv.png)
+![R.L. Gregory's 'hollow mask' demonstration.](images/human/01-seeing/Chaplin.wmv.png){#fig-hollow-mask width="70%"}
 :::
+
+The Hollow Mask Illusion informs us that we are deeply biased about the three-dimensional shape of certain objects. Apparently, we expect to see noses closer than foreheads. Given the chance, we force that interpretation and we then reinterpret other features (the motion) to make them consistent.
 
 ### Regional comparisons
 
-Text goes here.
+The three images presented below all inform us that we make even the simplest judgments, such as the brightness of a square, by taking into account the image context. Kitaoka's demonstration shows that the local contrast of the squares matter more than their absolute level.  Adelson's demonstration suggests one reason for this:  we are striving to see surface reflectance.  Cast shadows change the absolute intensity from a surface and this makes the absolute level unreliable about the surface reflectance.  Lotto and Purves glam up the Adelson version with a very realistic rendering.
+
+(Click on the tabs to see the three different images.)
 
 :::{.panel-tabset}
 # Local contrast
-![We make even simple judgments, such as the brightness of a square, with respect to their context.  The absolute level is not as important. This tab illustrates the principle using a version from [Akiyoshi Kitaoka.  The squares labeled A and B have the same absolute level.  But the shading across the checkerboard pattern makes it appear that the A square is darker than the B square.](https://www.ritsumei.ac.jp/~akitaoka/index-e.html)](images/human/01-seeing/local-contrast.png){#fig-basic-contrast width="70%"}
+
+![But the shading makes it appear that the A square is darker than the B square. It is not. Source: [Akiyoshi Kitaoka](https://www.ritsumei.ac.jp/~akitaoka/index-e.html)](images/human/01-seeing/local-contrast.png){#fig-basic-contrast width="70%"}
+
 
 # Adelson: Checkered shadow
 ![Ted Adelson created this illusion to showing why the local contrast is a good basis for judging surface brightness.  He gives us a physical reason for the shading, a cast shadow.  Again the squares labeled A and B are the same intensity.](images/human/01-seeing/Adelson-shadow-checkers.png){#fig-adelson-contrast width="70%"}
@@ -56,10 +74,17 @@ when-format
 -->
 
 ### Edges matter
+It is rather surprising that the impact of the local edge contrast spreads quite widely across space.  In the classic Cornsweet illusion we see that the two squares appear to be different across their whole extent.  They have the same intensity, but we see them as different  based on just the contrast information at the edge.
+
+The spreading over space is made very clear in this version from Daikin and Bex.  The large image areas all have the same intensity.  Some regions appear lighter than others only because of the contrast at the edge, between the regions.  Thus, the local information spreads to brightness judgments across quite substantial regions of the visual field. Try moving further and closer to the image, so that these regions come to occupy quite a large part of the visual field.  You will see that the illusion persists.
+
+(Click on the tabs to see the two different images).
 
 :::{.panel-tabset}
 # Cornsweet-Craik
 ![Cornsweet Craik O'Brien illusion.  Better to have a narrower dipole.](images/human/01-seeing/Cornsweet_illusion.png){#fig-cornsweet width="70%"}
+
+
 
 # Daikin-Bex
 ![Daikin and Bex.  The forehead and the hair are the same intensity.  There are dipoles everywhere.](images/human/01-seeing/Daikin-local-contrast.png){#fig-daikin-bex width="70%"}
