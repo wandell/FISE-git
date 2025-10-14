@@ -41,6 +41,68 @@ Spectricity.  IMEC.
 
 **Charge coupled device**
 
+Tell the Vera Rubin choice of CCD.
+
+Yes, your belief regarding the rationale is well-supported by the history and technical documentation of the Vera C. Rubin Observatory's Legacy Survey of Space and Time (LSST) Camera (LSSTCam).
+
+The choice of **CCD** (Charge-Coupled Device) over **CMOS** (Complementary Metal-Oxide-Semiconductor) imagers was largely driven by the absolute necessity for **high photometric precision and exquisite linearity** across the camera's massive 3.2-gigapixel focal plane.
+
+Here is the rationale described in technical documents from the time of the camera's design:
+
+### 1. The Calibration Challenge: Fixed Pattern Noise (FPN)
+
+The core issue was exactly what you described: the sheer number of independent signal chains in a CMOS array makes calibration exponentially more difficult compared to a CCD.
+
+* **CMOS Architecture:** Each pixel (or small group of pixels/columns) on a CMOS sensor typically has its own internal amplifier and often its own **Analog-to-Digital Converter (ADC)**. For a $4\text{K} \times 4\text{K}$ sensor, this results in potentially millions of individual readout circuits.
+* **The Calibration Problem:** Variations in the manufacturing process mean that the gain, offset (bias), and noise characteristics of these millions of on-chip amplifiers and ADCs are not perfectly uniform. This non-uniformity manifests as **Fixed Pattern Noise (FPN)** in the image. To achieve the LSST's demanding photometric accuracy (required to measure dark energy and dark matter effects), every one of these independent signal chains would need to be precisely mapped, calibrated, and monitored for drift over the 10-year survey. At the time of the LSSTCam's design (before the widespread availability of modern scientific CMOS sensors), the calibration stability and uniformity were considered an unacceptable risk for the scale of the project.
+
+***
+
+### 2. The CCD Advantage: Fewer, Higher-Precision Channels
+
+Describe CCD technology issues. Then use this background information for a modern usage.  They have lots of power/volts.  They are fanatical about calibration.
+
+::: {.callout-note title='Vera Rubin Telescope (LSSTCam)'}
+
+The chosen **CCD** solution, while still massive, dramatically reduced the number of high-precision electronic chains that needed calibration.
+
+* **CCD Architecture:** The LSSTCam focal plane uses 189 large CCDs. While each CCD is segmented for fast readout, the signal from thousands of pixels is serialized and routed to a dedicated output amplifier and off-chip ADC.
+
+* **The Calibration Solution:** Each of the 189 CCDs is divided into segments, resulting in a total of **3,024 readout channels** (video channels) for the entire camera. Instead of millions of independent ADCs, the system has **3,024 high-precision (18-bit) external ADCs** and associated electronics. Calibrating the gain and offset of **3,024** highly stable, purpose-built channels is far more manageable and reliable than calibrating millions of on-chip circuits in a CMOS array.
+
+In short, the CCD provided the **high linearity, low noise, and stable readout uniformity** that the LSST's deep-sky science requires, especially at the scale needed for the world's largest digital camera.
+:::
+<!--
+The Stanford faculty member at SLAC who held a primary leadership role for the construction of SLAC's main contribution to the Vera C. Rubin Observatory is **Dr. Aaron Roodman**.
+
+SLAC National Accelerator Laboratory's main responsibility in the Rubin Observatory project was the design, construction, and delivery of the **LSST Camera (LSSTCam)**—the world's largest digital camera, which is the core instrument of the telescope.
+
+Dr. Roodman's key roles at SLAC related to the construction include:
+
+| Role | Responsibility |
+| :--- | :--- |
+| **LSST Camera Program Lead** | The top leadership position at SLAC responsible for the development, construction, and performance of the camera. |
+| **Deputy Director of Rubin Construction for SLAC** | A high-level management role ensuring SLAC's component (the camera) was successfully built and integrated into the overall observatory construction project. |
+| **SLAC Professor** | He is a Professor and Chair of the Particle Physics & Astrophysics department at SLAC. |
+
+### Historical Context
+
+It is also important to note the historical faculty leadership:
+
+* **Dr. Steve Kahn**, a KIPAC Professor at Stanford/SLAC, was the **Director of the Vera C. Rubin Observatory construction project** (LSST Project Director) for the decade spanning 2013 to 2021. He was fundamental to getting the project funded, organized, and underway.
+
+Aaron Roodman succeeded Dr. Kahn in the primary project leadership role at SLAC/DOE as the Camera Program Lead and Deputy Director of Construction.
+-->
+
+https://diffractionlimited.com/calibrating-cmos-images/#:~:text=CMOS%20APS%20sensors%20are%20quite,switch%20photoelectrons%20onto%20internal%20wires.
+
+https://rubinobservatory.org/gallery/collections/main-gallery/07gi6gchk16918o21l49n0mu3f
+
+https://www6.slac.stanford.edu/lsst#:~:text=The%20U.S.%20Department%20of%20Energy's,Survey%20Telescope%20at%20the%20observatory.
+
+https://www.energy.gov/science/articles/nsf-doe-vera-c-rubin-observatory-installs-lsst-camera-telescope#:~:text=%E2%80%9CThis%20is%20a%20pivotal%20moment,National%20Accelerator%20Laboratory%20(SLAC).
+
+
 ## TOF {#sec-sensor-tof}
 **Time of Flight** sensor
 
