@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-10-05">
+<meta name="dcterms.date" content="2025-10-07">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>7&nbsp; Geometric optics – Foundations of Image Systems Engineering</title>
@@ -353,7 +353,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/human-02-encoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Human optics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Human visual encoding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -478,10 +478,7 @@ window.Quarto = {
   <li><a href="#sec-huygens-wave" id="toc-sec-huygens-wave" class="nav-link" data-scroll-target="#sec-huygens-wave"><span class="header-section-number">7.4</span> Huygens wave model</a></li>
   <li><a href="#double-slit-experiments" id="toc-double-slit-experiments" class="nav-link" data-scroll-target="#double-slit-experiments"><span class="header-section-number">7.5</span> Double slit experiments</a></li>
   <li><a href="#sec-airy-pattern" id="toc-sec-airy-pattern" class="nav-link" data-scroll-target="#sec-airy-pattern"><span class="header-section-number">7.6</span> Pinhole size or diffraction: which blurs more?</a></li>
-  <li><a href="#sec-pointspread" id="toc-sec-pointspread" class="nav-link" data-scroll-target="#sec-pointspread"><span class="header-section-number">7.7</span> The point spread function</a>
-  <ul class="collapse">
-  <li><a href="#the-power-of-the-psf-linearity" id="toc-the-power-of-the-psf-linearity" class="nav-link" data-scroll-target="#the-power-of-the-psf-linearity"><span class="header-section-number">7.7.1</span> The power of the PSF: Linearity</a></li>
-  </ul></li>
+  <li><a href="#sec-pointspread" id="toc-sec-pointspread" class="nav-link" data-scroll-target="#sec-pointspread"><span class="header-section-number">7.7</span> The point spread function</a></li>
   <li><a href="#pinhole-psfs" id="toc-pinhole-psfs" class="nav-link" data-scroll-target="#pinhole-psfs"><span class="header-section-number">7.8</span> Pinhole PSFs</a>
   <ul class="collapse">
   <li><a href="#pinhole-and-distance" id="toc-pinhole-and-distance" class="nav-link" data-scroll-target="#pinhole-and-distance"><span class="header-section-number">7.8.1</span> Pinhole and distance</a></li>
@@ -507,7 +504,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 5, 2025</p>
+      <p class="date">October 7, 2025</p>
     </div>
   </div>
   
@@ -534,7 +531,7 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: October 5, 2025</p>
+<p>Last updated: October 7, 2025</p>
 </div>
 </div>
 </div>
@@ -670,7 +667,7 @@ Figure&nbsp;7.8: Images of a light bulb filament through pinholes of decreasing 
 <section id="sec-huygens-wave" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="sec-huygens-wave"><span class="header-section-number">7.4</span> Huygens wave model</h2>
 <p>The Dutch scientist Christiaan Huygens, working at the same time as Newton, proposed an alternative to the ray model: he modeled light as waves expanding to fill space. In Huygens’ theory, light from a point source expands as a spherical wave. The leading edge of this expansion, the <strong>wavefront</strong>, can be seen as a collection of points, each acting as a source for a new secondary wavelet. This model successfully predicts many phenomena, including reflection from a mirror and the change in light’s direction (refraction) as it passes from one medium to another (<a href="#fig-huygens-waves" class="quarto-xref">Figure&nbsp;<span>7.9</span></a>).</p>
-<div id="fig-huygens-waves" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" data-fig-cap-location="bottom">
+<div id="fig-huygens-waves" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-cap-location="bottom" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-huygens-waves-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/optics/06-geometric/huygens-wave.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%" data-fig-cap-location="bottom">
@@ -808,13 +805,11 @@ The diameter of the diffraction point spread
 </section>
 <section id="sec-pointspread" class="level2" data-number="7.7">
 <h2 data-number="7.7" class="anchored" data-anchor-id="sec-pointspread"><span class="header-section-number">7.7</span> The point spread function</h2>
-<p>Throughout this section, we have discussed how an optical system images a single point of light. The resulting image is called the <strong>point spread function (PSF)</strong>, and it is a fundamental measure of optical performance. The Airy pattern, for example, is the PSF for a diffraction-limited circular aperture. We will encounter other types of PSFs when we analyze optical systems using linear systems theory (<a href="optics-05-linear-space.html" class="quarto-xref"><span>Chapter 11</span></a>).</p>
-<p>In a simple system, the PSF might be the same everywhere. In most real optical systems, however, the PSF is not fixed; it varies with the point’s distance and its position in the field of view. For a circularly symmetric system, we can describe a point’s position by its <strong>field height</strong>, which is the angle between the optical axis and the point source.</p>
-<section id="the-power-of-the-psf-linearity" class="level3" data-number="7.7.1">
-<h3 data-number="7.7.1" class="anchored" data-anchor-id="the-power-of-the-psf-linearity"><span class="header-section-number">7.7.1</span> The power of the PSF: Linearity</h3>
-<p>The PSF is a cornerstone of lens simulation, characterization, and computational imaging. This is because many optical systems are approximately <strong>linear</strong>. This means that the image of two points added together is the same as the sum of the images of each point individually.</p>
-<p>The principle of linearity is powerful. Any scene can be described as a collection of points. If we know the PSF for every point in the scene, we can calculate the final image by summing the PSFs from all the points. While this might involve millions of points, it’s a task that computers handle with ease. This principle of superposition is the foundation for simulating complex images, and we will use the ideas of linear systems throughout this book. The appendices go into some mathematical detail about general linear systems (<a href="appendix-01-linearsystems.html#sec-appendix-linear-systems-overview" class="quarto-xref"><span>Section 27.1</span></a>) and the special case of linear, space-invariant systems (<a href="appendix-02-spaceinvariance.html" class="quarto-xref"><span>Chapter 29</span></a>).</p>
-</section>
+<p>Throughout this section, we have analyzed optical systems by asking a simple question: what does the image of a single point of light look like? The resulting image pattern is called the <strong>point spread function (PSF)</strong>, and it is a fundamental measure of optical performance. The Airy pattern, for example, is the PSF for a diffraction-limited circular aperture. We will encounter other types of PSFs when we analyze optical systems using linear systems theory (<a href="optics-05-linear-space.html" class="quarto-xref"><span>Chapter 11</span></a>).</p>
+<p>The PSF is a cornerstone of lens simulation, characterization, and computational imaging. Its importance stems from a crucial property of many optical systems: they are approximately <strong>linear</strong>. This means that the image of two points added together is the same as the sum of the images of each point individually (a property known as superposition).</p>
+<p>Because of linearity, we can simulate the image of any complex scene. We can model the scene as a vast collection of individual light points. If we know the PSF, we can calculate the final image by scaling the PSF by the intensity of each point in the scene and summing all the resulting patterns. This process might involve millions of points, but it is a task that modern computers handle with ease.</p>
+<p>In an idealized system, the PSF might be the same for every point in the scene, merely shifted in position. Such a system is called <strong>linear and space-invariant (LSI)</strong>, and in that case the scaling and summing is called <strong>convolution</strong>. In most real-world optics, however, the system is <strong>space-variant</strong>: the PSF’s shape and size change depending on the point’s position in the field of view (e.g., its distance from the center, or <strong>field height</strong>).</p>
+<p>The concept of building an image from the sum of PSFs is foundational, and we will use the ideas of linear systems throughout this book. The appendices provide more mathematical detail on general linear systems (<a href="appendix-01-linearsystems.html#sec-appendix-linear-systems-overview" class="quarto-xref"><span>Section 27.1</span></a>) and the special case of LSI systems (<a href="appendix-02-spaceinvariance.html" class="quarto-xref"><span>Chapter 29</span></a>).</p>
 </section>
 <section id="pinhole-psfs" class="level2" data-number="7.8">
 <h2 data-number="7.8" class="anchored" data-anchor-id="pinhole-psfs"><span class="header-section-number">7.8</span> Pinhole PSFs</h2>

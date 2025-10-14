@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-22">
+<meta name="dcterms.date" content="2025-10-08">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>15&nbsp; Pixels and sensors – Foundations of Image Systems Engineering</title>
@@ -353,7 +353,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/human-02-encoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Human optics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Human visual encoding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -504,7 +504,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 22, 2025</p>
+      <p class="date">October 8, 2025</p>
     </div>
   </div>
   
@@ -531,13 +531,15 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: September 22, 2025</p>
+<p>Last updated: October 8, 2025</p>
 </div>
 </div>
 </div>
 <section id="sec-pixels-overview" class="level2" data-number="15.1">
 <h2 data-number="15.1" class="anchored" data-anchor-id="sec-pixels-overview"><span class="header-section-number">15.1</span> Pixels and sensors</h2>
-<p>Having established the fundamental physics of light-to-electron conversion, we now examine how these principles are implemented in the design of image sensor pixels. To understand how the photoelectric effect is harnessed in practical devices, we next review the behavior of electrons in semiconductors—the foundation of modern image sensor pixels.</p>
+<p>I now connect the physics of photon-to-electron conversion to the engineering of image sensor pixels. First, we review how electrons behave in semiconductor materials and how photons create mobile charge carriers (<a href="#sec-semiconductor-physics" class="quarto-xref"><span>Section 15.2</span></a>). Then I examine how CMOS pixel architectures (e.g., classic 3T and 4T designs, and their modern extensions) store, transfer, and read out that charge.</p>
+<p>Subsequent sections explain how pixel structures have evolved (front-side to back-side illumination, deep photodiodes, stacking, and digital pixels) to improve sensitivity, speed, and dynamic range. Finally, I describe how to model and measure sensor performance (<a href="sensors-06-characterization.html#sec-system-modeling-overview" class="quarto-xref"><span>Section 19.1</span></a>) and how additional on-sensor components—such as color filters and microlenses—shape the captured data (<a href="sensors-04-components.html" class="quarto-xref"><span>Chapter 17</span></a>).</p>
+<p>The goal of these chapters is to build an intuition that links semiconductor physics to practical design trade-offs in modern image sensors.</p>
 </section>
 <section id="sec-semiconductor-physics" class="level2" data-number="15.2">
 <h2 data-number="15.2" class="anchored" data-anchor-id="sec-semiconductor-physics"><span class="header-section-number">15.2</span> Semiconductors and electrons</h2>
@@ -660,10 +662,10 @@ transfer switch (M1), a reset switch (M2), a source follower (M3) and a row sele
 <div id="fig-cmos-multiplex" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cmos-multiplex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/sensors/14-pixels/03-CMOS-multiplex-readout.png" class="img-fluid figure-img" style="width:60.0%">
+<img src="images/sensors/14-pixels/03-CMOS-multiplex-readout.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cmos-multiplex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.6: Multiplex readout explanation
+Figure&nbsp;15.6: Multiplex readout of the image sensor. The analog-to-digital converters are very fast. Each ADC serves to convert the readout voltages from multiple columns during the readout process.
 </figcaption>
 </figure>
 </div>
@@ -717,6 +719,9 @@ Figure&nbsp;15.8: Simulated rolling shutter effect.
 <p>These challenges, and the huge success of CMOS sensors, were met by a massive, world-wide, engineering effort to improve the system. The evolution of image sensor pixel technology that came from this effort enabled dramatic improvements in image quality, sensitivity, and device functionality. The following sections describe the key milestones that were achieved through academic and industry partnerships. For an authoritative review, consult <span class="citation" data-cites="Oike2022-stackedevolution">Oike (<a href="references.html#ref-Oike2022-stackedevolution" role="doc-biblioref">2022</a>)</span>.</p>
 <!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
 https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor
+
+https://image-sensors-world.blogspot.com/2023/06/sonys-world-first-two-layer-image.html
+
 -->
 <div class="callout callout-style-default callout-note callout-titled" title="Pixel Evolution timeline">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
@@ -837,15 +842,25 @@ BSI technology development
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>The concept of back-side illuminated (BSI) CMOS image sensors was first proposed by Eric Fossum in 1994 to address the limitations caused by metal wiring obstructing incoming light and to improve sensitivity. While the benefits of rearranging the sensor layers were clear to many, developing a practical manufacturing process proved challenging. It took more than a decade for BSI technology to become commercially viable. OmniVision Technologies was among the first to introduce a commercial BSI sensor, releasing the OV8810 (1.4 μm pixels, 8 megapixels) in September 2008. Sony soon followed, launching the first widely adopted BSI sensors in 2009.</p>
-<p><a href="https://en.wikipedia.org/wiki/Back-illuminated_sensor">Wikipedia article on BSI</a></p>
+<p>The concept of back-side illuminated (BSI) CMOS image sensors was first proposed by Eric Fossum in 1994 to address the limitations caused by metal wiring obstructing incoming light and to improve sensitivity. While the benefits of rearranging the sensor layers were clear to many, developing a practical manufacturing process proved challenging. It took more than a decade for BSI technology to become commercially viable. OmniVision Technologies was among the first to introduce a commercial BSI sensor, releasing the OV8810 (1.4 μm pixels, 8 megapixels) in September 2008. Sony soon followed, launching the first widely adopted BSI sensors in 2009. See more in this <a href="https://en.wikipedia.org/wiki/Back-illuminated_sensor">Wikipedia article on BSI</a>.</p>
+<p>Here is an SEM cross section of an early BSI sensor from Sony. You can see the photodetector (PD) is close to the microlens array level without all the intervening metal layers.</p>
+<div id="fig-bsi-sony-sem" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bsi-sony-sem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/sensors/14-pixels/sensor-bsi-SEM.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bsi-sony-sem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.10: Sony 1.65 micron BSI sensor. Source: <a href="https://image-sensors-world.blogspot.com/2010/02/isscc-2010-sony-165um-bsi-pixel-cross.html">Image Sensors World</a>
+</figcaption>
+</figure>
+</div>
 </div>
 </div>
 </div>
 </section>
 <section id="sec-sensor-deepdiode" class="level2" data-number="15.8">
 <h2 data-number="15.8" class="anchored" data-anchor-id="sec-sensor-deepdiode"><span class="header-section-number">15.8</span> Deep photodiodes</h2>
-<p><a href="#fig-sensor-skhynix" class="quarto-xref">Figure&nbsp;<span>15.10</span></a> illustrates a further improvement in the BSI design. SK Hynix, Omnivision and other manufacturers recognized that simply flipping the sensor (BSI) improved light capture. But as pixel sizes continued to shrink there was relatively little ability to store electrons. Thus the well capacity was reduced and which limited the pixel’s dynamic range (<a href="sensors-03-parameters.html#sec-wellcapacity-dynamicrange" class="quarto-xref"><span>Section 16.3</span></a>). Moreover, the sensitivity to longer wavelengths, which penetrates deeper into silicon, became a challenge (<a href="sensors-04-components.html#sec-sensor-wavelength" class="quarto-xref"><span>Section 17.3</span></a>).</p>
+<p><a href="#fig-sensor-skhynix" class="quarto-xref">Figure&nbsp;<span>15.11</span></a> illustrates a further improvement in the BSI design. SK Hynix, Omnivision and other manufacturers recognized that simply flipping the sensor (BSI) improved light capture. But as pixel sizes continued to shrink there was relatively little ability to store electrons. Thus the well capacity was reduced and which limited the pixel’s dynamic range (<a href="sensors-03-parameters.html#sec-wellcapacity-dynamicrange" class="quarto-xref"><span>Section 16.3</span></a>). Moreover, the sensitivity to longer wavelengths, which penetrates deeper into silicon, became a challenge (<a href="sensors-04-components.html#sec-sensor-wavelength" class="quarto-xref"><span>Section 17.3</span></a>).</p>
 <p>To overcome these limitations, many vendors invented methods to build photodiodes that extend significantly deeper into the silicon (deep photodiode technology). Increasing the volume of the photodiode has two benefits. First, the photodiode can gather more charge before saturating. Second, the photodiode has higher long-wavelength sensitivity.</p>
 <div id="fig-sensor-skhynix" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -853,7 +868,7 @@ BSI technology development
 <img src="images/sensors/14-pixels/03-sensor-bsi.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensor-skhynix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.10: Deep photodiodes in the BSI. (a) A super pixel of a front-side illuminated CMOS sensor, including the microlenses, color filters, metal lines, and silicon. (b) A back-side illuminated super pixel with deep photodiode technology. Source: <a href="https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor/" target="_blank">Skhynix.</a>
+Figure&nbsp;15.11: Deep photodiodes in the BSI. (a) A super pixel of a front-side illuminated CMOS sensor, including the microlenses, color filters, metal lines, and silicon. (b) A back-side illuminated super pixel with deep photodiode technology. Source: <a href="https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor/" target="_blank">Skhynix.</a>
 </figcaption>
 </figure>
 </div>
@@ -868,7 +883,7 @@ Figure&nbsp;15.10: Deep photodiodes in the BSI. (a) A super pixel of a front-sid
 <img src="images/sensors/14-pixels/03-pixel-stacked.png" class="img-fluid figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensor-stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.11: Pixels in the stacked sensor are based on die stacking technology. Several layers of silicon that are bonded and connected using Through-Silicon Via (TSV) technology. The technology began with 2-layers, but when have you ever known Silicon Valley to stop?
+Figure&nbsp;15.12: Pixels in the stacked sensor are based on die stacking technology. Several layers of silicon that are bonded and connected using Through-Silicon Via (TSV) technology. The technology began with 2-layers, but when have you ever known Silicon Valley to stop?
 </figcaption>
 </figure>
 </div>
@@ -893,6 +908,17 @@ Stacked sensor applications
 <div class="callout-body-container callout-body">
 <p>Stacked CMOS sensors build on the BSI CMOS architecture by integrating the pixel array with a separate logic layer. This close integration enables advanced features such as high dynamic range (HDR) imaging, faster frame rates, and on-chip processing—including artificial intelligence (AI) functions.</p>
 <p>Some stacked sensors incorporate high-speed DRAM directly beneath the pixel array, allowing for rapid data readout and temporary storage. This architecture made possible innovations like the Sony a9 (2019), which could capture images at 20 frames per second (fps) with a continuous, blackout-free viewfinder experience.</p>
+<div id="fig-sem-cmos-stacked" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sem-cmos-stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/sensors/14-pixels/CMOS-stacked-Sony.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sem-cmos-stacked-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.13: Scanning electron microscope (SEM) image of a cross section through a Sony stacked CMOS image sensor. The image was published in a <a href="https://image-sensors-world.blogspot.com/2023/06/sonys-world-first-two-layer-image.html">blog post</a> by Image Sensors World in 2023. The article describes many of the components in detail.
+</figcaption>
+</figure>
+</div>
+<p>The complexity of the silicon and the multiple functions achieved by these stacked sensors is very impressive; it reminds me of the complexity of the retina. Many important functions for image systems are integrated into these sensing devices, and these functions are typically localized in space. Many other functions are carried out in the central processing units which have access to the image across larger regions of the visual field.</p>
 </div>
 </div>
 </div>
@@ -900,7 +926,7 @@ Stacked sensor applications
 <section id="sec-digital-pixel" class="level2" data-number="15.10">
 <h2 data-number="15.10" class="anchored" data-anchor-id="sec-digital-pixel"><span class="header-section-number">15.10</span> Digital pixel sensor</h2>
 <p>The Digital Pixel Sensor (DPS) was a significant parallel development in image sensor technology. The initial ideas were presented in the mid 1990s, at roughly the same time as the APS 3T and 4T circuits were implemented. The APS circuitry included an analog-to-digital conversion (ADC) at the column or chip level. The DPS architecture extended the pixel circuit by including an ADC within the pixel circuit <span class="citation" data-cites="fowler1995-dps-patent">Fowler and El (<a href="references.html#ref-fowler1995-dps-patent" role="doc-biblioref">1995</a>)</span> <span class="citation" data-cites="Udoy2025-dps-review">Udoy et al. (<a href="references.html#ref-Udoy2025-dps-review" role="doc-biblioref">2025</a>)</span>.</p>
-<p>Digitizing the signal at the pixel had several advantages for high dynamic range imaging, global shuttering and readout speed <span class="citation" data-cites="elgamal2005-cmos-imagesensors">El Gamal and Eltoukhy (<a href="references.html#ref-elgamal2005-cmos-imagesensors" role="doc-biblioref">2005</a>)</span> <span class="citation" data-cites="kleinfelder2001-10000fps">Kleinfelder et al. (<a href="references.html#ref-kleinfelder2001-10000fps" role="doc-biblioref">2001</a>)</span> <span class="citation" data-cites="Wandell2002-CommonPrinciples">Wandell et al. (<a href="references.html#ref-Wandell2002-CommonPrinciples" role="doc-biblioref">2002</a>)</span>. An important feature of the original digital pixel sensors was that the pixel voltage was read non-destructively and repeatedly, say at 1 ms, 2 ms, 4 ms, and so forth. As the photon generated electrons increased in the well, the voltage was sampled. The voltage for each pixel was reported when the pixel had passed one half well capacity, assuring it was much larger than the noise. It would be reported at a time before the well capacity was reached, so that it was below saturation. The information from each pixel was the a voltage and and the time at which it reached that voltage. Thus, each pixel had its own exposure duration -or put another way, the sensor had a space-varying exposure duration. Pixels in dark regions of the scene had longer exposure times than pixels in the bright regions. We explain the value of this approach for high dynamic range imaging in <a href="sensors-05-control.html#sec-exposure-control" class="quarto-xref"><span>Section 18.3</span></a>.</p>
+<p>Digitizing the signal at the pixel had several advantages for high dynamic range imaging, global shuttering and readout speed (<span class="citation" data-cites="elgamal2005-cmos-imagesensors">El Gamal and Eltoukhy (<a href="references.html#ref-elgamal2005-cmos-imagesensors" role="doc-biblioref">2005</a>)</span>, <span class="citation" data-cites="kleinfelder2001-10000fps">Kleinfelder et al. (<a href="references.html#ref-kleinfelder2001-10000fps" role="doc-biblioref">2001</a>)</span>, <span class="citation" data-cites="Wandell2002-CommonPrinciples">Wandell et al. (<a href="references.html#ref-Wandell2002-CommonPrinciples" role="doc-biblioref">2002</a>)</span>). An important feature of the original digital pixel sensors was that the pixel voltage was read non-destructively and repeatedly, say at 1 ms, 2 ms, 4 ms, and so forth. As the photon generated electrons increased in the well, the voltage was sampled. The voltage for each pixel was reported when the pixel had passed one half well capacity, assuring it was much larger than the noise. It would be reported at a time before the well capacity was reached, so that it was below saturation. The information from each pixel was the a voltage and the time at which it reached that voltage. Thus, each pixel had its own exposure duration -or put another way, the sensor had a space-varying exposure duration. Pixels in dark regions of the scene had longer exposure times than pixels in the bright regions. We explain the value of this approach for high dynamic range imaging in <a href="sensors-05-control.html#sec-exposure-control" class="quarto-xref"><span>Section 18.3</span></a>.</p>
 <p>The DPS concept was introduced at an early point in the development of CMOS imagers, and thus it faced significant hurdles in miniaturization. The idea of an ADC on the sensor foreshadowed an opportunity that has arisen as pixel architecture evolves. The stacked pixel structure offers a remedy by allowing the ADC and memory circuits to be placed in a separate layer underneath the photodiode. This enables higher pixel density and broader application of in-pixel conversion. The next generation of image sensors will implement the DPS concept (<span class="citation" data-cites="fossum2024-arvs">Fossum et al. (<a href="references.html#ref-fossum2024-arvs" role="doc-biblioref">2024</a>)</span>).</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Commercialization of the digital pixel sensor">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">

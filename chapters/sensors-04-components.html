@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-21">
+<meta name="dcterms.date" content="2025-10-08">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>17&nbsp; System components – Foundations of Image Systems Engineering</title>
@@ -353,7 +353,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/human-02-encoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Human optics</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Human visual encoding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -497,7 +497,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 21, 2025</p>
+      <p class="date">October 8, 2025</p>
     </div>
   </div>
   
@@ -524,13 +524,14 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: September 21, 2025</p>
+<p>Last updated: October 8, 2025</p>
 </div>
 </div>
 </div>
 <section id="sec-sensor-components-overview" class="level2" data-number="17.1">
 <h2 data-number="17.1" class="anchored" data-anchor-id="sec-sensor-components-overview"><span class="header-section-number">17.1</span> System components overview</h2>
-<p>Conventional CMOS imagers include several components that are critical for producing high quality images (<a href="sensors-02-pixels.html#fig-pixel-overview" class="quarto-xref">Figure&nbsp;<span>15.2</span></a>). The microlens array and deep trench isolation both increase sensitivity and reduce unwanted crosstalk between the pixels. Spectral filters, which are included in sensors for consumer photography and many other types of cameras, are used to capture information about the scene spectral radiance.</p>
+<p>Modern CMOS image sensors combine several carefully engineered layers that work together to capture sharp, low-noise, and color-accurate images (<a href="sensors-02-pixels.html#fig-pixel-overview" class="quarto-xref">Figure&nbsp;<span>15.2</span></a>). Light from the scene passes through (1) the main lens, (2) an optional UV/IR blocking filter that limits the spectrum to the visible range, (3) a microlens array that concentrates and redirects the light toward each pixel’s active area, and (4) a color filter array (CFA) that partitions the visible spectrum into broad bands for color reproduction. Beneath these layers, (5) deep trench isolation (DTI) structures reduce optical and electrical crosstalk between neighboring pixels, while (6) the photodiode converts absorbed photons into charge for readout.</p>
+<p>Each element serves a distinct purpose: the microlenses and DTI increase quantum efficiency and preserve spatial detail; the UV/IR filter and CFA shape the spectral sensitivity; and the pixel architecture and readout circuits determine noise performance. In the following sections we describe how these components evolved and how each contributes to image quality.</p>
 </section>
 <section id="sec-sensor-space" class="level2" data-number="17.2">
 <h2 data-number="17.2" class="anchored" data-anchor-id="sec-sensor-space"><span class="header-section-number">17.2</span> Spatial components</h2>
@@ -543,7 +544,7 @@ Work in Progress
 <img src="images/sensors/16-components/03-microlens-cfa-SEM.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-components-microlens-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17.1: Electron micrograph cross section illustrating the position of the color filters and microlenses above the photodiode (from <span class="citation" data-cites="elgamal2005-cmos-imagesensors">El Gamal and Eltoukhy (<a href="references.html#ref-elgamal2005-cmos-imagesensors" role="doc-biblioref">2005</a>)</span>)
+Figure&nbsp;17.1: Scanning electron micrograph (SEM) cross-section of a CMOS imager. The image shows the position of the color filters and microlenses above the photodiode. The microlens and filters are deposited on top of the photodetector. Source: <span class="citation" data-cites="elgamal2005-cmos-imagesensors">El Gamal and Eltoukhy (<a href="references.html#ref-elgamal2005-cmos-imagesensors" role="doc-biblioref">2005</a>)</span>.
 </figcaption>
 </figure>
 </div>
@@ -558,29 +559,28 @@ Figure&nbsp;17.2: Geometric logic for de-centering the microlens and color filte
 </figcaption>
 </figure>
 </div>
-<p>The microlens was important for classic, frontside illuminated sensors when the path from the lens through the metal layers was quite long and the angle of the chief ray at the edge was fairly large. For large pixels, and the initial sensor pixels were 6 or more microns, microlens technology was quite effective. <span class="citation" data-cites="Hwang2023-microlens-alignment">Hwang and Kim (<a href="references.html#ref-Hwang2023-microlens-alignment" role="doc-biblioref">2023a</a>)</span> <span class="citation" data-cites="Hwang2023-microlens-quad">Hwang and Kim (<a href="references.html#ref-Hwang2023-microlens-quad" role="doc-biblioref">2023b</a>)</span></p>
+<p>The microlens was important for classic, frontside illuminated sensors when the path from the lens through the metal layers was quite long and the angle of the chief ray at the edge was fairly large. For large pixels, and the initial sensor pixels were 6 or more microns, microlens technology was quite effective (<span class="citation" data-cites="Hwang2023-microlens-alignment">Hwang and Kim (<a href="references.html#ref-Hwang2023-microlens-alignment" role="doc-biblioref">2023a</a>)</span> <span class="citation" data-cites="Hwang2023-microlens-quad">Hwang and Kim (<a href="references.html#ref-Hwang2023-microlens-quad" role="doc-biblioref">2023b</a>)</span>).</p>
 </section>
 <section id="sec-sensor-dti" class="level3" data-number="17.2.2">
 <h3 data-number="17.2.2" class="anchored" data-anchor-id="sec-sensor-dti"><span class="header-section-number">17.2.2</span> Deep trench isolation (DTI)</h3>
 <p>As pixel sizes shrank to around 1.5 microns or less, diffraction effects became more significant. Light entering these tiny pixel apertures would spread out, causing photons to be absorbed not only by the intended photodiode but also by neighboring ones. This led to two main issues: reduced image sharpness due to optical blur, and decreased color accuracy because light passing through, for example, a green filter could generate electrons in a photodiode beneath a red filter.</p>
-<p><strong>Deep trench isolation (DTI)</strong> technology addresses these challenges. Engineers introduced narrow trenches at the boundaries between pixels and filled them with insulating materials such as silicon dioxide or silicon nitride (<a href="#fig-sensor-deeptrench" class="quarto-xref">Figure&nbsp;<span>17.3</span></a>). These trenches act as barriers, preventing light from spreading laterally between adjacent pixels. As a result, DTI improves both spatial resolution and color fidelity in modern image sensors.</p>
+<p><strong>Deep trench isolation (DTI)</strong> technology addresses these challenges. Engineers introduced narrow trenches at the boundaries between pixels and filled them with insulating materials such as silicon dioxide or silicon nitride (<a href="#fig-sensor-deeptrench" class="quarto-xref">Figure&nbsp;<span>17.3</span></a>). These trenches act as barriers, preventing light from spreading laterally between adjacent pixels. As a result, DTI improves both spatial resolution and color fidelity in modern image sensors (<span class="citation" data-cites="Han2020-deeptrench">Han et al. (<a href="references.html#ref-Han2020-deeptrench" role="doc-biblioref">2020</a>)</span>, <span class="citation" data-cites="Tournier2011-deeptrench">Tournier et al. (<a href="references.html#ref-Tournier2011-deeptrench" role="doc-biblioref">2011</a>)</span>, <span class="citation" data-cites="Park2007-deeptrench">Park et al. (<a href="references.html#ref-Park2007-deeptrench" role="doc-biblioref">2007</a>)</span>).</p>
 <div id="fig-sensor-deeptrench" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sensor-deeptrench-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/sensors/16-components/03-sensor-deeptrench.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensor-deeptrench-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17.3: Deep trench isolation revealed by Chipworks from a 8MP Samsung ISOCELL imager in the Galaxy S5 (2014). Light passes through color filters (bottom) to the silicon photodiodes. They are separated by deep, poly-filled trenches in the substrate. Source: <a href="https://image-sensors-world.blogspot.com/2014/04/chipworks-shows-samsung-isocell-cross.html" target="_blank">Image Sensors World, April 1, 2014</a>
+Figure&nbsp;17.3: Deep trench isolation of a 8MP Samsung ISOCELL imager in the Galaxy S5 (2014). Light passes through color filters (bottom) to the silicon photodiodes. They are separated by deep, poly-filled trenches in the substrate. The SEM was obtained by ChipWorks. Source: <a href="https://image-sensors-world.blogspot.com/2014/04/chipworks-shows-samsung-isocell-cross.html" target="_blank">Image Sensors World, April 1, 2014</a>
 </figcaption>
 </figure>
 </div>
-<p><span class="citation" data-cites="Han2020-deeptrench">Han et al. (<a href="references.html#ref-Han2020-deeptrench" role="doc-biblioref">2020</a>)</span> <span class="citation" data-cites="Tournier2011-deeptrench">Tournier et al. (<a href="references.html#ref-Tournier2011-deeptrench" role="doc-biblioref">2011</a>)</span> <span class="citation" data-cites="Park2007-deeptrench">Park et al. (<a href="references.html#ref-Park2007-deeptrench" role="doc-biblioref">2007</a>)</span> –&gt;</p>
 </section>
 </section>
 <section id="sec-sensor-wavelength" class="level2" data-number="17.3">
 <h2 data-number="17.3" class="anchored" data-anchor-id="sec-sensor-wavelength"><span class="header-section-number">17.3</span> Spectral components</h2>
 <p>Silicon-based CMOS image sensors are sensitive to photons with wavelengths up to about 1100 nm. In contrast, the human eye detects only a narrower range, from roughly 380 nm to 700 nm. For consumer cameras, the goal is to capture images that look natural to people, so sensors are designed to record light mainly within the visible spectrum. Since human vision uses three types of broadband photoreceptors, most cameras only need to capture three broad spectral bands.</p>
-<p>To achieve this, image sensors use two types of spectral filters: one to block unwanted infrared (IR) and ultraviolet (UV) light, and another to divide the visible spectrum into three color channels. The resulting data are processed to produce images that closely match human color perception. In this section, I describe these filters. After reviewing the relevant properties of human vision (<span class="quarto-unresolved-ref">?sec-human</span>), I explain how sensor color channels are processed to render accurate or visually pleasing images (<a href="imgprocessing-01-hardware.html" class="quarto-xref"><span>Chapter 25</span></a>).</p>
+<p>To achieve this, image sensors use two types of spectral filters: one to block unwanted infrared (IR) and ultraviolet (UV) light, and another to divide the visible spectrum into three color channels. The resulting data are processed to produce images that closely match human color perception. In this section, I describe these filters. After reviewing the relevant properties of human vision (<a href="human-02-encoding.html" class="quarto-xref"><span>Chapter 22</span></a>), I explain how sensor color channels are processed to render accurate or visually pleasing images (<a href="imgprocessing-01-hardware.html" class="quarto-xref"><span>Chapter 25</span></a>).</p>
 <section id="sec-sensor-irfilter" class="level3" data-number="17.3.1">
 <h3 data-number="17.3.1" class="anchored" data-anchor-id="sec-sensor-irfilter"><span class="header-section-number">17.3.1</span> UV/IR filters</h3>
 <p>Most consumer cameras include a spectral filter that blocks wavelengths longer than 680–700 nm (IR) and shorter than 380–400 nm (UV) from reaching the photodiode. These thin <strong>UV/IR blocking filters</strong> are placed above the microlenses on the sensor (<a href="#fig-sensor-uvir" class="quarto-xref">Figure&nbsp;<span>17.4</span></a>)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
@@ -645,12 +645,12 @@ Figure&nbsp;17.6: Spectral transmission profiles typical color filters. Notice t
 <img src="images/sensors/16-components/03-sensor-channel-spectral.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-channel-spectral-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17.7: Spectral quantum efficiency sensitivity of three color channels in a typical modern sensor. The channel properties are determined by the combination of media in the light path.
+Figure&nbsp;17.7: Spectral quantum efficiency sensitivity of three color channels in a typical modern sensor. The channel properties are determined by the combination of media in the light path, including the lens, color filters, and photodetector spectral sensitivity.
 </figcaption>
 </figure>
 </div>
 <p>When using a color filter array, we obtain one spectral sample at each position. To represent a color image, however, we represent three spectral samples at each location. Thus, we must convert the data from these interleaved mosaics to create a full-color image by assigning a red, green, and blue value at every pixel location. This process, called <strong>demosaicking</strong> can be very useful when a sensor has relatively large pixels. In that case, the images are coarsely sampled and the image appearance is significantly improved by interpolating the color channels, essentially upsampling the measurements.</p>
-<p>There is a principle we can use when evaluating whether a pixel is ‘large’. The imaging lens has a point spread function (<a href="optics-01-geometric.html#sec-pointspread" class="quarto-xref"><span>Section 7.7</span></a> and <span class="quarto-unresolved-ref">?sec-optics-linear</span>), and if its spread is two times larger than the pixel size we consider the pixel small. On the other hand, if the pixel is equal to or larger than the point spread, we consider the pixel large.</p>
+<p>There is a principle we can use when evaluating whether a pixel is ‘large’. The imaging lens has a point spread function (<a href="optics-01-geometric.html#sec-pointspread" class="quarto-xref"><span>Section 7.7</span></a>), and if the spread is two times larger than the pixel size we consider the pixel small. On the other hand, if the pixel is equal to or larger than the point spread, we consider the pixel large.</p>
 <p>For modern sensors, particularly in consumer imaging, pixel sizes can be quite small, often less than <span class="math inline">\(1~\mu \text{m}\)</span>. This pixel size is smaller than the ideal point spread function of a diffraction limited lens (<a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.6</span></a>), and often considerably smaller than the point spread function of the true system. For such sensors many small pixels —and even the entire super pixel- fit within the point spread function. Demosaicking is less critical in this case; we can simply group the measured values of the super pixel into a single point in the RGB image. We will quantify the impact of optics, pixel size and demosaicking for image quality in <a href="imgprocessing-01-hardware.html" class="quarto-xref"><span>Chapter 25</span></a>.</p>
 
 
