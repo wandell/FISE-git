@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-10-08">
+<meta name="dcterms.date" content="2025-10-14">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>15&nbsp; Pixels and sensors – Foundations of Image Systems Engineering</title>
@@ -480,11 +480,12 @@ window.Quarto = {
   <li><a href="#sec-4T-pixel-design" id="toc-sec-4T-pixel-design" class="nav-link" data-scroll-target="#sec-4T-pixel-design"><span class="header-section-number">15.4.2</span> Four-Transistor (4T) pixel design</a></li>
   </ul></li>
   <li><a href="#multiplex-readout" id="toc-multiplex-readout" class="nav-link" data-scroll-target="#multiplex-readout"><span class="header-section-number">15.5</span> Multiplex readout</a></li>
-  <li><a href="#sec-sensor-evolution" id="toc-sec-sensor-evolution" class="nav-link" data-scroll-target="#sec-sensor-evolution"><span class="header-section-number">15.6</span> Sensor evolution</a></li>
-  <li><a href="#sec-sensor-bsi" id="toc-sec-sensor-bsi" class="nav-link" data-scroll-target="#sec-sensor-bsi"><span class="header-section-number">15.7</span> Back-side illuminated (BSI)</a></li>
-  <li><a href="#sec-sensor-deepdiode" id="toc-sec-sensor-deepdiode" class="nav-link" data-scroll-target="#sec-sensor-deepdiode"><span class="header-section-number">15.8</span> Deep photodiodes</a></li>
-  <li><a href="#sec-sensor-stacked" id="toc-sec-sensor-stacked" class="nav-link" data-scroll-target="#sec-sensor-stacked"><span class="header-section-number">15.9</span> Stacked sensors</a></li>
-  <li><a href="#sec-digital-pixel" id="toc-sec-digital-pixel" class="nav-link" data-scroll-target="#sec-digital-pixel"><span class="header-section-number">15.10</span> Digital pixel sensor</a></li>
+  <li><a href="#sec-rolling-shutter" id="toc-sec-rolling-shutter" class="nav-link" data-scroll-target="#sec-rolling-shutter"><span class="header-section-number">15.6</span> Rolling shutter</a></li>
+  <li><a href="#sec-sensor-evolution" id="toc-sec-sensor-evolution" class="nav-link" data-scroll-target="#sec-sensor-evolution"><span class="header-section-number">15.7</span> Sensor evolution</a></li>
+  <li><a href="#sec-sensor-bsi" id="toc-sec-sensor-bsi" class="nav-link" data-scroll-target="#sec-sensor-bsi"><span class="header-section-number">15.8</span> Back-side illuminated (BSI)</a></li>
+  <li><a href="#sec-sensor-deepdiode" id="toc-sec-sensor-deepdiode" class="nav-link" data-scroll-target="#sec-sensor-deepdiode"><span class="header-section-number">15.9</span> Deep photodiodes</a></li>
+  <li><a href="#sec-sensor-stacked" id="toc-sec-sensor-stacked" class="nav-link" data-scroll-target="#sec-sensor-stacked"><span class="header-section-number">15.10</span> Stacked sensors</a></li>
+  <li><a href="#sec-digital-pixel" id="toc-sec-digital-pixel" class="nav-link" data-scroll-target="#sec-digital-pixel"><span class="header-section-number">15.11</span> Digital pixel sensor</a></li>
   </ul>
 </nav>
     </div>
@@ -504,7 +505,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 8, 2025</p>
+      <p class="date">October 14, 2025</p>
     </div>
   </div>
   
@@ -531,7 +532,7 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: October 8, 2025</p>
+<p>Last updated: October 14, 2025</p>
 </div>
 </div>
 </div>
@@ -561,7 +562,7 @@ Figure&nbsp;15.1: Energy bands in silicon semiconductors. A photon can excite an
 </figcaption>
 </figure>
 </div>
-<p>Without special circuitry, the hole and electron will re-combine. To make an image sensor, we need a method to measure the number of electrons. In a CCD an electric field between the bands prevents recombination. In CMOS electrons are trapped in capacitors placed in the silicon. We explain how this is done in <a href="#sec-pixels" class="quarto-xref"><span>Chapter 15</span></a>.</p>
+<p>Without special circuitry, the hole and electron will re-combine. To make an image sensor, we need a method to measure the number of electrons. In a CCD an electric field between the bands prevents recombination. In CMOS electrons are trapped in capacitors placed in the silicon. We explain this circuitry below.</p>
 </section>
 <section id="sec-wavelength-effects" class="level3" data-number="15.2.2">
 <h3 data-number="15.2.2" class="anchored" data-anchor-id="sec-wavelength-effects"><span class="header-section-number">15.2.2</span> Wavelength effects in silicon sensors</h3>
@@ -658,7 +659,7 @@ transfer switch (M1), a reset switch (M2), a source follower (M3) and a row sele
 </section>
 <section id="multiplex-readout" class="level2" data-number="15.5">
 <h2 data-number="15.5" class="anchored" data-anchor-id="multiplex-readout"><span class="header-section-number">15.5</span> Multiplex readout</h2>
-<p>The use of unity gain amplifiers at the pixel was one important innovation. A second innovation is the way the pixel data are read from the image sensor. In the original CCD devices, the important innovation was to find a way to move the electrons across the silicon array to a single analog-to-digital converter. But the electrons in the CMOS pixels are already converted to voltages on the output lines. How shall we convert all of these separate lines into digital readout values?</p>
+<p>The use of unity gain amplifiers at the pixel was one important innovation. A second innovation is the way the pixel data are read from the image sensor. In the original CCD devices, the important innovation was to find a way to move the electrons across the silicon array to a single analog-to-digital converter. But the electrons in the CMOS pixels are voltages on a large number of output lines. How shall we convert the voltages on all of these separate lines into digital readout values?</p>
 <div id="fig-cmos-multiplex" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cmos-multiplex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -671,6 +672,9 @@ Figure&nbsp;15.6: Multiplex readout of the image sensor. The analog-to-digital c
 </div>
 <p>The readout process begins with a control signal sent to a specific row of pixels, activating the row and placing the voltage from each pixel onto its corresponding column readout line. These column lines are connected to amplifiers, which buffer and amplify the signals to ensure accurate transmission. These amplified signals are then passed to an analog-to-digital converter (ADC). The gain settings on the amplifiers, prior to the ADC, are often adjustable allowing gain settings from 1x to 4x.</p>
 <p>In most CMOS sensors, ADCs are shared among groups of columns to reduce complexity and save space. This sharing is achieved through a process called <strong>multiplexing</strong>, where the ADC sequentially converts the analog signals from each column in its group into digital values. Typically, ADCs multiplex signals from 8 or 16 columns, depending on the sensor design and application. Once the data from the active row is fully read out, the control signal moves to the next row, and the process repeats.</p>
+</section>
+<section id="sec-rolling-shutter" class="level2" data-number="15.6">
+<h2 data-number="15.6" class="anchored" data-anchor-id="sec-rolling-shutter"><span class="header-section-number">15.6</span> Rolling shutter</h2>
 <p>So that all of the pixels have the same exposure duration, it is necessary to reset and integrate the pixels in the each row a little before the pixels in the subsequent row. Thus, the data in each row is captured a little bit before the data in each of the following rows. This sequential row-by-row readout introduces a temporal pattern known as a <strong>rolling shutter</strong> into the image data.</p>
 <p><a href="#fig-rolling-shutter" class="quarto-xref">Figure&nbsp;<span>15.7</span></a> illustrates the impact of this readout timing. The telephone poles captured in by this CMOS camera from a bullet train in Japan appear slanted. This is because the train is moving quickly, and the rows at the top are captured before the rows at the bottom. During this time, the telephone pole has shifted position to the right. The Japanese are very good at construction: the poles are straight. Very straight.</p>
 <div id="fig-rolling-shutter" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -711,8 +715,8 @@ Figure&nbsp;15.8: Simulated rolling shutter effect.
 </div>
 </div>
 </section>
-<section id="sec-sensor-evolution" class="level2" data-number="15.6">
-<h2 data-number="15.6" class="anchored" data-anchor-id="sec-sensor-evolution"><span class="header-section-number">15.6</span> Sensor evolution</h2>
+<section id="sec-sensor-evolution" class="level2" data-number="15.7">
+<h2 data-number="15.7" class="anchored" data-anchor-id="sec-sensor-evolution"><span class="header-section-number">15.7</span> Sensor evolution</h2>
 <p>There has been a large engineering effort to reduce various sources of noise, including temporal and fixed pattern noise, as well as other limitations in the sensor design relating to color and dynamic range. The engineering effort was supported by the enormous demand for CMOS sensors. In 2020, approximately 6.5 billion sensors were shipped. In 2025, we expect about 13 billion sensors to be produced. That’s a lot of sensors and the demand motivates a lot of engineering. This section covers the evolution of the pixel and sensor design.</p>
 <p>The sensor architecture I have described is known as <strong>front-side illumination (FSI)</strong>. The architecture has the obvious challenge of placing multiple metal layers above the semiconductor substrate (<a href="#fig-pixel-layers" class="quarto-xref">Figure&nbsp;<span>15.3</span></a>). Even at the time of the original implementation, it was clear that requiring light to pass through the metal layers to reach the light-sensitive photodiode created many problems.</p>
 <p>Additionally, both the photodiodes and their associated circuitry share the same substrate. Requiring the circuitry and photodiode to share space reduced the sensitivity the sensor. Finally, the original pixels were fairly large, <span class="math inline">\(6 \mu \text{m}\)</span> or more. As technology scaled and pixels became smaller -many CMOS imagers have pixels as small as <span class="math inline">\(0.8 \mu \text{m}\)</span> a reduction in area of <span class="math inline">\(50x\)</span>- additional problems arose. Different opportunities arose as well.</p>
@@ -816,8 +820,8 @@ Pixel Evolution timeline
 </div>
 </div>
 </section>
-<section id="sec-sensor-bsi" class="level2" data-number="15.7">
-<h2 data-number="15.7" class="anchored" data-anchor-id="sec-sensor-bsi"><span class="header-section-number">15.7</span> Back-side illuminated (BSI)</h2>
+<section id="sec-sensor-bsi" class="level2" data-number="15.8">
+<h2 data-number="15.8" class="anchored" data-anchor-id="sec-sensor-bsi"><span class="header-section-number">15.8</span> Back-side illuminated (BSI)</h2>
 <p>After years of incremental improvements, engineers developed a new architecture to overcome the limitations of front-side illuminated (FSI) sensors. The resulting design, known as <strong>Back-Side illuminated (BSI)</strong> CMOS, rearranges the device layers to improve sensitivity. In BSI sensors, the photodiode and wiring layers are flipped; the light no longer needs to pass through the wires.</p>
 <div id="fig-sensor-bsi2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -858,8 +862,8 @@ Figure&nbsp;15.10: Sony 1.65 micron BSI sensor. Source: <a href="https://image-s
 </div>
 </div>
 </section>
-<section id="sec-sensor-deepdiode" class="level2" data-number="15.8">
-<h2 data-number="15.8" class="anchored" data-anchor-id="sec-sensor-deepdiode"><span class="header-section-number">15.8</span> Deep photodiodes</h2>
+<section id="sec-sensor-deepdiode" class="level2" data-number="15.9">
+<h2 data-number="15.9" class="anchored" data-anchor-id="sec-sensor-deepdiode"><span class="header-section-number">15.9</span> Deep photodiodes</h2>
 <p><a href="#fig-sensor-skhynix" class="quarto-xref">Figure&nbsp;<span>15.11</span></a> illustrates a further improvement in the BSI design. SK Hynix, Omnivision and other manufacturers recognized that simply flipping the sensor (BSI) improved light capture. But as pixel sizes continued to shrink there was relatively little ability to store electrons. Thus the well capacity was reduced and which limited the pixel’s dynamic range (<a href="sensors-03-parameters.html#sec-wellcapacity-dynamicrange" class="quarto-xref"><span>Section 16.3</span></a>). Moreover, the sensitivity to longer wavelengths, which penetrates deeper into silicon, became a challenge (<a href="sensors-04-components.html#sec-sensor-wavelength" class="quarto-xref"><span>Section 17.3</span></a>).</p>
 <p>To overcome these limitations, many vendors invented methods to build photodiodes that extend significantly deeper into the silicon (deep photodiode technology). Increasing the volume of the photodiode has two benefits. First, the photodiode can gather more charge before saturating. Second, the photodiode has higher long-wavelength sensitivity.</p>
 <div id="fig-sensor-skhynix" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -873,8 +877,8 @@ Figure&nbsp;15.11: Deep photodiodes in the BSI. (a) A super pixel of a front-sid
 </figure>
 </div>
 </section>
-<section id="sec-sensor-stacked" class="level2" data-number="15.9">
-<h2 data-number="15.9" class="anchored" data-anchor-id="sec-sensor-stacked"><span class="header-section-number">15.9</span> Stacked sensors</h2>
+<section id="sec-sensor-stacked" class="level2" data-number="15.10">
+<h2 data-number="15.10" class="anchored" data-anchor-id="sec-sensor-stacked"><span class="header-section-number">15.10</span> Stacked sensors</h2>
 <p>In the original planar technology, photodiodes are adjacent to the transistor circuits within the silicon substrate. Thus, photodiodes must compete for space with the transistors. Reducing the photodiode area means less light efficiency; reducing the transistor size means noisier performance. Youse pays yer money and yer makes yer choice.</p>
 <p>The <strong>stacked sensor</strong> architecture overcomes this limitation by physically separating the photodiode layer from the readout and processing circuitry. In a stacked sensor, the photodiodes occupy one silicon layer, while the supporting electronics are fabricated on a separate layer beneath. This structure maximizes the light-sensitive area (fill factor) for each pixel and enables the use of more advanced, lower-noise circuitry without sacrificing pixel size.</p>
 <div id="fig-sensor-stacked" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -923,8 +927,8 @@ Figure&nbsp;15.13: Scanning electron microscope (SEM) image of a cross section t
 </div>
 </div>
 </section>
-<section id="sec-digital-pixel" class="level2" data-number="15.10">
-<h2 data-number="15.10" class="anchored" data-anchor-id="sec-digital-pixel"><span class="header-section-number">15.10</span> Digital pixel sensor</h2>
+<section id="sec-digital-pixel" class="level2" data-number="15.11">
+<h2 data-number="15.11" class="anchored" data-anchor-id="sec-digital-pixel"><span class="header-section-number">15.11</span> Digital pixel sensor</h2>
 <p>The Digital Pixel Sensor (DPS) was a significant parallel development in image sensor technology. The initial ideas were presented in the mid 1990s, at roughly the same time as the APS 3T and 4T circuits were implemented. The APS circuitry included an analog-to-digital conversion (ADC) at the column or chip level. The DPS architecture extended the pixel circuit by including an ADC within the pixel circuit <span class="citation" data-cites="fowler1995-dps-patent">Fowler and El (<a href="references.html#ref-fowler1995-dps-patent" role="doc-biblioref">1995</a>)</span> <span class="citation" data-cites="Udoy2025-dps-review">Udoy et al. (<a href="references.html#ref-Udoy2025-dps-review" role="doc-biblioref">2025</a>)</span>.</p>
 <p>Digitizing the signal at the pixel had several advantages for high dynamic range imaging, global shuttering and readout speed (<span class="citation" data-cites="elgamal2005-cmos-imagesensors">El Gamal and Eltoukhy (<a href="references.html#ref-elgamal2005-cmos-imagesensors" role="doc-biblioref">2005</a>)</span>, <span class="citation" data-cites="kleinfelder2001-10000fps">Kleinfelder et al. (<a href="references.html#ref-kleinfelder2001-10000fps" role="doc-biblioref">2001</a>)</span>, <span class="citation" data-cites="Wandell2002-CommonPrinciples">Wandell et al. (<a href="references.html#ref-Wandell2002-CommonPrinciples" role="doc-biblioref">2002</a>)</span>). An important feature of the original digital pixel sensors was that the pixel voltage was read non-destructively and repeatedly, say at 1 ms, 2 ms, 4 ms, and so forth. As the photon generated electrons increased in the well, the voltage was sampled. The voltage for each pixel was reported when the pixel had passed one half well capacity, assuring it was much larger than the noise. It would be reported at a time before the well capacity was reached, so that it was below saturation. The information from each pixel was the a voltage and the time at which it reached that voltage. Thus, each pixel had its own exposure duration -or put another way, the sensor had a space-varying exposure duration. Pixels in dark regions of the scene had longer exposure times than pixels in the bright regions. We explain the value of this approach for high dynamic range imaging in <a href="sensors-05-control.html#sec-exposure-control" class="quarto-xref"><span>Section 18.3</span></a>.</p>
 <p>The DPS concept was introduced at an early point in the development of CMOS imagers, and thus it faced significant hurdles in miniaturization. The idea of an ADC on the sensor foreshadowed an opportunity that has arisen as pixel architecture evolves. The stacked pixel structure offers a remedy by allowing the ADC and memory circuits to be placed in a separate layer underneath the photodiode. This enables higher pixel density and broader application of in-pixel conversion. The next generation of image sensors will implement the DPS concept (<span class="citation" data-cites="fossum2024-arvs">Fossum et al. (<a href="references.html#ref-fossum2024-arvs" role="doc-biblioref">2024</a>)</span>).</p>

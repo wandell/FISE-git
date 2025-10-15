@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-10-09">
+<meta name="dcterms.date" content="2025-10-15">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>14&nbsp; Photons and Electrons – Foundations of Image Systems Engineering</title>
@@ -492,7 +492,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 9, 2025</p>
+      <p class="date">October 15, 2025</p>
     </div>
   </div>
   
@@ -519,7 +519,7 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: October 9, 2025</p>
+<p>Last updated: October 15, 2025</p>
 </div>
 </div>
 </div>
@@ -541,25 +541,82 @@ Figure&nbsp;14.1: CMOS image sensors (CIS) incorporate integrated circuitry and 
 </section>
 <section id="photoelectric-effect" class="level2" data-number="14.2">
 <h2 data-number="14.2" class="anchored" data-anchor-id="photoelectric-effect"><span class="header-section-number">14.2</span> Photoelectric effect</h2>
-<p>The physical principle underlying the photodiode operation —converting light into electrons— is called the <strong>photoelectric effect</strong>. Understanding how materials convert light into electrical signals is a fascinating chapter in the history of physics and engineering, shaped by groundbreaking experiments and theories that changed our thinking about the world.</p>
-<p>Heinrich Hertz was the first to report an unexpected phenomenon related to electromagnetic waves that would later be known as the photoelectric effect <span class="citation" data-cites="Hertz1887-photoelectric2 Hertz1887-photoelectric1">(<a href="references.html#ref-Hertz1887-photoelectric2" role="doc-biblioref">Hertz 1887a</a>, <a href="references.html#ref-Hertz1887-photoelectric1" role="doc-biblioref">b</a>)</span>. His primary goal was to measure the electromagnetic waves predicted by Maxwell’s theory. For this, he used a two-part apparatus:</p>
+<p>The physical principle underlying photodiode operation—converting light into electrons—is called the <strong>photoelectric effect</strong>. Understanding how materials convert light into electrical signals is a foundational chapter in physics and engineering, shaped by experiments and theories that changed how we think about light and matter. In metals and vacuum tubes, the effect refers to electrons being emitted from a surface into vacuum. In semiconductors (as in photodiodes), absorbed photons create mobile charge carriers (electron–hole pairs) that are collected by circuitry.</p>
+<p>Heinrich Hertz was the first to report an unexpected phenomenon related to electromagnetic waves that would later be recognized as the photoelectric effect <span class="citation" data-cites="Hertz1887-photoelectric2 Hertz1887-photoelectric1">(<a href="references.html#ref-Hertz1887-photoelectric2" role="doc-biblioref">Hertz 1887a</a>, <a href="references.html#ref-Hertz1887-photoelectric1" role="doc-biblioref">b</a>)</span>. His primary goal was to measure the electromagnetic waves predicted by Maxwell’s theory. For this, he used a two-part apparatus:</p>
 <ol type="1">
 <li><p><strong>The Transmitter:</strong> This consisted of a large induction coil connected to a spark gap (often with attached metal plates acting as a dipole antenna). The induction coil produced high-voltage pulses, causing powerful, oscillating sparks to jump across this gap. These sparks were the source of the electromagnetic radiation (radio waves) that Hertz aimed to study.</p></li>
 <li><p><strong>The Receiver:</strong> This was a separate, much smaller loop of wire, also containing a small spark gap. The receiver was placed at a distance from the transmitter. When the electromagnetic waves from the transmitter propagated to the receiver, they induced an oscillating current in the receiver loop. If the induced current was strong enough, a tiny spark would jump across the receiver’s gap, signaling the detection of the electromagnetic waves.</p></li>
 </ol>
-<p>During these experiments Hertz made a crucial incidental observation: a spark in the <em>receiver</em> gap was significantly enhanced – jumping a longer distance – when the receiver gap was illuminated by the ultraviolet (UV) light emanating from the <em>transmitter’s</em> spark. Conversely, placing a glass plate (which blocks UV) between the transmitter and receiver diminished the receiver spark. A quartz plate (which transmits UV) did not impact the spark.</p>
-<p>Hertz correctly concluded that UV light was somehow facilitating the spark in the receiver gap. This observation was the first report of the photoelectric effect – the phenomenon where electromagnetic radiation, specifically UV light in this case, causes the emission of charged particles (later identified as electrons) from a material surface, thereby influencing electrical signals. <!--
+<p>During these experiments Hertz made a crucial incidental observation: a spark in the receiver gap was significantly enhanced—jumping a longer distance—when the gap was illuminated by ultraviolet (UV) light from the transmitter’s spark. Placing a glass plate (which blocks UV) between the transmitter and receiver diminished the receiver spark; a quartz plate (which transmits UV) did not. Hertz concluded that UV light was facilitating the spark in the receiver gap. This was the first report of what we now call the photoelectric effect: light causing emission of charged particles (later identified as electrons) from a material surface, thereby influencing electrical signals.</p>
+<p>Hertz correctly concluded that UV light was somehow facilitating the spark in the receiver gap. This observation was the first report of the photoelectric effect – the phenomenon where electromagnetic radiation, specifically UV light in this case, causes the emission of charged particles (later identified as electrons) from a material surface, thereby influencing electrical signals. The central challenge of the photoelectric effect is to model how electromagnetic radiation—light—interacts with a material to generate an electrical signal.</p>
+<!--
 He also noticed that glass, which blocks UV light, eliminated the effect. Quartz (which transmits UV light) did not.
-
 https://g.co/gemini/share/4d34e0260c7f
-
---></p>
-<p>The central challenge of the photoelectric effect is to model how electromagnetic radiation—light—interacts with a material to generate an electrical signal.</p>
+-->
 </section>
 <section id="sec-photon-discovered" class="level2" data-number="14.3">
 <h2 data-number="14.3" class="anchored" data-anchor-id="sec-photon-discovered"><span class="header-section-number">14.3</span> Discovery of the photon</h2>
-<p>It was not until 1897 that JJ Thomson conclusively demonstrated that electrons are discrete, countable particles. Thomson’s experiments revealed that cathode rays are composed of negatively charged particles with a specific mass and charge, much smaller than that of an atom.</p>
+<p>In 1897, J. J. Thomson conclusively demonstrated that cathode rays are streams of negatively charged particles—electrons—with a specific mass and charge, much smaller than an atom.</p>
 <p>In 1902, armed with knowledge of electrons, Philipp Lenard carried out a series of important experiments. He observed that increasing the intensity of the incident light increased the number of emitted electrons but <strong>did not</strong> increase their kinetic energy. Instead, the energy of the emitted electrons depended on the <strong>wavelength</strong> of the light: shorter wavelengths (higher frequencies) produced more energetic electrons. Lenard also identified a <strong>threshold wavelength</strong>—if the light’s wavelength was too long (i.e., its frequency too low), no electrons were emitted, regardless of how intense the light was. These results posed a serious challenge to classical wave theory, which predicted that energy should increase smoothly with intensity, not depend on frequency.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Lenard's measurements (long)">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Lenard’s measurements (long)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<!--
+https://chatgpt.com/c/WEB:606fcc5d-ec9a-46c9-a81a-86f918357a28
+https://en.wikipedia.org/wiki/Philipp_Lenard
+Lenard-rig svg:  By VectorVoyager - Own work, based on, CC0, https://commons.wikimedia.org/w/index.php?curid=124119939
+
+Lenard, P. (1902). Über die lichtelektrische Wirkung. Annalen der Physik, 8, 149–198.
+(“On the Photoelectric Effect.”)
+-->
+<p><strong>The Experimental Setup</strong></p>
+<div id="fig-lenard-rig" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lenard-rig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/sensors/13-photons/Lenard-Rig.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lenard-rig-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14.2: Lenard’s experimental apparatus (conceptual). Image by ChatGPT.
+</figcaption>
+</figure>
+</div>
+<p>Philipp Lenard refined the early photoelectric experiments of Hertz by introducing a carefully controlled photoelectric tube. The apparatus consisted of two metal electrodes—a <strong>cathode</strong> and an <strong>anode</strong>—sealed within a glass envelope that provided a near-vacuum. The key components were:</p>
+<ul>
+<li><strong>Cathode:</strong> a clean metal plate (often zinc or platinum) serving as the illuminated surface.</li>
+<li><strong>Quartz window:</strong> allowed ultraviolet light to enter the tube without absorption.</li>
+<li><strong>Anode:</strong> a collecting electrode positioned to receive emitted electrons.</li>
+<li><strong>Adjustable voltage:</strong> an adjustable potential difference between the cathode and anode.</li>
+<li><strong>Electrometer:</strong> a sensitive measuring device to record the resulting current (not shown).</li>
+</ul>
+<p>When he illuminated the metal cathode, electrons were produced (the photoelectric effect) and ejected into the vacuum. They were collected by the anode. The rig could both apply a voltage between the anode and cathode as well as measure the current. In the experiments he measured how the current changed as light was presented and the potential difference was varied. He found that the photoelectric current reached a <strong>saturation level</strong> when all emitted electrons were collected, and it dropped to zero when the applied voltage was sufficiently negative to repel even the most energetic electrons.</p>
+<p><strong>How the Electron Energy Was Deduced</strong></p>
+<p>The crucial measurement in Lenard’s experiment was the <strong>stopping potential</strong>, <span class="math inline">\(V_s\)</span>, the retarding voltage required to reduce the photoelectric current to zero. This provided a direct measure of the maximum kinetic energy of the emitted electrons:</p>
+<p><span class="math display">\[
+e V_s = \tfrac{1}{2} m v_{\text{max}}^2
+\]</span></p>
+<p>where <span class="math inline">\(e\)</span> is the electron charge and <span class="math inline">\(v_{\text{max}}\)</span> is the velocity of the fastest emitted electrons.</p>
+<p>By systematically changing the <strong>light intensity</strong> and <strong>wavelength</strong>, Lenard discovered two key laws:</p>
+<ol type="1">
+<li><strong>Increasing intensity</strong> (at fixed wavelength) increased the number of emitted electrons, and thus the measured current, but <strong>did not change</strong> the stopping potential (<span class="math inline">\(V_s\)</span>).</li>
+<li><strong>Increasing frequency</strong> (decreasing wavelength) increased the stopping potential—hence, the <strong>energy</strong> of the electrons.</li>
+</ol>
+<p>These findings showed that the energy of photoelectrons depends on the <strong>frequency</strong> of the incident light, not its intensity—a result that could not be explained by classical wave theory.</p>
+<p>Einstein’s photoelectric equation (1905) explains Lenard’s observations: <span class="math display">\[
+e V_s = h \nu - \phi,
+\]</span></p>
+<p>where <span class="math inline">\(h\)</span> is Planck’s constant, <span class="math inline">\(\nu\)</span> is the light frequency, and <span class="math inline">\(\phi\)</span> is the minimum energy required to emit the electron from a material into a vacuum. It is a surface-dependent material property (typically 2–5 eV for metals). In semiconductors used for photodiodes,this threshold is set by the bandgap, which for silicon is 1.12 eV.</p>
+</div>
+</div>
+</div>
 <p>At the same time, physicists were trying to explain the spectrum of light emitted by a blackbody—a perfect absorber and emitter of radiation. In 1900, <strong>Max Planck</strong> tackled this problem. He found a formula that matched the observed spectrum, but only if he assumed that energy exchange (joules) between matter and radiation occurred in discrete amounts.</p>
 <p><span class="math display">\[
 E = n h \nu
@@ -575,13 +632,14 @@ E = \frac{h c}{\lambda}
 <li><span class="math inline">\(c\)</span> = speed of light in vacuum (<span class="math inline">\(3.00 \times 10^8\)</span> m/s)</li>
 <li><span class="math inline">\(\lambda\)</span> = wavelength (in meters)</li>
 </ul>
-<p>This hypothesis went beyond Max Planck’s work, which assumed the quantization was part of the exchange between matter and radiation — not that light itself came in packets. Einstein suggested that <strong>light in free space</strong> behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained both Planck’s observations and all of Lenard’s experiments. His photoelectric theory laid the groundwork for the next generation’s work in quantum physics.</p>
+<p>This hypothesis went beyond Max Planck’s work, which assumed the quantization was part of the mechanism when radiation interacted with matter. Einstein suggested that <strong>light in free space</strong> behaves as localized energy quanta, capable of transferring energy to electrons one photon at a time. His theory explained both Planck’s observations and all of Lenard’s experiments. His theory, however, left unexplained the many verifiable findings from Huygens, Fresnel, Maxwell and others concerning the wave nature of electromagnetic radiation. Even so, the photoelectric theory laid the groundwork for the next generation’s work in quantum physics that was needed to resolve these differences.</p>
 </section>
 <section id="wave-particle-duality" class="level2" data-number="14.4">
 <h2 data-number="14.4" class="anchored" data-anchor-id="wave-particle-duality"><span class="header-section-number">14.4</span> Wave-particle duality</h2>
 <p>For much of the 19th century, Newton’s idea that light was made of tiny particles (corpuscles) was set aside, as experiments overwhelmingly supported the wave theory of light—interference and diffraction patterns provided strong evidence for wave-like behavior. However, the photoelectric effect presented results that could not be explained by wave theory alone, forcing physicists to recognize that light sometimes behaves as a particle as well. This is the essence of the <strong>wave-particle duality</strong>.</p>
 <p>Einstein did not ignore the wave phenomena. For much of his career, he worked towards a new set of principles that might be called a “statistical wave-particle” model, in which photons retain a wave-like “guiding field” or statistical distribution that determines their path. He imaginged that individual photons are particles, but their collective behavior is governed by an emergent, wave-like probability distributions that creates the familiar diffraction patterns.</p>
-<!-- Einstein and diffraction
+<!-- 
+Einstein and diffraction
 https://g.co/gemini/share/48fba5e2af5a
 -->
 <p>A different, revolutionary theory sprung forth from the next generation, including Neils Bohr. This theory, <strong>quantum mechanics</strong> describes electromagnetic radiation by a mathematical object called the <strong>wavefunction</strong>, which provides the probabilities of different outcomes. When experiments are designed to reveal wave-like effects (such as interference), light behaves as a wave. When experiments probe particle-like effects (such as the photoelectric effect), light behaves as a particle.</p>
@@ -591,14 +649,14 @@ https://g.co/gemini/share/48fba5e2af5a
 <img src="images/people/bohr-einstein.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bohr-einstein-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.2: Niels Bohr was an important figure in developing and advocating for the statistical wave-particle model in quantum mechanics. As a central architect of quantum theory, and advocate for the probabilistic interpretation of quantum mechanics, he viewed the statistical nature of quantum events as a fundamental aspect of reality. Bohr’s debates with Einstein helped clarify and popularize these concepts.
+Figure&nbsp;14.3: Niels Bohr was an important figure in developing and advocating for the statistical wave-particle model in quantum mechanics. As a central architect of quantum theory, and advocate for the probabilistic interpretation of quantum mechanics, he viewed the statistical nature of quantum events as a fundamental aspect of reality. Bohr’s debates with Einstein helped clarify and popularize these concepts.
 </figcaption>
 </figure>
 </div>
 <p>The young theorists argued that both descriptions are necessary, and neither alone is sufficient to fully describe the nature of light. Einstein was reluctant to accept this framing calling it implausible; Bohr argued that Einstein was clinging to classical intuitions about reality that quantum mechanics had shown to be inadequate. From Bohr’s perspective, the probabilistic nature of quantum mechanics wasn’t a sign of incomplete knowledge - it was a fundamental feature of nature at the microscopic scale. Bohr believed that concepts like “determinism” and “objective reality independent of observation” were classical prejudices that had to be abandoned. He argued that quantum mechanics was complete precisely because it recognized the fundamental role of measurement and the impossibility of simultaneously knowing all properties of a quantum system.</p>
 <p>This duality remains a central and intriguing feature of quantum physics. If you don’t find all of this a bit puzzling, you may not be paying enough attention: <a href="https://www.nature.com/articles/d41586-025-02342-y?utm_source=Live+Audience&amp;utm_campaign=a8d315930b-nature-briefing-daily-20250730&amp;utm_medium=email&amp;utm_term=0_-33f35e09ea-49658492" target="_blank">Physicists disagree wildly on what quantum mechanics says about reality</a>.</p>
 <div id="einstein-lenard-bohr" class="callout callout-style-default callout-note callout-titled" title="Einstein, Bohr, and Lenard">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -607,7 +665,7 @@ Einstein, Bohr, and Lenard
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>Einstein’s proposal of the photon was initially met with skepticism, as the wave theory of light was deeply established in physics. Even Einstein himself was uneasy with the resulting <strong>wave-particle duality</strong> and especially with the probabilistic foundations of quantum mechanics; he believed it pointed to an incomplete understanding of nature. He famously rejected this probabilistic view, remarking that “God does not play dice.” Niels Bohr responded, “Einstein, don’t tell God what to do.” The tension between wave and particle descriptions remains a central—and still <a href="https://www.instagram.com/reel/DMqt68pTSZg/?igsh=NTc4MTIwNjQ2YQ==" target="_blank">unresolved—theme in physics</a>.</p>
 <p>In 1905—Einstein’s <em>annus mirabilis</em>—he published four groundbreaking papers that reshaped modern physics. In addition to the photoelectric effect, for which he was awarded the Nobel Prize, he introduced Special Relativity, showing that <strong>simultaneity is relative</strong> depending on the observer’s frame of reference. The excellent biography of Einstein by Walter Isaacson <span class="citation" data-cites="Isaacson2008-einstein">(<a href="references.html#ref-Isaacson2008-einstein" role="doc-biblioref">2008</a>)</span> provides an accessible account of these discoveries and the broader scientific context.</p>
@@ -643,7 +701,7 @@ Bohndiek2008-sensorlinearity paper has figures.  Notice how nonlinear Figures 7 
 <p>The principles underlying the Poisson distribution of electrons are straightforward. Suppose we have a <strong>steady source</strong> of photons, all with the same wavelength. The probability of a photon arriving in any given small time interval, <span class="math inline">\(\delta t\)</span>, is constant. This is the defining property of a Poisson process: events occur independently, with a constant average rate.</p>
 <p>If the probability that a photon generates an electron is also constant (equal to the quantum efficiency, QE), then each photon arrival is an independent chance to generate an electron. The resulting number of electrons generated in a given interval is also Poisson distributed, with a mean scaled by the quantum efficiency. This statistical fluctuation in the number of electrons is known as the <strong>shot noise</strong> of the sensor.</p>
 <div id="photoelectric-poisson" class="callout callout-style-default callout-note callout-titled" title="Siméon Denis Poisson">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -652,7 +710,7 @@ Siméon Denis Poisson
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>I referred to Poisson earlier - he was the French academician who tried to disprove Fresnel’s wave theory calculations. He predicted <a href="https://en.wikipedia.org/wiki/Arago_spot">a bright point that appears at the center of a circular object’s shadow</a> based on Fresnel’s theory—thinking it impossible. But experiments showed that the spot was present!</p>
 <div id="fig-image-poisson" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -661,7 +719,7 @@ Siméon Denis Poisson
 <img src="images/people/poisson.png" class="img-fluid figure-img" style="width:40.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-image-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.3: Siméon Denis Poisson.
+Figure&nbsp;14.4: Siméon Denis Poisson.
 </figcaption>
 </figure>
 </div>
@@ -673,20 +731,20 @@ Figure&nbsp;14.3: Siméon Denis Poisson.
 <p>The Poisson formula describes the probability of observing <span class="math inline">\(n\)</span> electron events, given a mean <span class="math inline">\(\lambda\)</span>: <span class="math display">\[
 P(n; \lambda) = \frac{\lambda^n e^{-\lambda}}{n!}
 \]</span></p>
-<p>Here, <span class="math inline">\(\lambda\)</span> is both the expected (mean) number of events and the variance of the distribution. For large <span class="math inline">\(\lambda\)</span> (greater than about 15 or 20), the Poisson distribution closely resembles the Normal (Gaussian) distribution (<a href="#fig-sensor-poisson" class="quarto-xref">Figure&nbsp;<span>14.4</span></a>). The main differences are that the Poisson distribution only takes integer values and is skewed for small <span class="math inline">\(\lambda\)</span>. As <span class="math inline">\(\lambda\)</span> increases, the distribution becomes more symmetric and approaches the Normal distribution.</p>
+<p>Here, <span class="math inline">\(\lambda\)</span> is both the expected (mean) number of events and the variance of the distribution. For large <span class="math inline">\(\lambda\)</span> (greater than about 15 or 20), the Poisson distribution closely resembles the Normal (Gaussian) distribution (<a href="#fig-sensor-poisson" class="quarto-xref">Figure&nbsp;<span>14.5</span></a>). The main differences are that the Poisson distribution only takes integer values and is skewed for small <span class="math inline">\(\lambda\)</span>. As <span class="math inline">\(\lambda\)</span> increases, the distribution becomes more symmetric and approaches the Normal distribution.</p>
 <div id="fig-sensor-poisson" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sensor-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/sensors/13-photons/03-Poisson.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensor-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.4: Poisson distribution examples. The Poisson formula (red lines) and simulations of Poisson counts (bars) are shown for three mean levels.
+Figure&nbsp;14.5: Poisson distribution examples. The Poisson formula (red lines) and simulations of Poisson counts (bars) are shown for three mean levels.
 </figcaption>
 </figure>
 </div>
 <p>A key fact we will use later: for a Poisson distribution, the mean and variance are equal. This property distinguishes Poisson noise from other types of noise.</p>
 <div id="shotnoise-poisson" class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -695,7 +753,7 @@ ISETCam: shot noise
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>You can see a step-by-step statistical explanation of photon arrivals followed by electron generation in the <a href="../code/03Sensor/fise_photonsElectrons.html" target="_blank">ISETCam script</a>. The script demonstrates why, in conventional CMOS image sensors, both the incident photons and the resulting electrons follow Poisson statistics.</p>
 <p>This relationship -Poisson distribution followed by another Poisson distribution- does not apply to other sensor types. When a photon absorption generates multiple electrons (photomultipliers and SPADs), the statistical distribution of the output requires some more thought (<a href="sensors-07-innovations.html#sec-sensor-spad" class="quarto-xref"><span>Section 20.10</span></a>).</p>

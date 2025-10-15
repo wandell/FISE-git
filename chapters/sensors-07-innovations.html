@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-09-21">
+<meta name="dcterms.date" content="2025-10-14">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>20&nbsp; Sensor innovations – Foundations of Image Systems Engineering</title>
@@ -455,7 +455,11 @@ window.Quarto = {
   <li><a href="#sec-sensor-foveon" id="toc-sec-sensor-foveon" class="nav-link" data-scroll-target="#sec-sensor-foveon"><span class="header-section-number">20.5</span> Foveon and Stacked Color Sensors</a></li>
   <li><a href="#sec-sensor-spectral" id="toc-sec-sensor-spectral" class="nav-link" data-scroll-target="#sec-sensor-spectral"><span class="header-section-number">20.6</span> Spectral Imaging Sensors</a></li>
   <li><a href="#sec-sensor-event" id="toc-sec-sensor-event" class="nav-link" data-scroll-target="#sec-sensor-event"><span class="header-section-number">20.7</span> Event sensors</a></li>
-  <li><a href="#sec-sensor-ccd" id="toc-sec-sensor-ccd" class="nav-link" data-scroll-target="#sec-sensor-ccd"><span class="header-section-number">20.8</span> CCD</a></li>
+  <li><a href="#sec-sensor-ccd" id="toc-sec-sensor-ccd" class="nav-link" data-scroll-target="#sec-sensor-ccd"><span class="header-section-number">20.8</span> CCD</a>
+  <ul class="collapse">
+  <li><a href="#the-calibration-challenge-fixed-pattern-noise-fpn" id="toc-the-calibration-challenge-fixed-pattern-noise-fpn" class="nav-link" data-scroll-target="#the-calibration-challenge-fixed-pattern-noise-fpn"><span class="header-section-number">20.8.1</span> 1. The Calibration Challenge: Fixed Pattern Noise (FPN)</a></li>
+  <li><a href="#the-ccd-advantage-fewer-higher-precision-channels" id="toc-the-ccd-advantage-fewer-higher-precision-channels" class="nav-link" data-scroll-target="#the-ccd-advantage-fewer-higher-precision-channels"><span class="header-section-number">20.8.2</span> 2. The CCD Advantage: Fewer, Higher-Precision Channels</a></li>
+  </ul></li>
   <li><a href="#sec-sensor-tof" id="toc-sec-sensor-tof" class="nav-link" data-scroll-target="#sec-sensor-tof"><span class="header-section-number">20.9</span> TOF</a></li>
   <li><a href="#sec-sensor-spad" id="toc-sec-sensor-spad" class="nav-link" data-scroll-target="#sec-sensor-spad"><span class="header-section-number">20.10</span> SPAD</a></li>
   </ul>
@@ -477,7 +481,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 21, 2025</p>
+      <p class="date">October 14, 2025</p>
     </div>
   </div>
   
@@ -504,7 +508,7 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: September 21, 2025</p>
+<p>Last updated: October 14, 2025</p>
 </div>
 </div>
 </div>
@@ -543,6 +547,66 @@ Work in Progress
 <section id="sec-sensor-ccd" class="level2" data-number="20.8">
 <h2 data-number="20.8" class="anchored" data-anchor-id="sec-sensor-ccd"><span class="header-section-number">20.8</span> CCD</h2>
 <p><strong>Charge coupled device</strong></p>
+<p>Tell the Vera Rubin choice of CCD.</p>
+<p>Yes, your belief regarding the rationale is well-supported by the history and technical documentation of the Vera C. Rubin Observatory’s Legacy Survey of Space and Time (LSST) Camera (LSSTCam).</p>
+<p>The choice of <strong>CCD</strong> (Charge-Coupled Device) over <strong>CMOS</strong> (Complementary Metal-Oxide-Semiconductor) imagers was largely driven by the absolute necessity for <strong>high photometric precision and exquisite linearity</strong> across the camera’s massive 3.2-gigapixel focal plane.</p>
+<p>Here is the rationale described in technical documents from the time of the camera’s design:</p>
+<section id="the-calibration-challenge-fixed-pattern-noise-fpn" class="level3" data-number="20.8.1">
+<h3 data-number="20.8.1" class="anchored" data-anchor-id="the-calibration-challenge-fixed-pattern-noise-fpn"><span class="header-section-number">20.8.1</span> 1. The Calibration Challenge: Fixed Pattern Noise (FPN)</h3>
+<p>The core issue was exactly what you described: the sheer number of independent signal chains in a CMOS array makes calibration exponentially more difficult compared to a CCD.</p>
+<ul>
+<li><strong>CMOS Architecture:</strong> Each pixel (or small group of pixels/columns) on a CMOS sensor typically has its own internal amplifier and often its own <strong>Analog-to-Digital Converter (ADC)</strong>. For a <span class="math inline">\(4\text{K} \times 4\text{K}\)</span> sensor, this results in potentially millions of individual readout circuits.</li>
+<li><strong>The Calibration Problem:</strong> Variations in the manufacturing process mean that the gain, offset (bias), and noise characteristics of these millions of on-chip amplifiers and ADCs are not perfectly uniform. This non-uniformity manifests as <strong>Fixed Pattern Noise (FPN)</strong> in the image. To achieve the LSST’s demanding photometric accuracy (required to measure dark energy and dark matter effects), every one of these independent signal chains would need to be precisely mapped, calibrated, and monitored for drift over the 10-year survey. At the time of the LSSTCam’s design (before the widespread availability of modern scientific CMOS sensors), the calibration stability and uniformity were considered an unacceptable risk for the scale of the project.</li>
+</ul>
+<hr>
+</section>
+<section id="the-ccd-advantage-fewer-higher-precision-channels" class="level3" data-number="20.8.2">
+<h3 data-number="20.8.2" class="anchored" data-anchor-id="the-ccd-advantage-fewer-higher-precision-channels"><span class="header-section-number">20.8.2</span> 2. The CCD Advantage: Fewer, Higher-Precision Channels</h3>
+<p>Describe CCD technology issues. Then use this background information for a modern usage. They have lots of power/volts. They are fanatical about calibration.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Vera Rubin Telescope (LSSTCam)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Vera Rubin Telescope (LSSTCam)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The chosen <strong>CCD</strong> solution, while still massive, dramatically reduced the number of high-precision electronic chains that needed calibration.</p>
+<ul>
+<li><p><strong>CCD Architecture:</strong> The LSSTCam focal plane uses 189 large CCDs. While each CCD is segmented for fast readout, the signal from thousands of pixels is serialized and routed to a dedicated output amplifier and off-chip ADC.</p></li>
+<li><p><strong>The Calibration Solution:</strong> Each of the 189 CCDs is divided into segments, resulting in a total of <strong>3,024 readout channels</strong> (video channels) for the entire camera. Instead of millions of independent ADCs, the system has <strong>3,024 high-precision (18-bit) external ADCs</strong> and associated electronics. Calibrating the gain and offset of <strong>3,024</strong> highly stable, purpose-built channels is far more manageable and reliable than calibrating millions of on-chip circuits in a CMOS array.</p></li>
+</ul>
+<p>In short, the CCD provided the <strong>high linearity, low noise, and stable readout uniformity</strong> that the LSST’s deep-sky science requires, especially at the scale needed for the world’s largest digital camera.</p>
+</div>
+</div>
+<!--
+The Stanford faculty member at SLAC who held a primary leadership role for the construction of SLAC's main contribution to the Vera C. Rubin Observatory is **Dr. Aaron Roodman**.
+
+SLAC National Accelerator Laboratory's main responsibility in the Rubin Observatory project was the design, construction, and delivery of the **LSST Camera (LSSTCam)**—the world's largest digital camera, which is the core instrument of the telescope.
+
+Dr. Roodman's key roles at SLAC related to the construction include:
+
+| Role | Responsibility |
+| :--- | :--- |
+| **LSST Camera Program Lead** | The top leadership position at SLAC responsible for the development, construction, and performance of the camera. |
+| **Deputy Director of Rubin Construction for SLAC** | A high-level management role ensuring SLAC's component (the camera) was successfully built and integrated into the overall observatory construction project. |
+| **SLAC Professor** | He is a Professor and Chair of the Particle Physics & Astrophysics department at SLAC. |
+
+### Historical Context
+
+It is also important to note the historical faculty leadership:
+
+* **Dr. Steve Kahn**, a KIPAC Professor at Stanford/SLAC, was the **Director of the Vera C. Rubin Observatory construction project** (LSST Project Director) for the decade spanning 2013 to 2021. He was fundamental to getting the project funded, organized, and underway.
+
+Aaron Roodman succeeded Dr. Kahn in the primary project leadership role at SLAC/DOE as the Camera Program Lead and Deputy Director of Construction.
+-->
+<p>https://diffractionlimited.com/calibrating-cmos-images/#:~:text=CMOS%20APS%20sensors%20are%20quite,switch%20photoelectrons%20onto%20internal%20wires.</p>
+<p>https://rubinobservatory.org/gallery/collections/main-gallery/07gi6gchk16918o21l49n0mu3f</p>
+<p>https://www6.slac.stanford.edu/lsst#:~:text=The%20U.S.%20Department%20of%20Energy’s,Survey%20Telescope%20at%20the%20observatory.</p>
+<p>https://www.energy.gov/science/articles/nsf-doe-vera-c-rubin-observatory-installs-lsst-camera-telescope#:~:text=%E2%80%9CThis%20is%20a%20pivotal%20moment,National%20Accelerator%20Laboratory%20(SLAC).</p>
+</section>
 </section>
 <section id="sec-sensor-tof" class="level2" data-number="20.9">
 <h2 data-number="20.9" class="anchored" data-anchor-id="sec-sensor-tof"><span class="header-section-number">20.9</span> TOF</h2>
