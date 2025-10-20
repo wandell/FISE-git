@@ -3,22 +3,24 @@ date: last-modified
 ---
 
 # Human visual encoding {#sec-human-encoding}
+
 {{< include "includes/WIP-callout.qmd" >}}
 
+```{=html}
 <!--
 # The chapters with David have a lot of the material for this chapter.
 -->
+```
 
 ## Human visual encoding overview {#sec-human-encoding-overview}
 
+Some image systems are designed mainly to acquire information about the light field (cameras) in order to make inferences about the scene. Others are designed to capture and store information so that one might later reproduce key properties of the incident light field. The reproduction of the light field is typically intended to be viewed by a human. For this reason, the design of image reproduction systems is strongly influenced by the properties of the human vision.
 
-Some image systems are designed mainly to acquire information about the light field (cameras) in order to make inferences about the scene. Others are designed to capture and store information so that one might later reproduce key properties of the incident light field. The reproduction of the light field is typically intended to be viewed by a human.  For this reason, the design of image reproduction systems is strongly influenced by the properties of the human vision. 
+We know a great deal about two aspects of the peripheral human visual system. We have many measurements of how the physiological optics of the eye transforms the incident light field into the retinal irradiance, and how this irradiance is encoded by the photoreceptors. This knowledge, derived over two centuries of vision science, can be used in many practical ways to define many features of human vision, and most clear this knowledge defines the limits of human spatial resolution and color.
 
-We know a great deal about two aspects of the peripheral human visual system. We have many measurements of how the physiological optics of the eye transforms the incident light field into the retinal irradiance, and how this irradiance is encoded by the photoreceptors.  This knowledge, derived over two centuries of vision science, can be used in many practical ways to define many features of human vision, and most clear this knowledge defines the limits of human spatial resolution and color. 
+There are certain obvious features of the human visual system that impact the design of image systems for reproduction. The clearest case for a match between the system and the human eye is the case of color reproduction. An image system intended for reproduction and later viewing should capture the same portion of the electromagnetic spectrum that we see. Missing the part of the spectrum we see would worsen the ability to create a good color reproduction; capturing parts of the spectrum we do not see would either be wasteful or potentially interfere with creating a high quality color reproduction.
 
-There are certain obvious features of the human visual system that impact the design of image systems for reproduction. The clearest case for a match between the system and the human eye is the case of color reproduction.  An image system intended for reproduction and later viewing should capture the same portion of the electromagnetic spectrum that we see. Missing the part of the spectrum we see would worsen the ability to create a good color reproduction; capturing parts of the spectrum we do not see would either be wasteful or potentially interfere with creating a high quality color reproduction.
-
-The case for spatial resolution is different. It would surely be a disappointment if the image system failed to capture the scene at least as precisely as the spatial resolution of human eye.  We see the scene, and we hope the camera to do at least as well. But people are generally pleased if the camera captures the scene at a finer resolution than they could see at the time.  It is always possible to reduce the spatial resolution by blurring and downsampling.  The increased spatial resolution will not interfere with the image rendering; it will just take more resources.
+The case for spatial resolution is different. It would surely be a disappointment if the image system failed to capture the scene at least as precisely as the spatial resolution of human eye. We see the scene, and we hope the camera to do at least as well. But people are generally pleased if the camera captures the scene at a finer resolution than they could see at the time. It is always possible to reduce the spatial resolution by blurring and downsampling. The increased spatial resolution will not interfere with the image rendering; it will just take more resources.
 
 In this section, we review the anatomical and functional properties of the eye that limit how it encodes the lightfield. The properties of the eye do not account for what we see, but they do impose critical limits on what we cannot see. The way we encode wavelength and sample space within the eye represents an inescapable bottleneck on visual resolution and sensitivity. This makes measurements of the visual encoding an important part of the image systems engineering. In the next chapter, @sec-human-metrics-overviewl, I introduce various image quality metrics that are informed by these measurements. A more extensive description of the human visual encoding, including its biological substrate, is in @wandellFoundationsVision1995.
 
@@ -28,11 +30,14 @@ The eye includes two distinct functional systems [@fig-retina-color]. The physio
 
 The cornea and flexible lens, together, control the transformation of the incident light field to the optical light field. Even for a fixed head and eye position, the physiological optics are dynamic: the size of the entrance pupil can change and the shape of the lens, and thus its optical power, can vary. The pupil size is not controlled willfully; it changes depending on the ambient light conditions and as well as some non-visual events in the brain. Just as the direction of gaze depends on the viewer's intention, so too does the shape of the lens. Signals sent to the ciliary muscles cause them to relax to make the lens thinner and thus focus on objects at a distance. Signals that cause the muscles to contract result in a thicker lens, enabling focus on nearby objects. The system for bringing objects into focus at the retina is called *accommodation*. As I recall from a younger age, this is a wonderful system when it works. Unfortunately, lens flexibility is lost with age - for everybody. The gradual loss of your eyes' ability to focus on nearby objects is called *presbyopia*. It's a natural, often annoying part of aging. Presbyopia usually becomes noticeable in your early to mid-40s and continues to worsen until around age 65. To compensate for this reduced flexibility, we use reading glasses. And it will happen to you.
 
+```{=html}
 <!-- 
 https://commons.wikimedia.org/wiki/File:3D_Medical_Animation_Eye_Structure.jpg 
 https://www.scientificanimations.com, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons
 -->
-![Human physiological optics. Source:https://www.scientificanimations.com via Wikimedia. ](images/human/02-encoding/2048px-3D_Medical_Animation_Eye_Structure.jpg){#fig-human-eyeball width="60%"}
+```
+
+![Human physiological optics. Source:https://www.scientificanimations.com via Wikimedia.](images/human/02-encoding/2048px-3D_Medical_Animation_Eye_Structure.jpg){#fig-human-eyeball width="60%"}
 
 We now have many measurements of the quality of the physiological optics. In the sections below, I will summarize these measurements and explain how to simulate how the incident light field is transformed into the retinal image by ISETBio.
 
@@ -60,7 +65,7 @@ Maybe point mainly to the other book. Image showing the fovea and inhomogeneous 
 
 Encoding, not sampling.
 
-### Adaptive optics  {#sec-adaptive-optics}
+### Adaptive optics {#sec-adaptive-optics}
 
 The ability to measure certain properties of the optics was revolutionized by adpative optics - a method that makes real time measurements of the wavefront aberrations of the physiological optics using a Shack-Hartmann wavefront sensor. Just the measurement of the aberrations alone is useful. In addition, it has proben possible to engineer systems that correct for these aberrations in real time, and thus visualize the apertures of the photoreceptors (1-5 $\mu \text{m}$ diameter) cells in the retina. Further, using video tracking of the eye movements it has proven possible to deliver stimuli to specific, targeted photoreceptors.
 
@@ -70,40 +75,42 @@ First order approximations of the human optics. Simulations with ISETBio of mayb
 
 Where should the adaptive optics measurement method be? Here or FOV? Adaptive optics measurements of wavefront aberrations, expressed as point spread functions. Thibos and Artal data.
 
-
 ### Field height dependence
 
 Artal data. Point to ISETBio and maybe the other book.
-
 
 ### Ground-based telescopes {#sec-telescopes}
 
 These same technologies can be used to look inward, within the eye, rather than outward toward the stars. Realizing this was a very important insight that continues to lead to important insights about the peripheral human visual system (@sec-human-seeing-overview).
 
 ::: {.callout-note title="Shack-Hartmann wavefront sensor"}
-
 ### Shack–Hartmann wavefront sensor {#sec-wavefront-sensor}
-Johannes Franz Hartmann was a German astronomer working on the problem of detecting optical defects in telescope objectives. Reasoning  from the ray theory of light, he measured the optical light field from a simple stimulus:  an on-axis point at the focal length of the lens. In principle, the rays emerging from an ideal lens would all be parallel to the main axis.  To look for deviations, he created a screen comprising an array of pinholes.  If the rays were parallel, the light through the pinhole would be nicely centered behind the pinhole.  If the rays were not quite parallel, the image behind the pinhole would be displaced by some distance and amount from the center.  The deviations could be considered defects in the lens that could be corrected.
+
+Johannes Franz Hartmann was a German astronomer working on the problem of detecting optical defects in telescope objectives. Reasoning from the ray theory of light, he measured the optical light field from a simple stimulus: an on-axis point at the focal length of the lens. In principle, the rays emerging from an ideal lens would all be parallel to the main axis. To look for deviations, he created a screen comprising an array of pinholes. If the rays were parallel, the light through the pinhole would be nicely centered behind the pinhole. If the rays were not quite parallel, the image behind the pinhole would be displaced by some distance and amount from the center. The deviations could be considered defects in the lens that could be corrected.
 
 As I observed above, the image behind each pinhole measures the intensity of the rays incident at different angles. But in practice, a small pinhole produces a blurry spot due to diffraction. Thus Hartmann did not try to extract an image but he just estimated the central position of the blurry spot. Also, because the pinholes only let through a small amount of light, the technique was not very sensitive.
 
 Because there is an array of these pinholes, the accumulation of pinhole images measures the rays at multiple angles at multiple positions. In principle, by performing this measurement for different wavelengths and polarizations, we sample the optical light field (@eq-lightfield-optical).
 
+```{=html}
 <!--
 The Raskar version in which you put spots behind the lenslet array and adjust the spots to make the array uniform is kind of funny.  It is intended to measure the optical aberrations of the eye
 https://en.wikipedia.org/wiki/Shack%E2%80%93Hartmann_wavefront_sensor
 -->
+```
 
+```{=html}
 <!--
 # What about the color matching experiment? Maybe James Clerk Maxwell mentioned but referred to FOV 
 -->
+```
 
 [Arizona History of the Shack work.](https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf?utm_source=chatgpt.com)
-
 :::
 
 ## Wavelength encoding
 
+```{=html}
 <!--
 https://chatgpt.com/s/t_68af5af69c688191b21118844094d0b5
 
@@ -115,16 +122,10 @@ Thomas Young wrote a reply (@young1804-reply)
 
  > A MAN who has a proper regard for the dignity of his own character, although his sensibility may sometimes be awakened by the unjust attacks of interested malevolence, will esteem it ingeneral more advisable to bear, in silence, the temporary effects of a short lived injury, than to suffer his own pursuits to be interrupted, in making an effort to repel the invective, and to punish the aggressor. 
 -->
+```
 
 ### Color-matching
 
 ### Chromatic aberrations
 
 Wavelength dependence (chromatic aberration)
-
-
-
-
-
-
-
