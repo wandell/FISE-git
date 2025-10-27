@@ -90,7 +90,7 @@ The Massey 2006 retinal anatomy paper has lots of great images.  Use that as a r
 ::: panel-tabset
 
 ### Retinal layers
-![Layers from Fisher. Source: [New Scientist](https://www.newscientist.com/gallery/dn14971-small-world-gallery/)](images/human/02-encoding/retina-ej.png){#fig-retina-ej width="70%"}
+![Layers from Fisher. Source: [New Scientist](https://www.newscientist.com/gallery/dn14971-small-world-gallery/)](images/human/02-encoding/retina-ej.png){#fig-retina-ej width="50%"}
 
 ### Five retinal cell types
 ![Cell types from Rodieck](images/human/02-encoding/retina-rodieck.png){#fig-retina-rodieck width="70%"}
@@ -99,7 +99,7 @@ The Massey 2006 retinal anatomy paper has lots of great images.  Use that as a r
 ![Layers from Massey - Differential Interference Contrast microscopy.Source:  @massey2006-retinalanatomy](images/human/02-encoding/retina-massey.png){width="90%"}
 
 ### Fovea 
-![Fovea in detail. GCL: Ganglion cell layer.  BPL:  Bipolar layer, also called inner nuclear layer. REC: Receptors.  PE:  Pigment epithelium.](images/human/02-encoding/retina-fovea.png){#fig-retina-fovea width="40%"}
+![Fovea in detail. GCL: Ganglion cell layer.  BPL:  Bipolar layer, also called inner nuclear layer. REC: Receptors.  PE:  Pigment epithelium.  Better image from Massey paper, maybe.](images/human/02-encoding/retina-fovea.png){#fig-retina-fovea width="80%"}
 :::
 
 <p>
@@ -126,30 +126,38 @@ The short wavelength light is focused at the RGC layer when the middle wavelengt
 
 ## Cone spatial sampling
 
-![Miller cone inner segment spatial sampling](images/human/02-encoding/inner-segments-foveal.png){#fig-inner-segment-miller width="60%"}
+The regularity of the cone sampling mosaic in the central retina was a surprise. Miller was the first to crisply show it, I think.  Others had been thinking the density was high but the sampling grid was irregular.  In fact, the packing is fairly tight, sometimes called a triangular grid, and sometimes called a hexagonal packing scheme.  I need to explain the ideas.  Note the size of the inner segment apertures.  Maybe 1.5 microns.
+
+![Miller cone inner segment spatial sampling](images/human/02-encoding/inner-segments-foveal.png){#fig-inner-segment-miller width="50%"}
+
+The picture above doesn't show the different cone types.  These images do.  The S-cone spatial sampling is quite different from the other types.
 
 ::: panel-tabset
-### Cone classes
-![S-cone sampling image from Wikler and Rakic, 1990](images/human/02-encoding/s-cone-sampling.png){#fig-scones-wikley width="60%"}
+### Cone types
+![L,M cone types, intermixed with rods, and some S-cone hints.  Lots of rods.  Near periphery. from Wikler and Rakic, 1990](images/human/02-encoding/s-cone-sampling.png){#fig-scones-wikley width="60%"}
 
-### S-cones (Schein)
-![Schein scone procion yellow staining.](images/human/02-encoding/scones-schein.png){#fig-scones-schein width="60%"}
+### S-cones sampling
+![S-cone procion yellow staining from Stan.  ](images/human/02-encoding/scones-schein.png){#fig-scones-schein width="60%"}
 
 :::
 <p> <figcaption> Cone sampling by different cone classes </figcaption>
 
 ## PSF at the cones
 
-Measure the optical spread with respect to the cone mosaic image.  
-We need the retina and its sampling mosaic to make sense of the point spread function, IMHO.
+We are ready to describe the optical spread with respect to the cone mosaic image. We needed the retina and the photoreceptor sampling mosaic defined so we could make sense of the whoe system.
 
 <!-- See fise_humanConePSF.m in code/human -->
+
+### PSF Wavelength dependence.
 
 ### PSF field height dependence
 
 Artal data. Point to ISETBio and maybe the other book.
 
-::: {.callout-note title="Shack-Hartmann wavefront sensor"}
+::: {.callout-note title="Measuring the human optical PSF"}
+
+This callout is a mess.  Too much going on. Lots of rewriting ahead.
+
 ### Shack–Hartmann wavefront sensor {#sec-wavefront-sensor}
 
 Johannes Franz Hartmann was a German astronomer working on the problem of detecting optical defects in telescope objectives. Reasoning from the ray theory of light, he measured the optical light field from a simple stimulus: an on-axis point at the focal length of the lens. In principle, the rays emerging from an ideal lens would all be parallel to the main axis. To look for deviations, he created a screen comprising an array of pinholes. If the rays were parallel, the light through the pinhole would be nicely centered behind the pinhole. If the rays were not quite parallel, the image behind the pinhole would be displaced by some distance and amount from the center. The deviations could be considered defects in the lens that could be corrected.
