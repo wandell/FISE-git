@@ -30,9 +30,9 @@ $$ {#eq-pointspread-1}
 
 Here, $O(x, y)$ is the intensity at each image position. Each point in the scene contributes a scaled version of its PSF. The output image is the weighted sum of all those PSFs.
 
-Point spread functions are an intuitive way to understand the performance of the optical system, andthey are widely used in applications. In @sec-optics-psf-engineering I will describe how scientists and engineers design optics to achieve specific PSF characteristics to estimate depth or to reveal hard-to-see objects.
+Point spread functions are an intuitive way to understand the performance of the optical system, and they are widely used in applications. In @sec-optics-psf-engineering I will describe how scientists and engineers design optics to achieve specific PSF characteristics to estimate depth or to reveal hard-to-see objects.
 
-In the @sec-appendix-linear-systems-overview I describe how the point spread function is used to create the linear system matrix: each column of the linear system matrix is a point spread.  When the system is space-invariant (@sec-ls-shiftinvariance), the columns of the matrix are shifted copies of that point spread.  We also explain that harmonics are eigenvectors of such matrices.  This section further explores the analysis of optics using PSFs, and  @sec-optics-harmonics we explores applications using harmonics.
+In the @sec-appendix-linear-systems-overview I describe how the point spread function is used to create the linear system matrix: each column of the linear system matrix is a point spread.  When the system is space-invariant (@sec-ls-shiftinvariance), the columns of the matrix are shifted copies of that point spread.  We also explain that harmonics are eigenvectors of such matrices.  This section further explores the analysis of optics using PSFs, and  @sec-optics-harmonics explores applications using harmonics.
 
 ::: {.callout-note title="A limitation of PSFs" collapse="false"}
 Point spread functions (PSFs) are an excellent tool for modeling optical systems when the scene can be approximated as a flat surface, or when all objects are far enough away that occlusion is negligible. In these cases, each point in the scene contributes independently to the image, and the total image can be predicted by summing the PSFs from each point.
@@ -68,7 +68,7 @@ We can simulate how the four PSF shapes transform a spectral radiance (@fig-psf-
 
 ![The Airy pattern shows the image for a diffraction limited lens with an $f/\# =4$. The Gaussian has a spread that is roughly consistent with the Airy Disk size and a similar wavelength dependency; long-wavelengths spread more than short wavelengths. The high tail of the Lorentzian PSF produces a veiling glare. The Pillbox size is about equal to the Airy disk, but it introduces much more blur because it has a relatively high level over the entire width.](images/optics/10-space/optics-siKernels-image.png){#fig-psf-image width="90%"}
 
-These PSFs functions are valuable because they have simple parameters that control the amount of blur or light scatter. Here is a description of the different PSF formulae along with a brief descrition of their properties.
+These PSFs are valuable because they have simple parameters that control the amount of blur or light scatter. Here is a description of the different PSF formulae along with a brief descrition of their properties.
 
 ### The Airy pattern
 The Airy pattern is circularly symmetric, so you only need to know the distance from the center, $r$, to describe it. The intensity at a distance $r$ from the center is:
@@ -165,7 +165,7 @@ TCA occurs when the image blur interacts with the position and size of the apert
 ![With this aperture, there is only longitudinal chromatic aberration (LCA) and no transverse chromatic aberration (TCA).](images/optics/10-space/chromatic-notransverse.png){#fig-optics-notransverse width=70%}
 
 ## Transverse chromatic aberration
-![With this pupil aperture, some of the rays from this point will be blocked from entering the lower part of the lens. The absence of these rays has a differential effect on the short- and long-wavelength light. The of the center of the red blur circle will be shifted so it no longer aligns with the center of the blue blur circle (TCA).](images/optics/10-space/chromatic-transverse.png){#fig-optics-transverse width=70%}
+![With this pupil aperture, some of the rays from this point will be blocked from entering the lower part of the lens. The absence of these rays has a differential effect on the short- and long-wavelength light. The center of the red blur circle will be shifted so it no longer aligns with the center of the blue blur circle (TCA).](images/optics/10-space/chromatic-transverse.png){#fig-optics-transverse width=70%}
 :::
 
 <figcaption>
@@ -173,7 +173,7 @@ The images illustrate short wavelength (blue) and long wavelength (red) rays a s
 </figcaption>
 <!-- keep the empty lines for spacing in the rendered image -->
 
-Now, imagine reducing the aperture size and moving it in front of the lens. This new aperture position blocks some of the rays from both wavelengths. For the blue rays, which were already converging to a tight focus, the effect is minimal —the spot gets a little dimmer. But for the red rays, which form a large blur circle already, the new aperture blocks rays that would have formed the lower part of their blur circle. As a result, the red blur circle is clipped at the bottom, and its center shifts upward. The red and blue circles are no longer aligned. Th displacement of the red blur circle is transverse chromatic aberration.
+Now, imagine reducing the aperture size and moving it in front of the lens. This new aperture position blocks some of the rays from both wavelengths. For the blue rays, which were already converging to a tight focus, the effect is minimal —the spot gets a little dimmer. But for the red rays, which form a large blur circle already, the new aperture blocks rays that would have formed the lower part of their blur circle. As a result, the red blur circle is clipped at the bottom, and its center shifts upward. The red and blue circles are no longer aligned. The displacement of the red blur circle is transverse chromatic aberration.
 
 The size and position of the aperture determines the amount of TCA. The physical factors that cause the transverse shift are different from those that produce LCA. Both effects are related to the different wavelengths focus.  Were there no LCA, there would be no TCA.
 
