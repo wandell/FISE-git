@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-10-14">
+<meta name="dcterms.date" content="2025-10-15">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>16&nbsp; Sensor parameters – Foundations of Image Systems Engineering</title>
@@ -483,7 +483,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 14, 2025</p>
+      <p class="date">October 15, 2025</p>
     </div>
   </div>
   
@@ -510,7 +510,7 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: October 14, 2025</p>
+<p>Last updated: October 15, 2025</p>
 </div>
 </div>
 </div>
@@ -539,7 +539,7 @@ Photons per pixel
 <div class="callout-body-container callout-body">
 <p>The number of photons arriving at a pixel depends on many factors, including the light intensity, the optics, and the size of the pixel. ISETCam is a useful tool for estimating quantities such as the number of incident photons. The variance in the number of photons at a <span class="math inline">\(1~\mu\text{m}^2\)</span> pixel under moderate to dim lighting is considerable. Here is an image calculated using ISETCam, showing the Poisson variation in the number of photons across a small region.</p>
 <p><img src="images/sensors/15-parameters/03-photonimage.png" id="fig-photonimage" class="img-fluid" style="width:60.0%" alt="Poisson noise in a uniform region of a dim scene. Each pixel is $1~\mu\text{m}^2$ and the scene intensity is 50 nits.">.</p>
-<p>This <a href="../code/fise_opticsCountingPhotons.html">ISETCam script</a> illustrates the calculation. Nearly every sensor simulation we run in ISETCam includes calculations like this.</p>
+<p>This <a href="../code/02Optics/fise_opticsCountingPhotons.html" target="_blank">ISETCam script</a> illustrates the calculation. Nearly every sensor simulation we run in ISETCam includes calculations like this.</p>
 </div>
 </div>
 </div>
@@ -587,7 +587,7 @@ CG = 1 / C
 \tag{16.2}\]</span></span></p>
 <p>In film photography, light sensitivity was controlled by the film chemistry. The sensitivity was specified by a variable called its <strong>speed</strong>, and an international standard, <strong>ISO speed</strong>, was created to measure this sensitivity.</p>
 <p>Digital sensors control their relative sensitivity by circuitry that modulates the conversion gain. One widely used approach, <strong>dual conversion gain</strong>, adjusts the floating diffusion node capacitance. This is implemented using a switchable capacitor that can be connected, or not, to the node. The connection is controlled by a switchable transistor signal. In low conversion gain (<strong>LCG</strong>) mode, the capacitor is connected to the floating diffusion node; this increases the total capacitance and lowers the conversion gain (<a href="#eq-conversion-gain-capacitance" class="quarto-xref">Equation&nbsp;<span>16.2</span></a>). In high conversion gain (<strong>HCG</strong>) mode, the capacitor is disconnected; this reduces the total capacitance and increases the conversion gain.</p>
-<p>The LCG mode is used under normal or bright scene illumination. The HCG is useful when the scene is dark and there are relatively few photon generated electrons. The well capacity varies between these modes, so that the dynamic range of the sensor is reduced when it is in HCG mode. Of course, once an engineer builds a system with dual conversion modes you can expect another engineer to build a system with four or eight nodes (<strong>multi-capacitor gain switching</strong>).</p>
+<p>The LCG mode is used under normal or bright scene illumination. The HCG is useful when the scene is dark and there are relatively few photon generated electrons. The well capacity varies between these modes, so that the dynamic range of the sensor is reduced when it is in HCG mode. Of course, once an engineer builds a system with dual conversion modes you can expect another engineer to build a system with four or eight nodes: (<strong>multi-capacitor gain switching</strong>).</p>
 <div id="note-sensor-speed" class="callout callout-style-default callout-note callout-titled" title="Sensor speed">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -600,7 +600,7 @@ Sensor speed
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The dual conversion gain method is a true sensitivity adjustment: the conversion gain genuinely changes and the signal-to-noise of the sensor increases, while the well capacity decreases.</p>
+<p>The dual conversion gain method is a true sensitivity adjustment: the method genuinely changes the signal-to-noise by modifying the well capacity. We will review the formulae relating different circuit parameters and signal-to-noise in <a href="sensors-06-characterization.html#sec-system-modeling-overview" class="quarto-xref"><span>Section 19.1</span></a>.</p>
 <p>Commercial vendors use other methods to approximate ISO speed. In one approach, after the charge is converted to a voltage the signal is amplified by an analog amplifier prior to ADC. This approach amplifies both the signal and noise. Its value is that in low light conditions the output spans the full bit depth.</p>
 <p>In desperate times, some vendors simply scale the digital values. In this case the rendered image will be brighter because the digital values span the full range. But the approach isn’t great - it amplifies signal, noise, and quantization artifacts.</p>
 </div>
