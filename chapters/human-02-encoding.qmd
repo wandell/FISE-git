@@ -162,8 +162,17 @@ The spatial resolution of the human eye depends on the aperture size and spacing
 
 ![Miller cone inner segment spatial sampling. Source: Based on @miller1987-conesampling (personal communication)](images/human/02-encoding/inner-segments-foveal.png){#fig-inner-segment-miller width="50%"}
 
-How does the spatial sampling of the cones compare to the optical PSF? One comparison we can make is for the central fovea. There the inner-segment apertures are about 1.5–2 μm in diameter. Using ISETCam, we can calculate the diffraction-limited Airy disk diameter (to the first minimum) for 550 nm light. For a 3 mm pupil, the f-number of the human optics is 17 mm / 3 mm ≈ 5.6. Using @eq-airydisk1, this is:
+How does the spatial sampling of the cones compare to the optical PSF? One comparison we can make is for the central fovea. There the inner-segment apertures are about 1.5–2 microns in diameter. Using ISETCam we can calculate the diffraction-limited Airy disk diameter (first minimum) for a 550 nm light. For a 3 mm pupil, the f-number of the human optics is 17 mm / 3 mm ≈ 5.6. Using @eq-airydisk1, this is:
 
+```
+>> radius = airyDisk(550,5.6,'units','um','diameter',true)
+radius =
+    7.5152
+```
+
+Thus, a tiny point in the scene -say star light- will be spread over a diameter of about 7 microns on the retinal surface, which corresponds to a little more than 3 cones. Under typical natural vision conditions, no stimulus excites a single photoreceptor. The nervous system must always interpret the signal from multiple cones, even if it draws the inference that the source is a single, tiny point.
+
+One reason for creating such a system is that it enables us to judge the wavelength of the source better.  By spreading the light across 5-10 cones, we are likely to sample the light using more than one type of photopigment.  We saw a similar principle when reviewing the color filter array in cameras; early camera designers introduced blur the light from a small point to be measured by the R,G and B camera pixels (@sec-sensor-cfa).  But, what is the arrangement of the different cone types in the human eye?  
 
 Data on this point also emerged in the 1980s and 1990s.
 
