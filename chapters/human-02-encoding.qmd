@@ -21,31 +21,53 @@ Please refer to the chapters in [Foundations of Vision](https://foundationsofvis
 
 ## Human visual encoding overview {#sec-human-encoding-overview}
 
-Some image systems are designed mainly to acquire information about the light field (cameras) in order to make inferences about the scene. Others are designed to capture and store information so that one might later reproduce key properties of the incident light field. The reproduction of the light field is typically intended to be viewed by a human. For this reason, the design of image reproduction systems is strongly influenced by the properties of the human vision.
+When you design a digital camera, how good does it need to be? The answer depends on who you're designing it for. If the images are for a human to look at, then the camera's design must be guided by the capabilities and limits of the human eye. This simple principle has profound consequences for engineering.
 
-We know a great deal about two aspects of the peripheral human visual system. We have many measurements of how the physiological optics of the eye transforms the incident light field into the retinal irradiance, and how this irradiance is encoded by the photoreceptors. This knowledge, derived over two centuries of vision science, can be used in many practical ways to define many features of human vision, and most clear this knowledge defines the limits of human spatial resolution and color.
+Vision scientists have learned a great deal about the first stages of vision. We have excellent measurements of how the eye's optics (the cornea and lens) transform light from the world into an image on the retina, and we know how the retina's photoreceptors encode that image into neural signals. This knowledge is not just academic; it's a practical guide for designing any system that reproduces images for people.
 
-There are certain obvious features of the human visual system that impact the design of image systems for reproduction. The clearest case for a match between the system and the human eye is the case of color reproduction. An image system intended for reproduction and later viewing should capture the same portion of the electromagnetic spectrum that we see. Missing the part of the spectrum we see would worsen the ability to create a good color reproduction; capturing parts of the spectrum we do not see would either be wasteful or potentially interfere with creating a high quality color reproduction.
+Consider color. A camera designed for human viewing should capture the same portion of the electromagnetic spectrum that we see: visible light. Capturing less of the spectrum would lead to poor color reproduction. Capturing more—like infrared or ultraviolet—would be wasteful, consuming resources to record information we can't see anyway. In this sense, human wavelength sensitivity sets a clear target for camera design.
 
-The role of spatial resolution in image systems design is different. It would surely be a disappointment if the image system failed to capture the scene at least as precisely as the spatial resolution of human eye. We see the scene, and we hope the camera to do at least as well. But people are also pleased if the camera captures the scene at a finer resolution than they could see at the time. It is always possible to reduce the spatial resolution by blurring and downsampling. The increased spatial resolution will not interfere with the image rendering; it will just take more resources. Thus, understanding the wavelength encoding sets a maximum encoding rate in the visible range; capturing more would have little value. Understanding the spatial sampling sets a minimum encoding rate; capturing less information would be disappointing.
+Spatial resolution presents a different challenge. It would be a disappointment if a camera failed to capture details as fine as those the human eye can resolve. We expect our photos to be at least as sharp as what we see. However, unlike with color, people are often pleased if a camera captures a scene at a *finer* resolution than the eye can perceive. We can always zoom in on the digital image to see details we might have missed. This extra information doesn't interfere with the viewing experience; it just requires more storage and processing power.
 
-In this section, we review the anatomical and functional properties of the eye that limit how it encodes the lightfield. The properties of the eye do not account for what we see, but they do impose critical limits on what we cannot see. The way we encode wavelength and sample space within the eye represents an inescapable bottleneck on visual resolution and sensitivity. This makes measurements of the visual encoding an important part of the image systems engineering. In the next chapter, @sec-human-metrics-overview, I introduce various image quality metrics that are informed by these measurements. A more extensive description of the human visual encoding, including its biological substrate, is in @wandellFoundationsVision1995.
+So, we have two different engineering constraints derived from human vision:
 
-## The Encoding Systems {#sec-human-encoding-systems}
+*   **Wavelength:** Human vision sets a *target range*. Capturing more is wasteful.
+*   **Spatial Resolution:** Human vision sets a *minimum bar*. Capturing more can be beneficial.
 
-The eye includes two distinct functional systems [@fig-retina-color]. The first system is the physiological optics (cornea and lens). This system converts the incident light field into the optical light field, forming an image at the retina. The second system is the retina. This is a complex system that serves multiple functions. For the purpose of this chapter, the key function is that the arrays of light sensitive cells in the retina (principally cones and rods) convert the optical light field into a neural signal. This signals from the photoreceptor arrays is processed by multiple types of neuronal arrays within the retina. The output cells of the retina are the retinal ganlgion cells (RGCs). Their axons join together and form the optic nerve, which exits each eye. The axons in the optic nerve terminate in multiple locations in the brain @wandell2025-visual-processing.
+In this section, we will review the key properties of the eye that define these limits. The way our visual system samples space and encodes wavelength creates fundamental bottlenecks on what we can perceive. Understanding these limits doesn't explain everything about what we see, but it tells us what we *cannot* see—essential knowledge for the field of image systems engineering.
 
-The retina is plenty complicated - but one wonderful simplification is that there is no neural feedback from the brain to the retina. This means we can characterize the inputs (photoreceptors) and outputs (RGCs) without having to model signals from other parts of the nervous system. This is rarely true for other brain regions.
+## The Two Stages of Encoding {#sec-human-encoding-systems}
 
-There is one important type of feedback: The brain controls body, head and eye movements. These movements guide which parts of the environmental light field we acquire. These movements are an extremely important part of how we see. But to understand what the retina itself does, we can fix the eye and head to eliminate these signals. In this way we can characterize just the pathway from the photoreceptors to the signals on the optic nerve.
+The process of converting light from the world into a neural signal that the brain can interpret happens in two main stages, as illustrated in @fig-eye-and-retina.
+
+First, the **physiological optics**—the cornea and lens—act like a camera lens. They gather the light entering the eye and focus it to form an image on the retina. This stage transforms the light from the environment into a focused optical image.
+
+Second, the **retina**, a thin layer of neural tissue lining the back of the eye, converts this optical image into electrical signals. This process, called transduction, is performed by specialized cells called **photoreceptors**. The signals from the photoreceptors are then processed by a complex network of other retinal neurons. The final output is sent to the brain by the **retinal ganglion cells (RGCs)**, whose axons bundle together to form the optic nerve.
+
+::: {#fig-eye-and-retina .panel-tabset}
+## Eye Anatomy
+
+![A cross-section of the human eye, showing the cornea, lens, iris, and retina.](images/human/02-encoding/2048px-3D_Medical_Animation_Eye_Structure.jpg){#fig-human-eyeball width="60%"}
+
+## Retinal Location
+
+![This diagram shows how the retina lines the back of the eyeball and highlights the fovea, the region of highest visual acuity.](images/human/02-encoding/retina-fovea-color.png){#fig-retina-color width="75%"}
+
+<figcaption>
+The two stages of visual encoding. Light is first focused by the eye's optics onto the retina (left), where it is converted into neural signals for the brain (right). Image sources: [Scientific Animations](https://www.scientificanimations.com) (left).
+</figcaption>
+:::
+
+A key feature of the retina is that it operates as a feed-forward system; there is no direct neural feedback from the brain to the retina. This simplifies our analysis, as we can study the retina's input-output relationship without accounting for top-down signals from other brain regions—a luxury not often afforded when studying the nervous system.
+
+However, the brain also sends signals to the eye that control the size of the pupil and the optical power of the lens. The brain also provides an important indirect form of feedback by controlling eye, head, and body positions. These signals determine which part of the visual world is projected onto the retina. All of these signals are essential for seeing.
 
 ## Physiological optics
+The cornea and the flexible lens work together to focus light, forming an image on the retina, as shown in @fig-physiological-optics. This optical system is dynamic, constantly adjusting both the amount of light it lets in and its focal point.
 
-The cornea and flexible lens, together, control the transformation of the incident light field to the optical light field. Even for a fixed head and eye position, the physiological optics are dynamic: both the size of the entrance pupil and the shape of the lens vary. The pupil size changes mainly in response to the general light level, opening to about 7 mm diameter and closing to about 2mm. This produces a factor of about 10 in how much light enters the eye, which is a rather small factor compared to the mean level of natural illuminations which span 4 or 5 log units. The pupil size is not controlled willfully; it changes depending on the ambient light conditions and as well as some non-visual events in the brain.
+The amount of light entering the eye is controlled by the **pupil**, the aperture that can dilate (open) to about 8 mm in diameter in dim light or constrict (close) to about 2 mm in bright light. This change in area adjusts the light intake by a factor of about 16 (or 1.2 log units). While significant, this is a small adjustment compared to the vast range of light levels in the natural world, which can span over 10 log units. The pupil's size changes automatically in response to light, but it is also influenced by cognitive and emotional states, such as arousal or mental effort.
 
-Maybe a tabset for these two images
-
-::: panel-tabset
+::: {#fig-physiological-optics .panel-tabset}
 ## Eyeball image
 
 ![Image of the physiological optics](images/human/02-encoding/eyeball-image.png){#fig-eyeball-image width="50%"}
@@ -53,12 +75,15 @@ Maybe a tabset for these two images
 ## Eyeball sketch
 
 ![Schematic of the physiological optics](images/human/02-encoding/eyeball-sketch.png){#fig-eyeball-sketch width="50%"}
+
+<figcaption>
+The physiological optics of the human eye. The cornea provides most of the eye's fixed optical power, while the lens adjusts its shape to change focus.
+</figcaption>
 :::
 
-<figcaption>The two panels illustrate the physiological optics and their relationship to other important components of the eye. See the text for details.
-</figcaption>
+The eye changes its focus through a process called **accommodation**. Neural signals control the ciliary muscles, which are connected to the lens. To focus on distant objects, the ciliary muscles contract, which increases the diameter of the ring they form and pulls on the zonule fibers, flattening the lens. To focus on nearby objects, the muscles relax, allowing the lens to return to its natural, more rounded shape, which increases its optical power.
 
-By the varying shape of the lens, and thus its optical power, the eye adjusts which image plane is brought into focus on the retina. This process, called  **accommodation**, is based on neural signals sent to the ciliary muscles that are attached to the lens.  The signals cause the muscles to pull on the lens to make it thinner and thus focus on objects at a distance, or relax which causes the lens to become thicker lens and focus on nearby objects. As I recall -from a younger age- this is a wonderful system. Unfortunately, lens flexibility is lost with age - for everybody. The gradual loss of your eyes' ability to focus on nearby objects is called *presbyopia*. It's a natural, and somewhat annoying, part of aging. Presbyopia usually becomes noticeable in your early to mid-40s and continues to worsen until accommodation is lost. To compensate for this reduced flexibility, we use reading glasses. It will happen to you.
+This remarkable flexibility is not permanent. With age, the lens gradually stiffens, reducing its ability to change shape. This condition, known as **presbyopia**, makes it difficult to focus on near objects. It typically becomes noticeable in one's early to mid-40s and is a natural part of aging, commonly corrected with reading glasses.  It happens to all of us.
 
 <!-- 
 https://commons.wikimedia.org/wiki/File:3D_Medical_Animation_Eye_Structure.jpg 
@@ -66,44 +91,33 @@ https://www.scientificanimations.com, CC BY-SA 4.0 <https://creativecommons.org/
 -->
 
 ## Retina
-We now have many measurements of the quality of the physiological optics. In the sections below, I will summarize these measurements and explain how to simulate how the incident light field is transformed into the retinal image by ISETBio.
+Since the early 2000s, vision scientists have been able to measure the quality of the physiological optics. In the sections below, I will summarize these measurements and the techniques that were invented to make them.  I will also explain how to simulate how the incident light field is transformed into the retinal image using ISETBio. For me, it is important to understand these optics in terms of the photoreceptor sampling array.  Knowing that an image is spread over 5 microns can mean one thing if the photoreceptors are sample every 1 micron and something quite different if the photoreceptors sample every 10 microns.  So before we talk about the physiological optics, let's consider the retina and particularly the photoreceptor mosaic.
 
-Relationship between the physiological optics and the retina.
-
-::: panel-tabset
-## Eye and retina 1
-![Human physiological optics. Source:https://www.scientificanimations.com via Wikimedia.](images/human/02-encoding/2048px-3D_Medical_Animation_Eye_Structure.jpg){#fig-human-eyeball width="60%"}
-
-## Eye and retina 2
-![Overview of the eye.](images/human/02-encoding/retina-fovea-color.png){#fig-retina-color width="100%" fig-align="center" width="75%"}
-:::
-<p>
-<figcaption> Relationship between the eye and retina. </figcaption>
-</p>
-
-The retina is a 150-350 micron thick layered structure of neural tissue that lines the back of the eye (5 cm x 5 cm). There are about 80 different cell types that can be identified through their genetic expression. Specific retinal cell types form stereotypical connections that make up specific, identifiable circuits. There are about 20 known circuits, and these are likely to account for nearly all of the circuits in the retina. The output signals from these circuits are carried on axons in the optic nerve that project to a variety of locations in the brain.
+The retina is aabout 150-350 microns thick, and it covers the back of the eye over an area of about (5 cm x 5 cm). It is made up of three main layers structure of neural tissue that lines. There are about 80 different cell types that can be identified through their genetic expression, responses to light, and anatomical form. The retinal cells form stereotypical connections, which we call retinal circuits. We believe that there are about 20 circuits. The circuit outputs, carried on the retinal ganglion cell axons in the optic nerve, project to a variety of locations in the brain.
 
 The vast majority of light-driven activity is initiated in the photoreceptors (rods and cones). The rods are the dominant source under very low light levels, and the cones are the dominant source under moderate to high light levels. The typical retinal circuit is driven by activity that starts in a local region of the photoreceptors. The same basic circuit will be present throughout the retina, tiling the photoreceptor mosaic, though the absolute size of the cells and their input regions generally vary as one measures across the retina. The size of the region increases as one measures from the highly specialized central fovea into the periphery.
 
-The Massey 2006 retinal anatomy paper has lots of great images.  Use that as a resource!  Some better than the ones here.
+There is one important and interesting exception, only recently discovered.  There exists a class of retinal ganglion cells that contain a light sensitive pigment.  These cells, called the **intrinsically photosensitive RGCs (ipRGCs)** absorb photons and respond to the presence or absence of light.  There are not a lot of these cells, but their outputs are important for circadian rhythms.  They may also have an impact on other aspects of vision - even perception.
+
+<!-- The Massey 2006 retinal anatomy paper has lots of great images.  Use that as a resource!  Some better than the ones here. -->
 
 ::: panel-tabset
 
 ### Retinal layers
-![Layers from Fisher. Source: [New Scientist](https://www.newscientist.com/gallery/dn14971-small-world-gallery/)](images/human/02-encoding/retina-ej.png){#fig-retina-ej width="50%"}
+![This image shows the different layers of the retina very clearly. The different cell types are stained with different materials. Source: [New Scientist](https://www.newscientist.com/gallery/dn14971-small-world-gallery/)](images/human/02-encoding/retina-ej.png){#fig-retina-ej width="50%"}
 
 ### Five retinal cell types
-![Cell types from Rodieck](images/human/02-encoding/retina-rodieck.png){#fig-retina-rodieck width="70%"}
+![This sketch illustrates the different cell types and how they form specific circuits.  The five principal cell types are illustrated. Source: Rodieck](images/human/02-encoding/retina-rodieck.png){#fig-retina-rodieck width="70%"}
 
 ### Peripheral retinal layers
-![Layers from Massey - Differential Interference Contrast microscopy.Source:  @massey2006-retinalanatomy](images/human/02-encoding/retina-massey.png){width="90%"}
+![This Differential Interference Contrast microscopy image gives a sense of the density and interconnectedness of the different retinal layers and cells. It may also make it clear why it is such an accomplishment that scientists have painstakingly identified individual cell types and their circuits. Source:  @massey2006-retinalanatomy](images/human/02-encoding/retina-massey.png){width="90%"}
 
 ### Fovea 
-![Fovea in detail. GCL: Ganglion cell layer.  BPL:  Bipolar layer, also called inner nuclear layer. REC: Receptors.  PE:  Pigment epithelium.  Better image from Massey paper, maybe.](images/human/02-encoding/retina-fovea.png){#fig-retina-fovea width="80%"}
+![The primate retina -but not all retinas- have a very important specialization:  the fovea.  This is a region of the retina that comprises only a single layer of photoreceptors. GCL: Ganglion cell layer.  BPL:  Bipolar layer, also called inner nuclear layer. REC: Receptors.  PE:  Pigment epithelium.  Source: I have had this forever.  I have searched for the source. Better image from Massey paper, maybe.](images/human/02-encoding/retina-fovea.png){#fig-retina-fovea width="80%"}
 :::
 
 <p>
-<figcaption> A variety of ways of describing the retina. </figcaption>
+<figcaption> A variety of ways of visualizing and characterizing the retina. </figcaption>
 </p>
 
 <!-- 
@@ -122,10 +136,8 @@ DIC microscopy converts gradients in specimen thickness or refractive index (whi
 In the context of the figure caption, using DIC optics allowed the researchers to clearly delineate the layered structure of the macaque retina—the **plexiform layers** and the **nuclear layers (ONL, INL, ganglion cell layer)**—in a fresh or relatively unstained preparation.
 -->
 
-The short wavelength light is focused at the RGC layer when the middle wavelengths are in good focus at the inner segment.
 
 ## Cone spatial sampling
-
 The regularity of the cone sampling mosaic in the central retina was a surprise. Miller was the first to crisply show it, I think.  Others had been thinking the density was high but the sampling grid was irregular.  In fact, the packing is fairly tight, sometimes called a triangular grid, and sometimes called a hexagonal packing scheme.  I need to explain the ideas.  Note the size of the inner segment apertures.  Maybe 1.5 microns.
 
 ![Miller cone inner segment spatial sampling](images/human/02-encoding/inner-segments-foveal.png){#fig-inner-segment-miller width="50%"}
@@ -143,6 +155,7 @@ The picture above doesn't show the different cone types.  These images do.  The 
 <p> <figcaption> Cone sampling by different cone classes </figcaption>
 
 ## PSF at the cones
+The short wavelength light is focused at the RGC layer when the middle wavelengths are in good focus at the inner segment.
 
 <!-- See fise_humanConePSF.m in code/human -->
 
