@@ -19,11 +19,12 @@ scene = sceneCreate('point array',256,96);
 scene = sceneSet(scene,'h fov',0.3);
 
 % I need to figure out how to load a wvf for different eccentricities.
-oi = oiCreate('human wvf');
+eccDegs = [8 0];
+oi = oiPosition('Polans2015','position',eccDegs);
 oi = oiCompute(oi,scene,'crop',false);
 % oiWindow(oi);
 
-cm = cMosaic('eccentricityDegs',[0 6],'sizeDegs',[0.5 0.5]);
+cm = cMosaic('eccentricityDegs',eccDegs,'sizeDegs',[0.4 0.4]);
 
 allE = cm.compute(oi);
 cm.plot('excitations', allE, 'label cones',true,'plot title','Activation map','cones line width',1);
@@ -33,10 +34,14 @@ cm.plot('excitations', allE, 'label cones',true,'plot title','Activation map','c
 % 
 % Make point array scene
 
+% Let's just check the fovea for now
+eccDegs = [2 0];
+
 % sceneCreate('pointArray',sz,spacing,spectralType);
 scene = sceneCreate('point array',256,96);
 scene = sceneSet(scene,'h fov',0.2);
 wave = sceneGet(scene,'wave');
+
 monoWave = 550;
 illEnergy = zeros(numel(wave),1); 
 illEnergy(wave==monoWave) = 1; 
@@ -44,7 +49,9 @@ scene = sceneAdjustIlluminant(scene,illEnergy);
 
 % sceneWindow(scene);
 
-oi = oiCreate('human wvf');
+% oi = oiCreate('human wvf');
+oi = oiPosition('Polans2015','position',eccDegs,'wave',monoWave);
+
 oi = oiCompute(oi,scene);
 % oiWindow(oi);
 
@@ -53,7 +60,7 @@ cm = cMosaic;
 allE = cm.compute(oi);
 
 % Looking for another plotting method.  Asked NC.
-cm.plot('excitations', allE, 'label cones',true,'plot title','Activation map','cones line width',1);
+cm.plot('excitations', allE, 'label cones',false,'plot title','Activation map','cones line width',1);
 
 fname = fullfile(fiseRootPath,'chapters','images','human','02-encoding','conePSF-550.svg');
 % exportgraphics(gcf,fname);
@@ -64,14 +71,18 @@ print(gcf,fname,'-dsvg');
 
 scene = sceneCreate('point array',256,96);
 scene = sceneSet(scene,'h fov',0.3);
+
 wave = sceneGet(scene,'wave');
-monoWave = 480;
+monoWave = 450;
 illEnergy = zeros(numel(wave),1); 
 illEnergy(wave==monoWave) = 1; 
+
 scene = sceneAdjustIlluminant(scene,illEnergy);
+scene = sceneSet(scene,'mean luminance',1000);
+
 % sceneWindow(scene);
 
-oi = oiCreate('human wvf');
+oi = oiPosition('Polans2015','position',eccDegs,'wave',monoWave);
 oi = oiCompute(oi,scene);
 % oiWindow(oi);
 
@@ -80,7 +91,7 @@ cm = cMosaic;
 allE = cm.compute(oi);
 
 % Looking for another plotting method.  Asked NC.
-cm.plot('excitations', allE, 'label cones',true,'plot title','Activation map','cones line width',1);
+cm.plot('excitations', allE, 'label cones',false,'plot title','Activation map','cones line width',1);
 
 fname = fullfile(fiseRootPath,'chapters','images','human','02-encoding','conePSF-480.svg');
 %exportgraphics(gcf,fname);
