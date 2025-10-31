@@ -8,27 +8,30 @@ date: last-modified
 
 ## Measuring light: An overview {#sec-lfmeasurement-overview}
 
-An imaging system consists of two connected components: the **acquisition hardware**, which measures aspects of the light field, and the **processing algorithms**, which interpret or transform that data. Effective system design requires these components to work in harmony. By understanding the information captured by the hardware, we can develop algorithms that interpret the data effectively. Understanding the light signal is essential for designing image systems acquisition hardware. Knowledge about the typical characteristics of light images will be helpful for designing the processing algorithms that interpret the signal. This synergy between acquisition and processing is a cornerstone of modern imaging system design.
+Imaging systems combine two tightly coupled parts: the **acquisition hardware** determines what is measured; the **processing algorithms** interpret the measurements. Effective image system designs optimize these components jointly. When we know precisely which aspects of the light field the hardware captures—over space, angle, wavelength, and time—we can build algorithms that make the best use of that information.
 
-So far, we have described the light field as a collection of rays, mainly paying attention to the ray directions. A single light ray is a useful geometric abstraction, but it is infinitely thin and thus has no energy. Any real measurement of light must capture a bundle of rays that occupies a finite amount of space and angle. We might measure a bundle of rays spreading out from a light source or a bundle of rays converging on a surface. The principles for quantifying the energy in these bundles come from **radiometry**, the science of measuring electromagnetic radiation, including light.
+In this chapter we model light with rays for geometric reasoning, but a single ray is only an idealization with no energy. Real measurements always integrate over a finite bundle: a small area (or aperture), a small solid angle (direction range), a finite wavelength band, and a finite time interval. We may capture bundles diverging from a source or converging onto a surface; the same radiometric principles apply in either case.
 
-This section introduces the fundamental concepts and units of radiometry. These units are essential for understanding how optics transforms light from input to output, and how sensors encode light. Image systems simulation software, such as ISETCam, quantifies light using these standard units.
+**Radiometry** provides the quantitative framework for these measurements. We will work primarily with spectral (per-wavelength) quantities and SI[^SI-units] units (e.g., watts or photons per second), which are standard in imaging and used by simulation tools such as ISETCam. The next sections define the core quantities — radiant flux, radiant intensity, radiance, and irradiance— and show how geometry (area, angle, and foreshortening) enters their units.
+
+[^SI-units]: Système International d'Unités.  These units are the modern form of the metric system, the most widely used system of measurement in the world.
 
 ## Radiometric units
 
-Radiometric measurements are made separately for each wavelength. For people working with light, wavelength is commonly expressed with respect to nanometers [^lightfields-measurement-1]. We quantify the radiance by measuring the amount of energy, or equivalently the number of photons, present at a location. The basic energy unit is joules per second, (watts). In the case of photons the basic unit is photons per second. Thus, in radiometry one often finds units such as (watts per nanometer) or (photons per sec per nanometer). 
+Radiometric measurements are made separately for each wavelength. For people working in radiometry and image systems, wavelength is commonly expressed with respect to nanometers [^lightfields-measurement-1]. We quantify the amount of radiance by measuring the amount of energy, or equivalently the number of photons, present at a location. The basic energy unit is joules per second, (watts) and for photons the basic unit is photons per second. Thus, in radiometry one often finds units such as (watts per nanometer) or (photons per sec per nanometer). 
 
 [^lightfields-measurement-1]: Units of micrometers (microns, $\mu$) are commonly used by people working in the infrared studies, units of angstroms in atomic and x-ray studies, and electron volts in high-energy photon research.
 
-We describe the energy separately for each wavelength because, in most cases, the energy at different electromagnetic wavelengths act independently: we can measure the energy at two wavelengths separately, mix the two lights, and the result is simply the sum of the individual measurements. This additivity is a critical feature of light behavior in many cases [^lightfields-measurement-2].
+We describe the energy separately for each wavelength because, in most cases, the energy at different electromagnetic wavelengths act independently: we can measure the energy at two wavelengths separately, mix the two lights, and the result is simply the sum of the individual measurements. This additivity is a critical feature of light behavior in many cases [^lightfields-measurement-2] and is a foundational principle for many image systems (@sec-ls-superposition).
 
-[^lightfields-measurement-2]: There are important and useful cases light when radiance at one wavelength evokes emissions at other wavelengths (fluorescence). There are also important cases of non-linear behavior (e.g., two-photon imaging). We discuss these when we review special instrumentation.
+[^lightfields-measurement-2]: There are important cases light when radiance at one wavelength evokes emissions at a different wavelength (fluorescence). There are also important cases of non-linear behavior (e.g., two-photon imaging). We discuss these when we review special instrumentation. But the vast majority of image systems are linear and the Principle of Superposition applies (@eq-superposition).
 
 Radiometry defines units that are helpful for different types of geometry. The radiometric measures can be divided with respect to those from a source (radiance) and those arriving at a surface (irradiance). These can be further divided with respect to measurements from a small (point) source, or from an extended surface.
 
-Finally, adjacent to the radiometric measurements there is a set of units that summarize the impact of the radiation on the human visual system. These measurements begin with the spectral radiometry units, and they are then reduced by calculating a weighted sum across wavelengths. The weights are selected to represent (roughly) the relative visibility of each wavelength. These **photometric** units parallel the radiometric units; for example, radiance and irradiance correspond to luminance and illuminance. In this section, we will describe the radiometric quantities. 
+## Photometric units
+There is a set of units that summarize the impact of the radiation on the human visual system. These units are based on the spectral radiometry units, and we then calculate a weighted sum across wavelengths. The weights are selected to represent (roughly) the relative visibility of each wavelength. These **photometric** units parallel the radiometric units; for example, radiance and irradiance correspond to luminance and illuminance. In this section, we will describe the radiometric quantities. The experimental basis of photometry for the weighted sum across wavelengths -the key step to spectral radiometric quantities into photometric quantities- is explained in @sec-human-metrics.
 
-The reader might consult [Foundations of Vision](https://wandell.github.io/FOV-1995){target=_blank} for more information about human vision; a summary of critical aspects of human vision for image systems engineering is presented in Part IV: Human Vision. The experimental basis of photometry for the weighted sum across wavelengths -the key step to spectral radiometric quantities into photometric quantities- is explained in @sec-human-encoding.
+The reader might consult [Foundations of Vision](https://wandell.github.io/FOV-1995){target=_blank} for more information about human vision. *Part IV: Human Vision* summarizes aspects of human vision that are important for image systems engineering. 
 
 ## Radiance from a point
 
@@ -52,18 +55,16 @@ $$
 
 ![Geometric factors for measuring radiance from an extended surface to a detector.](images/lightfields/02-measuring/01-foreshortening-sketch.png){#fig-foreshortening-sketch width="60%"}
 
-<!--
-::: {.callout-note collapse="false" title="Foreshortening"}
 
-This is intended to be a different image.  Not sure it is needed.  But if so, it should be better.
-
-![**Geometry and image size.** The paper curves so that the circles are at different angles from the camera. As the angle increases, the circles are smaller in the image plane. You can judge the circle sizes; I suspect the physical difference is greater your perceived size difference. (Maybe I make a set of rows of circles on a cylinder. Then you ask which physical size on, say the lowest rows, matches one of the full frontal circles.](images/lightfields/02-measuring/01-foreshortening-sketch.png){#fig-foreshortening width="60%" fig-cap-location="bottom"}
-:::
--->
-
-## Irradiance
+## Irradiance on a surface
 
 Another important measurement is the radiance incident upon a surface, the *irradiance*.  This quantity is important to calculate the radiance available to an image sensor or the retina. It is also a practical measure in assessing room lighting, say how much light will arrive at a desk top. The irradiance sums the energy arriving from all directions, hence no three-dimensional angles (steradians) are specified. The irradiance measures the total energy per unit area of the surface. The standard symbol for irradiance is $E(\lambda)$, has units $watts/nm/m^2$.
+
+The amount of light from a small source, say a point source or a light bulb, that irradiates a surface depends on the geometry relating the light source and the surface. @fig-foreshortening-irradiance illustrates two cases:  the same angular rays emerging from both light bulbs. On the left the surface is perpendicular to the direction of the central ray.  On the right, the surface is slanted and not perpendiulcar; th same bundle of rays is spread across a larger surface area. Thus, there will be less light per unit area when the surface is not perpendicular to the main ray.  In the most extreme case, when the surface is parallel to the central ray, no light will fall on the surface at all.
+
+![Irradiance from a small source onto a surface. The same angular bundle of rays is drawn in (A) and (B). The image in (A) shows the bundle of rays arriving at the surface that is perpendicular the the central ray.  In (B) the surface is tilted, off perpendicular, so the rays are more spread out.](images/lightfields/02-measuring/02-foreshortening-irradiance-chatgpt.png){#fig-foreshortening-irradiance width="60%" fig-cap-location="bottom"}
+
+The geometric relationship between surfaces and relatively small light sources in an image is an important part of rendering images in computer graphics and measuring the illumination on surfaces in natural settings.  The geometric factor illustrated here is complementary to the geometric factor illustrated in @fig-foreshortening-sketch for how we measure the light radiating from a surface.
 
 ## Radiometric units
 
@@ -83,12 +84,17 @@ How do we determine whether we are measuring a part of a surface or a point? The
 These recommendations are filled with imprecision that I always try to remove. They contain words, like 'small', 'large', 'high', and 'low' because there is no fixed threshold at which a surface definitively becomes a point source. It is your decision whether to treat the source as a point. What is important is to tell people exactly what you did. If they don't like your choice, they can do it their own way. Or they can ask you - nicely - to try it another way.
 :::
 
-## Beyond the basics
-The four fundamental radiometric measurements provide a foundation for understanding light. In later chapters, we will expand on these concepts by introducing additional dependencies and variables.
+## Beyond the basics: BRDF, light field, colorimetry
+The four fundamental radiometric measurements provide a foundation for understanding light. In later chapters, we will expand on these concepts by introducing additional factors.
 
-For instance, radiance from a surface patch can be measured not just in a single direction but as a function of the viewing angle, described by azimuth ($\alpha$) and elevation ($\beta$). Similarly, irradiance arriving at a surface can be analyzed as a function of the incident angle. These angle-dependent measurements are crucial for understanding how light interacts with materials. We will delve deeper into this topic when we discuss the bidirectional reflectance distribution function (BRDF) in @sec-properties-brdf.
+A key extension is directional dependence. Radiance from a surface patch varies with viewing direction and is often written as $L(\mathbf{x}, \omega, \lambda)$, where $\omega$ denotes direction using polar angle $\theta$ (from the surface normal) and azimuth $\phi$. Likewise, the irradiance at a surface point is the directional radiance integrated over the hemisphere, weighted by the cosine-foreshortening factor,
+$$
+E(\mathbf{x}, \lambda) = \int_{\Omega^+} L(\mathbf{x}, \omega, \lambda)\,\cos\theta\, d\omega.
+$$
+These angle-dependent behaviors are central to how materials reflect and transmit light. We will study them with the bidirectional reflectance distribution function (BRDF), $f_r(\omega_i,\omega_o,\lambda)$, in @sec-properties-brdf.
 
-One of the most significant extensions for image systems engineering involves understanding the data captured by image sensors. Modern sensors are typically arrays of small light-sensitive elements called **pixels**, which spatially sample the irradiance at the sensor surface. Each pixel integrates energy from rays arriving from all directions within a specific wavelength band. Over time, the number of pixels in sensors has grown dramatically, from early arrays with about $256 \times 256$ pixels to today's sensors with tens of millions.
+The properties of modern image sensors also add practical constraints. Sensors are 2D arrays of small light-sensitive elements (pixels) that spatially sample the irradiance at the sensor plane. Each pixel integrates photons over its finite area, over the exposure time, over wavelengths weighted by its spectral sensitivity, and over the acceptance cone set by the lens and pixel aperture.  Pixel counts, and the corresponding microlens arrays, have grown from early arrays with a few hundred by a few hundred pixels to today’s sensors with tens of millions. 
 
-From the outset, researchers recognized the value of capturing more detailed information. Measuring rays from different directions separately, as illustrated in @fig-lightfield-pixel, provides richer data and forms the basis of light field imaging. Similarly, reproducing color requires pixels with different wavelength sensitivities, a concept first formalized in @maxwell1872-colorvision. This understanding gave rise to the field of **photometry**, which we will explore further in Part IV: Human vision.
+Capturing directional information—measuring rays from different directions separately, as in @fig-lightfield-pixel—yields richer data and is the basis of light field imaging.  The geometry of pixels, including small lenslet arrays placed over the pixel arrays, enables us to make useful measurements about the light field. 
 
+Similarly, reproducing color requires pixels with different wavelength sensitivities (e.g., a color filter array). The idea that we can use just three measurements to represent human color perception was formalized in @maxwell1872-colorvision and led to the field of **colorimetry**, which we will explore in *Part IV: Human vision*.
