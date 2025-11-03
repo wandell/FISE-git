@@ -12,7 +12,7 @@ date: last-modified
 -->
 ```
 
-The material about human vision in this chapter is under development, and the text is not ready to be reviewed.
+The material about human vision in this chapter is under development.
 
 Please refer to the chapters in [Foundations of Vision](https://foundationsofvision.stanford.edu){target="_blank"}.
 
@@ -21,20 +21,6 @@ Please refer to the chapters in [Foundations of Vision](https://foundationsofvis
 
 ## Human spatial encoding overview {#sec-human-spatial-encoding-overview}
 
-When you design a digital camera, how good does it need to be? The answer depends on who you're designing it for. If the images are for a human to look at, then the camera's design must be guided by the capabilities and limits of the human eye. This simple principle has profound consequences for engineering.
-
-Vision scientists have learned a great deal about the first stages of vision. We have excellent measurements of how the eye's optics (the cornea and lens) transform light from the world into an image on the retina, and we know how the retina's photoreceptors encode that image into neural signals. This knowledge is not just academic; it's a practical guide for designing any system that reproduces images for people.
-
-Consider color. A camera designed for human viewing should capture the same portion of the electromagnetic spectrum that we see: visible light. Capturing less of the spectrum would lead to poor color reproduction. Capturing more—like infrared or ultraviolet—would be wasteful, consuming resources to record information we can't see anyway. In this sense, human wavelength sensitivity sets a clear target for camera design.
-
-Spatial resolution presents a different challenge. It would be a disappointment if a camera failed to capture details as fine as those the human eye can resolve. We expect our photos to be at least as sharp as what we see. However, unlike with color, people are often pleased if a camera captures a scene at a *finer* resolution than the eye can perceive. We can always zoom in on the digital image to see details we might have missed. This extra information doesn't interfere with the viewing experience; it just requires more storage and processing power.
-
-So, we have two different engineering constraints derived from human vision:
-
-*   **Spatial Resolution:** Human vision sets a *minimum bar*. Capturing more can be beneficial.
-*   **Wavelength:** Human vision sets a *target range*. Capturing more is wasteful.
-
-In this section, we will review the key properties of the spatial eye that define these limits. The way our visual system samples space and encodes wavelength creates fundamental bottlenecks on what we can perceive. Understanding these limits doesn't explain everything about what we see, but it tells us what we *cannot* see—essential knowledge for the field of image systems engineering.
 
 ## The Two Stages of Encoding {#sec-human-encoding-systems}
 
@@ -135,6 +121,41 @@ DIC microscopy converts gradients in specimen thickness or refractive index (whi
 In the context of the figure caption, using DIC optics allowed the researchers to clearly delineate the layered structure of the macaque retina—the **plexiform layers** and the **nuclear layers (ONL, INL, ganglion cell layer)**—in a fresh or relatively unstained preparation.
 -->
 
+## The optical image {#sec-adaptive-optics}
+In the late 1990s, it became possible to measure how the physiological optics blurs the light in the living human eye.  The key technology for making this measurement is called **adaptive optics**, and it is based on a measurement device called the **Shack-Hartmann wavefront sensor**. This technology, originally developed by astronomers pointing their telescopes at the stars, measures the blurring (wavefront distortion) by the optical system. 
+
+The idea of the measurement is illustrated in @fig-wavefront-aberrometer.  A narrow beam of light is sent into the center of the pupil. is reflected from the inner segement layer at the back of the eye.  There it forms a fairly small spot that reverses path, back out the through the optics.  If the eye's optics were absolutely perfect, the rays from this small reflected spot would be parallel (collimated). The optics would be diffraction limited.  But the rays do not come out perfectly collimated.  They are distorted and we call this the wavefront aberration of the eye.  
+
+![Aberrometer](images/human/02-encoding/wavefront-aberrometer.png){#fig-wavefront-aberrometer width="60%"}
+
+We use the S-H wavefront sensor to measure the distortion introduced by the optics of the eye. Once we know the wavefront distortion, we can send in an image whose rays are compensated for this distortion.  These pre-distorted rays pass through the optics, and the effect of the wavefront aberrations is to cause the reflected rays to be collimated and thus the image is diffraction limited.  When the pupil aperture is fairly large, say 7 mm diameter, the Airy disk will be
+
+<!--
+My chatgpt conversation about AO and AOSLO imaging. This book should have a short form of that.  A longer explanation can go into FOV 2nd ed.
+
+https://chatgpt.com/share/690926d6-4d98-8002-b395-5e93bb3f900a
+-->
+
+These double-pass measurements (light goes in through the optics and then back out)
+
+### Shack–Hartmann wavefront sensor {#sec-wavefront-sensor}
+
+Johannes Franz Hartmann was a German astronomer working on the problem of detecting optical defects in telescope objectives. Reasoning from the ray theory of light, he measured the optical light field from a simple stimulus: an on-axis point at the focal length of the lens. In principle, the rays emerging from an ideal lens would all be parallel to the main axis. To look for deviations, he created a screen comprising an array of pinholes. If the rays were parallel, the light through the pinhole would be nicely centered behind the pinhole. If the rays were not quite parallel, the image behind the pinhole would be displaced by some distance and amount from the center. The deviations could be considered defects in the lens that could be corrected.
+
+As I observed above, the image behind each pinhole measures the intensity of the rays incident at different angles. But in practice, a small pinhole produces a blurry spot due to diffraction. Thus Hartmann did not try to extract an image but he just estimated the central position of the blurry spot. Also, because the pinholes only let through a small amount of light, the technique was not very sensitive.
+
+Because there is an array of these pinholes, the accumulation of pinhole images measures the rays at multiple angles at multiple positions. In principle, by performing this measurement for different wavelengths and polarizations, we sample the optical light field (@eq-lightfield-optical).
+
+<!--
+The Raskar version in which you put spots behind the lenslet array and adjust the spots to make the array uniform is kind of funny.  It is intended to measure the optical aberrations of the eye
+https://en.wikipedia.org/wiki/Shack%E2%80%93Hartmann_wavefront_sensor
+-->
+
+
+[Arizona History of the Shack work.](https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf?utm_source=chatgpt.com)
+
+### PSF measurements
+New section to describe
 
 ## Photoreceptor types
 The rod and cone photoreceptors are specialized neurons whose principal function is to convert electromagnetic radiation into a neural signal. Both types of photoreceptors accomplish this using a light-sensitive pigment (photopigment). This pigment absorbs photons and, in so doing, initiates a chain reaction of events within the cell (@stryer1986-annrev). These events, the transduction cascade, result in a change in the synaptic signal from the photoreceptor. The spatio-temporal pattern of changes across the photoreceptor mosaic is the signal that the nervous system interprets and the basis of our sight.
@@ -216,11 +237,13 @@ The cone density and the aperture size of the inner segment varies a great deal 
 ISETBio simulations of the cone sampling mosaic at four different eccentricities. Source: fise_humanMosaic.m
 :::
 
+
+
 <!-- See fise_humanConePSF.m in code/human -->
 ## PSF at the cone inner segments
-We are ready to describe the optical spread with respect to the cone mosaic image. We needed the retina and the photoreceptor sampling mosaic defined so we could make sense of the whoe system.
+We are ready to describe the optical spread with respect to the cone mosaic image. We needed the retina and the photoreceptor sampling mosaic defined so we could make sense of the whole system.
 
-### PSF at different eccentricities
+### Eccentricity dependence
 
 Artal data. Point to ISETBio and maybe the other book.
 
@@ -241,9 +264,7 @@ Artal data. Point to ISETBio and maybe the other book.
 ISETBio simulations of the PSF superimposed on the cone sampling mosaic at four different eccentricities. For an example subject based on Artal optics measurements. Source: fise_humanOpticsPSFm
 :::
 
-### PSF at different wavelengths
-
-Illustrate large impact of chromatic aberration
+### Wavelength dependence
 
 The short wavelength light is focused at the RGC layer when the middle wavelengths are in good focus at the inner segment.
 
@@ -259,32 +280,10 @@ The short wavelength light is focused at the RGC layer when the middle wavelengt
 Point spread function for different wavelengths, superimposed on the foveal sampling mosaic. (Source:  fise_humanConePSF.m)
 :::
 
-::: {.callout-note title="Measuring the human optical PSF"}
+## Modulation Transfer function 
 
-This callout is a mess.  Too much going on. Lots of rewriting ahead.
 
-### Shack–Hartmann wavefront sensor {#sec-wavefront-sensor}
-
-Johannes Franz Hartmann was a German astronomer working on the problem of detecting optical defects in telescope objectives. Reasoning from the ray theory of light, he measured the optical light field from a simple stimulus: an on-axis point at the focal length of the lens. In principle, the rays emerging from an ideal lens would all be parallel to the main axis. To look for deviations, he created a screen comprising an array of pinholes. If the rays were parallel, the light through the pinhole would be nicely centered behind the pinhole. If the rays were not quite parallel, the image behind the pinhole would be displaced by some distance and amount from the center. The deviations could be considered defects in the lens that could be corrected.
-
-As I observed above, the image behind each pinhole measures the intensity of the rays incident at different angles. But in practice, a small pinhole produces a blurry spot due to diffraction. Thus Hartmann did not try to extract an image but he just estimated the central position of the blurry spot. Also, because the pinholes only let through a small amount of light, the technique was not very sensitive.
-
-Because there is an array of these pinholes, the accumulation of pinhole images measures the rays at multiple angles at multiple positions. In principle, by performing this measurement for different wavelengths and polarizations, we sample the optical light field (@eq-lightfield-optical).
-
-```{=html}
-<!--
-The Raskar version in which you put spots behind the lenslet array and adjust the spots to make the array uniform is kind of funny.  It is intended to measure the optical aberrations of the eye
-https://en.wikipedia.org/wiki/Shack%E2%80%93Hartmann_wavefront_sensor
--->
-```
-
-```{=html}
-<!--
-# What about the color matching experiment? Maybe James Clerk Maxwell mentioned but referred to FOV 
--->
-```
-
-[Arizona History of the Shack work.](https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf?utm_source=chatgpt.com)
+::: {.callout-note title="Astronomy and adaptive optics"}
 
 ### Ground-based telescopes {#sec-telescopes}
 
