@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-10-27">
+<meta name="dcterms.date" content="2025-11-02">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>11&nbsp; Spatial domain – Foundations of Image Systems Engineering</title>
@@ -509,7 +509,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 27, 2025</p>
+      <p class="date">November 2, 2025</p>
     </div>
   </div>
   
@@ -536,7 +536,7 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: October 27, 2025</p>
+<p>Last updated: November 2, 2025</p>
 </div>
 </div>
 </div>
@@ -551,7 +551,7 @@ Work in Progress
 <h2 data-number="11.2" class="anchored" data-anchor-id="linearity"><span class="header-section-number">11.2</span> Linearity</h2>
 <section id="sec-pointspread-2" class="level3" data-number="11.2.1">
 <h3 data-number="11.2.1" class="anchored" data-anchor-id="sec-pointspread-2"><span class="header-section-number">11.2.1</span> Point spread functions</h3>
-<p>In <a href="optics-01-geometric.html#sec-pointspread" class="quarto-xref"><span>Section 7.7</span></a> I introduced the idea of the point spread function (PSF). It is simply the image of a point of light. If we know the point spread for each location in the scene, and superposition holds, we can predict how any input scene becomes an image.</p>
+<p>In <a href="optics-01-geometric.html#sec-pointspread" class="quarto-xref"><span>Section 7.8</span></a> I introduced the idea of the point spread function (PSF). It is simply the image of a point of light. If we know the point spread for each location in the scene, and superposition holds, we can predict how any input scene becomes an image.</p>
 <p>The scene is a collection of scene points, <span class="math inline">\(\mathbf{p} = (p_x, p_y, p_z)\)</span>, each with its own intensity <span class="math inline">\(S(\mathbf{p})\)</span>. Write the point spread function of a scene point as <span class="math inline">\(\text{PSF}_{\mathbf{p}(x, y)}\)</span>, where <span class="math inline">\((x, y)\)</span> are positions in the image. Using superposition, we calculate the output image, <span class="math inline">\(O(x,y)\)</span> by adding up the weighted point spreads from every scene point. The formula looks like this:</p>
 <p><span id="eq-pointspread-1"><span class="math display">\[
 O(x, y) = \sum_{\mathbf{p}} s(\mathbf{p})\, \text{PSF}_{\mathbf{p}}(x, y)
@@ -593,7 +593,7 @@ A limitation of PSFs
 <h2 data-number="11.3" class="anchored" data-anchor-id="sec-pointspread-common"><span class="header-section-number">11.3</span> Common PSFs in simulation</h2>
 <p>The PSFs of real systems can be difficult to model using a simple formula. In ISETCam we make it possible to provide an empirical PSF when it is known. But there are many cases in which the PSF is not yet known, say for a system that is under design and the optics have not yet been selected. In such optical system simulations, a few PSFs are routinely used to approximate image system performance prior to implementation (<a href="#fig-psf-graph" class="quarto-xref">Figure&nbsp;<span>11.1</span></a>).</p>
 <ul>
-<li><strong>Airy pattern</strong> is the only one of these PSFs that is based on the physics of light waves. This is the PSF we measure for a perfect, diffraction-limited lens imaging a point at a distance (<a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.6</span></a> and <a href="optics-01-geometric.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>7.12</span></a>). The Airy pattern depends on wavelength and represents a best case limit. The optics you use will not be better than this.</li>
+<li><strong>Airy pattern</strong> is the only one of these PSFs that is based on the physics of light waves. This is the PSF we measure for a perfect, diffraction-limited lens imaging a point at a distance (<a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.7</span></a> and <a href="optics-01-geometric.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>7.12</span></a>). The Airy pattern depends on wavelength and represents a best case limit. The optics you use will not be better than this.</li>
 <li><strong>Gaussian</strong> is popular because it’s easy to work with in calculations.</li>
 <li><strong>Lorentzian</strong> (also called Cauchy) has higher tails than the Gaussian. This makes it better for modeling systems where light gets scattered a lot—like if the lens is scratched or there are many internal reflections from a multi-element lens assembly.</li>
 <li><strong>Pillbox</strong> A square region with constant values that averages the values over the region. Who doesn’t like a simple average? Well, I don’t - but apart from me?</li>
@@ -634,7 +634,7 @@ I(r) = I_0 \left[ \frac{2 J_1\left( \frac{\pi r}{\lambda N} \right)}{ \frac{\pi 
 <li><span class="math inline">\(N\)</span> is the <span class="math inline">\(f/\#\)</span> of the lens</li>
 <li><span class="math inline">\(\lambda\)</span> is the wavelength of light</li>
 </ul>
-<p>The first dark ring defines the Airy disk (<a href="optics-01-geometric.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>7.12</span></a> , <a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.6</span></a>). It is the diameter where the intensity drops to zero, and defines the smallest spot size.</p>
+<p>The first dark ring defines the Airy disk (<a href="optics-01-geometric.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>7.12</span></a> , <a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.7</span></a>). It is the diameter where the intensity drops to zero, and defines the smallest spot size.</p>
 <p><span id="eq-airydisk3"><span class="math display">\[
 d = \arcsin(2.44 \, \lambda N) \approx 2.44 \, \lambda N
 \tag{11.2}\]</span></span></p>
@@ -689,76 +689,88 @@ LSF = \sum_x PSF(x,y)
 <h3 data-number="11.4.1" class="anchored" data-anchor-id="longitudinal-chromatic-aberration"><span class="header-section-number">11.4.1</span> Longitudinal chromatic aberration</h3>
 <p>A consequence of this wavelength-dependence is that for a given image distance will be in best focus (small PSF) for one wavelength, but not all. The wavelength-dependent defocus is called <strong>longitudinal chromatic aberration (LCA)</strong>.</p>
 <p>There is noticeable chromatic aberration for many types of lenses and materials. The most surprising optical system with a large amount of chromatic aberration is the human eye! The line spread and point spread functions measured at the human retina both vary considerably as we change the stimulus wavelength.</p>
+<div id="fig-linespread-pointspread" class="figure quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-linespread-pointspread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Line Spread Function</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Point Spread Function</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div id="fig-optics-linespread" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
+<figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-optics-linespread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/optics/10-space/linespread.png" class="img-fluid figure-img">
+<img src="images/optics/10-space/linespread.png" class="img-fluid figure-img" data-ref-parent="fig-linespread-pointspread">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-linespread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.3: Typical human line spread functions. The dashed white lines are the relative retinal illuminance.
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-optics-linespread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Typical human line spread functions. The dashed white lines are the relative retinal illuminance.
 </figcaption>
 </figure>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div id="fig-optics-pointspread" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
+<figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-optics-pointspread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/optics/10-space/pointspread.png" class="img-fluid figure-img">
+<img src="images/optics/10-space/pointspread.png" class="img-fluid figure-img" data-ref-parent="fig-linespread-pointspread">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-pointspread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.4: Typical human point spread functions. The large spread for the blue is striking. Notice that the orientation of the blur differs for this example subject, which is typical.
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-optics-pointspread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Typical human point spread functions. The large spread for the blue is striking. Notice that the orientation of the blur differs for this example subject, which is typical.
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<figcaption>
-<p>Click on the tabs at the top to see typical human line spread functions or point spread functions for stimuli with equal energy, 425 nm, 525 nm, and 625 nm. See <a href="../code/02Optics/fise_humanLSF.html" target="_blank">Human LSF</a> for how ISETBio/ISETCam implements that calculation.</p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-linespread-pointspread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.3: Typical human line spread functions or point spread functions for stimuli with equal energy, 425 nm, 525 nm, and 625 nm. Source: ISETBio <a href="../code/02Optics/fise_humanLSF.html" target="_blank">Human LSF</a>.
 </figcaption>
+</figure>
+</div>
 <p>The very large LCA of the human eye has consequences for many aspects of the human visual system and image systems engineering technology. We will describe it quantitatively and explain why it matters to technology in <a href="human-02-encoding.html#sec-human-encoding-overview" class="quarto-xref"><span>Section 22.1</span></a>.</p>
 </section>
 <section id="transverse-chromatic-aberration" class="level3" data-number="11.4.2">
 <h3 data-number="11.4.2" class="anchored" data-anchor-id="transverse-chromatic-aberration"><span class="header-section-number">11.4.2</span> Transverse chromatic aberration</h3>
 <p>A second type of chromatic aberration, called <strong>transverse chromatic aberration (TCA)</strong>, is also common in real imaging systems. While it is related to LCA, its physical cause is different.</p>
 <p>TCA occurs when the image blur interacts with the position and size of the aperture. The two panels of the figure below show short wavelength (blue) and long wavelength (red) rays, originating from a point at the lower left. The blue rays are in focus, forming a tight spot on the image plane. The red rays, however, come to focus behind the image plane, creating a larger, blurred red circle.</p>
+<div id="fig-chromatic-aberration" class="figure quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chromatic-aberration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Longitudinal chromatic aberration</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Transverse chromatic aberration</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div id="fig-optics-notransverse" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
+<figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-optics-notransverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/optics/10-space/chromatic-notransverse.png" class="img-fluid figure-img" style="width:70.0%">
+<img src="images/optics/10-space/chromatic-notransverse.png" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-chromatic-aberration">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-notransverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.5: With this aperture, there is only longitudinal chromatic aberration (LCA) and no transverse chromatic aberration (TCA).
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-optics-notransverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) With this aperture, there is only longitudinal chromatic aberration (LCA) and no transverse chromatic aberration (TCA).
 </figcaption>
 </figure>
 </div>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div id="fig-optics-transverse" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
+<figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-optics-transverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/optics/10-space/chromatic-transverse.png" class="img-fluid figure-img" style="width:70.0%">
+<img src="images/optics/10-space/chromatic-transverse.png" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-chromatic-aberration">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-transverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.6: With this pupil aperture, some of the rays from this point will be blocked from entering the lower part of the lens. The absence of these rays has a differential effect on the short- and long-wavelength light. The center of the red blur circle will be shifted so it no longer aligns with the center of the blue blur circle (TCA).
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-optics-transverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) With this pupil aperture, some of the rays from this point will be blocked from entering the lower part of the lens. The absence of these rays has a differential effect on the short- and long-wavelength light. The center of the red blur circle will be shifted so it no longer aligns with the center of the blue blur circle (TCA).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<figcaption>
-The images illustrate short wavelength (blue) and long wavelength (red) rays a single point. The blue rays are in good focus, but the red rays have a large blur circle. The two panels illustrate how changing the aperture position interacts with defocus to create transverse chromatic aberration. See the text for details.
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromatic-aberration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11.4: The images illustrate short wavelength (blue) and long wavelength (red) rays a single point. The blue rays are in good focus, but the red rays have a large blur circle. The two panels illustrate how changing the aperture position interacts with defocus to create transverse chromatic aberration. See the text for details.
 </figcaption>
+</figure>
+</div>
 <!-- keep the empty lines for spacing in the rendered image -->
 <p>Now, imagine reducing the aperture size and moving it in front of the lens. This new aperture position blocks some of the rays from both wavelengths. For the blue rays, which were already converging to a tight focus, the effect is minimal —the spot gets a little dimmer. But for the red rays, which form a large blur circle already, the new aperture blocks rays that would have formed the lower part of their blur circle. As a result, the red blur circle is clipped at the bottom, and its center shifts upward. The red and blue circles are no longer aligned. The displacement of the red blur circle is transverse chromatic aberration.</p>
 <p>The size and position of the aperture determines the amount of TCA. The physical factors that cause the transverse shift are different from those that produce LCA. Both effects are related to the different wavelengths focus. Were there no LCA, there would be no TCA.</p>
@@ -766,20 +778,20 @@ The images illustrate short wavelength (blue) and long wavelength (red) rays a s
 </section>
 <section id="sec-optics-psf-engineering" class="level2" data-number="11.5">
 <h2 data-number="11.5" class="anchored" data-anchor-id="sec-optics-psf-engineering"><span class="header-section-number">11.5</span> PSF engineering</h2>
-<p>The usual goal of optical design for consumer photography is to create a lens that has a very compact point spread function (sharp image) that is the same for all wavelengths (no chromatic aberration). This makes sense because people want their photographs to be sharp and free of the kind of chromatic fringing you can see in <a href="#fig-optics-linespread" class="quarto-xref">Figure&nbsp;<span>11.3</span></a> and <a href="#fig-optics-pointspread" class="quarto-xref">Figure&nbsp;<span>11.4</span></a>.</p>
+<p>The usual goal of optical design for consumer photography is to create a lens that has a very compact point spread function (sharp image) that is the same for all wavelengths (no chromatic aberration). This makes sense because people want their photographs to be sharp and free of the kind of chromatic fringing you can see in <a href="#fig-optics-linespread" class="quarto-xref">Figure&nbsp;<span>11.3 (a)</span></a> and <a href="#fig-optics-pointspread" class="quarto-xref">Figure&nbsp;<span>11.3 (b)</span></a>.</p>
 <p>The goal of optical design can differ, of course, for different applications. In the sections below, I describe two cases that I found to be very interesting. The first case designs optics for telescopes that are looking for planets in other star systems (exoplanets). The second case designs optics that can be helpful in estimating the depth of objects in an image. For example, in microscopy we might be interested to measure the tissue layer where a particular glowing molecule resides. These two examples are drawn from the literature of PSF engineering.</p>
 <section id="sec-psf-expolanets" class="level3" data-number="11.5.1">
 <h3 data-number="11.5.1" class="anchored" data-anchor-id="sec-psf-expolanets"><span class="header-section-number">11.5.1</span> Exoplanets</h3>
 <p>When we see a solar eclipse, the moon blocks the bright center of the sun, revealing the faint outer atmosphere called the <em>corona</em>. For centuries, scientists could only study the corona during these rare events. That changed in the 1930s, when Bernard Lyot invented the <strong>coronagraph</strong>—an optical instrument designed to block out the sun’s bright disk and make the corona visible at any time.</p>
-<p>The key to a coronagraph is <strong>PSF engineering</strong>: designing the optics so that light from a bright central source (like the sun or a star) is strongly suppressed in the image. By shaping the point spread function (PSF) to have a dark center, the instrument allows much fainter features near the bright source to be detected. Lyot’s original design remains influential and is still used in modern telescopes, including the James Webb Space Telescope’s <a href="https://jwst-docs.stsci.edu/jwst-mid-infrared-instrument/miri-instrumentation/miri-coronagraphs#gsc.tab=0" target="_blank">coronagraphic instruments</a>. The basic layout is shown in <a href="#fig-optics-lyot" class="quarto-xref">Figure&nbsp;<span>11.7</span></a>. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>Here’s how the Lyot coronagraph works (<a href="#fig-optics-lyot" class="quarto-xref">Figure&nbsp;<span>11.7</span></a>): Parallel rays from a distant star or the sun enter the telescope and are focused by the first lens. At the focal plane, a small opaque disk (the <strong>occulting disk</strong>) blocks the bright central spot. This also introduces some diffraction, as light bends around the edge of the disk. A second lens then reimages the entrance pupil, creating a new pupil plane. In this plane, a <strong>Lyot stop</strong>—a slightly smaller aperture—blocks much of the diffracted light. Finally, a third lens forms the final image, where the bright core is suppressed and the faint corona or nearby objects become visible. Typically, only about 1/200th of the original light makes it through the system.</p>
+<p>The key to a coronagraph is <strong>PSF engineering</strong>: designing the optics so that light from a bright central source (like the sun or a star) is strongly suppressed in the image. By shaping the point spread function (PSF) to have a dark center, the instrument allows much fainter features near the bright source to be detected. Lyot’s original design remains influential and is still used in modern telescopes, including the James Webb Space Telescope’s <a href="https://jwst-docs.stsci.edu/jwst-mid-infrared-instrument/miri-instrumentation/miri-coronagraphs#gsc.tab=0" target="_blank">coronagraphic instruments</a>. The basic layout is shown in <a href="#fig-optics-lyot" class="quarto-xref">Figure&nbsp;<span>11.5</span></a>. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Here’s how the Lyot coronagraph works (<a href="#fig-optics-lyot" class="quarto-xref">Figure&nbsp;<span>11.5</span></a>): Parallel rays from a distant star or the sun enter the telescope and are focused by the first lens. At the focal plane, a small opaque disk (the <strong>occulting disk</strong>) blocks the bright central spot. This also introduces some diffraction, as light bends around the edge of the disk. A second lens then reimages the entrance pupil, creating a new pupil plane. In this plane, a <strong>Lyot stop</strong>—a slightly smaller aperture—blocks much of the diffracted light. Finally, a third lens forms the final image, where the bright core is suppressed and the faint corona or nearby objects become visible. Typically, only about 1/200th of the original light makes it through the system.</p>
 <div id="fig-optics-lyot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-optics-lyot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/optics/10-space/optics-lyot-coronagraph.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-lyot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.7: Lyot coronagraph concept.
+Figure&nbsp;11.5: Lyot coronagraph concept.
 </figcaption>
 </figure>
 </div>
@@ -790,7 +802,7 @@ Figure&nbsp;11.7: Lyot coronagraph concept.
 <img src="images/optics/10-space/optics-lyot-stops.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-lyot-stops-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.8: A Lyot stop designed to work with a nearly circular occulting stop. The pattern on the left shows the diffraction pattern from a nearly circular occulting stop. The image on the right shows the Lyot stop, which lets light pass (bright regions) where the diffraction intensity is low. (From <a href="https://tinyurl.com/bp8vmkz8" target="_blank">JWST documentation, Figure 3</a>.
+Figure&nbsp;11.6: A Lyot stop designed to work with a nearly circular occulting stop. The pattern on the left shows the diffraction pattern from a nearly circular occulting stop. The image on the right shows the Lyot stop, which lets light pass (bright regions) where the diffraction intensity is low. (From <a href="https://tinyurl.com/bp8vmkz8" target="_blank">JWST documentation, Figure 3</a>.
 </figcaption>
 </figure>
 </div>
@@ -804,7 +816,7 @@ Figure&nbsp;11.8: A Lyot stop designed to work with a nearly circular occulting 
 <img src="images/optics/10-space/optics-coronagraphs.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-psfengineering-kuhn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.9: An image produced from coronagraphic data from the <a href="https://tinyurl.com/mr2b67ce" target="_blank">James Webb Space Telescope</a> and from coronagraph data from the <a href="https://www.caltech.edu/about/news/keck-observatorys-new-planet-imager-delivers-first-science-53770" target="_blank">Keck Observatory</a> (<span class="citation" data-cites="serabyn2017-exoplanet-coronagraph">Serabyn et al. (<a href="references.html#ref-serabyn2017-exoplanet-coronagraph" role="doc-biblioref">2017, fig. 5</a>)</span>.)
+Figure&nbsp;11.7: An image produced from coronagraphic data from the <a href="https://tinyurl.com/mr2b67ce" target="_blank">James Webb Space Telescope</a> and from coronagraph data from the <a href="https://www.caltech.edu/about/news/keck-observatorys-new-planet-imager-delivers-first-science-53770" target="_blank">Keck Observatory</a> (<span class="citation" data-cites="serabyn2017-exoplanet-coronagraph">Serabyn et al. (<a href="references.html#ref-serabyn2017-exoplanet-coronagraph" role="doc-biblioref">2017, fig. 5</a>)</span>.)
 </figcaption>
 </figure>
 </div>
@@ -821,14 +833,14 @@ Jeff Kuhn describes the Exo-Life Finder (ELF) project.  The quotes below are abo
 <p>Building on this, researchers like Eric Betzig (Photoactivated Localization Microscopy, PALM) and Xiaowei Zhuang (Stochastic Optical Reconstruction Microscopy, STORM) developed methods to create images with unprecedented detail (<span class="citation" data-cites="betzig2006-PALM">Betzig et al. (<a href="references.html#ref-betzig2006-PALM" role="doc-biblioref">2006</a>)</span>, <span class="citation" data-cites="zhuang2006-STORM">Rust et al. (<a href="references.html#ref-zhuang2006-STORM" role="doc-biblioref">2006</a>)</span>). The key idea is to activate only a sparse subset of fluorescent tags at any given moment. Because the active molecules are far apart, their PSFs do not overlap. The center of each PSF can be calculated with high precision, revealing the molecule’s <span class="math inline">\((x, y)\)</span> position. By repeating this process—activating a new sparse set of molecules, localizing them, and then combining all the locations—a complete, high-resolution image is constructed.</p>
 <p>These SMLM techniques are often said to “break the diffraction limit” because they can localize molecules on a scale much smaller than the Airy disk. This has revolutionized biological imaging, earning Moerner, Betzig, and Stefan Hell<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> a Nobel Prize.</p>
 <p>While SMLM excels at finding the <span class="math inline">\((x, y)\)</span> position, determining a molecule’s depth (<span class="math inline">\(z\)</span> position) is also critical for understanding 3D biological structures. The PSF of a conventional microscope changes with depth, but usually just by becoming slightly more blurry, which is difficult to measure accurately.</p>
-<p>This is where PSF engineering provides a brilliant solution. Rafael Piestun and his collaborators designed an optical system that transforms the PSF into a distinctive shape: two lobes that rotate around a central point as the molecule’s depth changes (<span class="citation" data-cites="pavani2008-3d-dh-tracking">Pavani and Piestun (<a href="references.html#ref-pavani2008-3d-dh-tracking" role="doc-biblioref">2008</a>)</span>). When plotted as a function of depth, the rotating lobes trace out a double helix (<a href="#fig-optics-double-helix" class="quarto-xref">Figure&nbsp;<span>11.10</span></a>). For a sparsely labeled sample, an investigator can find the <span class="math inline">\((x, y)\)</span> position from the PSF’s center and estimate the depth (<span class="math inline">\(z\)</span>) from the orientation of the two lobes. This clever design enables precise 3D localization of single molecules. Piestun co-founded <a href="https://www.doublehelixoptics.com/">Double Helix Optics</a> to commercialize this technology.</p>
+<p>This is where PSF engineering provides a brilliant solution. Rafael Piestun and his collaborators designed an optical system that transforms the PSF into a distinctive shape: two lobes that rotate around a central point as the molecule’s depth changes (<span class="citation" data-cites="pavani2008-3d-dh-tracking">Pavani and Piestun (<a href="references.html#ref-pavani2008-3d-dh-tracking" role="doc-biblioref">2008</a>)</span>). When plotted as a function of depth, the rotating lobes trace out a double helix (<a href="#fig-optics-double-helix" class="quarto-xref">Figure&nbsp;<span>11.8</span></a>). For a sparsely labeled sample, an investigator can find the <span class="math inline">\((x, y)\)</span> position from the PSF’s center and estimate the depth (<span class="math inline">\(z\)</span>) from the orientation of the two lobes. This clever design enables precise 3D localization of single molecules. Piestun co-founded <a href="https://www.doublehelixoptics.com/">Double Helix Optics</a> to commercialize this technology.</p>
 <div id="fig-optics-double-helix" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-optics-double-helix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/optics/10-space/piestun-double-helix.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-double-helix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;11.10: Double-helix point spread. Using a spatial light modulator to control the phase of the light, Piestun and colleagues created an oriented point spread function (images). The angle of the point spread depends on the distance from the optics at a scale of hundreds of nanometers (graph). After <span class="citation" data-cites="backlund2012-psfengineering">Backlund et al. (<a href="references.html#ref-backlund2012-psfengineering" role="doc-biblioref">2012, fig. 1</a>)</span>.
+Figure&nbsp;11.8: Double-helix point spread. Using a spatial light modulator to control the phase of the light, Piestun and colleagues created an oriented point spread function (images). The angle of the point spread depends on the distance from the optics at a scale of hundreds of nanometers (graph). After <span class="citation" data-cites="backlund2012-psfengineering">Backlund et al. (<a href="references.html#ref-backlund2012-psfengineering" role="doc-biblioref">2012, fig. 1</a>)</span>.
 </figcaption>
 </figure>
 </div>

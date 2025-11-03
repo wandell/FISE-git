@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-10-15">
+<meta name="dcterms.date" content="2025-11-01">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>7&nbsp; Geometric optics – Foundations of Image Systems Engineering</title>
@@ -477,13 +477,14 @@ window.Quarto = {
   <li><a href="#sec-lightfields-diffraction" id="toc-sec-lightfields-diffraction" class="nav-link" data-scroll-target="#sec-lightfields-diffraction"><span class="header-section-number">7.3</span> Diffraction</a></li>
   <li><a href="#sec-huygens-wave" id="toc-sec-huygens-wave" class="nav-link" data-scroll-target="#sec-huygens-wave"><span class="header-section-number">7.4</span> Huygens wave model</a></li>
   <li><a href="#double-slit-experiments" id="toc-double-slit-experiments" class="nav-link" data-scroll-target="#double-slit-experiments"><span class="header-section-number">7.5</span> Double slit experiments</a></li>
-  <li><a href="#sec-airy-pattern" id="toc-sec-airy-pattern" class="nav-link" data-scroll-target="#sec-airy-pattern"><span class="header-section-number">7.6</span> Pinhole size or diffraction: which blurs more?</a></li>
-  <li><a href="#sec-pointspread" id="toc-sec-pointspread" class="nav-link" data-scroll-target="#sec-pointspread"><span class="header-section-number">7.7</span> The point spread function</a></li>
-  <li><a href="#pinhole-psfs" id="toc-pinhole-psfs" class="nav-link" data-scroll-target="#pinhole-psfs"><span class="header-section-number">7.8</span> Pinhole PSFs</a>
+  <li><a href="#polarization" id="toc-polarization" class="nav-link" data-scroll-target="#polarization"><span class="header-section-number">7.6</span> Polarization</a></li>
+  <li><a href="#sec-airy-pattern" id="toc-sec-airy-pattern" class="nav-link" data-scroll-target="#sec-airy-pattern"><span class="header-section-number">7.7</span> Pinhole size or diffraction: which blurs more?</a></li>
+  <li><a href="#sec-pointspread" id="toc-sec-pointspread" class="nav-link" data-scroll-target="#sec-pointspread"><span class="header-section-number">7.8</span> The point spread function</a></li>
+  <li><a href="#pinhole-psfs" id="toc-pinhole-psfs" class="nav-link" data-scroll-target="#pinhole-psfs"><span class="header-section-number">7.9</span> Pinhole PSFs</a>
   <ul class="collapse">
-  <li><a href="#pinhole-and-distance" id="toc-pinhole-and-distance" class="nav-link" data-scroll-target="#pinhole-and-distance"><span class="header-section-number">7.8.1</span> Pinhole and distance</a></li>
-  <li><a href="#pinhole-shapes" id="toc-pinhole-shapes" class="nav-link" data-scroll-target="#pinhole-shapes"><span class="header-section-number">7.8.2</span> Pinhole shapes</a></li>
-  <li><a href="#human-psf" id="toc-human-psf" class="nav-link" data-scroll-target="#human-psf"><span class="header-section-number">7.8.3</span> Human PSF</a></li>
+  <li><a href="#pinhole-and-distance" id="toc-pinhole-and-distance" class="nav-link" data-scroll-target="#pinhole-and-distance"><span class="header-section-number">7.9.1</span> Pinhole and distance</a></li>
+  <li><a href="#pinhole-shapes" id="toc-pinhole-shapes" class="nav-link" data-scroll-target="#pinhole-shapes"><span class="header-section-number">7.9.2</span> Pinhole shapes</a></li>
+  <li><a href="#human-psf" id="toc-human-psf" class="nav-link" data-scroll-target="#human-psf"><span class="header-section-number">7.9.3</span> Human PSF</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -504,7 +505,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 15, 2025</p>
+      <p class="date">November 1, 2025</p>
     </div>
   </div>
   
@@ -531,7 +532,7 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: October 15, 2025</p>
+<p>Last updated: November 1, 2025</p>
 </div>
 </div>
 </div>
@@ -582,7 +583,7 @@ Figure&nbsp;7.3: Pinhole camera geometry. The rays from a distant objects arrive
 <section id="pinhole-computer-graphics" class="level3" data-number="7.2.2">
 <h3 data-number="7.2.2" class="anchored" data-anchor-id="pinhole-computer-graphics"><span class="header-section-number">7.2.2</span> Pinhole: Computer graphics</h3>
 <p>Pinhole cameras are often used in computer graphics calculations. They are simple to compute, tracing light from the recording surface (film or sensor) through the pinhole back into object space. In computer graphics it is fairly common to aim to render a nice looking image, rather than a physically accurate image. The pinhole approximation to optics provides a sharp image with large depth of field that is suitable for many applications.</p>
-<p>It is also possible to use pinhole computations to illustrate the limitations of this model in real image systems. In <a href="#fig-pinhole-chessset" class="quarto-xref">Figure&nbsp;<span>7.4</span></a> I rendered a chess set scene with the pieces, each a few cm tall, positioned about 0.5 meters from the pinhole camera. The four pictures were rendered using different pinhole diameters. The upper left allows only one ray through from each location in the scene. The aperture diameters for the next three pictures are for three different pinhole sizes. The images are brighter as the pinhole size increases. For this example, the image at the two smaller pinhole sizes are tolerable. Depending on your viewing distance from the screen or page, the third pinhole image might be usable. But the largest pinhole, which lets in the most light, loses so much spatial information that the individual pieces blur together in the image (<a href="#sec-airy-pattern" class="quarto-xref"><span>Section 7.6</span></a>).</p>
+<p>It is also possible to use pinhole computations to illustrate the limitations of this model in real image systems. In <a href="#fig-pinhole-chessset" class="quarto-xref">Figure&nbsp;<span>7.4</span></a> I rendered a chess set scene with the pieces, each a few cm tall, positioned about 0.5 meters from the pinhole camera. The four pictures were rendered using different pinhole diameters. The upper left allows only one ray through from each location in the scene. The aperture diameters for the next three pictures are for three different pinhole sizes. The images are brighter as the pinhole size increases. For this example, the image at the two smaller pinhole sizes are tolerable. Depending on your viewing distance from the screen or page, the third pinhole image might be usable. But the largest pinhole, which lets in the most light, loses so much spatial information that the individual pieces blur together in the image (<a href="#sec-airy-pattern" class="quarto-xref"><span>Section 7.7</span></a>).</p>
 <div id="fig-pinhole-chessset" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pinhole-chessset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -753,8 +754,15 @@ https://chatgpt.com/s/t_68af573578f08191a975ae4de6749069
 </div>
 </div>
 </section>
-<section id="sec-airy-pattern" class="level2 page-columns page-full" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="sec-airy-pattern"><span class="header-section-number">7.6</span> Pinhole size or diffraction: which blurs more?</h2>
+<section id="polarization" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="polarization"><span class="header-section-number">7.6</span> Polarization</h2>
+<p>(Maybe we introduce polarization here. Maybe earlier. Maybe put this in a callout instead of the moder double-slit callout.)</p>
+<p>What kind of a wave is light?</p>
+<p>Transverse or longitudinal wave. Polarization.</p>
+<p><a href="https://youtu.be/E9qpbt0v5Hw">How we know light is a transverse wave.</a></p>
+</section>
+<section id="sec-airy-pattern" class="level2 page-columns page-full" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="sec-airy-pattern"><span class="header-section-number">7.7</span> Pinhole size or diffraction: which blurs more?</h2>
 <p>From these simple considerations, we have seen that the image is blurred by two effects: the pinhole size and diffraction. Increasing the pinhole would create a larger spot on the wall, but decreasing the pinhole size reveals the spherical nature of the wavefront and also increases the size of the spot on the wall. We can compare the size of these two effects numerically.</p>
 <div id="fig-blur-comparison" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-cap-location="margin">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
@@ -803,28 +811,28 @@ The diameter of the diffraction point spread
 </div>
 </div>
 </section>
-<section id="sec-pointspread" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="sec-pointspread"><span class="header-section-number">7.7</span> The point spread function</h2>
+<section id="sec-pointspread" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="sec-pointspread"><span class="header-section-number">7.8</span> The point spread function</h2>
 <p>Throughout this section, we have analyzed optical systems by asking a simple question: what does the image of a single point of light look like? The resulting image pattern is called the <strong>point spread function (PSF)</strong>, and it is a fundamental measure of optical performance. The Airy pattern, for example, is the PSF for a diffraction-limited circular aperture. We will encounter other types of PSFs when we analyze optical systems using linear systems theory (<a href="optics-05-linear-space.html" class="quarto-xref"><span>Chapter 11</span></a>).</p>
 <p>The PSF is a cornerstone of lens simulation, characterization, and computational imaging. Its importance stems from a crucial property of many optical systems: they are approximately <strong>linear</strong>. This means that the image of two points added together is the same as the sum of the images of each point individually (a property known as superposition).</p>
 <p>Because of linearity, we can simulate the image of any complex scene. We can model the scene as a vast collection of individual light points. If we know the PSF, we can calculate the final image by scaling the PSF by the intensity of each point in the scene and summing all the resulting patterns. This process might involve millions of points, but it is a task that modern computers handle with ease.</p>
 <p>In an idealized system, the PSF might be the same for every point in the scene, merely shifted in position. Such a system is called <strong>linear and space-invariant (LSI)</strong>, and in that case the scaling and summing is called <strong>convolution</strong>. In most real-world optics, however, the system is <strong>space-variant</strong>: the PSF’s shape and size change depending on the point’s position in the field of view (e.g., its distance from the center, or <strong>field height</strong>).</p>
 <p>The concept of building an image from the sum of PSFs is foundational, and we will use the ideas of linear systems throughout this book. The appendices provide more mathematical detail on general linear systems (<a href="appendix-01-linearsystems.html#sec-appendix-linear-systems-overview" class="quarto-xref"><span>Section 27.1</span></a>) and the special case of LSI systems (<a href="appendix-02-spaceinvariance.html" class="quarto-xref"><span>Chapter 29</span></a>).</p>
 </section>
-<section id="pinhole-psfs" class="level2" data-number="7.8">
-<h2 data-number="7.8" class="anchored" data-anchor-id="pinhole-psfs"><span class="header-section-number">7.8</span> Pinhole PSFs</h2>
-<section id="pinhole-and-distance" class="level3" data-number="7.8.1">
-<h3 data-number="7.8.1" class="anchored" data-anchor-id="pinhole-and-distance"><span class="header-section-number">7.8.1</span> Pinhole and distance</h3>
+<section id="pinhole-psfs" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="pinhole-psfs"><span class="header-section-number">7.9</span> Pinhole PSFs</h2>
+<section id="pinhole-and-distance" class="level3" data-number="7.9.1">
+<h3 data-number="7.9.1" class="anchored" data-anchor-id="pinhole-and-distance"><span class="header-section-number">7.9.1</span> Pinhole and distance</h3>
 <p>Even for a simple pinhole, the PSF isn’t a single, fixed pattern. Its shape depends on how far the light source is from the aperture. This distance determines which of two diffraction regimes applies.</p>
 <p>When the point source is far away, its rays arrive collimated and thus the wavefront is a plane. This is the realm of <strong>Fraunhofer diffraction</strong> (or far-field diffraction). In this common scenario, the PSF for a circular pinhole is the classic Airy pattern we discussed earlier.</p>
 <p>When the point source is close to the pinhole, its rays arrive diverging and the wavefront is a curved, spherical wavefront. This situation is described by <strong>Fresnel diffraction</strong> (or near-field diffraction). In the near field, the PSF’s shape and size change with the distance between the source and the pinhole.</p>
 </section>
-<section id="pinhole-shapes" class="level3" data-number="7.8.2">
-<h3 data-number="7.8.2" class="anchored" data-anchor-id="pinhole-shapes"><span class="header-section-number">7.8.2</span> Pinhole shapes</h3>
+<section id="pinhole-shapes" class="level3" data-number="7.9.2">
+<h3 data-number="7.9.2" class="anchored" data-anchor-id="pinhole-shapes"><span class="header-section-number">7.9.2</span> Pinhole shapes</h3>
 <p>So far, we have focused on circular pinholes. This is a practical choice, as many apertures—from the human pupil to camera lenses—are approximately circular. A key advantage of a circular aperture is its rotational symmetry; rotating the camera (or your head) doesn’t change the image blur. The resulting PSF, like the Airy pattern, is also circularly symmetric and can be described simply by its radial profile.</p>
 <p>However, both nature and technology provide many examples of non-circular apertures. These produce more complex, two-dimensional PSFs that are not rotationally symmetric. In the following sections, we will use an ISETCam script to explore how to calculate the diffraction-limited PSF for some of these interesting shapes.</p>
-<section id="rectangular-pinholes" class="level4" data-number="7.8.2.1">
-<h4 data-number="7.8.2.1" class="anchored" data-anchor-id="rectangular-pinholes"><span class="header-section-number">7.8.2.1</span> Rectangular pinholes</h4>
+<section id="rectangular-pinholes" class="level4" data-number="7.9.2.1">
+<h4 data-number="7.9.2.1" class="anchored" data-anchor-id="rectangular-pinholes"><span class="header-section-number">7.9.2.1</span> Rectangular pinholes</h4>
 <p>The script <a href="../code/02Optics/fise_oiAperture.html" target="_blank">fise_oiAperture</a> illustrates how to calculate the PSF for a rectangular aperture in ISETCam. An image computed using the PSF from a diffraction limited rectangular pinhole, and the PSF for that pinhole, are shown in <a href="#fig-pinhole-rectangle" class="quarto-xref">Figure&nbsp;<span>7.13</span></a>. The images illustrate a case for the rectangular aperture is three times wider (x) than high (y). The larger vertical height causes less blur in the y-direction, making the image sharper for the horizontal stripes.</p>
 <div id="fig-pinhole-rectangle" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -871,8 +879,8 @@ Figure&nbsp;7.14: The cat has a vertical pupil - appropriate for a killing machi
 </div>
 </div>
 </section>
-<section id="regular-polygons" class="level4" data-number="7.8.2.2">
-<h4 data-number="7.8.2.2" class="anchored" data-anchor-id="regular-polygons"><span class="header-section-number">7.8.2.2</span> Regular polygons</h4>
+<section id="regular-polygons" class="level4" data-number="7.9.2.2">
+<h4 data-number="7.9.2.2" class="anchored" data-anchor-id="regular-polygons"><span class="header-section-number">7.9.2.2</span> Regular polygons</h4>
 <p>Classic cameras with mechanical shutters often had regular polygon shapes (left) or the interesting ‘leaf’ pattern at the right. These apertures introduce structure into the PSF that differs from a circularly symmetric aperture.</p>
 <div id="fig-pinhole-polygon" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -902,8 +910,8 @@ Figure&nbsp;7.16: High dynamic range images simulated through a lens with a regu
 <p>For the simulation in <a href="#fig-pinhole-hdr" class="quarto-xref">Figure&nbsp;<span>7.16</span></a>, I also added some scratches and dust on to the lens for realism. The brightest light in each scene (left) is five orders of magnitude (<span class="math inline">\(10^5\)</span>) more intense than the dimmest light (right), which is barely visible. The lights are all the same size, but the bright ones appear larger because of the blurring by the PSF.</p>
 </section>
 </section>
-<section id="human-psf" class="level3" data-number="7.8.3">
-<h3 data-number="7.8.3" class="anchored" data-anchor-id="human-psf"><span class="header-section-number">7.8.3</span> Human PSF</h3>
+<section id="human-psf" class="level3" data-number="7.9.3">
+<h3 data-number="7.9.3" class="anchored" data-anchor-id="human-psf"><span class="header-section-number">7.9.3</span> Human PSF</h3>
 <p>Human eyes have approximately circular pupils. In bright light the pupil is contracted to about 3 mm diameter, and the PSF can be roughly circularly symmetric. In darker environments, the pupil widens and imperfections of the human optics (cornea, lens) often have a very large and irregular impact on the PSF. The pupil aperture is circular, but the optical imperfections distort the PSF and it takes on a very irregular shape (<span class="citation" data-cites="thibos2020-arvs">Thibos (<a href="references.html#ref-thibos2020-arvs" role="doc-biblioref">2020</a>)</span> <span class="citation" data-cites="thibos2002-statisticalvariationaberration">Thibos et al. (<a href="references.html#ref-thibos2002-statisticalvariationaberration" role="doc-biblioref">2002</a>)</span>).</p>
 <!-- Isn't there some notion that the astigmatism can be well-modeled as two types (horizontal and vertical)?  Is that true, or just old fashioned stuff.-->
 <p>Even though the PSF is quite irregular, we often approximate its shape. One approximation summarizes whether or not the PSF is very different in two directions. If it is very different in two perpendicular directions, we say the person is <strong>astigmatic</strong>. <a href="#fig-astigmatism" class="quarto-xref">Figure&nbsp;<span>7.17</span></a> shows PSFs with some defocus and astigmatism. These were simulated using the same wavefront methods I described above and that will be covered in <a href="optics-07-wavefront.html" class="quarto-xref"><span>Chapter 13</span></a>.</p>

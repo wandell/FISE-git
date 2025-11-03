@@ -3,14 +3,15 @@
 % Not sure what I should set coneslinewidth parameter
 %
 
-%% 
+%%
 ieInit;
 
-%% Field height section
+%% PSF:  Field height section
 %
-% Not fully implemented.  Try 0, 2 deg and 6 deg for fun
+% Try 0, 2 deg and 6 deg eccentricities.
+%
 % I have noticed that in the periphery the spot sometimes ends up on a
-% s cone and very little response is visible.  A panel-tabset flipping
+% S-cone and very little response is visible.  A panel-tabset flipping
 % through the eccentricities is pretty compelling.
 
 % I need to figure out how to load a wvf for different eccentricities.
@@ -19,87 +20,95 @@ scene = sceneCreate('point array',256,96);
 scene = sceneSet(scene,'h fov',0.3);
 
 % I need to figure out how to load a wvf for different eccentricities.
-oi = oiCreate('human wvf');
-oi = oiCompute(oi,scene,'crop',false);
-% oiWindow(oi);
+eccDegs = [12 0; 6 0; 3 0; 0 0];
+for ii=1:size(eccDegs,1)
+    [oi, psf, support, zCoeffs, subjID] = oiPosition('Polans2015','position',eccDegs(ii,:));
+    oi = oiCompute(oi,scene,'crop',false);
+    % oiWindow(oi);
 
-cm = cMosaic('eccentricityDegs',[0 6],'sizeDegs',[0.5 0.5]);
+    cm = cMosaic('eccentricityDegs',eccDegs(ii,:),'sizeDegs',[0.4 0.4]);
 
-allE = cm.compute(oi);
-cm.plot('excitations', allE, 'label cones',true,'plot title','Activation map','cones line width',1);
+    allE = cm.compute(oi);
+    cm.plot('excitations', allE, 'label cones',false,...
+        'domain','degrees', ...
+        'plot title','Activation map',...
+        'cones line width',1);
 
+    % This should work some day.
+    % exportgraphics(gcf, fname, 'ContentType', 'vector');
+    fname = sprintf('conePSF-%d-deg.svg',eccDegs(ii,1));
+    fname = fullfile(fiseRootPath,'chapters','images','human','02-encoding',fname);
+    print(gcf,fname,'-dsvg');
+end
 
 %% Chromatic aberration section
-% 
-% Make point array scene
+%
+
+% Let's check just outside the fovea
+eccDegs = [2 0];
+hfov = 0.5;
 
 % sceneCreate('pointArray',sz,spacing,spectralType);
 scene = sceneCreate('point array',256,96);
-scene = sceneSet(scene,'h fov',0.2);
+scene = sceneSet(scene,'h fov',hfov);
 wave = sceneGet(scene,'wave');
-monoWave = 550;
-illEnergy = zeros(numel(wave),1); 
-illEnergy(wave==monoWave) = 1; 
-scene = sceneAdjustIlluminant(scene,illEnergy);
 
+% Make the scene monochromatic
+monoWave = 550;
+illEnergy = zeros(numel(wave),1);
+illEnergy(wave==monoWave) = 1;
+scene = sceneAdjustIlluminant(scene,illEnergy);
+scene = sceneSet(scene,'mean luminance',100);
 % sceneWindow(scene);
 
-oi = oiCreate('human wvf');
-oi = oiCompute(oi,scene);
+% Extract the oi for that wavelength
+oi = oiPosition('Polans2015','position',eccDegs,'wave',monoWave);
+oi = oiCompute(oi,scene,"crop",false);
 % oiWindow(oi);
 
 %% Default cone mosaic
-cm = cMosaic;
+
+cm = cMosaic('eccentricityDegs',eccDegs,'sizeDegs',[hfov hfov]*1.2);
 allE = cm.compute(oi);
 
 % Looking for another plotting method.  Asked NC.
-cm.plot('excitations', allE, 'label cones',true,'plot title','Activation map','cones line width',1);
+cm.plot('excitations', allE, 'label cones',true,'plot title','Activation map','cones line width',0.5);
 
 fname = fullfile(fiseRootPath,'chapters','images','human','02-encoding','conePSF-550.svg');
-% exportgraphics(gcf,fname);
+
+% This should work some day.
 % exportgraphics(gcf, fname, 'ContentType', 'vector');
 print(gcf,fname,'-dsvg');
 
-%% How about changing the point SPD?
+%% How about changing the point spectral power distribution?
 
 scene = sceneCreate('point array',256,96);
-scene = sceneSet(scene,'h fov',0.3);
+scene = sceneSet(scene,'h fov',hfov);
+
 wave = sceneGet(scene,'wave');
-monoWave = 480;
-illEnergy = zeros(numel(wave),1); 
-illEnergy(wave==monoWave) = 1; 
+monoWave = 450;
+illEnergy = zeros(numel(wave),1);
+illEnergy(wave==monoWave) = 1;
+
 scene = sceneAdjustIlluminant(scene,illEnergy);
+scene = sceneSet(scene,'mean luminance',100);
+
 % sceneWindow(scene);
 
-oi = oiCreate('human wvf');
-oi = oiCompute(oi,scene);
+oi = oiPosition('Polans2015','position',eccDegs,'wave',monoWave);
+oi = oiCompute(oi,scene,"crop",true);
 % oiWindow(oi);
 
 %%
-cm = cMosaic;
+% cm = cMosaic;
 allE = cm.compute(oi);
 
-% Looking for another plotting method.  Asked NC.
-cm.plot('excitations', allE, 'label cones',true,'plot title','Activation map','cones line width',1);
+cm.plot('excitations', allE, 'label cones',true,'plot title','Activation map','cones line width',0.5);
 
 fname = fullfile(fiseRootPath,'chapters','images','human','02-encoding','conePSF-480.svg');
-%exportgraphics(gcf,fname);
+
+% This should work some day.
 % exportgraphics(gcf, fname, 'ContentType', 'vector');
 print(gcf,fname,'-dsvg');
 
-%% Maybe Nicolas had a nice way to do this?
-
-%{
-wavelength = 550;
-psfRangeArcMin = 30;
-
-% The cmosaic needs to be hex type?
-visualizePSF(oi,wavelength,psfRangeArcMin,'withSuperimposedMosaic',cm)
-%}
-
-%{
-cm.visualize(... 
-    'activation', allE, ...
-    'labelConesInActivationMap', true, ...
-     'conesLineWidth', 2.0);
-%}
+%% END
