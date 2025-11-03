@@ -2,7 +2,7 @@
 date: last-modified
 ---
 
-# Human visual encoding {#sec-human-encoding}
+# Human spatial encoding {#sec-human-spatial-encoding}
 
 {{< include "includes/WIP-callout.qmd" >}}
 
@@ -16,10 +16,10 @@ The material about human vision in this chapter is under development, and the te
 
 Please refer to the chapters in [Foundations of Vision](https://foundationsofvision.stanford.edu){target="_blank"}.
 
--   [Wavelength encoding](https://wandell.github.io/FOV-1995/chapter-4-wavelength-encoding.html){target="_blank"}
+-   [Retina](https://wandell.github.io/FOV-1995/chapter-5-the-retinal-representation.html){target="_blank"}
 -   [Pattern sensitivity](https://wandell.github.io/FOV-1995/chapter-7-pattern-sensitivity.html){target="_blank"}
 
-## Human visual encoding overview {#sec-human-encoding-overview}
+## Human spatial encoding overview {#sec-human-spatial-encoding-overview}
 
 When you design a digital camera, how good does it need to be? The answer depends on who you're designing it for. If the images are for a human to look at, then the camera's design must be guided by the capabilities and limits of the human eye. This simple principle has profound consequences for engineering.
 
@@ -31,10 +31,10 @@ Spatial resolution presents a different challenge. It would be a disappointment 
 
 So, we have two different engineering constraints derived from human vision:
 
-*   **Wavelength:** Human vision sets a *target range*. Capturing more is wasteful.
 *   **Spatial Resolution:** Human vision sets a *minimum bar*. Capturing more can be beneficial.
+*   **Wavelength:** Human vision sets a *target range*. Capturing more is wasteful.
 
-In this section, we will review the key properties of the eye that define these limits. The way our visual system samples space and encodes wavelength creates fundamental bottlenecks on what we can perceive. Understanding these limits doesn't explain everything about what we see, but it tells us what we *cannot* see—essential knowledge for the field of image systems engineering.
+In this section, we will review the key properties of the spatial eye that define these limits. The way our visual system samples space and encodes wavelength creates fundamental bottlenecks on what we can perceive. Understanding these limits doesn't explain everything about what we see, but it tells us what we *cannot* see—essential knowledge for the field of image systems engineering.
 
 ## The Two Stages of Encoding {#sec-human-encoding-systems}
 
@@ -241,8 +241,6 @@ Artal data. Point to ISETBio and maybe the other book.
 ISETBio simulations of the PSF superimposed on the cone sampling mosaic at four different eccentricities. For an example subject based on Artal optics measurements. Source: fise_humanOpticsPSFm
 :::
 
-
-
 ### PSF at different wavelengths
 
 Illustrate large impact of chromatic aberration
@@ -260,8 +258,6 @@ The short wavelength light is focused at the RGC layer when the middle wavelengt
 :::
 Point spread function for different wavelengths, superimposed on the foveal sampling mosaic. (Source:  fise_humanConePSF.m)
 :::
-
-
 
 ::: {.callout-note title="Measuring the human optical PSF"}
 
@@ -302,47 +298,3 @@ The ability to measure certain properties of the optics was revolutionized by ad
 First order approximations of the human optics. Simulations with ISETBio of maybe the Westheimer or Ijspeert functions. Eye models?
 
 :::
-
-## Photoreceptor spatial sampling
-
-Maybe point mainly to the other book. Image showing the fovea and inhomogeneous sampling of the photoreceptor mosaics. Maybe Curcio. Maybe the S-cone image sampling mosaic. Adaptive optics measurements of retinal sampling Rods, ipRGCs, too in here. Other book - ISETBio: Examples of simulation. David also has these new measurements.
-
-## Photoreceptor wavelength encoding
-
-The neural tissue of the retina lines the curved surface at the back of the eye. The retina is about 5 x 5 cm, and its properties vary considerably across space. The retinal image is converted into a neural signal by a special class of neurons, the photoreceptors. The retina contains many types of specialized cells that combine into stereotypical local circuits. Multiple copies of these local circuits, but usually with different parameters, are present throughout the retina. The circuit outputs leave the retina via the optic nerve. One of the ways we can identify these circuits is that their outputs are transmitted to multiple brain regions. The circuit properties are dynamic in the sense that the circuit response to a simple stimulus, say a small flashed spot, varies with changes in the mean and variance of the retinal image.
-
-There are some similarities between the eye and a conventional camera. For example, the optics and light sensing components are integrated into a single package, and the components are adaptive with respect to light level and focus. But there are lots of differences, as well. One major difference is that the retinal encoding does not sample the image uniformly; it is very inhomogeneous compared to modern cameras. The central human retina is specialized for the cone photoreceptors, which have small (\~ 1.5 um) apertures and are tightly packed. The size of the photoreceptor apertures increases significantly from fovea to periphery, and the receptors for nighttime vision (rods) are inserted between the cones, further increasing their center-to-center spacing. This spatial sampling is quite unlike a typical image sensor whose pixels are all of the same size. Finally, the human visual system relies on eye movements to bring regions of interest into focus at the fovea. The keep integration of eye movements is very important for such a spatially inhomogeneous system.
-
-I will describe measurements of the optics and encoding in several sections below. These are selected to support calculations of image quality and engineering design. For more about the biology and the scientific methods used to derive these measurements, consult [@wandellFoundationsVision2024]
-
-## Wavelength encoding
-
-```{=html}
-<!--
-https://chatgpt.com/s/t_68af5af69c688191b21118844094d0b5
-
-By Henry Brougham in Edinburgh Review, an ardent admirer of Newton, criticizing Thomas Young’s Bakerian Lectures.
-
->  ...this paper contains nothing which deserves the name, either of experiment or of discovery, and as it is, in fact, destitute of every species of merit. We now dismiss, for the present, the feeble lucubrations of this author, in which we have searched without success for some traces of learning, acuteness, and ingenuity, that might compensate his evident deficiency in the powers of solid thinking, calm and patient investigation … 
-
-Thomas Young wrote a reply (@young1804-reply)
-
- > A MAN who has a proper regard for the dignity of his own character, although his sensibility may sometimes be awakened by the unjust attacks of interested malevolence, will esteem it ingeneral more advisable to bear, in silence, the temporary effects of a short lived injury, than to suffer his own pursuits to be interrupted, in making an effort to repel the invective, and to punish the aggressor. 
--->
-```
-
-### Color-matching
-
-### Human chromatic aberrations
-
-fise_human* script exists.
-
-Wavelength dependence (chromatic aberration)
-
-
-## Retinal prostheses
-
-Now that we know so much about the retinal encoding, the Palanker project would fit well.
-
-THe Chichilnisky project gets thrown in at the end as next generation.  Palanker fits well with the cones going forward.  The Chichilnisky project fits well with motivating why we want to know what the retinal circuitry does so we address diseases when the bipolar cells (inner nuclear layer) are damaged.
-
