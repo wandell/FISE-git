@@ -5,6 +5,8 @@
 
 %%
 ieInit;
+figsave = false;
+activationMap = colormap('hot');
 
 %% PSF:  Field height section
 %
@@ -32,13 +34,14 @@ for ii=1:size(eccDegs,1)
     cm.plot('excitations', allE, 'label cones',false,...
         'domain','degrees', ...
         'plot title','Activation map',...
-        'cones line width',1);
+        'cones line width',1, ...
+        'activation color map',activationMap);
 
     % This should work some day.
     % exportgraphics(gcf, fname, 'ContentType', 'vector');
     fname = sprintf('conePSF-%d-deg.svg',eccDegs(ii,1));
     fname = fullfile(fiseRootPath,'chapters','images','human','02-encoding',fname);
-    print(gcf,fname,'-dsvg');
+    if figsave, print(gcf,fname,'-dsvg'); end
 end
 
 %% Chromatic aberration section
@@ -72,13 +75,15 @@ cm = cMosaic('eccentricityDegs',eccDegs,'sizeDegs',[hfov hfov]*1.2);
 allE = cm.compute(oi);
 
 % Looking for another plotting method.  Asked NC.
-cm.plot('excitations', allE, 'label cones',true,'plot title','Activation map','cones line width',0.5);
+cm.plot('excitations', allE, 'label cones',true,...
+    'plot title','Activation map','cones line width',0.5, ...
+    'activation color map',0.7*activationMap + 0.3*ones(size(activationMap)));
 
 fname = fullfile(fiseRootPath,'chapters','images','human','02-encoding','conePSF-550.svg');
 
 % This should work some day.
 % exportgraphics(gcf, fname, 'ContentType', 'vector');
-print(gcf,fname,'-dsvg');
+if figsave, print(gcf,fname,'-dsvg'); end
 
 %% How about changing the point spectral power distribution?
 
@@ -103,12 +108,14 @@ oi = oiCompute(oi,scene,"crop",true);
 % cm = cMosaic;
 allE = cm.compute(oi);
 
-cm.plot('excitations', allE, 'label cones',true,'plot title','Activation map','cones line width',0.5);
+cm.plot('excitations', allE, 'label cones',true,...
+    'plot title','Activation map','cones line width',0.5, ...
+    'activation color map',activationMap);
 
 fname = fullfile(fiseRootPath,'chapters','images','human','02-encoding','conePSF-480.svg');
 
 % This should work some day.
 % exportgraphics(gcf, fname, 'ContentType', 'vector');
-print(gcf,fname,'-dsvg');
+if figsave, print(gcf,fname,'-dsvg'); end
 
 %% END
