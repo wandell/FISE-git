@@ -1,16 +1,15 @@
-%% Image of the point spread on the cone mosaic
+%% Create images of the point spread on the cone mosaic
 %
-% Not sure what I should set coneslinewidth parameter
-%
+%  * The first section creates images as a function of field height
+%  * The second section creates images as a function 
 
 %%
 ieInit;
-figsave = false;
+figsave = true;
 activationMap = colormap('hot');
+close(gcf);
 
 %% PSF:  Field height section
-%
-% Try 0, 2 deg and 6 deg eccentricities.
 %
 % I have noticed that in the periphery the spot sometimes ends up on a
 % S-cone and very little response is visible.  A panel-tabset flipping
@@ -40,18 +39,23 @@ for ii=1:size(eccDegs,1)
     % This should work some day.
     % exportgraphics(gcf, fname, 'ContentType', 'vector');
     fname = sprintf('conePSF-%d-deg.svg',eccDegs(ii,1));
-    fname = fullfile(fiseRootPath,'chapters','images','human','02-encoding',fname);
+    fname = fullfile(fiseRootPath,'chapters','images','human','02-spatial-encoding',fname);
     if figsave, print(gcf,fname,'-dsvg'); end
 end
 
 %% Chromatic aberration section
 %
 
+ieInit;
+
+figsave = true;
+activationMap = hot(256); close(gcf);
+
 % Let's check just outside the fovea
-eccDegs = [2 0];
+eccDegs = [3 0];
 hfov = 0.5;
 
-% sceneCreate('pointArray',sz,spacing,spectralType);
+%% sceneCreate('pointArray',sz,spacing,spectralType);
 scene = sceneCreate('point array',256,96);
 scene = sceneSet(scene,'h fov',hfov);
 wave = sceneGet(scene,'wave');
@@ -73,13 +77,14 @@ oi = oiCompute(oi,scene,"crop",false);
 
 cm = cMosaic('eccentricityDegs',eccDegs,'sizeDegs',[hfov hfov]*1.2);
 allE = cm.compute(oi);
+allE = ieClip(allE, 0,7000);
 
 % Looking for another plotting method.  Asked NC.
-cm.plot('excitations', allE, 'label cones',true,...
+cm.plot('excitations', allE, 'label cones',false,...
     'plot title','Activation map','cones line width',0.5, ...
-    'activation color map',0.7*activationMap + 0.3*ones(size(activationMap)));
+    'activation color map',activationMap);
 
-fname = fullfile(fiseRootPath,'chapters','images','human','02-encoding','conePSF-550.svg');
+fname = fullfile(fiseRootPath,'chapters','images','human','02-spatial-encoding','conePSF-550.svg');
 
 % This should work some day.
 % exportgraphics(gcf, fname, 'ContentType', 'vector');
@@ -107,12 +112,13 @@ oi = oiCompute(oi,scene,"crop",true);
 %%
 % cm = cMosaic;
 allE = cm.compute(oi);
+allE = ieClip(allE, 0,7000);
 
-cm.plot('excitations', allE, 'label cones',true,...
+cm.plot('excitations', allE, 'label cones',false,...
     'plot title','Activation map','cones line width',0.5, ...
     'activation color map',activationMap);
 
-fname = fullfile(fiseRootPath,'chapters','images','human','02-encoding','conePSF-480.svg');
+fname = fullfile(fiseRootPath,'chapters','images','human','02-spatial-encoding','conePSF-480.svg');
 
 % This should work some day.
 % exportgraphics(gcf, fname, 'ContentType', 'vector');
