@@ -239,35 +239,37 @@ ISETBio simulations of the cone sampling mosaic at four different eccentricities
 
 <!-- See fise_humanConePSF.m in code/human -->
 ## PSF at the cone inner segments
-We are ready to describe the optical spread with respect to the cone mosaic image. We needed the retina and the photoreceptor sampling mosaic defined so we could make sense of the whole system.
+We are now ready to describe the optical spread with respect to the cone spatial sampling. First, we illustrate for a typical person how the PSF changes with visual field eccentricity.  Second, wwe illustrate how the PSF changes with wavelength.
 
 ### Eccentricity dependence
+The set of images in this panel illustrates the PSF on the cone mosaic for locations in the central fovea, 3 deg, 6 deg and 12 deg.  The original scene is a set of 9 points (3 x 3), spanning about half a degree. The points are broadband lights. In the fovea, the PSF excites about 3-7 cones. In this region this light causes about 2000 excitations per cone.
 
-Calculating with the Artal data. Rendering is not good enough yet.
+In the peripheral locations the cone inner segment apertures are bigger, and the blur is bigger as well.  The larger blur matches the increased size of the cone apertures, so once again about 3-7 cones are significantly excited. Further, the cones all absorb about 2000 photons. for this subject, at 12 deg eccentricities, the cone apertures are not quite as well matched. Only 2-4 cones are significantly excited and they each capture about 4000 photons.
 
-::: {#fig-cone-psf- .figure}
+::: {#fig-cone-psf .figure}
 ::: {.panel-tabset}
 ### Fovea
-![Mumble.](images/human/02-spatial-encoding/conePSF-0-deg.svg){#fig-mosaic-0 width="70%"}
+![Each black circle represents the aperture of a cone inner segment. The hot colormap represents the number of expected excitations from the light. In the fovea region each point excites 3-7 cones significantly above the background level. ](images/human/02-spatial-encoding/conePSF-0-deg.svg){#fig-mosaic-0 width="70%"}
 
 ### 3 deg
-![Fix.](images/human/02-spatial-encoding/conePSF-3-deg.svg){#fig-mosaic-3 width="70%"}
+![At 3 deg of eccentricity the cone inner segments are much larger, but the PSF is larger as well.  Again, about 3-7 cones are excited above tehe background. ](images/human/02-spatial-encoding/conePSF-3-deg.svg){#fig-mosaic-3 width="70%"}
 
 ### 6 deg
-![Fix.](images/human/02-spatial-encoding/conePSF-6-deg.svg){#fig-mosaic-6 width="70%"}
+![At 6 deg of eccentricity the cone inner segments are larger again, and the PSF is slightly larger as well.  Again, about 3-7 cones are excited above the background](images/human/02-spatial-encoding/conePSF-6-deg.svg){#fig-mosaic-6 width="70%"}
 
 ### 12 deg
-![Fix.](images/human/02-spatial-encoding/conePSF-12-deg.svg){#fig-mosaic-12 width="70%"}
+![Finally, at 12 deg eccentricity the blur and cone aperture sizes may diverge a bit so that slightly ewer cones, perhaps 2-5, have elevated absorption rates compared to the background.](images/human/02-spatial-encoding/conePSF-12-deg.svg){#fig-mosaic-12 width="70%"}
 :::
-ISETBio simulations of the PSF superimposed on the cone sampling mosaic.  The four panels show four different eccentricities. The optical blur is from one example subject based on Artal optics measurements. Source: fise_humanConePSFm
+ISETBio simulations of the PSF superimposed on the cone sampling mosaic.  The four panels show four different eccentricities. This precise pattern varies between subjects because we all have slightly different optics and mosaics. The main trend, which we believe to be true, is that the blur and cone aperture size both increase with eccentricity. In some cases, as illustrated here, the two changes approximately balance one another so that the same number of cones are stimulated by about the same amount. The optical blur is from one example subject based on Artal optics measurements. Source: fise_humanConePSFm
 :::
+
+If we measure an input-referred spatial resolution, the eye's sensitivity is considerably reduced with eccentricity.  If we think purely in terms of the number of excited cones, the signal is much closer to constant from fovea to periphery.  Perhaps this latter measure is the important one for how the nervous system is wired up. I can speculate a little, right?  Though I sure would like a better story.
 
 ### PSF wavelength dependence
-In normal viewing, the human eye's optics brings the middle wavelengths are in good focus at the inner segment.  Because of chromatic aberration, the short wavelength light is focused at the RGC layer. Measured at the inner segment layer, the short wavelength light is considerably spread out (@fig-cone-psf-wavelength). This defocus of the short wavelength light (chromatic aberration) is anticipated as part of the design of the cone sampling density.  We can see this by comparing the spacing of the L- and M-cones with the S-cones. There are about 3-5 cones within the point spread of the middle wavealength light; There are 3-5 S-cones within the point spread of the short-wavelength light.  The spatial sampling of each cone type matches the optical blur of the wavelengths they capture.
+In normal viewing, the human eye's optics brings the middle wavelengths are in good focus at the inner segment. Because of chromatic aberration, the short wavelength light is focused at the RGC layer, and measured at the inner segment layer the short wavelength light is considerably spread out (@fig-cone-psf-wavelength). The defocus of the short wavelength light is wired into the design of the cone sampling density.
 
-<!-- 
-See fise_humanConePSF.m in code/human 
--->
+We can see this by comparing the spacing of the L- and M-cones with the S-cone (@fig-cone-psf-wavelength). That figure shows the sampling density of the L,M cones separately from the much lower sampling density of the S-cones.  There are about 3-5 cones within the point spread of the middle wavelength light, and there are also about 3-5 S-cones within the point spread of the short-wavelength light. Nature has evolved a photoreceptor mosaic so that the spatial sampling of each cone type matches the wavelength-dependent optical blur. 
+
 ::: {#fig-cone-psf-wavelength .figure}
 :::{.panel-tabset}
 ### PSF for 550nm
@@ -279,9 +281,9 @@ See fise_humanConePSF.m in code/human
 The two tabs show the approximate size of the point spread function at two different wavelengths, 550 nm and 450 nm, estimated at the inner segments. The spread is superimposed on the photoreceptor sampling mosaic. The retinal region shown here is in the near periphery, where there are both rods and cones. 
 :::
 
-We can simulate this in the central fovea using ISETBio.
+Modern measurements of the eye's wavefront aberrations enable us to simulate the wavelength-dependent PSF at the cone mosaic effect. Recall that in the very center of the fovea, there are no S-cones.  But there are some about 0.2 deg in the periphery.  If you click on the images in @fig-cone-psf-wavelength-isetbio, you will see a simulation of the absorptions along with a label of the cone type by the color of the circle around each cone. For the 550 nm light in the left panel, the excitations are spread over only about 3 cones.  
 
-::: {#fig-cone-psf-wavelength .figure}
+::: {#fig-cone-psf-wavelength-isetbio .figure}
 :::{.panel-tabset}
 ### PSF for 550nm
 ![PSF at 3 deg:  550nm](images/human/02-spatial-encoding/conePSF-550.png){#fig-psf-550nm width="60%"}
@@ -289,17 +291,33 @@ We can simulate this in the central fovea using ISETBio.
 ### PSF for 480nm
 ![PSF at 3 deg:  480nm](images/human/02-spatial-encoding/conePSF-480.png){#fig-psf-480nm width="60%"}
 :::
-The two tabs show simulations of the cone excitations in response to a point of light.  The left panel is for a 550 nm light and the right for a 480 nm light. The simulation is for the central fovea region.
+The two tabs show simulations of the cone excitations in response to a point of light (PSF).  The left panel is for a 550 nm light and the right for a 480 nm light. The simulation is for the central fovea region.
 :::
 
-## Modulation Transfer function 
+For the 450 nm light in the right panel, the PSF is spread over a larger retinal region. But again, click on the image to see it enlarged in a new tab.  The number of S-cones excited by the short-wavelength PSF is still only 3-5, as in @fig-cone-psf-wavelength.  The number of excitations of all the cones, including the S-cones, is much lower for the short-wavelength light.  Recall that the short-wavelength light is absorbed by the cornea, lens, and macular pigment.  To equate the number of absorptions, we would need to scale the intensity of the light quite a bit. 
 
-TODO:  Examples of the rendering of Gabor wavelets of different frequencies on the cone mosaic.  Different eccentricities.  Different wavelengths.
+## Contrast sensitivity functions (CSF)  {#sec-contrast-sensitivity}
+Optical scientists use both the space domain (PSF) and the transform domain (MTF) to study their system, and vision scientists use both domains as well. The nonuniformity of the optical blur, coupled with the nonuniformity of the cone spatial sampling, imply that shift-invariant methods only make sense over patches of the visual field. As a result, the carefully controlled harmonics used in vision experiments are modulated over relatively small regions of space.
 
-Relate this to the transform chapter.
+There are several ways in which this modulation is accomplished in experiments, though perhaps the most common is to use a **Gabor function**; named after Denis Gabor, the Nobel Laureate credited with the discovery of the laser. 
 
-Figure out where to put these callouts, and finish them up with some more images.
+$$
+\begin{aligned}
+g(x,y) &= \exp\!\left(
+  -\frac{(x - x_0)^2 + (y - y_0)^2}{2\sigma^2}
+\right)
+[1 + a \cos\!\big(2\pi f x +  \phi\big)]
+\end{aligned}
+$$ {#eq-gabor-function}
 
+Gabor functions are harmonics modulated by a Gaussian.  The standard deviation of the Gaussian ($\sigma$) controls the spatial spread; the frequency of the harmonic $f$, controls the center frequency of the image. The phase term, $\phi$, controls the spatial relationship between the harmonic and the peak of the Gaussian.  The central position in the visual field is $(x_0,y_0)$, and the amplitude of the harmonic is controlled by $a$. 
+
+Figure:  Show images of different Gabors.
+
+Contrast sensitivity functions  (CSF) measured with Gabor patches shown here.  Should we adjust $f$ and $\sigma$ together, or should we fix $\sigma$ and adjust $f$ on its own.
+
+
+## TODO
 
 Not sure the astronomy one should be here.  Shack-Hartmann should, I think.
 

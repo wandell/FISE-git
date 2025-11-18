@@ -1,7 +1,39 @@
-%% Create images of the point spread on the cone mosaic
+%% Point spread function (PSF) activation on the human cone mosaic
 %
-%  * The first section creates images as a function of field height
-%  * The second section creates images as a function 
+% This script simulates how point sources of light create activation
+% patterns on the human cone photoreceptor mosaic, demonstrating both
+% spatial and chromatic effects of the eye's optical system.
+%
+% Description:
+%   Creates visualizations of point spread function (PSF) responses on the
+%   cone mosaic under different conditions. The script has two main
+%   sections:
+%
+%   1. Field Height Variation: Computes PSF activation patterns at
+%      different retinal eccentricities (0, 3, 6, and 12 degrees) using
+%      wavefront data from Polans2015 to show how optical quality varies
+%      across the visual field.
+%
+%   2. Chromatic Aberration: Demonstrates wavelength-dependent PSF changes
+%      at a fixed eccentricity (3 degrees) by computing activation patterns
+%      for monochromatic point sources at different wavelengths (550nm and
+%      450nm), illustrating the eye's chromatic aberration.
+%
+% Outputs:
+%   - SVG files showing cone activation maps for different eccentricities
+%   - SVG files showing cone activation maps for different wavelengths
+%   - All output files saved to: 
+%     fiseRootPath/chapters/images/human/02-spatial-encoding/
+%
+% Dependencies:
+%   - ISETBio toolbox
+%   - fiseRootPath.m
+%   - oiPosition function (for Polans2015 wavefront data)
+%
+% See also:
+%   cMosaic, oiPosition, sceneCreate, oiCompute
+%
+% Copyright Imageval Consulting, LLC 2025 
 
 %%
 ieInit;
