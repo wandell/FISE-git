@@ -20,13 +20,13 @@ Please refer to the chapters in [Foundations of Vision](https://foundationsofvis
 -   [Pattern sensitivity](https://wandell.github.io/FOV-1995/chapter-7-pattern-sensitivity.html){target="_blank"}
 
 ## Human spatial encoding overview {#sec-human-spatial-encoding-overview}
-There are several types of measurements that are useful for characterizing human spatial sensitivity.  In the first part of this chapter, I review how the initial encoding within the eye limits spatial resolution, through blurring by the optics and sampling by the cone photoreceptors.  These measurements are only one of the steps in seeing, but they are important because they represent a bottleneck. Spatial information that is not captured at by the eye can only be guessed at by the brain.
+The image systems components we studied in earlier chapters have a structure that has an input and an output. This makes it possible to characterize these systems using transfer functions, such as the OTF and pointspread.  The human visual system does not have an output that we can measure directly; the percepts we experience are private.  Consequently vision science has relied on a wide variety of measurements, some direct and some indirect, to make inferences about the neural processing that underlies human perception. 
 
-For many aspects of seeing, there is a large gap between the information available in the cone photoreceptor array and human performance. We perform at a level far below capacity because of the neural processing strategies used by the brain to interpret the image. This gap is of interest, of course, for image systems engineers who are interested in predicting human perception, such as perceived image quality.
+In the first part of this chapter, I review how blurring by the optics and sampling by the photoreceptors limits the spatial resolution. These measurements characterize only the first steps in seeing, but they are important because they represent a bottleneck. Spatial information that is not captured by the eye can only be guessed at by the brain.
 
-While the limits of resolution can be established from studying the biology, information about the final human performance generally come from direct measures of human performance. Some of these measurements are amenable to quantification and thus use in engineering metrics.  Other measurements that are useful for revealing the principles implemented in the neural processing, but not immediately applicable to image systems evaluation or design.  
+There is more information available in the cone photoreceptor array than we effectively process. The neural processing strategies that interpret the image do not aim to use every scrap of available information. This gap is of interest, of course, for image systems engineers who are interested in predicting human perception, such as perceived image quality. Information about the spatial resolution of human performance must come from measures of this performance. Some of these measurements are amenable to quantification and they can be used to create quantitative engineering metrics (e.g., Barten's model).  
 
-The material in this section describes measurements that are relevant the engineering metrics. [Foundations of Vision](https://foundationsofvision.stanford.edu){target="_blank"} includes many more measurements that are helpful for understanding the general processing strategies.
+There are many other measurements that are useful for revealing the principles implemented in the neural processing, but not immediately applicable to image systems evaluation or design. The material in this section describes measurements that are relevant to engineering metrics, and the material in [Foundations of Vision](https://foundationsofvision.stanford.edu){target="_blank"} includes many more measurements that are helpful for understanding the general processing strategies.
 
 ## The Two Stages of Encoding {#sec-human-encoding-systems}
 Two systems in the eye function together to convert electromagnetic radiation from the scene into a neural signal that the brain interprets  (@fig-eye-and-retina).
@@ -48,9 +48,9 @@ Second, the **retina**, a thin layer of neural tissue lining the back of the eye
 The two systems of the visual encoding. Radiation is focused by the optics onto the photoreceptor layer of the retina. These specialized neurons, which are sensitive to some wavelengths but not others, convert the radiation into neural signals. We call the radiation that the eye converts into a neural signal *light*. Source: Eye anatomy: [Scientific Animations](https://www.scientificanimations.com).
 :::
 
-A simplifying feature of the retina, considered as a unit, is that it is a feed-forward system; there is no direct neural feedback from the brain to the retina. This means we can study the retina's input-output relationship without accounting for top-down signals from other brain regions—a luxury not often afforded when studying most other parts of the brain.
+The retina is a feed-forward system; there is no direct neural feedback from the brain. This simplifies our work, allowing us to study the retina's input-output relationship without accounting for top-down signals—a luxury we rarely have when studying other parts of the brain.
 
-For considering vision as a whole, however, we must recognize that the brain does send signals to the eye.  These control various properties, such as the size of the pupil and the optical power of the lens. Perhaps most importantly, the brain provides a form of feedback by controlling eye, head, and body positions. These signals determine which part of the visual world is projected onto the retina. These signals do not directly reach the retina, but they are of huge importance for seeing.
+However, the brain does send signals to the eye that control pupil size and lens power. It also controls eye, head, and body positions, determining which part of the visual world falls on the retina. These signals do not reach the retinal neurons directly, but they are essential for seeing.
 
 ## Physiological optics
 The cornea and the flexible lens work together to focus light, forming an image on the retina, as shown in @fig-physiological-optics. This optical system is dynamic, constantly adjusting both the amount of light it lets in and its focal length.
@@ -83,7 +83,9 @@ https://www.scientificanimations.com, CC BY-SA 4.0 <https://creativecommons.org/
 -->
 
 ## Retina
-Since the 1990s, vision scientists have been able to measure the quality of the physiological optics. In the sections below, I will summarize these measurements and the techniques that were invented to make them. I will also explain how to simulate how the incident light field is transformed into the retinal image using ISETBio. For me, it is important to understand these optics in terms of the photoreceptor sampling array. Knowing that an image is spread over 5 microns can mean one thing if the photoreceptors are sampled every 2 microns and something quite different if the photoreceptors are sampled every 10 microns. So before we talk about the physiological optics, let's consider the retina and particularly the photoreceptor mosaic.
+Since the 1990s, vision scientists have been able to measure the quality of the physiological optics. Below, I describe the techniques invented to make these measurements. The Appendix explains how we use these measurements and ISETBio to simulate the transformation of the incident light field into the retinal image.
+
+It is important to understand these optics in terms of the photoreceptor sampling array. A 5-micron optical spread has different implications if sampled every 2 microns versus every 10 microns. Thus, before discussing physiological optics, we consider the retina and the photoreceptor mosaic.
 
 The retina is approximately $200–300$ microns thick near the posterior pole, varying from about $100$ to $500$ microns across the retina. Its total area is on the order of $10–12~cm^2$. It is a laminated neural tissue comprising three nuclear layers separated by two plexiform layers. There are on the order of 80 different cell types that can be identified through their genetic expression, responses to light, and anatomical form. The retinal cells form stereotyped connections, which we call retinal circuits. We believe that there are about 20 such circuits. The circuit outputs, carried on the retinal ganglion cell axons in the optic nerve, project to a variety of locations in the brain.
 
@@ -303,7 +305,7 @@ The two tabs show simulations of the cone excitations in response to a point of 
 For the 450 nm light in the right panel, the PSF is spread over a larger retinal region. But again, click on the image to see it enlarged in a new tab.  The number of S-cones excited by the short-wavelength PSF is still only 3-5, as in @fig-cone-psf-wavelength.  The number of excitations of all the cones, including the S-cones, is much lower for the short-wavelength light.  Recall that the short-wavelength light is absorbed by the cornea, lens, and macular pigment.  To equate the number of absorptions, we would need to scale the intensity of the light quite a bit. 
 
 ## Spatial sensitivity in the transform domain
-
+The importance of the transform domain in optics and engineering led vision scientists to ask whether the same techniques could be applied to the human visual system. One of the first people to see the connection was the great engineer Otto Schade.
 
 
 ### Contrast sensitivity functions (CSF)  {#sec-contrast-sensitivity}
