@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-11-06">
+<meta name="dcterms.date" content="2025-11-22">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>12&nbsp; Transform domain – Foundations of Image Systems Engineering</title>
@@ -509,7 +509,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 6, 2025</p>
+      <p class="date">November 22, 2025</p>
     </div>
   </div>
   
@@ -536,7 +536,7 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: November 6, 2025</p>
+<p>Last updated: November 22, 2025</p>
 </div>
 </div>
 </div>
@@ -672,7 +672,7 @@ g(x) = \mathscr{F}^{-1}\!\big( \mathcal{O}(f)\,\mathscr{F}\{i\} \big).
 \tag{12.7}\]</span></span></p>
 <p>For many optical systems, particularly those with symmetric point spread functions, the phase shifts are small (i.e., <span class="math inline">\(\mathcal{P}(f)\approx 0\)</span>), in which case the OTF is approximately real and non‑negative.</p>
 <p><a href="#fig-optics-harmonics-mtf" class="quarto-xref">Figure&nbsp;<span>12.6</span></a> illustrates the effect of the MTF. An input image with a sweep of spatial frequencies (top) is passed through an optical system. The output image (bottom) shows that the contrast of the high-frequency patterns is significantly reduced, a direct visualization of the MTF’s attenuation of higher frequencies.</p>
-<!-- find the script, make the image monocrhome -->
+<!-- fise_opticsMTF.mlx. -->
 <div id="fig-optics-harmonics-mtf" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-optics-harmonics-mtf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -682,6 +682,40 @@ g(x) = \mathscr{F}^{-1}\!\big( \mathcal{O}(f)\,\mathscr{F}\{i\} \big).
 Figure&nbsp;12.6: A sweep frequency pattern demonstrates the MTF. The input image (top) is a sweep frequency, from low to high frequency, at 550 nm. The input contrast is the same as the local frequency increases. The simulation passes this image through a diffraction‑limited lens, <span class="math inline">\(f/\#=4\)</span>. The local contrast decreases at the higher frequencies. The red curve, defined as the envelope of the modulating output response, is the system’s MTF, <span class="math inline">\(\mathcal{M}(f)\)</span>. …
 </figcaption>
 </figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Otto Schade">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Otto Schade
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>https://ethw.org/Otto_H._Schade</p>
+<div id="fig-schade" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-schade-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/02-spatial-encoding/Schade_NAEwebsite.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-schade-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.7: Otto Schade Jr.&nbsp;introduced and widely applied the MTF concept in imaging engineering.
+</figcaption>
+</figure>
+</div>
+<p>Otto H. Schade (1903–1981), an RCA engineer, is the single most important figure in bringing modulation transfer function (MTF) and linear-systems analysis into practical image-system engineering. In 1938 he began specialized studies of television circuits, camera tubes, picture tubes, and the analysis of television systems perfor­mance. From 1944 to 1957 he worked on a unified general method of image analysis and specification, including practical methods for measuring the modulation transfer function and noise in optical, photographic, and electronic imaging systems. His contributions include:</p>
+<ul>
+<li>Introducing MTF as the central system-level metric for image quality in photography, television, and film.</li>
+<li>Showing how lenses, film, detectors, display phosphors, and even human vision could be treated as cascaded linear filters.</li>
+<li>Publishing a series of influential papers from the late 1930s through the 1950s, especially the canonical 1948–1958 RCA technical reports.</li>
+<li>Establishing the idea that image quality is best characterized in the frequency domain, rather than by geometric aberrations alone.</li>
+</ul>
+<p>In the August 1976 Scientific American, William H. Price of Kodak wrote: ” Much of the mystery surrounding lens ‘quality’ was cleared up in 1951 when Otto H. Schade, Sr., of the Radio Corporation of America, described his investigation of lenses used in the entire chain of infor­mation transmission represented by a television system.” He adds that with Otto Schade’s concepts and a computer, ” [now] we can mathematically model the entire photographic system, beginning with the subject and ending with the transfer function of the viewer’s eye <a href="https://www.nae.edu/30647/Mr-Otto-H-Schade-Sr">Source: NAE.</a>“. The application to the human visual system was really quite remarkable, and I will explain this in much more detail in <a href="human-02-spatial-encoding.html#sec-human-spatial-encoding-overview" class="quarto-xref"><span>Section 22.1</span></a>.</p>
+</div>
+</div>
 </div>
 </section>
 <section id="sec-PTF" class="level3" data-number="12.4.3">
@@ -709,14 +743,14 @@ Figure&nbsp;12.6: A sweep frequency pattern demonstrates the MTF. The input imag
 </section>
 <section id="two-dimensional-fourier-transforms-representation" class="level2" data-number="12.5">
 <h2 data-number="12.5" class="anchored" data-anchor-id="two-dimensional-fourier-transforms-representation"><span class="header-section-number">12.5</span> Two-dimensional Fourier Transforms representation</h2>
-<p>There are times when we would like to visualize the amplitude of the image harmonics as a function of spatial frequency. The image in <a href="#fig-optics-otf2d" class="quarto-xref">Figure&nbsp;<span>12.7</span></a> is a common approach. The spatial domain images are on the left - two different harmonics. The amplitude of the Fourier coefficients are shown on the right. The center of the image represents the mean value. The two points, symmetric about the center, represent the amplitude of the Fourier representation.</p>
+<p>There are times when we would like to visualize the amplitude of the image harmonics as a function of spatial frequency. The image in <a href="#fig-optics-otf2d" class="quarto-xref">Figure&nbsp;<span>12.8</span></a> is a common approach. The spatial domain images are on the left - two different harmonics. The amplitude of the Fourier coefficients are shown on the right. The center of the image represents the mean value. The two points, symmetric about the center, represent the amplitude of the Fourier representation.</p>
 <div id="fig-optics-otf2d" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-optics-otf2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/optics/11-transform/otf2d.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-otf2d-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.7: Pictures of 2d FFT Amplitude spectrum. <a href="../code/02Optics/fise_otf2d.html" target="_blank">See fise_otf2d</a>
+Figure&nbsp;12.8: Pictures of 2d FFT Amplitude spectrum. <a href="../code/02Optics/fise_otf2d.html" target="_blank">See fise_otf2d</a>
 </figcaption>
 </figure>
 </div>
@@ -728,7 +762,7 @@ Figure&nbsp;12.7: Pictures of 2d FFT Amplitude spectrum. <a href="../code/02Opti
 <img src="images/optics/11-transform/otf2dFace.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-otf2dparts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.8: The <span class="math inline">\(\log_{10}\)</span> amplitudes of the two-dimensional Fourier Transform coefficients are shown in the bottom row; the corresponding images are shown in the top row.<a href="../code/02Optics/fise_otf2dFace.html" target="_blank">fise_otf2dFace</a>
+Figure&nbsp;12.9: The <span class="math inline">\(\log_{10}\)</span> amplitudes of the two-dimensional Fourier Transform coefficients are shown in the bottom row; the corresponding images are shown in the top row.<a href="../code/02Optics/fise_otf2dFace.html" target="_blank">fise_otf2dFace</a>
 </figcaption>
 </figure>
 </div>
@@ -738,7 +772,7 @@ Figure&nbsp;12.8: The <span class="math inline">\(\log_{10}\)</span> amplitudes 
 <p>The transform domain is frequently used in practice to summarize high level properties of image systems. Three important ideas, often expressed in the transform domain, are summarized here. These ideas have counterparts in the spatial domain as well, as they are system characteristics. They appear in the transform domain because they are easily expressed in terms of harmonics.</p>
 <section id="image-sharpness-high-frequency-roll-off" class="level3" data-number="12.6.1">
 <h3 data-number="12.6.1" class="anchored" data-anchor-id="image-sharpness-high-frequency-roll-off"><span class="header-section-number">12.6.1</span> Image sharpness: High frequency roll off</h3>
-<p>The apparent sharpness of an image is important in consumer photography applications. And the ability to resolve fine spatial details can be important in driving, robotics and other industrial applications. The system’s spatial resolution is usually determined by how well it encodes the high spatial frequency components of the image (<a href="#fig-optics-otf2dparts" class="quarto-xref">Figure&nbsp;<span>12.8</span></a>).</p>
+<p>The apparent sharpness of an image is important in consumer photography applications. And the ability to resolve fine spatial details can be important in driving, robotics and other industrial applications. The system’s spatial resolution is usually determined by how well it encodes the high spatial frequency components of the image (<a href="#fig-optics-otf2dparts" class="quarto-xref">Figure&nbsp;<span>12.9</span></a>).</p>
 <p>Natural images often exhibit amplitude spectra that decrease roughly as <span class="math inline">\(1/f^{\alpha}\)</span> with <span class="math inline">\(\alpha\in[0.5,1]\)</span>. Optical systems further reduce high spatial frequencies due to diffraction and aberrations, reflected in the MTF roll‑off. As frequency approaches the system cutoff (e.g., the diffraction limit), contrast necessarily drops toward zero.</p>
 </section>
 <section id="spatial-aliasing" class="level3" data-number="12.6.2">
@@ -753,7 +787,7 @@ Figure&nbsp;12.8: The <span class="math inline">\(\log_{10}\)</span> amplitudes 
 F(x,y) = f(x) g(y)
 \tag{12.10}\]</span></span></p>
 <div class="callout callout-style-default callout-note callout-titled" title="2D Fourier Transforms">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -762,7 +796,7 @@ F(x,y) = f(x) g(y)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>How did we get to the close connection of imaging and the 2D Fourier Transform?</p>
 <p>Sir William Bragg and Sir William Bragg (father and son) demonstrated that the pattern of X-rays scattered by a crystal is directly related to the crystal’s internal periodic structure. This led people to the understanding that the diffraction pattern is, in fact, the Fourier transform of the crystal’s electron density. This insight became a fundamental part of studying the 3D atomic structure of molecules. In fact, it led them to measuring the 3D diffraction pattern (the frequency domain data) and then performing an inverse 3D Fourier transform to get back to the spatial domain structure. A large part of crystallography became a practical problem of applied Fourier analysis.</p>
@@ -775,7 +809,7 @@ F(x,y) = f(x) g(y)
 <img src="images/people/Bracewell_Goodman_Dish.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bracewell-goodman-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.9: Joe Goodman (left) and Ron Bracewell (right), shown together. The radio telescopes Bracewell built were located in the Stanford hills, just across the highway from the 150-foot radio telescope know as the **Dish*. The area is a popular hiking spot near Stanford.
+Figure&nbsp;12.10: Joe Goodman (left) and Ron Bracewell (right), shown together. The radio telescopes Bracewell built were located in the Stanford hills, just across the highway from the 150-foot radio telescope know as the **Dish*. The area is a popular hiking spot near Stanford.
 </figcaption>
 </figure>
 </div>

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-11-06">
+<meta name="dcterms.date" content="2025-11-23">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>22&nbsp; Human spatial encoding – Foundations of Image Systems Engineering</title>
@@ -477,15 +477,23 @@ window.Quarto = {
   <li><a href="#sec-human-encoding-systems" id="toc-sec-human-encoding-systems" class="nav-link" data-scroll-target="#sec-human-encoding-systems"><span class="header-section-number">22.2</span> The Two Stages of Encoding</a></li>
   <li><a href="#physiological-optics" id="toc-physiological-optics" class="nav-link" data-scroll-target="#physiological-optics"><span class="header-section-number">22.3</span> Physiological optics</a></li>
   <li><a href="#retina" id="toc-retina" class="nav-link" data-scroll-target="#retina"><span class="header-section-number">22.4</span> Retina</a></li>
-  <li><a href="#sec-optical-image" id="toc-sec-optical-image" class="nav-link" data-scroll-target="#sec-optical-image"><span class="header-section-number">22.5</span> The optical image</a></li>
+  <li><a href="#sec-adaptive-optics" id="toc-sec-adaptive-optics" class="nav-link" data-scroll-target="#sec-adaptive-optics"><span class="header-section-number">22.5</span> Adaptive optics</a></li>
   <li><a href="#photoreceptor-types" id="toc-photoreceptor-types" class="nav-link" data-scroll-target="#photoreceptor-types"><span class="header-section-number">22.6</span> Photoreceptor types</a></li>
   <li><a href="#cone-mosaic-at-different-eccentricities" id="toc-cone-mosaic-at-different-eccentricities" class="nav-link" data-scroll-target="#cone-mosaic-at-different-eccentricities"><span class="header-section-number">22.7</span> Cone mosaic at different eccentricities</a></li>
   <li><a href="#psf-at-the-cone-inner-segments" id="toc-psf-at-the-cone-inner-segments" class="nav-link" data-scroll-target="#psf-at-the-cone-inner-segments"><span class="header-section-number">22.8</span> PSF at the cone inner segments</a>
   <ul class="collapse">
   <li><a href="#eccentricity-dependence" id="toc-eccentricity-dependence" class="nav-link" data-scroll-target="#eccentricity-dependence"><span class="header-section-number">22.8.1</span> Eccentricity dependence</a></li>
-  <li><a href="#wavelength-dependence" id="toc-wavelength-dependence" class="nav-link" data-scroll-target="#wavelength-dependence"><span class="header-section-number">22.8.2</span> Wavelength dependence</a></li>
+  <li><a href="#psf-wavelength-dependence" id="toc-psf-wavelength-dependence" class="nav-link" data-scroll-target="#psf-wavelength-dependence"><span class="header-section-number">22.8.2</span> PSF wavelength dependence</a></li>
   </ul></li>
-  <li><a href="#modulation-transfer-function" id="toc-modulation-transfer-function" class="nav-link" data-scroll-target="#modulation-transfer-function"><span class="header-section-number">22.9</span> Modulation Transfer function</a></li>
+  <li><a href="#spatial-sensitivity-in-the-transform-domain" id="toc-spatial-sensitivity-in-the-transform-domain" class="nav-link" data-scroll-target="#spatial-sensitivity-in-the-transform-domain"><span class="header-section-number">22.9</span> Spatial sensitivity in the transform domain</a>
+  <ul class="collapse">
+  <li><a href="#sec-contrast-sensitivity" id="toc-sec-contrast-sensitivity" class="nav-link" data-scroll-target="#sec-contrast-sensitivity"><span class="header-section-number">22.9.1</span> Contrast sensitivity functions (CSF)</a></li>
+  <li><a href="#vernier-acuity" id="toc-vernier-acuity" class="nav-link" data-scroll-target="#vernier-acuity"><span class="header-section-number">22.9.2</span> Vernier acuity</a></li>
+  </ul></li>
+  <li><a href="#todo" id="toc-todo" class="nav-link" data-scroll-target="#todo"><span class="header-section-number">22.10</span> TODO</a>
+  <ul class="collapse">
+  <li><a href="#sec-telescopes" id="toc-sec-telescopes" class="nav-link" data-scroll-target="#sec-telescopes"><span class="header-section-number">22.10.1</span> Ground-based telescopes</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -505,7 +513,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 6, 2025</p>
+      <p class="date">November 23, 2025</p>
     </div>
   </div>
   
@@ -532,7 +540,7 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: November 6, 2025</p>
+<p>Last updated: November 23, 2025</p>
 </div>
 </div>
 </div>
@@ -547,12 +555,16 @@ Work in Progress
 </ul>
 <section id="sec-human-spatial-encoding-overview" class="level2" data-number="22.1">
 <h2 data-number="22.1" class="anchored" data-anchor-id="sec-human-spatial-encoding-overview"><span class="header-section-number">22.1</span> Human spatial encoding overview</h2>
+<p>The image systems components we studied in earlier chapters have a structure that has an input and an output. This makes it possible to characterize these systems using transfer functions, such as the OTF and pointspread. The human visual system does not have an output that we can measure directly; the percepts we experience are private. Consequently vision science has relied on a wide variety of measurements, some direct and some indirect, to make inferences about the neural processing that underlies human perception.</p>
+<p>In the first part of this chapter, I review how blurring by the optics and sampling by the photoreceptors limits the spatial resolution. These measurements characterize only the first steps in seeing, but they are important because they represent a bottleneck. Spatial information that is not captured by the eye can only be guessed at by the brain.</p>
+<p>There is more information available in the cone photoreceptor array than we effectively process. The neural processing strategies that interpret the image do not aim to use every scrap of available information. This gap is of interest, of course, for image systems engineers who are interested in predicting human perception, such as perceived image quality. Information about the spatial resolution of human performance must come from measures of this performance. Some of these measurements are amenable to quantification and they can be used to create quantitative engineering metrics (e.g., Barten’s model).</p>
+<p>There are many other measurements that are useful for revealing the principles implemented in the neural processing, but not immediately applicable to image systems evaluation or design. The material in this section describes measurements that are relevant to engineering metrics, and the material in <a href="https://foundationsofvision.stanford.edu" target="_blank">Foundations of Vision</a> includes many more measurements that are helpful for understanding the general processing strategies.</p>
 </section>
 <section id="sec-human-encoding-systems" class="level2" data-number="22.2">
 <h2 data-number="22.2" class="anchored" data-anchor-id="sec-human-encoding-systems"><span class="header-section-number">22.2</span> The Two Stages of Encoding</h2>
-<p>The process of converting light from the world into a neural signal that the brain can interpret happens in two main stages, as illustrated in <a href="#fig-eye-and-retina" class="quarto-xref">Figure&nbsp;<span>22.1</span></a>.</p>
-<p>First, the <strong>physiological optics</strong>—the cornea and lens—act like a camera lens. They gather the light entering the eye and focus it to form an image on the retina. This stage transforms the light from the environment into a focused optical image.</p>
-<p>Second, the <strong>retina</strong>, a thin layer of neural tissue lining the back of the eye, converts this optical image into electrical signals. This process, called transduction, is performed by specialized cells called <strong>photoreceptors</strong>. The signals from the photoreceptors are then processed by a complex network of other retinal neurons. The final output is sent to the brain by the <strong>retinal ganglion cells (RGCs)</strong>, whose axons bundle together to form the optic nerve.</p>
+<p>Two systems in the eye function together to convert electromagnetic radiation from the scene into a neural signal that the brain interprets (<a href="#fig-eye-and-retina" class="quarto-xref">Figure&nbsp;<span>22.1</span></a>).</p>
+<p>First, the <strong>physiological optics</strong>—the cornea and lens—act like a camera lens. The optics gathers the radiation entering the eye and focuses it to form an image on the retina. This optical system transforms the radiation from the environment into a focused optical image.</p>
+<p>Second, the <strong>retina</strong>, a thin layer of neural tissue lining the back of the eye, contains a set of highly specialized neurons that convert this optical image into neural signals. This process, called transduction, is performed by the <strong>photoreceptors</strong>. The signals from the photoreceptors, in the form of synaptic transmitter release, are processed by several distinct networks of retinal neurons. The output of these networks is sent to the brain on the axons of the <strong>retinal ganglion cells (RGCs)</strong>. The bundle of RGC axons exit the retina through a small hole and form the optic nerve.</p>
 <div id="fig-eye-and-retina" class="figure quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-eye-and-retina-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -587,17 +599,18 @@ Work in Progress
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eye-and-retina-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;22.1: The two stages of visual encoding. Light is first focused by the eye’s optics onto the retina, where it is converted into neural signals for the brain. Eye anatomy image source: <a href="https://www.scientificanimations.com">Scientific Animations</a>.
+Figure&nbsp;22.1: The two systems of the visual encoding. Radiation is focused by the optics onto the photoreceptor layer of the retina. These specialized neurons, which are sensitive to some wavelengths but not others, convert the radiation into neural signals. We call the radiation that the eye converts into a neural signal <em>light</em>. Source: Eye anatomy: <a href="https://www.scientificanimations.com">Scientific Animations</a>.
 </figcaption>
 </figure>
 </div>
-<p>A key feature of the retina is that it operates as a feed-forward system; there is no direct neural feedback from the brain to the retina. This simplifies our analysis, as we can study the retina’s input-output relationship without accounting for top-down signals from other brain regions—a luxury not often afforded when studying the nervous system.</p>
-<p>However, the brain also sends signals to the eye that control the size of the pupil and the optical power of the lens. The brain also provides an important indirect form of feedback by controlling eye, head, and body positions. These signals determine which part of the visual world is projected onto the retina. All of these signals are essential for seeing.</p>
+<p>The retina is a feed-forward system; there is no direct neural feedback from the brain. This simplifies our work, allowing us to study the retina’s input-output relationship without accounting for top-down signals—a luxury we rarely have when studying other parts of the brain.</p>
+<p>However, the brain does send signals to the eye that control pupil size and lens power. It also controls eye, head, and body positions, determining which part of the visual world falls on the retina. These signals do not reach the retinal neurons directly, but they are essential for seeing.</p>
 </section>
 <section id="physiological-optics" class="level2" data-number="22.3">
 <h2 data-number="22.3" class="anchored" data-anchor-id="physiological-optics"><span class="header-section-number">22.3</span> Physiological optics</h2>
-<p>The cornea and the flexible lens work together to focus light, forming an image on the retina, as shown in <a href="#fig-physiological-optics" class="quarto-xref">Figure&nbsp;<span>22.3</span></a>. This optical system is dynamic, constantly adjusting both the amount of light it lets in and its focal point.</p>
-<p>The amount of light entering the eye is controlled by the <strong>pupil</strong>, the aperture that can dilate (open) to about 8 mm in diameter in dim light or constrict (close) to about 2 mm in bright light. This change in area adjusts the light intake by a factor of about 16 (or 1.2 log units). While significant, this is a small adjustment compared to the vast range of light levels in the natural world, which can span over 10 log units. The pupil’s size changes automatically in response to light, but it is also influenced by cognitive and emotional states, such as arousal or mental effort.</p>
+<p>The cornea and the flexible lens work together to focus light, forming an image on the retina, as shown in <a href="#fig-physiological-optics" class="quarto-xref">Figure&nbsp;<span>22.3</span></a>. This optical system is dynamic, constantly adjusting both the amount of light it lets in and its focal length.</p>
+<p>The amount of light entering the eye is controlled by the <strong>pupil</strong>, an aperture that can dilate (open) to about 8 mm in diameter in dim light or constrict (close) to about 2 mm in bright light. This change in area adjusts the light intake by a factor of about 16 (or 1.2 log units). While significant, this is a small adjustment compared to the vast range of light levels we encounter in nature, which can span as much as 10 log units across a single day. The pupil’s size changes automatically in response to light, but it is also influenced by cognitive and emotional states, such as arousal or mental effort.</p>
+<p>The pupil size also determines which part of the cornea and lens contributes to image formation. When the pupil is constricted, the image is formed using only a relatively small central part of the cornea and lens. Under these conditions, optical aberrations are minimized, and the image quality can be very high, sometimes approaching the diffraction limit. When the pupil is wide open, a much larger region of the cornea and lens is used. Because biological optics are not perfect, aberrations become more significant, and the image quality is far from diffraction-limited.</p>
 <div id="fig-physiological-optics" class="figure quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-physiological-optics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -632,12 +645,12 @@ Figure&nbsp;22.1: The two stages of visual encoding. Light is first focused by t
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-physiological-optics-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;22.2: The physiological optics of the human eye. The cornea provides most of the eye’s fixed optical power, while the lens adjusts its shape to change focus.
+Figure&nbsp;22.2: The physiological optics of the human eye. The cornea provides most of the eye’s fixed optical power. The lens adjusts its shape and optical power, which changes the in-focus plane.
 </figcaption>
 </figure>
 </div>
-<p>The eye changes its focus through a process called <strong>accommodation</strong>. Neural signals control the ciliary muscles, which are connected to the lens. To focus on distant objects, the ciliary muscles contract, which increases the diameter of the ring they form and pulls on the zonule fibers, flattening the lens. To focus on nearby objects, the muscles relax, allowing the lens to return to its natural, more rounded shape, which increases its optical power.</p>
-<p>This remarkable flexibility is not permanent. With age, the lens gradually stiffens, reducing its ability to change shape. This condition, known as <strong>presbyopia</strong>, makes it difficult to focus on near objects. It typically becomes noticeable in one’s early to mid-40s and is a natural part of aging, commonly corrected with reading glasses. It happens to all of us.</p>
+<p>The eye changes the object plane that is in focus through a process called <strong>accommodation</strong>. Neural signals control the ciliary muscles, which are connected to the lens by the zonule fibers. To focus on nearby objects, the ciliary muscles contract. This contraction reduces the diameter of the ring they form, relaxing the tension on the zonule fibers. This allows the elastic lens to become more rounded (convex), increasing its optical power. To focus on distant objects, the ciliary muscles relax. This increases the diameter of the ring, which pulls on the zonule fibers and flattens the lens, decreasing its optical power.</p>
+<p>This lens flexibility is not permanent. With age, the lens gradually stiffens, reducing its ability to change shape. This condition, known as <strong>presbyopia</strong>, makes it difficult for older people to focus on near objects. The loss of near-field visual acuity typically becomes noticeable in one’s early to mid-40s and is a natural part of aging, commonly corrected with reading glasses. It happens to all of us.</p>
 <!-- 
 https://commons.wikimedia.org/wiki/File:3D_Medical_Animation_Eye_Structure.jpg 
 https://www.scientificanimations.com, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons
@@ -645,7 +658,8 @@ https://www.scientificanimations.com, CC BY-SA 4.0 <https://creativecommons.org/
 </section>
 <section id="retina" class="level2" data-number="22.4">
 <h2 data-number="22.4" class="anchored" data-anchor-id="retina"><span class="header-section-number">22.4</span> Retina</h2>
-<p>Since the 1990s, vision scientists have been able to measure the quality of the physiological optics. In the sections below, I will summarize these measurements and the techniques that were invented to make them. I will also explain how to simulate how the incident light field is transformed into the retinal image using ISETBio. For me, it is important to understand these optics in terms of the photoreceptor sampling array. Knowing that an image is spread over 5 microns can mean one thing if the photoreceptors are sampled every 2 microns and something quite different if the photoreceptors are sampled every 10 microns. So before we talk about the physiological optics, let’s consider the retina and particularly the photoreceptor mosaic.</p>
+<p>Since the 1990s, vision scientists have been able to measure the quality of the physiological optics. Below, I describe the techniques invented to make these measurements. The Appendix explains how we use these measurements and ISETBio to simulate the transformation of the incident light field into the retinal image.</p>
+<p>It is important to understand these optics in terms of the photoreceptor sampling array. A 5-micron optical spread has different implications if sampled every 2 microns versus every 10 microns. Thus, before discussing physiological optics, we consider the retina and the photoreceptor mosaic.</p>
 <p>The retina is approximately <span class="math inline">\(200–300\)</span> microns thick near the posterior pole, varying from about <span class="math inline">\(100\)</span> to <span class="math inline">\(500\)</span> microns across the retina. Its total area is on the order of <span class="math inline">\(10–12~cm^2\)</span>. It is a laminated neural tissue comprising three nuclear layers separated by two plexiform layers. There are on the order of 80 different cell types that can be identified through their genetic expression, responses to light, and anatomical form. The retinal cells form stereotyped connections, which we call retinal circuits. We believe that there are about 20 such circuits. The circuit outputs, carried on the retinal ganglion cell axons in the optic nerve, project to a variety of locations in the brain.</p>
 <p>The vast majority of light-driven activity is initiated in the photoreceptors (rods and cones). The rods are the dominant source under very low light levels, and the cones are the dominant source under moderate to high light levels. The typical retinal circuit is driven by activity that starts in a local region of the photoreceptors. The same basic circuit will be present throughout the retina, tiling the photoreceptor mosaic, though the absolute size of the cells and their input regions generally vary across the retina. The size of the region increases as one measures from the highly specialized central fovea into the periphery.</p>
 <p>There is one important and interesting exception, only recently discovered. There exists a class of retinal ganglion cells that contain a light-sensitive pigment (melanopsin). These cells, called the intrinsically photosensitive RGCs (ipRGCs), absorb photons and respond to overall light level. There are not a lot of these cells, but their outputs are important for circadian rhythms and pupillary control. They may also influence other aspects of vision.</p>
@@ -684,7 +698,7 @@ https://www.scientificanimations.com, CC BY-SA 4.0 <https://creativecommons.org/
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/human/02-spatial-encoding/retina-massey.png" class="img-fluid figure-img" style="width:90.0%"></p>
-<figcaption>This Differential Interference Contrast (DIC) microscopy image gives a sense of the density and interconnectedness of the different retinal layers and cells. It may also make it clear why it is such an accomplishment that scientists have painstakingly identified individual cell types and their circuits. Source: <span class="citation" data-cites="massey2006-retinalanatomy">Massey (<a href="references.html#ref-massey2006-retinalanatomy" role="doc-biblioref">2006</a>)</span></figcaption>
+<figcaption>This Differential Interference Contrast (DIC) microscopy<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> image gives a sense of the density and interconnectedness of the different retinal layers and cells. It may also make it clear why it is such an accomplishment that scientists have painstakingly identified individual cell types and their circuits. Source: <span class="citation" data-cites="massey2006-retinalanatomy">Massey (<a href="references.html#ref-massey2006-retinalanatomy" role="doc-biblioref">2006</a>)</span></figcaption>
 </figure>
 </div>
 </div>
@@ -708,14 +722,8 @@ Figure&nbsp;22.3: A variety of ways of visualizing and characterizing the retina
 </figcaption>
 </figure>
 </div>
-<!-- 
-DIC optics refers to **Differential Interference Contrast microscopy**.
-
-It's a type of optical microscopy technique that enhances the contrast in unstained, transparent specimens, like the layers of a retina, by making features visible that would otherwise be nearly invisible in a brightfield microscope.
-
+<!--
 ### How DIC Optics Work
-
-DIC microscopy converts gradients in specimen thickness or refractive index (which naturally occur at the boundaries of structures like cell layers, membranes, and organelles) into differences in light intensity (contrast) that the human eye or a camera can detect.
 
 1.  **Light Manipulation:** It uses specialized optical components, primarily **polarizers** and **Nomarski prisms** (or Wollaston prisms), to split a single beam of light into two beams that are slightly offset from each other.
 2.  **Phase Shift:** These two beams pass through adjacent regions of the specimen. Since the specimen has a varying refractive index (e.g., one beam passes through a cell membrane, the other through the surrounding cytoplasm), the light waves emerge with a slight **phase difference**.
@@ -724,10 +732,10 @@ DIC microscopy converts gradients in specimen thickness or refractive index (whi
 In the context of the figure caption, using DIC optics allowed the researchers to clearly delineate the layered structure of the macaque retina—the **plexiform layers** and the **nuclear layers (ONL, INL, ganglion cell layer)**—in a fresh or relatively unstained preparation.
 -->
 </section>
-<section id="sec-optical-image" class="level2" data-number="22.5">
-<h2 data-number="22.5" class="anchored" data-anchor-id="sec-optical-image"><span class="header-section-number">22.5</span> The optical image</h2>
-<p>In the late 1990s, it became possible to measure how the physiological optics blurs the light in the living human eye. The key technology for making this measurement is called <strong>adaptive optics</strong>, and it is based on a measurement device called the <strong>Shack-Hartmann (S-H) wavefront sensor</strong>. This technology, originally developed by astronomers pointing their telescopes at the stars, measures the blurring (wavefront distortion) by the optical system.</p>
-<p>The principle of the measurement is illustrated in <a href="#fig-wavefront-aberrometer" class="quarto-xref">Figure&nbsp;<span>22.4</span></a>. A narrow beam of light is directed through the center of the pupil. Some of the light is reflected from the retina, at the layer between the inner and outer segements of the receptors. The reflected light is Lambertian (spread in all directions) and fills up the lens as it passes back through the optics. If the optics were perfect, the rays exiting the eye from the small spot would be close to collimated and the wavefront would be a constant. But the rays are not parallel and thus the wavefront has some deviations from constant. These are aberrations that we measure at the S-H wavefront sensor.</p>
+<section id="sec-adaptive-optics" class="level2" data-number="22.5">
+<h2 data-number="22.5" class="anchored" data-anchor-id="sec-adaptive-optics"><span class="header-section-number">22.5</span> Adaptive optics</h2>
+<p>In the late 1990s, it became possible to measure how the physiological optics blurs the light in the living human eye. A key technology for making this measurement is <strong>adaptive optics</strong>, based on a measurement device called the <strong>Shack-Hartmann (S-H) wavefront sensor</strong>. This wavefront sensor was originally developed by astronomers pointing their telescopes at the stars. They knew that the wavefront from space was distorted by the atmosphere. They developed the sensor and adaptive optics system to measure the wavefront distortion and correct it.</p>
+<p>The principle of the measurement is illustrated in <a href="#fig-wavefront-aberrometer" class="quarto-xref">Figure&nbsp;<span>22.4</span></a>. A narrow beam of light is directed through the center of the pupil. Some of the light is reflected from the retina, at the layer between the inner and outer segements of the receptors. The reflected light is Lambertian (spread in all directions) and fills up the lens as it passes back through the optics. If the optics were perfect, the rays exiting the eye from the small spot would be close to collimated and the wavefront would be a constant. But the rays are not parallel and thus the wavefront has some deviations from constant. These are the aberrations that we measure at the S-H wavefront sensor. They are introduced by the optics of the eye.</p>
 <div id="fig-wavefront-aberrometer" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wavefront-aberrometer-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -738,13 +746,34 @@ Figure&nbsp;22.4: Wavefront measurement.
 </figcaption>
 </figure>
 </div>
-<p>We use the S-H wavefront sensor to measure the distortion introduced by the optics of the eye. Once we know the wavefront distortion, we can send in an image whose rays are compensated for this distortion. These pre-distorted rays pass through the optics, and the effect of the wavefront aberrations is to cause the reflected rays to be collimated and thus the image is diffraction limited. When the pupil aperture is fairly large, say 7 mm diameter, the Airy disk will be</p>
+<p>In addition to measuring the optics, the S-H wavefront sensor enables to additional functions. First, we can use knowledge of the wavefront distortion, to create a very sharp image at the back of the eye. We do this by pre-distorting the rays of our image before they pass through the optics. This way, the effect of the optical aberrations is to cause the reflected rays to be without any distortion and thus the image is diffraction limited. Such an image can be localized to a small spot, exciting just a single cone.</p>
+<p>Second, we can use the method to create a relatively sharp image of the retina. When the pupil aperture is fairly large, say 7 mm diameter, the diffraction-limited PSF (Airy disk) will have a small diameter of about 3 microns. Scanning a spot across the retina provides an point-by-point image of the back of the eye, blurred only by the 3 microns of the Airy disk. This technique, called adaptive optics - scanning laser ophthalmoscope (<strong>AOSLO</strong>)- enables us to form a crisp image of many parts of the photoreceptor mosaic.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Shack-Hartmann">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Shack-Hartmann
+</div>
+</div>
+<section id="sec-wavefront-sensor" class="level3 callout-body-container callout-body" data-number="22.5.1">
+<h3 data-number="22.5.1" class="anchored" data-anchor-id="sec-wavefront-sensor"><span class="header-section-number">22.5.1</span> Shack–Hartmann wavefront sensor</h3>
+<p>Johannes Franz Hartmann was a German astronomer working on the problem of detecting optical defects in telescope objectives. Reasoning from the ray theory of light, he measured the optical light field from a simple stimulus: an on-axis point at the focal length of the lens. In principle, the rays emerging from an ideal lens would all be parallel to the main axis. To measure deviations from the ideal, he created a screen comprising an array of pinholes. If the rays exiting the lens were parallel, the light through each pinhole would create a spot that is nicely centered behind the pinhole. If the rays from the lens were not parallel, the image behind the pinhole would be displaced by from the center. The measured displacements could guide how the lens might be improved.</p>
+<p>In practice, the image from each pinhole produces a blurry spot due to diffraction. Thus Hartmann did not try to extract an image; he just estimated the central position of the blurry spot. Also, because the pinholes only let through a small amount of light, the technique was not very sensitive.</p>
+<p>Hopefully these ideas are familiar to you by now - it is the same principle we used when describing the light field measurements (<a href="lightfields-01-intro.html#sec-lightfield-measurement" class="quarto-xref"><span>Section 2.7</span></a>, <a href="lightfields-01-intro.html#fig-lightfield-pixel" class="quarto-xref">Figure&nbsp;<span>2.7</span></a>). Because there is an array of these pinholes, the accumulation of pinhole images measures the rays at multiple angles at multiple positions. In principle, by performing this measurement for different wavelengths and polarizations, we sample the optical light field (<a href="lightfields-01-intro.html#eq-lightfield-optical" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>).</p>
+<!--
+The Raskar version in which you put spots behind the lenslet array and adjust the spots to make the array uniform is kind of funny.  It is intended to measure the optical aberrations of the eye
+https://en.wikipedia.org/wiki/Shack%E2%80%93Hartmann_wavefront_sensor
+-->
+<p><a href="https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf?utm_source=chatgpt.com">Arizona History of the Shack work.</a></p>
+</section>
+</div>
 <!--
 My chatgpt conversation about AO and AOSLO imaging. This book should have a short form of that.  A longer explanation can go into FOV 2nd ed.
 
 https://chatgpt.com/share/690926d6-4d98-8002-b395-5e93bb3f900a
 -->
-<p>These double-pass measurements (light goes in through the optics and then back out)</p>
 </section>
 <section id="photoreceptor-types" class="level2" data-number="22.6">
 <h2 data-number="22.6" class="anchored" data-anchor-id="photoreceptor-types"><span class="header-section-number">22.6</span> Photoreceptor types</h2>
@@ -783,11 +812,9 @@ https://chatgpt.com/share/690926d6-4d98-8002-b395-5e93bb3f900a
 </div>
 </div>
 </div>
-The photoreceptors capture light. The light enters the photoreceptor through the inner segment and is absorbed by the photosensitive molecules in the outer segment.
-
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-photoreceptors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;22.5
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-photoreceptors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;22.5: The photoreceptors convert electromagnetic radiation into a neural signal. The radiation enters the photoreceptor through the inner segment and is absorbed by the photosensitive molecules in the outer segment. The absorption initiates a series of chemical events resulting in transmitter release at the synaptic ending.
 </figcaption>
 </figure>
 </div>
@@ -860,11 +887,14 @@ Figure&nbsp;22.8: Source:<span class="citation" data-cites="hofer2005-cone-mosai
 </figcaption>
 </figure>
 </div>
-<p>These measurements revealed something that was quite surprising to vision scientists. The ratio of L- to M- cones in the living human eye is quite variable, from person to person. Some individuals have equal numbers of L- and M- cones, while others have a large predominance of L-cones. To this point in time, we have not learned how to reveal these differences in behavioral experiments, although there have been some attempts. I suspect that an enterprising engineer or scientist will find a means to do so in the future. One of the reasons that the difference is hard to reveal is that the L- and M-cones are so similar to one another.</p>
+<p>These measurements revealed something that was quite surprising to vision scientists: the ratio of L- to M- cones in the living human eye differs greatly between people. Some of us have equal numbers of L- and M- cones, while others have a large predominance of L-cones. To this point in time, we have not learned how to measure these differences in behavioral experiments, although there have been some attempts. I suspect that an enterprising engineer or scientist will find a means to do so in the future. One of the reasons that the difference is hard to reveal is that the L- and M-cones are so similar to one another.</p>
 </section>
 <section id="cone-mosaic-at-different-eccentricities" class="level2" data-number="22.7">
 <h2 data-number="22.7" class="anchored" data-anchor-id="cone-mosaic-at-different-eccentricities"><span class="header-section-number">22.7</span> Cone mosaic at different eccentricities</h2>
-<p>The cone density and the aperture size of the inner segment varies a great deal as we measure from the fovea to the periphery. The inner segment aperture diameters in the central fovea are very small (1-2 microns) and tightly packed. The apertures in the periphery become as large as 8light field sampling function is very different from the fovea to the periphery (<a href="#fig-cone-mosaic-density" class="quarto-xref">Figure&nbsp;<span>22.9</span></a>).</p>
+<p>The cone spatial sampling density and inner segment aperture size varies a great deal between the fovea and periphery. In the central fovea, the cones are tightly packed and their inner segment aperture diameters are very small (1-2 microns). In the periphery the cones are much more widely spaced and their inner segment apertures are nearly ten times larger (<a href="#fig-cone-mosaic-density" class="quarto-xref">Figure&nbsp;<span>22.9</span></a>). Hence, our encoding of the retinal irradiance is very different between the fovea and periphery.</p>
+<!--
+There is an ISETBio figure related to s_coneEccentricities.m that we could include.
+-->
 <div id="fig-cone-mosaic-density" class="figure quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cone-mosaic-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -933,13 +963,14 @@ Figure&nbsp;22.9: ISETBio simulations of the cone sampling mosaic at four differ
 </section>
 <section id="psf-at-the-cone-inner-segments" class="level2" data-number="22.8">
 <h2 data-number="22.8" class="anchored" data-anchor-id="psf-at-the-cone-inner-segments"><span class="header-section-number">22.8</span> PSF at the cone inner segments</h2>
-<p>We are ready to describe the optical spread with respect to the cone mosaic image. We needed the retina and the photoreceptor sampling mosaic defined so we could make sense of the whole system.</p>
+<p>We are now ready to describe the optical spread with respect to the cone spatial sampling. First, we illustrate for a typical person how the PSF changes with visual field eccentricity. Second, wwe illustrate how the PSF changes with wavelength.</p>
 <section id="eccentricity-dependence" class="level3" data-number="22.8.1">
 <h3 data-number="22.8.1" class="anchored" data-anchor-id="eccentricity-dependence"><span class="header-section-number">22.8.1</span> Eccentricity dependence</h3>
-<p>Calculating with the Artal data. Rendering is not good enough yet.</p>
-<div id="fig-cone-psf-" class="figure quarto-float quarto-figure quarto-figure-center anchored">
+<p>The set of images in this panel illustrates the PSF on the cone mosaic for locations in the central fovea, 3 deg, 6 deg and 12 deg. The original scene is a set of 9 points (3 x 3), spanning about half a degree. The points are broadband lights. In the fovea, the PSF excites about 3-7 cones. In this region this light causes about 2000 excitations per cone.</p>
+<p>In the peripheral locations the cone inner segment apertures are bigger, and the blur is bigger as well. The larger blur matches the increased size of the cone apertures, so once again about 3-7 cones are significantly excited. Further, the cones all absorb about 2000 photons. for this subject, at 12 deg eccentricities, the cone apertures are not quite as well matched. Only 2-4 cones are significantly excited and they each capture about 4000 photons.</p>
+<div id="fig-cone-psf" class="figure quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cone-psf--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-cone-psf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true">Fovea</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false">3 deg</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-3" role="tab" aria-controls="tabset-7-3" aria-selected="false">6 deg</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-4" role="tab" aria-controls="tabset-7-4" aria-selected="false">12 deg</a></li></ul>
 <div class="tab-content">
@@ -947,10 +978,10 @@ Figure&nbsp;22.9: ISETBio simulations of the cone sampling mosaic at four differ
 <div id="fig-mosaic-0" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-mosaic-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/02-spatial-encoding/conePSF-0-deg.svg" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-cone-psf-">
+<img src="images/human/02-spatial-encoding/conePSF-0-deg.svg" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-cone-psf">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-mosaic-0-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Mumble.
+(a) Each black circle represents the aperture of a cone inner segment. The hot colormap represents the number of expected excitations from the light. In the fovea region each point excites 3-7 cones significantly above the background level.
 </figcaption>
 </figure>
 </div>
@@ -959,10 +990,10 @@ Figure&nbsp;22.9: ISETBio simulations of the cone sampling mosaic at four differ
 <div id="fig-mosaic-3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-mosaic-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/02-spatial-encoding/conePSF-3-deg.svg" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-cone-psf-">
+<img src="images/human/02-spatial-encoding/conePSF-3-deg.svg" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-cone-psf">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-mosaic-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Fix.
+(b) At 3 deg of eccentricity the cone inner segments are much larger, but the PSF is larger as well. Again, about 3-7 cones are excited above tehe background.
 </figcaption>
 </figure>
 </div>
@@ -971,10 +1002,10 @@ Figure&nbsp;22.9: ISETBio simulations of the cone sampling mosaic at four differ
 <div id="fig-mosaic-6" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-mosaic-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/02-spatial-encoding/conePSF-6-deg.svg" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-cone-psf-">
+<img src="images/human/02-spatial-encoding/conePSF-6-deg.svg" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-cone-psf">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-mosaic-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(c) Fix.
+(c) At 6 deg of eccentricity the cone inner segments are larger again, and the PSF is slightly larger as well. Again, about 3-7 cones are excited above the background
 </figcaption>
 </figure>
 </div>
@@ -983,10 +1014,10 @@ Figure&nbsp;22.9: ISETBio simulations of the cone sampling mosaic at four differ
 <div id="fig-mosaic-12" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-mosaic-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/02-spatial-encoding/conePSF-12-deg.svg" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-cone-psf-">
+<img src="images/human/02-spatial-encoding/conePSF-12-deg.svg" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-cone-psf">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-mosaic-12-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(d) Fix.
+(d) Finally, at 12 deg eccentricity the blur and cone aperture sizes may diverge a bit so that slightly ewer cones, perhaps 2-5, have elevated absorption rates compared to the background.
 </figcaption>
 </figure>
 </div>
@@ -994,18 +1025,17 @@ Figure&nbsp;22.9: ISETBio simulations of the cone sampling mosaic at four differ
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cone-psf--caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;22.10: ISETBio simulations of the PSF superimposed on the cone sampling mosaic. The four panels show four different eccentricities. The optical blur is from one example subject based on Artal optics measurements. Source: fise_humanOpticsPSFm
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cone-psf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;22.10: ISETBio simulations of the PSF superimposed on the cone sampling mosaic. The four panels show four different eccentricities. This precise pattern varies between subjects because we all have slightly different optics and mosaics. The main trend, which we believe to be true, is that the blur and cone aperture size both increase with eccentricity. In some cases, as illustrated here, the two changes approximately balance one another so that the same number of cones are stimulated by about the same amount. The optical blur is from one example subject based on Artal optics measurements. Source: fise_humanConePSFm
 </figcaption>
 </figure>
 </div>
+<p>If we measure an input-referred spatial resolution, the eye’s sensitivity is considerably reduced with eccentricity. If we think purely in terms of the number of excited cones, the signal is much closer to constant from fovea to periphery. Perhaps this latter measure is the important one for how the nervous system is wired up. I can speculate a little, right? Though I sure would like a better story.</p>
 </section>
-<section id="wavelength-dependence" class="level3" data-number="22.8.2">
-<h3 data-number="22.8.2" class="anchored" data-anchor-id="wavelength-dependence"><span class="header-section-number">22.8.2</span> Wavelength dependence</h3>
-<p>In normal viewing, the human eye’s optics brings the middle wavelengths are in good focus at the inner segment. Because of chromatic aberration, the short wavelength light is focused at the RGC layer. Measured at the inner segment layer, the short wavelength light is considerably spread out (<a href="#fig-cone-psf-wavelength" class="quarto-xref">Figure&nbsp;<span>22.12</span></a>). This defocus of the short wavelength light (chromatic aberration) is anticipated as part of the design of the cone sampling density. We can see this by comparing the spacing of the L- and M-cones with the S-cones. There are about 3-5 cones within the point spread of the middle wavealength light; There are 3-5 S-cones within the point spread of the short-wavelength light. The spatial sampling of each cone type matches the optical blur of the wavelengths they capture.</p>
-<!-- 
-See fise_humanConePSF.m in code/human 
--->
+<section id="psf-wavelength-dependence" class="level3" data-number="22.8.2">
+<h3 data-number="22.8.2" class="anchored" data-anchor-id="psf-wavelength-dependence"><span class="header-section-number">22.8.2</span> PSF wavelength dependence</h3>
+<p>In normal viewing, the human eye’s optics brings the middle wavelengths are in good focus at the inner segment. Because of chromatic aberration, the short wavelength light is focused at the RGC layer, and measured at the inner segment layer the short wavelength light is considerably spread out (<a href="#fig-cone-psf-wavelength" class="quarto-xref">Figure&nbsp;<span>22.11</span></a>). The defocus of the short wavelength light is wired into the design of the cone sampling density.</p>
+<p>We can see this by comparing the spacing of the L- and M-cones with the S-cone (<a href="#fig-cone-psf-wavelength" class="quarto-xref">Figure&nbsp;<span>22.11</span></a>). That figure shows the sampling density of the L,M cones separately from the much lower sampling density of the S-cones. There are about 3-5 cones within the point spread of the middle wavelength light, and there are also about 3-5 S-cones within the point spread of the short-wavelength light. Nature has evolved a photoreceptor mosaic so that the spatial sampling of each cone type matches the wavelength-dependent optical blur.</p>
 <div id="fig-cone-psf-wavelength" class="figure quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cone-psf-wavelength-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1044,10 +1074,10 @@ Figure&nbsp;22.11: The two tabs show the approximate size of the point spread fu
 </figcaption>
 </figure>
 </div>
-<p>We can simulate this in the central fovea using ISETBio.</p>
-<div id="fig-cone-psf-wavelength" class="figure quarto-float quarto-figure quarto-figure-center anchored">
+<p>Modern measurements of the eye’s wavefront aberrations enable us to simulate the wavelength-dependent PSF at the cone mosaic effect. Recall that in the very center of the fovea, there are no S-cones. But there are some about 0.2 deg in the periphery. If you click on the images in <a href="#fig-cone-psf-wavelength-isetbio" class="quarto-xref">Figure&nbsp;<span>22.12</span></a>, you will see a simulation of the absorptions along with a label of the cone type by the color of the circle around each cone. For the 550 nm light in the left panel, the excitations are spread over only about 3 cones.</p>
+<div id="fig-cone-psf-wavelength-isetbio" class="figure quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cone-psf-wavelength-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-cone-psf-wavelength-isetbio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true">PSF for 550nm</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false">PSF for 480nm</a></li></ul>
 <div class="tab-content">
@@ -1055,7 +1085,7 @@ Figure&nbsp;22.11: The two tabs show the approximate size of the point spread fu
 <div id="fig-psf-550nm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-psf-550nm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/02-spatial-encoding/conePSF-550.png" class="img-fluid figure-img" style="width:60.0%" data-ref-parent="fig-cone-psf-wavelength">
+<img src="images/human/02-spatial-encoding/conePSF-550.png" class="img-fluid figure-img" style="width:60.0%" data-ref-parent="fig-cone-psf-wavelength-isetbio">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-psf-550nm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) PSF at 3 deg: 550nm
@@ -1067,7 +1097,7 @@ Figure&nbsp;22.11: The two tabs show the approximate size of the point spread fu
 <div id="fig-psf-480nm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-psf-480nm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/02-spatial-encoding/conePSF-480.png" class="img-fluid figure-img" style="width:60.0%" data-ref-parent="fig-cone-psf-wavelength">
+<img src="images/human/02-spatial-encoding/conePSF-480.png" class="img-fluid figure-img" style="width:60.0%" data-ref-parent="fig-cone-psf-wavelength-isetbio">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-psf-480nm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) PSF at 3 deg: 480nm
@@ -1078,41 +1108,73 @@ Figure&nbsp;22.11: The two tabs show the approximate size of the point spread fu
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cone-psf-wavelength-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;22.12: The two tabs show simulations of the cone excitations in response to a point of light. The left panel is for a 550 nm light and the right for a 480 nm light. The simulation is for the central fovea region.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cone-psf-wavelength-isetbio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;22.12: The two tabs show simulations of the cone excitations in response to a point of light (PSF). The left panel is for a 550 nm light and the right for a 480 nm light. The simulation is for the central fovea region.
 </figcaption>
 </figure>
 </div>
+<p>For the 450 nm light in the right panel, the PSF is spread over a larger retinal region. But again, click on the image to see it enlarged in a new tab. The number of S-cones excited by the short-wavelength PSF is still only 3-5, as in <a href="#fig-cone-psf-wavelength" class="quarto-xref">Figure&nbsp;<span>22.11</span></a>. The number of excitations of all the cones, including the S-cones, is much lower for the short-wavelength light. Recall that the short-wavelength light is absorbed by the cornea, lens, and macular pigment. To equate the number of absorptions, we would need to scale the intensity of the light quite a bit.</p>
 </section>
 </section>
-<section id="modulation-transfer-function" class="level2" data-number="22.9">
-<h2 data-number="22.9" class="anchored" data-anchor-id="modulation-transfer-function"><span class="header-section-number">22.9</span> Modulation Transfer function</h2>
-<p>TODO: Examples of the rendering of Gabor wavelets of different frequencies on the cone mosaic. Different eccentricities. Different wavelengths.</p>
-<p>Relate this to the transform chapter.</p>
-<p>Figure out where to put these callouts, and finish them up with some more images.</p>
-<p>Not sure the astronomy one should be here. Shack-Hartmann should, I think.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Shack-Hartmann">
-<div class="callout-header d-flex align-content-center">
+<section id="spatial-sensitivity-in-the-transform-domain" class="level2" data-number="22.9">
+<h2 data-number="22.9" class="anchored" data-anchor-id="spatial-sensitivity-in-the-transform-domain"><span class="header-section-number">22.9</span> Spatial sensitivity in the transform domain</h2>
+<p>The usefulness of the analyses in the transform domain, in engineering generally and optics specifically, led vision scientists to ask whether measurements using harmonics could be useful for understanding and characterizing the human visual system. Perhaps the first person to see the potential application was the image systems engineer Otto Schade. This is the person who developed the concept of the modulation transfer function (MTF) for image systems engineering questions (<a href="optics-06-linear-transform.html#sec-MTF" class="quarto-xref"><span>Section 12.4.2</span></a>).</p>
+<p>I created four Google docs with historical information about CSF measurements, how to download the historical data, and how to imlement the modern models of the historical and more modern data. Integrate those pages here and write some Matlab scripts to create figures.</p>
+<p>Show the data he collected of the CSF (1/MTF) he measured that I include in FOV. Maybe in the human spatial encoding chapter.</p>
+<p>The use of harmonics to probe the visual system is quite different from their use in studying typical systems. At many points in this volume I have pointed out that harmonics are particularly valuable stimuli for space-invariant linear systems <a href="appendix-02-spaceinvariance.html" class="quarto-xref"><span>Chapter 30</span></a>. These systems have an input and an output. THe use of harmonic stimuli in human vision faces two significant limitations. First, as we have just seen, the system is not at all space-invariant (<a href="#fig-cone-mosaic-density" class="quarto-xref">Figure&nbsp;<span>22.9</span></a>). It is justifiable to use harmonics as special stimuli over small regions of the retina, which can be close to space-invariant. Stimuli that span more than a degree or two will not have the special property (harmonics being nearly eigenfunctions) that make them so useful in systems analysis.</p>
+<p>Second, even at the earliest stages of vision the encoding is not restricted to a single system.</p>
+<section id="sec-contrast-sensitivity" class="level3" data-number="22.9.1">
+<h3 data-number="22.9.1" class="anchored" data-anchor-id="sec-contrast-sensitivity"><span class="header-section-number">22.9.1</span> Contrast sensitivity functions (CSF)</h3>
+<p>Optical scientists use both the space domain (PSF) and the transform domain (MTF) to study their system, and vision scientists use both domains as well. The nonuniformity of the optical blur, coupled with the nonuniformity of the cone spatial sampling, imply that shift-invariant methods only make sense over patches of the visual field. As a result, the carefully controlled harmonics used in vision experiments are modulated over relatively small regions of space.</p>
+<p>There are several ways in which this modulation is accomplished in experiments, though perhaps the most common is to use a <strong>Gabor function</strong>; named after Denis Gabor, the Nobel Laureate credited with the discovery of the laser.</p>
+<p><span id="eq-gabor-function"><span class="math display">\[
+\begin{aligned}
+g(x,y) &amp;= \exp\!\left(
+  -\frac{(x - x_0)^2 + (y - y_0)^2}{2\sigma^2}
+\right)
+[1 + a \cos\!\big(2\pi f x +  \phi\big)]
+\end{aligned}
+\tag{22.1}\]</span></span></p>
+<p>Gabor functions are harmonics modulated by a Gaussian. The standard deviation of the Gaussian (<span class="math inline">\(\sigma\)</span>) controls the spatial spread; the frequency of the harmonic <span class="math inline">\(f\)</span>, controls the center frequency of the image. The phase term, <span class="math inline">\(\phi\)</span>, controls the spatial relationship between the harmonic and the peak of the Gaussian. The central position in the visual field is <span class="math inline">\((x_0,y_0)\)</span>, and the amplitude of the harmonic is controlled by <span class="math inline">\(a\)</span>.</p>
+<p>Figure: Show images of different Gabors.</p>
+<p>Contrast sensitivity functions (CSF) measured with Gabor patches shown here. Should we adjust <span class="math inline">\(f\)</span> and <span class="math inline">\(\sigma\)</span> together, or should we fix <span class="math inline">\(\sigma\)</span> and adjust <span class="math inline">\(f\)</span> on its own.</p>
+</section>
+<section id="vernier-acuity" class="level3" data-number="22.9.2">
+<h3 data-number="22.9.2" class="anchored" data-anchor-id="vernier-acuity"><span class="header-section-number">22.9.2</span> Vernier acuity</h3>
+<div class="callout callout-style-default callout-note callout-titled" title="Pierre Vernier">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Shack-Hartmann
+Pierre Vernier
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>https://www.fisicanet.com.ar/biografias/cientificos/v/vernier-pierre.php</p>
+<p>Something about Vernier calipers and the story of Pierre Vernier.</p>
+<div id="fig-vernier" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vernier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/02-spatial-encoding/Vernier_fisica.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vernier-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;22.13: Pierre Vernier.
+</figcaption>
+</figure>
+</div>
+<p>Historical</p>
+<p>https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Vernier,_Pierre</p>
 </div>
 </div>
-<section id="sec-wavefront-sensor" class="level3 callout-body-container callout-body" data-number="22.9.1">
-<h3 data-number="22.9.1" class="anchored" data-anchor-id="sec-wavefront-sensor"><span class="header-section-number">22.9.1</span> Shack–Hartmann wavefront sensor</h3>
-<p>Johannes Franz Hartmann was a German astronomer working on the problem of detecting optical defects in telescope objectives. Reasoning from the ray theory of light, he measured the optical light field from a simple stimulus: an on-axis point at the focal length of the lens. In principle, the rays emerging from an ideal lens would all be parallel to the main axis. To look for deviations, he created a screen comprising an array of pinholes. If the rays were parallel, the light through the pinhole would be nicely centered behind the pinhole. If the rays were not quite parallel, the image behind the pinhole would be displaced by some distance and amount from the center. The deviations could be considered defects in the lens that could be corrected.</p>
-<p>As I observed above, the image behind each pinhole measures the intensity of the rays incident at different angles. But in practice, a small pinhole produces a blurry spot due to diffraction. Thus Hartmann did not try to extract an image but he just estimated the central position of the blurry spot. Also, because the pinholes only let through a small amount of light, the technique was not very sensitive.</p>
-<p>Because there is an array of these pinholes, the accumulation of pinhole images measures the rays at multiple angles at multiple positions. In principle, by performing this measurement for different wavelengths and polarizations, we sample the optical light field (<a href="lightfields-01-intro.html#eq-lightfield-optical" class="quarto-xref">Equation&nbsp;<span>2.3</span></a>).</p>
-<!--
-The Raskar version in which you put spots behind the lenslet array and adjust the spots to make the array uniform is kind of funny.  It is intended to measure the optical aberrations of the eye
-https://en.wikipedia.org/wiki/Shack%E2%80%93Hartmann_wavefront_sensor
--->
-<p><a href="https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf?utm_source=chatgpt.com">Arizona History of the Shack work.</a></p>
+</div>
 </section>
-</div>
-<p>Second callout.</p>
+</section>
+<section id="todo" class="level2" data-number="22.10">
+<h2 data-number="22.10" class="anchored" data-anchor-id="todo"><span class="header-section-number">22.10</span> TODO</h2>
+<p>Not sure the astronomy one should be here. Shack-Hartmann should, I think.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Astronomy and adaptive optics">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1122,14 +1184,18 @@ https://en.wikipedia.org/wiki/Shack%E2%80%93Hartmann_wavefront_sensor
 Astronomy and adaptive optics
 </div>
 </div>
-<section id="sec-telescopes" class="level3 callout-body-container callout-body" data-number="22.9.2">
-<h3 data-number="22.9.2" class="anchored" data-anchor-id="sec-telescopes"><span class="header-section-number">22.9.2</span> Ground-based telescopes</h3>
+<div class="callout-body-container callout-body">
+<p>https://en.wikipedia.org/wiki/Pierre_Vernier</p>
+<p>fisicanet.com.ar/biografias/cientificos/v/vernier-pierre.php</p>
+</div>
+</div>
+<section id="sec-telescopes" class="level3" data-number="22.10.1">
+<h3 data-number="22.10.1" class="anchored" data-anchor-id="sec-telescopes"><span class="header-section-number">22.10.1</span> Ground-based telescopes</h3>
 <p>quatThese same technologies can be used to look inward, within the eye, rather than outward toward the stars. Realizing this was a very important insight that continues to lead to important insights about the peripheral human visual system (<a href="human-01-seeing.html#sec-human-seeing-overview" class="quarto-xref"><span>Section 21.1</span></a>).</p>
 <p>Where should the adaptive optics measurement method be? Here or FOV? Adaptive optics measurements of wavefront aberrations, expressed as point spread functions. Thibos and Artal data.</p>
 <p>The ability to measure certain properties of the optics was revolutionized by adpative optics - a method that makes real time measurements of the wavefront aberrations of the physiological optics using a Shack-Hartmann wavefront sensor. Just the measurement of the aberrations alone is useful. In addition, it has proben possible to engineer systems that correct for these aberrations in real time, and thus visualize the apertures of the photoreceptors (1-5 <span class="math inline">\(\mu \text{m}\)</span> diameter) cells in the retina. Further, using video tracking of the eye movements it has proven possible to deliver stimuli to specific, targeted photoreceptors.</p>
 <p>First order approximations of the human optics. Simulations with ISETBio of maybe the Westheimer or Ijspeert functions. Eye models?</p>
-</section>
-</div>
+<p>:::</p>
 
 
 
@@ -1171,6 +1237,13 @@ Stryer L (1986) <a href="http://dx.doi.org/10.1146/annurev.ne.09.030186.000511">
 Wikler KC, Rakic P (1990) <a href="http://dx.doi.org/10.1523/JNEUROSCI.10-10-03390.1990">Distribution of photoreceptor subtypes in the retina of diurnal and nocturnal primates</a>. J Neurosci 10:3390–3401
 </div>
 </div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Differential Interference Contrast microscopy is a technique that enhances the contrast in unstained, transparent specimens. The microscope converts gradients in specimen thickness or refractive index (which naturally occur at the boundaries of structures like cell layers, membranes, and organelles) into differences in light intensity (contrast). It is particularly useful in imaging the layers of a retina, making features visible that would otherwise be nearly invisible in a brightfield microscope.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
