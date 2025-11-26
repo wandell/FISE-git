@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-10-04">
+<meta name="dcterms.date" content="2025-11-24">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
-<title>6&nbsp; Spatial regularities – Foundations of Image Systems Engineering</title>
+<title>28&nbsp; Image processing metrics – Foundations of Image Systems Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,26 +22,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -51,8 +32,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/part-optics.html" rel="next">
-<link href="../chapters/lightfields-04-properties-spectral.html" rel="prev">
+<link href="../chapters/part-appendix.html" rel="next">
+<link href="../chapters/imgprocessing-02-rendering.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -133,7 +114,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-scenes.html">Scenes</a></li><li class="breadcrumb-item"><a href="../chapters/lightfields-05-properties-spatial.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-processing.html">Image processing</a></li><li class="breadcrumb-item"><a href="../chapters/imgprocessing-03-metrics.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Image processing metrics</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -205,7 +186,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link active">
+  <a href="../chapters/lightfields-05-properties-spatial.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></a>
   </div>
 </li>
@@ -422,7 +403,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/imgprocessing-03-metrics.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/imgprocessing-03-metrics.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Image processing metrics</span></span></a>
   </div>
 </li>
@@ -479,24 +460,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-spatial-regularities-overview" id="toc-sec-spatial-regularities-overview" class="nav-link active" data-scroll-target="#sec-spatial-regularities-overview"><span class="header-section-number">6.1</span> Spatial regularities overview</a></li>
-  <li><a href="#sec-spatial-correlations" id="toc-sec-spatial-correlations" class="nav-link" data-scroll-target="#sec-spatial-correlations"><span class="header-section-number">6.2</span> Spatial correlations</a></li>
-  <li><a href="#sec-spectrum-power-law" id="toc-sec-spectrum-power-law" class="nav-link" data-scroll-target="#sec-spectrum-power-law"><span class="header-section-number">6.3</span> Natural scenes and the 1/f spatial frequency falloff</a></li>
-  <li><a href="#sec-dead-leaves" id="toc-sec-dead-leaves" class="nav-link" data-scroll-target="#sec-dead-leaves"><span class="header-section-number">6.4</span> The dead leaves model</a>
-  <ul class="collapse">
-  <li><a href="#sec-fractals" id="toc-sec-fractals" class="nav-link" data-scroll-target="#sec-fractals"><span class="header-section-number">6.4.1</span> Scale invariance</a></li>
-  </ul></li>
-  <li><a href="#sec-spatial-diffusion" id="toc-sec-spatial-diffusion" class="nav-link" data-scroll-target="#sec-spatial-diffusion"><span class="header-section-number">6.5</span> Diffusion models</a></li>
-  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">6.6</span> Applications</a></li>
+  <li><a href="#sec-imgprocessing-metrics-overview" id="toc-sec-imgprocessing-metrics-overview" class="nav-link active" data-scroll-target="#sec-imgprocessing-metrics-overview"><span class="header-section-number">28.1</span> IP metrics overview</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-scenes.html">Scenes</a></li><li class="breadcrumb-item"><a href="../chapters/lightfields-05-properties-spatial.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-processing.html">Image processing</a></li><li class="breadcrumb-item"><a href="../chapters/imgprocessing-03-metrics.html"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Image processing metrics</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-spatial-regularities" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial regularities</span></span></h1>
+<h1 class="title"><span id="sec-imgprocessing-metrics" class="quarto-section-identifier"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Image processing metrics</span></span></h1>
 </div>
 
 
@@ -507,7 +480,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 4, 2025</p>
+      <p class="date">November 24, 2025</p>
     </div>
   </div>
   
@@ -534,101 +507,18 @@ Work in Progress
 <p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
 <p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
 <p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: October 4, 2025</p>
+<p>Last updated: November 24, 2025</p>
 </div>
 </div>
 </div>
-<section id="sec-spatial-regularities-overview" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="sec-spatial-regularities-overview"><span class="header-section-number">6.1</span> Spatial regularities overview</h2>
-<p>We can immediately recognize whether an image is natural or not. No reader will have any difficulty judging which of the three parts of the image is a natural image. Why? Plainly the natural image data conform to some spatial statistical rules that make them very distinguishable as a group.</p>
-<div id="fig-naturalspatial" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-naturalspatial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/lightfields/05-spatial/Gemini_Generated_NoiseSketchNatural.png" class="img-fluid figure-img" style="width:70.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-naturalspatial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.1: Three images. You have no difficulty knowing which is a natural image. Image created by Gemini.
-</figcaption>
-</figure>
-</div>
-<p>We have already seen how information about the spectral characteristics of natural images can be helpful in interpreting them. Learning more about the spatial statistics of natural images -or not- has been a longstanding goal of image systems engineering and vision science. The reason is simple: the more we know about these statistics, the better we can do at interpreting the images we measure. For example, we should be able to remove noise more effectively by rewriting a noisy capture in a format that is more natural-like. We can even hope that we should be able to develop better algorithms to interpret the contents of the images (<a href="lightfields-03-properties.html#sec-image-regularities" class="quarto-xref"><span>Section 4.2</span></a>).</p>
-<p>Over the last four decades, our knowledge about the spatial statistics has grown considerably. The development of machine learning algorithms, particularly diffusion methods for generating natural images, has been a recent striking advance. In this chapter we will start with the foundations and work our way towards the most recent insights.</p>
-</section>
-<section id="sec-spatial-correlations" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="sec-spatial-correlations"><span class="header-section-number">6.2</span> Spatial correlations</h2>
-<p>Image scientists were immediately drawn to analyzing the very different spatial statistics of images. If we examine the three sections of <a href="#fig-naturalspatial" class="quarto-xref">Figure&nbsp;<span>6.1</span></a>, one very obvious feature jumps out. In the first panel, every pixel is completely independent of the other. In natural images, if you know the light at one point there is a good chance that it will be similar to the light at another point. There are various mathematical ways to express this basic insight. And of course these measures all can be connected to one another, although sometimes with some difficulty.</p>
-<!--
-Something about fractals. Textures. Other stuff. @Simoncelli2001-imagestats @Geisler2008-imagestats @Ruderman1994-imagestats
--->
-</section>
-<section id="sec-spectrum-power-law" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="sec-spectrum-power-law"><span class="header-section-number">6.3</span> Natural scenes and the 1/f spatial frequency falloff</h2>
-<p>Who first pointed this out? Relationship to the scale invariant idea of fractals, and the fractal nature of many things.</p>
-<p>Ruderman and Bialek paper on natural image statistics.</p>
-<p>Field, Olshausen</p>
-<p>The scale invariance of natural images arises from their power-law spectral decay, which mathematically ensures statistical consistency across spatial scales. The connection between <span class="math inline">\(\fract{1}{f}^\alpha\)</span> spectra and scale invariance can be expressed through:</p>
-<p>The power spectrum of natural images follows:</p>
-<p><span class="math display">\[
-P(\omega) \propto \frac{1}{|\omega|^{2-\eta}} \quad \text{where } \eta \approx 0.8\text{--}1.5
-\]</span></p>
-<p>Here, <span class="math inline">\(\omega\)</span> represents spatial frequency magnitude, and <span class="math inline">\(\eta\)</span> controls the decay rate<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
-<p>For scale invariance under spatial scaling <span class="math inline">\(x \to \lambda x\)</span>, the power spectrum must satisfy:</p>
-<p><span class="math display">\[
-P(\lambda\omega) = \lambda^{-\kappa}P(\omega)
-\]</span></p>
-<p>Substituting the power-law form:</p>
-<p><span class="math display">\[
-P(\lambda\omega) = \frac{1}{|\lambda\omega|^{2-\eta}} = \lambda^{-(2-\eta)}P(\omega)
-\]</span></p>
-<p>This matches the scale-invariance condition with <span class="math inline">\(\kappa = 2-\eta\)</span>, demonstrating that statistical properties remain consistent across scales<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
-</section>
-<section id="sec-dead-leaves" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="sec-dead-leaves"><span class="header-section-number">6.4</span> The dead leaves model</h2>
-<p><span class="citation" data-cites="lee2001-deadleaves">Lee et al. (<a href="references.html#ref-lee2001-deadleaves" role="doc-biblioref">2001</a>)</span></p>
-<p>Jon’s Matlab script as a basis for discussing this. <a href="https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m">Software from Jon showing 1/f issues.</a></p>
-<p>Also, the deadleaves function in ISETCam.</p>
-<section id="sec-fractals" class="level3" data-number="6.4.1">
-<h3 data-number="6.4.1" class="anchored" data-anchor-id="sec-fractals"><span class="header-section-number">6.4.1</span> Scale invariance</h3>
-<p><strong>Fractal connection</strong> The power-law exponent relates to fractal dimension <span class="math inline">\(D\)</span> through:</p>
-<p><span class="math display">\[
-D = 3 - \frac{\eta}{2}
-\]</span></p>
-<p>where <span class="math inline">\(D\)</span> quantifies space-filling characteristics. Natural images typically exhibit <span class="math inline">\(D \approx 2.2\text{--}2.6\)</span>, consistent with their 1/f^α spectra<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>,<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.</p>
-<p>This mathematical framework shows that 1/f^α spectra inherently encode fractal, scale-invariant structure - the same statistical regularities appear whether analyzing fine details or coarse features of natural scenes<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>,<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>,<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>.</p>
-</section>
-</section>
-<section id="sec-spatial-diffusion" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="sec-spatial-diffusion"><span class="header-section-number">6.5</span> Diffusion models</h2>
-<p>Diffusion neural networks.</p>
-<p>Eero’s analysis of the statistical properties of images using diffusion models.</p>
-</section>
-<section id="applications" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="applications"><span class="header-section-number">6.6</span> Applications</h2>
-<p>Image compression and JPEG is the big one. It doesn’t get us all the way to objects. But it sure mattered.</p>
+<section id="sec-imgprocessing-metrics-overview" class="level2" data-number="28.1">
+<h2 data-number="28.1" class="anchored" data-anchor-id="sec-imgprocessing-metrics-overview"><span class="header-section-number">28.1</span> IP metrics overview</h2>
+<p>PSNR</p>
+<p>ISO 12233 a way to assess the MTF of a device.</p>
+<p>Sharpness metrics (acutance)</p>
 
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
-<div id="ref-lee2001-deadleaves" class="csl-entry" role="listitem">
-Lee AB, Mumford D, Huang J (2001) <a href="http://dx.doi.org/10.1023/a:1011109015675">Occlusion models for natural images: A statistical study of a scale-invariant dead leaves model</a>. Int J Comput Vis 41:35–59
-</div>
-</div>
-</section>
-<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn1"><p>https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>https://web.mit.edu/torralba/www/ne3302.pdf<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>https://www.sciencedirect.com/science/article/pii/0042698996000028<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>https://web.mit.edu/torralba/www/ne3302.pdf<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>http://vigir.missouri.edu/~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>https://www.nature.com/articles/srep46672<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>https://web.mit.edu/torralba/www/ne3302.pdf<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>http://vigir.missouri.edu/~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf –&gt;<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
 </section>
 
 </main> <!-- /main -->
@@ -1054,13 +944,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/lightfields-04-properties-spectral.html" class="pagination-link" aria-label="Spectral regularities">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Spectral regularities</span></span>
+      <a href="../chapters/imgprocessing-02-rendering.html" class="pagination-link" aria-label="Rendering">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Rendering</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/part-optics.html" class="pagination-link" aria-label="Part II: Optics">
-        <span class="nav-page-text">Part II: Optics</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/part-appendix.html" class="pagination-link" aria-label="Part VII:  Appendix">
+        <span class="nav-page-text">Part VII: Appendix</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
