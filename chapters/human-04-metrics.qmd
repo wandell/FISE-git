@@ -36,9 +36,24 @@ Does Peter B. Barten and the Square-root integral model sound like what you were
 
 # Human visual metrics overview {#sec-human-metrics-overview}
 
-Summary of what is to come.
+Engineering progress relies on measurement. Improving a system is an iterative process that involves a loop of designing, measuring, and redesigning. Consequently, performance metrics are fundamental to nearly all engineering disciplines.
 
-## Image quality metrics {#sec-human-imagequality}
+It is also a common principle that systems of even moderate complexity have more than one performance measure. We are often forced to make trade-offs, for example, between a system's speed and its accuracy. We see this in modern AI systems that offer a choice between a 'fast' mode and a more thorough 'thinking' mode.
+
+Imaging systems are no different. They present numerous trade-offs. For instance, increasing a sensor's spatial resolution can reduce the number of photons captured per pixel, thus lowering the signal-to-noise ratio (SNR). Conversely, increasing SNR by using wider color filter bandwidths may reduce color accuracy.
+
+When there is only one parameter to optimize, assessing system design is straightforward. However, most systems involve optimizing multiple parameters simultaneously. A design change might improve some metrics while degrading others, making it difficult to determine an overall improvement.
+
+This complexity is reflected in the field of image quality metrics. Many different metrics exist. Some assess a specific aspect of system performance, guiding the design of a particular component. Others, however, aim to capture the general notion of image quality as a human would judge it. The most famous of these—the Structural Similarity Index Measure (SSIM), with over 100,000 citations—is a prime example.
+
+Engineers, computer scientists, and product managers often desire a single number they can optimize and market. As a student or young researcher, you might be tempted to resist this simplification. A word of advice: understand the limitations of single-number metrics, but don't let their imperfection stall your progress. Use them as the valuable, albeit incomplete, tools they are.
+
+## Human metrics
+In the image processing section, I introduce a number of image systems metrics that are designed to evaluate the system and its components directly (@sec-imgprocessing-metrics-overview). Those metrics might assess the signal-to-noise (SNR) of a pixel, or the MTF of a lens.
+
+In this section, I review metrics that are designed with the human viewer in mind:  How sharp will the image appear?  Will the noise be visible?  Do the colors in the rendering match those in the original?  I have divided these human-centric metrics into three parts.  The frist part covers metrics that are largely dependent on the spatial image properties, such as image sharpness and noise.  The second part covers metrics that are largely dependent on color properties.  The third section describes metrics that measure the temporal sensitivity, including the visibility of flicker or motion blur.
+
+## Spatial metrics {#sec-human-spatial-metrics}
 
 I have links to both original measurements, modern measurements (Standard Spatial Observer), and many commercial versions of spatial metrics that are implemented in ISETCam.  This section will describe those.
 
@@ -57,19 +72,20 @@ That single channel guy with his metric and formula.  Repeated everywhere. Barte
 
 Earlier single channel. Value of multiple channel metrics?  Existence?  S-CIELAB accounts for distance
 
+### Modern
+
 SSIM and MS-SSIM
 
 LPIP goes here because it is human judgments of image quality?
 
 Pyramid from Beau? Multi-parameter
 
-temporal MTF. Flicker.
-
 I forked the [Mantiuk github repository: ](https://github.com/isetbio/stelaCSF) 
 [The Mantiuk repository is here: ](https://github.com/gfxdisp/stelaCSF.git).
  His metric goes here, I think.  His code reads classic datasets.  Maybe we include the data files in the book? 
 
 The surprising metric LPIPS
+
 
 ## Color metrics
 
@@ -83,11 +99,6 @@ Mark Fairchild contributions. Others?
 
 temporal MTF metrics
 
-## Computer vision metrics for color?
-
-They should be described elsewhere, probably in the image processing.
-
-A lot of these might have been used in those directional cosine errors in Zheng's dissertation.  But it is the cosine metric for similarity of large vectors that needs to be included somewhere.
 
 
 
