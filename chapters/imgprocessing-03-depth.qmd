@@ -6,28 +6,19 @@ date: last-modified
 
 {{< include "includes/WIP-callout.qmd" >}}
 
-
 ## Image processing: stereo overview {#sec-imgprocessing-stereo-overview}
 
 There is more to depth than stereo
 
-## Hardware
-
-### Camera arrays
-
-### Lidar
-
 ## Stereo depth information
 
-The light captured at each pixel in a conventional sensor arises from a small region (point) in three-dimensional space. The sensor data only have an $(x,y)$ position, and we require some additional inferencing to estimate the three dimensional position of the object point $(X,Y,Z)$. There are many ways that we can make inferences about the distance to the object, and stereo cameras are one important technology.
+In a conventional image system, the light imaged onto each pixel arises from a small region (point) in three-dimensional space. The sensor data only have an $(x,y)$ position, and additional inferencing is required to estimate the distance (three dimensional position,Z) of the object point $(X,Y,Z)$. There are many algorithms to infer the distance to the object; stereo cameras are one important technology.
 
-Consider the ray tracing in The object could be anywhere along a line.  When we record a star, the object is many light-years away.  When we look at a flower, the light can be close at hand.  
+Consider the ray tracing in @fig-stereo-camera-rays (A). The image at a point $(x,y)$ could be anywhere along the three dimensional line.  We could be looking at a star, many light-years away, or an LED two meters away. The distance to the object can be estimated by using a second camera imaging in the same direction (@fig-stereo-camera-rays (B)). Knowing the corresponding location in the second camera disambiguates where the object is in three space.  
 
-![Using a stereo pair to locate a point in three-space](images/imageprocessing/epipolar.png){#fig-stereo-camera-rays}
+![Using a stereo pair to locate a point in three-space. (A) A point on the sensor at X could arise from any of the points on the colored points on the three-dimensional line. (B) Using a second camera, the points at different distances would be imaged at different locations. As the image illustrates, the possible locations in the second camera fall along the *epipolar line*.  Hence, if one is searching for the corresponding point in the two cameras, given a position X the corresponding point must be on the epipolar line in the second camera.](images/imageprocessing/epipolar.png){#fig-stereo-camera-rays}
 
-If we have a second camera measuring the scene, knowing the corresponding location in the second camera disambiguates where the object is in three space.  It is at the intersection of the two lines.
-
-In human vision we call the relationship between corresponding points the disparity. There are neurons that are sensitive to specific disparities.  Not sure if that goes here or elsewhere, say in the human section.
+In human vision the depth information collected by the two eyes is commonly specified relative to the position of the fovea, which is assumed to be directed at the object and thus called the *fixation point*.  To the extent that a point is imaged at corresponding locations on the two retinae, we say there is zero disparity.  To the extent that the two points are in different positions relative to the fovea, we say that there is disparity.  The disparity can be crossed or uncrossed, which classifies the point as closer or further than the fixation point. 
 
 ## Epipolar geometry
 The ideas of epipolar geometry are enormously helpful when we work with stereo cameras. The principles, derived using ray tracing geometry, help us search efficiently for potential stereo matches between two images. As we saw earlier, knowing which the correspondence between image points allows us to infer the position of the object in three-space.
@@ -61,4 +52,8 @@ Their work at SRI International came during an important transition period in co
 This paper influenced later work in structure-from-motion and multi-view stereo, as it provided both theoretical insights and practical methods for extracting 3D information from image sequences. It's still referenced today, particularly when dealing with camera arrays or linear camera motions.
 
 
+## Hardware
 
+### Camera arrays
+
+### Lidar
