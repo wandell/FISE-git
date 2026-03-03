@@ -24,52 +24,24 @@ You are assisting with a Quarto book project stored in a GitHub repository. Your
    - If a technique only works in HTML (e.g., text wrap around figures), say so and provide a PDF-safe fallback.
 
 ## Quarto cross-references (book-scale)
-- Use Quarto’s native crossref system consistently.
-- Sections: use the project’s established approach for section refs (commonly `@sec-*`).
-  - If the user reports `@chapter-*` not working, do not insist on it; use `@sec-*` or whatever the project already uses.
-- Figures/tables/equations: use stable labels and consistent prefixes.
-  - Prefer `fig-...`, `tbl-...`, `eq-...`, `sec-...` (or match the repo convention).
+- Use Quarto’s native crossref system (commonly `@sec-*` and `@fig-*`).
+- For detailed layout instructions, including margin figures and sizing, see [.agent/workflows/layout.md](.agent/workflows/layout.md).
+- Figure prefixes: use stable labels (`fig-...`, `tbl-...`, `eq-...`, `sec-...`).
 - When debugging refs:
   - Confirm the label exists and is unique.
   - Confirm the label is attached to the correct block.
   - Confirm the output format supports the feature (HTML vs PDF differences).
-  - Suggest a clean rebuild if stale intermediates are suspected (but don’t hand-wave; be specific).
+  - Refer to [.agent/workflows/debug.md](.agent/workflows/debug.md) for clean rebuild steps.
 
-## Figures, sizing, placement, and margin content
-- The project uses Quarto figure options heavily. Prefer Quarto-native syntax:
-  - `fig-cap`, `fig-alt`, `fig-align`, `fig-width`/`fig-height`, `out-width`, etc.
-- Margin figures:
-  - Use `.column-margin` where appropriate (this is a known working approach in this project).
-  - Provide guidance that works with the project’s chosen HTML theme/CSS.
-- “Half-page width with text wrapping”:
-  - Be clear: **true text wrap around figures is usually HTML/CSS-driven**, not reliably portable to PDF.
-  - Offer:
-    1) an HTML solution (float + width + margins),
-    2) a PDF-safe alternative (side-by-side columns, callouts, or figure placement without wrap).
-- Images:
-  - Encourage predictable repo paths (e.g., `images/`, `figures/`, `resources/`) and relative links.
-  - Always suggest `fig-alt` for accessibility in HTML.
-
-## WordPress-like needs inside Quarto
-The author is used to LaTeX-style numbering and referencing:
-- Ensure figures are numbered via Quarto crossrefs and can be referenced in text.
-- If the author wants “LaTeX-like” behavior, prefer Quarto-native crossrefs rather than custom JS.
+## VSCode workflow and debugging
+- Suggestions should be actionable in VSCode (specific files and minimal diffs).
+- Preferred tools: use `rg` instead of `grep` and `fd` instead of `find`.
+- Debug approach:
+  - Refer to [.agent/workflows/debug.md](.agent/workflows/debug.md) for diagnostic procedures (`quarto check`, cleaning `_book/`, etc.).
+  - Ask for exact error text and minimal reproducible snippets.
 
 ## Citations and bibliography
-- Bibliography is BibTeX-managed via `paperpile.bib`. Assume this file is authoritative.
-- Formatting is enforced by `bibtex-tidy` (via local CLI + VS Code settings). Refer to `.agent/workflows/bibliography.md`.
-- Do not “correct” citation keys by guessing. If keys appear invalid, verify against the `.bib` file first.
-- When suggesting tooling:
-  - Be aware that certain BibTeX tooling can introduce unwanted formatting. Prefer the established `bibtex-tidy` workflow.
-
-## VSCode workflow expectations
-- Suggestions should be actionable in VSCode:
-  - Point to which file to edit and what to change.
-  - Prefer small, testable edits.
-- Debug approach:
-  - Ask for the exact error text and the smallest reproducible snippet (YAML header + the block that fails).
-  - Recommend running `quarto check` and `quarto render` locally, and describe what to look for in the output logs.
-  - If the issue smells like caching/stale build, suggest cleaning `_book/` or `_site/` (as appropriate) and re-rendering—state exactly which folder applies.
+- Managed via `paperpile.bib`. Refer to [.agent/workflows/bibliography.md](.agent/workflows/bibliography.md) for setup and formatting workflows.
 
 ## YAML and project configuration
 - Be conservative editing `_quarto.yml`:
