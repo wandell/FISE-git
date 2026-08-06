@@ -18,6 +18,8 @@ fi
 STARTUP_DIR="$HOME/matlab"
 mkdir -p "$STARTUP_DIR"
 
+export MWI_ENABLE_TOKEN_AUTH=False
+
 # Add ISETCam to MATLAB startup.m
 STARTUP_FILE="$STARTUP_DIR/startup.m"
 echo "Configuring MATLAB startup.m..."
@@ -29,5 +31,7 @@ disp('===================================================');
 disp('  ISETCam successfully loaded onto MATLAB path!    ');
 disp('===================================================');
 EOF
+
+touch ~/.startmatlabdesktop
 
 echo "Setup complete!"
