@@ -8,9 +8,7 @@ date: last-modified
 
 ## Measuring light: An overview {#sec-lfmeasurement-overview}
 
-Imaging systems combine two tightly coupled parts: the **acquisition hardware** determines what is measured; the **processing algorithms** interpret the measurements. Effective image system designs optimize these components jointly. When we know precisely which aspects of the light field the hardware captures—over space, angle, wavelength, and time—we can build algorithms that make the best use of that information.
-
-In this chapter we model light with rays for geometric reasoning, but a single ray is only an idealization with no energy. Real measurements always integrate over a finite bundle: a small area (or aperture), a small solid angle (direction range), a finite wavelength band, and a finite time interval. We may capture bundles diverging from a source or converging onto a surface; the same radiometric principles apply in either case.
+In this chapter we describe several ways to measure light. For many of the applications in this book, we can model light as comprising rays. But a single ray is only an idealization with no energy. Real measurements always integrate over a small area (or aperture), a small solid angle (direction range), a finite wavelength band, and a finite time interval. We think of the instruments as measuring ray bundles; these may be diverging from a source or converging onto a surface. The same radiometric principles apply in either case.
 
 **Radiometry** provides the quantitative framework for these measurements. We will work primarily with spectral (per-wavelength) quantities and SI[^SI-units] units (e.g., watts or photons per second), which are standard in imaging and used by simulation tools such as ISETCam. The next sections define the core quantities — radiant flux, radiant intensity, radiance, and irradiance— and show how geometry (area, angle, and foreshortening) enters their units.
 
@@ -26,7 +24,15 @@ We describe the energy separately for each wavelength because, in most cases, th
 
 [^lightfields-measurement-2]: There are important cases light when radiance at one wavelength evokes emissions at a different wavelength (fluorescence). There are also important cases of non-linear behavior (e.g., two-photon imaging). We discuss these when we review special instrumentation. But the vast majority of image systems are linear and the Principle of Superposition applies (@eq-superposition).
 
-Radiometry defines units that are helpful for different types of geometry. The radiometric measures can be divided with respect to those from a source (radiance) and those arriving at a surface (irradiance). These can be further divided with respect to measurements from a small (point) source, or from an extended surface.
+Radiometry defines units that are helpful for different types of geometry. The radiometric measures can be divided with respect to those from a source (radiance) and those arriving at a surface (irradiance). These can be further divided with respect to measurements from a small (point) source, or from an extended surface.  Here are some of the basic physical quantities that we build upon to create radiometric units.
+
+| Concept | Definition | Energy-Based Units | Photon-Based Units (q) |
+| --- | --- | --- | --- |
+| **Wavelength** | dimension along which electromagnetic energy is measured independently.  | nanometers (nm) | nanometers (nm) |
+| **Power / Flux** | energy present at a location over time. | joules/sec (watts) | photons/sec (q/s) |
+| **Spectral Power** | power per unit of wavelength. | watts / nm | photons / (s nm) |
+
+(Note: In the photon-based units column, "q" is often used as shorthand for quanta/photons, "m" represents the spatial area and "s" represents seconds).
 
 ## Photometric units
 There is a set of units that summarize the impact of the radiation on the human visual system. These units are based on the spectral radiometry units, and we then calculate a weighted sum across wavelengths. The weights are selected to represent (roughly) the relative visibility of each wavelength. These **photometric** units parallel the radiometric units; for example, radiance and irradiance correspond to luminance and illuminance. In this section, we will describe the radiometric quantities. The experimental basis of photometry for the weighted sum across wavelengths -the key step to spectral radiometric quantities into photometric quantities- is explained in @sec-human-metrics.
@@ -42,7 +48,7 @@ There is a set of units that summarize the impact of the radiation on the human 
 Often, we measure the light emitted by a point source in a particular direction, the *radiant intensity*. In that case we measure the energy within a cone of rays in a particular direction. The standard unit for angles in three-dimensions is the *steradian*, just as the radian is the standard unit for angles in two-dimensions. The radiant intensity has units of watts per steradian per nanometer (watts/sr/nm). Thus, if the measurement instrument measures energy over an angle of 0.5 steradians, we divide the measurement by 0.5. If the instrument sums over 10 nm bands, we divide the energy by 10. In this way, the radiant intensity normalizes the angle we measure to the unit steradian and per nanometer. The standard symbol for radiant intensity is $I(\lambda)$.
 
 ::: {.callout-note collapse="false" title="Steradians"}
-![Three-dimensional angle units are called steradians. One steradian is defined as angle of the cone whose surface area on a sphere of radius $r$ is equal to $r^2$. Because the surface area of a sphere with radius $r$ is $4 \pi r^2$, it follows that the complete sphere surrounding a point is $4 \pi$ steradians.](images/lightfields/02-measuring/01-radiometry-steradian.png){#fig-steradian width="40%" fig-cap-location="bottom"}
+![Three-dimensional angle units are called steradians. One steradian is defined as angle of the cone whose surface area on a sphere of radius $r$ is equal to $r^2$. Because the surface area of a sphere with radius $r$ is $4 \pi r^2$, it follows that the complete sphere surrounding a point is $4 \pi$ steradians.](images/lightfields/02-measuring/02-radiometry-steradian.png){#fig-steradian width="80%" fig-cap-location="bottom"}
 :::
 
 ## Radiance from a surface
@@ -56,7 +62,6 @@ $$
 ![Geometric factors for measuring radiance from an extended surface to a detector.](images/lightfields/02-measuring/01-foreshortening-sketch.png){#fig-foreshortening-sketch width="60%"}
 
 ## Radiance from a large surface
-
 
 Measuring the radiance from a large wall with a spectroradiometer. The distance from the wall does not impact the measurement.  Why?
 
