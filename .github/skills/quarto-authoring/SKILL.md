@@ -124,6 +124,23 @@ part of `book.chapters`.
 Bad: change `project.resources`, `execute`, or `format` speculatively while fixing
 a single chapter.
 
+## Publishing to GitHub Pages
+
+The site is published from the local machine, not CI. `quarto publish gh-pages`
+renders the project (HTML only, since PDF output is commented out in
+`format:` in `_quarto.yml`) and pushes the rendered `_book` output to the
+`gh-pages` branch on `origin` (https://github.com/wandell/FISE-git), which
+GitHub Pages serves.
+
+```
+quarto publish gh-pages
+```
+
+A separate `quarto render --to html` beforehand is unnecessary: `quarto
+publish` renders by default and only skips rendering when passed
+`--no-render`. Do not run `quarto publish gh-pages` on the user's behalf
+without confirmation — it pushes to a shared branch.
+
 ## Render diagnosis
 
 For a failing render, start with the file, line, and complete error text. Run
