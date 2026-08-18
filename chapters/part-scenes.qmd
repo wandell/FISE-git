@@ -5,32 +5,51 @@ date: last-modified
 # Part I:  Scenes {#sec-part-scenes .unlisted .unnumbered}
 {{< include "includes/WIP-callout.qmd" >}}
 
-This part of the book introduces the **light field**, a fundamental concept for understanding image formation. It is defined as the amount of light flowing through every point in space and in every direction. The initial chapter presents the comprehensive 7D Plenoptic Function and simplifies it to the more practical 4D light field, which is essential for computational photography tasks like digital refocusing.
-
-The subsequent chapters systematically explore the key physical properties of light that comprise the dimensions of the light field.
+This part of the book introduces the **light field**, a concept that describes the intensity of light traveling along every ray in space. We distinguish three related light fields that describe the successive stages by which light travels from a scene into an imaging system: the *environmental* light field that fills the space around us, the *incident* light field that reaches a system's entrance pupil, and the *optical* light field formed by the system's optics just before it reaches the sensor. After introducing this framework and the radiometric units used to measure it, the remaining chapters describe statistical regularities in scene radiance — the spectral properties of illuminants and surfaces, and the spatial statistics of natural images — that image systems can exploit to interpret their measurements.
 
 ## Scene topics
 
-### Introduction to the Light Field 
-*   Introduces the light field as a function describing radiance at different positions and directions.
-*   Defines the 7D Plenoptic Function: $P(x,y,z, \theta, \phi, \lambda, t)$.
-*   Simplifies the Plenoptic function to the 4D light field for practical applications.
-*   Illustrates light field rendering for digital refocusing and viewpoint adjustment.
+### Light and Seeing
 
-### Spectral Properties 
-*   Focuses on the wavelength ($\lambda$) dimension of light.
-*   Defines the spectral power distribution (SPD) of light sources and surfaces.
-*   Discusses different types of light sources, including blackbody radiators (e.g., the sun), daylight, and artificial lights (LEDs, fluorescent).
-*   Explains how surface reflectance properties modify the SPD of the light reaching a camera.
+This chapter introduces light as the information-carrying signal that mobile organisms and image systems both depend on. It defines the light field concept and distinguishes the environmental, incident, and optical light fields that describe how light passes from a scene into a camera or eye.
 
-### Polarization Properties 
-*   Explains polarization as a property of the transverse nature of light waves.
-*   Describes different states of polarization: linear, circular, and elliptical.
-*   Discusses how polarization occurs naturally through reflection (glare) and atmospheric scattering.
-*   Introduces the use of polarizing filters to control reflections and enhance images.
-*   Briefly mentions the mathematical formalisms (Stokes vectors) used to describe polarization state.
+*   Frames vision as the sensing and interpretation of electromagnetic radiation, and reviews the electromagnetic spectrum.
+*   Defines the environmental light field, $L_E(x,y,z,\alpha,\beta,\lambda,\rho)$, and traces the light field/plenoptic function idea through Gershun, Adelson and Bergen, and Levoy and Hanrahan.
+*   Defines the incident light field at an imaging system's entrance pupil and the optical light field between the exit pupil and the sensor.
+*   Describes how camera arrays and lenslet-based light field sensors sample these light fields, enabling applications such as digital refocusing.
 
-### Spatial Properties 
+### Measuring Light
 
-*This chapter is planned and will cover topics such as spatial frequency, coherence, and other geometric properties of light propagation.*
+This chapter introduces radiometry, the quantitative framework for measuring light. It defines the basic radiometric quantities and shows how the geometry of sources and surfaces enters their units.
 
+*   Explains why real measurements integrate over a finite area, solid angle, wavelength band, and time, rather than a single idealized ray.
+*   Defines radiant flux, radiant intensity, radiance, and irradiance, and works through their units and geometry.
+*   Introduces photometric units as a wavelength-weighted summary of radiometric quantities relevant to human vision.
+*   Previews the bidirectional reflectance distribution function (BRDF) as a bridge to later chapters on surface reflectance.
+
+### Light Field Properties
+
+This chapter introduces two classical mathematical tools — Bayesian inference and dimensionality reduction — for representing statistical regularities in scene radiance, which the next two chapters apply to spectral and spatial data.
+
+*   Motivates the value of scene regularities for interpreting underdetermined image measurements.
+*   Introduces Bayes' Rule and its terms (likelihood, prior, posterior) as a framework for inference from data.
+*   Introduces linear models and dimensionality reduction as a practical tool for summarizing high-dimensional regularities.
+*   Previews neural network training as an increasingly important, data-driven alternative to these classical tools.
+
+### Spectral Regularities
+
+This chapter examines the spectral regularities of natural illuminants and surfaces, from sunlight to material reflectance.
+
+*   Describes the solar spectrum, Fraunhofer lines, and their historical role in calibrating spectral instruments.
+*   Discusses atmospheric effects on daylight and low-dimensional (correlated-weights) models of daylight spectra.
+*   Reviews surface spectral reflectance, including diffuse (Lambertian) and specular reflection and the dichromatic reflectance model.
+*   Introduces the BRDF in more detail, contrasting theoretical and data-driven models.
+
+### Spatial Regularities
+
+This chapter examines the spatial statistics of natural images, from correlations between nearby pixels to the models used to synthesize realistic images.
+
+*   Shows how natural images are readily distinguished from unstructured or synthetic images by their spatial statistics.
+*   Describes spatial correlations in natural images and the $1/f^\alpha$ power-law falloff of their spatial-frequency spectrum.
+*   Introduces the dead leaves model and the scale invariance (fractal structure) of natural scenes.
+*   Discusses diffusion models as a modern, data-driven approach to capturing natural image statistics.
