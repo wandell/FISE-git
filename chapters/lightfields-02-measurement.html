@@ -575,15 +575,51 @@ Last updated: August 18, 2026
 </div>
 <section id="sec-lfmeasurement-overview" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-lfmeasurement-overview"><span class="header-section-number">3.1</span> Measuring light: An overview</h2>
-<p>Imaging systems combine two tightly coupled parts: the <strong>acquisition hardware</strong> determines what is measured; the <strong>processing algorithms</strong> interpret the measurements. Effective image system designs optimize these components jointly. When we know precisely which aspects of the light field the hardware captures—over space, angle, wavelength, and time—we can build algorithms that make the best use of that information.</p>
-<p>In this chapter we model light with rays for geometric reasoning, but a single ray is only an idealization with no energy. Real measurements always integrate over a finite bundle: a small area (or aperture), a small solid angle (direction range), a finite wavelength band, and a finite time interval. We may capture bundles diverging from a source or converging onto a surface; the same radiometric principles apply in either case.</p>
+<p>In this chapter we describe several ways to measure light. For many of the applications in this book, we can model light as comprising rays. But a single ray is only an idealization with no energy. Real measurements always integrate over a small area (or aperture), a small solid angle (direction range), a finite wavelength band, and a finite time interval. We think of the instruments as measuring ray bundles; these may be diverging from a source or converging onto a surface. The same radiometric principles apply in either case.</p>
 <p><strong>Radiometry</strong> provides the quantitative framework for these measurements. We will work primarily with spectral (per-wavelength) quantities and SI<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> units (e.g., watts or photons per second), which are standard in imaging and used by simulation tools such as ISETCam. The next sections define the core quantities — radiant flux, radiant intensity, radiance, and irradiance— and show how geometry (area, angle, and foreshortening) enters their units.</p>
 </section>
 <section id="radiometric-units" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="radiometric-units"><span class="header-section-number">3.2</span> Radiometric units</h2>
 <p>Radiometric measurements are made separately for each wavelength. For people working in radiometry and image systems, wavelength is commonly expressed with respect to nanometers <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. We quantify the amount of radiance by measuring the amount of energy, or equivalently the number of photons, present at a location. The basic energy unit is joules per second, (watts) and for photons the basic unit is photons per second. Thus, in radiometry one often finds units such as (watts per nanometer) or (photons per sec per nanometer).</p>
 <p>We describe the energy separately for each wavelength because, in most cases, the energy at different electromagnetic wavelengths act independently: we can measure the energy at two wavelengths separately, mix the two lights, and the result is simply the sum of the individual measurements. This additivity is a critical feature of light behavior in many cases <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and is a foundational principle for many image systems (<a href="appendix-01-linearsystems.html#sec-ls-superposition" class="quarto-xref"><span>Section 32.2</span></a>).</p>
-<p>Radiometry defines units that are helpful for different types of geometry. The radiometric measures can be divided with respect to those from a source (radiance) and those arriving at a surface (irradiance). These can be further divided with respect to measurements from a small (point) source, or from an extended surface.</p>
+<p>Radiometry defines units that are helpful for different types of geometry. The radiometric measures can be divided with respect to those from a source (radiance) and those arriving at a surface (irradiance). These can be further divided with respect to measurements from a small (point) source, or from an extended surface. Here are some of the basic physical quantities that we build upon to create radiometric units.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concept</th>
+<th>Definition</th>
+<th>Energy-Based Units</th>
+<th>Photon-Based Units (q)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Wavelength</strong></td>
+<td>dimension along which electromagnetic energy is measured independently.</td>
+<td>nanometers (nm)</td>
+<td>nanometers (nm)</td>
+</tr>
+<tr class="even">
+<td><strong>Power / Flux</strong></td>
+<td>energy present at a location over time.</td>
+<td>joules/sec (watts)</td>
+<td>photons/sec (q/s)</td>
+</tr>
+<tr class="odd">
+<td><strong>Spectral Power</strong></td>
+<td>power per unit of wavelength.</td>
+<td>watts / nm</td>
+<td>photons / (s nm)</td>
+</tr>
+</tbody>
+</table>
+<p>(Note: In the photon-based units column, “q” is often used as shorthand for quanta/photons, “m” represents the spatial area and “s” represents seconds).</p>
 </section>
 <section id="photometric-units" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="photometric-units"><span class="header-section-number">3.3</span> Photometric units</h2>
@@ -619,7 +655,7 @@ Steradians
 <div id="fig-steradian" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-cap-location="bottom">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-steradian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/lightfields/02-measuring/01-radiometry-steradian.png" class="img-fluid figure-img" style="width:40.0%" data-fig-cap-location="bottom">
+<img src="images/lightfields/02-measuring/02-radiometry-steradian.png" class="img-fluid figure-img" style="width:80.0%" data-fig-cap-location="bottom">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-steradian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.2: Three-dimensional angle units are called steradians. One steradian is defined as angle of the cone whose surface area on a sphere of radius <span class="math inline">\(r\)</span> is equal to <span class="math inline">\(r^2\)</span>. Because the surface area of a sphere with radius <span class="math inline">\(r\)</span> is <span class="math inline">\(4 \pi r^2\)</span>, it follows that the complete sphere surrounding a point is <span class="math inline">\(4 \pi\)</span> steradians.
@@ -649,7 +685,6 @@ Figure&nbsp;3.3: Geometric factors for measuring radiance from an extended surfa
 </section>
 <section id="radiance-from-a-large-surface" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="radiance-from-a-large-surface"><span class="header-section-number">3.6</span> Radiance from a large surface</h2>
-<p>Measuring the radiance from a large wall with a spectroradiometer. The distance from the wall does not impact the measurement. Why?</p>
 <div id="fig-wall-distance" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-wall-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -660,7 +695,7 @@ Figure&nbsp;3.4: Does the distance from the very large wall impact the measureme
 </figcaption>
 </figure>
 </div>
-<p>Explain the different panels a bit here, and the tradeoff.</p>
+<p>We often measure the radiance from a large uniform surface, say a large wall or a large display screen, with a spectroradiometer. When the surface is large and uniform, the distance from the wall does not impact the measurement. Why?</p>
 <div id="fig-radiance-surface" class="figure quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-radiance-surface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -707,7 +742,8 @@ Figure&nbsp;3.5: The tradeoffs between angular bundle and surface area when meas
 </figcaption>
 </figure>
 </div>
-<p>Here is a tabular summary of the tradeoffs - solid angle and contributing surface area cancel one another. If the wall is uniform, then the distance will not matter.</p>
+<p>The different tabs in the figure illustrate how the tradeoffs balance nicely so that the distance from the uniform surface does not matter. When the instrument is close, the aperture captures a bundle of rays that is a bit <em>larger</em> (Rays - close) than when we measure a little further away (Rays - far). On the other hand, the amount of the surface that makes it on to the sensor is <em>smaller</em> when close (Surface area -close) compared to farther (Surface area - far).</p>
+<p>Here is a tabular summary of the tradeoffs as the distance changes - solid angle and contributing surface area cancel one another. If the wall is uniform, the distance does not matter.</p>
 <div id="tbl-angle-area-tradeoff" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-angle-area-tradeoff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -754,17 +790,56 @@ Figure&nbsp;3.6: Irradiance from a small source onto a surface. The same angular
 </section>
 <section id="radiometric-units-1" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="radiometric-units-1"><span class="header-section-number">3.8</span> Radiometric units</h2>
-<p><a href="#fig-radiometry-units" class="quarto-xref">Figure&nbsp;<span>3.7</span></a> is a guide to help you remember the four fundamental spectral radiometric measurements. Please note that people will sometimes report a measure of any of these radiometric quantities by summing the energy across all wavelengths. This would be called, for example, the <em>total radiance</em> or <em>total irradiance,</em> rather than the spectral radiance. I list the corresponding <strong>photometric</strong> measurements in <a href="human-03-wavelength-encoding.html" class="quarto-xref"><span>Chapter 23</span></a>. The photometric values are also a sum across wavelengths, but weighted by the relative visual significance of the different wavelengths.</p>
-<div id="fig-radiometry-units" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-cap-location="bottom" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-radiometry-units-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/lightfields/02-measuring/01-radiometry-units.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" data-fig-cap-location="bottom">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-radiometry-units-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.7: The four fundamental radiometric measurement quantities. The table lists the name of the measurement, how it is used, and the International System of Units (SI) definition for each.
+<p><a href="#tbl-SI-units" class="quarto-xref">Table&nbsp;<span>3.2</span></a> is a guide to help you remember the four fundamental spectral radiometric measurements. Please note that people will sometimes report a measure of any of these radiometric quantities by summing the energy across all wavelengths. This would be called, for example, the <em>total radiance</em> or <em>total irradiance,</em> rather than the spectral radiance.</p>
+<div id="tbl-SI-units" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-SI-units-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;3.2: The four fundamental radiometric measurement quantities. The table lists the name of the measurement, how it is used, and the International System of Units (SI) definition for each
 </figcaption>
+<div aria-describedby="tbl-SI-units-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Term</th>
+<th>Application</th>
+<th>SI unit</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Radiant flux</td>
+<td>Light emitted in all directions from a point</td>
+<td>Watt (W)</td>
+</tr>
+<tr class="even">
+<td>Radiant intensity</td>
+<td>Light emitted from a point in a direction per solid angle</td>
+<td>W sr⁻¹</td>
+</tr>
+<tr class="odd">
+<td>Radiance</td>
+<td>Light from an extended source in a direction from an oriented surface</td>
+<td>W sr⁻¹ m⁻²</td>
+</tr>
+<tr class="even">
+<td>Irradiance</td>
+<td>Light incident on a plane from all directions</td>
+<td>W m⁻²</td>
+</tr>
+</tbody>
+</table>
+</div>
 </figure>
 </div>
+<p>I list the corresponding <strong>photometric</strong> measurements in <a href="human-03-wavelength-encoding.html" class="quarto-xref"><span>Chapter 23</span></a>. The photometric units corresponding to these radiometric terms have the same geometry, but they sum across wavelengths, weighted by the relative visual significance of each wavelengths. The term ‘significance’ is doing a lot of work there, which I explain later.</p>
+<!--
+![The four fundamental radiometric measurement quantities. The table lists the name of the measurement, how it is used, and the International System of Units (SI) definition for each.](images/lightfields/02-measuring/01-radiometry-units.png){#fig-radiometry-units fig-cap-location="bottom" width="100%" fig-align="center"}
+-->
 <div class="callout callout-style-default callout-note callout-titled" title="Surface or point?">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
