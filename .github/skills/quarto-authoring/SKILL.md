@@ -94,6 +94,11 @@ Use the project’s established `content-visible` blocks for alternatives.
   Do not imply that they will reproduce in PDF.
 - Keep raw HTML to a justified minimum. Prefer Quarto syntax and CSS already in
   `styles/` over inline styling.
+- Self-close void HTML elements (`<source ... />`, `<img ... />`, `<br />`) in
+  any raw HTML placed inside a fenced Div (e.g. `.content-visible` video/audio
+  embeds). An unclosed void tag can make pandoc misjudge where the Div's `:::`
+  fence closes, producing a confusing "unclosed Div" warning whose reported
+  line number does not match the source (see Render diagnosis).
 - For a deliberately portable single-file HTML artifact, use Quarto’s
   `embed-resources: true` only at the document or rendering scope that needs it;
   do not make the whole book self-contained by default.
@@ -154,6 +159,39 @@ explicit authorization.
 Good: identify the duplicate label, repair it, and render the affected chapter.
 
 Bad: erase generated output before reading the render error.
+
+### Warnings whose reported line number doesn't match the source file
+
+Pandoc-filter warnings (e.g. "unclosed Div", shortcode errors) report a line
+number in the *fully resolved* document — after `{{< include >}}` expansion and
+Quarto's Lua filters run — not the raw `.qmd` line count. That number can look
+impossibly large for a short chapter, and the book-level render log doesn't name
+a file at all for some warnings (e.g. "Shortcode 'include' not found"). Two
+techniques resolve this ambiguity:
+
+1. Render the single suspect chapter in isolation
+   (`quarto render chapters/<file>.qmd --to html`) to confirm which chapter
+   actually produces the warning — the book-level log's ordering only
+   approximates which file a given line belongs to.
+2. Get an accurate line number by rendering with `-M keep-md:true`, which
+   leaves a resolved `chapters/<file>.html.md` next to the source (delete it
+   afterward — it's a debug artifact, not a real doc). Run plain `pandoc
+   chapters/<file>.html.md -f markdown -t html -o /dev/null` on that resolved
+   file; unlike the Quarto-wrapped render, plain pandoc prints the file name
+   with its warning, and the line number matches that resolved file exactly.
+
+A `{{< include ... >}}` shortcode must be a block on its own line, not glued to
+following prose on the same line — inline placement can make Quarto fail to
+recognize the shortcode at all ("Shortcode 'include' not found") rather than
+just misplacing it.
+
+Good: `quarto render chapters/human-01-seeing.qmd --to html -M keep-md:true`,
+then `pandoc chapters/human-01-seeing.html.md -t html -o /dev/null` to get a
+warning with a real, matching line number; delete the `.html.md` afterward.
+
+Bad: guess which chapter a book-level warning belongs to from log order alone,
+or hunt for a line number in the raw `.qmd` that the resolved document doesn't
+actually have.
 
 ## Completion check
 
