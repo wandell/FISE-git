@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-11-15">
+<meta name="dcterms.date" content="2026-08-18">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>17&nbsp; System components – Foundations of Image Systems Engineering</title>
@@ -481,6 +481,23 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Resources</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/resources/lightfield-measurements.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lightfield measurements - historical</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
@@ -527,7 +544,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 15, 2025</p>
+      <p class="date">August 18, 2026</p>
     </div>
   </div>
   
@@ -553,7 +570,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: November 15, 2025
+Last updated: August 18, 2026
 !-->
 </div>
 </div>
@@ -610,7 +627,7 @@ Figure&nbsp;17.3: Deep trench isolation of a 8MP Samsung ISOCELL imager in the G
 <section id="sec-sensor-wavelength" class="level2" data-number="17.3">
 <h2 data-number="17.3" class="anchored" data-anchor-id="sec-sensor-wavelength"><span class="header-section-number">17.3</span> Spectral components</h2>
 <p>Silicon-based CMOS image sensors are sensitive to photons with wavelengths up to about 1100 nm. In contrast, the human eye detects only a narrower range, from roughly 380 nm to 700 nm. For consumer cameras, the goal is to capture images that look natural to people, so sensors are designed to record light mainly within the visible spectrum. Since human vision uses three types of broadband photoreceptors, most cameras only need to capture three broad spectral bands.</p>
-<p>To achieve this, image sensors use two types of spectral filters: one to block unwanted infrared (IR) and ultraviolet (UV) light, and another to divide the visible spectrum into three color channels. The resulting data are processed to produce images that closely match human color perception. In this section, I describe these filters. After reviewing the relevant properties of human vision (<a href="human-03-wavelength-encoding.html" class="quarto-xref"><span>Chapter 23</span></a>), I explain how sensor color channels are processed to render accurate or visually pleasing images (<span class="quarto-unresolved-ref">?sec-imgprocessing</span>).</p>
+<p>To achieve this, image sensors use two types of spectral filters: one to block unwanted infrared (IR) and ultraviolet (UV) light, and another to divide the visible spectrum into three color channels. The resulting data are processed to produce images that closely match human color perception. In this section, I describe these filters. After reviewing the relevant properties of human vision (<a href="human-03-wavelength-encoding.html" class="quarto-xref"><span>Chapter 23</span></a>), I explain how sensor color channels are processed to render accurate or visually pleasing images (<a href="imgprocessing-01-principles.html" class="quarto-xref"><span>Chapter 28</span></a>).</p>
 <section id="sec-sensor-irfilter" class="level3" data-number="17.3.1">
 <h3 data-number="17.3.1" class="anchored" data-anchor-id="sec-sensor-irfilter"><span class="header-section-number">17.3.1</span> UV/IR filters</h3>
 <p>Most consumer cameras include a spectral filter that blocks wavelengths longer than 680–700 nm (IR) and shorter than 380–400 nm (UV) from reaching the photodiode. These thin <strong>UV/IR blocking filters</strong> are placed above the microlenses on the sensor (<a href="#fig-sensor-uvir" class="quarto-xref">Figure&nbsp;<span>17.4</span></a>)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
@@ -681,7 +698,7 @@ Figure&nbsp;17.7: Spectral quantum efficiency sensitivity of three color channel
 </div>
 <p>When using a color filter array, we obtain one spectral sample at each position. To represent a color image, however, we represent three spectral samples at each location. Thus, we must convert the data from these interleaved mosaics to create a full-color image by assigning a red, green, and blue value at every pixel location. This process, called <strong>demosaicking</strong> can be very useful when a sensor has relatively large pixels. In that case, the images are coarsely sampled and the image appearance is significantly improved by interpolating the color channels, essentially upsampling the measurements.</p>
 <p>There is a principle we can use when evaluating whether a pixel is ‘large’. The imaging lens has a point spread function (<a href="optics-01-geometric.html#sec-pointspread" class="quarto-xref"><span>Section 7.8</span></a>), and if the spread is two times larger than the pixel size we consider the pixel small. On the other hand, if the pixel is equal to or larger than the point spread, we consider the pixel large.</p>
-<p>For modern sensors, particularly in consumer imaging, pixel sizes can be quite small, often less than <span class="math inline">\(1~\mu \text{m}\)</span>. This pixel size is smaller than the ideal point spread function of a diffraction limited lens (<a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.7</span></a>), and often considerably smaller than the point spread function of the true system. For such sensors many small pixels —and even the entire super pixel- fit within the point spread function. Demosaicking is less critical in this case; we can simply group the measured values of the super pixel into a single point in the RGB image. We will quantify the impact of optics, pixel size and demosaicking for image quality in <span class="quarto-unresolved-ref">?sec-imgprocessing</span>.</p>
+<p>For modern sensors, particularly in consumer imaging, pixel sizes can be quite small, often less than <span class="math inline">\(1~\mu \text{m}\)</span>. This pixel size is smaller than the ideal point spread function of a diffraction limited lens (<a href="optics-01-geometric.html#sec-airy-pattern" class="quarto-xref"><span>Section 7.7</span></a>), and often considerably smaller than the point spread function of the true system. For such sensors many small pixels —and even the entire super pixel- fit within the point spread function. Demosaicking is less critical in this case; we can simply group the measured values of the super pixel into a single point in the RGB image. We will quantify the impact of optics, pixel size and demosaicking for image quality in <a href="imgprocessing-01-principles.html" class="quarto-xref"><span>Chapter 28</span></a>.</p>
 
 
 
