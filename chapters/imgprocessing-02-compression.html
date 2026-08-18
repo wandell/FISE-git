@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-11-24">
+<meta name="dcterms.date" content="2025-12-04">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
-<title>27&nbsp; Rendering – Foundations of Image Systems Engineering</title>
+<title>29&nbsp; Compression and multiresolution – Foundations of Image Systems Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,8 +32,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/imgprocessing-03-metrics.html" rel="next">
-<link href="../chapters/imgprocessing-01-hardware.html" rel="prev">
+<link href="../chapters/imgprocessing-03-depth.html" rel="next">
+<link href="../chapters/imgprocessing-01-principles.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -114,7 +114,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-processing.html">Image processing</a></li><li class="breadcrumb-item"><a href="../chapters/imgprocessing-02-rendering.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Rendering</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-processing.html">Image processing</a></li><li class="breadcrumb-item"><a href="../chapters/imgprocessing-02-compression.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Compression and multiresolution</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -369,7 +369,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/displays-01-principles.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Display Principles</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Display principles</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-02-technologies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Display technologies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/displays-03-characterization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Display characterization</span></span></a>
   </div>
 </li>
       </ul>
@@ -391,20 +403,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/imgprocessing-01-hardware.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Hardware processing</span></span></a>
+  <a href="../chapters/imgprocessing-01-principles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Image processing principles</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/imgprocessing-02-rendering.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Rendering</span></span></a>
+  <a href="../chapters/imgprocessing-02-compression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Compression and multiresolution</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/imgprocessing-03-metrics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Image processing metrics</span></span></a>
+  <a href="../chapters/imgprocessing-03-depth.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Image processing: stereo</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/imgprocessing-04-metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Image processing metrics</span></span></a>
   </div>
 </li>
       </ul>
@@ -427,19 +445,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix-01-linearsystems.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Linear systems</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix-02-spaceinvariance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Linear Space-Invariant (LSI) Systems</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/appendix-03-isetcam.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Image Systems Simulation</span></span></a>
   </div>
 </li>
       </ul>
@@ -460,19 +478,18 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-rendering-overview" id="toc-sec-rendering-overview" class="nav-link active" data-scroll-target="#sec-rendering-overview"><span class="header-section-number">27.1</span> Rendering overview</a></li>
-  <li><a href="#image-compression" id="toc-image-compression" class="nav-link" data-scroll-target="#image-compression"><span class="header-section-number">27.2</span> Image compression</a></li>
-  <li><a href="#color-management" id="toc-color-management" class="nav-link" data-scroll-target="#color-management"><span class="header-section-number">27.3</span> Color management</a></li>
-  <li><a href="#display-modeling" id="toc-display-modeling" class="nav-link" data-scroll-target="#display-modeling"><span class="header-section-number">27.4</span> Display modeling</a></li>
+  <li><a href="#sec-imgprocessing-compression-overview" id="toc-sec-imgprocessing-compression-overview" class="nav-link active" data-scroll-target="#sec-imgprocessing-compression-overview"><span class="header-section-number">29.1</span> Compression and multiresolution</a></li>
+  <li><a href="#image-compression" id="toc-image-compression" class="nav-link" data-scroll-target="#image-compression"><span class="header-section-number">29.2</span> Image compression</a></li>
+  <li><a href="#color-management" id="toc-color-management" class="nav-link" data-scroll-target="#color-management"><span class="header-section-number">29.3</span> Color management</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-processing.html">Image processing</a></li><li class="breadcrumb-item"><a href="../chapters/imgprocessing-02-rendering.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Rendering</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-processing.html">Image processing</a></li><li class="breadcrumb-item"><a href="../chapters/imgprocessing-02-compression.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Compression and multiresolution</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-rendering" class="quarto-section-identifier"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Rendering</span></span></h1>
+<h1 class="title"><span id="sec-imgprocessing-compression" class="quarto-section-identifier"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Compression and multiresolution</span></span></h1>
 </div>
 
 
@@ -483,7 +500,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 24, 2025</p>
+      <p class="date">December 4, 2025</p>
     </div>
   </div>
   
@@ -507,26 +524,23 @@ Work in Progress
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>The book is still taking shape, and your feedback is an important part of the process. Suggestions of all kinds are welcome—whether it’s fixing small errors, raising bigger questions, or offering new perspectives. I’ll do my best to respond, but please keep in mind that the text will continue to change significantly over the next two years.</p>
-<p>You can share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>.</p>
-<p>Feel free to open a new issue or join an existing discussion. To make feedback easier to address, please point to the section you have in mind—by section number or a short snippet of text. Adding a label characterizing your issue would also be helpful.</p>
-<p>Last updated: November 24, 2025</p>
+<p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
+<!--
+Last updated: December 4, 2025
+!-->
 </div>
 </div>
 </div>
-<section id="sec-rendering-overview" class="level2" data-number="27.1">
-<h2 data-number="27.1" class="anchored" data-anchor-id="sec-rendering-overview"><span class="header-section-number">27.1</span> Rendering overview</h2>
+<section id="sec-imgprocessing-compression-overview" class="level2" data-number="29.1">
+<h2 data-number="29.1" class="anchored" data-anchor-id="sec-imgprocessing-compression-overview"><span class="header-section-number">29.1</span> Compression and multiresolution</h2>
 <p>These are processing steps that are designed principally for human visual consumption. Rendering to a person.</p>
 <p>Maybe I will add another processing for rendering for machine vision applications.</p>
 </section>
-<section id="image-compression" class="level2" data-number="27.2">
-<h2 data-number="27.2" class="anchored" data-anchor-id="image-compression"><span class="header-section-number">27.2</span> Image compression</h2>
+<section id="image-compression" class="level2" data-number="29.2">
+<h2 data-number="29.2" class="anchored" data-anchor-id="image-compression"><span class="header-section-number">29.2</span> Image compression</h2>
 </section>
-<section id="color-management" class="level2" data-number="27.3">
-<h2 data-number="27.3" class="anchored" data-anchor-id="color-management"><span class="header-section-number">27.3</span> Color management</h2>
-</section>
-<section id="display-modeling" class="level2" data-number="27.4">
-<h2 data-number="27.4" class="anchored" data-anchor-id="display-modeling"><span class="header-section-number">27.4</span> Display modeling</h2>
+<section id="color-management" class="level2" data-number="29.3">
+<h2 data-number="29.3" class="anchored" data-anchor-id="color-management"><span class="header-section-number">29.3</span> Color management</h2>
 
 
 
@@ -955,13 +969,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/imgprocessing-01-hardware.html" class="pagination-link" aria-label="Hardware processing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Hardware processing</span></span>
+      <a href="../chapters/imgprocessing-01-principles.html" class="pagination-link" aria-label="Image processing principles">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Image processing principles</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/imgprocessing-03-metrics.html" class="pagination-link" aria-label="Image processing metrics">
-        <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Image processing metrics</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/imgprocessing-03-depth.html" class="pagination-link" aria-label="Image processing: stereo">
+        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Image processing: stereo</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
