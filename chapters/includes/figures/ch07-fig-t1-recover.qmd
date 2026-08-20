@@ -1,0 +1,88 @@
+::: {style="width: 80%; margin: 0 auto; overflow: visible; font-size: 1.1rem;"}
+
+```{ojs}
+//| echo: false
+viewof t1_val = Inputs.range([0.1, 4.0], {value: 0.88, step: 0.05, label: "T₁ relaxation time (seconds)"})
+```
+
+```{ojs}
+//| echo: false
+viewof readout_time = Inputs.number([0, 6], {value: 1, step: 0.1, label: "Readout time (seconds)"})
+```
+
+```{ojs}
+//| echo: false
+t1_data = {
+  const points = [];
+  for (let t = 0; t <= 6; t += 0.02) {
+    points.push({
+      time: t,
+      magnetization: 1 - Math.exp(-t / t1_val)
+    });
+  }
+  return points;
+}
+
+readout_marker = [{
+  time: readout_time,
+  magnetization: 1 - Math.exp(-readout_time / t1_val)
+}]
+
+Plot.plot({
+  grid: false,
+  width: width,
+  height: 500,
+  marginLeft: 170,
+  marginRight: 32,
+  marginBottom: 100,
+  style: {
+    color: "#1f1f1f",
+    fontSize: "20px",
+    fontWeight: 500,
+    fontFamily: "system-ui, sans-serif"
+  },
+  y: {
+    domain: [0, 1.1],
+    axis: null
+  },
+  x: {
+    domain: [0, 6],
+    axis: null
+  },
+  marks: [
+    Plot.gridX({strokeOpacity: 0.15}),
+    Plot.gridY({strokeOpacity: 0.15}),
+    Plot.axisY({
+      label: "Normalized magnetization",
+      labelAnchor: "center",
+      labelArrow: "none",
+      fill: "#1f1f1f",
+      fontSize: 26,
+      fontWeight: 500
+    }),
+    Plot.axisX({
+      label: "Time after 90° excitation (s)",
+      labelAnchor: "center",
+      labelArrow: "none",
+      fill: "#1f1f1f",
+      fontSize: 26,
+      fontWeight: 500
+    }),
+    Plot.line(t1_data, {x: "time", y: "magnetization", stroke: "#2e7d32", strokeWidth: 3}),
+    Plot.ruleX([readout_time], {stroke: "#d32f2f", strokeDasharray: "4,4"}),
+    Plot.dot(readout_marker, {x: "time", y: "magnetization", fill: "#d32f2f", r: 6}),
+    Plot.text(readout_marker, {
+      x: "time",
+      y: "magnetization",
+      text: d => `At ${d.time.toFixed(1)} s: M_z / M_0 = ${d.magnetization.toFixed(3)}`,
+      dy: readout_marker[0].magnetization > 0.85 ? 24 : -22,
+      dx: readout_time > 3.7 ? -12 : 12,
+      textAnchor: readout_time > 3.7 ? "end" : "start",
+      fontSize: 20,
+      fontWeight: "bold",
+      fill: "#d32f2f"
+    })
+  ]
+})
+```
+:::

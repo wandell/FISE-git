@@ -7,6 +7,7 @@ This repository’s agent instructions are organized as modular Agent Skills in
 - `citations-and-crossrefs` for `paperpile.bib`, citations, labels, equations,
   tables, and footnotes;
 - `figures-and-media` for images, diagrams, figure labels, captions, and video;
+- `interactive-figures` for client-side Observable JS (OJS), Observable Plot, and WebAssembly (Wasm) simulations;
 - `reproducible-matlab` for `code/`, MATLAB, live scripts, and generated output;
 - `editorial-voice` for prose revision;
 - `scientific-notation` for equations, symbols, units, and domain terminology;
