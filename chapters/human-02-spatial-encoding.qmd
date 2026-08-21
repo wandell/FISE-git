@@ -24,40 +24,29 @@ Many of the imaging system components characterized in previous chapters can be 
 
 For parts of the human visual system, we can apply the same systems engineering approach. The eye's cornea and crystalline lens form an optical system whose transformation of incident light can be measured directly. Similarly, the photoreceptor mosaic provides the input to retinal neural circuitry, while the action potentials along retinal ganglion cell axons form the output. 
 
+![Human vision encodes the light field and then has many processing stages. The earliest stages, optics and photoreceptor encoding, and retina, are the basis for many important engineering metrics.](images/human/02-spatial-encoding/02-encoding-overview-human.png){#fig-human-encoding-overview width="80%"}
+
 In this book, we focus on the early stages of the visual pathway that can be characterized with measurable transfer functions. This chapter reviews the first steps in visual encoding: how optical blur by the eye's physiological optics and spatial sampling by the photoreceptor mosaic establish fundamental bottlenecks on spatial resolution. Spatial information lost at these initial stages cannot be recovered by downstream neural processing. Consequently, these early limits provide a principled foundation for creating quantitative image quality metrics (see @sec-human-metrics).
 
-![Human vision stages](images/human/02-spatial-encoding/02-encoding-overview-human.png){#fig-human-encoding-overview width="80%"}
+Later stages of visual processing are fascinating and present different challenges. The perceptual experiences and judgments — color, shape, texture — cannot be read out using a measurement instrument. The cortical circuitry has a wide variety of input and output connections that cannot be characterized using the transformation models we apply to the front end or to engineering components. The visual cortex performs perceptual inferences based on the retinal encoding (@sec-human-seeing), but understanding these inferences will require new science. How vision scientists investigate the cortical circuits and how we might model the relationship between these circuits and perception is explored more fully in [Foundations of Vision](https://foundationsofvision.stanford.edu){target="_blank"}. 
 
+This chapter is deliberately targeted: we quantify how the front end transformations and how the human visual system limits the ability to detect and discriminate signals.  This chapter covers the spatial patterns in the light field. The next chapter target covers the wavelength encoding. These analyses are the foundation of the most important engineering tools used to model human visual performance
 
-Later stages of visual processing present different challenges. Signals enter the eye, but the resulting perceptual experience—a color, shape, or texture—cannot be read out with a simple physical probe. Instead, the visual cortex performs perceptual inferences based on the retinal encoding (@sec-human-seeing). Understanding these perceptual stages requires psychophysical experiments and computational models of inference rather than direct transfer-function measurements.
-
-Vision scientists also investigate the detailed neural circuits throughout cortex and how specific cell types mediate visual experience—topics explored in depth in [Foundations of Vision](https://foundationsofvision.stanford.edu){target="_blank"}. 
-
-In this chapter, our focus is deliberately targeted: we quantify how the front end of the human visual system limits our ability to detect and discriminate spatial patterns in the light field. In the next chapter, we target how the front end of the visual system encodes the wavelength. These analyses are the foundation for the most imortant engineering tools needed to model human visual performance
-
-## The Two Stages of Encoding {#sec-human-encoding-systems}
-Two systems in the eye function together to convert electromagnetic radiation from the scene into a neural signal that the brain interprets  (@fig-eye-and-retina).
+## Two stages of visual encoding {#sec-human-encoding-systems}
+Two systems in the eye function together to convert electromagnetic radiation from the scene into a neural signal that the brain interprets.
 
 First, the **physiological optics**—the cornea and lens—act like a camera lens. The optics gathers the radiation entering the eye and focuses it to form an image on the retina. This optical system transforms the radiation from the environment into a focused optical image.
 
+![A cross-section of the human eye, showing the cornea, lens, iris, and retina. Radiation is focused by the optics onto the photoreceptor layer of the retina. We call the radiation that the eye converts into a neural signal *light*. Source: Eye anatomy: [Scientific Animations](https://www.scientificanimations.com).](images/human/02-spatial-encoding/2048px-3D_Medical_Animation_Eye_Structure.jpg){#fig-human-eyeball width="60%"}
+
+The brain sends signals to the eye that control pupil size and lens power. It also controls eye, head, and body positions, determining which part of the visual world falls on the retina. These signals do not reach the retinal neurons directly, but they are essential for seeing.
+
 Second, the **retina**, a thin layer of neural tissue lining the back of the eye, contains a set of highly specialized neurons that convert this optical image into neural signals. This process, called transduction, is performed by the **photoreceptors**. The signals from the photoreceptors, in the form of synaptic transmitter release, are processed by several distinct networks of retinal neurons. The output of these networks is sent to the brain on the axons of the **retinal ganglion cells (RGCs)**.  The bundle of RGC axons exit the retina through a small hole and form the optic nerve. 
 
-::: {#fig-eye-and-retina .figure}
-::: {.panel-tabset}
+![This diagram shows how the retina lines the back of the eyeball and highlights the fovea, the region of highest visual acuity. These specialized neurons, which are sensitive to some wavelengths but not others, convert the radiation into neural signals. ](images/human/02-spatial-encoding/retina-fovea-color.png){#fig-retina-color width="75%"}
 
-### Eye Anatomy
-![A cross-section of the human eye, showing the cornea, lens, iris, and retina.](images/human/02-spatial-encoding/2048px-3D_Medical_Animation_Eye_Structure.jpg){#fig-human-eyeball width="60%"}
+The retina is a feed-forward system; there is virtually no direct neural feedback from the brain. This simplifies our work, allowing us to study the retina's input-output relationship without accounting for top-down signals—a luxury we rarely have when studying other parts of the brain.
 
-### Retinal Location
-![This diagram shows how the retina lines the back of the eyeball and highlights the fovea, the region of highest visual acuity.](images/human/02-spatial-encoding/retina-fovea-color.png){#fig-retina-color width="75%"}
-
-:::
-The two systems of the visual encoding. Radiation is focused by the optics onto the photoreceptor layer of the retina. These specialized neurons, which are sensitive to some wavelengths but not others, convert the radiation into neural signals. We call the radiation that the eye converts into a neural signal *light*. Source: Eye anatomy: [Scientific Animations](https://www.scientificanimations.com).
-:::
-
-The retina is a feed-forward system; there is no direct neural feedback from the brain. This simplifies our work, allowing us to study the retina's input-output relationship without accounting for top-down signals—a luxury we rarely have when studying other parts of the brain.
-
-However, the brain does send signals to the eye that control pupil size and lens power. It also controls eye, head, and body positions, determining which part of the visual world falls on the retina. These signals do not reach the retinal neurons directly, but they are essential for seeing.
 
 ## Physiological optics
 The cornea and the flexible lens work together to focus light, forming an image on the retina, as shown in @fig-physiological-optics. This optical system is dynamic, constantly adjusting both the amount of light it lets in and its focal length.
@@ -87,6 +76,42 @@ This lens flexibility is not permanent. With age, the lens gradually stiffens, r
 <!-- 
 https://commons.wikimedia.org/wiki/File:3D_Medical_Animation_Eye_Structure.jpg 
 https://www.scientificanimations.com, CC BY-SA 4.0 <https://creativecommons.org/licenses/by-sa/4.0>, via Wikimedia Commons
+-->
+
+
+## Adaptive optics {#sec-adaptive-optics}
+In the late 1990s, it became possible to measure how the physiological optics blurs the light in the living human eye. A key technology for making this measurement is **adaptive optics**, based on a measurement device called the **Shack-Hartmann (S-H) wavefront sensor**. This wavefront sensor was originally developed by astronomers pointing their telescopes at the stars.  They knew that the wavefront from space was distorted by the atmosphere.  They developed the sensor and adaptive optics system to measure the wavefront distortion and correct it.
+
+The principle of the measurement is illustrated in @fig-wavefront-aberrometer. A narrow beam of light is directed through the center of the pupil. Some of the light is reflected from the retina, at the layer between the inner and outer segements of the receptors. The reflected light is Lambertian (spread in all directions) and fills up the lens as it passes back through the optics. If the optics were perfect, the rays exiting the eye from the small spot would be close to collimated and the wavefront would be a constant. But the rays are not parallel and thus the wavefront has some deviations from constant. These are the aberrations that we measure at the S-H wavefront sensor.  They are introduced by the optics of the eye. 
+
+![Wavefront measurement.  ](images/human/02-spatial-encoding/wavefront-aberrometer.png){#fig-wavefront-aberrometer width="60%"}
+
+In addition to measuring the optics, the S-H wavefront sensor enables to additional functions. First, we can use knowledge of the wavefront distortion, to create a very sharp image at the back of the eye.  We do this by pre-distorting the rays of our image before they pass through the optics.  This way, the effect of the optical aberrations is to cause the reflected rays to be without any distortion and thus the image is diffraction limited. Such an image can be localized to a small spot, exciting just a single cone. 
+
+Second, we can use the method to create a relatively sharp image of the retina.  When the pupil aperture is fairly large, say 7 mm diameter, the diffraction-limited PSF (Airy disk) will have a small diameter of about 3 microns. Scanning a spot across the retina provides an point-by-point image of the back of the eye, blurred only by the 3 microns of the Airy disk. This technique, called adaptive optics - scanning laser ophthalmoscope (**AOSLO**)- enables us to form a crisp image of many parts of the photoreceptor mosaic.  
+
+
+::: {.callout-note title='Shack-Hartmann'}
+### Shack–Hartmann wavefront sensor {#sec-wavefront-sensor}
+
+Johannes Franz Hartmann was a German astronomer working on the problem of detecting optical defects in telescope objectives. Reasoning from the ray theory of light, he measured the optical light field from a simple stimulus: an on-axis point at the focal length of the lens. In principle, the rays emerging from an ideal lens would all be parallel to the main axis. To measure deviations from the ideal, he created a screen comprising an array of pinholes. If the rays exiting the lens were parallel, the light through each pinhole would create a spot that is nicely centered behind the pinhole. If the rays from the lens were not parallel, the image behind the pinhole would be displaced by from the center. The measured displacements could guide how the lens might be improved.
+
+In practice, the image from each pinhole produces a blurry spot due to diffraction. Thus Hartmann did not try to extract an image; he just estimated the central position of the blurry spot. Also, because the pinholes only let through a small amount of light, the technique was not very sensitive. 
+
+Hopefully these ideas are familiar to you by now - it is the same principle we used when describing the light field measurements (@sec-lightfield-measurement, @fig-lightfield-pixel). Because there is an array of these pinholes, the accumulation of pinhole images measures the rays at multiple angles at multiple positions. In principle, by performing this measurement for different wavelengths and polarizations, we sample the optical light field (@eq-lightfield-optical).
+
+<!--
+The Raskar version in which you put spots behind the lenslet array and adjust the spots to make the array uniform is kind of funny.  It is intended to measure the optical aberrations of the eye
+https://en.wikipedia.org/wiki/Shack%E2%80%93Hartmann_wavefront_sensor
+-->
+
+[Arizona History of the Shack work.](https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf?utm_source=chatgpt.com)
+:::
+
+<!--
+My chatgpt conversation about AO and AOSLO imaging. This book should have a short form of that.  A longer explanation can go into FOV 2nd ed.
+
+https://chatgpt.com/share/690926d6-4d98-8002-b395-5e93bb3f900a
 -->
 
 ## Retina
@@ -130,41 +155,6 @@ A variety of ways of visualizing and characterizing the retina.
 3.  **Interference:** The beams are then recombined. Due to the phase difference, they **interfere** with each other. This interference creates a high-contrast, pseudo-three-dimensional relief image, making structures like the cell layers and fine details mentioned in the caption (e.g., cone pedicles) much more distinct and easier to observe without the need for staining. 
 
 In the context of the figure caption, using DIC optics allowed the researchers to clearly delineate the layered structure of the macaque retina—the **plexiform layers** and the **nuclear layers (ONL, INL, ganglion cell layer)**—in a fresh or relatively unstained preparation.
--->
-
-## Adaptive optics {#sec-adaptive-optics}
-In the late 1990s, it became possible to measure how the physiological optics blurs the light in the living human eye. A key technology for making this measurement is **adaptive optics**, based on a measurement device called the **Shack-Hartmann (S-H) wavefront sensor**. This wavefront sensor was originally developed by astronomers pointing their telescopes at the stars.  They knew that the wavefront from space was distorted by the atmosphere.  They developed the sensor and adaptive optics system to measure the wavefront distortion and correct it.
-
-The principle of the measurement is illustrated in @fig-wavefront-aberrometer. A narrow beam of light is directed through the center of the pupil. Some of the light is reflected from the retina, at the layer between the inner and outer segements of the receptors. The reflected light is Lambertian (spread in all directions) and fills up the lens as it passes back through the optics. If the optics were perfect, the rays exiting the eye from the small spot would be close to collimated and the wavefront would be a constant. But the rays are not parallel and thus the wavefront has some deviations from constant. These are the aberrations that we measure at the S-H wavefront sensor.  They are introduced by the optics of the eye. 
-
-![Wavefront measurement.  ](images/human/02-spatial-encoding/wavefront-aberrometer.png){#fig-wavefront-aberrometer width="60%"}
-
-In addition to measuring the optics, the S-H wavefront sensor enables to additional functions. First, we can use knowledge of the wavefront distortion, to create a very sharp image at the back of the eye.  We do this by pre-distorting the rays of our image before they pass through the optics.  This way, the effect of the optical aberrations is to cause the reflected rays to be without any distortion and thus the image is diffraction limited. Such an image can be localized to a small spot, exciting just a single cone. 
-
-Second, we can use the method to create a relatively sharp image of the retina.  When the pupil aperture is fairly large, say 7 mm diameter, the diffraction-limited PSF (Airy disk) will have a small diameter of about 3 microns. Scanning a spot across the retina provides an point-by-point image of the back of the eye, blurred only by the 3 microns of the Airy disk. This technique, called adaptive optics - scanning laser ophthalmoscope (**AOSLO**)- enables us to form a crisp image of many parts of the photoreceptor mosaic.  
-
-
-::: {.callout-note title='Shack-Hartmann'}
-### Shack–Hartmann wavefront sensor {#sec-wavefront-sensor}
-
-Johannes Franz Hartmann was a German astronomer working on the problem of detecting optical defects in telescope objectives. Reasoning from the ray theory of light, he measured the optical light field from a simple stimulus: an on-axis point at the focal length of the lens. In principle, the rays emerging from an ideal lens would all be parallel to the main axis. To measure deviations from the ideal, he created a screen comprising an array of pinholes. If the rays exiting the lens were parallel, the light through each pinhole would create a spot that is nicely centered behind the pinhole. If the rays from the lens were not parallel, the image behind the pinhole would be displaced by from the center. The measured displacements could guide how the lens might be improved.
-
-In practice, the image from each pinhole produces a blurry spot due to diffraction. Thus Hartmann did not try to extract an image; he just estimated the central position of the blurry spot. Also, because the pinholes only let through a small amount of light, the technique was not very sensitive. 
-
-Hopefully these ideas are familiar to you by now - it is the same principle we used when describing the light field measurements (@sec-lightfield-measurement, @fig-lightfield-pixel). Because there is an array of these pinholes, the accumulation of pinhole images measures the rays at multiple angles at multiple positions. In principle, by performing this measurement for different wavelengths and polarizations, we sample the optical light field (@eq-lightfield-optical).
-
-<!--
-The Raskar version in which you put spots behind the lenslet array and adjust the spots to make the array uniform is kind of funny.  It is intended to measure the optical aberrations of the eye
-https://en.wikipedia.org/wiki/Shack%E2%80%93Hartmann_wavefront_sensor
--->
-
-[Arizona History of the Shack work.](https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf?utm_source=chatgpt.com)
-:::
-
-<!--
-My chatgpt conversation about AO and AOSLO imaging. This book should have a short form of that.  A longer explanation can go into FOV 2nd ed.
-
-https://chatgpt.com/share/690926d6-4d98-8002-b395-5e93bb3f900a
 -->
 
 ## Photoreceptor types
@@ -347,7 +337,7 @@ Note:  Should we adjust $f$ and $\sigma$ together, or should we fix $\sigma$ and
 
 ### Vernier acuity
 
-Gerald and Suzanne lead.
+Gerald and Suzanne lead the discussion of Vernier acuity.
 
 ::: {.callout-note title="Pierre Vernier" collapse=true}
 
@@ -360,27 +350,5 @@ Something about Vernier calipers and the story of Pierre Vernier.
 Historical
 
 https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Vernier,_Pierre
-
-:::
-
-## TODO
-
-Not sure the astronomy one should be here.  Shack-Hartmann should, I think.
-
-::: {.callout-note title="Astronomy and adaptive optics"}
-
-https://en.wikipedia.org/wiki/Pierre_Vernier
-
-fisicanet.com.ar/biografias/cientificos/v/vernier-pierre.php
-
-:::
-### Ground-based telescopes {#sec-telescopes}
-quatThese same technologies can be used to look inward, within the eye, rather than outward toward the stars. Realizing this was a very important insight that continues to lead to important insights about the peripheral human visual system (@sec-human-seeing-overview).
-
-Where should the adaptive optics measurement method be? Here or FOV? Adaptive optics measurements of wavefront aberrations, expressed as point spread functions. Thibos and Artal data.
-
-The ability to measure certain properties of the optics was revolutionized by adpative optics - a method that makes real time measurements of the wavefront aberrations of the physiological optics using a Shack-Hartmann wavefront sensor. Just the measurement of the aberrations alone is useful. In addition, it has proben possible to engineer systems that correct for these aberrations in real time, and thus visualize the apertures of the photoreceptors (1-5 $\mu \text{m}$ diameter) cells in the retina. Further, using video tracking of the eye movements it has proven possible to deliver stimuli to specific, targeted photoreceptors.
-
-First order approximations of the human optics. Simulations with ISETBio of maybe the Westheimer or Ijspeert functions. Eye models?
 
 :::
