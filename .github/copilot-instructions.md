@@ -4,8 +4,8 @@ This repository’s agent instructions are organized as modular Agent Skills in
 `.github/skills/`. Use the skill whose trigger description matches the task:
 
 - `quarto-authoring` for `.qmd`, YAML, callouts, layouts, and Quarto rendering;
-- `citations-and-crossrefs` for `paperpile.bib`, citations, labels, equations,
-  tables, and footnotes;
+- `bib-crossref-indexing` for `paperpile.bib`, `local.bib`, citations, labels,
+  equations, tables, footnotes, and cross-project bibliography sync;
 - `figures-and-media` for images, diagrams, figure labels, captions, and video;
 - `interactive-figures` for client-side Observable JS (OJS), Observable Plot, and WebAssembly (Wasm) simulations;
 - `reproducible-matlab` for `code/`, MATLAB, live scripts, and generated output;
