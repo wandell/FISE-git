@@ -21,19 +21,21 @@ To measure light we also need to go beyond the concept of a ray. A single ray is
 ## Measuring the light field {#sec-lightfield-measurement}
 How do we measure the direction of the rays in a light field? A pinhole camera offers a simple answer. Each point in the image from a pinhole camera measures the intensity of an incident light field ray at different angle. The measurement is at the location of the pinhole; to learn more about the light field we follow Leonardo's lead and move the pinhole to different locations. This accumulates information about the extended light field.
 
-A slightly different way to think of it is to consider a small lens (called a *lenslet*). We might measuring just a small region of the light field in which the rays are traveling approximately in the same direction.  We say the rays in this small region are *collimated* (parallel to one another).  In that case, the lenslet will focus the rays focuses onto a sensor at a small point. The position of the point will depend on the angle of the rays.
+A slightly different way to think of it is to consider a small lens (called a *lenslet*). We might measuring just a small region of the light field in which the rays are traveling approximately in the same direction.  We say the rays in such a small region are *collimated* (parallel to one another).  In that case, the lenslet will focus the rays focuses onto a sensor at a small point whose position of the point depends on the angle of the incident rays.
 
-![A lenslet can be used to measure the direction of rays in a small region of the light field. The green lines show what happens when the rays are parallel and along the main axis of the lenslet: the point is centered.  When the rays are traveling at an angle, as suggested by the red lines, the image will be displaced from the center.  The size of the displacement depends on the angle of the rays.](images/lightfields/02-measuring/lenslet.png){#fig-lenslet width="70%"}
+![A lenslet can be used to measure the direction of rays in a small region of the light field. The green lines show rays parallel to the main axis of the lenslet: the image point is centered.  The red rays arrive at an angle, and their image will be displaced from the center by an amount that depends on the angle.](images/lightfields/02-measuring/lenslet-0.png){#fig-lenslet width="60%"}
 
 ### Shack-Hartmann wavefront sensors
 The fundamental way to characteriz how an optical system transforms an incident light field into an optical light field (@eq-lightfield-optical) is illustrated in @fig-shack-hartmann. The instrument used to measure the wavefront is called a Shack-Hartmann wavefront sensor.
 
-![Principles of the Shack-Hartmann wavefront sensor.](images/lightfields/01-lightfields/01-Shack-Harmann.png){#fig-shack-hartmann width="80%" fig-align="center" .margin-caption}
+![Principles of the Shack-Hartmann wavefront sensor.](images/lightfields/02-measuring/02-Shack-Hartmann.png){#fig-shack-hartmann width="100%" fig-align="center" .margin-caption}
 
-TODO: Explanation of the principles to go here.  Top image shows the local wavefront direction.  Bottom images show the measurements across space to capture the larger area of the wavefront.
+Assembling an array of lenslets, each with a sensor beneath it, samples the light field across space. The location of the image on the sensor informs us about the directions of the rays in that part of the light field.  Assuming the rays in each small region are collimated, and we sample finely enough, we get a reasonable estimate of the direction of the rays.
 
 ### Wavefront sensor applications
-The wavefront sensors are used in applications far beyond optical measurement. For example, astronomers measure the wavefront of light from a guide star at the top edge of the atmosphere. The rays from this small point of light would ordinarily be parallel when they arrive at the telescope.  But the atmosphere distorts the wavefront. They measure the actual wavefront and couple it with a wavefront corrector to compensate for the atmospheric distrotions.  These are called adaptive optics systems (@sec-adaptive-optics), and they enable creating a much sharper image of the sky, limiting the distortions from the atmosphere.
+The wavefront sensors are used in applications far beyond optical measurement. A critical enabling technology for several applications is that we can change the measured ray directions using a small deformable mirror, in which the slant the mirror by an amount to change the direction of the rays.
+
+For example, astronomers measure the wavefront of light from a guide star at the top edge of the atmosphere. The rays from this small point of light would ordinarily be parallel when they arrive at the telescope.  But the atmosphere distorts the wavefront. They measure the actual wavefront and couple it with a wavefront corrector to compensate for the atmospheric distrotions.  These are called adaptive optics systems (@sec-adaptive-optics), and they enable creating a much sharper image of the sky, limiting the distortions from the atmosphere.
 
 <!-- https://www.thorlabs.com/shack-hartmann-wavefront-sensors?tabName=SH%20Tutorial
 -->
@@ -43,11 +45,7 @@ The wavefront sensors are used in applications far beyond optical measurement. F
 A second and quite different example is that Shack-Hartmann wavefront sensors are used to measur the optics of the human eye. Imperfections in a person's cornea and lens can be corrected with spectacles or laser surgery. To design these corrections, we must first measure how the eye's optics transform incoming light rays. These measurements are central to the fields of ophthalmology and vision science, as we will explore further in @sec-human-spatial-encoding.
 
 ### Light field cameras
-A modern image sensor design that directly captures the optical light field was invented by @adelson-wang-1992. They placed a lenslet array in front of a standard camera sensor. Each lenslet covers a small group of pixels. As @fig-lightfield-pixel illustrates—using a pinhole array rather than lenslet for simplicity—rays arriving from different angles are captured by different pixels behind the pinhole. This sensor records both the position of a ray (which lenslet or pinhole) and its angle (which subpixel). @adelson-wang-1992 describe how to use this information to estimate depth. The ideas was further developed by Ren Ng and his colleagues.  Ng formed company, Lytro, that commercialized light field cameras [@ng2005-lightfield]. These cameras allow users to perform novel operations, such as refocusing an image after it has been captured (@sec-sensor-lightfield).
-
-![A light field sensor captures both the position and angle of incoming light rays. The sensor is composed of an array of "macropixels" (bottom). Each macropixel consists of a microlens (or a pinhole, as simplified here) and a group of pixels beneath it. The microlens or pinhole location on the sensor determines the ray's position. The subpixels are below the pinhole.  Which of these detects the light determines the ray's angle. By capturing the position and angle data across the entire sensor, a light field camera can perform powerful computations, such as refocusing an image after it has been taken. (Image by me and Gemini 2.5 Pro.)](images/lightfields/01-lightfields/Gemini_lightfieldPixel-Circle.png){#fig-lightfield-pixel width="60%"}
-
-The principles of the light field camera continue to be used in modern sensors. While full depth estimation is not common in consumer devices, many cameras use a simplified version of this technology for autofocus (@sec-focus-control). We will return to light field cameras in @sec-sensor-lightfield and discuss the parallel developments of Shack-Hartmann wavefront sensing in @sec-wavefront-sensor.
+The lenslet-array principle used in wavefront sensors can also be built into an ordinary image sensor. Placing a lenslet array in front of the sensor, so that each lenslet covers a small group of pixels, lets the sensor record both the position of a ray (which lenslet) and its angle (which pixel beneath it)—directly sampling the optical light field (@eq-lightfield-optical). @adelson-wang-1992 introduced this design and showed how the recovered position-angle information supports depth estimation; Ren Ng and colleagues later commercialized it as the Lytro camera, enabling users to refocus an image after it has been captured [@ng2005-lightfield]. We describe the sensor design in detail, and its relation to modern autofocus methods, in @sec-sensor-lightfield.
 
 ::: {.callout-note title="Lightfield measurement instruments"}
 * **Hartmann (1900)** developed the **aperture mask** (Hartmann screen) to sample ray angles across a telescope pupil to detect optical aberrations.
@@ -59,6 +57,7 @@ The principles of the light field camera continue to be used in modern sensors. 
 * **Ren Ng / Refocus Imaging (later Lytro, 2012)** commercialized the first integrated handheld light field camera for the consumer market.
 :::
 
+<!--
 ## Interpreting the light field
 Encoding the light field data is the first step in seeing. The instrumentation for encoding is a critical bottleneck because it limits what we can infer about the scene. For example, if an instrument does not record information about certain wavelengths, we can only guess at the missing information, for instance, by choosing the most likely value based on context.
 
@@ -69,8 +68,9 @@ We will review many algorithms for interpreting images, but one overarching prin
 > The general rule determining the ideas of vision that are formed whenever an impression is made on the eye, is that *such objects are always imagined as being present in the field of vision as would have to be there in order to produce the same impression on the nervous mechanism*. [Italics in the original; from *Treatise on Physiological Optics*, Vol. III, 1867]
 
 Understanding the light field—how it interacts with objects, how it is measured by instruments, and how it is interpreted—is fundamental to achieving that goal. We are still working on the project assigned to us by Helmholtz.  We will return to this important issue later in the book.
+-->
 
-## Radiometric units
+## Measuring the amount of light
 
 Radiometric measurements are made separately for each wavelength. For people working in radiometry and image systems, wavelength is commonly expressed with respect to nanometers [^lightfields-measurement-1]. We quantify the amount of radiance by measuring the amount of energy, or equivalently the number of photons, present at a location. The basic energy unit is joules per second, (watts) and for photons the basic unit is photons per second. Thus, in radiometry one often finds units such as (watts per nanometer) or (photons per sec per nanometer). 
 
@@ -206,6 +206,6 @@ These angle-dependent behaviors are central to how materials reflect and transmi
 
 The properties of modern image sensors also add practical constraints. Sensors are 2D arrays of small light-sensitive elements (pixels) that spatially sample the irradiance at the sensor plane. Each pixel integrates photons over its finite area, over the exposure time, over wavelengths weighted by its spectral sensitivity, and over the acceptance cone set by the lens and pixel aperture.  Pixel counts, and the corresponding microlens arrays, have grown from early arrays with a few hundred by a few hundred pixels to today’s sensors with tens of millions. 
 
-Capturing directional information—measuring rays from different directions separately, as in @fig-lightfield-pixel—yields richer data and is the basis of light field imaging.  The geometry of pixels, including small lenslet arrays placed over the pixel arrays, enables us to make useful measurements about the light field. 
+Capturing directional information—measuring rays from different directions separately, as in a light field camera (@sec-sensor-lightfield)—yields richer data and is the basis of light field imaging.  The geometry of pixels, including small lenslet arrays placed over the pixel arrays, enables us to make useful measurements about the light field.
 
 Similarly, reproducing color requires pixels with different wavelength sensitivities (e.g., a color filter array). The idea that we can use just three measurements to represent human color perception was formalized in @maxwell1872-colorvision and led to the field of **colorimetry**, which we will explore in *Part IV: Human vision*.

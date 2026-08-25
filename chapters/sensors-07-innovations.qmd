@@ -21,7 +21,14 @@ Global Shutter Pixel Technologies and CMOS Image Sensors – A Powerful Combinat
 Well recycling?
 
 ## Light Field Cameras {#sec-sensor-lightfield}
-Refocus.  Depth estimation
+
+A modern image sensor design that directly captures the optical light field was invented by @adelson-wang-1992. They placed a lenslet array in front of a standard camera sensor. Each lenslet covers a small group of pixels. As @fig-lightfield-pixel illustrates—using a pinhole array rather than a lenslet for simplicity—rays arriving from different angles are captured by different pixels behind the pinhole. This sensor records both the position of a ray (which lenslet or pinhole) and its angle (which subpixel). @adelson-wang-1992 describe how to use this information to estimate depth.
+
+![A light field sensor captures both the position and angle of incoming light rays. The sensor is composed of an array of "macropixels" (bottom). Each macropixel consists of a microlens (or a pinhole, as simplified here) and a group of pixels beneath it. The microlens or pinhole location on the sensor determines the ray's position. The subpixels are below the pinhole. Which of these detects the light determines the ray's angle. By capturing the position and angle data across the entire sensor, a light field camera can perform powerful computations, such as refocusing an image after it has been taken. (Image by me and Gemini 2.5 Pro.)](images/sensors/19-innovations/Gemini_lightfieldPixel-Circle.png){#fig-lightfield-pixel width="60%"}
+
+The idea was further developed by Ren Ng and his colleagues. Ng formed a company, Lytro, that commercialized light field cameras [@ng2005-lightfield]. These cameras allow users to perform novel operations, such as refocusing an image after it has been captured.
+
+The principles of the light field camera continue to be used in modern sensors. While full depth estimation is not common in consumer devices, many cameras use a simplified version of this technology for autofocus (@sec-focus-control): dual-pixel autofocus (@sec-dualpixel-autofocus) samples just two angular positions per macropixel, rather than the many angles captured by a full lenslet array. The lenslet array itself reappears in a very different application—measuring rather than capturing the light field—in the Shack-Hartmann wavefront sensor (@sec-wavefront-sensor), used to characterize telescope and eye optics.
 
 ## Split Pixel and HDR Sensors {#sec-sensor-splitpixel}
 Autonomous driving.  HDR.
