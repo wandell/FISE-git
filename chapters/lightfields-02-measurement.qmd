@@ -8,11 +8,67 @@ date: last-modified
 
 ## Measuring light: An overview {#sec-lfmeasurement-overview}
 
-In this chapter we describe several ways to measure light. For many of the applications in this book, we can model light as comprising rays. But a single ray is only an idealization with no energy. Real measurements always integrate over a small area (or aperture), a small solid angle (direction range), a finite wavelength band, and a finite time interval. We think of the instruments as measuring ray bundles; these may be diverging from a source or converging onto a surface. The same radiometric principles apply in either case.
+In this chapter we describe several ways to measure light. 
 
-**Radiometry** provides the quantitative framework for these measurements. We will work primarily with spectral (per-wavelength) quantities and SI[^SI-units] units (e.g., watts or photons per second), which are standard in imaging and used by simulation tools such as ISETCam. The next sections define the core quantities — radiant flux, radiant intensity, radiance, and irradiance— and show how geometry (area, angle, and foreshortening) enters their units.
+First, we explain measurements of the light field incident at a detector. These measurements capture the directions of the rays.  Understanding how an optical instrument or passage through a medium (such as the atmosphere) transforms the incident ray directions into a new set of directions is an important, foundational measurement. 
+
+For many of the applications in this book, we can model light as comprising rays. But a single ray is only an idealization with no energy. Real measurements always integrate over a small area (or aperture), a small solid angle (direction range), a finite wavelength band, and a finite time interval. We think of the instruments as measuring ray bundles; these may be diverging from a source or converging onto a surface. The same principles apply in either case. In this case, we are integrating the energy across bundles of rays using techniques that account for the different geometry of the ray bundles. 
+
+**Radiometry** is the field that provides the quantitative framework for these integrative measurements. We will work primarily with spectral (per-wavelength) quantities and SI[^SI-units] units (e.g., watts or photons per second), which are standard in imaging and used by simulation tools such as ISETCam. The next sections define the core quantities — radiant flux, radiant intensity, radiance, and irradiance— and show how geometry (area, angle, and foreshortening) enters their units.
 
 [^SI-units]: Système International d'Unités.  These units are the modern form of the metric system, the most widely used system of measurement in the world.
+
+## Measuring the light field {#sec-lightfield-measurement}
+How do we measure a light field? A pinhole camera offers a simple conceptual answer. An image from a pinhole camera is a measurement of the incident light field at the pinhole's location. The intensity at each image point corresponds to the intensity of a small bundle of rays arriving from a single direction. To learn more about the environmental light field, we can follow Leonardo's lead and move the pinhole to different locations, accumulating information with each measurement.
+
+The camera arrays in @fig-camera-array are a practical implementation of this idea. They sample the environmental light field by measuring the incident light field at multiple camera positions. However, these cameras use lenses, not pinholes. A lens gathers light from across its entire aperture, and a conventional sensor integrates all of this light. For any single point on the sensor, the rays in the optical light field arrive from many positions within the lens's exit pupil. A conventional sensor sums the energy from all these rays, losing the information about where each ray originated in the pupil. Consequently, a conventional camera measures an integrated version of the light field, not the full angular distribution of light at each point.
+
+While a conventional camera array does not capture the complete light field, it captures enough information for its intended purpose: rendering a scene from various viewpoints by interpolating between the captured images. The light field concept is a powerful theoretical guide for the design and interpretation of such systems, even when the full light field is not measured.
+
+### Shack-Hartmann wavefront sensors
+In many scientific and clinical applications a measurement of the light field is valuable. The fundamental way to characteriz how an optical system transforms an incident light field into an optical light field (@eq-lightfield-optical) is illustrated in @fig-shack-hartmann. The instrument used to measure the wavefront is called a Shack-Hartmann wavefront sensor.
+
+![Principles of the Shack-Hartmann wavefront sensor.](images/lightfields/01-lightfields/01-Shack-Harmann.png){#fig-shack-hartmann width="80%" fig-align="center" .margin-caption}
+
+TODO: Explanation of the principles to go here.  Top image shows the local wavefront direction.  Bottom images show the measurements across space to capture the larger area of the wavefront.
+
+### Wavefront sensor applications
+The wavefront sensors are used in applications far beyond optical measurement. For example, astronomers measure the wavefront of light from a guide star at the top edge of the atmosphere. The rays from this small point of light would ordinarily be parallel when they arrive at the telescope.  But the atmosphere distorts the wavefront. They measure the actual wavefront and couple it with a wavefront corrector to compensate for the atmospheric distrotions.  These are called adaptive optics systems (@sec-adaptive-optics), and they enable creating a much sharper image of the sky, limiting the distortions from the atmosphere.
+
+<!-- https://www.thorlabs.com/shack-hartmann-wavefront-sensors?tabName=SH%20Tutorial
+-->
+
+![Wavefront-sensing architecture used in astronomy and ophthalmology. The incoming light can be from a star or reflected from the back of the eye. Adapted from [Exosens, “Short-wave infrared adaptive optics and applications,” Fig. 1](https://www.exosens.com/news/short-wave-infrared-adaptive-optics-and-applications), which credits C. Max, Center for Adaptive Optics.](images/lightfields/01-lightfields/01-wavefront-sensing.png){#fig-wavefront-sensing width="80%" fig-align="center" .margin-caption}
+
+A second and quite different example is that Shack-Hartmann wavefront sensors are used to measur the optics of the human eye. Imperfections in a person's cornea and lens can be corrected with spectacles or laser surgery. To design these corrections, we must first measure how the eye's optics transform incoming light rays. These measurements are central to the fields of ophthalmology and vision science, as we will explore further in @sec-human-spatial-encoding.
+
+### Light field cameras
+A modern image sensor design that directly captures the optical light field was invented by @adelson-wang-1992. They placed a lenslet array in front of a standard camera sensor. Each lenslet covers a small group of pixels. As @fig-lightfield-pixel illustrates—using a pinhole array rather than lenslet for simplicity—rays arriving from different angles are captured by different pixels behind the pinhole. This sensor records both the position of a ray (which lenslet or pinhole) and its angle (which subpixel). @adelson-wang-1992 describe how to use this information to estimate depth. The ideas was further developed by Ren Ng and his colleagues.  Ng formed company, Lytro, that commercialized light field cameras [@ng2005-lightfield]. These cameras allow users to perform novel operations, such as refocusing an image after it has been captured (@sec-sensor-lightfield).
+
+![A light field sensor captures both the position and angle of incoming light rays. The sensor is composed of an array of "macropixels" (bottom). Each macropixel consists of a microlens (or a pinhole, as simplified here) and a group of pixels beneath it. The microlens or pinhole location on the sensor determines the ray's position. The subpixels are below the pinhole.  Which of these detects the light determines the ray's angle. By capturing the position and angle data across the entire sensor, a light field camera can perform powerful computations, such as refocusing an image after it has been taken. (Image by me and Gemini 2.5 Pro.)](images/lightfields/01-lightfields/Gemini_lightfieldPixel-Circle.png){#fig-lightfield-pixel width="60%"}
+
+The principles of the light field camera continue to be used in modern sensors. While full depth estimation is not common in consumer devices, many cameras use a simplified version of this technology for autofocus (@sec-focus-control). We will return to light field cameras in @sec-sensor-lightfield and discuss the parallel developments of Shack-Hartmann wavefront sensing in @sec-wavefront-sensor.
+
+::: {.callout-note title="Lightfield measurement instruments"}
+* **Hartmann (1900)** developed the **aperture mask** (Hartmann screen) to sample ray angles across a telescope pupil to detect optical aberrations.
+* **Lippmann (1908)** invented *integral photography*, using a **microlens array** on photographic emulsion to record directional light rays and create 3D imagery.
+* **Gershun (1936)** formalized the **radiometric concept** and mathematical foundation of the 3D "light field."
+* **Shack & Platt (1971)** replaced Hartmann's aperture mask with a **microlens array**, creating the Shack-Hartmann wavefront sensor to measure ray slopes in astronomy and optical testing.
+* **Adelson & Wang (1992)** placed a microlens array at the focal plane of a camera lens to extract disparity and depth for computer vision (the single-lens plenoptic camera).
+* **Perwaß & Wietzke / Raytrix (2010)** brought the first industrial light field camera (Raytrix R11) to the commercial market for metrology and machine vision.
+* **Ren Ng / Refocus Imaging (later Lytro, 2012)** commercialized the first integrated handheld light field camera for the consumer market.
+:::
+
+## Interpreting the light field
+Encoding the light field data is the first step in seeing. The instrumentation for encoding is a critical bottleneck because it limits what we can infer about the scene. For example, if an instrument does not record information about certain wavelengths, we can only guess at the missing information, for instance, by choosing the most likely value based on context.
+
+Knowledge of the light field encoding is always connected to the next step in an image system: interpreting the measurement. The invention of algorithms that interpret the light field—to recognize objects or measure distances—is central to building computers that see. Interpreting the light field is also important for consumer photography, where we may wish to distinguish a surface marking from a shadow, or the color of an object from the color of the ambient lighting. In vision science, a primary goal is to discover how the brain interprets the signal encoded by the retina.
+
+We will review many algorithms for interpreting images, but one overarching principle has endured for centuries. The principle is that image systems, whether artificial or biological, should use the encoded signal to build an internal model of the scene.
+
+> The general rule determining the ideas of vision that are formed whenever an impression is made on the eye, is that *such objects are always imagined as being present in the field of vision as would have to be there in order to produce the same impression on the nervous mechanism*. [Italics in the original; from *Treatise on Physiological Optics*, Vol. III, 1867]
+
+Understanding the light field—how it interacts with objects, how it is measured by instruments, and how it is interpreted—is fundamental to achieving that goal. We are still working on the project assigned to us by Helmholtz.  We will return to this important issue later in the book.
 
 ## Radiometric units
 
