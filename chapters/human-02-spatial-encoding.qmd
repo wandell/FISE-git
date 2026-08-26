@@ -80,33 +80,13 @@ https://www.scientificanimations.com, CC BY-SA 4.0 <https://creativecommons.org/
 
 
 ## Adaptive optics {#sec-adaptive-optics}
-In the late 1990s, it became possible to measure how the physiological optics blurs the light in the living human eye. A key technology for making this measurement is **adaptive optics**, based on a measurement device called the **Shack-Hartmann (S-H) wavefront sensor**. This wavefront sensor was originally developed by astronomers pointing their telescopes at the stars.  They knew that the wavefront from space was distorted by the atmosphere.  They developed the sensor and adaptive optics system to measure the wavefront distortion and correct it.
+By the 1990s, astronomers were routinely using **adaptive optics**—a Shack-Hartmann wavefront sensor paired with a deformable mirror (@sec-optics-wavefront-sensing)—to correct the blur that atmospheric turbulence imposes on telescope images. David Williams, at the University of Rochester, recognized that the eye's optics distort the retinal image in much the same way the atmosphere distorts starlight, and that a sensor and mirror built to correct one could be turned inward to correct the other. Working with Junzhong Liang and Donald Miller, he built the first adaptive optics system for the living human eye and demonstrated "supernormal vision"—retinal images sharper than the eye's own optics would otherwise allow [@liang1997-sm].
 
-The principle of the measurement is illustrated in @fig-wavefront-aberrometer. A narrow beam of light is directed through the center of the pupil. Some of the light is reflected from the retina, at the layer between the inner and outer segements of the receptors. The reflected light is Lambertian (spread in all directions) and fills up the lens as it passes back through the optics. If the optics were perfect, the rays exiting the eye from the small spot would be close to collimated and the wavefront would be a constant. But the rays are not parallel and thus the wavefront has some deviations from constant. These are the aberrations that we measure at the S-H wavefront sensor.  They are introduced by the optics of the eye. 
+The principle of the measurement is illustrated in @fig-wavefront-aberrometer. A narrow beam of light is directed through the center of the pupil. Some of the light is reflected from the retina, at the layer between the inner and outer segments of the receptors. The reflected light is Lambertian (spread in all directions) and fills up the lens as it passes back through the optics. If the optics were perfect, the rays exiting the eye from the small spot would be close to collimated and the wavefront would be a constant. But the rays are not parallel and thus the wavefront has some deviations from constant. These are the aberrations that we measure with the Shack-Hartmann wavefront sensor (@sec-optics-wavefront-hardware); they are introduced by the optics of the eye.
 
 ![Wavefront measurement.  ](images/human/02-spatial-encoding/wavefront-aberrometer.png){#fig-wavefront-aberrometer width="60%"}
 
-In addition to measuring the optics, the S-H wavefront sensor enables to additional functions. First, we can use knowledge of the wavefront distortion, to create a very sharp image at the back of the eye.  We do this by pre-distorting the rays of our image before they pass through the optics.  This way, the effect of the optical aberrations is to cause the reflected rays to be without any distortion and thus the image is diffraction limited. Such an image can be localized to a small spot, exciting just a single cone. 
-
-Second, we can use the method to create a relatively sharp image of the retina.  When the pupil aperture is fairly large, say 7 mm diameter, the diffraction-limited PSF (Airy disk) will have a small diameter of about 3 microns. Scanning a spot across the retina provides an point-by-point image of the back of the eye, blurred only by the 3 microns of the Airy disk. This technique, called adaptive optics - scanning laser ophthalmoscope (**AOSLO**)- enables us to form a crisp image of many parts of the photoreceptor mosaic.  
-
-
-::: {.callout-note title='Shack-Hartmann'}
-### Shack–Hartmann wavefront sensor {#sec-wavefront-sensor}
-
-Johannes Franz Hartmann was a German astronomer working on the problem of detecting optical defects in telescope objectives. Reasoning from the ray theory of light, he measured the optical light field from a simple stimulus: an on-axis point at the focal length of the lens. In principle, the rays emerging from an ideal lens would all be parallel to the main axis. To measure deviations from the ideal, he created a screen comprising an array of pinholes. If the rays exiting the lens were parallel, the light through each pinhole would create a spot that is nicely centered behind the pinhole. If the rays from the lens were not parallel, the image behind the pinhole would be displaced by from the center. The measured displacements could guide how the lens might be improved.
-
-In practice, the image from each pinhole produces a blurry spot due to diffraction. Thus Hartmann did not try to extract an image; he just estimated the central position of the blurry spot. Also, because the pinholes only let through a small amount of light, the technique was not very sensitive. 
-
-Hopefully these ideas are familiar to you by now - it is the same principle used by the light field camera (@sec-lightfield-measurement, @sec-sensor-lightfield, @fig-lightfield-pixel). Because there is an array of these pinholes, the accumulation of pinhole images measures the rays at multiple angles at multiple positions. In principle, by performing this measurement for different wavelengths and polarizations, we sample the optical light field (@eq-lightfield-optical).
-
-<!--
-The Raskar version in which you put spots behind the lenslet array and adjust the spots to make the array uniform is kind of funny.  It is intended to measure the optical aberrations of the eye
-https://en.wikipedia.org/wiki/Shack%E2%80%93Hartmann_wavefront_sensor
--->
-
-[Arizona History of the Shack work.](https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf?utm_source=chatgpt.com)
-:::
+Williams' demonstration opened up two further applications beyond simply measuring the eye's optics. First, knowledge of the wavefront distortion lets us pre-distort an image before it passes through the optics, so that the aberrations cancel and the retinal image is diffraction limited—sharp enough to stimulate a single cone. Second, the same correction can be applied to a spot scanned across the retina rather than a full image formed on it. When the pupil aperture is fairly large, say 7 mm diameter, the diffraction-limited PSF (Airy disk) has a small diameter of about 3 microns. Scanning a corrected spot across the retina therefore provides a point-by-point image of the back of the eye, blurred only by this 3-micron Airy disk. This technique, adaptive optics scanning laser ophthalmoscopy (**AOSLO**), lets us form a crisp image of many parts of the photoreceptor mosaic.
 
 <!--
 My chatgpt conversation about AO and AOSLO imaging. This book should have a short form of that.  A longer explanation can go into FOV 2nd ed.

@@ -25,29 +25,11 @@ A slightly different way to think of it is to consider a small lens (called a *l
 
 ![A lenslet can be used to measure the direction of rays in a small region of the light field. The green lines show rays parallel to the main axis of the lenslet: the image point is centered.  The red rays arrive at an angle, and their image will be displaced from the center by an amount that depends on the angle.](images/lightfields/02-measuring/lenslet-0.png){#fig-lenslet width="60%"}
 
-### Shack-Hartmann wavefront sensors
-The fundamental way to characteriz how an optical system transforms an incident light field into an optical light field (@eq-lightfield-optical) is illustrated in @fig-shack-hartmann. The instrument used to measure the wavefront is called a Shack-Hartmann wavefront sensor.
-
-![Principles of the Shack-Hartmann wavefront sensor.](images/lightfields/02-measuring/02-Shack-Hartmann.png){#fig-shack-hartmann width="100%" fig-align="center" .margin-caption}
-
-Assembling an array of lenslets, each with a sensor beneath it, samples the light field across space. The location of the image on the sensor informs us about the directions of the rays in that part of the light field.  Assuming the rays in each small region are collimated, and we sample finely enough, we get a reasonable estimate of the direction of the rays.
-
-### Wavefront sensor applications
-The wavefront sensors are used in applications far beyond optical measurement. A critical enabling technology for several applications is that we can change the measured ray directions using a small deformable mirror, in which the slant the mirror by an amount to change the direction of the rays.
-
-For example, astronomers measure the wavefront of light from a guide star at the top edge of the atmosphere. The rays from this small point of light would ordinarily be parallel when they arrive at the telescope.  But the atmosphere distorts the wavefront. They measure the actual wavefront and couple it with a wavefront corrector to compensate for the atmospheric distrotions.  These are called adaptive optics systems (@sec-adaptive-optics), and they enable creating a much sharper image of the sky, limiting the distortions from the atmosphere.
-
-<!-- https://www.thorlabs.com/shack-hartmann-wavefront-sensors?tabName=SH%20Tutorial
--->
-
-![Wavefront-sensing architecture used in astronomy and ophthalmology. The incoming light can be from a star or reflected from the back of the eye. Adapted from [Exosens, “Short-wave infrared adaptive optics and applications,” Fig. 1](https://www.exosens.com/news/short-wave-infrared-adaptive-optics-and-applications), which credits C. Max, Center for Adaptive Optics.](images/lightfields/01-lightfields/01-wavefront-sensing.png){#fig-wavefront-sensing width="80%" fig-align="center" .margin-caption}
-
-A second and quite different example is that Shack-Hartmann wavefront sensors are used to measur the optics of the human eye. Imperfections in a person's cornea and lens can be corrected with spectacles or laser surgery. To design these corrections, we must first measure how the eye's optics transform incoming light rays. These measurements are central to the fields of ophthalmology and vision science, as we will explore further in @sec-human-spatial-encoding.
-
-### Light field cameras
-The lenslet-array principle used in wavefront sensors can also be built into an ordinary image sensor. Placing a lenslet array in front of the sensor, so that each lenslet covers a small group of pixels, lets the sensor record both the position of a ray (which lenslet) and its angle (which pixel beneath it)—directly sampling the optical light field (@eq-lightfield-optical). @adelson-wang-1992 introduced this design and showed how the recovered position-angle information supports depth estimation; Ren Ng and colleagues later commercialized it as the Lytro camera, enabling users to refocus an image after it has been captured [@ng2005-lightfield]. We describe the sensor design in detail, and its relation to modern autofocus methods, in @sec-sensor-lightfield.
+Assembling an array of lenslets, each with a small sensor region beneath it, extends this angle measurement across the whole light field at once. The resulting instrument, the **Shack-Hartmann wavefront sensor**, measures the wavefront of an optical light field (@eq-lightfield-optical), and, paired with a deformable mirror, underlies adaptive optics systems used in astronomy and in measuring the optics of the human eye. We describe the instrument and these applications in @sec-optics-wavefront-sensing, once the idea of a wavefront has been introduced.
 
 ::: {.callout-note title="Lightfield measurement instruments"}
+A brief history of lightfield measurement instruments.  We describe several of the ideas and instruments more fully in later sections.
+
 * **Hartmann (1900)** developed the **aperture mask** (Hartmann screen) to sample ray angles across a telescope pupil to detect optical aberrations.
 * **Lippmann (1908)** invented *integral photography*, using a **microlens array** on photographic emulsion to record directional light rays and create 3D imagery.
 * **Gershun (1936)** formalized the **radiometric concept** and mathematical foundation of the 3D "light field."
@@ -56,19 +38,6 @@ The lenslet-array principle used in wavefront sensors can also be built into an 
 * **Perwaß & Wietzke / Raytrix (2010)** brought the first industrial light field camera (Raytrix R11) to the commercial market for metrology and machine vision.
 * **Ren Ng / Refocus Imaging (later Lytro, 2012)** commercialized the first integrated handheld light field camera for the consumer market.
 :::
-
-<!--
-## Interpreting the light field
-Encoding the light field data is the first step in seeing. The instrumentation for encoding is a critical bottleneck because it limits what we can infer about the scene. For example, if an instrument does not record information about certain wavelengths, we can only guess at the missing information, for instance, by choosing the most likely value based on context.
-
-Knowledge of the light field encoding is always connected to the next step in an image system: interpreting the measurement. The invention of algorithms that interpret the light field—to recognize objects or measure distances—is central to building computers that see. Interpreting the light field is also important for consumer photography, where we may wish to distinguish a surface marking from a shadow, or the color of an object from the color of the ambient lighting. In vision science, a primary goal is to discover how the brain interprets the signal encoded by the retina.
-
-We will review many algorithms for interpreting images, but one overarching principle has endured for centuries. The principle is that image systems, whether artificial or biological, should use the encoded signal to build an internal model of the scene.
-
-> The general rule determining the ideas of vision that are formed whenever an impression is made on the eye, is that *such objects are always imagined as being present in the field of vision as would have to be there in order to produce the same impression on the nervous mechanism*. [Italics in the original; from *Treatise on Physiological Optics*, Vol. III, 1867]
-
-Understanding the light field—how it interacts with objects, how it is measured by instruments, and how it is interpreted—is fundamental to achieving that goal. We are still working on the project assigned to us by Helmholtz.  We will return to this important issue later in the book.
--->
 
 ## Measuring the amount of light
 

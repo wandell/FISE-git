@@ -1,0 +1,39 @@
+---
+date: last-modified
+---
+
+# Wavefront sensing {#sec-optics-wavefront-sensing}
+
+{{< include "includes/WIP-callout.qmd" >}}
+
+## Wavefront sensing overview {#sec-optics-wavefront-sensing-overview}
+
+The previous chapter described how to represent a wavefront, $W(\rho,\theta)$, and how that representation determines the point spread function (@sec-optics-wavefront). But the wavefront itself is not something an ordinary image sensor can measure directly—a sensor records the intensity of light, not its phase. This chapter describes an instrument that measures the wavefront, the Shack-Hartmann wavefront sensor, and two of its major applications: correcting atmospheric turbulence in astronomical imaging, and measuring the optics of the human eye.
+
+## Shack-Hartmann wavefront sensor {#sec-optics-wavefront-hardware}
+
+The **Shack-Hartmann wavefront sensor** measures $W$ indirectly, using the fact that a lenslet focuses collimated light to a point that shifts when the incoming rays are tilted.
+
+The sensor places a lenslet array in front of an image sensor, with a small sensor region behind each lenslet (@fig-shack-hartmann). Each lenslet samples a small sub-aperture of the pupil. If the wavefront were flat over that sub-aperture, the lenslet would focus its light to a spot centered on its axis; a locally tilted wavefront shifts the spot away from center by an amount proportional to the local slope, $\nabla W$. Measuring the spot displacement at every lenslet therefore samples $\nabla W(\rho,\theta)$ across the whole pupil, from which $W$ itself can be reconstructed—for example by fitting Zernike polynomials to the measured slopes and integrating. This is a direct extension of the ray-based lenslet measurement introduced in @sec-lightfield-measurement: assembling many lenslets, each with its own small sensor region, turns a single local-angle measurement into a sampled estimate of the wavefront across the entire pupil.
+
+![Principles of the Shack-Hartmann wavefront sensor.](images/optics/13-wavefront-sensing/02-Shack-Hartmann.png){#fig-shack-hartmann width="100%" fig-align="center" .margin-caption}
+
+Using Zernike decomposition on the measured slopes allows immediate interpretation and simulation without needing to reconstruct PSFs from images.
+
+::: {.callout-note title="Hartmann's screen"}
+Johannes Franz Hartmann, a German astronomer, faced a version of this problem around 1900: how to measure whether a telescope objective sent out parallel rays from an on-axis point source. He covered the aperture with a screen pierced by an array of pinholes and photographed the resulting spots on either side of focus. A ray bundle emerging parallel to the axis produced a spot centered behind its pinhole; any deviation from parallel displaced the spot, revealing the local ray error. Diffraction blurred each pinhole's image into a small spot rather than a point, and the pinholes passed little light, so the technique was not very sensitive.
+
+Roland Shack and Ben Platt's 1971 innovation was to replace each pinhole with a small lens—a lenslet—which collects far more light and focuses it to a sharper spot: the design described above.
+
+[Arizona history of the Shack-Hartmann sensor.](https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf?utm_source=chatgpt.com)
+:::
+
+## Adaptive optics
+
+A wavefront sensor becomes especially powerful when paired with a **deformable mirror**, whose surface shape can be adjusted to change the wavefront. Measuring an aberration and applying an equal and opposite correction with the deformable mirror is called **adaptive optics**.
+
+A classic example is astronomical imaging: light from a guide star at the edge of the atmosphere would arrive with a flat wavefront if the atmosphere were not present, but atmospheric turbulence distorts it along the way. An adaptive optics system measures the distorted wavefront with a Shack-Hartmann sensor and corrects it with a deformable mirror in real time, producing a much sharper image of the sky than the atmosphere alone would allow.
+
+![Wavefront-sensing architecture used in astronomy and ophthalmology. The incoming light can be from a star or reflected from the back of the eye. Adapted from [Exosens, “Short-wave infrared adaptive optics and applications,” Fig. 1](https://www.exosens.com/news/short-wave-infrared-adaptive-optics-and-applications), which credits C. Max, Center for Adaptive Optics.](images/optics/13-wavefront-sensing/01-wavefront-sensing.png){#fig-wavefront-sensing width="80%" fig-align="center" .margin-caption}
+
+The same architecture measures the optics of the human eye, where the aberrating medium is the cornea and lens rather than the atmosphere; we describe that application, and the resulting adaptive-optics imaging of the retina, in @sec-adaptive-optics.
