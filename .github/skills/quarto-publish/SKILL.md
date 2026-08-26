@@ -46,6 +46,14 @@ reset/reuse a worktree directory that still has uncommitted state in it.
 time — so it is not reliably tied to any specific file. Treat the second
 `fatal` line as the one to act on.)
 
+**Why cleanup is required, not optional:** step 1's `-B gh-pages` forces git
+to check out/reset the `gh-pages` branch, and git will not let two worktrees
+hold the same branch checked out at once. As long as the old worktree from a
+prior failed run still exists, it holds `gh-pages`, so any new attempt fails
+immediately at the checkout step — retrying without cleanup cannot work.
+This explains why *retries* kept failing; it does not explain what
+interrupted the *original* run (see below).
+
 ### Recovery steps (confirmed safe)
 
 1. `git worktree list` — find the leftover worktree (a subdirectory of the
@@ -58,7 +66,10 @@ time — so it is not reliably tied to any specific file. Treat the second
 4. Retry `quarto publish gh-pages`.
 
 This sequence resolved the failure in this repo on 2026-08-26 (twice, with
-two different leftover worktrees).
+two different leftover worktrees). A subsequent `quarto publish gh-pages`
+run completed successfully afterward, confirmed by `git worktree list`
+showing no leftover worktree and `gh-pages` no longer marked as checked out
+anywhere — the cleanup `finally` block ran to completion that time.
 
 ## Prevention
 

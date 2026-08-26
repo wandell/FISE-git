@@ -13,7 +13,11 @@ This repository’s agent instructions are organized as modular Agent Skills in
 - `reproducible-matlab` for `code/`, MATLAB, live scripts, and generated output;
 - `editorial-voice` for prose revision;
 - `scientific-notation` for equations, symbols, units, and domain terminology;
-- `chapter-architecture` for chapter planning and pedagogical structure.
+- `chapter-architecture` for chapter planning and pedagogical structure;
+- `external-resources` for surfacing supplementary videos, interactive demos,
+  or related books (e.g., a colleague's computational-photography book,
+  3Blue1Brown, Khan Academy, or Wandell's *Foundations of Vision*) worth
+  linking to from a chapter.
 
 Substantive-domain skills:
 

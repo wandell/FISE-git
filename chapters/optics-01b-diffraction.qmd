@@ -1,0 +1,224 @@
+---
+date: last-modified
+---
+
+# Diffraction {#sec-diffraction}
+
+{{< include "includes/WIP-callout.qmd" >}}
+
+## Diffraction overview {#sec-diffraction-overview}
+
+The ray model in @sec-geometric-optics explains a great deal about pinhole imaging, but it fails at small apertures and sharp edges. In this chapter I describe how Grimaldi, Huygens, and Young established that light must be modeled as a wave, and how Fresnel's mathematics settled the debate with the Poisson spot. I then use the wave model to explain diffraction quantitatively: the Airy pattern sets a physical limit on how sharp a pinhole image can be, no matter how small the aperture. This leads to the **point spread function (PSF)**, the general description of how an optical system images a single point, a concept I use throughout the rest of the book. I close by applying these ideas to pinholes of different shapes and distances, and to the human eye.
+
+## The failure of the ray model {#sec-lightfields-diffraction}
+
+Useful as the ray model has been, for more than 300 years scientists have known that geometric optics is not completely accurate. Consider the simple prediction of the ray model in @fig-ray-wave. The parallel rays from a point source should pass through the pinhole and continue in a straight line, forming an image the size of the pinhole. An observer to the side should see only darkness, as no rays are heading toward their eyes.
+
+But this isn't what happens. As the Jesuit scientist Francesco Grimaldi, a contemporary of Newton, documented, light behaves in surprising ways near small apertures and edges [@grimaldi1665-physico]. He observed that light spreads out, allowing the pinhole to be seen from the side and creating an image on a screen that can be larger than the pinhole itself. He gave the name **diffraction** to this phenomenon where light deviates from a straight path.
+
+![Grimaldi's experiment showing light passing through a pinhole. According to the ray theory, the image on the screen should be the same size as the pinhole, and an observer to the side should see nothing. Grimaldi found that the image was often larger and that light spread out, allowing the pinhole to be seen from the side. Newton confirmed the experiment but continued to use the ray theory for its practical utility, a pragmatic approach we still follow today.](images/optics/06-geometric/ray-wave.png){#fig-ray-wave width="80%" fig-align="center"}
+
+The trade-off between pinhole size and image sharpness provides a second, compelling example of diffraction. In their classic textbook, Jenkins and White showed a series of images of a light bulb filament through pinholes of decreasing size (@Jenkins1976-jt). As predicted by the ray model, reducing the pinhole size initially sharpens the image. But beyond a certain point, further reducing the pinhole size makes the image *blurrier*, directly contradicting the ray model. These observations demand an explanation that goes beyond geometric optics.
+
+![Images of a light bulb filament through pinholes of decreasing size. Initially, a smaller pinhole yields a sharper image (as predicted by geometric optics). However, as the pinhole becomes very small, the image becomes blurrier due to diffraction. After Jenkins and White, @Jenkins1976-jt.](images/optics/06-geometric/diffraction-filaments.png){#fig-diffraction-filaments width="70%"}
+
+## Huygens wave model {#sec-huygens-wave}
+
+The Dutch scientist Christiaan Huygens, working at the same time as Newton, proposed an alternative to the ray model: he modeled light as waves expanding to fill space. In Huygens' theory, light from a point source expands as a spherical wave. The leading edge of this expansion, the **wavefront**, can be seen as a collection of points, each acting as a source for a new secondary wavelet. This model successfully predicts many phenomena, including reflection from a mirror and the change in light's direction (refraction) as it passes from one medium to another (@fig-huygens-waves).
+
+![Light modeled as a wavefront. (A) A point source emits a spherical wave. Each point on the expanding wavefront acts as a source for a new secondary wavelet, and their common tangent forms the new wavefront. (B) Far from the source, a small section of the wavefront approximates a plane wave, which propagates forward in the same manner. (C) When a plane wave encounters a small aperture, only a few secondary sources pass through, revealing their spherical nature and causing the light to spread out.](images/optics/06-geometric/huygens-wave.png){#fig-huygens-waves fig-cap-location="bottom" width="80%" fig-align="center"}
+
+When a plane wave travels through open space, the constructive interference of all the secondary wavelets results in a new plane wave that propagates straight ahead, much like an ocean wave. However, when this wavefront passes through a small aperture or near an edge, the aperture blocks most of the secondary sources. The few wavelets that do pass through are revealed, causing the light to spread out spherically.
+
+This directly explains diffraction. A very small pinhole allows only a tiny portion of the wavefront to pass, which then propagates outward as a nearly perfect spherical wave, allowing it to be seen from many directions. As the aperture size increases, more of the plane wave passes through, and the output more closely resembles a plane wave. This wave model elegantly explains why a pinhole's effect on an image depends so critically on its size relative to the wavelength of light.
+
+::: {.callout-note collapse="false" title="Rays, waves and hypotheses"}
+<!-- History.  https://chatgpt.com/c/67098b1d-ae24-8002-be3d-d55f2bc87045 -->
+
+Although the ray and wave theories were proposed at about the same time, Newton's 1704 framing of light as rays was widely accepted for roughly a century. Widespread recognition of the accuracy of Huygen's wave theory was delayed until Thomas Young's 1804 demonstration of the interference pattern created by light from two coherent, nearby sources. I find it interesting to learn about the [the history of these ideas.](resources/optics-diffraction.html).
+
+I have worked in fields where scientists rely mainly on hypothesis testing: they perform experiments to see if a theory is provably wrong. Surely Newton's theory of light as a ray is provably wrong, and it was so proved more than 300 years ago! And yet, we use rays to describe light routinely. This is because in many cases the ray theory is an excellent approximation, and we use it as a simple way to reason about radiation - approximately.
+
+This is a very pragmatic approach, which is deeply embedded in the mind of many scientists and engineers: Use the tool that is accurate enough for the problem at hand. Approach your problem with a toolbox of methods, and choose the one that gets the job done. In this spirit, the phrase 'all models are wrong, some are useful', @box-science-1976 is widely quoted in many engineering disciplines. In these fields hypotheses that are useful are included in the toolbox. It is essential to understand the scope over which the tool can be reasonably relied upon.
+
+```{=html}
+<!-- Gemini link
+Some scientific fields rely strongly on hypothesis testing - asking whether a theory can be proven wrong by experiment.  Other fields accept that theories are largely wrong, but they can still be useful as tools to compute approximations and make devices or products.  Can you describe which fields rely more on the hypothesis testing approach and which rely more on theories as useful tools and approximations?
+
+Gemini puts basic sciences into hypothesis and engineering into tools.
+https://g.co/gemini/share/9013b83cc4f6 -->
+```
+:::
+
+## Double slit experiments
+
+Grimaldi’s observations documenting how light spreads out after passing the edge of an obstacle or through a narrow slit, are easily reproducible and important. Huygens put forward a genuine wave theory of light. His principle of secondary wavelets elegantly explained reflection and refraction, and even hinted at diffraction (@huygens-1690-traite). It is surprising to me that Newton felt he could promote a ray theory of light despite these prior observations and theory. It was fascinating to learn that Newton and Huygens directly confronted one another on both optics and gravity (@Shapiro1989-er). Perhaps because Newton was remarkable in so many ways, his voice dominated the scientific scene for decades.
+
+Even though Huygens theory did account for many important phenomena; to me the simple observation in @fig-ray-wave decisively demonstrates the necessity of a theory that allows for waves. Nonetheless, it wasn't until Thomas Young presented his famous double-slit experiments to the Royal Society in 1801–1803 that Newton's hold on the field began to loosen (@young1804-bakerian-optics). This paper was a crucial step in the shift of the scientific consensus towards the wave theory of light. The ability to see the interference fringes provided quantitative, unmistakable proof of the value of the wave theory. Only waves, not particles, could add and cancel in this way and made the phenomenon hard to ignore. Young -and many others- considered- the demonstration of interference to be decisive[^optics-01b-diffraction-1].
+
+[^optics-01b-diffraction-1]: In making some experiments on the fringes of colours accompanying shadows, I have found so simple and so demonstrative a proof of the general law of the interference of two portions of light, which I have already endeavoured to establish, that I think it right to lay before the Royal Society, a short statement of the facts which appear to me so decisive (@young1804-bakerian-optics).
+
+The experiment requires some precision, but it is fairly straightforward to instrument (@fig-double-slit). One begins with a collimated beam arriving at a small aperture (part A). The light passing through the aperture serves as a coherent light source. It is allowed to transport forward to a second surface that has two narrow slits separated by some small distance. It is now the turn of these two slits to provide separated coherent light sources. When we observe the image formed by the double slits on a surface, the image is a striped pattern. As Young explained and drew in his original paper (part B), this is what one might expect of the two slits are both emitting waves at the same frequency.
+
+![Thomas Young's double slit experiment. Young's drawing is available from [Wikipedia](https://en.wikipedia.org/wiki/Diffraction#/media/File:Young_Diffraction.png)](images/optics/06-geometric/double-slit.png){#fig-double-slit width="80%"}
+
+Even after Young's presentations to the Royal Society, the wave theory met resistance. The loudest was from Henry Brougham who made personal attacks on Young[^optics-01b-diffraction-2]. But serious thinkers also wondered whether a wave theory could be right. What was the medium that supported the waves? Huygens referred to it, but the so-called 'ether' had not been measured[^optics-01b-diffraction-3]. And if the waves were propagating through a medium, wouldn't inhomogeneities cause them to deviate from straight lines?
+
+[^optics-01b-diffraction-2]: Henry Brougham was a particularly fierce critique of Young's entire research program and an ardent defender of Newton's work. His strongest attacks were against Young's important -and accurate!- observations about human color vision. More on that, including Young's response (@young1804-reply) in @sec-human-wavelength-encoding.
+
+[^optics-01b-diffraction-3]: "Now there is no doubt at all that light also comes from the luminous body to our eyes by some movement impressed on the matter which is between the two."—Christiaan Huygens
+
+A particularly important event that turned the tide occurred a decade later, when Augustin-Jean Fresnel supplied the mathematics of diffraction and interference. This was a famous event in the history of physics. In 1818, Fresnel submitted his wave theory to a competition sponsored by the French Academy of Sciences. One of the judges, Siméon-Denis Poisson, was a staunch supporter of Newton's particle theory and sought to disprove Fresnel's work. Using Fresnel's own equations, Poisson calculated that if a circular obstacle were illuminated by a point source of light, a bright spot should appear in the very center of the shadow. Poisson presented this as a *reductio ad absurdum*—an absurd conclusion that surely proved the wave theory was wrong.
+
+However, the head of the committee, François Arago, decided to perform the experiment. To the astonishment of many, Arago observed the bright spot exactly as predicted. This dramatic confirmation of a counter-intuitive prediction was a decisive victory for the wave theory. The spot is now ironically known as **Poisson's spot** (or sometimes Arago's spot). This work ended the dominance of the corpuscular theory for some time. It was to return with Einstein's work, which I explain in @sec-sensors-photons-electrons.
+
+::: {.callout-note title="A modern double-slit experiment" collapse="false"}
+I was delighted to see the fundamental principle of the double-slit experiment return in my Inbox while writing this book. The core idea of the experiment is to measure the superposition of two signals. Even as technology has scaled, scientists continue to use this principle to investigate and characterize the properties of electromagnetic radiation.
+
+![Atoms and the double-slit. The image shows two single atoms floating in a vacuum chamber are illuminated by a laser beam and act as the two slits. The interference of the scattered light is recorded with a highly sensitive camera depicted as a screen. Incoherent light appears as background and implies that the photon has acted as a particle passing only through one slit. (Courtesy: Wolfgang Ketterle, Vitaly Fedoseev, Hanzhen Lin, Yu-Kun Lu, Yoo Kyung Lee and Jiahao Lyu)](images/optics/06-geometric/double-slit-atoms.png){#fig-double-slit-atoms width="60%"}
+
+Here is a link to see the [article in Physics World.](https://physicsworld.com/a/famous-double-slit-experiment-gets-its-cleanest-test-yet/?utm_source=Live+Audience&utm_campaign=01bdf7753f-nature-briefing-daily-20250827&utm_medium=email&utm_term=0_b27a691814-01bdf7753f-49658492){target="_blank"}
+
+```{=html}
+<!-- A bit about the history.
+https://chatgpt.com/s/t_68af573578f08191a975ae4de6749069
+-->
+```
+:::
+
+## Polarization
+
+(Maybe we introduce polarization here. Maybe earlier. Maybe put this in a callout instead of the moder double-slit callout.)
+
+What kind of a wave is light?
+
+Transverse or longitudinal wave. Polarization.
+
+[How we know light is a transverse wave.](https://youtu.be/E9qpbt0v5Hw)
+
+## Pinhole size or diffraction: which blurs more? {#sec-airy-pattern}
+
+From these simple considerations, we have seen that the image is blurred by two effects: the pinhole size and diffraction. Increasing the pinhole would create a larger spot on the wall, but decreasing the pinhole size reveals the spherical nature of the wavefront and also increases the size of the spot on the wall. We can compare the size of these two effects numerically.
+
+![The Airy pattern of a pinhole camera.](images/optics/06-geometric/blur-comparison.png){#fig-blur-comparison fig-cap-location="margin" width="80%"}
+
+First, consider what we expect from the ray model. If the pinhole diameter is $D$, a far-away point on the main axis will produce a blurred spot in the image of size $D$. Also, the pinhole-blur predicted by the ray model is the same no matter how far the image plane is from the pinhole.
+
+Second, consider the light pattern we expect for a plane wave passing through a pinhole aperture. This pattern can be calculated using a formula derived by the astronomer, George B. Airy [@airy-1835-diffraction] and is shown in @fig-blur-comparison. The Airy pattern has a central bright spot (the Airy disk), which is surrounded by a series of concentric rings. The size of the pattern depends on the wavelength of the light $\lambda$, the diameter of the pinhole $D$. Unlike the ray model, for the diffraction case the rays are expanding so that the distance $L$ from the pinhole to the image plane matters. The image is radially symmetric with a bright spot in the center, surrounded by a set of concentric rings of decreasing intensity. The Airy disk contains about 85% of the total energy. The mathematical notation for the Airy pattern is a bit complex, but the diameter of the Airy disk, $d$, has a simple formula
+
+$$
+d = 2.44~L~(\lambda / D)
+$$ {#eq-airy1}
+
+Suppose we calculate the size of the diffraction diameter when the image plane is 1 m away, so $L=1$, and for a wavelength of light is 550 nm. Suppose the pinhole diameter is $D = 10^{-4} m$. The diameter of the Airy disk, $d$, will be
+
+$$
+d = 2.44 \times (1 m) (550 \times 10^{-9} m )/ 1 \times 10^{-4}m) = 0.0134 m
+$$ {#eq-airydisk1}
+
+```{=html}
+<!--
+The diffraction spread is larger than the pinhole spread when $d$ exceeds $D$. We do the calculation in the scripts in this [ISETCam script](https://htmlpreview.github.io/?https://github.com/wandell/FISE-git/blob/main/code/fise_diffraction.html).  For $L = 1m$ the pinhole blur is larger than the diffraction blur for a diameter of about $1 mm$.  When $L$ is much closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
+-->
+```
+
+The diffraction spread exceeds the pinhole spread when $d$ exceeds $D$. We do the calculation for different assumptions about the distance to the image plane [ISETCam:fise_diffraction](../code/02Optics/fise_diffraction.html). As an example, we find that when the distance to the image plane is $L = 1m$, the pinhole blur is larger than the diffraction blur for a pinhole diameter of about $1 mm$. When the image plane distance, $L$, is closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
+
+::: {.callout-note collapse="false" title="The diameter of the diffraction point spread"}
+In a paper entitled "On the Diffraction of an Object-glass with Circular Aperture", George Airy provided the mathematical description of the diffraction pattern [@airy-1835-diffraction]. A modern derivation of the full point spread function for both the circular aperture and other shapes is in @Goodman2022-fv (pages 88-94). The computation is implemented and frequently used in ISETCam. It is explained [in this tutorial](https://htmlpreview.github.io/?https://github.com/ISET/isetcam/blob/main/tutorials/optics/t_opticsAiryDisk.html).
+
+In the main text, we expressed the formula for a particular distance from the pinhole to an image plane. For a pinhole, the formula is usually given in terms of the angle of the bundle of rays emerging from the pinhole.
+
+$$sin(\theta) = 1.22 \lambda / D$$
+
+When the angle is small, $\theta < 10 \deg$, the formula is very accurately approximated as
+
+$$
+\theta = 1.22 \lambda / D
+$$
+
+The size of the spot on the image plane depends on the distance how far away the pinhole is from the pinhole, as you can see in [@eq-airy2]. In @sec-optics-thinlens we provide a formula for the Airy disk size for ideal lenses.
+:::
+
+## The point spread function {#sec-pointspread}
+
+Throughout this section, we have analyzed optical systems by asking a simple question: what does the image of a single point of light look like? The resulting image pattern is called the **point spread function (PSF)**, and it is a fundamental measure of optical performance. The Airy pattern, for example, is the PSF for a diffraction-limited circular aperture. We will encounter other types of PSFs when we analyze optical systems using linear systems theory (@sec-optics-linear-space).
+
+The PSF is a cornerstone of lens simulation, characterization, and computational imaging. Its importance stems from a crucial property of many optical systems: they are approximately **linear**. This means that the image of two points added together is the same as the sum of the images of each point individually (a property known as superposition).
+
+Because of linearity, we can simulate the image of any complex scene. We can model the scene as a vast collection of individual light points. If we know the PSF, we can calculate the final image by scaling the PSF by the intensity of each point in the scene and summing all the resulting patterns. This process might involve millions of points, but it is a task that modern computers handle with ease.
+
+In an idealized system, the PSF might be the same for every point in the scene, merely shifted in position. Such a system is called **linear and space-invariant (LSI)**, and in that case the scaling and summing is called **convolution**. In most real-world optics, however, the system is **space-variant**: the PSF's shape and size change depending on the point's position in the field of view (e.g., its distance from the center, or **field height**).
+
+The concept of building an image from the sum of PSFs is foundational, and we will use the ideas of linear systems throughout this book. The appendices provide more mathematical detail on general linear systems (@sec-appendix-linear-systems-overview) and the special case of LSI systems (@sec-appendix-spaceinvariance-overview).
+
+## Pinhole PSFs
+
+### Pinhole and distance
+
+Even for a simple pinhole, the PSF isn't a single, fixed pattern. Its shape depends on how far the light source is from the aperture. This distance determines which of two diffraction regimes applies.
+
+When the point source is far away, its rays arrive collimated and thus the wavefront is a plane. This is the realm of **Fraunhofer diffraction** (or far-field diffraction). In this common scenario, the PSF for a circular pinhole is the classic Airy pattern we discussed earlier.
+
+When the point source is close to the pinhole, its rays arrive diverging and the wavefront is a curved, spherical wavefront. This situation is described by **Fresnel diffraction** (or near-field diffraction). In the near field, the PSF's shape and size change with the distance between the source and the pinhole.
+
+### Pinhole shapes
+
+So far, we have focused on circular pinholes. This is a practical choice, as many apertures—from the human pupil to camera lenses—are approximately circular. A key advantage of a circular aperture is its rotational symmetry; rotating the camera (or your head) doesn't change the image blur. The resulting PSF, like the Airy pattern, is also circularly symmetric and can be described simply by its radial profile.
+
+However, both nature and technology provide many examples of non-circular apertures. These produce more complex, two-dimensional PSFs that are not rotationally symmetric. In the following sections, we will use an ISETCam script to explore how to calculate the diffraction-limited PSF for some of these interesting shapes.
+
+#### Rectangular pinholes
+
+The script [fise_oiAperture](../code/02Optics/fise_oiAperture.html){target="_blank"} illustrates how to calculate the PSF for a rectangular aperture in ISETCam. An image computed using the PSF from a diffraction limited rectangular pinhole, and the PSF for that pinhole, are shown in @fig-pinhole-rectangle. The images illustrate a case for the rectangular aperture is three times wider (x) than high (y). The larger vertical height causes less blur in the y-direction, making the image sharper for the horizontal stripes.
+
+![Simulating a diffraction-limited rectangular pinhole that is 3x higher than wide. The test pattern has spatial frequency increasing from left to right, and orientation varying up to down. The horizontal lines retain their contrast as frequency increases; the vertical lines lose theirs. The PSF (550 nm) for the rectangular aperture is plotted on the right. See [fise_oiAperture](../code/02Optics/fise_oiAperture.html){target="_blank"}.](images/optics/06-geometric/pinhole-rectangle-both.png){#fig-pinhole-rectangle width="80%"}
+
+There is a formula for the rectangular diffraction-limited PSF, given in terms of distance on the sensor surface.
+
+$$
+\text{PSF}(x',y') \;\propto\;
+\left[\operatorname{sinc}\!\left(\frac{\pi a}{\lambda f}\,x'\right)\right]^2
+\;\left[\operatorname{sinc}\!\left(\frac{\pi b}{\lambda f}\,y'\right)\right]^2,
+$$
+
+where $a$ and $b$ are the aperture widths in the $x$ and $y$ directions, $f$ is the focal length, and $\lambda$ is the wavelength. We define $\operatorname{sinc}(u) = \tfrac{\sin(u)}{u}$.
+
+In the script, you will see that I didn't use the formula directly. Rather, I simply defined the shape of the aperture and ran a calculation. In @sec-optics-wavefront I will explain that calculation. Being able to numerically compute with the wavefront means we can find the PSF for many different shapes.
+
+::: {.callout-note collapse="false" title="Animal pupil shapes."}
+Approximately rectangular pupils are fairly common in biology, as well, and the pupil shape is associated with how they live their lives (@Banks2015-yr). Vertically elongated pupils are associated with ambush predators that are active both day and night. So beware! Horizontally elongated pupils are more likely to be found in prey, who also have laterally placed eyes that helps them look all around.
+
+![The cat has a vertical pupil - appropriate for a killing machine. There are many, many images of the cat pupil on the web. The cat is capable of closing its pupil nearly completely. The images on the right are examples provided by @Banks2015-yr.](images/optics/06-geometric/catpupil.png){#fig-cat-pupil width="60%"}
+:::
+
+#### Regular polygons
+
+Classic cameras with mechanical shutters often had regular polygon shapes (left) or the interesting 'leaf' pattern at the right. These apertures introduce structure into the PSF that differs from a circularly symmetric aperture.
+
+![A sampling of mechanical shutter shapes. The array on the left are different regular polygons. The one on the right is called a 'leaf' shutter. I have wanted to simulate its PSF, but I haven't gotten around to it. Let me know if you try. You might start with the script described above, and introduce the aperture shape from an image. Or start with the image and define a mathematical function for the shape. You can see why I never did it. I just can't choose.](images/optics/06-geometric/mechanical-shutters.png){#fig-pinhole-polygon width="60%"}
+
+```{=html}
+<!--
+This is a mechanical shutter.  This is a leaf https://www.photoreview.com.au/tips/shooting/mechanical-vs-electronic-shutters/
+This is a polygon https://stackoverflow.com/questions/56467558/trying-to-create-a-camera-shutter-effect-with-divs
+-->
+```
+
+The impact of the regular polygon shape is quite visible in high dynamic range (HDR) scenes that include light sources. The script [fise_oiAperture](../code/02Optics/fise_oiAperture.html){target="_blank"} simulates an HDR scene, superimposing some very bright light sources on the background image. These apertures produce the flare pattern that one often sees in professional productions, including movies and sports shows. The three images show the flare pattern for polygons with different numbers of sides.
+
+![High dynamic range images simulated through a lens with a regular polygon aperture.](images/optics/06-geometric/pinhole-shape-hdr.png){#fig-pinhole-hdr width="90%"}
+
+For the simulation in @fig-pinhole-hdr, I also added some scratches and dust on to the lens for realism. The brightest light in each scene (left) is five orders of magnitude ($10^5$) more intense than the dimmest light (right), which is barely visible. The lights are all the same size, but the bright ones appear larger because of the blurring by the PSF.
+
+### Human PSF
+
+Human eyes have approximately circular pupils. In bright light the pupil is contracted to about 3 mm diameter, and the PSF can be roughly circularly symmetric. In darker environments, the pupil widens and imperfections of the human optics (cornea, lens) often have a very large and irregular impact on the PSF. The pupil aperture is circular, but the optical imperfections distort the PSF and it takes on a very irregular shape (@thibos2020-qs @thibosStatisticalVariationAberration2002).
+
+<!-- Isn't there some notion that the astigmatism can be well-modeled as two types (horizontal and vertical)?  Is that true, or just old fashioned stuff.-->
+
+Even though the PSF is quite irregular, we often approximate its shape. One approximation summarizes whether or not the PSF is very different in two directions. If it is very different in two perpendicular directions, we say the person is **astigmatic**. @fig-astigmatism shows PSFs with some defocus and astigmatism. These were simulated using the same wavefront methods I described above and that will be covered in @sec-optics-wavefront.
+
+![Illustration of astigmatism. s_wvfAstigmatism. Top row of the plot.](images/optics/06-geometric/astigmatism-defocus.png){#fig-astigmatism width="100%"}
+
+I will show simulations of a range of human PSFs in @sec-human-spatial-encoding. You can assess your own PSF easily. Glasses or contact lenses are typically designed to sharpen the PSF and counter any astigmatism. To see the PSF of your lens, take off your glasses or contact lenses, and look with one eye at a small spot of light in the dark -maybe a night light from across the room, or one of the LED lights on electronic gear- against in the presence of a uniform background such as a wall. The image you see is the PSF of your own visual system. If you are looking in a dark room, your pupil is probably relatively large. By squinting, you reduce the size of your eye's aperture, and this is likely to sharpen the PSF. The squinting reduces how much the lens contributes to image formation. If the aperture is made quite small, say by using an artifical pupile, the image will be diffraction limited.

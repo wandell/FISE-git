@@ -120,9 +120,6 @@ end
 
 %% The Judd Macadam Wyszecki Daylight model
 % 
-% 
-% %
-% 
 % This group and several others measured the spectral distributions of irradiance 
 % at the Earth's surface.  The found a two-dimensional linear model that described 
 % a large percentage of the variance of their (normalized) data (mean plus two 
