@@ -113,14 +113,38 @@ across all three active projects):
   different key (compares by DOI, falling back to title). Run periodically to
   find what's ready to add to Paperpile and fold back into the shared master.
 
+**Project-local script** (`utility/check_citations.py`, part of this repo):
+
+- Checks every `@key` citation used in `index.qmd` and `chapters/**/*.qmd`
+  against the keys defined in `paperpile.bib` and `local.bib`. Ignores Quarto
+  crossrefs (`@sec-`, `@fig-`, `@tbl-`, `@eq-`), HTML comments, and code
+  spans, so it only flags real bibliography citations.
+- Run with no flags for a report: case-only mismatches, ambiguous
+  case-insensitive collisions, and fully unresolved keys (with best-guess
+  suggestions for the latter, via `difflib` against the combined key list).
+- Run with `--fix` to auto-correct case-only mismatches in place — safe to
+  run any time, e.g. right after a `paperpile.bib` sync changes key casing.
+  It deliberately leaves ambiguous and fully unresolved keys alone; those
+  need a human to confirm the right paper (check title/year against
+  `paperpile.bib`, or against a fresh Paperpile BibTeX export if the paper
+  is recent) before editing prose or `local.bib`.
+- `chapters/resources/PCC.qmd` is intentionally excluded from being a
+  concern here: it's a personal source-material file, not in `_quarto.yml`'s
+  `book.chapters`, and its ~192 citations use an old, unrelated key
+  convention. Don't let it inflate the sense of how broken citations are —
+  fix its citations only opportunistically, as specific material is copied
+  out of it into a real chapter.
+
 **Diagnosing a citation that renders as "?" or is missing from the bibliography:**
 
-1. Confirm the exact key exists in `paperpile.bib` or `local.bib`
+1. Run `python3 utility/check_citations.py` first — it does steps 1-2 below
+   automatically across the whole book and suggests fixes.
+2. Confirm the exact key exists in `paperpile.bib` or `local.bib`
    (`grep -n "^@.*{the-key" *.bib`) — case matters, keys are case-sensitive.
-2. If it was working before a bibliography sync, it likely got renamed in the
+3. If it was working before a bibliography sync, it likely got renamed in the
    newer Paperpile export — run `bib_key_audit.py` against the new master to
    find it.
-3. Confirm the file with the citation is actually listed in `_quarto.yml`'s
+4. Confirm the file with the citation is actually listed in `_quarto.yml`'s
    `chapters:`/rendered set.
 
 ## Labels and links
