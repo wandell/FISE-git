@@ -8,65 +8,71 @@ date: last-modified
 
 ## Measuring light: An overview {#sec-lfmeasurement-overview}
 
-In this chapter we describe several ways to measure light. 
+This chapter describes two ways to measure light: the direction of its rays, and the amount of energy the rays carry.
 
-First, we explain measurements of the direction of the light rays at a detector. The redirection of the rays is an essential function of an optical instrument, and the unwanted redirection of rays as they pass through a turbulent medium (such as the atmosphere, or water) is an important part of image system characterization. As we develop the ideas of optical instruments and their design, we often understand them in terms of how they redirect the rays in the light field.
+We first explain how to measure the direction of the rays in a light field. Redirecting rays is the essential function of an optical instrument, so characterizing ray directions before and after they pass through a lens is fundamental to building one. The same idea extends beyond cameras: understanding how the eye's optics transform ray directions is central to characterizing human vision, and quantifying how a turbulent medium—the atmosphere, or water—distorts ray directions is central to building imaging systems for telescopes and drones. We introduce the basic idea here; the instruments themselves are described in more detail later, when we discuss optical instrumentation (@sec-SLM, @sec-shack-hartmann), light field cameras (@sec-sensor-lightfield-camera), and human vision (@sec-adaptive-optics).
 
-To measure light we also need to go beyond the concept of a ray. A single ray is only an idealization, it has no energy. But a great deal that matters to us about light is how much energy it has.  To make such measurements we must integrate the light over a small area, or over a small solid angle.  We also integrate over a finite wavelength band and a finite time interval. 
+In addition to having a direction, light carries energy, and we often need to measure how much. A camera needs enough light energy to form a usable image (@sec-pixel-sensitivity-fillfactor), but not so much that it saturates the detector (@sec-sensor-splitpixel). We also measure light energy to predict how a person will perceive a display's color and pattern (@sec-human-metrics). Measuring light energy requires going beyond the concept of a ray, which is a geometric idealization with no energy of its own. We need concepts that integrate many rays together—over a bundle spanning some area or some solid angle, over a band of wavelengths, and over an interval of time. This calls for a framework that treats rays not individually but as a collection.
 
-**Radiometry** is the field that provides the quantitative framework for how we make these integrative measurements that specify the energy. Radiometry works primarily with spectral (per-wavelength) quantities and SI[^SI-units] units (e.g., watts or photons per second), which are standard in imaging and used by simulation tools such as ISETCam. The next sections define the core quantities — radiant flux, radiant intensity, radiance, and irradiance— and show how the geometry of the imaging framework (area, angle, and foreshortening) enters their units.
+**Radiometry** is the field that provides this framework. It works primarily with spectral (per-wavelength) quantities, expressed in SI[^lightfields-02-measurement-1] units such as watts or photons per second—the units standard in imaging and used by simulation tools such as ISETCam. The next sections define the core radiometric quantities—radiant flux, radiant intensity, radiance, and irradiance—and show how the geometry of the imaging framework (area, angle, and foreshortening) enters their units.
 
-[^SI-units]: Système International d'Unités.  These units are the modern form of the metric system, the most widely used system of measurement in the world.
+[^lightfields-02-measurement-1]: Système International d'Unités. These units are the modern form of the metric system, the most widely used system of measurement in the world.
 
 ## Measuring ray directions {#sec-lightfield-measurement}
-How do we measure the direction of the rays in a light field? A pinhole camera offers a simple answer. Each point in the image from a pinhole camera measures the intensity of an incident light field ray at different angle. The measurement is at the location of the pinhole; to learn more about the light field we follow Leonardo's lead and move the pinhole to different locations. This accumulates information about the extended light field.
 
-A slightly different way to think of it is to consider a small lens (called a *lenslet*). We might measuring just a small region of the light field in which the rays are traveling approximately in the same direction.  We say the rays in such a small region are *collimated* (parallel to one another).  In that case, the lenslet will focus the rays focuses onto a sensor at a small point whose position of the point depends on the angle of the incident rays.
+How do we measure the direction of the rays in a light field? A pinhole camera offers a simple answer. Each point in the pinhole camera image measures the intensity of an incident light field ray at one angle, from the pinhole's location. To learn about the light field over a larger spatial extent we move the pinhole to different locations, as Leonardo did (@sec-incident-lightfield). Multiple measurements accumulate information about the spatial light field. Later we shall see that using a pure pinhole for the measurement can have some problems (@sec-lightfields-diffraction). A lens with a small aperture (*lenslet*) may be a better way to measure a small region of the light field.  
 
-![A lenslet can be used to measure the direction of rays in a small region of the light field. The green lines show rays parallel to the main axis of the lenslet: the image point is centered.  The red rays arrive at an angle, and their image will be displaced from the center by an amount that depends on the angle.](images/lightfields/02-measuring/lenslet-0.png){#fig-lenslet width="60%"}
+In many—but not all—measurement applications, the rays in a small region will be approximately *collimated* (parallel to one another). In that case, the lenslet will focus the rays down to a small point whose position depends on the angle of the collimated rays at the lenslet aperture.
 
-Assembling an array of lenslets, each with a small sensor region beneath it, extends this angle measurement across the whole light field at once. The resulting instrument, the **Shack-Hartmann wavefront sensor**, is an important instrument in many advanced imaging applications (@eq-lightfield-optical). Paired with a deformable mirror, the wavefront sensor underlies adaptive optics systems used in astronomy and in measuring the optics of the human eye. We describe the measurement instrument and how it enables these applications in @sec-optics-wavefront-sensing, after the idea of a wavefront and its relationship to ray directions has been introduced.
+![A lenslet can be used to measure the direction of rays in a small region of the light field. The green lines show rays parallel to the main axis of the lenslet: the image point is centered. The red rays arrive at an angle, and their image will be displaced from the center by an amount that depends on the angle.](images/lightfields/02-measuring/lenslet-0.png){#fig-lenslet width="60%"}
+
+Assembling an array of lenslets, each with a small sensor region beneath it, extends this angle measurement across the whole light field at once. The resulting instrument is the **Shack-Hartmann wavefront sensor** (@fig-lenslet-array).
+
+![A lenslet array measures the local ray angles across a region of the light field. This is the key hardware in a Shack-Hartmann wavefront sensor (@sec-shack-hartmann).](images/lightfields/02-measuring/lenslet-array.png){#fig-lenslet-array width="80%"}
+
+Paired with a deformable mirror, the Shack-Hartmann sensor underlies **adaptive optics** systems used in astronomy and ophthalmology (@sec-adaptive-optics-astronomy, @sec-adaptive-optics). We describe these systems, and how the sensor enables them, in @sec-optics-wavefront-sensing.
 
 ::: {.callout-note title="Lightfield measurement instruments"}
-A brief history of lightfield measurement instruments.  We describe several of the ideas and instruments more fully in later sections.
+A brief history of lightfield measurement instruments. We describe several of the ideas and instruments more fully in later sections.
 
-* **Hartmann (1900)** developed the **aperture mask** (Hartmann screen) to sample ray angles across a telescope pupil to detect optical aberrations.
-* **Lippmann (1908)** invented *integral photography*, using a **microlens array** on photographic emulsion to record directional light rays and create 3D imagery.
-* **Gershun (1936)** formalized the **radiometric concept** and mathematical foundation of the 3D "light field."
-* **Shack & Platt (1971)** replaced Hartmann's aperture mask with a **microlens array**, creating the Shack-Hartmann wavefront sensor to measure ray slopes in astronomy and optical testing.
-* **Adelson & Wang (1992)** placed a microlens array at the focal plane of a camera lens to extract disparity and depth for computer vision (the single-lens plenoptic camera).
-* **Perwaß & Wietzke / Raytrix (2010)** brought the first industrial light field camera (Raytrix R11) to the commercial market for metrology and machine vision.
-* **Ren Ng / Refocus Imaging (later Lytro, 2012)** commercialized the first integrated handheld light field camera for the consumer market.
+-   **Hartmann (1900)** developed the **aperture mask** (Hartmann screen) to sample ray angles across a telescope pupil to detect optical aberrations.
+-   **Lippmann (1908)** invented *integral photography*, using a **microlens array** on photographic emulsion to record directional light rays and create 3D imagery.
+-   **Gershun (1936)** formalized the **radiometric concept** and mathematical foundation of the 3D "light field."
+-   **Shack & Platt (1971)** replaced Hartmann's aperture mask with a **microlens array**, creating the Shack-Hartmann wavefront sensor to measure ray slopes in astronomy and optical testing.
+-   **Adelson & Wang (1992)** placed a microlens array at the focal plane of a camera lens to extract disparity and depth for computer vision (the single-lens plenoptic camera).
+-   **Perwaß & Wietzke / Raytrix (2010)** brought the first industrial light field camera (Raytrix R11) to the commercial market for metrology and machine vision.
+-   **Ren Ng / Refocus Imaging (later Lytro, 2012)** commercialized the first integrated handheld light field camera for the consumer market.
 :::
 
-## Measuring the amount of light
+## Measuring light energy {#sec-lightfield-energy}
 
-Radiometric measurements are made separately for each wavelength. For people working in radiometry and image systems, wavelength is commonly expressed with respect to nanometers [^lightfields-measurement-1]. We quantify the amount of radiance by measuring the amount of energy, or equivalently the number of photons, present at a location. The basic energy unit is joules per second, (watts) and for photons the basic unit is photons per second. Thus, in radiometry one often finds units such as (watts per nanometer) or (photons per sec per nanometer). 
+Radiometric measurements are made separately for each wavelength. For people working in radiometry and image systems, wavelength is commonly expressed with respect to nanometers [^lightfields-02-measurement-2]. We quantify the amount of radiance by measuring the amount of energy, or equivalently the number of photons, present at a location. The basic energy unit is joules per second, (watts) and for photons the basic unit is photons per second. Thus, in radiometry one often finds units such as (watts per nanometer) or (photons per sec per nanometer).
 
-[^lightfields-measurement-1]: Units of micrometers (microns, $\mu$) are commonly used by people working in the infrared studies, units of angstroms in atomic and x-ray studies, and electron volts in high-energy photon research.
+[^lightfields-02-measurement-2]: Units of micrometers (microns, $\mu$) are commonly used by people working in the infrared studies, units of angstroms in atomic and x-ray studies, and electron volts in high-energy photon research.
 
-We describe the energy separately for each wavelength because, in most cases, the energy at different electromagnetic wavelengths act independently: we can measure the energy at two wavelengths separately, mix the two lights, and the result is simply the sum of the individual measurements. This additivity is a critical feature of light behavior in many cases [^lightfields-measurement-2] and is a foundational principle for many image systems (@sec-ls-superposition).
+We describe the energy separately for each wavelength because, in most cases, the energy at different electromagnetic wavelengths act independently: we can measure the energy at two wavelengths separately, mix the two lights, and the result is simply the sum of the individual measurements. This additivity is a critical feature of light behavior in many cases [^lightfields-02-measurement-3] and is a foundational principle for many image systems (@sec-ls-superposition).
 
-[^lightfields-measurement-2]: There are important cases light when radiance at one wavelength evokes emissions at a different wavelength (fluorescence). There are also important cases of non-linear behavior (e.g., two-photon imaging). We discuss these when we review special instrumentation. But the vast majority of image systems are linear and the Principle of Superposition applies (@eq-superposition).
+[^lightfields-02-measurement-3]: There are important cases light when radiance at one wavelength evokes emissions at a different wavelength (fluorescence). There are also important cases of non-linear behavior (e.g., two-photon imaging). We discuss these when we review special instrumentation. But the vast majority of image systems are linear and the Principle of Superposition applies (@eq-superposition).
 
-Radiometry defines units that are helpful for different types of geometry. The radiometric measures can be divided with respect to those from a source (radiance) and those arriving at a surface (irradiance). These can be further divided with respect to measurements from a small (point) source, or from an extended surface.  Here are some of the basic physical quantities that we build upon to create radiometric units.
+Radiometry defines units that are helpful for different types of geometry. The radiometric measures can be divided with respect to those from a source (radiance) and those arriving at a surface (irradiance). These can be further divided with respect to measurements from a small (point) source, or from an extended surface. Here are some of the basic physical quantities that we build upon to create radiometric units.
 
 | Concept | Definition | Energy-Based Units | Photon-Based Units (q) |
-| --- | --- | --- | --- |
-| **Wavelength** | dimension along which electromagnetic energy is measured independently.  | nanometers (nm) | nanometers (nm) |
+|------------------|------------------|------------------|------------------|
+| **Wavelength** | dimension along which electromagnetic energy is measured independently. | nanometers (nm) | nanometers (nm) |
 | **Power / Flux** | energy present at a location over time. | joules/sec (watts) | photons/sec (q/s) |
 | **Spectral Power** | power per unit of wavelength. | watts / nm | photons / (s nm) |
 
 (Note: In the photon-based units column, "q" is often used as shorthand for quanta/photons, "m" represents the spatial area and "s" represents seconds).
 
 ## Photometric units
+
 There is a set of units that summarize the impact of the radiation on the human visual system. These units are based on the spectral radiometry units, and we then calculate a weighted sum across wavelengths. The weights are selected to represent (roughly) the relative visibility of each wavelength. These **photometric** units parallel the radiometric units; for example, radiance and irradiance correspond to luminance and illuminance. In this section, we will describe the radiometric quantities. The experimental basis of photometry for the weighted sum across wavelengths -the key step to spectral radiometric quantities into photometric quantities- is explained in @sec-human-metrics.
 
- *Part IV: Human Vision* summarizes aspects of human vision that are important for image systems engineering. Please consult [Foundations of Vision](https://wandell.github.io/FOV-1995){target=_blank} for more information about wavelength encoding and color appearance in human vision.
+*Part IV: Human Vision* summarizes aspects of human vision that are important for image systems engineering. Please consult [Foundations of Vision](https://wandell.github.io/FOV-1995){target="_blank"} for more information about wavelength encoding and color appearance in human vision.
 
 ## Radiance from a point
 
-![The geometry of four, fundamental, radiometric measures.](images/lightfields/02-measuring/01-radiometry.png){#fig-radiometry fig-cap-location="bottom" width="100%" fig-align="center" .margin-caption}
+![The geometry of four, fundamental, radiometric measures.](images/lightfields/02-measuring/01-radiometry.png){#fig-radiometry .margin-caption fig-cap-location="bottom" width="100%" fig-align="center"}
 
 @fig-radiometry illustrates the geometry of four basic radiometric measures. The upper left illustrates a point source. The *radiant flux* measures the total energy emitted from the point in all directions. As for all radiometric measurements, the energy (watts) is specified as a function of wavelength (watts/nm).
 
@@ -78,7 +84,7 @@ Often, we measure the light emitted by a point source in a particular direction,
 
 ## Radiance from a surface
 
-In many applications we measure radiance from a patch on an extended, flat surface - such as a large light fixture with a diffuser, a wall, or a large display screen. The geometry of such a measurement accounts for two main factors illustrated in [@fig-foreshortening-sketch]. First, we must account for the area of the surface patch, as seen from the detector. For example, if the measured surface patch is a square $0.1$ meters on a side its area is $A_s = (0.1~m)^2$. The area of this patch, as seen from the detector, is foreshortened. We calculate the foreshortened area using the angle between the viewing direction and the surface normal, $\theta$, which becomes $A_s \cos(\theta) ~ m^2$. Second, we account for the size of the bundle of rays captured by the detector. We measure this size by its three-dimensional angle, $\omega ~ sr$, from a surface point that will be measured by the detector. The *radiance* combines the energy measured at the sensor ($watts/nm$) with these geometric factors. The standard symbol for spectral radiance is $L(\lambda)$. It has units of watts per nanometer per unit foreshortened-area per steradian: 
+In many applications we measure radiance from a patch on an extended, flat surface - such as a large light fixture with a diffuser, a wall, or a large display screen. The geometry of such a measurement accounts for two main factors illustrated in [@fig-foreshortening-sketch]. First, we must account for the area of the surface patch, as seen from the detector. For example, if the measured surface patch is a square $0.1$ meters on a side its area is $A_s = (0.1~m)^2$. The area of this patch, as seen from the detector, is foreshortened. We calculate the foreshortened area using the angle between the viewing direction and the surface normal, $\theta$, which becomes $A_s \cos(\theta) ~ m^2$. Second, we account for the size of the bundle of rays captured by the detector. We measure this size by its three-dimensional angle, $\omega ~ sr$, from a surface point that will be measured by the detector. The *radiance* combines the energy measured at the sensor ($watts/nm$) with these geometric factors. The standard symbol for spectral radiance is $L(\lambda)$. It has units of watts per nanometer per unit foreshortened-area per steradian:
 
 $$ 
 \frac{Watts}{nm ~ \cos(\theta) ~ m^2 ~ sr}
@@ -88,57 +94,59 @@ $$
 
 ## Radiance from a large surface
 
-
 ![Does the distance from the very large wall impact the measurement?](images/lightfields/02-measuring/wall-distance.png){#fig-wall-distance width="70%"}
 
-We often measure the radiance from a large uniform surface, say a large wall or a large display screen, with a spectroradiometer. When the surface is large and uniform, the distance from the wall does not impact the measurement.  Why?
+We often measure the radiance from a large uniform surface, say a large wall or a large display screen, with a spectroradiometer. When the surface is large and uniform, the distance from the wall does not impact the measurement. Why?
 
-::: {#fig-radiance-surface .figure}
-::: {.panel-tabset}
-
+:::: {#fig-radiance-surface .figure}
+::: panel-tabset
 ### Rays - close
+
 ![When the sensor is close to the surface, the solid angle of the ray bundle captured from any single point is large.](images/lightfields/02-measuring/radiance-surface-1.png)
 
 ### Rays - far
+
 ![As the sensor moves farther away, the solid angle of the ray bundle captured from a single point becomes smaller.](images/lightfields/02-measuring/radiance-surface-2.png)
 
 ### Surface area - close
+
 ![When the sensor is close, it measures light from a relatively small area on the surface.](images/lightfields/02-measuring/radiance-surface-3.png)
 
 ### Surface area - far
+
 ![As the sensor moves farther away, it measures light from a larger area on the surface.](images/lightfields/02-measuring/radiance-surface-4.png)
 :::
-The tradeoffs between angular bundle and surface area when measuring a large surface as the distance increases. The spectroradiometer -comprising a lens and a sensor- captures a large angular bundle when it is closer, but a smaller portion of the surface.  These two factors cancel.  Thus the distance away from a large surface is largely irrelevant when measuring the radiance.
-:::
 
-The different tabs in the figure illustrate how the tradeoffs balance nicely so that the distance from the uniform surface does not matter.  When the instrument is close, the aperture captures a bundle of rays that is a bit *larger* (Rays - close) than when we measure a little further away (Rays - far). On the other hand, the amount of the surface that makes it on to the sensor is *smaller* when close (Surface area -close) compared to farther (Surface area - far).
+The tradeoffs between angular bundle and surface area when measuring a large surface as the distance increases. The spectroradiometer -comprising a lens and a sensor- captures a large angular bundle when it is closer, but a smaller portion of the surface. These two factors cancel. Thus the distance away from a large surface is largely irrelevant when measuring the radiance.
+::::
 
-Here is a tabular summary of the tradeoffs as the distance changes - solid angle and contributing surface area cancel one another. If the wall is uniform, the distance does not matter. 
+The different tabs in the figure illustrate how the tradeoffs balance nicely so that the distance from the uniform surface does not matter. When the instrument is close, the aperture captures a bundle of rays that is a bit *larger* (Rays - close) than when we measure a little further away (Rays - far). On the other hand, the amount of the surface that makes it on to the sensor is *smaller* when close (Surface area -close) compared to farther (Surface area - far).
 
-| Parameter     | Distance  |
-|---------------|-----------|
-| Solid angle   | Decreases |
-| Surface area  | Increases |
+Here is a tabular summary of the tradeoffs as the distance changes - solid angle and contributing surface area cancel one another. If the wall is uniform, the distance does not matter.
+
+| Parameter    | Distance  |
+|--------------|-----------|
+| Solid angle  | Decreases |
+| Surface area | Increases |
 
 : As distance from a surface increases, the solid angle subtended by each surface point decreases, while the measured surface area increases proportionally. {#tbl-angle-area-tradeoff}
 
 ## Irradiance on a surface
 
-Another important measurement is the radiance incident upon a surface, the *irradiance*.  This quantity is important to calculate the radiance available to an image sensor or the retina. It is also a practical measure in assessing room lighting, say how much light will arrive at a desk top. The irradiance sums the energy arriving from all directions, hence no three-dimensional angles (steradians) are specified. The irradiance measures the total energy per unit area of the surface. The standard symbol for irradiance is $E(\lambda)$, has units $watts/nm/m^2$.
+Another important measurement is the radiance incident upon a surface, the *irradiance*. This quantity is important to calculate the radiance available to an image sensor or the retina. It is also a practical measure in assessing room lighting, say how much light will arrive at a desk top. The irradiance sums the energy arriving from all directions, hence no three-dimensional angles (steradians) are specified. The irradiance measures the total energy per unit area of the surface. The standard symbol for irradiance is $E(\lambda)$, has units $watts/nm/m^2$.
 
-The amount of light from a small source, say a point source or a light bulb, that irradiates a surface depends on the geometry relating the light source and the surface. @fig-foreshortening-irradiance illustrates two cases:  the same angular rays emerging from both light bulbs. On the left the surface is perpendicular to the direction of the central ray.  On the right, the surface is slanted and not perpendiulcar; th same bundle of rays is spread across a larger surface area. Thus, there will be less light per unit area when the surface is not perpendicular to the main ray.  In the most extreme case, when the surface is parallel to the central ray, no light will fall on the surface at all.
+The amount of light from a small source, say a point source or a light bulb, that irradiates a surface depends on the geometry relating the light source and the surface. @fig-foreshortening-irradiance illustrates two cases: the same angular rays emerging from both light bulbs. On the left the surface is perpendicular to the direction of the central ray. On the right, the surface is slanted and not perpendiulcar; th same bundle of rays is spread across a larger surface area. Thus, there will be less light per unit area when the surface is not perpendicular to the main ray. In the most extreme case, when the surface is parallel to the central ray, no light will fall on the surface at all.
 
-![Irradiance from a small source onto a surface. The same angular bundle of rays is drawn in (A) and (B). The image in (A) shows the bundle of rays arriving at the surface that is perpendicular the the central ray.  In (B) the surface is tilted, off perpendicular, so the rays are more spread out.](images/lightfields/02-measuring/02-foreshortening-irradiance.png){#fig-foreshortening-irradiance width="60%" fig-cap-location="bottom"}
+![Irradiance from a small source onto a surface. The same angular bundle of rays is drawn in (A) and (B). The image in (A) shows the bundle of rays arriving at the surface that is perpendicular the the central ray. In (B) the surface is tilted, off perpendicular, so the rays are more spread out.](images/lightfields/02-measuring/02-foreshortening-irradiance.png){#fig-foreshortening-irradiance width="60%" fig-cap-location="bottom"}
 
-The geometric relationship between surfaces and relatively small light sources in an image is an important part of rendering images in computer graphics and measuring the illumination on surfaces in natural settings.  The geometric factor illustrated here is complementary to the geometric factor illustrated in @fig-foreshortening-sketch for how we measure the light radiating from a surface.
+The geometric relationship between surfaces and relatively small light sources in an image is an important part of rendering images in computer graphics and measuring the illumination on surfaces in natural settings. The geometric factor illustrated here is complementary to the geometric factor illustrated in @fig-foreshortening-sketch for how we measure the light radiating from a surface.
 
 ## Radiometric units
 
-@tbl-SI-units is a guide to help you remember the four fundamental spectral radiometric measurements. Please note that people will sometimes report a measure of any of these radiometric quantities by summing the energy across all wavelengths. This would be called, for example, the *total radiance* or *total irradiance,* rather than the spectral radiance. 
-
+@tbl-SI-units is a guide to help you remember the four fundamental spectral radiometric measurements. Please note that people will sometimes report a measure of any of these radiometric quantities by summing the energy across all wavelengths. This would be called, for example, the *total radiance* or *total irradiance,* rather than the spectral radiance.
 
 | Term | Application | SI unit |
-| --- | --- | --- |
+|------------------------|------------------------|------------------------|
 | Radiant flux | Light emitted in all directions from a point | Watt (W) |
 | Radiant intensity | Light emitted from a point in a direction per solid angle | W sr⁻¹ |
 | Radiance | Light from an extended source in a direction from an oriented surface | W sr⁻¹ m⁻² |
@@ -146,11 +154,13 @@ The geometric relationship between surfaces and relatively small light sources i
 
 : The four fundamental radiometric measurement quantities. The table lists the name of the measurement, how it is used, and the International System of Units (SI) definition for each {#tbl-SI-units}
 
-I list the corresponding **photometric** measurements in @sec-human-wavelength-encoding. The photometric units corresponding to these radiometric terms have the same geometry, but they sum across wavelengths, weighted by the relative visual significance of each wavelengths.  The term 'significance' is doing a lot of work there, which I explain later.
+I list the corresponding **photometric** measurements in @sec-human-wavelength-encoding. The photometric units corresponding to these radiometric terms have the same geometry, but they sum across wavelengths, weighted by the relative visual significance of each wavelengths. The term 'significance' is doing a lot of work there, which I explain later.
 
+```{=html}
 <!--
 ![The four fundamental radiometric measurement quantities. The table lists the name of the measurement, how it is used, and the International System of Units (SI) definition for each.](images/lightfields/02-measuring/01-radiometry-units.png){#fig-radiometry-units fig-cap-location="bottom" width="100%" fig-align="center"}
 -->
+```
 
 ::: {.callout-note collapse="false" title="Surface or point?"}
 <!--# The difference between radiant intensity and radiance is a question of whether we are measuring from a point or a surface.  But as a surface patch becomes smaller and smaller, how do we know when it should be considered a point?   -->
@@ -165,16 +175,15 @@ These recommendations are filled with imprecision that I always try to remove. T
 :::
 
 ## Beyond the basics: BRDF, light field, colorimetry
+
 The four fundamental radiometric measurements provide a foundation for understanding light. In later chapters, we will expand on these concepts by introducing additional factors.
 
-A key extension is directional dependence. Radiance from a surface patch varies with viewing direction and is often written as $L(\mathbf{x}, \omega, \lambda)$, where $\omega$ denotes direction using polar angle $\theta$ (from the surface normal) and azimuth $\phi$. Likewise, the irradiance at a surface point is the directional radiance integrated over the hemisphere, weighted by the cosine-foreshortening factor,
-$$
+A key extension is directional dependence. Radiance from a surface patch varies with viewing direction and is often written as $L(\mathbf{x}, \omega, \lambda)$, where $\omega$ denotes direction using polar angle $\theta$ (from the surface normal) and azimuth $\phi$. Likewise, the irradiance at a surface point is the directional radiance integrated over the hemisphere, weighted by the cosine-foreshortening factor, $$
 E(\mathbf{x}, \lambda) = \int_{\Omega^+} L(\mathbf{x}, \omega, \lambda)\,\cos\theta\, d\omega.
-$$
-These angle-dependent behaviors are central to how materials reflect and transmit light. We will study them with the bidirectional reflectance distribution function (BRDF), $f_r(\omega_i,\omega_o,\lambda)$, in @sec-properties-brdf.
+$$ These angle-dependent behaviors are central to how materials reflect and transmit light. We will study them with the bidirectional reflectance distribution function (BRDF), $f_r(\omega_i,\omega_o,\lambda)$, in @sec-properties-brdf.
 
-The properties of modern image sensors also add practical constraints. Sensors are 2D arrays of small light-sensitive elements (pixels) that spatially sample the irradiance at the sensor plane. Each pixel integrates photons over its finite area, over the exposure time, over wavelengths weighted by its spectral sensitivity, and over the acceptance cone set by the lens and pixel aperture.  Pixel counts, and the corresponding microlens arrays, have grown from early arrays with a few hundred by a few hundred pixels to today’s sensors with tens of millions. 
+The properties of modern image sensors also add practical constraints. Sensors are 2D arrays of small light-sensitive elements (pixels) that spatially sample the irradiance at the sensor plane. Each pixel integrates photons over its finite area, over the exposure time, over wavelengths weighted by its spectral sensitivity, and over the acceptance cone set by the lens and pixel aperture. Pixel counts, and the corresponding microlens arrays, have grown from early arrays with a few hundred by a few hundred pixels to today’s sensors with tens of millions.
 
-Capturing directional information—measuring rays from different directions separately, as in a light field camera (@sec-sensor-lightfield)—yields richer data and is the basis of light field imaging.  The geometry of pixels, including small lenslet arrays placed over the pixel arrays, enables us to make useful measurements about the light field.
+Capturing directional information—measuring rays from different directions separately, as in a light field camera (@sec-sensor-lightfield)—yields richer data and is the basis of light field imaging. The geometry of pixels, including small lenslet arrays placed over the pixel arrays, enables us to make useful measurements about the light field.
 
 Similarly, reproducing color requires pixels with different wavelength sensitivities (e.g., a color filter array). The idea that we can use just three measurements to represent human color perception was formalized in @maxwell1872-colorvision and led to the field of **colorimetry**, which we will explore in *Part IV: Human vision*.
