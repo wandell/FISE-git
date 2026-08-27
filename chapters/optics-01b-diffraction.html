@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2026-08-26">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
-<title>8&nbsp; Diffraction – Foundations of Image Systems Engineering</title>
+<title>8&nbsp; Diffraction and PSF – Foundations of Image Systems Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -133,7 +133,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-01b-diffraction.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diffraction</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-01b-diffraction.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diffraction and PSF</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -235,7 +235,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/optics-01b-diffraction.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diffraction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diffraction and PSF</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -526,7 +526,7 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-diffraction-overview" id="toc-sec-diffraction-overview" class="nav-link active" data-scroll-target="#sec-diffraction-overview"><span class="header-section-number">8.1</span> Diffraction overview</a></li>
+  <li><a href="#sec-diffraction-overview" id="toc-sec-diffraction-overview" class="nav-link active" data-scroll-target="#sec-diffraction-overview"><span class="header-section-number">8.1</span> Diffraction and PSF overview</a></li>
   <li><a href="#sec-lightfields-diffraction" id="toc-sec-lightfields-diffraction" class="nav-link" data-scroll-target="#sec-lightfields-diffraction"><span class="header-section-number">8.2</span> The failure of the ray model</a></li>
   <li><a href="#sec-huygens-wave" id="toc-sec-huygens-wave" class="nav-link" data-scroll-target="#sec-huygens-wave"><span class="header-section-number">8.3</span> Huygens wave model</a></li>
   <li><a href="#double-slit-experiments" id="toc-double-slit-experiments" class="nav-link" data-scroll-target="#double-slit-experiments"><span class="header-section-number">8.4</span> Double slit experiments</a></li>
@@ -545,9 +545,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-01b-diffraction.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diffraction</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-01b-diffraction.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diffraction and PSF</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-diffraction" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diffraction</span></span></h1>
+<h1 class="title"><span id="sec-diffraction" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diffraction and PSF</span></span></h1>
 </div>
 
 
@@ -590,7 +590,7 @@ Last updated: August 26, 2026
 </div>
 </div>
 <section id="sec-diffraction-overview" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="sec-diffraction-overview"><span class="header-section-number">8.1</span> Diffraction overview</h2>
+<h2 data-number="8.1" class="anchored" data-anchor-id="sec-diffraction-overview"><span class="header-section-number">8.1</span> Diffraction and PSF overview</h2>
 <p>The ray model in <a href="optics-01-geometric.html" class="quarto-xref"><span>Chapter 7</span></a> explains a great deal about pinhole imaging, but it fails at small apertures and sharp edges. In this chapter I describe how Grimaldi, Huygens, and Young established that light must be modeled as a wave, and how Fresnel’s mathematics settled the debate with the Poisson spot. I then use the wave model to explain diffraction quantitatively: the Airy pattern sets a physical limit on how sharp a pinhole image can be, no matter how small the aperture. This leads to the <strong>point spread function (PSF)</strong>, the general description of how an optical system images a single point, a concept I use throughout the rest of the book. I close by applying these ideas to pinholes of different shapes and distances, and to the human eye.</p>
 </section>
 <section id="sec-lightfields-diffraction" class="level2" data-number="8.2">
@@ -740,7 +740,7 @@ d = 2.44 \times (1 m) (550 \times 10^{-9} m )/ 1 \times 10^{-4}m) = 0.0134 m
 <!--
 The diffraction spread is larger than the pinhole spread when $d$ exceeds $D$. We do the calculation in the scripts in this [ISETCam script](https://htmlpreview.github.io/?https://github.com/wandell/FISE-git/blob/main/code/fise_diffraction.html).  For $L = 1m$ the pinhole blur is larger than the diffraction blur for a diameter of about $1 mm$.  When $L$ is much closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
 -->
-<p>The diffraction spread exceeds the pinhole spread when <span class="math inline">\(d\)</span> exceeds <span class="math inline">\(D\)</span>. We do the calculation for different assumptions about the distance to the image plane <a href="../code/02Optics/fise_diffraction.html">ISETCam:fise_diffraction</a>. As an example, we find that when the distance to the image plane is <span class="math inline">\(L = 1m\)</span>, the pinhole blur is larger than the diffraction blur for a pinhole diameter of about <span class="math inline">\(1 mm\)</span>. When the image plane distance, <span class="math inline">\(L\)</span>, is closer, say <span class="math inline">\(10 mm\)</span>, the pinhole blur exceeds the diffraction blur when the diameter is <span class="math inline">\(100 \mu\)</span>.</p>
+<p>The diffraction spread exceeds the pinhole spread when <span class="math inline">\(d\)</span> exceeds <span class="math inline">\(D\)</span>. We do the calculation for different assumptions about the distance to the image plane <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_diffraction.html">ISETCam:fise_diffraction</a>. As an example, we find that when the distance to the image plane is <span class="math inline">\(L = 1m\)</span>, the pinhole blur is larger than the diffraction blur for a pinhole diameter of about <span class="math inline">\(1 mm\)</span>. When the image plane distance, <span class="math inline">\(L\)</span>, is closer, say <span class="math inline">\(10 mm\)</span>, the pinhole blur exceeds the diffraction blur when the diameter is <span class="math inline">\(100 \mu\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="The diameter of the diffraction point spread">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -787,14 +787,14 @@ The diameter of the diffraction point spread
 <p>However, both nature and technology provide many examples of non-circular apertures. These produce more complex, two-dimensional PSFs that are not rotationally symmetric. In the following sections, we will use an ISETCam script to explore how to calculate the diffraction-limited PSF for some of these interesting shapes.</p>
 <section id="rectangular-pinholes" class="level4" data-number="8.8.2.1">
 <h4 data-number="8.8.2.1" class="anchored" data-anchor-id="rectangular-pinholes"><span class="header-section-number">8.8.2.1</span> Rectangular pinholes</h4>
-<p>The script <a href="../code/02Optics/fise_oiAperture.html" target="_blank">fise_oiAperture</a> illustrates how to calculate the PSF for a rectangular aperture in ISETCam. An image computed using the PSF from a diffraction limited rectangular pinhole, and the PSF for that pinhole, are shown in <a href="#fig-pinhole-rectangle" class="quarto-xref">Figure&nbsp;<span>8.7</span></a>. The images illustrate a case for the rectangular aperture is three times wider (x) than high (y). The larger vertical height causes less blur in the y-direction, making the image sharper for the horizontal stripes.</p>
+<p>The script <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_oiAperture.html" target="_blank">fise_oiAperture</a> illustrates how to calculate the PSF for a rectangular aperture in ISETCam. An image computed using the PSF from a diffraction limited rectangular pinhole, and the PSF for that pinhole, are shown in <a href="#fig-pinhole-rectangle" class="quarto-xref">Figure&nbsp;<span>8.7</span></a>. The images illustrate a case for the rectangular aperture is three times wider (x) than high (y). The larger vertical height causes less blur in the y-direction, making the image sharper for the horizontal stripes.</p>
 <div id="fig-pinhole-rectangle" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pinhole-rectangle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/optics/06-geometric/pinhole-rectangle-both.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinhole-rectangle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8.7: Simulating a diffraction-limited rectangular pinhole that is 3x higher than wide. The test pattern has spatial frequency increasing from left to right, and orientation varying up to down. The horizontal lines retain their contrast as frequency increases; the vertical lines lose theirs. The PSF (550 nm) for the rectangular aperture is plotted on the right. See <a href="../code/02Optics/fise_oiAperture.html" target="_blank">fise_oiAperture</a>.
+Figure&nbsp;8.7: Simulating a diffraction-limited rectangular pinhole that is 3x higher than wide. The test pattern has spatial frequency increasing from left to right, and orientation varying up to down. The horizontal lines retain their contrast as frequency increases; the vertical lines lose theirs. The PSF (550 nm) for the rectangular aperture is plotted on the right. See <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_oiAperture.html" target="_blank">fise_oiAperture</a>.
 </figcaption>
 </figure>
 </div>
@@ -850,7 +850,7 @@ Figure&nbsp;8.9: A sampling of mechanical shutter shapes. The array on the left 
 This is a mechanical shutter.  This is a leaf https://www.photoreview.com.au/tips/shooting/mechanical-vs-electronic-shutters/
 This is a polygon https://stackoverflow.com/questions/56467558/trying-to-create-a-camera-shutter-effect-with-divs
 -->
-<p>The impact of the regular polygon shape is quite visible in high dynamic range (HDR) scenes that include light sources. The script <a href="../code/02Optics/fise_oiAperture.html" target="_blank">fise_oiAperture</a> simulates an HDR scene, superimposing some very bright light sources on the background image. These apertures produce the flare pattern that one often sees in professional productions, including movies and sports shows. The three images show the flare pattern for polygons with different numbers of sides.</p>
+<p>The impact of the regular polygon shape is quite visible in high dynamic range (HDR) scenes that include light sources. The script <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_oiAperture.html" target="_blank">fise_oiAperture</a> simulates an HDR scene, superimposing some very bright light sources on the background image. These apertures produce the flare pattern that one often sees in professional productions, including movies and sports shows. The three images show the flare pattern for polygons with different numbers of sides.</p>
 <div id="fig-pinhole-hdr" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pinhole-hdr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">

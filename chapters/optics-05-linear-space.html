@@ -235,7 +235,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/optics-01b-diffraction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diffraction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diffraction and PSF</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -640,7 +640,7 @@ A limitation of PSFs
 <section id="general-linear-analysis" class="level3" data-number="12.2.2">
 <h3 data-number="12.2.2" class="anchored" data-anchor-id="general-linear-analysis"><span class="header-section-number">12.2.2</span> General linear analysis</h3>
 <p>There is no guarantee that the point spread is the same everywhere in the image, and in general it will not be. This case is called a <strong>shift-varying</strong> linear system, and we represent the linear system by a general matrix (<a href="appendix-01-linearsystems.html#sec-ls-point-matrix" class="quarto-xref"><span>Section 34.4</span></a>). In that case each column of the matrix represents the point spread for a different point. These can be quite broad and irregular, making the image quite unrecognizable. Even so, if we know the matrix, and it is invertible, we can estimate the input.</p>
-<p>The calculation is illustrated in the script <a href="../code/02Optics/fise_ImageFormationLinearity.html" target="_blank">fise_ImageFormationLinearity</a>. I created a random image to serve as the PSF for each pixel, and naturally the image looks completely random. But with knowlege of the PSFs, and thus the system matrix, we can find the inverse of the system matrix and estimate the input from an image that appears to be complete noise.</p>
+<p>The calculation is illustrated in the script <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_ImageFormationLinearity.html" target="_blank">fise_ImageFormationLinearity</a>. I created a random image to serve as the PSF for each pixel, and naturally the image looks completely random. But with knowlege of the PSFs, and thus the system matrix, we can find the inverse of the system matrix and estimate the input from an image that appears to be complete noise.</p>
 <p>There are many details as to how well this works, mostly concerning how robust the calculation is to noise. I doubt this calculation is of practical interest, though it has been used in interesting ways by <strong>Laura Waller’s group</strong>. (Correct me if you know of a case!) The principle of linearity is good to keep in mind because it will help you solve many other problems.</p>
 </section>
 <section id="space-invariant-linear-analysis" class="level3" data-number="12.2.3">
@@ -668,7 +668,7 @@ Figure&nbsp;12.1: Cross-section of four point spread functions that are widely u
 </figcaption>
 </figure>
 </div>
-<p>We can simulate how the four PSF shapes transform a spectral radiance (<a href="#fig-psf-image" class="quarto-xref">Figure&nbsp;<span>12.2</span></a>). We compare the optical images four each of the PSFs for a scene comprising a set of grid lines. The images were calculated using the ISETCam script <a href="../code/02Optics/fise_opticsPSF.html" target="_blank">fise_opticsPSF.</a> The Airy and Gaussian PSFs were implemented with wavelength-dependent point spread functions. The Pillbox and Lorentzian PSFs were implemented as wavelength-indepedent.</p>
+<p>We can simulate how the four PSF shapes transform a spectral radiance (<a href="#fig-psf-image" class="quarto-xref">Figure&nbsp;<span>12.2</span></a>). We compare the optical images four each of the PSFs for a scene comprising a set of grid lines. The images were calculated using the ISETCam script <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_opticsPSF.html" target="_blank">fise_opticsPSF.</a> The Airy and Gaussian PSFs were implemented with wavelength-dependent point spread functions. The Pillbox and Lorentzian PSFs were implemented as wavelength-indepedent.</p>
 <div id="fig-psf-image" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-psf-image-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -782,7 +782,7 @@ LSF = \sum_x PSF(x,y)
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-linespread-pointspread-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.3: Typical human line spread functions or point spread functions for stimuli with equal energy, 425 nm, 525 nm, and 625 nm. Source: ISETBio <a href="../code/02Optics/fise_humanLSF.html" target="_blank">Human LSF</a>.
+Figure&nbsp;12.3: Typical human line spread functions or point spread functions for stimuli with equal energy, 425 nm, 525 nm, and 625 nm. Source: ISETBio <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_humanLSF.html" target="_blank">Human LSF</a>.
 </figcaption>
 </figure>
 </div>
