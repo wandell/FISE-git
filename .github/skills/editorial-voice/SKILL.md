@@ -11,9 +11,9 @@ Write for technically curious advanced undergraduates and beginning graduate
 students. They can follow mathematics and physical reasoning, but should not be
 asked to infer unstated assumptions, notation, or motivation.
 
-Priority order: accuracy and clarity first; then a welcoming, interesting tone;
+Priority order: accuracy and clarity first; then a welcoming, personal interesting tone;
 then brevity. The voice is direct, calm, and precise—not promotional, inflated,
-or overly casual.
+or overly casual. We are having a one-on-one personal conversation with the reader.
 
 ## Explain before compressing
 

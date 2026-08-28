@@ -7,26 +7,24 @@ date: last-modified
 {{< include "includes/WIP-callout.qmd" >}}
 
 ## Spatial regularities overview {#sec-spatial-regularities-overview}
-We have already seen how information about the spectral characteristics of natural images can be helpful in interpreting them. Learning more about the spatial statistics of natural images -or not- has been a longstanding goal of image systems engineering and vision science. The reason is simple: the more we know about these statistics, the better we can do at interpreting the images we measure. For example, we should be able to remove noise more effectively by rewriting a noisy capture in a format that is more natural-like.  We can even hope that we should be able to develop better algorithms to interpret the contents of the images (@sec-image-regularities). 
+Information about the spectral characteristics of natural images, including the illuminant and surfaces, is helpful for rendering images and for reasoning about their contents. The reason is simple: the more we know about these statistics, the better we can do at interpreting the images we measure. 
 
-Over the last four decades, our knowledge about the spatial statistics has grown considerably.  The development of machine learning algorithms, particularly diffusion methods for generating natural images, has been a recent striking advance.  In this chapter we will start with the foundations and work our way towards the most recent insights.
+Characterizing the spatial statistics of natural images is a second important quest within image systems engineering and vision science. Knowing about the likely spatial image will enable us to remove measurement noise more effectively, especially to the extent that natural images are not like noise. We can even hope that we do a better job of estimating the spatial properties of images that are just beyond our spatial resolution, being able to interpolate what we do see to a higher resolution based on knowing the likely structure of the object (@sec-image-regularities). 
+
+Over the last four decades, our knowledge about the spatial statistics has grown considerably. The development of machine learning algorithms, particularly diffusion methods for generating natural images, has been a recent striking advance.  In this chapter we will start with the foundations and work our way towards the most recent insights.
 
 ## Spatial correlations  {#sec-spatial-correlations}
-Image scientists were immediately drawn to analyzing the very different spatial statistics of images.  If we examine the three sections of @fig-naturalspatial, one very obvious feature jumps out.  In the first panel, every pixel is completely independent of the other. In natural images, if you know the light at one point there is a good chance that it will be similar to the light at another point. There are various mathematical ways to express this basic insight.  And of course these measures all can be connected to one another, although sometimes with some difficulty.
+Image scientists were immediately drawn to analyzing the very different spatial statistics of images.  If we examine the three panels of @fig-naturalspatial, one very obvious feature jumps out.  In the left panel, every pixel is completely independent of the other. That was how this image was created:  every pixel intensity is drawn from an independent random simple. This independence is almost never found in natural images; the light level at one point is quite likely to be similar to the level at a nearby point. 
 
-<!--
-Something about fractals. Textures. Other stuff. @Simoncelli2001-imagestats @Geisler2008-imagestats @Ruderman1994-imagestats
--->
+In the middle panel, the similarity of adjacent pixels is extreme.  Almost all the pixels are the same.  That doesn't happen in natural images either. The image is so unnatural, it might be surprising that we can recognize its contents at all. I often wonder whether other species can interpret such line drawings, that only represent the object boundaries.
+
+What are the regularities that make the right panel - synthesized by a diffusion models - appear to be natural? Here are some ideas.
 
 ## Natural scenes and the 1/f spatial frequency falloff  {#sec-spectrum-power-law}
 
-Who first pointed this out? Relationship to the scale invariant idea of fractals, and the fractal nature of many things.
+One idea is that natural images must satisfy this simple statistical measure: if we express the image as the weighted sum of harmonic functions (sines and cosines), the amplitudes of the harmonics decline with spatial frequency.  This was the idea suggested in an early paper by Ruderman and Bialek [@Ruderman1994-imagestats] who set out to measure natural image spatial statistics. The analysis was confirmed and extended by others, including @Simoncelli2001-imagestats @Geisler2008-imagestats @mumford-deadleaves.
 
-Ruderman and Bialek paper on natural image statistics.
-
-Field, Olshausen
-
-The scale invariance of natural images arises from their power-law spectral decay, which mathematically ensures statistical consistency across spatial scales. The connection between $\fract{1}{f}^\alpha$ spectra and scale invariance can be expressed through:
+Field, Olshausen.  I think they have work on this topic?
 
 The power spectrum of natural images follows:
 
@@ -34,7 +32,13 @@ $$
 P(\omega) \propto \frac{1}{|\omega|^{2-\eta}} \quad \text{where } \eta \approx 0.8\text{--}1.5
 $$
 
-Here, $\omega$ represents spatial frequency magnitude, and $\eta$ controls the decay rate[^lightfields-properties-3],[^lightfields-properties-4],[^lightfields-properties-5].
+Here, $\omega$ represents spatial frequency magnitude, and $\eta$ controls the decay rate
+
+The scale invariance of natural images arises from their power-law spectral decay, which mathematically ensures statistical consistency across spatial scales. The connection between $\fract{1}{f}^\alpha$ spectra and scale invariance can be expressed through:
+
+
+
+[^lightfields-properties-3],[^lightfields-properties-4],[^lightfields-properties-5].
 
 [^lightfields-properties-3]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
 
@@ -63,6 +67,10 @@ This matches the scale-invariance condition with $\kappa = 2-\eta$, demonstratin
 [^lightfields-properties-8]: http://vigir.missouri.edu/\~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf
 
 ## The dead leaves model {#sec-dead-leaves}
+
+To me, it makes no sense to say that there is a single harmonic across the image.  If there were, then getting closer to it would shift its frequency but not its amplitude.  
+
+This gets to the importance of phase over amplitude. The coherence length is frequency dependent, I would guess.  This has an impact on the amplitude.  The literature is not good on this point, although this model is helpful.
 
 @lee2001-deadleaves
 
@@ -96,12 +104,14 @@ This mathematical framework shows that 1/f\^α spectra inherently encode fractal
 
 ## Diffusion models {#sec-spatial-diffusion}
 
-Diffusion neural networks.
+Diffusion models implemented in a neural network.
 
 Eero's analysis of the statistical properties of images using diffusion models.
 
-## Applications
+This doesn't get us to objects.  But it is great for generative, when coupled with a text prompt that guides it to a particular content of natural images.
 
-Image compression and JPEG is the big one.  It doesn't get us all the way to objects.  But it sure mattered.
+Explaining such models might be complicated, but let's see if I can get us there from the Simoncelli and other papers.
+
+**Note:** Save image compression and JPEG, which is a big one, for later.  It depends a great deal on human vision and so it is too early here.  But maybe some of the Simoncelli explanations of diffusion imaging networks could fit here.  The idea that the networks learn fairly complex image statistics and when we start them out with noise, they drive the image towards something that is within the realm of a natural image.
 
 
