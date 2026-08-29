@@ -9,6 +9,13 @@ rewritten around David Williams' 1997 result in
 duplicated history, thin physical explanation, missing applications, and
 terminology drift across the now five touched chapters.
 
+Update: `human-02-spatial-encoding.qmd` was subsequently split into
+`human-02-physiological-optics.qmd` (physiological optics, adaptive optics /
+AOSLO — this is where the Adaptive optics section below now lives) and
+`human-03-retinal-encoding.qmd` (retina, photoreceptor mosaic, cone PSF, CSF).
+References to `human-02` below that concern the Adaptive optics section
+should now be read as `human-02-physiological-optics.qmd`.
+
 ## Duplication to resolve
 
 - [ ] Three separate tellings of the Hartmann → Shack & Platt history now
@@ -47,10 +54,18 @@ terminology drift across the now five touched chapters.
       the new Adaptive optics section) for other Shack-Hartmann/AOSLO
       mentions that might now be stale, redundant, or use different wording
       than the rewritten intro.
-- [ ] Same file has a pre-existing, unrelated bug worth fixing while in
+- [x] Same file has a pre-existing, unrelated bug worth fixing while in
       there: the div id `#fig-physiological-optics` is reused for two
       different tabset figure groups (the eyeball image/sketch near the top,
       and the retinal-layers panels later) — should get distinct ids.
+      Fixed by the `human-02`/`human-03` split: the eyeball tabset keeps
+      `#fig-physiological-optics` in `human-02-physiological-optics.qmd`;
+      the retinal-layers tabset became `#fig-retina-layers-panel` in
+      `human-03-retinal-encoding.qmd`. (While at it, also renamed the
+      duplicated `#fig-mosaic-0/3/6/12` ids on the "PSF at the cone inner
+      segments" panel to `#fig-conepsf-0/3/6/12`, since they collided with
+      the same ids used two sections earlier on "Cone mosaic at different
+      eccentricities".)
 - [ ] `sensors-07-innovations.qmd` Light Field Cameras section: verify the
       autofocus/DPAF application paragraph still reads well now that the
       Shack-Hartmann cross-reference points into `optics-08` rather than
