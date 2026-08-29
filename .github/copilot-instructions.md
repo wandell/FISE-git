@@ -41,3 +41,12 @@ Substantive-domain skills:
 General rules: inspect the relevant source before naming a path, label, or
 configuration key; preserve established conventions; prefer small, localized
 changes; and state whether a formatting technique works in HTML, PDF, or both.
+
+## Git workflow
+
+Do work on a feature branch, not directly on `main`. When a change is ready,
+commit it, push the branch, and open a pull request with `gh pr create --web`
+(or otherwise open the PR in a browser) so it's there for review before
+merging. The `ci.yml` GitHub Actions workflow renders the book on every push
+and pull request against `main`; let that check run rather than only relying
+on a local `quarto render`.
