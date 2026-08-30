@@ -85,11 +85,17 @@ Choose a directory location for your new book project
 
 ## Quarto: resource files
 
-I seem to have to make sure the resource files, which I write as qmd, are converted to html files. To do this, I run
+Published resource pages are Quarto source files under `chapters/resources/`.
+Add a resource page to the `Resources` part of `book.chapters` in
+`_quarto.yml`, and link to its `.qmd` source from other chapters. Quarto rewrites
+the link to `.html` and renders the resource into `_book/` as part of the normal
+project render:
 
-   quarto render chapters/resources/file.qmd --to html
+   quarto render
 
-Also, perhaps I should be adding a pre-render command for these files (see below for the code/ files).
+Generated `.html` and `_files/` output beside the source is ignored and should
+not be committed to the source branch. The rendered site is published from
+`_book/` to the `gh-pages` branch.
 
 ## Quarto:  Matlab files
 
@@ -107,8 +113,6 @@ project:
 ```
   
 and inside of code/ there is an additional _quarto.yml file and an index.qmd. Not sure why those are needed, but Claude told me to do it and I haven't really debugged to see what I can get rid of. It appears that Quarto renders the markdown file when I preview and it brings up the livescript in a window nicely enough for now.  
-
-(In the past, I had to move the _files directory into the _book directory by hand until we figure out the proper way.  Maybe what I did for 'code' should work for these additional files? Also, the resources/files.qmd need to be in the _quarto.yml file.  But none of that appears to be true at the moment).
 
 ## Quarto: section labels
 
@@ -191,4 +195,3 @@ I used the Jekyll Export Tool that is a Wordpress plugin.  I simply installed th
 In addition to putting the book on GitHub pages at some point, we will probably deposit a PDF version on Stanford Digital Repository.
 
 For the moment, I commented out the pdf formatting option.  That format and perhaps others will be useful in the future.
-
