@@ -1,0 +1,177 @@
+
+https://share.gemini.google/Ap2FtLmUp4VK
+
+
+To bridge wave optics and sensor physics, the key is showing how a continuous electromagnetic field converts into measurable energy and, ultimately, discrete photoelectrons.
+
+We need this both in the wavefront section and in the photoelectric effect section (which should refer to it).
+
+---
+
+
+### 1. Cleaning Up the Notation Collisions
+
+* **Wavefront Field & Amplitude:** Use $U(\mathbf{x})$ for the complex field and $a(\mathbf{x})$ (lowercase) for field amplitude:
+
+$$U(\mathbf{x}) = a(\mathbf{x}) e^{i\phi(\mathbf{x})}$$
+
+
+* **Pixel Area:** Use $\Delta A$ or $\text{area}_{\text{pix}}$ instead of $A_{\text{pix}}$ to avoid any confusion with field amplitudes or aperture stops $A(u, v)$.
+
+
+* **Irradiance vs. Electric Field:** In radiometry, image plane irradiance is traditionally written as $E$ or $E_e$. To avoid confusing it with the electric field vector $\mathbf{E}$, write it explicitly as **irradiance $E(\mathbf{x})$**, or simply as optical intensity $I(\mathbf{x})$.
+
+---
+
+### 2. How the Wavefront Defines Image Irradiance
+
+Image irradiance is simply the squared magnitude of the complex wavefront arriving at that position $\mathbf{x} = (x, y)$ on the sensor plane:
+
+$$E(\mathbf{x}) = \vert{}U(\mathbf{x})\vert{}^2 = a(\mathbf{x})^2$$
+
+* **Units:** In physical radiometry, this is power density (Watts/m$^2$). In imaging and photon-based modeling (such as ISETCam), it is commonly expressed directly as photon flux density:
+
+
+
+$$\left[\frac{\text{photons}}{\text{s} \cdot \text{m}^2}\right] \quad \text{or} \quad \left[\frac{\text{q}}{\text{s} \cdot \text{m}^2}\right] \text{[cite: 1]}$$
+
+
+### 3. Connecting the Wavefront to the Pixel Output
+
+Once the image irradiance $E(\mathbf{x})$ is defined via the wavefront amplitude squared, the path to the sensor's photoelectric response follows two direct integration steps:
+
+**Step A: Spatial Integration over the Pixel**
+A pixel at grid location $(i, j)$ covers a physical patch of the sensor surface. The total photon flux (rate of photons arriving per second) incident on the pixel is:
+
+
+$$\Phi_{i, j} = \iint_{\text{pixel } (i, j)} E(\mathbf{x}) \, d\mathbf{x} = \iint_{\text{pixel } (i, j)} a(\mathbf{x})^2 \, d\mathbf{x} \quad \left[\frac{\text{q}}{\text{s}}\right] \text{[cite: 1]}$$
+
+If the irradiance does not vary significantly across the small dimensions of the pixel, this simplifies to multiplying by the pixel area $\Delta A$:
+
+
+$$\Phi_{i, j} \approx E(x_i, y_j) \cdot \Delta A = a(x_i, y_j)^2 \cdot \Delta A$$
+
+**Step B: Temporal Integration over the Exposure Time**
+Integrating across the sensor's exposure duration $\Delta t$ yields the expected number of arriving photons (quanta) $\mu_q$:
+
+
+$$\mu_q = \Phi_{i, j} \cdot \Delta t = a(x_i, y_j)^2 \cdot \Delta A \cdot \Delta t \quad [\text{photons or q}]$$
+
+**Step C: The Photoelectric Effect**
+Through the internal photoelectric effect in the pixel's photodiode, absorbed photons create electron-hole pairs. Multiplying by the detector's quantum efficiency $\eta$ yields the expected number of photoelectrons $\mu_e$:
+
+
+$$\mu_e = \eta \cdot \mu_q = \eta \cdot a(x_i, y_j)^2 \cdot \Delta A \cdot \Delta t \quad [\text{electrons}]$$
+
+---
+
+
+You caught two very real notation collisions: using $E$ for both **electric field** and **irradiance**, and using $A$ for both **wavefront amplitude** and **pixel area**.
+
+To resolve this cleanly for students, standardize the notation so that radiometry and wave optics seamlessly connect.
+
+---
+
+### 1. Cleaning Up the Notation Collisions
+
+* **Wavefront Field & Amplitude:** Use $U(\mathbf{x})$ for the complex field and $a(\mathbf{x})$ (lowercase) for field amplitude:
+
+$$U(\mathbf{x}) = a(\mathbf{x}) e^{i\phi(\mathbf{x})}$$
+
+
+* **Pixel Area:** Use $\Delta A$ or $\text{area}_{\text{pix}}$ instead of $A_{\text{pix}}$ to avoid any confusion with field amplitudes or aperture stops $A(u, v)$.
+
+
+* **Irradiance vs. Electric Field:** In radiometry, image plane irradiance is traditionally written as $E$ or $E_e$. To avoid confusing it with the electric field vector $\mathbf{E}$, write it explicitly as **irradiance $E(\mathbf{x})$**, or simply as optical intensity $I(\mathbf{x})$.
+
+
+
+---
+
+### 2. How the Wavefront Defines Image Irradiance
+
+Image irradiance is simply the squared magnitude of the complex wavefront arriving at that position $\mathbf{x} = (x, y)$ on the sensor plane:
+
+$$E(\mathbf{x}) = \vert{}U(\mathbf{x})\vert{}^2 = a(\mathbf{x})^2$$
+
+* **Units:** In physical radiometry, this is power density (Watts/m$^2$). In imaging and photon-based modeling (such as ISETCam), it is commonly expressed directly as photon flux density:
+
+
+
+$$\left[\frac{\text{photons}}{\text{s} \cdot \text{m}^2}\right] \quad \text{or} \quad \left[\frac{\text{q}}{\text{s} \cdot \text{m}^2}\right] \text{[cite: 1]}$$
+
+
+
+---
+
+### 3. Connecting the Wavefront to the Pixel Output
+
+Once the image irradiance $E(\mathbf{x})$ is defined via the wavefront amplitude squared, the path to the sensor's photoelectric response follows two direct integration steps:
+
+**Step A: Spatial Integration over the Pixel**
+A pixel at grid location $(i, j)$ covers a physical patch of the sensor surface. The total photon flux (rate of photons arriving per second) incident on the pixel is:
+
+
+$$\Phi_{i, j} = \iint_{\text{pixel } (i, j)} E(\mathbf{x}) \, d\mathbf{x} = \iint_{\text{pixel } (i, j)} a(\mathbf{x})^2 \, d\mathbf{x} \quad \left[\frac{\text{q}}{\text{s}}\right] \text{[cite: 1]}$$
+
+If the irradiance does not vary significantly across the small dimensions of the pixel, this simplifies to multiplying by the pixel area $\Delta A$:
+
+
+$$\Phi_{i, j} \approx E(x_i, y_j) \cdot \Delta A = a(x_i, y_j)^2 \cdot \Delta A$$
+
+**Step B: Temporal Integration over the Exposure Time**
+Integrating across the sensor's exposure duration $\Delta t$ yields the expected number of arriving photons (quanta) $\mu_q$:
+
+
+$$\mu_q = \Phi_{i, j} \cdot \Delta t = a(x_i, y_j)^2 \cdot \Delta A \cdot \Delta t \quad [\text{photons or q}]$$
+
+**Step C: The Photoelectric Effect**
+Through the internal photoelectric effect in the pixel's photodiode, absorbed photons create electron-hole pairs. Multiplying by the detector's quantum efficiency $\eta$ yields the expected number of photoelectrons $\mu_e$:
+
+
+$$\mu_e = \eta \cdot \mu_q = \eta \cdot a(x_i, y_j)^2 \cdot \Delta A \cdot \Delta t \quad [\text{electrons}]$$
+
+---
+
+### Suggested Textbook Box
+
+**From Wavefront to Electrons at a Pixel:**
+1. **Wavefront Amplitude:** The complex optical field at image position $\mathbf{x}$ is $U(\mathbf{x}) = a(\mathbf{x})e^{i\phi(\mathbf{x})}$.
+2. **Irradiance:** Time-averaging strips the optical phase, giving the image irradiance:
+ 
+$$E(\mathbf{x}) = a(\mathbf{x})^2 \quad \left[\frac{\text{q}}{\text{s} \cdot \text{m}^2}\right]\text{[cite: 1]}$$
+ 
+ 
+3. **Photon Catch:** A pixel with surface area $\Delta A$ exposed for duration $\Delta t$ catches an expected number of photons:
+
+$$\mu_q = E(\mathbf{x}) \cdot \Delta A \cdot \Delta t$$
+
+
+4. **Photoelectrons:** Governed by quantum efficiency $\eta$, the resulting signal is:
+
+$$\mu_e = \eta \cdot \mu_q = \eta \cdot a(\mathbf{x})^2 \cdot \Delta A \cdot \Delta t \quad [e^-]$$
+
+
+
+
+### Suggested Textbook Box
+
+**From Wavefront to Electrons at a Pixel:**
+
+1. **Wavefront Amplitude:** The complex optical field at image position $\mathbf{x}$ is $U(\mathbf{x}) = a(\mathbf{x})e^{i\phi(\mathbf{x})}$.
+2. **Irradiance:** Time-averaging strips the optical phase, giving the image irradiance:
+
+$$E(\mathbf{x}) = a(\mathbf{x})^2 \quad \left[\frac{\text{q}}{\text{s} \cdot \text{m}^2}\right]\text{[cite: 1]}$$
+
+
+3. **Photon Catch:** A pixel with surface area $\Delta A$ exposed for duration $\Delta t$ catches an expected number of photons:
+
+$$\mu_q = E(\mathbf{x}) \cdot \Delta A \cdot \Delta t$$
+
+
+4. **Photoelectrons:** Governed by quantum efficiency $\eta$, the resulting signal is:
+
+$$\mu_e = \eta \cdot \mu_q = \eta \cdot a(\mathbf{x})^2 \cdot \Delta A \cdot \Delta t \quad [e^-]$$
+
+
+
