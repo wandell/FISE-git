@@ -56,6 +56,22 @@ def local_target(site_root: Path, page: Path, reference: str) -> tuple[Path, str
     return target.resolve(), unquote(split.fragment)
 
 
+def has_exact_case(path: Path) -> bool:
+    """Return whether every path component matches the stored filename case."""
+
+    parts = path.parts
+    current = Path(parts[0])
+    for part in parts[1:]:
+        try:
+            names = {entry.name for entry in current.iterdir()}
+        except OSError:
+            return False
+        if part not in names:
+            return False
+        current /= part
+    return True
+
+
 def check_site(site_root: Path) -> list[str]:
     site_root = site_root.resolve()
     html_files = sorted(site_root.rglob("*.html"))
@@ -73,6 +89,11 @@ def check_site(site_root: Path) -> list[str]:
             if not target.exists():
                 problems.append(
                     f"{location}: <{tag}> {attribute} points to missing file: {reference}"
+                )
+                continue
+            if not has_exact_case(target):
+                problems.append(
+                    f"{location}: <{tag}> {attribute} has incorrect filename case: {reference}"
                 )
                 continue
 
