@@ -1,6 +1,6 @@
 ---
 name: matlab-evaluation
-description: Use this when running, testing, or evaluating Matlab .m scripts on this machine — locating the Matlab binary, setting up toolbox paths for non-interactive sessions, and invoking batch evaluation. Activate for Matlab test runs, tutorial verification in code/, or iePublish HTML generation.
+description: Use this when running, testing, or evaluating Matlab .m scripts on this machine — locating the Matlab binary, setting up toolbox paths for non-interactive sessions, and invoking batch evaluation. Activate for Matlab test runs, tutorial verification for isetfise/fise, or iePublish HTML generation.
 ---
 
 # Matlab Evaluation Workflow
@@ -22,7 +22,7 @@ ls /Applications | rg -i '^MATLAB_R'
 - Use `-batch`, not `-r`, for evaluation. `-batch` runs headless (no splash, no desktop), still processes Matlab's normal startup files, exits automatically when the statement finishes, and — critically — returns a non-zero exit code and prints the error to stderr if the statement throws. `-r` requires an explicit `exit`/`quit` call and manual `try/catch` to avoid hanging or masking failures.
 
 ```bash
-/Applications/MATLAB_R2026a.app/bin/matlab -batch "run('code/t_mri01MR.m')"
+/Applications/MATLAB_R2026a.app/bin/matlab -batch "run('path/to/fise_script.m')"
 echo "exit: $?"
 ```
 
@@ -31,11 +31,15 @@ echo "exit: $?"
 
 ## Toolbox Path Management
 
+Code in support of this book relies on `isetcam`, `isetbio`, and `iset3d`.
+
 ### Common Toolbox Locations
-- **isetcam**: `~/Documents/MATLAB/isetcam` (contains essential utilities like iePublish)
+- **isetcam**: `~/Documents/MATLAB/isetcam` (contains essential utilities like `iePublish`)
+- **isetbio**: `~/Documents/MATLAB/isetbio` (for biological image processing and retinal models)
+- **iset3d**: `~/Documents/MATLAB/iset3d` (or `iset3d-v4`, for 3D rendering and ray-tracing calculations)
+- **isetfise**: `~/Documents/MATLAB/isetfise` (contains `fise/` topic scripts and utilities)
 - **teachmri**: `~/Documents/MATLAB/teach/teachmri` (contains teaching-related utilities)
 - **vistasoft**: `~/Documents/MATLAB/vistasoft` (for visual field mapping and diffusion MRI)
-- **isetbio**: `~/Documents/MATLAB/isetbio` (for biological image processing)
 
 ### Path Setup in Batch Mode
 Project toolboxes are not automatically added in non-interactive sessions due to skipped startup prompts:
@@ -63,8 +67,9 @@ which functionName    % Shows path resolution
 ```bash
 /Applications/MATLAB_R2026a.app/bin/matlab -batch "\
 addpath(genpath('~/Documents/MATLAB/isetcam')); \
-addpath(genpath('~/Documents/MATLAB/teach/teachmri/utility')); \
-iePublish('code/t_mri01MR.m')"
+addpath(genpath('~/Documents/MATLAB/isetbio')); \
+addpath(genpath('~/Documents/MATLAB/isetfise')); \
+iePublish('~/Documents/MATLAB/isetfise/fise/02Optics/fise_diffraction.m')"
 ```
 
 ### Important Notes
@@ -75,24 +80,24 @@ iePublish('code/t_mri01MR.m')"
 ## Working directory
 
 - `-batch` inherits the shell's current working directory as Matlab's `pwd`; it does not `cd` into the repo or the script's folder automatically.
-- Some tutorials, and `iePublish` itself, resolve relative paths and write output relative to `pwd`. Launch from — or explicitly `cd` to — whichever directory the script assumes (usually the repo root for this project).
+- Some tutorials, and `iePublish` itself, resolve relative paths and write output relative to `pwd`. Launch from — or explicitly `cd` to — whichever directory the script assumes.
 
-## Typical flow for this repo's tutorials (`code/*.m`)
+## Typical flow for book tutorials (`isetfise/fise/**/*.m`)
 
-1. Identify which toolbox, if any, the tutorial needs.
+1. Identify which toolboxes (`isetcam`, `isetbio`, `iset3d`, etc.) the tutorial needs.
 2. Confirm it runs cleanly:
 
 ```bash
-/Applications/MATLAB_R2026a.app/bin/matlab -batch "addpath(genpath('~/Documents/MATLAB/<toolbox>')); run('code/<tutorial>.m')"
+/Applications/MATLAB_R2026a.app/bin/matlab -batch "addpath(genpath('~/Documents/MATLAB/isetcam')); addpath(genpath('~/Documents/MATLAB/isetbio')); run('fise_script.m')"
 ```
 
-3. Once it runs cleanly, publish it to a self-contained HTML file with `iePublish` (from isetcam):
+3. Once it runs cleanly, publish it to a self-contained HTML file with `iePublish` (from `isetcam`):
 
 ```bash
-/Applications/MATLAB_R2026a.app/bin/matlab -batch "addpath(genpath('~/Documents/MATLAB/isetcam')); iePublish('code/<tutorial>.m')"
+/Applications/MATLAB_R2026a.app/bin/matlab -batch "addpath(genpath('~/Documents/MATLAB/isetcam')); iePublish('fise_script.m')"
 ```
 
-4. `iePublish` writes the HTML next to the source `.m` file. Confirm the output landed where expected and that figures embedded correctly before treating the conversion as done.
+4. `iePublish` writes the HTML next to the source `.m` file in `isetfise/fise/`. Confirm the output landed where expected and that figures embedded correctly before updating links in `chapters/resources/code-html-links.qmd` or book chapters.
 
 ## Best Practices & Warnings
 
@@ -105,7 +110,7 @@ iePublish('code/t_mri01MR.m')"
    - Always check exit status: `echo "exit: $?"`
 
 3. **Toolbox Management**
-   - Add only required toolboxes to avoid conflicts
+   - Add only required toolboxes (`isetcam`, `isetbio`, `iset3d`, `isetfise`) to avoid conflicts
    - Never use wholesale `addpath(genpath('~/Documents/MATLAB'))`
    - Verify paths with diagnostic commands
 

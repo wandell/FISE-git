@@ -10,7 +10,8 @@ This repository’s agent instructions are organized as modular Agent Skills in
   equations, tables, footnotes, and cross-project bibliography sync;
 - `figures-and-media` for images, diagrams, figure labels, captions, and video;
 - `interactive-figures` for client-side Observable JS (OJS), Observable Plot, and WebAssembly (Wasm) simulations;
-- `reproducible-matlab` for `code/`, MATLAB, live scripts, and generated output;
+- `reproducible-matlab` for MATLAB scripts, live scripts, and generated output supporting the book;
+- `matlab-evaluation` for running, testing, or publishing MATLAB code;
 - `editorial-voice` for prose revision;
 - `scientific-notation` for equations, symbols, units, and domain terminology;
 - `chapter-architecture` for chapter planning and pedagogical structure;
@@ -18,6 +19,15 @@ This repository’s agent instructions are organized as modular Agent Skills in
   or related books (e.g., a colleague's computational-photography book,
   3Blue1Brown, Khan Academy, or Wandell's *Foundations of Vision*) worth
   linking to from a chapter.
+
+## Code and Computational Foundations
+
+Code in support of this book relies on the ISET software ecosystem:
+- **`isetcam`**: core image systems engineering toolbox (optics, sensors, illuminants, camera simulation, `iePublish`).
+- **`isetbio`**: biological image processing, physiological optics, retinal mosaic models, and computational observer models.
+- **`iset3d`**: 3D spectral scene rendering and ray-tracing integrations.
+
+The primary code repository for the book's scripts, live scripts, and published tutorials is **`isetfise`** (<https://github.com/ISET/isetfise>), located in the subdirectory **`isetfise/fise`** (organized by topic folders).
 
 Substantive-domain skills:
 
@@ -41,3 +51,12 @@ Substantive-domain skills:
 General rules: inspect the relevant source before naming a path, label, or
 configuration key; preserve established conventions; prefer small, localized
 changes; and state whether a formatting technique works in HTML, PDF, or both.
+
+## Git workflow
+
+Do work on a feature branch, not directly on `main`. When a change is ready,
+commit it, push the branch, and open a pull request with `gh pr create --web`
+(or otherwise open the PR in a browser) so it's there for review before
+merging. The `ci.yml` GitHub Actions workflow renders the book on every push
+and pull request against `main`; let that check run rather than only relying
+on a local `quarto render`.
