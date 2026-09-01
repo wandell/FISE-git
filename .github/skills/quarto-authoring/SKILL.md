@@ -117,6 +117,32 @@ Bad:
 <img src="images/example.png" style="position:absolute; left: 37px">
 ```
 
+## Linking to a resource page
+
+Link from a chapter to a page under `chapters/resources/` with a plain
+relative `.qmd` link (this is the one place file links, not `@sec-`/`@fig-`
+crossrefs, are the convention — see the crossref-indexing skill's "Avoid"
+section):
+
+```markdown
+For background, see [the history of these ideas](resources/optics-diffraction.qmd).
+```
+
+Being listed under `book.chapters`' `"Resources"` part is **not** required
+for the link or the render to work — confirmed in this repo: multiple
+resource pages (e.g. `chapters/resources/history-2D-fourier-transform.qmd`,
+linked from `optics-06-linear-transform.qmd`) render into `_book/` and are
+linked correctly despite never appearing in `_quarto.yml`'s `Resources`
+part. Listing a page there only controls whether it appears in the book's
+table of contents/sidebar navigation, not whether it renders or resolves.
+
+If a resource link is broken in HTML, check (in order): the target file
+exists at that relative path from the *linking* chapter (not from the repo
+root); the file has no YAML/render error of its own
+(`quarto render chapters/resources/<file>.qmd --to html`); and only then
+consider whether it's missing from `book.chapters` (relevant to
+navigation/TOC, not to whether the link itself resolves).
+
 ## Configuration changes
 
 `_quarto.yml` defines book order, bibliography, cross-reference prefixes,

@@ -14,30 +14,26 @@ At this point, we should start to think about light as wavefronts.  I want you t
 
 Light wavefronts are typically measured using specialized instrumentation and a simple stimulus (a point). They are conceptually realized to the point spread function [@sec-pointspread] we introduced in the diffraction chapter [@sec-diffraction]. We use specialized instruments to estimate the wavefront (@sec-lightfield-measurement). And we incorporate these simple instruments into larger scale image systems for astronomy (@sec-optics-wavefront-sensing) and ophthalmology @sec-adaptive-optics-human. 
 
-## Wavefront of a point source {#sec-optics-wavefront-point}
+## Wavefronts and rays{#sec-optics-wavefront-point}
 @sec-optics-rays-wavefronts introduced the connection between a wavefront and a ray. When you are given a sketch of a wavefront, you can draw a perpendicular at each point along it to find the local ray direction [@fig-waves-rays]. This is a simpler picture than a full light field, though. At a point in space, rays from many different scene points cross in many directions, so no single wavefront can describe the field there.
 
 The rays from a single point, however, can be described as forming a wavefront. The incident light field from a point has a collection of rays, each with a unique direction at the lens aperture. If the point is relatively far from the aperture, the rays will be nearly parallel (collimated). If the point is close, the rays will be diverging. If the rays have passed through a turbulent medium, they may point in many different directions (@fig-waves-rays). The surface perpendicular to these rays is the wavefront. 
 
-The light field comprises the collection of rays from all the points in the scene. Similarly, at the entrance pupil, the electromagnetic field is the sum of the wavefronts from all the points in the scene. 
+![The blue waves on the left show a set of parallel waves from a single source.  The wavefront is identified by the dashed lines through the peaks of the waves.  The wavefront is flat as it arrives at the lens. The lens directs the rays to a single focal point, changing the wavefront shape. Were the focus perfect, the wavefront would be spherical (dark curve).  The actual wavefront (red curve) is not spherical. The deviation is called the **wavefront aberration** $W(\rho)$, written as a function of $\rho$ alone because this example is circularly symmetric: only the distance from the center matters, not the angle around it.](images/optics/12-wavefront/wavefront-lens-aberration.png){#fig-wave-aberration width="100%"}
+
+Just as the light field comprises the collection of rays from all the points in the scene, the electromagnetic field is the sum of the wavefronts from all the points in the scene. 
 
 ## Wavefront description: time course {#sec-wavefront-time}
-
-A light wave's electric field in air propagates at the speed of light in that medium, and its wavelength is very short: between 400 and 700 nm for visible light. As a result, the field oscillates at a very high temporal frequency, on the order of $10^{14}\text{ Hz}$. Natural sources, such as the sun or an incandescent bulb, emit light through countless independent atomic events, so the field's amplitude and phase fluctuate randomly over time. 
+@fig-wave-aberration shows the rays as waves rather than straight lines, and indeed they are electric field oscillations traveling away from the point source. A light wave's electric field in air propagates at the speed of light in that medium, and its wavelength is very short: between 400 and 700 nm for visible light. As a result, the oscillation is at a very high temporal frequency, on the order of $10^{14}\text{ Hz}$. 
 
 $$E(t) = a(t)\sin(2\pi \nu_0 t + \phi(t))$$
 
-Here $\nu_0$ is the carrier frequency, the sine term is the **carrier**, $a(t)$ is the **amplitude**, and $\phi(t)$ is the **phase**. Because the amplitude and phase drift randomly, they stay close to constant only over a short interval called the **coherence time**.
+Here $\nu_0$ is called the carrier frequency, the sine term is the **carrier**, $a(t)$ is the wave **amplitude**, and $\phi(t)$ is the **phase**. Natural sources, such as the sun or an incandescent bulb, emit light through countless independent atomic events, so the field's amplitude and phase fluctuate randomly over time. Hence, the amplitude and phase are not perfectly steady; they fluctuate about the mean randomly, remaining approximately constant over a fairly short interval called the **coherence time**.
 
 ![Time course of the electric field for two independent light sources, both centered at 500 nm. Each field's amplitude and phase drift randomly on a timescale of femtoseconds.](images/optics/12-wavefront/wavefront-time.png){#fig-wavefront-time  fig-align="center" width="70%"}
 
-<!-- fise_wavetimecourse('ncycles',30); -->
 
-We typically combine the amplitude and phase into a single complex number, which is easier to carry through the wave equations than the sine-and-phase form above. The same idea applies not only at one position over time, but also across positions at a single instant: within one coherence time, when the amplitude and phase at each point $\mathbf{x}$ on the wavefront are effectively constant, we write the field there as
-
-$$U(\mathbf{x}) = a(\mathbf{x}) e^{i\phi(\mathbf{x})}$$
-
-::: {.callout-note title="The temporal waveform of light" collapse="true"}
+::: {.callout-note title="The temporal waveform of light" collapse="false"}
 The temporal frequency of a light wave at a fixed position is very high. We can compute it from the relationship between speed, wavelength, and temporal frequency $\nu$:
 
 $$
@@ -55,10 +51,16 @@ $$
 
 The amplitude and phase are random, but they stay correlated only over the coherence time — about a femtosecond ($10^{-14}$ to $10^{-15}\text{ s}$) for typical, broadband visible light (@fig-wavefront-time). On longer time scales, the peaks and troughs of the carrier wash out along with the phase.
 
-For most imaging applications, the integration time of a camera ranges from tens of microseconds to many milliseconds — many orders of magnitude longer than the coherence time. Over that interval, the field passes through a huge number of independent amplitude and phase fluctuations, so only the average irradiance (the mean squared amplitude), not the instantaneous field, is relevant to the measurement.
-
 :::
 
+<!-- fise_wavetimecourse('ncycles',30); -->
+
+### The wavefront representation as a complex number
+For most imaging applications, the integration time of the sensor ranges from tens of microseconds to many milliseconds — many orders of magnitude longer than the coherence time. Over that interval, the field passes through a huge number of independent amplitude and phase fluctuations, so only the average irradiance (the mean squared amplitude), not the instantaneous field, is relevant to the measurement.
+
+We typically combine the mean amplitude and phase into a single complex number, which is easier to use for calculations than the sine-and-phase form above. We write the amplitude and phase at each point $\mathbf{x}$ on the wavefront as
+
+$$U(\mathbf{x}) = a(\mathbf{x}) e^{i\phi(\mathbf{x})}$$
 
 The energy of the wave as it arrives at a surface is its irradiance (@sec-lfmeasurement-overview). The irradiance is equal to the squared magnitude of the complex wavefront arriving at that position $\mathbf{x} = (x, y)$ on the sensor plane:[^wave-irradiance]
 
@@ -76,30 +78,31 @@ $$
 
 
 ## The Pupil Function
-We have learned about the wavefronts from different sources, and in particular how they are similar and how they differ.  We have also learned that for the time scale of the measurements we make, we can often use the average irradiance over time. The questions we consider next are about the spatial aspect of the wavefront. In particular, how does a lens transform an incident wave?  
+How does a lens transform an incident wave?  We have already asked this question for points of light, and come up with the answer of the point spread function. Now, we ask how the lens transforms the input wavefront into an output wavefront. We call the transformation the **pupil function**.  
 
-This is the type of question we have asked before. How does the lens transform the input wavefront into an output wavefront.  We call this transformation the **pupil function**.  
+Because many pupils are circular---like the pupil in your eye---we will introduce the input and output wavefronts using polar coordinates, rather than $\mathbf{x}$. We use $\rho$ for distance from the pupil center and $\theta$ for angle around the center.  The pupil function is specified separately for each wavelength of light, $\lambda$. 
 
-Because many pupils are circular---like the pupil in your eye---we will describe the input and output wavefronts using polar coordinates, rather than $\mathbf{x}$. We use $\rho$ for distance from the pupil center and $\theta$ for angle around the center.  The pupil function is specified separately for each wavelength of light, $\lambda$. 
+To define an aberration, we first specify a reference wavefront: the ideal spherical wave that would converge to the desired image point.  For an unaberrated lens, the actual wavefront coincides with this reference wavefront.  We saw a one-dimensional version of this idea in @fig-wave-aberration: the gap between the actual wavefront and the ideal (reference) wavefront was the wavefront aberration.  Here we generalize that idea to the full, two-dimensional pupil.  The **wavefront aberration**, $W(\rho, \theta)$, is the optical path difference between the actual and reference wavefronts at each point in the pupil. Thus, $W$ is measured as a length (for example, microns), even though its optical effect is a phase shift. A constant offset in $W$ shifts every phase by the same amount and has no effect on the image, so only variation across the pupil matters.
 
-To define an aberration, we first specify a reference wavefront: the ideal spherical wave that would converge to the desired image point.  For an unaberrated lens, the actual wavefront coincides with this reference wavefront.  The **wavefront aberration**, $W(\rho, \theta)$, is the optical path difference between the actual and reference wavefronts at each point in the pupil. Thus, $W$ is measured as a length (for example, microns), even though its optical effect is a phase shift. A constant offset in $W$ shifts every phase by the same amount and has no effect on the image, so only variation across the pupil matters.
-
-Let $A(\rho, \theta)$ be the pupil function amplitude, a scalar that is often 1 inside the pupil and 0 outside. After expressing the field relative to the ideal reference wavefront, the pupil function is:
+Let $a(\rho, \theta)$ be the pupil function amplitude, a scalar that is often 1 inside the pupil and 0 outside. After expressing the field relative to the ideal reference wavefront, the pupil function is:
 
 $$
-P(\rho, \theta) = A(\rho, \theta) \, e^{i \, \frac{2\pi}{\lambda} W(\rho, \theta)}
+P(\rho, \theta) = a(\rho, \theta) \, e^{i \, \frac{2\pi}{\lambda} W(\rho, \theta)}
 $$
 
 The phase term converts the optical path difference into radians. When $W(\rho, \theta)=0$, the pupil has the phase of the ideal reference wavefront; nonzero spatial variation in $W$ represents aberration.
 
-### Paraxial
-
-Get the shift invariance idea inserted and relate it to paraxial analyses.
-
 ### Phase: Wave direction
+
+These two sections might move into the next chapter, along with the SLM from chapter 9.
+
 Illustrate how a linear phase shift changes the wavefront's direction and thus the direction of a collimated bundle of rays.  Refer to spatial light modulators and devices that leave the amplitude unchanged but shift the phase.
 
-### Amplitude: Pupil shape and transmission
+![This phase ramp leaves the rays parallel, but changes the orientation of the wavefront. The ray direction is perpendicular to the wavefront.  This should point to the spatial light modulator @sec-SLM](images/optics/12-wavefront/wavefront-phaseramp.png){#fig-optics-phaseramp width="80%"}
+
+Maybe we should move this section and the SLM section into the wavefront-sensing chapter that is next.
+
+### Amplitude: Pupil shape
 
 To model different physical configurations:
 
@@ -114,9 +117,13 @@ These changes immediately reflect in the PSF via the Fourier transform.
 How we represent the amplitude
 Pupil shape can get introduced here.
 
-Enables us to specify properties like scratches, aperture size.
+Enables us to specify properties like scratches, aperture size.  
 
-### Computing the PSF from the wavefront
+If we move this, it goes nicely with the flare.
+
+### Paraxial regime and shift-invariance
+
+Get the shift invariance idea inserted and relate it to paraxial analyses.
 
 The complex field in the image plane (at best focus) is proportional to the **Fourier transform of the pupil function**:
 
@@ -132,17 +139,20 @@ $$
 
 Hence, the wavefront shape directly influences the spatial structure of the PSF.
 
+## Imperfections: Wavefront Aberrations and the PSF {#sec-optics-psf-wavefront}
+<!-- Originated with ChatGPT in FISE-Optics -->
 
-## Complex wavefront models
+To model the image of a point source (i.e., the PSF), we consider the **pupil function**, which describes the amplitude and phase of the light at the exit pupil of the system. Aberrations are incorporated into the **phase** component.
 
-### Zernike
+Model of plausible PSFs in this Zernike polynomial space is better than the free PSF description.
 
-Efficient representations.  Zernike polynomials.
-Explain the Zernike polynomials as an approximation to the wavefront.  Born and Wolf description of derivation might be good here.
+Complex valued description of the PSF.  Why this rather than just the PSF?  
 
-This pdf from the book might be what I mean:  appVII circle_polynomials_of_zernike_921
-It has a lot of functional equations.
+What is a perfect wavefront for a thin lens, or really any lens?  Collimated input, what is the output?
 
+Deviations from the perfect wavefront.  Notice that people measure aberrations in different ways (see below).
+
+## Zernike wavefront model
 The wavefront function $W(\rho, \theta)$ is often expanded in terms of **Zernike polynomials** $Z_n^m(\rho, \theta)$, which form an orthonormal basis over the unit circle:
 
 $$
@@ -163,44 +173,29 @@ This representation enables:
 * parametric simulations of optical quality
 * statistical modeling (e.g., for manufacturing tolerances or biological variation)
 
-### Interfacing with Human Vision Models:
-In visual optics (e.g., for modeling the human eye), Zernike representations are the standard. This makes it easy to compare and combine artificial optics (e.g., camera lenses) with biological optics models.
 
-### Seidel
-Seidel aberrations
+::: {.panel-tabset}
 
-<!-- 
-Would you like a MATLAB or Python snippet that performs this calculation for a few Zernike terms and visualizes the PSF?
--->
+## Diffraction limited
 
-## Imperfections: Wavefront Aberrations and the PSF {#sec-optics-psf-wavefront}
-<!-- Originated with ChatGPT in FISE-Optics -->
+![Diffraction limited](images/optics/12-wavefront/wavefront-pupil-diffraction.png){#fig-optics-pupil-diffraction width="80%"}
 
-To model the image of a point source (i.e., the PSF), we consider the **pupil function**, which describes the amplitude and phase of the light at the exit pupil of the system. Aberrations are incorporated into the **phase** component.
+## Defocus
 
-Model of plausible PSFs in this Zernike polynomial space is better than the free PSF description.
-Look for an explanation of why the wavefront at the lens is related to the image irradiance by a Fourier Transform.  Goodman?  ChatGPT?  Come on, it must be out there.
+![Defocus limited](images/optics/12-wavefront/wavefront-pupil-defocus.png){#fig-optics-pupil-defocus width="80%"}
+:::
 
-Lead up to wavefront in the next section.
+Efficient representations.  Zernike polynomials.
 
-Complex valued description of the PSF.  Why this rather than just the PSF?  
+Seidel aberrations Link to Resource.
+
+Explain the Zernike polynomials as an approximation to the wavefront aberration.  Born and Wolf description of derivation might be good here.
+
+This pdf from the Born and Wolf book might be what I mean:  appVII circle_polynomials_of_zernike_921
+It has a lot of functional equations.
 
 
-What is a perfect wavefront for a thin lens, or really any lens?  Collimated input, what is the output?
-
-Deviations from the perfect wavefront.  Notice that people measure aberrations in different ways (see below).
-
-## ISETCam and wavefronts
-
-## Examples
-
-### Flare
-
-Aperture shape - non circular
-
-Scratches and HDR rendering illustrated
-
-Here’s a Quarto-formatted explanation of the mathematical connection between **wavefront aberrations** and the **point spread function (PSF)**, emphasizing how Zernike polynomials and pupil modifications fit into the framework.
+![Example of a zernike polynomial](images/optics/12-wavefront/wavefront-pupil-gallery.png){#fig-optics-zernike-gallery width="80%"}
 
 
 
