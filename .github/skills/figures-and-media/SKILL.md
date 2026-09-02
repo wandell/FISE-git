@@ -90,6 +90,81 @@ explains the scientific observation.
 
 Bad: a video with autoplay as the only explanation of a result.
 
+### Local video files
+
+Embed a local `.mp4`/`.mov`/`.gif` with ordinary image Markdown — Quarto emits
+a `<video>` tag automatically for video extensions. Pair it with a PNG/JPG
+still frame for PDF, using the same fig-style attributes on both.
+
+```markdown
+::: {.content-visible when-format="html"}
+![Caption describing what the video shows.](images/topic/nn-section/clip.mp4){#fig-clip width="60%"}
+:::
+
+::: {.content-visible when-format="pdf"}
+![Caption describing what the video shows.](images/topic/nn-section/clip.png){#fig-clip width="60%"}
+:::
+```
+
+This is the established pattern for every local video in the book (e.g.
+`human-01-seeing.qmd`, `optics-06-linear-transform.qmd`,
+`sensors-02-pixels.qmd`). Reuse the same `#fig-` id on both variants; only one
+survives in a given render, so it isn't a duplicate-label conflict.
+
+### YouTube embeds
+
+The book embeds YouTube videos with a raw, responsive 16:9 `<iframe>` inside
+an HTML-only `content-visible` block, paired with a plain link for PDF:
+
+```markdown
+::: {.content-visible when-format="html"}
+
+<div style="max-width: 800px; margin: 0 auto;">
+  <div style="position: relative; width: 100%; padding-top: 56.25%;"> <!-- 16:9 -->
+    <iframe
+      src="https://www.youtube.com/embed/VIDEO_ID"
+      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+:::
+
+::: {.content-visible when-format="pdf"}
+[In this YouTube video, learn more about ...](https://youtu.be/VIDEO_ID){target=_blank}
+:::
+```
+
+**Gotcha, confirmed in this repo (2026-09-01):** this `content-visible`/`<iframe>`
+block must sit **inside an ordinary block container** — a `.callout-note`, a
+`.column-margin`, any div — not as a bare, direct child of the chapter body.
+Placed bare, the outer `padding-top: 56.25%` aspect-ratio div collapses to
+zero visible height in this book's rendered page-grid layout, even though the
+HTML in the rendered output is byte-for-byte identical to a working copy
+sitting inside a callout a few lines below it. This is not about the video
+itself (both the working and the broken copy passed a YouTube oEmbed check
+confirming the video allows embedding) and not about Quarto's Markdown
+resolution (`quarto render -M keep-md:true` showed the resolved Markdown and
+the final `_book/**/*.html` both contained the correct, complete markup in
+both cases). It only shows up visually, and only in the actual browser
+rendering — confirmed by rendering to `_book/`, serving it
+(`python3 -m http.server`), and screenshotting with headless Chrome
+(`google-chrome --headless --disable-gpu --window-size=W,H --screenshot=out.png URL`);
+diffing the source or the rendered HTML text will not reveal it.
+
+Good: wrap the embed in `::: {.callout-note title="..."} ... :::` (as done
+for every working YouTube embed in `optics-08-wavefront-sensing.qmd`).
+
+Bad: paste the iframe block directly between two paragraphs with no
+enclosing div/callout — it will render in the HTML source and in
+`_book/**/*.html`, but not on the page.
+
+If a video "isn't showing" and the source/rendered-HTML markup looks correct,
+render to a real browser screenshot (steps above) before assuming the link,
+video ID, or embed permissions are the problem.
+
 ## Quality review
 
 Before completion, check that the file exists, the path is correct from the

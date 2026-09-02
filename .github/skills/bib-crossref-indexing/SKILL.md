@@ -154,7 +154,27 @@ Use these label prefixes consistently:
 - `sec-` for sections and chapters;
 - `fig-` for figures and figure groups;
 - `tbl-` for tables;
-- `eq-` for display equations.
+- `eq-` for display equations;
+- `nte-` for a numbered, cross-referenced `.callout-note` (confirmed against
+  Quarto's crossref filter source, `ref_type = "nte"`); the sibling callout
+  types follow the same pattern if ever needed: `wrn-` (warning), `cau-`
+  (caution), `tip-` (tip), `imp-` (important).
+
+A cross-referenced callout needs the id on the fenced div itself, and the
+callout's own heading becomes its crossref title:
+
+```markdown
+::: {#nte-my-callout .callout-note}
+## Cross-referenced Note
+This is a note that you can refer to.
+:::
+
+See @nte-my-callout for more info.
+```
+
+Most callouts in this book are *not* cross-referenced (a plain `title=` on
+`.callout-note` is enough for an ordinary aside) — reach for `#nte-` only when
+another section actually needs to point back at this specific callout.
 
 Label names should be lowercase, concise, semantic, and stable. A label is an
 identifier, not a sentence; do not encode numbering in it. Confirm uniqueness
