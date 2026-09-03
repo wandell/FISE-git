@@ -41,11 +41,7 @@ It is useful to draw the connection between geometric and wave representations. 
 
 ![Relationship between the ray (arrows) and wavefront (dashed) representations. (a) A collimated set of rays is a planar wavefront. (b) Rays from a point source form a spherical wavefront. (The image shows a slice through the sphere). (c) Smoothly varying wavefronts with many different shapes are common. Often these shapes are due to imperfections (aberrations) in the optics.  We reason about them as a collection of rays; the direction of each ray is drawn perpendicular to the tangent of the wavefront. (d) Only a narrow section of the rays from a distant point are incident at the entrance aperture of the imaging device. Hence, the incident light field from the point is close to a planar wavefront.](images/optics/07-principles/rays-wave.png){#fig-waves-rays fig-cap-location="bottom" fig-align="center" width="75%"}
 
-It is common for optics tutorials to represent wavefront directions as extended in space, but it is uncommon to represent the amplitude of the wavefront across space. In reality the amplitude of the wavefront will vary across space. For example, a typical laser emits a set of parallel (collimated) rays.  The amplitude of these rays has a Gaussian profile that limits the wavefront in space.  That's why the spot a laser pointer produces is limited in space. In recent years, image systems engineers have had access to **spatial light modulators (SLMs)** (@sec-SLM).  These devices modulate either the local amplitude or phase of the wavefront at different positions in space, controlling the light field. 
-
-The software calculations that accompany this book use both wavefront and ray methods[^optics-intro-1].
-
-[^optics-intro-1]: The ISETCam optics calculations uses the wave model. The ISET3d graphics calculations use the ray model.
+We will return to the representation of light as waves, wavefronts, and wavefront aberrations in @sec-optics-wavefront.
 
 ## Material interactions
 When a light rays arrive at the boundary between regions with different optical properties - whether those regions contain matter (like glass or water), air or vacuum - several things can happen (@fig-reflected-scattered).  The rays might be reflected back, as in a mirror.  Or, the rays might enter into the material, undergo a series of internal reflections, and emerge back in one of many different directions.  Also, the rays might enter the material and be absorbed, giving up their energy to the atoms in the material. (Maybe reference the dichromatic reflection model here?)
@@ -202,16 +198,6 @@ Another way to control light is to vary the material properties within the lens 
 Long before this became practical, in 1854, James Clerk Maxwell theorized that such a gradient could eliminate spherical aberration in a spherical lens, a design now known as the "Maxwell fisheye." It was later discovered that many animal eyes use this exact principle. While more challenging to manufacture than aspheres, GRIN lenses offer unique design possibilities, especially in compact systems like endoscopes. Maxwell's work in this area -and later when we discuss his work in color- are an example of the interplay between physics, engineering, and biology[^grinlens-maxwell].
 
 [^grinlens-maxwell]: Michael Land's [Britannica article](https://www.britannica.com/science/photoreception/Single-chambered-eyes){target=_blank} has lots of interesting examples of animal eyes and the story about GRIN lenses and Maxwell.
-
-### Spatial Light Modulators {#sec-SLM}
-What if a lens could be reconfigured on the fly? **Spatial light modulators (SLMs)** are devices that can dynamically control the properties of a light field on a pixel-by-pixel basis. They are essentially programmable optical elements.
-
-*   **Phase SLMs**, often based on liquid crystal arrays, can locally alter the phase of light, effectively acting as a reconfigurable lens or diffraction grating. They can be used to correct for aberrations in real-time or to sculpt a light beam into a complex pattern.
-*   **Amplitude SLMs**, which use technologies like MEMS (micro-electro-mechanical systems) mirrors, modulate the intensity of light at each pixel.
-
-With pixel sizes on the order of microns and arrays containing millions of elements, SLMs are powerful tools in adaptive optics, holography, and advanced imaging systems. This figure shows a recent phase SLM with extremely high resolution.
-
-![Holoeye phase spatial light modulator based on reflective LCOS. Max resolution 4160 x 2464, pixel Pitch 3.74 µm, Active Area 15.56 x 9.22 mm (0.7″ Diagonal, 8 Bit, 60 Hz frame rate). The small part is the SLM; the big part is the electronics. [See Holoeye](https://holoeye.com/products/spatial-light-modulators/gaea-2-phase-only/){target=_blank}](images/optics/07-principles/slm-holoeye.png){#fig-slm-holoeye width="60%"}
  
 ### Metalenses {#sec-optics-metalens}
 The most recent revolution in optics miniaturization comes from **metalenses**. These are not lenses in the traditional sense but are flat surfaces, like a sliver of glass, patterned with an array of nanoscale structures ("meta-atoms"). Each nanostructure is smaller than the wavelength of light and is engineered to impart a specific phase shift to the light passing through it.
