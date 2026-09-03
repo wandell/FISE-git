@@ -1,6 +1,6 @@
 ---
 name: chapter-architecture
-description: Plan, draft, restructure, or review FISE chapters and sections. Use when adding a chapter, creating an overview, reorganizing technical exposition, deciding what belongs in callouts or resources, or checking pedagogical flow.
+description: Plan, draft, restructure, or review FISE chapters and sections. Use when adding a chapter, creating an overview, reorganizing technical exposition, deciding what belongs in callouts or resources, checking pedagogical flow, or auditing whether section headings and callout titles still match their content.
 ---
 
 # FISE chapter architecture
@@ -62,6 +62,39 @@ Bad:
 There are several more details to discuss.
 ```
 
+## Section and callout titles
+
+Headings and callout titles are the chapter's visible outline: a reader scanning
+only the titles, top to bottom, should be able to reconstruct what the chapter
+argues and in what order. Write each title to name what its section delivers,
+not a generic label for its kind — "Overview" or "Details" tells the reader
+nothing that isn't already obvious from the heading level.
+
+Prefer active voice in a title when it reads naturally ("The pupil transforms the
+wavefront" beats "Pupil transformation"), but this is a preference, not a
+requirement — an established noun phrase for a well-known topic (`## Zernike
+wavefront model`) is fine. What matters more is specificity: the title should not
+be interchangeable, unchanged, with the title of a different section.
+
+Good:
+
+```markdown
+## Well capacity limits the largest usable signal {#sec-wellcapacity}
+
+::: {.callout-note title="Why shot noise follows a Poisson distribution"}
+```
+
+Bad:
+
+```markdown
+## Overview
+
+::: {.callout-note title="Note"}
+```
+
+Match the sentence case and `sec-`/`fig-` label conventions already used in the
+surrounding chapter; do not introduce Title Case or a new label prefix locally.
+
 ## Main path, callouts, and resources
 
 Keep the main path necessary for a first careful reading. Put optional history,
@@ -93,3 +126,10 @@ headings form a logical outline, every section advances the stated question,
 technical detail arrives after motivation, and the ending leaves the reader ready
 for the next dependency. Preserve existing chapter order in `_quarto.yml` unless
 an explicit editorial decision authorizes a change.
+
+Revisit section and callout titles on their own, separately from a body-text
+edit: read just the titles in sequence and ask whether they still describe what
+is there now. A section drifts from its title not only when its own text
+changes, but when neighboring sections are added, merged, or reordered around
+it. Do this periodically as the chapter evolves, not only when writing new
+material.
