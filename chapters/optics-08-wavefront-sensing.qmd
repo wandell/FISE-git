@@ -25,7 +25,7 @@ Johannes Franz Hartmann, a German astronomer, faced a version of this problem ar
 
 Roland Shack and Ben Platt's 1971 innovation was to replace each pinhole with a small lens—a lenslet—which collects far more light and focuses it to a sharper spot: the design described above.
 
-[Arizona history of the Shack-Hartmann sensor.](https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf?utm_source=chatgpt.com)
+[Arizona history of the Shack-Hartmann sensor.](https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf)
 :::
 
 ## Adaptive optics {#sec-adaptive-optics-astronomy}
@@ -37,7 +37,7 @@ The concept was first applied in astronomical imaging. The astronomer shines a s
 
 ![Laser guide star at La Palma, Observatorio del Roque de los Muchachos. The 4.2m William Herschel Telescope Canary adaptive optics system was used together with the ESO laser guide star unit. [Source](https://www.eso.org/public/blog/making-lgs-even-brighter/)](images/optics/13-wavefront-sensing/laser-guide-star.png){#fig-optics-laser-guidestar width="80%"}
 
-A wavefront sensor measures the distorted wavefront and controls a deformable mirror, as illustrated in the gif.  The mirror changes it shape by just the amount necessary to correct the wavefront, making the rays collimated (flattening the wavefront).
+A wavefront sensor measures the distorted wavefront and controls a deformable mirror, as illustrated in the gif.  The mirror changes its shape by just the amount necessary to correct the wavefront, making the rays collimated (flattening the wavefront).
 
 ::: {.content-visible when-format="html"}
 ![Deformable mirror](images/optics/13-wavefront-sensing/deformable_mirror.gif){#fig-deformable-mirror width="60%" fig-align="center" .margin-caption}
@@ -52,8 +52,14 @@ This whole process updates fairly rapidly (milliseconds) because the atmosphere 
 ![Wavefront-sensing architecture used in astronomy and ophthalmology. The incoming light can be from a star or reflected from the back of the eye. Adapted from [Exosens, “Short-wave infrared adaptive optics and applications,” Fig. 1](https://www.exosens.com/news/short-wave-infrared-adaptive-optics-and-applications), which credits C. Max, Center for Adaptive Optics.](images/optics/13-wavefront-sensing/01-wavefront-sensing.png){#fig-wavefront-astronomy width="70%" fig-align="center" .margin-caption}
 
 
-::: {.callout-note title="YouTube: An informal explanation of adaptive optics" collapse="false"}
-Here is an informal, very nice explanation of the adaptive optics system for astronomy.  Maybe a little too cute, or maybe just pefect?  I like it.
+::: {.callout-note title="YouTube: Explanations of adaptive optics" collapse="false"}
+Here are two helpful video explanations of adaptive optics in astronomy: the first offers an intuitive conceptual overview, while the second provides a detailed look at the engineering, including how to build a deformable mirror.
+
+::: {.panel-tabset}
+
+### Conceptual overview
+
+Here is an informal, very nice explanation of the adaptive optics system for astronomy. Maybe a little too cute, or maybe just perfect? I like it.
 
 ::: {.content-visible when-format="html"}
 
@@ -75,10 +81,9 @@ Here is an informal, very nice explanation of the adaptive optics system for ast
 [In this YouTube video, learn more about the application of adaptive optics in astronomical imaging.](https://youtu.be/gDGvNyVApgg?si=66-yeXvR2vX7Y_-G){target=_blank}
 :::
 
-:::
+### Building a deformable mirror
 
-::: {.callout-note title="YouTube: Adaptive optics in astronomy" collapse="false"}
-Here is an excellent, detailed, YouTube video describing the use of adaptive optics in astronomical imaging. The author describes how to build a deformable mirror!  Very enjoyable!
+Here is an excellent, detailed video describing the use of adaptive optics in astronomical imaging, where the author describes how to build a deformable mirror. Very enjoyable!
 
 ::: {.content-visible when-format="html"}
 
@@ -97,7 +102,9 @@ Here is an excellent, detailed, YouTube video describing the use of adaptive opt
 :::
 
 ::: {.content-visible when-format="pdf"}
-[In this YouTube video, learn more about the application of adaptive optics in astronomical imaging.](https://youtu.be/TPyQI7bJo6Q){target=_blank}
+[In this YouTube video, learn more about building a deformable mirror and using adaptive optics in astronomical imaging.](https://youtu.be/TPyQI7bJo6Q){target=_blank}
+:::
+
 :::
 
 :::
@@ -107,7 +114,7 @@ The same architecture measures the optics of the human eye, where the aberrating
 ### Spatial Light Modulators {#sec-SLM}
 What if the way a lens focuses light could be reconfigured rapidly? Perhaps even in a way that depends on the input.  Sounds cool.
 
- **Spatial light modulators (SLMs)** dynamically control the properties of a light field, on a pixel-by-pixel basis. They are arrays of small, programmable optical elements. The way we describe them is is based on the representation of light in terms of wavefronts (@sec-optics-wavefront).  We can build devices the modulate the phase or the amplitude of the local electrical field.
+ **Spatial light modulators (SLMs)** dynamically control the properties of a light field, on a pixel-by-pixel basis. They are arrays of small, programmable optical elements. The way we describe them is based on the representation of light in terms of wavefronts (@sec-optics-wavefront).  We can build devices that modulate the phase or the amplitude of the local electric field.
 
  The SLMs come in two general types.
 
@@ -120,19 +127,88 @@ With pixel sizes on the order of microns and arrays containing millions of eleme
 ![Holoeye phase spatial light modulator based on reflective LCOS. Max resolution 4160 x 2464, pixel Pitch 3.74 µm, Active Area 15.56 x 9.22 mm (0.7″ Diagonal, 8 Bit, 60 Hz frame rate). The small part is the SLM; the big part is the electronics. [See Holoeye](https://holoeye.com/products/spatial-light-modulators/gaea-2-phase-only/){target=_blank}](images/optics/07-principles/slm-holoeye.png){#fig-slm-holoeye width="60%"}
 :::
 
-@fig-optics-phaseramp illustrates how a phase SLM might be programmed to change the direction of a planar wavefront (collimated bundle of rays). We can set the elements to introduce a the linear phase shift across space. This has the effect of changing the angle of the wavefront, but leaving it as planar. This phase shift changes the direction of the wave, or equivalently, the collimated bundle of rays.  
+@fig-optics-phaseramp illustrates how a phase SLM might be programmed to change the direction of a planar wavefront (collimated bundle of rays). We can set the elements to introduce a linear phase shift across space. This has the effect of changing the angle of the wavefront, but leaving it as planar. This phase shift changes the direction of the wave, or equivalently, the collimated bundle of rays.  
 
-![This phase ramp leaves the rays parallel, but changes the orientation of the wavefront. The ray direction is perpendicular to the wavefront.  This should point to the spatial light modulator @sec-SLM](images/optics/12-wavefront/wavefront-phaseramp.png){#fig-optics-phaseramp width="80%"}
-
-
-## ISETCam simulation:  Calculating flare
-
-Let's finish with an ISETCam flare example, emphasizing the impact of the aperture.
-Aperture shape - non circular causes some stuff.
-
-Pupil functions for in automotive application exampl.e
-
-Scratches and HDR rendering illustrated
+![This phase ramp leaves the rays parallel, but changes the orientation of the wavefront. The ray direction is perpendicular to the wavefront.](images/optics/12-wavefront/wavefront-phaseramp.png){#fig-optics-phaseramp width="80%"}
 
 
+## ISETCam simulation: Flare and wavefronts
+Let's finish this chapter with ISETCam flare examples. We will illustrate the impact of the aperture shape and scratches. Illustrate the use of the pupil functions in automotive modeling.  We will do it again when we simulate the human eye pupil function.
 
+* **Stopping down the aperture and changing its shape**
+  Modify $a(\rho, \theta)$ to reduce the pupil radius
+* **Adding obscurations, vignetting, or scratches**
+  Mask parts of $a(\rho, \theta)$ or add amplitude modulation (scratches)
+* **Simulating phase plates or diffractive elements**
+  Alter $W(\rho, \theta)$ with custom phase profiles - this will require a new tutorial with linear phase ramp
+
+<!--
+================================================================================
+TODO & REVIEW ITEMS: ACCURACY AND CLARITY ANALYSIS (optics-08-wavefront-sensing.qmd)
+================================================================================
+
+1. SCIENTIFIC & TECHNICAL ACCURACY
+--------------------------------------------------------------------------------
+- [ ] 1.1 Laser Guide Star (LGS) Wavefront Curvature vs. Collimation:
+      * Current text (Line 36): "Were there no atmosphere, light from these atoms would arrive back to the telescope collimated (a flat wavefront)."
+      * Issue: The mesospheric sodium layer is at a finite altitude (~90 km). Light radiating from this altitude reaches the telescope aperture as a diverging spherical wave (with curvature radius R ≈ 90 km), not a collimated/flat wave. In large telescopes, this produces focal anisoplanatism (the "cone effect") because the backscattered cone does not sample the identical cylinder of atmospheric turbulence traversed by starlight from infinity.
+      * Action: Clarify that light from the beacon arrives as a diverging spherical wave of known curvature (which the telescope optics focus), and turbulence introduces perturbations onto this nominal wavefront.
+
+- [ ] 1.2 Deformable Mirror Reflection Factor of 2:
+      * Current text (Line 40): "The mirror changes it shape by just the amount necessary to correct the wavefront, making the rays collimated (flattening the wavefront)."
+      * Issue: Reflective geometry doubles the optical path difference: a physical surface displacement of Δz introduces a wavefront change of ΔW = 2·Δz (for near-normal incidence).
+      * Action: Note that the mirror surface needs to displace by only half the measured wavefront error (Δz = -W/2). Fix typo "changes it shape" -> "changes its shape".
+
+- [ ] 1.3 Shack-Hartmann Quantitative Geometry & Pupil Conjugation:
+      * Current text (Line 17): "shifts the spot away from center by an amount proportional to the local slope, ∇W."
+      * Action: State the quantitative geometric relation: Δx = f_L · (∂W/∂x) and Δy = f_L · (∂W/∂y), where f_L is the focal length of the lenslet. This cleanly connects ray angles to wave slope.
+      * Action: Clarify that in practical systems, the lenslet array is placed at an optical conjugate to the pupil plane (via relay optics), so that each lenslet samples a known sub-aperture of the entrance pupil.
+
+- [ ] 1.4 Wavefront Reconstruction (Modal vs. Zonal):
+      * Current text (Line 17): "from which W itself can be reconstructed—for example by fitting Zernike polynomials to the measured slopes and integrating."
+      * Issue: In modal Zernike reconstruction, slopes are not integrated first. Because the spatial derivatives of Zernike polynomials (∇Z_n^m) are known analytically, the coefficient vector c is solved directly by linear least-squares (s = G·c) from the measured spot slopes.
+      * Action: Rephrase to distinguish modal fitting (least-squares fit directly on slope gradients) from numerical zonal integration (e.g., Southwell or Fried grids).
+
+- [ ] 1.5 Spatial Light Modulator (SLM) Phase Wrapping:
+      * Current text (Line 123): Describes programming a phase ramp to tilt a planar wavefront.
+      * Action: Mention phase wrapping (modulo 2π). Because physical liquid crystal layers have a limited stroke (typically 0 to 2π phase retardation), steep ramps and lens profiles are implemented via 2π blazed phase discontinuities (analogous to a Fresnel lens or diffraction grating).
+
+
+2. CLARITY, STRUCTURE & NARRATIVE FLOW
+--------------------------------------------------------------------------------
+- [ ] 2.1 Section Hierarchy for Spatial Light Modulators:
+      * Current: Section 8.4 is `### Spatial Light Modulators {#sec-SLM}` nested as an H3 under `## Adaptive optics`.
+      * Issue: SLMs are general-purpose wavefront modulation devices (used across displays, beam shaping, microscopy, holography, and ophthalmology), and @sec-SLM is referenced from earlier chapters (e.g., lightfields-02).
+      * Action: Promote to a top-level section: `## Spatial light modulators {#sec-SLM}`.
+
+- [ ] 2.2 Reconcile or Complete Section 8.5 ("ISETCam simulation: Flare and wavefronts"):
+      * Current text (Lines 128-137): Contains only an introductory paragraph and three bullet points with placeholder reminders.
+      * Structural question: Does flare from aperture shape and scratches belong in Chapter 8 (Wavefront Sensing), or in Chapter 7 ("Wavefronts", alongside pupil function calculations), or Chapter 1b ("Diffraction")?
+      * Action:
+        - If kept here: Complete the planned simulation code/figures demonstrating how aperture masks a(ρ, θ) and scratches/phase profiles W(ρ, θ) generate flare in ISETCam.
+        - Alternatively: Replace or supplement with an ISETCam wavefront sensing demo (e.g., creating a wavefront, sampling slopes, and fitting Zernike coefficients using wvfCreate).
+
+- [x] 2.3 Consolidate Dual YouTube Callout Boxes:
+      * Current (Lines 55-103): Two consecutive YouTube video callout boxes back-to-back disrupt reading rhythm.
+      * Action: Combine into a single curated callout or clearly differentiate their roles (e.g., conceptual primer vs. DIY hardware construction).
+
+- [ ] 2.4 Bridge to Ophthalmology:
+      * Figure @fig-wavefront-astronomy and Chapter 7 explicitly promise connections to ophthalmology, but the text currently has only a one-sentence forward-pointer (Line 105) to Chapter human-02.
+      * Action: Add 1-2 paragraphs contrasting astronomical AO (compensating rapidly fluctuating atmospheric turbulence using guide stars) with ophthalmic aberrometry (compensating static/slow ocular aberrations using a retinal beacon).
+
+
+3. TYPOS, EDITORIAL ARTIFACTS & FORMATTING
+--------------------------------------------------------------------------------
+- [x] 3.1 Line 28: Clean tracking parameters from Arizona history link (`?utm_source=chatgpt.com`).
+- [x] 3.2 Line 40: "changes it shape" -> "changes its shape".
+- [x] 3.3 Line 56: "or maybe just pefect?" -> "or maybe just perfect?".
+- [x] 3.4 Line 100: PDF link description for the second video is an identical duplicate of the first video's text; update to describe the deformable mirror DIY video.
+- [x] 3.5 Line 110: "The way we describe them is is based..." -> "The way we describe them is based...".
+- [x] 3.6 Line 110: "devices the modulate" -> "devices that modulate".
+- [x] 3.7 Line 110: "electrical field" -> "electric field".
+- [x] 3.8 Line 123: "introduce a the linear phase shift" -> "introduce a linear phase shift".
+- [x] 3.9 Line 125: Caption of @fig-optics-phaseramp contains an internal editorial note: "This should point to the spatial light modulator @sec-SLM". Remove this sentence from the published caption.
+- [x] 3.10 Line 129: "Illustrate the use of the pupil functions for in automotive modeling." -> "...functions in automotive modeling."
+- [x] 3.11 Line 134: Notation discrepancy: Uses capital $A(\rho, \theta)$ instead of lowercase $a(\rho, \theta)$ as defined in @eq-pupil-function.
+================================================================================
+-->

@@ -253,3 +253,19 @@ Check in this order: the target exists; its label is unique; the label is attach
 to the correct block; the reference syntax matches the prefix; and the relevant
 chapter is included in `book.chapters`. Render after the repair. Avoid changing a
 working label because its prose wording changes.
+
+If all five checks pass but `quarto render chapters/<file>.qmd --to html` still
+prints `Unable to resolve crossref @sec-...` for a reference into a *different*
+chapter, suspect a stale crossref index rather than the label. Quarto caches the
+book-wide crossref index under `.quarto/xref/` (and `.quarto/idx/`) and reuses it
+for single-chapter renders/previews instead of rebuilding it; after a chapter
+reorg or a label rename, that cache can keep resolving the *old* label (or a
+whole superseded chapter structure) and never learn the new one. Confirm before
+touching anything: `grep -rl "sec-your-label" .quarto/xref/` — if it's empty even
+though the label exists correctly in the source, the cache is stale. Per
+`quarto-authoring`'s render-diagnosis rule, don't delete `.quarto/` without
+explicit authorization; once authorized, `rm -rf .quarto/xref .quarto/idx` and
+run a full `quarto render` (not just the one chapter) to rebuild the index, then
+re-render the original chapter to confirm the warning is gone. This also tends to
+surface other references that still point at labels renamed during the same
+reorg — grep the book for the old label name and update any stragglers.
