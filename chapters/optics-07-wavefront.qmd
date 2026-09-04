@@ -7,23 +7,9 @@ date: last-modified
 
 ## Wavefronts overview {#sec-optics-wavefront-overview}
 
-*Put this in the right place*
+When we reviewed why Newton's ray model is clearly wrong, we also realized the need for Huygens model of light as a wave [@sec-diffraction]. I delayed a full discussion because it wasn't really necessary to rely on wavefronts until after we finished several other basic principles of optics. Many of the important principles can be described using rays, and three hundred years of practice has taught us that working with rays is useful.  Wrong, but useful.
 
-It is common for optics tutorials to represent wavefront directions as extended in space, but it is uncommon to represent the amplitude of the wavefront across space. In reality the amplitude of the wavefront will vary across space. For example, a typical laser emits a set of parallel (collimated) rays.  The amplitude of these rays has a Gaussian profile that limits the wavefront in space.  That's why the spot a laser pointer produces is limited in space. In recent years, image systems engineers have had access to **spatial light modulators (SLMs)** (@sec-SLM).  These devices modulate either the local amplitude or phase of the wavefront at different positions in space, controlling the light field. 
-
-The software calculations that accompany this book use both wavefront and ray methods[^optics-intro-1].
-
-[^optics-intro-1]: The ISETCam optics calculations uses the wave model. The ISET3d graphics calculations use the ray model.
-
----
-
-This chapter starts out about light, and that section might have been part of the light field section, say in the chapter on diffraction. It was there we first saw that Newton's ray model is clearly wrong and the necessity of having a model in terms of waves. 
-
-I delayed because it wasn't really necessary to talk about wavefronts until we finished with the basic principles of optics that could be described using rays. As we have seen from three hundred years of practice, working with rays is clearly useful. 
-
-At this point, we should start to think about light as wavefronts.  I want you to learn about adaptive optics, and I want you to understand how we use wavefronts in the ISETCam calculations for optics.
-
-Light wavefronts are typically measured using specialized instrumentation and a simple stimulus (a point). They are conceptually realized to the point spread function [@sec-pointspread] we introduced in the diffraction chapter [@sec-diffraction]. We use specialized instruments to estimate the wavefront (@sec-lightfield-measurement). And we incorporate these simple instruments into larger scale image systems for astronomy (@sec-optics-wavefront-sensing) and ophthalmology @sec-adaptive-optics-human. 
+Here we develop more of the infrastructure that is used to describe light as waves. I want you to understand how we use wavefronts in the ISETCam calculations for optics.  In the next chapter we will review how we can measure wavefronts using specialized instrumentation (@sec-shack-hartmann). We will also learn about how adaptive optics systems use wavefront measurements in applications ranging from astronomy (@sec-optics-wavefront-sensing) to ophthalmology (@sec-adaptive-optics-human). 
 
 ## Wavefronts
 In @sec-optics-rays-wavefronts we introduced the connection between the idea of light as a wave and a ray. Recall that given a sketch of a wavefront, we can draw the perpendicular along the wavefront to find the local ray direction [@fig-waves-rays]. If a point is relatively far from the aperture, the rays will be nearly parallel (collimated). If the point is close, the rays will be diverging. If the rays have passed through a turbulent medium, they may point in many different directions (@fig-waves-rays). In each case, the surface perpendicular to these rays is the wavefront. 
@@ -154,6 +140,11 @@ Enables us to specify properties like scratches, aperture size.
 If we move this, it goes nicely with the flare.
 
 ## Modeling wavefront aberrations:  Zernike polynomials
+
+The software calculations that accompany this book use both wavefront and ray methods[^optics-intro-1].
+
+[^optics-intro-1]: The ISETCam optics calculations uses the wave model. The ISET3d graphics calculations use the ray model.
+
 The wavefront function $W(\rho, \theta)$ is often expanded in terms of **Zernike polynomials** $Z_n^m(\rho, \theta)$, which form an orthonormal basis over the unit circle:
 
 $$
@@ -198,5 +189,29 @@ It has a lot of functional equations.
 
 ![Example of a zernike polynomial](images/optics/12-wavefront/wavefront-pupil-gallery.png){#fig-optics-zernike-gallery width="80%"}
 
+<!--
+TODO / REVIEW ITEMS:
 
+1. Draft Remnants & Cleanup:
+   - Lines 135-141: In-line drafting notes ("How we represent the amplitude...", "Pupil shape can get introduced here...", "If we move this, it goes nicely with the flare").
+   - Lines 180-188: Scratchpad notes ("Efficient representations...", "Seidel aberrations Link to Resource", Born and Wolf references).
+   - Line 64: Commented-out MATLAB call (`fise_wavetimecourse`).
 
+2. Syntax Errors and Typos:
+   - Line 119: Mismatched bracket and repetitive grammar: "(@sec-pointspread, @sec-ls-shiftinvariance}" and "that the in some special cases the changing".
+   - Line 94: "combing" -> "combining", and repeated word "light light".
+   - Line 146: "The ISETCam optics calculations uses..." -> "use".
+   - Line 10: "Huygens model" -> "Huygens's model".
+   - Line 12: Reference to astronomy AO is @sec-adaptive-optics-astronomy rather than @sec-optics-wavefront-sensing.
+
+3. Notation & Math Inconsistencies:
+   - Symbol 'E': Used for electric field E(t) (line 36) and irradiance E(x) (line 78). Consider using I(x) or E_e(x) for irradiance.
+   - Symbol 'a': Overloaded between field amplitude a(t)/a(x) and Zernike expansion coefficients a_n^m (line 151). Consider c_n^m or w_n^m for Zernike coefficients.
+   - Amplitude casing: a(\rho, \theta) in line 128 vs A(\rho, \theta) in line 130.
+   - Fourier transform coordinates (Eq. 7.6): U(x, y) \propto \mathcal{F}\{ P(\rho, \theta) \} mixes Cartesian and polar representations. Clarify conversion to Cartesian pupil coordinates (u, v).
+
+4. Incomplete Content & Narrative Gaps:
+   - ISETCam integration: Section 7.1 mentions understanding how ISETCam calculates optics with wavefronts, but no ISETCam code/workflow (e.g. wvfCreate, Zernikes to PSF) is demonstrated.
+   - Figure tabsets: Diffraction-limited vs defocus-limited figures (lines 169-178) lack explanatory text/captions for students.
+   - Zernike gallery: Figure @fig-optics-zernike-gallery lacks discussion of radial order n, azimuthal index m, and aberration types.
+-->
