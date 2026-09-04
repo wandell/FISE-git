@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-08-31">
+<meta name="dcterms.date" content="2026-09-03">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>9&nbsp; Lens principles – Foundations of Image Systems Engineering</title>
@@ -528,7 +528,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/resources/Poisson-history.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/resources/history-Poisson.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Poisson absorptions</span></span></a>
   </div>
 </li>
@@ -577,8 +577,7 @@ window.Quarto = {
   <li><a href="#multi-element-lens" id="toc-multi-element-lens" class="nav-link" data-scroll-target="#multi-element-lens"><span class="header-section-number">9.6.2</span> Multi-element lens</a></li>
   <li><a href="#aspheric-lenses" id="toc-aspheric-lenses" class="nav-link" data-scroll-target="#aspheric-lenses"><span class="header-section-number">9.6.3</span> Aspheric Lenses</a></li>
   <li><a href="#grin-lenses" id="toc-grin-lenses" class="nav-link" data-scroll-target="#grin-lenses"><span class="header-section-number">9.6.4</span> GRIN Lenses</a></li>
-  <li><a href="#sec-SLM" id="toc-sec-SLM" class="nav-link" data-scroll-target="#sec-SLM"><span class="header-section-number">9.6.5</span> Spatial Light Modulators</a></li>
-  <li><a href="#sec-optics-metalens" id="toc-sec-optics-metalens" class="nav-link" data-scroll-target="#sec-optics-metalens"><span class="header-section-number">9.6.6</span> Metalenses</a></li>
+  <li><a href="#sec-optics-metalens" id="toc-sec-optics-metalens" class="nav-link" data-scroll-target="#sec-optics-metalens"><span class="header-section-number">9.6.5</span> Metalenses</a></li>
   </ul></li>
   <li><a href="#onward" id="toc-onward" class="nav-link" data-scroll-target="#onward"><span class="header-section-number">9.7</span> Onward</a></li>
   </ul>
@@ -600,7 +599,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 31, 2026</p>
+      <p class="date">September 3, 2026</p>
     </div>
   </div>
   
@@ -629,7 +628,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: August 31, 2026
+Last updated: September 3, 2026
 !-->
 </div>
 </div>
@@ -679,7 +678,7 @@ Perplexity search about tradeoffs between pinhole optics and lenses, particularl
 **Notes about wavefront representations** 
 (https://www.rp-photonics.com/wavefronts.html).  
 -->
-<div id="fig-waves-rays" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" data-fig-cap-location="bottom">
+<div id="fig-waves-rays" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-cap-location="bottom" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-waves-rays-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/optics/07-principles/rays-wave.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%" data-fig-cap-location="bottom">
@@ -689,8 +688,7 @@ Figure&nbsp;9.2: Relationship between the ray (arrows) and wavefront (dashed) re
 </figcaption>
 </figure>
 </div>
-<p>It is common for optics tutorials to represent wavefront directions as extended in space, but it is uncommon to represent the amplitude of the wavefront across space. In reality the amplitude of the wavefront will vary across space. For example, a typical laser emits a set of parallel (collimated) rays. The amplitude of these rays has a Gaussian profile that limits the wavefront in space. That’s why the spot a laser pointer produces is limited in space. In recent years, image systems engineers have had access to <strong>spatial light modulators (SLMs)</strong> (<a href="#sec-SLM" class="quarto-xref"><span>Section 9.6.5</span></a>). These devices modulate either the local amplitude or phase of the wavefront at different positions in space, controlling the light field.</p>
-<p>The software calculations that accompany this book use both wavefront and ray methods<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>We will return to the representation of light as waves, wavefronts, and wavefront aberrations in <a href="optics-07-wavefront.html" class="quarto-xref"><span>Chapter 14</span></a>.</p>
 </section>
 <section id="material-interactions" class="level2" data-number="9.3">
 <h2 data-number="9.3" class="anchored" data-anchor-id="material-interactions"><span class="header-section-number">9.3</span> Material interactions</h2>
@@ -727,7 +725,7 @@ n \sin(\phi) = n' \sin(\phi')
 n = \frac{c}{v}
 \tag{9.2}\]</span></span></p>
 <p>where <span class="math inline">\(c\)</span> is the speed of light in a vacuum, <span class="math inline">\(v\)</span> is the speed in the material. By definition, <span class="math inline">\(n=1\)</span> in a vacuum. It is very close to <span class="math inline">\(1.0\)</span> in air. In some materials, such as glass, the velocity of light is much slower, so that the index might be <span class="math inline">\(1.3\)</span> or even <span class="math inline">\(1.5\)</span>.</p>
-<p>In many common materials the velocity is reduced because the light, which is electromagnetic radiation, induces an electrical signal in the electrons of the material. The specific properties of this signal depend on the material. The induced electrical signal sums with the electrical field of the light. The combined signal is predicted to travel slower and in a different direction, with the exact change in speed and direction dependent on the electrical properties of the material<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>In many common materials the velocity is reduced because the light, which is electromagnetic radiation, induces an electrical signal in the electrons of the material. The specific properties of this signal depend on the material. The induced electrical signal sums with the electrical field of the light. The combined signal is predicted to travel slower and in a different direction, with the exact change in speed and direction dependent on the electrical properties of the material<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <p>Interestingly, there are less common materials (e.g.,liquid crystals) that have more complex interactions with the electrical field of light. These materials create interesting and useful effects (birefringence) that we will describe in <a href="displays-01-principles.html#sec-display-principles-overview" class="quarto-xref"><span>Section 28.1</span></a>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="YouTube:  Why lenses bend light (Don Lincoln)">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
@@ -774,7 +772,7 @@ Historical note: Refraction
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>The Greek astronomer Ptolemy studed refraction in about the year 150 (<span class="citation" data-cites="Smith1982-vr">Smith (<a href="references.html#ref-Smith1982-vr" role="doc-biblioref">1982</a>)</span>). He documented that rays passing from air into, say water or glass, change direction<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Ibn Sahl in Persia, around 930, quantified the change in direction as light crossed the boundary between certain materials, and he used this knowledge to design lenses.</p>
+<p>The Greek astronomer Ptolemy studed refraction in about the year 150 (<span class="citation" data-cites="Smith1982-vr">Smith (<a href="references.html#ref-Smith1982-vr" role="doc-biblioref">1982</a>)</span>). He documented that rays passing from air into, say water or glass, change direction<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Ibn Sahl in Persia, around 930, quantified the change in direction as light crossed the boundary between certain materials, and he used this knowledge to design lenses.</p>
 <!-- 
 - Feynman copies in Ptolemy's tables, see footnote.
 - Feynman lecturing on the relationship of Mathematics to Physics:  https://youtu.be/IaSN-3JAVTg?si=U3d7Kybo5gZKVGsF
@@ -849,7 +847,7 @@ Figure&nbsp;9.8: A lens can be approximated as many small prisms. The outline sh
 </figcaption>
 </figure>
 </div>
-<p>Expanding on this idea, we can stack a collection of prisms to gather more of the rays. Or, more likely, we might polish a glass surface to have two spherical surfaces, forming a continuous form of the stacked prisms. The entrance aperture of this lens can capture much more light than a pinhole, and it guides the rays to converge. Spherical lenses are quite popular because they are easy to manufacture. Using Snell’s Law it is relatively straightforward to calculate the refraction for a ray arriving at any location on the sphere <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<p>Expanding on this idea, we can stack a collection of prisms to gather more of the rays. Or, more likely, we might polish a glass surface to have two spherical surfaces, forming a continuous form of the stacked prisms. The entrance aperture of this lens can capture much more light than a pinhole, and it guides the rays to converge. Spherical lenses are quite popular because they are easy to manufacture. Using Snell’s Law it is relatively straightforward to calculate the refraction for a ray arriving at any location on the sphere <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
 <p>The diagram makes it clear that there are many lens design choices. For example, we might change the shape of the lens surfaces. Also, we might use different materials in the prisms. What considerations would guide such choices?</p>
 </section>
 <section id="innovations-in-lens-design" class="level2" data-number="9.6">
@@ -886,29 +884,10 @@ z(\rho) = \frac{\rho^2 / R}{1 + \sqrt{1 - (1 + k)(\rho/R)^2}} + A_4 \rho^4 + A_6
 <section id="grin-lenses" class="level3" data-number="9.6.4">
 <h3 data-number="9.6.4" class="anchored" data-anchor-id="grin-lenses"><span class="header-section-number">9.6.4</span> GRIN Lenses</h3>
 <p>Another way to control light is to vary the material properties within the lens instead of changing its surface shape. A <strong>gradient-index (GRIN)</strong> lens has a refractive index that changes continuously within the material, typically decreasing from the center to the edge.</p>
-<p>Long before this became practical, in 1854, James Clerk Maxwell theorized that such a gradient could eliminate spherical aberration in a spherical lens, a design now known as the “Maxwell fisheye.” It was later discovered that many animal eyes use this exact principle. While more challenging to manufacture than aspheres, GRIN lenses offer unique design possibilities, especially in compact systems like endoscopes. Maxwell’s work in this area -and later when we discuss his work in color- are an example of the interplay between physics, engineering, and biology<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
+<p>Long before this became practical, in 1854, James Clerk Maxwell theorized that such a gradient could eliminate spherical aberration in a spherical lens, a design now known as the “Maxwell fisheye.” It was later discovered that many animal eyes use this exact principle. While more challenging to manufacture than aspheres, GRIN lenses offer unique design possibilities, especially in compact systems like endoscopes. Maxwell’s work in this area -and later when we discuss his work in color- are an example of the interplay between physics, engineering, and biology<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
 </section>
-<section id="sec-SLM" class="level3" data-number="9.6.5">
-<h3 data-number="9.6.5" class="anchored" data-anchor-id="sec-SLM"><span class="header-section-number">9.6.5</span> Spatial Light Modulators</h3>
-<p>What if a lens could be reconfigured on the fly? <strong>Spatial light modulators (SLMs)</strong> are devices that can dynamically control the properties of a light field on a pixel-by-pixel basis. They are essentially programmable optical elements.</p>
-<ul>
-<li><strong>Phase SLMs</strong>, often based on liquid crystal arrays, can locally alter the phase of light, effectively acting as a reconfigurable lens or diffraction grating. They can be used to correct for aberrations in real-time or to sculpt a light beam into a complex pattern.</li>
-<li><strong>Amplitude SLMs</strong>, which use technologies like MEMS (micro-electro-mechanical systems) mirrors, modulate the intensity of light at each pixel.</li>
-</ul>
-<p>With pixel sizes on the order of microns and arrays containing millions of elements, SLMs are powerful tools in adaptive optics, holography, and advanced imaging systems. This figure shows a recent phase SLM with extremely high resolution.</p>
-<div id="fig-slm-holoeye" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-slm-holoeye-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/optics/07-principles/slm-holoeye.png" class="img-fluid figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-slm-holoeye-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.10: Holoeye phase spatial light modulator based on reflective LCOS. Max resolution 4160 x 2464, pixel Pitch 3.74 µm, Active Area 15.56 x 9.22 mm (0.7″ Diagonal, 8 Bit, 60 Hz frame rate). The small part is the SLM; the big part is the electronics. <a href="https://holoeye.com/products/spatial-light-modulators/gaea-2-phase-only/" target="_blank">See Holoeye</a>
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="sec-optics-metalens" class="level3" data-number="9.6.6">
-<h3 data-number="9.6.6" class="anchored" data-anchor-id="sec-optics-metalens"><span class="header-section-number">9.6.6</span> Metalenses</h3>
+<section id="sec-optics-metalens" class="level3" data-number="9.6.5">
+<h3 data-number="9.6.5" class="anchored" data-anchor-id="sec-optics-metalens"><span class="header-section-number">9.6.5</span> Metalenses</h3>
 <p>The most recent revolution in optics miniaturization comes from <strong>metalenses</strong>. These are not lenses in the traditional sense but are flat surfaces, like a sliver of glass, patterned with an array of nanoscale structures (“meta-atoms”). Each nanostructure is smaller than the wavelength of light and is engineered to impart a specific phase shift to the light passing through it.</p>
 <p>By arranging these meta-atoms in a precise pattern, a metalens can bend light just like a conventional curved lens but without the bulk. This technology promises to replace complex, multi-element systems with a single, ultra-thin optical element. Researchers are developing metalenses that can perform sophisticated tasks, such as focusing different colors to the same point or routing specific wavelengths to different locations (<span class="citation" data-cites="Catrysse2022-vs">Catrysse et al. (<a href="references.html#ref-Catrysse2022-vs" role="doc-biblioref">2022</a>)</span>, <span class="citation" data-cites="Catrysse2023-kx">Catrysse and Fan (<a href="references.html#ref-Catrysse2023-kx" role="doc-biblioref">2023</a>)</span>). While still an active area of research, metalenses have the potential to fundamentally change optical design.</p>
 <p><em>Note: <span class="citation" data-cites="Froch2025-fa">Fröch et al. (<a href="references.html#ref-Froch2025-fa" role="doc-biblioref">2025</a>)</span> dealing with chromatic aberration, broadband imaging challenge.</em></p>
@@ -967,11 +946,10 @@ Smith AM (1982) <a href="https://www.jstor.org/stable/41133649?utm_source=chatgp
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>The ISETCam optics calculations uses the wave model. The ISET3d graphics calculations use the ray model.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>This excellent pair of (nicely snarky) Fermilab videos from Don Lincoln explain the change in <a href="https://www.youtube.com/watch?v=CUjt36SD3h8">velocity</a> and <a href="https://www.youtube.com/watch?v=NLmpNM0sgYk">direction.</a>. We can thank James Clerk Maxwell for providing the basis of this understanding.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>In Chapter 26 of his book of lectures, “Optics: The Principle of Least Time”, Feynman works from Ptolemy’s data to derive Snell’s law (<span class="citation" data-cites="feynman1963-lectures">Feynman et al. (<a href="references.html#ref-feynman1963-lectures" role="doc-biblioref">1963</a>)</span>). Some say that Ptolemy held back science by not noticing the relationship. Seems a bit harsh to me.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>Put the formula for refraction of a ray at a spherical lens in here.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>Michael Land’s <a href="https://www.britannica.com/science/photoreception/Single-chambered-eyes" target="_blank">Britannica article</a> has lots of interesting examples of animal eyes and the story about GRIN lenses and Maxwell.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>This excellent pair of (nicely snarky) Fermilab videos from Don Lincoln explain the change in <a href="https://www.youtube.com/watch?v=CUjt36SD3h8">velocity</a> and <a href="https://www.youtube.com/watch?v=NLmpNM0sgYk">direction.</a>. We can thank James Clerk Maxwell for providing the basis of this understanding.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In Chapter 26 of his book of lectures, “Optics: The Principle of Least Time”, Feynman works from Ptolemy’s data to derive Snell’s law (<span class="citation" data-cites="feynman1963-lectures">Feynman et al. (<a href="references.html#ref-feynman1963-lectures" role="doc-biblioref">1963</a>)</span>). Some say that Ptolemy held back science by not noticing the relationship. Seems a bit harsh to me.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Put the formula for refraction of a ray at a spherical lens in here.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Michael Land’s <a href="https://www.britannica.com/science/photoreception/Single-chambered-eyes" target="_blank">Britannica article</a> has lots of interesting examples of animal eyes and the story about GRIN lenses and Maxwell.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

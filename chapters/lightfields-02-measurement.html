@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-08-31">
+<meta name="dcterms.date" content="2026-09-03">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>3&nbsp; Measuring light – Foundations of Image Systems Engineering</title>
@@ -528,7 +528,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/resources/Poisson-history.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/resources/history-Poisson.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Poisson absorptions</span></span></a>
   </div>
 </li>
@@ -591,7 +591,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 31, 2026</p>
+      <p class="date">September 3, 2026</p>
     </div>
   </div>
   
@@ -617,7 +617,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: August 31, 2026
+Last updated: September 3, 2026
 !-->
 </div>
 </div>
@@ -625,7 +625,7 @@ Last updated: August 31, 2026
 <section id="sec-lfmeasurement-overview" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-lfmeasurement-overview"><span class="header-section-number">3.1</span> Measuring light: An overview</h2>
 <p>This chapter describes two ways to measure light: the direction of its rays, and the amount of energy the rays carry.</p>
-<p>We first explain how to measure the direction of the rays in a light field. Redirecting rays is the essential function of an optical instrument, so characterizing ray directions before and after they pass through a lens is fundamental to building one. The same idea extends beyond cameras: understanding how the eye’s optics transform ray directions is central to characterizing human vision, and quantifying how a turbulent medium—the atmosphere, or water—distorts ray directions is central to building imaging systems for telescopes and drones. We introduce the basic idea here; the instruments themselves are described in more detail later, when we discuss optical instrumentation (<a href="optics-02-lenses.html#sec-SLM" class="quarto-xref"><span>Section 9.6.5</span></a>, <a href="optics-08-wavefront-sensing.html#sec-shack-hartmann" class="quarto-xref"><span>Section 15.2</span></a>), light field cameras (<a href="sensors-07-innovations.html#sec-sensor-lightfield-camera" class="quarto-xref"><span>Section 22.3</span></a>), and human vision (<span class="quarto-unresolved-ref">?sec-adaptive-optics</span>).</p>
+<p>We first explain how to measure the direction of the rays in a light field. Redirecting rays is the essential function of an optical instrument, so characterizing ray directions before and after they pass through a lens is fundamental to building one. The same idea extends beyond cameras: understanding how the eye’s optics transform ray directions is central to characterizing human vision, and quantifying how a turbulent medium—the atmosphere, or water—distorts ray directions is central to building imaging systems for telescopes and drones. We introduce the basic idea here; the instruments themselves are described in more detail later, when we discuss optical instrumentation (<a href="optics-08-wavefront-sensing.html#sec-SLM" class="quarto-xref"><span>Section 15.3.1</span></a>, <a href="optics-08-wavefront-sensing.html#sec-shack-hartmann" class="quarto-xref"><span>Section 15.2</span></a>), light field cameras (<a href="sensors-07-innovations.html#sec-sensor-lightfield-camera" class="quarto-xref"><span>Section 22.3</span></a>), and human vision (<a href="human-02-physiological-optics.html#sec-adaptive-optics-human" class="quarto-xref"><span>Section 24.4</span></a>).</p>
 <p>In addition to having a direction, light carries energy, and we often need to measure how much. A camera needs enough light energy to form a usable image (<a href="sensors-03-parameters.html#sec-pixel-sensitivity-fillfactor" class="quarto-xref"><span>Section 18.2</span></a>), but not so much that it saturates the detector (<a href="sensors-07-innovations.html#sec-sensor-splitpixel" class="quarto-xref"><span>Section 22.4</span></a>). We also measure light energy to predict how a person will perceive a display’s color and pattern (<a href="human-05-metrics.html" class="quarto-xref"><span>Chapter 27</span></a>). Measuring light energy requires going beyond the concept of a ray, which is a geometric idealization with no energy of its own. We need concepts that integrate many rays together—over a bundle spanning some area or some solid angle, over a band of wavelengths, and over an interval of time. This calls for a framework that treats rays not individually but as a collection.</p>
 <p><strong>Radiometry</strong> is the field that provides this framework. It works primarily with spectral (per-wavelength) quantities, expressed in SI<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> units such as watts or photons per second—the units standard in imaging and used by simulation tools such as ISETCam. The next sections define the core radiometric quantities—radiant flux, radiant intensity, radiance, and irradiance—and show how the geometry of the imaging framework (area, angle, and foreshortening) enters their units.</p>
 </section>
@@ -654,7 +654,7 @@ Figure&nbsp;3.2: A lenslet array measures the local ray angles across a region o
 </figcaption>
 </figure>
 </div>
-<p>Paired with a deformable mirror, the Shack-Hartmann sensor underlies <strong>adaptive optics</strong> systems used in astronomy and ophthalmology (<a href="optics-08-wavefront-sensing.html#sec-adaptive-optics-astronomy" class="quarto-xref"><span>Section 15.3</span></a>, <span class="quarto-unresolved-ref">?sec-adaptive-optics</span>). We describe these systems, and how the sensor enables them, in <a href="optics-08-wavefront-sensing.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
+<p>Paired with a deformable mirror, the Shack-Hartmann sensor underlies <strong>adaptive optics</strong> systems used in astronomy and ophthalmology (<a href="optics-08-wavefront-sensing.html#sec-adaptive-optics-astronomy" class="quarto-xref"><span>Section 15.3</span></a>, <a href="human-02-physiological-optics.html#sec-adaptive-optics-human" class="quarto-xref"><span>Section 24.4</span></a>). We describe these systems, and how the sensor enables them, in <a href="optics-08-wavefront-sensing.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Lightfield measurement instruments">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

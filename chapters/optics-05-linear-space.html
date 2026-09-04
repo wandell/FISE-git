@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-08-26">
+<meta name="dcterms.date" content="2026-09-03">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>12&nbsp; Spatial domain – Foundations of Image Systems Engineering</title>
@@ -528,7 +528,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/resources/Poisson-history.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/resources/history-Poisson.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Poisson absorptions</span></span></a>
   </div>
 </li>
@@ -567,7 +567,7 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#sec-pointspread-2" id="toc-sec-pointspread-2" class="nav-link" data-scroll-target="#sec-pointspread-2"><span class="header-section-number">12.2.1</span> Point spread functions</a></li>
   <li><a href="#general-linear-analysis" id="toc-general-linear-analysis" class="nav-link" data-scroll-target="#general-linear-analysis"><span class="header-section-number">12.2.2</span> General linear analysis</a></li>
-  <li><a href="#space-invariant-linear-analysis" id="toc-space-invariant-linear-analysis" class="nav-link" data-scroll-target="#space-invariant-linear-analysis"><span class="header-section-number">12.2.3</span> Space invariant linear analysis</a></li>
+  <li><a href="#sec-ls-shiftinvariance" id="toc-sec-ls-shiftinvariance" class="nav-link" data-scroll-target="#sec-ls-shiftinvariance"><span class="header-section-number">12.2.3</span> Space invariant linear analysis</a></li>
   </ul></li>
   <li><a href="#sec-pointspread-common" id="toc-sec-pointspread-common" class="nav-link" data-scroll-target="#sec-pointspread-common"><span class="header-section-number">12.3</span> Common PSFs in simulation</a>
   <ul class="collapse">
@@ -604,7 +604,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 26, 2026</p>
+      <p class="date">September 3, 2026</p>
     </div>
   </div>
   
@@ -630,7 +630,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: August 26, 2026
+Last updated: September 3, 2026
 !-->
 </div>
 </div>
@@ -679,9 +679,9 @@ A limitation of PSFs
 <p>The calculation is illustrated in the script <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_ImageFormationLinearity.html" target="_blank">fise_ImageFormationLinearity</a>. I created a random image to serve as the PSF for each pixel, and naturally the image looks completely random. But with knowlege of the PSFs, and thus the system matrix, we can find the inverse of the system matrix and estimate the input from an image that appears to be complete noise.</p>
 <p>There are many details as to how well this works, mostly concerning how robust the calculation is to noise. I doubt this calculation is of practical interest, though it has been used in interesting ways by <strong>Laura Waller’s group</strong>. (Correct me if you know of a case!) The principle of linearity is good to keep in mind because it will help you solve many other problems.</p>
 </section>
-<section id="space-invariant-linear-analysis" class="level3" data-number="12.2.3">
-<h3 data-number="12.2.3" class="anchored" data-anchor-id="space-invariant-linear-analysis"><span class="header-section-number">12.2.3</span> Space invariant linear analysis</h3>
-<p>A more common situation for image systems engineering is the shift-invariance: the point spread is the same over a some region (isoplanatic region). We have many powerful mathematical tools for simulating and analyzing this case (<a href="appendix-02-spaceinvariance.html" class="quarto-xref"><span>Chapter 37</span></a>). This is the case in which we can compute the system transformation using convolution (<a href="appendix-02-spaceinvariance.html#sec-ls-convolution" class="quarto-xref"><span>Section 37.3</span></a>) and Fourier tools (<a href="appendix-02-spaceinvariance.html#sec-ls-convolution-theorem" class="quarto-xref"><span>Section 37.8</span></a>).</p>
+<section id="sec-ls-shiftinvariance" class="level3" data-number="12.2.3">
+<h3 data-number="12.2.3" class="anchored" data-anchor-id="sec-ls-shiftinvariance"><span class="header-section-number">12.2.3</span> Space invariant linear analysis</h3>
+<p>A more common situation for image systems engineering is the case when the system is space-invariant. This means: the point spread is the same over a some region, also called an <em>isoplanatic region</em>. We have many powerful mathematical tools for simulating and analyzing this case (<a href="appendix-02-spaceinvariance.html" class="quarto-xref"><span>Chapter 37</span></a>). This is the case in which we can compute the system transformation using convolution (<a href="appendix-02-spaceinvariance.html#sec-ls-convolution" class="quarto-xref"><span>Section 37.3</span></a>) and Fourier tools (<a href="appendix-02-spaceinvariance.html#sec-ls-convolution-theorem" class="quarto-xref"><span>Section 37.8</span></a>).</p>
 </section>
 </section>
 <section id="sec-pointspread-common" class="level2" data-number="12.3">
