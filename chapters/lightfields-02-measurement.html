@@ -563,7 +563,10 @@ window.Quarto = {
    
   <ul>
   <li><a href="#sec-lfmeasurement-overview" id="toc-sec-lfmeasurement-overview" class="nav-link active" data-scroll-target="#sec-lfmeasurement-overview"><span class="header-section-number">3.1</span> Measuring light: An overview</a></li>
-  <li><a href="#sec-lightfield-measurement" id="toc-sec-lightfield-measurement" class="nav-link" data-scroll-target="#sec-lightfield-measurement"><span class="header-section-number">3.2</span> Measuring ray directions</a></li>
+  <li><a href="#sec-lightfield-measurement" id="toc-sec-lightfield-measurement" class="nav-link" data-scroll-target="#sec-lightfield-measurement"><span class="header-section-number">3.2</span> Measuring ray directions</a>
+  <ul class="collapse">
+  <li><a href="#sec-lightfield-cameras" id="toc-sec-lightfield-cameras" class="nav-link" data-scroll-target="#sec-lightfield-cameras"><span class="header-section-number">3.2.1</span> Light field cameras and macropixels</a></li>
+  </ul></li>
   <li><a href="#sec-lightfield-energy" id="toc-sec-lightfield-energy" class="nav-link" data-scroll-target="#sec-lightfield-energy"><span class="header-section-number">3.3</span> Measuring light energy</a></li>
   <li><a href="#photometric-units" id="toc-photometric-units" class="nav-link" data-scroll-target="#photometric-units"><span class="header-section-number">3.4</span> Photometric units</a></li>
   <li><a href="#radiance-from-a-point" id="toc-radiance-from-a-point" class="nav-link" data-scroll-target="#radiance-from-a-point"><span class="header-section-number">3.5</span> Radiance from a point</a></li>
@@ -625,8 +628,8 @@ Last updated: September 6, 2026
 <section id="sec-lfmeasurement-overview" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-lfmeasurement-overview"><span class="header-section-number">3.1</span> Measuring light: An overview</h2>
 <p>This chapter describes two ways to measure light: the direction of its rays, and the amount of energy the rays carry.</p>
-<p>We first explain how to measure the direction of the rays in a light field. Redirecting rays is the essential function of an optical instrument, so characterizing ray directions before and after they pass through a lens is fundamental to building one. The same idea extends beyond cameras: understanding how the eye’s optics transform ray directions is central to characterizing human vision, and quantifying how a turbulent medium—the atmosphere, or water—distorts ray directions is central to building imaging systems for telescopes and drones. We introduce the basic idea here; the instruments themselves are described in more detail later, when we discuss optical instrumentation (<a href="optics-08-wavefront-sensing.html#sec-SLM" class="quarto-xref"><span>Section 15.4</span></a>, <a href="optics-08-wavefront-sensing.html#sec-shack-hartmann" class="quarto-xref"><span>Section 15.2</span></a>), light field cameras (<a href="sensors-07-innovations.html#sec-sensor-lightfield-camera" class="quarto-xref"><span>Section 22.3</span></a>), and human vision (<a href="human-02-physiological-optics.html#sec-adaptive-optics-human" class="quarto-xref"><span>Section 24.4</span></a>).</p>
-<p>In addition to having a direction, light carries energy, and we often need to measure how much. A camera needs enough light energy to form a usable image (<a href="sensors-03-parameters.html#sec-pixel-sensitivity-fillfactor" class="quarto-xref"><span>Section 18.2</span></a>), but not so much that it saturates the detector (<a href="sensors-07-innovations.html#sec-sensor-splitpixel" class="quarto-xref"><span>Section 22.4</span></a>). We also measure light energy to predict how a person will perceive a display’s color and pattern (<a href="human-05-metrics.html" class="quarto-xref"><span>Chapter 27</span></a>). Measuring light energy requires going beyond the concept of a ray, which is a geometric idealization with no energy of its own. We need concepts that integrate many rays together—over a bundle spanning some area or some solid angle, over a band of wavelengths, and over an interval of time. This calls for a framework that treats rays not individually but as a collection.</p>
+<p>We first explain how to measure the direction of the rays in a light field. Redirecting rays is the essential function of an optical instrument, so characterizing ray directions before and after they pass through a lens is fundamental to building one. The same idea extends beyond cameras: understanding how the eye’s optics transform ray directions is central to characterizing human vision, and quantifying how a turbulent medium—the atmosphere, or water—distorts ray directions is central to building imaging systems for telescopes and drones. We introduce the basic idea here; the instruments themselves are described in more detail later, when we discuss optical instrumentation (<a href="optics-08-wavefront-sensing.html#sec-SLM" class="quarto-xref"><span>Section 15.4</span></a>, <a href="optics-08-wavefront-sensing.html#sec-shack-hartmann" class="quarto-xref"><span>Section 15.2</span></a>), light field cameras (<a href="#sec-lightfield-cameras" class="quarto-xref"><span>Section 3.2.1</span></a>), and human vision (<a href="human-02-physiological-optics.html#sec-adaptive-optics-human" class="quarto-xref"><span>Section 24.4</span></a>).</p>
+<p>In addition to having a direction, light carries energy, and we often need to measure how much. A camera needs enough light energy to form a usable image (<a href="sensors-03-parameters.html#sec-pixel-sensitivity-fillfactor" class="quarto-xref"><span>Section 18.2</span></a>), but not so much that it saturates the detector (<a href="sensors-07-innovations.html#sec-sensor-splitpixel" class="quarto-xref"><span>Section 22.3</span></a>). We also measure light energy to predict how a person will perceive a display’s color and pattern (<a href="human-05-metrics.html" class="quarto-xref"><span>Chapter 27</span></a>). Measuring light energy requires going beyond the concept of a ray, which is a geometric idealization with no energy of its own. We need concepts that integrate many rays together—over a bundle spanning some area or some solid angle, over a band of wavelengths, and over an interval of time. This calls for a framework that treats rays not individually but as a collection.</p>
 <p><strong>Radiometry</strong> is the field that provides this framework. It works primarily with spectral (per-wavelength) quantities, expressed in SI<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> units such as watts or photons per second—the units standard in imaging and used by simulation tools such as ISETCam. The next sections define the core radiometric quantities—radiant flux, radiant intensity, radiance, and irradiance—and show how the geometry of the imaging framework (area, angle, and foreshortening) enters their units.</p>
 </section>
 <section id="sec-lightfield-measurement" class="level2" data-number="3.2">
@@ -655,6 +658,21 @@ Figure&nbsp;3.2: A lenslet array measures the local ray angles across a region o
 </figure>
 </div>
 <p>Paired with a deformable mirror, the Shack-Hartmann sensor underlies <strong>adaptive optics</strong> systems used in astronomy and ophthalmology (<a href="optics-08-wavefront-sensing.html#sec-adaptive-optics-astronomy" class="quarto-xref"><span>Section 15.3</span></a>, <a href="human-02-physiological-optics.html#sec-adaptive-optics-human" class="quarto-xref"><span>Section 24.4</span></a>). We describe these systems, and how the sensor enables them, in <a href="optics-08-wavefront-sensing.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
+<section id="sec-lightfield-cameras" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="sec-lightfield-cameras"><span class="header-section-number">3.2.1</span> Light field cameras and macropixels</h3>
+<p>The same physical arrangement can be used to construct an image sensor that directly captures the 4D light field <span class="citation" data-cites="adelson-wang-1992 ngLightFieldPhotography2005">(<a href="references.html#ref-adelson-wang-1992" role="doc-biblioref">Adelson and Wang 1992</a>; <a href="references.html#ref-ngLightFieldPhotography2005" role="doc-biblioref">Ng et al. 2005</a>)</span>. Instead of placing a single detector behind each lenslet, an array of detector elements is placed underneath.</p>
+<p>In this geometry, the combination of each lenslet (or pinhole) and its underlying group of sensor pixels is called a <strong>macropixel</strong>, and the individual photodetectors beneath are referred to as <strong>subpixels</strong> (<a href="#fig-lightfield-pixel" class="quarto-xref">Figure&nbsp;<span>3.3</span></a>). As <a href="#fig-lightfield-pixel" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> illustrates—using a pinhole array rather than a lenslet for simplicity—rays arriving from different angles are captured by different subpixels behind the aperture.</p>
+<div id="fig-lightfield-pixel" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lightfield-pixel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/02-measuring/Gemini_lightfieldPixel-Circle.png" class="img-fluid figure-img" style="width:55.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lightfield-pixel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.3: A light field sensor captures both the position and angle of incoming light rays. The sensor is composed of an array of “macropixels” (bottom). Each macropixel consists of a microlens (or a pinhole, as simplified here) and a group of subpixels beneath it. The pinhole location on the sensor determines the ray’s spatial position. The subpixels lie below the pinhole; which of these detects the light determines the ray’s angle of incidence. By capturing position and angle data across the entire sensor, a light field camera can perform powerful computational operations, such as estimating depth or refocusing an image after capture. (Image by Gemini 2.5 Pro and Wandell.)
+</figcaption>
+</figure>
+</div>
+<p>This sensor records both the position of a ray (which macropixel) and its angle (which subpixel). <span class="citation" data-cites="adelson-wang-1992">Adelson and Wang (<a href="references.html#ref-adelson-wang-1992" role="doc-biblioref">1992</a>)</span> described how to use this directional disparity across macropixels to estimate depth. Ren Ng and colleagues later developed handheld light field cameras that allow users to refocus an image after capture <span class="citation" data-cites="ngLightFieldPhotography2005">(<a href="references.html#ref-ngLightFieldPhotography2005" role="doc-biblioref">Ng et al. 2005</a>)</span>, commercialized through Lytro. While full light field cameras remain specialized instruments, a simplified version of this technology—dual-pixel autofocus (<a href="sensors-05-control.html#sec-dualpixel-autofocus" class="quarto-xref"><span>Section 20.2.4</span></a>), which uses two subpixels beneath each microlens—is now standard in smartphone and mirrorless cameras.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Lightfield measurement instruments">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -677,6 +695,7 @@ Lightfield measurement instruments
 </ul>
 </div>
 </div>
+</section>
 </section>
 <section id="sec-lightfield-energy" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="sec-lightfield-energy"><span class="header-section-number">3.3</span> Measuring light energy</h2>
@@ -734,11 +753,11 @@ Lightfield measurement instruments
 <img src="images/lightfields/02-measuring/01-radiometry.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%" data-fig-cap-location="bottom">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig margin-caption" id="fig-radiometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.3: The geometry of four, fundamental, radiometric measures.
+Figure&nbsp;3.4: The geometry of four, fundamental, radiometric measures.
 </figcaption>
 </figure>
 </div>
-<p><a href="#fig-radiometry" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> illustrates the geometry of four basic radiometric measures. The upper left illustrates a point source. The <em>radiant flux</em> measures the total energy emitted from the point in all directions. As for all radiometric measurements, the energy (watts) is specified as a function of wavelength (watts/nm).</p>
+<p><a href="#fig-radiometry" class="quarto-xref">Figure&nbsp;<span>3.4</span></a> illustrates the geometry of four basic radiometric measures. The upper left illustrates a point source. The <em>radiant flux</em> measures the total energy emitted from the point in all directions. As for all radiometric measurements, the energy (watts) is specified as a function of wavelength (watts/nm).</p>
 <p>Often, we measure the light emitted by a point source in a particular direction, the <em>radiant intensity</em>. In that case we measure the energy within a cone of rays in a particular direction. The standard unit for angles in three-dimensions is the <em>steradian</em>, just as the radian is the standard unit for angles in two-dimensions. The radiant intensity has units of watts per steradian per nanometer (watts/sr/nm). Thus, if the measurement instrument measures energy over an angle of 0.5 steradians, we divide the measurement by 0.5. If the instrument sums over 10 nm bands, we divide the energy by 10. In this way, the radiant intensity normalizes the angle we measure to the unit steradian and per nanometer. The standard symbol for radiant intensity is <span class="math inline">\(I(\lambda)\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Steradians">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
@@ -758,7 +777,7 @@ Steradians
 <img src="images/lightfields/02-measuring/02-radiometry-steradian.png" class="img-fluid figure-img" style="width:80.0%" data-fig-cap-location="bottom">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-steradian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.4: Three-dimensional angle units are called steradians. One steradian is defined as angle of the cone whose surface area on a sphere of radius <span class="math inline">\(r\)</span> is equal to <span class="math inline">\(r^2\)</span>. Because the surface area of a sphere with radius <span class="math inline">\(r\)</span> is <span class="math inline">\(4 \pi r^2\)</span>, it follows that the complete sphere surrounding a point is <span class="math inline">\(4 \pi\)</span> steradians.
+Figure&nbsp;3.5: Three-dimensional angle units are called steradians. One steradian is defined as angle of the cone whose surface area on a sphere of radius <span class="math inline">\(r\)</span> is equal to <span class="math inline">\(r^2\)</span>. Because the surface area of a sphere with radius <span class="math inline">\(r\)</span> is <span class="math inline">\(4 \pi r^2\)</span>, it follows that the complete sphere surrounding a point is <span class="math inline">\(4 \pi\)</span> steradians.
 </figcaption>
 </figure>
 </div>
@@ -768,7 +787,7 @@ Figure&nbsp;3.4: Three-dimensional angle units are called steradians. One sterad
 </section>
 <section id="radiance-from-a-surface" class="level2" data-number="3.6">
 <h2 data-number="3.6" class="anchored" data-anchor-id="radiance-from-a-surface"><span class="header-section-number">3.6</span> Radiance from a surface</h2>
-<p>In many applications we measure radiance from a patch on an extended, flat surface - such as a large light fixture with a diffuser, a wall, or a large display screen. The geometry of such a measurement accounts for two main factors illustrated in <a href="#fig-foreshortening-sketch" class="quarto-xref">Figure&nbsp;<span>3.5</span></a>. First, we must account for the area of the surface patch, as seen from the detector. For example, if the measured surface patch is a square <span class="math inline">\(0.1\)</span> meters on a side its area is <span class="math inline">\(A_s = (0.1~m)^2\)</span>. The area of this patch, as seen from the detector, is foreshortened. We calculate the foreshortened area using the angle between the viewing direction and the surface normal, <span class="math inline">\(\theta\)</span>, which becomes <span class="math inline">\(A_s \cos(\theta) ~ m^2\)</span>. Second, we account for the size of the bundle of rays captured by the detector. We measure this size by its three-dimensional angle, <span class="math inline">\(\omega ~ sr\)</span>, from a surface point that will be measured by the detector. The <em>radiance</em> combines the energy measured at the sensor (<span class="math inline">\(watts/nm\)</span>) with these geometric factors. The standard symbol for spectral radiance is <span class="math inline">\(L(\lambda)\)</span>. It has units of watts per nanometer per unit foreshortened-area per steradian:</p>
+<p>In many applications we measure radiance from a patch on an extended, flat surface - such as a large light fixture with a diffuser, a wall, or a large display screen. The geometry of such a measurement accounts for two main factors illustrated in <a href="#fig-foreshortening-sketch" class="quarto-xref">Figure&nbsp;<span>3.6</span></a>. First, we must account for the area of the surface patch, as seen from the detector. For example, if the measured surface patch is a square <span class="math inline">\(0.1\)</span> meters on a side its area is <span class="math inline">\(A_s = (0.1~m)^2\)</span>. The area of this patch, as seen from the detector, is foreshortened. We calculate the foreshortened area using the angle between the viewing direction and the surface normal, <span class="math inline">\(\theta\)</span>, which becomes <span class="math inline">\(A_s \cos(\theta) ~ m^2\)</span>. Second, we account for the size of the bundle of rays captured by the detector. We measure this size by its three-dimensional angle, <span class="math inline">\(\omega ~ sr\)</span>, from a surface point that will be measured by the detector. The <em>radiance</em> combines the energy measured at the sensor (<span class="math inline">\(watts/nm\)</span>) with these geometric factors. The standard symbol for spectral radiance is <span class="math inline">\(L(\lambda)\)</span>. It has units of watts per nanometer per unit foreshortened-area per steradian:</p>
 <p><span class="math display">\[
 \frac{Watts}{nm ~ \cos(\theta) ~ m^2 ~ sr}
 \]</span></p>
@@ -778,7 +797,7 @@ Figure&nbsp;3.4: Three-dimensional angle units are called steradians. One sterad
 <img src="images/lightfields/02-measuring/01-foreshortening-sketch.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-foreshortening-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.5: Geometric factors for measuring radiance from an extended surface to a detector.
+Figure&nbsp;3.6: Geometric factors for measuring radiance from an extended surface to a detector.
 </figcaption>
 </figure>
 </div>
@@ -791,7 +810,7 @@ Figure&nbsp;3.5: Geometric factors for measuring radiance from an extended surfa
 <img src="images/lightfields/02-measuring/wall-distance.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wall-distance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.6: Does the distance from the very large wall impact the measurement?
+Figure&nbsp;3.7: Does the distance from the very large wall impact the measurement?
 </figcaption>
 </figure>
 </div>
@@ -838,7 +857,7 @@ Figure&nbsp;3.6: Does the distance from the very large wall impact the measureme
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-radiance-surface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.7: The tradeoffs between angular bundle and surface area when measuring a large surface as the distance increases. The spectroradiometer -comprising a lens and a sensor- captures a large angular bundle when it is closer, but a smaller portion of the surface. These two factors cancel. Thus the distance away from a large surface is largely irrelevant when measuring the radiance.
+Figure&nbsp;3.8: The tradeoffs between angular bundle and surface area when measuring a large surface as the distance increases. The spectroradiometer -comprising a lens and a sensor- captures a large angular bundle when it is closer, but a smaller portion of the surface. These two factors cancel. Thus the distance away from a large surface is largely irrelevant when measuring the radiance.
 </figcaption>
 </figure>
 </div>
@@ -875,18 +894,18 @@ Table&nbsp;3.1: As distance from a surface increases, the solid angle subtended 
 <section id="irradiance-on-a-surface" class="level2" data-number="3.8">
 <h2 data-number="3.8" class="anchored" data-anchor-id="irradiance-on-a-surface"><span class="header-section-number">3.8</span> Irradiance on a surface</h2>
 <p>Another important measurement is the radiance incident upon a surface, the <em>irradiance</em>. This quantity is important to calculate the radiance available to an image sensor or the retina. It is also a practical measure in assessing room lighting, say how much light will arrive at a desk top. The irradiance sums the energy arriving from all directions, hence no three-dimensional angles (steradians) are specified. The irradiance measures the total energy per unit area of the surface. The standard symbol for irradiance is <span class="math inline">\(E(\lambda)\)</span>, has units <span class="math inline">\(watts/nm/m^2\)</span>.</p>
-<p>The amount of light from a small source, say a point source or a light bulb, that irradiates a surface depends on the geometry relating the light source and the surface. <a href="#fig-foreshortening-irradiance" class="quarto-xref">Figure&nbsp;<span>3.8</span></a> illustrates two cases: the same angular rays emerging from both light bulbs. On the left the surface is perpendicular to the direction of the central ray. On the right, the surface is slanted and not perpendiulcar; th same bundle of rays is spread across a larger surface area. Thus, there will be less light per unit area when the surface is not perpendicular to the main ray. In the most extreme case, when the surface is parallel to the central ray, no light will fall on the surface at all.</p>
+<p>The amount of light from a small source, say a point source or a light bulb, that irradiates a surface depends on the geometry relating the light source and the surface. <a href="#fig-foreshortening-irradiance" class="quarto-xref">Figure&nbsp;<span>3.9</span></a> illustrates two cases: the same angular rays emerging from both light bulbs. On the left the surface is perpendicular to the direction of the central ray. On the right, the surface is slanted and not perpendiulcar; th same bundle of rays is spread across a larger surface area. Thus, there will be less light per unit area when the surface is not perpendicular to the main ray. In the most extreme case, when the surface is parallel to the central ray, no light will fall on the surface at all.</p>
 <div id="fig-foreshortening-irradiance" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-cap-location="bottom">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-foreshortening-irradiance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/lightfields/02-measuring/02-foreshortening-irradiance.png" class="img-fluid figure-img" style="width:60.0%" data-fig-cap-location="bottom">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-foreshortening-irradiance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.8: Irradiance from a small source onto a surface. The same angular bundle of rays is drawn in (A) and (B). The image in (A) shows the bundle of rays arriving at the surface that is perpendicular the the central ray. In (B) the surface is tilted, off perpendicular, so the rays are more spread out.
+Figure&nbsp;3.9: Irradiance from a small source onto a surface. The same angular bundle of rays is drawn in (A) and (B). The image in (A) shows the bundle of rays arriving at the surface that is perpendicular the the central ray. In (B) the surface is tilted, off perpendicular, so the rays are more spread out.
 </figcaption>
 </figure>
 </div>
-<p>The geometric relationship between surfaces and relatively small light sources in an image is an important part of rendering images in computer graphics and measuring the illumination on surfaces in natural settings. The geometric factor illustrated here is complementary to the geometric factor illustrated in <a href="#fig-foreshortening-sketch" class="quarto-xref">Figure&nbsp;<span>3.5</span></a> for how we measure the light radiating from a surface.</p>
+<p>The geometric relationship between surfaces and relatively small light sources in an image is an important part of rendering images in computer graphics and measuring the illumination on surfaces in natural settings. The geometric factor illustrated here is complementary to the geometric factor illustrated in <a href="#fig-foreshortening-sketch" class="quarto-xref">Figure&nbsp;<span>3.6</span></a> for how we measure the light radiating from a surface.</p>
 </section>
 <section id="radiometric-units" class="level2" data-number="3.9">
 <h2 data-number="3.9" class="anchored" data-anchor-id="radiometric-units"><span class="header-section-number">3.9</span> Radiometric units</h2>
@@ -971,14 +990,20 @@ Surface or point?
 E(\mathbf{x}, \lambda) = \int_{\Omega^+} L(\mathbf{x}, \omega, \lambda)\,\cos\theta\, d\omega.
 \]</span> These angle-dependent behaviors are central to how materials reflect and transmit light. We will study them with the bidirectional reflectance distribution function (BRDF), <span class="math inline">\(f_r(\omega_i,\omega_o,\lambda)\)</span>, in <a href="lightfields-04-properties-spectral.html#sec-properties-brdf" class="quarto-xref"><span>Section 5.8</span></a>.</p>
 <p>The properties of modern image sensors also add practical constraints. Sensors are 2D arrays of small light-sensitive elements (pixels) that spatially sample the irradiance at the sensor plane. Each pixel integrates photons over its finite area, over the exposure time, over wavelengths weighted by its spectral sensitivity, and over the acceptance cone set by the lens and pixel aperture. Pixel counts, and the corresponding microlens arrays, have grown from early arrays with a few hundred by a few hundred pixels to today’s sensors with tens of millions.</p>
-<p>Capturing directional information—measuring rays from different directions separately, as in a light field camera (<a href="sensors-07-innovations.html#sec-sensor-lightfield-camera" class="quarto-xref"><span>Section 22.3</span></a>)—yields richer data and is the basis of light field imaging. The geometry of pixels, including small lenslet arrays placed over the pixel arrays, enables us to make useful measurements about the light field.</p>
+<p>Capturing directional information—measuring rays from different directions separately, as in a light field camera (<a href="#sec-lightfield-cameras" class="quarto-xref"><span>Section 3.2.1</span></a>)—yields richer data and is the basis of light field imaging. The geometry of pixels, including small lenslet arrays placed over the pixel arrays, enables us to make useful measurements about the light field.</p>
 <p>Similarly, reproducing color requires pixels with different wavelength sensitivities (e.g., a color filter array). The idea that we can use just three measurements to represent human color perception was formalized in <span class="citation" data-cites="maxwell1872-colorvision">Maxwell (<a href="references.html#ref-maxwell1872-colorvision" role="doc-biblioref">1872</a>)</span> and led to the field of <strong>colorimetry</strong>, which we will explore in <em>Part IV: Human vision</em>.</p>
 
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-adelson-wang-1992" class="csl-entry" role="listitem">
+Adelson EH, Wang JYA (1992) Single lens stereo with a plenoptic camera. IEEE Transactions on Pattern Analysis and Machine Intelligence 14:99–106
+</div>
 <div id="ref-maxwell1872-colorvision" class="csl-entry" role="listitem">
 Maxwell JC (1872) On color vision. 75–83
+</div>
+<div id="ref-ngLightFieldPhotography2005" class="csl-entry" role="listitem">
+Ng R, Levoy M, Brédif M, et al (2005) Light field photography with a hand-held plenoptic camera. PhD thesis, Stanford university
 </div>
 </div>
 </section>
