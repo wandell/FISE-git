@@ -7,46 +7,17 @@ date: last-modified
 
 ## Pixels and sensors {#sec-pixels-overview}
 
-The earliest digital image sensors, known as charge-coupled devices (CCD), were built using metal-oxide semiconductor technology (MOS). Measuring the electrons captured by the array of photodiodes in a CCD requires significant power, making them unsuitable for mobile devices and limiting their early adoption to scientific and other high-end applications.
+This chapter connects the physics of photon-to-electron conversion (@sec-sensors-photons-electrons) to the engineering of image sensor pixels. In the previous chapter, we saw how absorbed photons generate mobile electron–hole pairs in silicon. Without an electric field, however, the liberated electrons and holes quickly recombine. In both CCD and CMOS sensors, an internal electric field—created by a reverse-biased diode junction or a biased gate electrode—separates the charges and collects the electrons in a potential well. 
 
-A major breakthrough came in the early 1990s with the development of the modern Complementary Metal-Oxide Semiconductor (CMOS) active pixel sensor (APS) by Eric Fossum and his team at NASA's Jet Propulsion Laboratory (@fossum1993-ccd-dinosaurs; @fossum1995-patent). Earlier CMOS sensors had relied on passive pixels (PPS), which suffered from high noise and slow readout. By placing an active amplifier in each pixel and incorporating on-chip timing, control, and analog-to-digital conversion, the JPL team demonstrated the "camera-on-a-chip." Because CMOS sensors could be manufactured using standard microelectronics fabrication lines, they consumed far less power than CCDs and paved the way for the widespread adoption of electronic image sensors in mobile devices and many other applications.
+The defining challenge of an image sensor is not how electrons are created, but **how that collected charge is transferred and read out** across an array of millions of pixels.
+
+The earliest digital image sensors, known as charge-coupled devices (CCD), were built using metal-oxide semiconductor technology (MOS). Measuring the electrons captured by the array of photodiodes in a CCD requires significant power, making them unsuitable for mobile devices and limiting their early adoption to scientific and other high-end applications. The earliest attempts to use CMOS sensors had relied on passive pixels (PPS), which suffered from high noise and slow readout. 
+
+A major breakthrough came in the early 1990s with the development of the modern Complementary Metal-Oxide Semiconductor (CMOS) active pixel sensor (APS) [@fossum1993-ccd-dinosaurs; @fossum1995-patent]. By placing an active amplifier in each pixel and incorporating on-chip timing, control, and analog-to-digital conversion, the JPL team demonstrated the "camera-on-a-chip." Because CMOS sensors could be manufactured using standard microelectronics fabrication lines, they consumed far less power than CCDs and paved the way for the widespread adoption of electronic image sensors in mobile devices and many other applications.
 
 ![CMOS image sensors (CIS) incorporate integrated circuitry and multiple subsystems. The circuitry and subsystems, together, enable the capture, transfer and digital encoding of the image. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>.](images/sensors/13-photons/olympusCMOSSensorImage.png){#fig-olympus-overview style=".float-right" width="60%"}
 
-
-I now connect the physics of photon-to-electron conversion to the engineering of image sensor pixels. First, we review how electrons behave in semiconductor materials and how photons create mobile charge carriers (@sec-semiconductor-physics). Then I examine how CMOS pixel architectures (e.g., classic 3T and 4T designs, and their modern extensions) store, transfer, and read out that charge.
-
-Subsequent sections explain how pixel structures have evolved (front-side to back-side illumination, deep photodiodes, stacking, and digital pixels) to improve sensitivity, speed, and dynamic range. Finally, I describe how to model and measure sensor performance (@sec-system-modeling-overview) and how additional on-sensor components—such as color filters and microlenses—shape the captured data (@sec-sensor-components).
-
-The goal of these chapters is to build an intuition that links semiconductor physics to practical design trade-offs in modern image sensors.
-
-## Semiconductors and electrons {#sec-semiconductor-physics}
-Atoms in a silicon semiconductor are arranged in a crystalline structure, and their electrons occupy specific energy levels grouped into two main bands: the **valence band** (lower energy) and the **conduction band** (higher energy). Under normal conditions, most electrons remain in the valence band. When a silicon atom absorbs a photon, an electron can be excited from the valence band to the conduction band (@fig-sensor-bandgap).
-
-<!--
-A particularly clear explanation with figures and a video.
-https://scientificimaging.com/knowledge-base/photoelectric-effect/ 
--->
-
-### Bandgap {#sec-bandgap-photon-absorption}
- The minimum energy required for this transition is called the **bandgap**, and it is measured in electron volts (eV). For silicon at room temperature ($21 \deg C$), the bandgap is 1.12 eV. Only photons with energy equal to or greater than this value can generate free electrons in silicon.
-
-![Energy bands in silicon semiconductors. A photon can excite an electron in the Valence band.  If the photon has enough energy, the electron can shift to the conduction band, becoming a free electron that can be stored and counted. ](images/sensors/14-pixels/03-sensor-bandgap.png){#fig-sensor-bandgap width=50%}
-
-Without an electric field, the liberated electron and hole will quickly recombine. In both CCD and CMOS sensors, an internal electric field—created by a reverse-biased diode junction or a biased gate electrode—separates the charges and collects the electrons in a potential well. The defining difference between CCD and CMOS is not how electrons are created, but **how that collected charge is transferred and read out**.
-
-### Wavelength effects in silicon sensors {#sec-wavelength-effects}
-There are several wavelength-dependent effects worth noting about silicon sensors. First, we can calculate the energy in Joules of a photon of wavelength $\lambda$ using this the photon energy formula:
-
-We can convert from Joules (J) to electron volts (eV) with this formula
-
-$$
-1~\text{eV} = {1.602 \times 10^{-19}}~\text{J} 
-$$ {#eq-joules-ev}
-
-A wavelength of 1100 nm has just enough energy (1.12 eV) to transition an electron across the bandgap: Thus, silicon sensors are insensitive to electromagnetic radiation beyond 1100 nm and infrared sensors must use a different material. Second, photons with wavelengths less than 1100 nm have enough energy to excite electrons across the bandgap, and silicon will absorb radiation at these shorter wavelengths.  It is notable that the eye does not encode wavelengths below about 400 nm. 
-
-Third, the chance that a photon excites an electron that crosses the bandgrap depends on the photon's energy level. Higher energy (shorter wavelength) photons are more likely to cause the electron to change bands. For this reason, different wavelengths are absorbed at different spatial depths in the material. Short-wavelength photons are much more likely to generate electrons near the surface compared to long-wavelength photons.  Conversely, long-wavelength photons are relatively more likely to generate electrons deeper in the material. This depth-dependence on wavelength has been used to create color image sensors (@sec-sensor-foveon).
+Finally, we review how pixel structures have evolved since the first implementation, from a front-side to back-side illumination, deep photodiodes, stacking, and digital pixels.  These changes vastly improved sensitivity, speed, and dynamic range. In subsequent chapters, we see how additional on-sensor components—such as color filters and microlenses—shape the captured data (@sec-sensor-components) and how to model and measure sensor performance (@sec-system-modeling-overview).
 
 ## CMOS Pixel: Front-side illuminated {#sec-cmos-pixel-fsi}
 CMOS image sensors use photodiodes—and the photoelectric effect—to measure and store the optical light field at the sensor surface. The key technical breakthrough that enabled CMOS sensors was the invention of circuitry to store and then transmit the photon-generated electrons from the photodiode to the computer.
@@ -72,11 +43,20 @@ The logical flow of the circuitry is as follows:
 
 The role of the other essential pixel components, the color filter arrays and microlenses, is explained in Section @sec-sensor-components.  In @sec-system-modeling-overview I describes how to calibrate and model sensor performance, from the scene light field to image capture.
 
-## CMOS circuits {#sec-sensor-circuits}
+## Two Readout Paradigms: Charge Transfer vs. In-Pixel Amplification {#sec-sensor-circuits}
 
-<!--
-Resources has a good markdown file about the properties required of the various transistors for the 4T case.  That could be a good  callout note. That note could integrate the various comments in this section.
--->
+- **Explain Boyle & Smith's CCD architecture ("The Bucket Brigade"):**
+  - Explain that in a CCD, pixels have no internal amplifiers or switches.
+  - Instead, the sensor acts as a giant analog shift register. Multi-phase clock voltages applied to gate electrodes march the charge packets across columns and rows, like a bucket brigade, until each packet reaches a single output charge-to-voltage amplifier at the corner.
+  - *The CCD Strength:* Every pixel passes through the exact same output amplifier, providing extraordinary uniformity (near-zero fixed pattern noise) and high linearity.
+  - *The CCD Bottleneck:* Physically moving charge across large silicon wafers requires high clocking voltages (10–15 V), consumes substantial dynamic power ($P \propto C V^2 f$), is relatively slow, and requires specialized manufacturing lines that cannot integrate digital logic, clock generators, or ADCs on the same chip.
+- **Explain the CMOS Matrix Readout ("Random-Access Memory"):**
+  - Contrast this with CMOS, where the sensor operates like an addressable RAM chip (row decoders and column lines).
+  - Briefly mention why early Passive Pixel Sensors (PPS) failed: dumping a small charge directly onto a long, high-capacitance column bus drowned the signal in noise.
+  - Introduce Eric Fossum's Active Pixel Sensor (APS) concept: putting a buffer amplifier (source follower) *inside* each pixel to convert charge to voltage locally before driving the column line.
+
+## CMOS pixel circuits {#sec-pixel-circuits}
+
 ### Three-Transistor (3T) Pixel Design {#sec-3T-pixel-design}
 
 ![The classic CMOS 3-transistor (3T) active pixel circuit design (see @fossum1997-early).](images/sensors/14-pixels/03-3T-Circuit.png){#fig-sensor-3T-circuit width="60%"}
@@ -95,6 +75,10 @@ Vdd is positive supply voltage  (http://encyclopedia2.thefreedictionary.com/Vdd 
 ```
 
 ### Four-Transistor (4T) pixel design {#sec-4T-pixel-design}
+
+<!--
+Resources has a good markdown file about the properties required of the various transistors for the 4T case.  That could be a good  callout note. That note could integrate the various comments in this section.
+-->
 
 ![The 4T pixel circuit introduces a pinned photodiode and an additional transistor. When activated, the new transistor transfers the accumulated charge from the photodiode to a storage capacitor (the floating diffusion node, $C_{fd}$). The rest of the circuit, including readout and row select, is similar to the 3T design.](images/sensors/14-pixels/03-4T-Circuit.png){#fig-sensor-4T-circuit width="60%"}
 
@@ -120,27 +104,7 @@ The readout process begins with a control signal sent to a specific row of pixel
 
 In most CMOS sensors, ADCs are shared among groups of columns to reduce complexity and save space. This sharing is achieved through a process called **multiplexing**, where the ADC sequentially converts the analog signals from each column in its group into digital values. Typically, ADCs multiplex signals from 8 or 16 columns, depending on the sensor design and application. Once the data from the active row is fully read out, the control signal moves to the next row, and the process repeats. 
 
-## Rolling shutter {#sec-rolling-shutter}
-So that all of the pixels have the same exposure duration, it is necessary to reset and integrate the pixels in each row a little before the pixels in the subsequent row.  Thus, the data in each row is captured a little bit before the data in each of the following rows. This sequential row-by-row readout introduces a temporal pattern known as a **rolling shutter** into the image data.  
-
-@fig-rolling-shutter illustrates the impact of this readout timing. The telephone poles captured in by this CMOS camera from a  bullet train in Japan appear slanted. This is because the train is moving quickly, and the rows at the top are captured before the rows at the bottom.  During this time, the telephone pole has shifted position to the right.  The Japanese are very good at construction: the poles are straight.  Very straight.
-
-::: {.content-visible when-format="pdf"}
-![Movie frame illustrating a rolling shutter capture effect.](images/sensors/14-pixels/rollingShutter-still.png){#fig-rolling-shutter width="60%"}
-:::
-
-::: {.content-visible when-format="html"}
-![Movie illustrating a rolling shutter capture effect.](images/sensors/14-pixels/rollingShutter-movie.mp4){#fig-rolling-shutter width="60%"}
-:::
-
-Technology developments described below enable a different capture method. Some memory is put into each pixel, enabling the sensor to store the pixel value locally.  All of the pixels are exposed at the same time, and the data is stored in the local memory.  This design, called a [**global shutter**]{#def-global-shutter} eliminates the rolling shutter effect.  
-
-::: {.callout-note collapse="false" title="Rolling shutter simulation"}
-This [ISETCam script](https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/03Sensor/fise_sensorRollingShutter.html){target=_blank} simulates a rolling shutter. The timing and spatial parameter details of the sensor are included.
-
-![Simulated rolling shutter effect.](images/sensors/14-pixels/rolling-shutter-simulated.png){#fig-rolling-shutter-simulated width="60%"}
-
-:::
+Because the rows of the sensor are read out sequentially, the exposure duration of each row begins and ends at slightly different times. This sequential row-by-row timing, known as a **rolling shutter**, and its alternative, the **global shutter**, are analyzed in detail in @sec-rolling-shutter.
 
 ## Sensor evolution {#sec-sensor-evolution}
 
@@ -242,7 +206,7 @@ The **stacked sensor** architecture overcomes this limitation by physically sepa
 
 The key enabling technology is called **die stacking**. The silicon layers are bonded together and electrically connected using two main methods. The original approach used **Through-Silicon Vias (TSVs)**—tiny holes etched through the silicon and filled with a conductive material (such as copper or tungsten) to create vertical electrical connections. 
 
-More recently, **Cu-Cu (copper-to-copper)** direct bonding has become common. In this method, patterned copper pads on each wafer are precisely aligned and bonded under heat and pressure, allowing for dense, fine-pitch interconnects between the pixel and logic layers. Cu-Cu bonding is ideal for high-resolution, high-speed sensors, enabling features like  per-pixel memory used for [global shutters](#def-global-shutter) which are sold by many companies. TSVs are still used for tasks such as power delivery and global I/O routing.
+More recently, **Cu-Cu (copper-to-copper)** direct bonding has become common. In this method, patterned copper pads on each wafer are precisely aligned and bonded under heat and pressure, allowing for dense, fine-pitch interconnects between the pixel and logic layers. Cu-Cu bonding is ideal for high-resolution, high-speed sensors, enabling features like per-pixel memory used for [global shutters](sensors-05-control.qmd#def-global-shutter) which are sold by many companies. TSVs are still used for tasks such as power delivery and global I/O routing.
 
 Stacked sensors have unlocked new capabilities in image sensor design. By separating the photodiode and circuitry layers, manufacturers can improve light sensitivity, reduce noise, and add advanced processing features directly beneath the pixel array. This architecture forms the foundation for ongoing innovation in sensor performance and functionality.
 

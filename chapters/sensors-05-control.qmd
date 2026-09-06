@@ -101,7 +101,7 @@ The underlying principle is based on the optical light field. For pixels near th
 
 ![Shift from defocus. Needs work. Also, could do it with the Chess Set image and true light field simulation. t_cameraLightField.](images/sensors/17-control/03-sensors-lf-shift.png){#fig-sensor-lf-shift width="80%"}
 
-By using two photodiodes under each microlens, DPAF sensors capture some information about the optical light field—the left and right subpixels sample rays from different parts of the lens. This concept could be extended further: with more subpixels, it may be possible to recover even richer light field information, opening up new possibilities for computational imaging and post-capture refocusing (@sec-sensor-lightfield-camera).
+By using two photodiodes under each microlens, DPAF sensors capture some information about the optical light field—the left and right subpixels sample rays from different parts of the lens. This concept could be extended further: with more subpixels, it may be possible to recover even richer light field information, opening up new possibilities for computational imaging and post-capture refocusing (@sec-lightfield-cameras).
 
 ## Exposure Control {#sec-exposure-control}
 To capture a high-quality image, the exposure must be set so that dark regions generate enough electrons to rise above the sensor’s noise floor, while bright regions do not exceed the pixel’s full well capacity (@sec-wellcapacity-dynamicrange). If the exposure time is too short, pixels in dark areas collect very few electrons—sometimes fewer than the noise level. Even with a low-noise sensor, the inherent Poisson noise means that a small number of electrons results in a low signal-to-noise ratio. For example, if a pixel collects an average of 4 electrons, the standard deviation is 2, so the SNR is only 2.
@@ -224,5 +224,46 @@ As the table shows, the regression estimator has lower SNR (ratio less than 1) t
 (See Figure @fig-snr-exponential if added.) -->
 
 :::
+
+## Shutter timing: Rolling and global shutters {#sec-rolling-shutter}
+
+In electronic image sensors, the shutter controls the precise time when each pixel begins and ends its exposure. Unlike traditional mechanical shutters in film cameras—which open and close physical curtains in front of the film plane—most CMOS sensors control exposure electronically through the timing of pixel reset and readout signals. There are two primary electronic shuttering modes: **rolling shutter** and **global shutter**.
+
+### Rolling shutter {#sec-rolling-shutter-concept}
+
+In a standard CMOS sensor with row-by-row multiplexed readout (@sec-cmos-multiplex), reading all pixels simultaneously is impractical because each column line connects to a shared amplifier and ADC. To ensure that every pixel integrates light for the same exposure duration, the sensor resets and reads each row sequentially. 
+
+Row 1 is reset, exposed for duration $T$, and read out; shortly thereafter, Row 2 is reset, exposed for duration $T$, and read out; and so on down through the entire sensor array. Because the start and end of exposure roll down the array line by line, this timing pattern is called a **rolling shutter**.
+
+While a rolling shutter operates efficiently with minimal pixel circuitry, it introduces temporal distortion when objects in the scene move rapidly or when the camera itself moves during exposure. 
+
+@fig-rolling-shutter illustrates the impact of this readout timing. The telephone poles captured by this CMOS camera from a bullet train in Japan appear slanted. This is because the train is moving quickly, and the rows at the top of the sensor are captured before the rows at the bottom. During the time it takes the readout to sweep from top to bottom, the telephone pole has shifted position to the right relative to the camera frame. (The Japanese are very good at construction: the poles are straight. Very straight.)
+
+::: {.content-visible when-format="pdf"}
+![Movie frame illustrating a rolling shutter capture effect.](images/sensors/17-control/rollingShutter-still.png){#fig-rolling-shutter width="60%"}
+:::
+
+::: {.content-visible when-format="html"}
+![Movie illustrating a rolling shutter capture effect.](images/sensors/17-control/rollingShutter-movie.mp4){#fig-rolling-shutter width="60%"}
+:::
+
+::: {.callout-note collapse="false" title="Rolling shutter simulation"}
+This [ISETCam script](https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/03Sensor/fise_sensorRollingShutter.html){target=_blank} simulates a rolling shutter. The timing and spatial parameter details of the sensor are included.
+
+![Simulated rolling shutter effect.](images/sensors/17-control/rolling-shutter-simulated.png){#fig-rolling-shutter-simulated width="60%"}
+:::
+
+### Global shutter {#sec-global-shutter-concept}
+
+To eliminate motion skew, wobble (the "jello effect"), and flash banding caused by rolling shutters, an image sensor must expose all pixels at the exact same instant in time. This capture mode is known as a [**global shutter**]{#def-global-shutter}.
+
+In a global shutter sensor:
+
+1. **Simultaneous Exposure:** All pixels across the entire array begin exposure simultaneously via a global reset pulse, and all stop exposing simultaneously.
+2. **In-Pixel Storage:** Because all pixels finish exposure at the same time but readout must still proceed sequentially row-by-row, each pixel must have an in-pixel analog storage node (a shielded capacitor or memory element) to hold the accumulated charge or voltage until its turn to be read.
+3. **Sequential Readout:** Once charge is safely transferred into the shielded storage node, the rows can be digitized sequentially without accumulating any additional light.
+
+In classic front-side illuminated planar CMOS sensors, adding a shielded storage node inside each pixel reduced the silicon area available for the photodiode, significantly lowering the sensor's fill factor and sensitivity. As we explore in @sec-stacked-sensors, modern 3D stacked silicon architectures (such as Cu-Cu direct bonding) solve this trade-off by placing the storage and readout electronics on a separate layer beneath the photodiode array. This enables modern high-speed cameras—such as the Sony $\alpha9$ III (@sec-digital-pixel)—to achieve full-frame global shutter capture at high frame rates (120 frames per second) with zero motion distortion.
+
 
 

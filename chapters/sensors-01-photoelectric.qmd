@@ -143,7 +143,33 @@ https://www.perplexity.ai/search/when-einstein-worked-out-the-p-_doyK0P0SPCj2lF7
 -->
 :::
 
-## The random nature of photon absorptions{#sec-photons-poisson}
+## Semiconductors and electrons {#sec-semiconductor-physics}
+Atoms in a silicon semiconductor are arranged in a crystalline structure, and their electrons occupy specific energy levels grouped into two main bands: the **valence band** (lower energy) and the **conduction band** (higher energy). Under normal conditions, most electrons remain in the valence band. When a silicon atom absorbs a photon, an electron can be excited from the valence band to the conduction band (@fig-sensor-bandgap).
+
+<!--
+A particularly clear explanation with figures and a video.
+https://scientificimaging.com/knowledge-base/photoelectric-effect/ 
+-->
+
+### Bandgap {#sec-bandgap-photon-absorption}
+The minimum energy required for this transition is called the **bandgap**, and it is measured in electron volts (eV). For silicon at room temperature ($21^\circ\text{C}$), the bandgap is 1.12 eV. Only photons with energy equal to or greater than this value can generate free electrons in silicon.
+
+![Energy bands in silicon semiconductors. A photon can excite an electron in the valence band. If the photon has enough energy, the electron can shift to the conduction band, becoming a free electron that can be stored and counted.](images/sensors/13-photons/03-sensor-bandgap.png){#fig-sensor-bandgap width=50%}
+
+### Wavelength effects in silicon sensors {#sec-wavelength-effects}
+There are several wavelength-dependent effects worth noting about silicon sensors. First, we can calculate the energy in Joules of a photon of wavelength $\lambda$ using Planck's photon energy formula (@eq-plancks-formula).
+
+We can convert from Joules (J) to electron volts (eV) using the relationship:
+
+$$
+1~\text{eV} = {1.602 \times 10^{-19}}~\text{J} 
+$$ {#eq-joules-ev}
+
+A wavelength of 1100 nm has just enough energy (1.12 eV) to transition an electron across the bandgap: thus, silicon sensors are insensitive to electromagnetic radiation beyond 1100 nm, and infrared sensors must use different semiconductor materials (such as InGaAs). Second, photons with wavelengths shorter than 1100 nm have more than enough energy to excite electrons across the bandgap, so silicon absorbs radiation across the entire visible spectrum (approximately 400–700 nm).
+
+Third, the probability that a photon excites an electron across the bandgap depends on the photon's energy level. Higher-energy (shorter wavelength) photons are absorbed much closer to the surface of the silicon, whereas lower-energy (longer wavelength) photons penetrate deeper into the material before being absorbed. Short-wavelength (blue) photons generate electrons near the surface, while long-wavelength (red and near-infrared) photons generate electrons deeper in the silicon. This depth-dependence on wavelength has even been exploited to design color image sensors that separate colors by depth without requiring a surface color filter array (@sec-sensor-foveon).
+
+## The random nature of photon absorptions {#sec-photons-poisson}
 When we model light as a wavefunction, we can only predict the probability that a photon will generate an electron. This means that even with a perfectly stable light source, the number of electrons generated in a photodiode will fluctuate from one measurement to the next. These statistical fluctuations are a key feature of how light interacts with matter and are central to quantum optics.
 
 The number of photon absorptions in a photodiode follows the Poisson probability distribution. This statistical property was formalized in the 1950s by two groups: one studying visual sensitivity in the retina (@pirenne1951-poisson, @barlow1956-retinalnoise), and another investigating the physics of electromagnetic radiation and image sensors (@mandel1959-poissonabsorptions).[^sensors-01-photoelectric-1]
