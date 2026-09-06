@@ -47,7 +47,7 @@ The narrative arc across the book should follow a clear 4-step conceptual progre
 
 ### A. `chapters/part-sensors.qmd` (Part III Overview)
 
-- [ ] **Frame the two fundamental challenges of electronic imaging:**
+- [x] **Frame the two fundamental challenges of electronic imaging:**
   Update the introductory text (around line 8) to state that converting an optical image into a digital image involves two distinct steps:
   1. *Photogeneration (Physics):* Converting incident photons into mobile electron charges inside silicon via the photoelectric effect (identical across CCD and CMOS).
   2. *Readout Architecture (Engineering):* Collecting and measuring those tiny charge packets across an array—tracing the journey from Boyle & Smith's charge-domain shifting (CCD) to modern voltage-domain active pixels (CMOS).
@@ -56,7 +56,7 @@ The narrative arc across the book should follow a clear 4-step conceptual progre
 
 ### B. `chapters/sensors-01-photoelectric.qmd` (Photons and Electrons)
 
-- [ ] **Streamline the opening overview (lines 11–16):**
+- [x] **Streamline the opening overview (lines 11–16):**
   - **Problem:** Lines 13–15 jump into Passive Pixel Sensors (PPS), Active Pixel Sensors (APS), microelectronics fabrication lines, and "camera-on-a-chip." The reader has not yet encountered a p-n junction, capacitance, or a transistor circuit, making this premature.
   - **Recommendation:** Keep `sensors-01` focused on the physics of light-matter interaction. Credit Boyle & Smith for showing that solid-state silicon could replace chemical film, note that all solid-state sensors share identical photodiode physics, and explicitly defer the circuit readout debate (CCD vs. CMOS) to `sensors-02`.
   - **Suggested draft for lines 11–16:**
@@ -74,7 +74,7 @@ The narrative arc across the book should follow a clear 4-step conceptual progre
 
 This is the primary home for the transition. Several specific edits are needed:
 
-- [ ] **Fix physical inaccuracy at Line 29:**
+- [x] **Fix physical inaccuracy at Line 29:**
   - **Current text:**
     > *"Without special circuitry, the hole and electron will re-combine. To make an image sensor, we need a method to measure the number of electrons. In a CCD an electric field between the bands prevents recombination. In CMOS electrons are trapped in capacitors placed in the silicon. We explain this circuitry below."*
   - **Issue:** Both CCD and CMOS use an electric field in a reverse-biased depletion region (a potential well) to separate electrons and holes before they recombine. Both store electrons on capacitance.
