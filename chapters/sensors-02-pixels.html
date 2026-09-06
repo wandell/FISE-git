@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-08-29">
+<meta name="dcterms.date" content="2026-09-06">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>17&nbsp; Pixels and sensors – Foundations of Image Systems Engineering</title>
@@ -600,7 +600,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 29, 2026</p>
+      <p class="date">September 6, 2026</p>
     </div>
   </div>
   
@@ -626,7 +626,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: August 29, 2026
+Last updated: September 6, 2026
 !-->
 </div>
 </div>
@@ -719,7 +719,7 @@ Resources has a good markdown file about the properties required of the various 
 <img src="images/sensors/14-pixels/03-3T-Circuit.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensor-3T-circuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17.4: The original CMOS 3-transistor (3T) circuit design (<span class="citation" data-cites="fossum1997-early">Fossum (<a href="references.html#ref-fossum1997-early" role="doc-biblioref">1997</a>)</span>).
+Figure&nbsp;17.4: The classic CMOS 3-transistor (3T) active pixel circuit design (see <span class="citation" data-cites="fossum1997-early">Fossum (<a href="references.html#ref-fossum1997-early" role="doc-biblioref">1997</a>)</span>).
 </figcaption>
 </figure>
 </div>
@@ -744,7 +744,7 @@ Figure&nbsp;17.5: The 4T pixel circuit introduces a pinned photodiode and an add
 </figcaption>
 </figure>
 </div>
-<p>Since about 2000, most CMOS image sensors have used a four-transistor (4T) pixel circuit <span class="citation" data-cites="fossum2014-pinnedpd">(<a href="references.html#ref-fossum2014-pinnedpd" role="doc-biblioref">Fossum and Hondongwa 2014</a>)</span>. The 4T pixel adds two important features: a pinned photodiode (PPD) and a transfer gate transistor (<a href="#fig-sensor-4T-circuit" class="quarto-xref">Figure&nbsp;<span>17.5</span></a>). The pinned photodiode improves charge storage and reduces noise, while the transfer gate allows precise movement of the collected charge from the photodiode to a storage node called the floating diffusion, which has a capacitance <span class="math inline">\(C_{fd}\)</span>. The other circuit elements—reset, row select, and source follower—remain the same as in the 3T design.</p>
+<p>Since about 2000, most CMOS image sensors have used a four-transistor (4T) pixel circuit <span class="citation" data-cites="fossum2014-pinnedpd">(<a href="references.html#ref-fossum2014-pinnedpd" role="doc-biblioref">Fossum and Hondongwa 2014</a>)</span>. The 4T pixel adds two important features: a pinned photodiode (PPD), originally invented by Nobukazu Teranishi in 1980 for CCDs, and a transfer gate transistor (<a href="#fig-sensor-4T-circuit" class="quarto-xref">Figure&nbsp;<span>17.5</span></a>). The pinned photodiode improves charge storage, drastically lowers dark current, and enables complete charge transfer, while the transfer gate allows precise movement of the collected charge to a storage node called the floating diffusion (with capacitance <span class="math inline">\(C_{fd}\)</span>). This arrangement enables true correlated double sampling (CDS) to eliminate reset noise. The other circuit elements—reset, row select, and source follower—remain the same as in the 3T design.</p>
 <p>The transfer gate and floating diffusion give the circuit better control over when and how charge is transferred and measured, which helps reduce noise and improve image quality.</p>
 <p>Today, the 4T pixel is the standard in almost all high-performance CMOS image sensors, including those found in smartphones, industrial cameras, cars, and scientific instruments.</p>
 <!--
@@ -944,7 +944,8 @@ BSI technology development
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>The concept of back-side illuminated (BSI) CMOS image sensors was first proposed by Eric Fossum in 1994 to address the limitations caused by metal wiring obstructing incoming light and to improve sensitivity. While the benefits of rearranging the sensor layers were clear to many, developing a practical manufacturing process proved challenging. It took more than a decade for BSI technology to become commercially viable. OmniVision Technologies was among the first to introduce a commercial BSI sensor, releasing the OV8810 (1.4 μm pixels, 8 megapixels) in September 2008. Sony soon followed, launching the first widely adopted BSI sensors in 2009. See more in this <a href="https://en.wikipedia.org/wiki/Back-illuminated_sensor">Wikipedia article on BSI</a>.</p>
+<p>The concept of back-side illumination (BSI) was first developed decades earlier for specialized charge-coupled devices (CCDs) used in astronomy and space missions, where incoming light struck the thinned backside of the silicon substrate unobstructed by surface gate electrodes. Bringing BSI to commercial CMOS image sensors, however, required solving formidable manufacturing challenges: the silicon wafer had to be thinned to only a few micrometers and its back surface carefully passivated to prevent catastrophic dark current and pixel crosstalk.</p>
+<p>After more than a decade of process development across the semiconductor industry, OmniVision Technologies (working with TSMC) introduced one of the first commercial BSI CMOS sensors (the OV8810) in 2008. Sony followed closely in 2009 with its widely adopted “Exmor R” sensors, which firmly established BSI as the standard architecture for high-performance consumer and smartphone cameras. See more in this <a href="https://en.wikipedia.org/wiki/Back-illuminated_sensor">Wikipedia article on BSI</a>.</p>
 <p>Here is an SEM cross section of an early BSI sensor from Sony. You can see the photodetector (PD) is close to the microlens array level without all the intervening metal layers.</p>
 <div id="fig-bsi-sony-sem" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1044,7 +1045,7 @@ Commercialization of the digital pixel sensor
 <div class="callout-body-container callout-body">
 <p>El Gamal co-founded Pixim, Inc.&nbsp;in 1998, a fabless semiconductor company that commercialized chipsets for security cameras based on this DPS technology. A challenge for early DPS implementations was the reduced photodiode area in the planar array due to the additional ADC circuitry. This increased the cost of the chip and narrowed the field of potential applications and prevented widespread mainstream adoption for many years. Pixim was acquired by Sony Electronics in 2012.</p>
 <p>In 2023 Sony introduced the <a href="https://en.wikipedia.org/wiki/Sony_%CE%B19_III">Sony a9 iii</a>. It has 24.6 Megapixels and a global shutter. The camera can operate at high frame rates <a href="https://www.sony.co.uk/interchangeable-lens-cameras/products/ilce-9m3?locale=en_GB">(120 frames per sec)</a>. It appears to be using a digital pixel approach.</p>
-<p>It’s highly probable that <a href="https://sites.google.com/site/yusukeoike">Yusuke Oike</a> who worked in the El Gamal group from 2010-2012, played a crucial role in the development and design of the groundbreaking global shutter sensor that is at the core of the a9 III’s capabilities. He has been with Sony Corporation and Sony Semiconductor Solutions Corporation for many years, focusing on research and development of CMOS image sensors, pixel architecture, circuit design, and imaging device technologies. He’s held positions like Senior General Manager of Research Division and is even listed as the newly appointed CTO of Sony Semiconductor Solutions Corporation in a 2025 news release.</p>
+<p><a href="https://sites.google.com/site/yusukeoike">Yusuke Oike</a>, who was a visiting scholar in the El Gamal group from 2010–2012, was the manager in charge of the project that developed the groundbreaking global shutter sensor at the core of the a9 III’s capabilities. He has been with Sony Corporation and Sony Semiconductor Solutions Corporation for many years, leading research and development in CMOS image sensors, pixel architecture, circuit design, and imaging device technologies. He has held leadership positions including Senior General Manager of the Research Division and was appointed CTO of Sony Semiconductor Solutions Corporation in 2025.</p>
 </div>
 </div>
 </div>
