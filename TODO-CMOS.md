@@ -88,18 +88,19 @@ This is the primary home for the transition. Several specific edits are needed:
   - **Replacement text:**
     > *"Without an electric field, the liberated electron and hole will quickly recombine. In both CCD and CMOS sensors, an internal electric field—created by a reverse-biased diode junction or a biased gate electrode—separates the charges and collects the electrons in a potential well. The defining difference between CCD and CMOS is not how electrons are created, but **how that collected charge is transferred and read out**."*
     >
-- [ ] **Add a dedicated subsection before or at Section 14.3 (`#sec-cmos-pixel-fsi`):**
-  *Title suggestion:* `### Two Readout Paradigms: Charge Transfer vs. In-Pixel Amplification`
+- [X] **Add a dedicated section on the Two Readout Paradigms (`#sec-sensor-circuits`):**
+  *Implemented as:* `## Two Readout Paradigms {#sec-sensor-circuits}`, featuring `### Charge Transfer: The CCD Bucket Brigade {#sec-ccd-readout}` and `### In-Pixel Amplification: The CMOS Active Pixel Sensor {#sec-active-pixel-sensor}`.
 
   - **Explain Boyle & Smith's CCD architecture ("The Bucket Brigade"):**
-    - Explain that in a CCD, pixels have no internal amplifiers or switches.
-    - Instead, the sensor acts as a giant analog shift register. Multi-phase clock voltages applied to gate electrodes march the charge packets across columns and rows, like a bucket brigade, until each packet reaches a single output charge-to-voltage amplifier at the corner.
-    - *The CCD Strength:* Every pixel passes through the exact same output amplifier, providing extraordinary uniformity (near-zero fixed pattern noise) and high linearity.
-    - *The CCD Bottleneck:* Physically moving charge across large silicon wafers requires high clocking voltages (10–15 V), consumes substantial dynamic power ($P \propto C V^2 f$), is relatively slow, and requires specialized manufacturing lines that cannot integrate digital logic, clock generators, or ADCs on the same chip.
+    - Explains that pixels have no in-pixel amplifiers or switches.
+    - Sensor acts as an analog shift register using multi-phase clocking, transferring charge packets row-by-row into a high-speed serial readout register, and then onto a floating diffusion node.
+    - *The CCD Strength:* Every pixel passes through the exact same output amplifier, achieving near-zero fixed pattern noise and high linearity.
+    - *The CCD Bottleneck:* High clocking voltages (10–15 V), dynamic power consumption, and the strict requirement for "six nines" CTE (@nte-sensor-cte).
   - **Explain the CMOS Matrix Readout ("Random-Access Memory"):**
-    - Contrast this with CMOS, where the sensor operates like an addressable RAM chip (row decoders and column lines).
-    - Briefly mention why early Passive Pixel Sensors (PPS) failed: dumping a small charge directly onto a long, high-capacitance column bus drowned the signal in noise.
-    - Introduce Eric Fossum's Active Pixel Sensor (APS) concept: putting a buffer amplifier (source follower) *inside* each pixel to convert charge to voltage locally before driving the column line.
+    - Contrasts with CMOS addressable matrix readout.
+    - Explains why early Passive Pixel Sensors (PPS) failed (column bus capacitance drowning charge in noise; El Gamal's "unnatural act" critique).
+    - Introduces Eric Fossum's Active Pixel Sensor (APS) concept at NASA JPL and in-pixel source-follower buffer, alongside Ted Adelson's "why not put an amplifier in the pixel?" anecdote.
+    - Integrates responsive Vimeo animations for both CCD (@fig-ccd-animation) and CMOS (@fig-cmos-animation) with conditional HTML/PDF formatting.
 - [ ] **Enhance the 4T Pixel and Nobukazu Teranishi's Pinned Photodiode (Section 14.3.2, line 94):**
 
   - **The Narrative Hook:** When 3T CMOS sensors first appeared in the 1990s, CCD proponents called them noisy toys ("CCD dinosaurs vs. CMOS fleas"). 3T pixels suffered from high dark current and $kTC$ reset noise because reading the voltage required resetting the photodiode, leaving no uncorrupted reference state.

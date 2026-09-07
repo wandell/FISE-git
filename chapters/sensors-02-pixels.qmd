@@ -19,20 +19,103 @@ A major breakthrough came in the early 1990s with the development of the modern 
 
 Finally, we review how pixel structures have evolved since the first implementation, from a front-side to back-side illumination, deep photodiodes, stacking, and digital pixels.  These changes vastly improved sensitivity, speed, and dynamic range. In subsequent chapters, we see how additional on-sensor components—such as color filters and microlenses—shape the captured data (@sec-sensor-components) and how to model and measure sensor performance (@sec-system-modeling-overview).
 
-## CMOS Pixel: Front-side illuminated {#sec-cmos-pixel-fsi}
-CMOS image sensors use photodiodes—and the photoelectric effect—to measure and store the optical light field at the sensor surface. The key technical breakthrough that enabled CMOS sensors was the invention of circuitry to store and then transmit the photon-generated electrons from the photodiode to the computer.
+## Two Readout Paradigms {#sec-sensor-circuits}
 
-The photodiode and this circuitry are critical parts of the pixel; there are other essential components as well (@fig-pixel-overview). For example, effective image sensors place a small lens (microlens) above each pixel.  Color image sensors place a color filter between the microlens and the photodiode that passes certain wavelengths and blocks others. 
+Solid-state image sensors rely on two fundamentally different readout architectures:
 
-![Schematic of the early CMOS pixel architecture.  This image shows a microlens and color filter, which are typically part of the pixel. The microlens is centered over the pixel here, but for pixels at the edge of the sensor array it will be positioned a bit to the side. This color filter passes long wavelength (red-appearing) light, but different pixels will have different color filters. The first layer of silicon, with its photodiode and classic circuitry sharing space, are shown. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>](images/sensors/14-pixels/03-pixel-overview.png){#fig-pixel-overview width="60%"}
+1. **Charge transport (CCD):** Charge packets are physically shifted across the silicon array step-by-step—like a bucket brigade—to a single corner amplifier.
+2. **In-pixel amplification (CMOS):** Each pixel converts charge to a voltage locally, and an addressable matrix of row and column wires reads out the voltages, much like digital random-access memory (RAM).
+
+### Charge Transfer: The CCD Bucket Brigade {#sec-ccd-readout}
+
+Boyle and Smith's invention of the CCD (@boyle1970-ccd-first) was a pivotal milestone: the principle of using the photoelectric effect to convert light into charge within semiconductor silicon remains the foundation of all solid-state imaging. A second, equally critical aspect of sensor design is how to measure the charge collected within the silicon substrate. The original Boyle and Smith design had no transistors inside the imaging area; the pixels were simply a sequence of MOS capacitors (metal or polysilicon gates over thin silicon dioxide on silicon). With this technology, it was not feasible to include amplifier circuits at each pixel. Instead, they devised an ingenious method—analogous to a bucket brigade—to move charge packets across the substrate without loss to a shared measuring circuit.
+
+This method uses a coordinated, two-stage transfer process (@fig-ccd-animation). Sets of gate electrodes are laid out across the silicon and driven by alternating voltages. Raising the voltage on an adjacent gate while lowering it on the current gate sequentially creates a traveling electrostatic potential well that sweeps electrons along. During readout, the entire two-dimensional array shifts its charge packets downward one row at a time into a specialized, high-speed **serial readout register** running along the bottom edge of the sensor. While the vertical array pauses, this serial register clocks the row of charge packets rapidly along the edge to the corner of the chip. There, each packet is transferred onto a tiny capacitor called the **floating diffusion node**. Dumping the electrons onto this capacitor produces a voltage drop that is proportional to the number of electrons ($\Delta V = Q/C$). A single, dedicated buffer amplifier senses this voltage and sends it to an analog-to-digital converter (ADC) to record the pixel's digital value.
+
+::: {#fig-ccd-animation}
+
+::: {.content-visible when-format="html"}
+{{< video https://vimeo.com/103279733 aspect-ratio="16x9" title="CCD Animation Sequence" >}}
+:::
+
+::: {.content-visible when-format="pdf"}
+[Watch an animation of the CCD charge transfer sequence on Vimeo.](https://vimeo.com/103279733){target=_blank}
+:::
+
+Animation of charge transfer in a CCD image sensor. Photoelectrons collected across the array shift downward row by row into a high-speed serial register at the edge. The colors of the charge packets in the animation indicate the color filter above each photodiode; the photoelectrons themselves are identical. Notice the timing difference: the full array advances one row at a time, while the serial register clocks each packet rapidly to a single floating diffusion capacitor and output amplifier at the corner of the chip. Because every pixel's charge is measured by the exact same amplifier, CCDs achieve outstanding spatial uniformity (near-zero fixed-pattern noise) and high linearity.
+
+:::
+
+Precisely moving charge across large silicon wafers requires high clocking voltages (10–15 V), consumes substantial power, and is relatively slow. Implementing this approach requires specialized manufacturing lines that cannot integrate digital logic, clock generators, or ADCs on the same chip. @nte-sensor-cte describes why moving and measuring the charge imposes a strong constraint on the precision of the movement if we hope to measure the signal accurately. 
+
+::: {#nte-sensor-cte .callout-note collapse="true" title="Charge Transfer Efficiency: The necessity of 'six nines'"}
+In a CCD, charge packets are shifted across the silicon array from pixel to pixel. For a high resolution image sensor, there will be many steps. Each step must be very high quality or the loss of image quality can be significant.
+
+Consider a $2048 \times 2048$ array. To read out the pixel in the corner furthest from the output amplifier, its charge packet must be shifted vertically down 2,048 rows, and then shifted horizontally across 2,048 columns in the serial readout register. In a typical 3-phase CCD design, this requires $N \approx 4,000$ to $12,000$ individual gate-to-gate transfers.
+
+If the **Charge Transfer Efficiency (CTE)** per transfer is $\eta$, the fraction of the original charge packet that successfully reaches the output amplifier after $N$ transfers is:
+
+$$
+\text{Fraction arriving intact} = \eta^N
+$$
+
+If $\eta = 0.999$ (99.9%—a value that sounds remarkably good in most engineering contexts), the outcome across 4,000 transfers is disastrous:
+
+$$
+(0.999)^{4,000} \approx 0.018
+$$
+
+Only $1.8\%$ of the electrons reach the output amplifier in the correct pixel; the remaining $98.2\%$ are left behind in intermediate potential wells, creating a severe trailing smear across the image!
+
+| CTE ($\eta$) | Description | Signal intact after 1,000 transfers | Signal intact after 4,000 transfers | Signal intact after 10,000 transfers |
+|:---|:---|:---:|:---:|:---:|
+| $0.99$ | Two nines (99%) | $\approx 0.004\%$ | $\approx 0\%$ | $0\%$ |
+| $0.999$ | Three nines (99.9%) | $36.8\%$ | $1.8\%$ | $\approx 0.005\%$ |
+| $0.9999$ | Four nines (99.99%) | $90.5\%$ | $67.0\%$ | $36.8\%$ |
+| $0.99999$ | Five nines (99.999%) | $99.0\%$ | $96.1\%$ | $90.5\%$ |
+| $0.999999$ | Six nines (99.9999%) | $99.9\%$ | $99.6\%$ | $99.0\%$ |
+
+To keep trailing smear below $1\%$, scientific and astronomical CCDs require **"six nines"** of efficiency ($\eta \ge 0.999999$). 
+
+To achieve this level of perfection, electrons cannot rely on slow thermal diffusion to drift out of the potential wells; they must be rapidly swept across each gate by strong lateral electric fields. Creating these steep "potential cliffs" deep inside the silicon requires large clock voltage swings (typically 10–15 V), which is the direct source of the CCD's high dynamic power consumption and specialized manufacturing requirements.
+:::
+
+### In-Pixel Amplification: The CMOS Active Pixel Sensor {#sec-active-pixel-sensor}
+
+In the 1970s and 1980s, the limitations of unipolar MOS technologies (NMOS and PMOS) became evident: they drew significant static power and suffered from thermal regulation problems as circuit density scaled up. The massive demand for semiconductor memory drove the electronics industry toward CMOS (Complementary MOS), which drew far less power and was much easier to keep cool. Microprocessors shifted soon after.
+
+The earliest experiments with CMOS imagers used **Passive Pixel Sensors (PPS)**. In a passive pixel, each photodiode was simply connected to a column bus through a single transistor switch. Reading the pixel dumped its tiny charge packet directly onto a long, high-capacitance column bus, severely attenuating the signal and drowning it in noise. In his lectures on this topic, my Stanford colleague Abbas El Gamal would refer to dumping charge onto such a line as an "unnatural act": who would pour a few thousand electrons onto a long wire and hope that they would dribble intact to the other end? 
+
+What enabled the breakthrough to practical CMOS sensors? By the early 1990s, CMOS feature sizes shrank below $0.5\,\mu\text{m}$, meaning transistors were finally tiny enough to fit inside each pixel without occupying too much light-sensitive area (maintaining an acceptable **fill factor**). At NASA's Jet Propulsion Laboratory (JPL), Eric Fossum recognized that CCDs were trapped on expensive, specialized fab lines that could not integrate digital logic or support circuits, requiring cumbersome multi-chip camera boards with external clock drivers, multiple voltage regulators, and external ADCs. Fossum realized[^PPS-adelson] that by placing a buffer amplifier (a source-follower transistor) *inside* each pixel—creating the **Active Pixel Sensor (APS)**—charge could be converted to a voltage locally within the pixel. That voltage could then drive the high-capacitance column line with negligible signal loss. This eliminated the 15 V bucket brigade altogether and made it possible to build an entire "camera-on-a-chip" on high-volume, low-voltage commercial CMOS lines [@fossum1993-ccd-dinosaurs].
+
+[^PPS-adelson]: My friend Ted Adelson visited me in the early 2000s when I was working with Abbas El Gamal. I was explaining to Ted—who is a vision scientist and psychologist—the logic of passive pixel sensors in anticipation of an "aha" moment when I revealed Fossum's active pixel idea. As I finished describing the PPS, Ted just looked at me quizzically and said: "Why not put an amplifier in the pixel?" There must be a moral in this story somewhere.
+
+::: {#fig-cmos-animation}
+
+::: {.content-visible when-format="html"}
+{{< video https://vimeo.com/103279734 aspect-ratio="16x9" title="CMOS Animation Sequence" >}}
+:::
+
+::: {.content-visible when-format="pdf"}
+[Watch an animation of the CMOS readout sequence on Vimeo.](https://vimeo.com/103279734){target=_blank}
+:::
+
+Animation of the readout sequence in a CMOS image sensor. In contrast to the CCD (@fig-ccd-animation), charge packets are not transported across the chip. Instead, photoelectrons collected across the array are converted to a voltage locally within each pixel. Column buses then read out the voltages row by row into analog-to-digital converters at the edge of the array. The colors of the charge packets in the animation indicate the color filter above each photodiode; the photoelectrons themselves are identical. The detailed circuitry that performs this readout is described in the following sections.
+
+:::
+
+
+### CMOS pixel circuitry {#sec-pixel-circuits}
 
  @fig-pixel-overview is a schematic that omits many details. For example, notice the gap between the photodiode and the color filter. In early CMOS imagers, this gap contained many metal lines that carried control and data signals. The metal lines were organized into layers and they are illustrated in  @fig-pixel-layers. In the first generation of image sensors the distance from the microlens at the top to the photodiode at the bottom was fairly large compared to the size of the photodiode. In these early pixels, light from the main lens had to travel through what was effectively a tunnel to reach the photodiode.
 
-![Color imagers use an array of color filters to create pixels with different wavelength selectivity. The color filters are typically arranged in a repeating pattern, and the smallest repeating unit of the color filter array is called a **super pixel**. The image illustrates a super pixel for a sensor with cyan, magenta, and yellow color filters. This image emphasizes the metal lines, omitted in @fig-pixel-overview. In the original CMOS imagers, light from the main imaging lens had to pass through these metal layers before reaching the photodiode.](images/sensors/14-pixels/03-pixel-overview2.png){#fig-pixel-layers width="50%}
-
-<!-- fig-pixel-layers:  not sure where this image comes from -->
+![Schematic of the early CMOS pixel architecture.  This image shows a microlens and color filter, which are typically part of the pixel. The microlens is centered over the pixel here, but for pixels at the edge of the sensor array it will be positioned a bit to the side. This color filter passes long wavelength (red-appearing) light, but different pixels will have different color filters. The first layer of silicon, with its photodiode and classic circuitry sharing space, are shown. Source: <a href="https://evidentscientific.com/en/microscope-resource/knowledge-hub/digital-imaging/cmosimagesensors" target="_blank">Evident Scientific.</a>](images/sensors/14-pixels/03-pixel-overview.png){#fig-pixel-overview width="60%"}
 
 Pixel architecture has evolved significantly over the years, and there continue to be many novel designs. The most straightforward change is that technology has scaled, enabling pixel sizes to shrink and thus increasing spatial sampling resolution. In addition, the placement of the circuitry and metal lines has changed to below the photodiode; light no longer passes through a deep tunnel. There are other improvements to the circuitry, some experimental, that we will review later in @sec-sensor-innovations. It is helpful to first understand the concepts behind the classic circuitry, so that we can better appreciate these innovations.
+
+![Color imagers use an array of color filters to create pixels with different wavelength selectivity. The color filters are typically arranged in a repeating pattern, and the smallest repeating unit of the color filter array is called a **super pixel**. The image illustrates a super pixel for a sensor with cyan, magenta, and yellow color filters. This image emphasizes the metal lines, omitted in @fig-pixel-overview. In the original CMOS imagers, light from the main imaging lens had to pass through these metal layers before reaching the photodiode.](images/sensors/14-pixels/03-pixel-overview2.png){#fig-pixel-layers width="50%"}
+
+<!-- fig-pixel-layers:  not sure where this image comes from -->
 
 The logical flow of the circuitry is as follows:
 
@@ -41,21 +124,8 @@ The logical flow of the circuitry is as follows:
 -   During readout, the circuitry transfers the stored charge to an analog-to-digital converter (ADC).
 -   The digital image array records the amount of light captured by each pixel.
 
-The role of the other essential pixel components, the color filter arrays and microlenses, is explained in Section @sec-sensor-components.  In @sec-system-modeling-overview I describes how to calibrate and model sensor performance, from the scene light field to image capture.
+The role of the other essential pixel components, the color filter arrays and microlenses, is explained in Section @sec-sensor-components.  In @sec-system-modeling-overview I describe how to calibrate and model sensor performance, from the scene light field to image capture.
 
-## Two Readout Paradigms: Charge Transfer vs. In-Pixel Amplification {#sec-sensor-circuits}
-
-- **Explain Boyle & Smith's CCD architecture ("The Bucket Brigade"):**
-  - Explain that in a CCD, pixels have no internal amplifiers or switches.
-  - Instead, the sensor acts as a giant analog shift register. Multi-phase clock voltages applied to gate electrodes march the charge packets across columns and rows, like a bucket brigade, until each packet reaches a single output charge-to-voltage amplifier at the corner.
-  - *The CCD Strength:* Every pixel passes through the exact same output amplifier, providing extraordinary uniformity (near-zero fixed pattern noise) and high linearity.
-  - *The CCD Bottleneck:* Physically moving charge across large silicon wafers requires high clocking voltages (10–15 V), consumes substantial dynamic power ($P \propto C V^2 f$), is relatively slow, and requires specialized manufacturing lines that cannot integrate digital logic, clock generators, or ADCs on the same chip.
-- **Explain the CMOS Matrix Readout ("Random-Access Memory"):**
-  - Contrast this with CMOS, where the sensor operates like an addressable RAM chip (row decoders and column lines).
-  - Briefly mention why early Passive Pixel Sensors (PPS) failed: dumping a small charge directly onto a long, high-capacitance column bus drowned the signal in noise.
-  - Introduce Eric Fossum's Active Pixel Sensor (APS) concept: putting a buffer amplifier (source follower) *inside* each pixel to convert charge to voltage locally before driving the column line.
-
-## CMOS pixel circuits {#sec-pixel-circuits}
 
 ### Three-Transistor (3T) Pixel Design {#sec-3T-pixel-design}
 
