@@ -64,9 +64,9 @@ Bad:
 ![Lens.](images/lens.png){width="200" height="30"}
 ```
 
-Use an identified figure container for a multi-panel or tabbed figure when the
-whole group needs one reference. Give individual panels captions only when the
-reader needs to distinguish them independently.
+### Multi-panel figures (side-by-side)
+
+Use an identified figure container for a multi-panel figure when the whole group needs one reference. Give individual panels captions only when the reader needs to distinguish them independently:
 
 ```markdown
 ::: {#fig-example-comparison layout-ncol=2}
@@ -77,6 +77,34 @@ reader needs to distinguish them independently.
 Comparison of the two conditions.
 :::
 ```
+
+### Tabbed figures (`panel-tabset`)
+
+When presenting alternative views, related conditions, or sequential observations that the reader can click through, use Quarto's `.panel-tabset`.
+
+**Cross-referencing gotcha:** Always wrap the `.panel-tabset` inside an outer figure container `::: {#fig-... .figure}` with the overall caption at the bottom. Do NOT place `#fig-...` directly on the `::: {.panel-tabset}` div; Quarto's crossref filter will not number or reference a tabset div.
+
+```markdown
+::: {#fig-retina-layers-panel .figure}
+::: {.panel-tabset}
+
+## Retinal layers
+![Different stained retinal layers.](images/human/02-spatial-encoding/retina-ej.png){#fig-retina-ej width="60%"}
+
+## Five cell types
+![Schematic of the five principal retinal cell types.](images/human/02-spatial-encoding/retina-rodieck.png){#fig-retina-rodieck width="70%"}
+
+## Foveal pit
+![Cone-dominated foveal region with laterally displaced inner layers.](images/human/02-spatial-encoding/retina-fovea.png){#fig-retina-fovea width="75%"}
+:::
+A variety of ways of visualizing and characterizing the retina.
+:::
+```
+
+- Each markdown heading (`##` or `###`) inside the tabset div generates a clickable tab label.
+- Sub-figure IDs (`{#fig-...}` on the image markdown) are optional; use them when individual tabs need separate citation (e.g., `@fig-retina-ej`).
+- The overall caption sits after the closing `:::` of `.panel-tabset` but before the closing `:::` of the outer figure div.
+
 
 ## Video and format fallback
 
