@@ -32,12 +32,15 @@ Roland Shack and Ben Platt's 1971 innovation was to replace each pinhole with a 
 
 A wavefront sensor becomes especially powerful when paired with a **deformable mirror**.  This is a front surface mirror whose shape can be adjusted locally, over small regions.  When the rays in a light field are reflected by the mirror the shape of the surface sculpts the direction of the rays, or equivalently we can say the mirror changes the wavefront. An **adaptive optics** system first measures the direction of the rays (the wavefront) and then applies a correction to the rays with the deformable mirror.  This reduces the aberrations so that we can focus the light and form a high quality image.
 
-The concept was first applied in astronomical imaging. The astronomer shines a strong laser into the upper atmosphere to create a signal that will be visible on the ground. The laser is usually set to 589 nm, which excites sodium atoms in a layer of the atmosphere about 90 km (56 miles) above the earth, in the mesosphere.  These atoms, which were left behind by microscopic meteorites, are energized and when they relax back emit light in all directions at the same wavelength (resonance fluorescence). Were there no atmosphere, light from these atoms would arrive back to the telescope collimated (a flat wavefront). But atmospheric turbulence distorts the light. 
+The concept was first applied in astronomical imaging. The astronomer shines a strong laser, tuned to 589 nm, into the upper atmosphere. This laser excites sodium atoms that are in a layer of the mesosphere roughly 90 km (56 miles) above Earth[^mesophere-sodium].  The sodium absorbs the laser light and re-emit it in all directions through resonance fluorescence.  This light is called a beacon or guide star.
 
+ [^mesophere-sodium]: These atoms were deposited in this layer by vaporizing micrometeorites.
+
+The sodium layer is pretty far away, but not quite far enough for the light to arrive adequately collimated (planar) at the telescope. The rays are still a (slightly) diverging spherical wave. On a large aperture, the wavefront sagitta deviates from planarity by many wavelengths (e.g., about $40\lambda$ on a 4-meter telescope and over $200\lambda$ on a 10-meter telescope). Because this 90 km curvature is predictable, the wavefront sensing optics are set to focus at that altitude. Atmospheric turbulence then adds rapidly fluctuating, irregular phase ripples onto this nominal spherical wave.
 
 ![Laser guide star at La Palma, Observatorio del Roque de los Muchachos. The 4.2m William Herschel Telescope Canary adaptive optics system was used together with the ESO laser guide star unit. [Source](https://www.eso.org/public/blog/making-lgs-even-brighter/)](images/optics/13-wavefront-sensing/laser-guide-star.png){#fig-optics-laser-guidestar width="80%"}
 
-A wavefront sensor measures the distorted wavefront and controls a deformable mirror, as illustrated in the gif.  The mirror changes its shape by just the amount necessary to correct the wavefront, making the rays collimated (flattening the wavefront).
+A wavefront sensor measures these turbulent phase perturbations and controls a deformable mirror (illustrated below). The mirror alters its surface shape, canceling the atmospheric aberrations so that light from distant astronomical objects (which arrive from infinity) emerges with a flat, collimated wavefront.
 
 ::: {.content-visible when-format="html"}
 ![Deformable mirror](images/optics/13-wavefront-sensing/deformable_mirror.gif){#fig-deformable-mirror width="60%" fig-align="center" .margin-caption}
@@ -47,7 +50,7 @@ A wavefront sensor measures the distorted wavefront and controls a deformable mi
 ![Deformable mirror](images/optics/13-wavefront-sensing/deformable_mirror.png){#fig-deformable-mirror-static width="60%" fig-align="center" .margin-caption}
 :::
 
-This whole process updates fairly rapidly (milliseconds) because the atmosphere is changing quickly. This means the sensing must be fast and the deformable mirror must be fairly light and responsive so it can change shape quickly. The whole system is illustrated in @fig-wavefront-astronomy. The corrected image of the stars in the sky is much sharper than would be possible by imaging through the atmosphere.
+This whole process updates rapidly (milliseconds) because the atmosphere is changing quickly. This means the sensing must be fast and the deformable mirror must be fairly light and responsive so it can change shape quickly. The whole system is illustrated in @fig-wavefront-astronomy. The corrected image of the stars in the sky is much sharper than would be possible by imaging through the atmosphere.
 
 ![Wavefront-sensing architecture used in astronomy and ophthalmology. The incoming light can be from a star or reflected from the back of the eye. Adapted from [Exosens, “Short-wave infrared adaptive optics and applications,” Fig. 1](https://www.exosens.com/news/short-wave-infrared-adaptive-optics-and-applications), which credits C. Max, Center for Adaptive Optics.](images/optics/13-wavefront-sensing/01-wavefront-sensing.png){#fig-wavefront-astronomy width="70%" fig-align="center" .margin-caption}
 
@@ -149,7 +152,7 @@ TODO & REVIEW ITEMS: ACCURACY AND CLARITY ANALYSIS (optics-08-wavefront-sensing.
 
 1. SCIENTIFIC & TECHNICAL ACCURACY
 --------------------------------------------------------------------------------
-- [ ] 1.1 Laser Guide Star (LGS) Wavefront Curvature vs. Collimation:
+- [x] 1.1 Laser Guide Star (LGS) Wavefront Curvature vs. Collimation:
       * Current text (Line 36): "Were there no atmosphere, light from these atoms would arrive back to the telescope collimated (a flat wavefront)."
       * Issue: The mesospheric sodium layer is at a finite altitude (~90 km). Light radiating from this altitude reaches the telescope aperture as a diverging spherical wave (with curvature radius R ≈ 90 km), not a collimated/flat wave. In large telescopes, this produces focal anisoplanatism (the "cone effect") because the backscattered cone does not sample the identical cylinder of atmospheric turbulence traversed by starlight from infinity.
       * Action: Clarify that light from the beacon arrives as a diverging spherical wave of known curvature (which the telescope optics focus), and turbulence introduces perturbations onto this nominal wavefront.

@@ -104,7 +104,6 @@ Animation of the readout sequence in a CMOS image sensor. In contrast to the CCD
 
 :::
 
-
 ### CMOS pixel circuitry {#sec-pixel-circuits}
 
  @fig-cmos-pixel-overview-panel includes two coarse schematics of pixels from early CMOS imagers. Each gives you a sense of the complexity of the early pixel designs as well as their shortcoming. Click on each of the tabs to see the two schematics.
@@ -139,7 +138,7 @@ The role of the other essential pixel components, the color filter arrays and mi
 
 ### Three-Transistor (3T) Pixel Design {#sec-3T-pixel-design}
 
-The original CMOS pixel design uses a three-transistor (3T) circuit to store and read out the charge collected by the photodiode (@fig-sensor-3T-circuit). Each pixel contains three key transistors: $M_{rst}$ (reset), $M_{sel}$ (select), and $M_{sf}$ (source follower). The $M_{rst}$ transistor resets the photodiode by connecting it to the supply voltage (Vdd), clearing any residual charge before image capture. The $M_{sel}$ transistor selects a specific row of pixels, connecting them to the readout circuitry. The $M_{sf}$ transistor acts as a buffer, transferring the stored charge to the analog-to-digital converter (ADC) for measurement. In most sensors, each column has its own ADC, but some designs use a single ADC shared among multiple columns—a technique known as multiplexing (mux).
+The original CMOS pixel design uses a three-transistor (3T) circuit to store and read out the charge collected by the photodiode (@fig-sensor-3T-circuit). Each pixel contains three key transistors: $M_{rst}$ (reset), $M_{sel}$ (select), and $M_{sf}$ (source follower). The $M_{rst}$ transistor resets the photodiode by connecting it to the supply voltage (Vdd), clearing any residual charge before image capture. The $M_{sel}$ transistor selects a specific row of pixels, connecting them to the column lines. The $M_{sf}$ transistor acts as a buffer, driving the pixel voltage onto the column readout line for measurement by an analog-to-digital converter (ADC), as described below in @sec-cmos-multiplex.
 
 ![The classic CMOS 3-transistor (3T) active pixel circuit design (see @fossum1997-early).](images/sensors/14-pixels/03-3T-Circuit.png){#fig-sensor-3T-circuit width="60%"}
 
@@ -180,23 +179,21 @@ Subtracting the reset voltage from the signal voltage eliminates $kTC$ reset noi
 
 Today, the 4T pixel is the standard in almost all high-performance CMOS image sensors, including those found in smartphones, industrial cameras, cars, and scientific instruments [@fossum2014-pinnedpd; @Fossum2024-nx].
 
-<!--
-There is also Theuwissen diagram, with five transistors that he calls a 4T circuit.  In the paper 'Linearity analysis ...' @Wang2017-CMOSLinearity.  He says the source follower is shared by multiple rows of pixels. It is Figure 2.  
-
-The text: "Figure 2 shows the schematic of a typical voltage mode 4T pixel. The pixel circuit consists of a pinned photodiode, a charge
-transfer switch (M1), a reset switch (M2), a source follower (M3) and a row select switch (M4). The current source transistor (M5) is shared by multiple rows of pixels. VDD is the power supply while VPIX is the output voltage of pixel. VLN provides an adjustable bias current. In the following analysis, the nonlinearity caused by the row select transistor (M4) is omitted to simplify the analysis."
--->
-
 ## Multiplex readout {#sec-cmos-multiplex}
-The use of unity gain amplifiers at the pixel was one important innovation. A second innovation is the way the pixel data are read from the image sensor. In the original CCD devices, the important innovation was to find a way to move the electrons across the silicon array to a single analog-to-digital converter. But the electrons in the CMOS pixels are voltages on a large number of output lines. How shall we convert the voltages on all of these separate lines into digital readout values?
 
-![Multiplex readout of the image sensor.  The analog-to-digital converters are very fast. Each ADC serves to convert the readout voltages from multiple columns during the readout process.](images/sensors/14-pixels/03-CMOS-multiplex-readout.png){#fig-cmos-multiplex width=70%}
+In-pixel buffer amplifiers (source followers) solved the challenge of driving charge out of the pixel without noise-corrupting attenuation. The second major architectural challenge was reading out signals across the sensor array. In a classic CCD, charge packets are physically shifted across the entire silicon array to a single output amplifier and ADC at the corner (@sec-ccd-readout). In CMOS sensors, the photoelectrons in each pixel are converted to voltages that drive an addressable matrix of parallel output lines. How do we convert the analog voltages on all of these separate lines into digital values?
 
-The readout process begins with a control signal sent to a specific row of pixels, activating the row and placing the voltage from each pixel onto its corresponding column readout line. These column lines are connected to amplifiers, which buffer and amplify the signals to ensure accurate transmission. These amplified signals are then passed to an analog-to-digital converter (ADC).  The gain settings on the amplifiers, prior to the ADC, are often adjustable allowing gain settings from 1x to 4x.
+![Multiplex readout of the image sensor. In early CMOS architectures, each high-speed ADC sequentially converted the readout voltages from a group of multiplexed columns during row readout. Modern sensors place a dedicated ADC at every column.](images/sensors/14-pixels/03-CMOS-multiplex-readout.png){#fig-cmos-multiplex width=70%}
 
-In most CMOS sensors, ADCs are shared among groups of columns to reduce complexity and save space. This sharing is achieved through a process called **multiplexing**, where the ADC sequentially converts the analog signals from each column in its group into digital values. Typically, ADCs multiplex signals from 8 or 16 columns, depending on the sensor design and application. Once the data from the active row is fully read out, the control signal moves to the next row, and the process repeats. 
+The readout process begins when a row-select control signal activates a specific row of pixels, placing the voltage from each pixel in that row onto its corresponding vertical column readout line. These column lines are connected to column amplifiers, which buffer and amplify the signals to ensure accurate transmission. The analog gain of these amplifiers is often adjustable (typically from 1× to 4× or higher), which is how ISO sensitivity adjustments are implemented in hardware prior to quantization.
 
-Because the rows of the sensor are read out sequentially, the exposure duration of each row begins and ends at slightly different times. This sequential row-by-row timing, known as a **rolling shutter**, and its alternative, the **global shutter**, are analyzed in detail in @sec-rolling-shutter.
+These amplified signals are then passed to an analog-to-digital converter (ADC). The architecture for digitizing these signals has evolved through three distinct stages:
+
+1. **Multiplexed ADCs (Early CMOS):** In early CMOS sensors, fabrication constraints made ADCs relatively large and power-hungry. To save silicon area, ADCs were shared among groups of columns (@fig-cmos-multiplex). An analog switch sequentially connected the ADC to each column in its group (typically 8, 16, or 32 columns)—a process called **multiplexing**. Once all columns in the active row were digitized, the readout circuitry moved to the next row.
+2. **Column-Parallel ADCs (Modern Planar CMOS):** As process technologies scaled, engineers shrank ADC circuitry enough to place a dedicated converter at the pitch of every column. Having thousands of converters operating in parallel means each ADC can run at a much slower sampling rate and lower noise bandwidth, while dramatically boosting the total frame rate. Today, column-parallel ADCs are standard in commercial CMOS sensors.
+3. **Pixel-Parallel ADCs (3D Stacked Sensors):** In the future—and increasingly in the present—we are seeing the return of the idea where every individual pixel has its own ADC, as in the Digital Pixel Sensor (@sec-digital-pixel). With 3D wafer stacking, pixel-parallel digitization has become commercially viable, achieving massive parallel readout without sacrificing light sensitivity. Engineering advances march on, remarkably to me.
+
+Because the rows of the sensor are addressed and read out sequentially, the exposure duration of each row begins and ends at slightly different times. This sequential row-by-row timing, known as a **rolling shutter**, and its alternative, the **global shutter**, are analyzed in detail in @sec-rolling-shutter.
 
 ## Sensor evolution {#sec-sensor-evolution}
 
@@ -208,11 +205,11 @@ Additionally, both the photodiodes and their associated circuitry share the same
 
 These challenges, and the huge success of CMOS sensors, were met by a massive, world-wide, engineering effort to improve the system. The evolution of image sensor pixel technology that came from this effort enabled dramatic improvements in image quality, sensitivity, and device functionality. The following sections describe the key milestones that were achieved through academic and industry partnerships. For an authoritative review, consult @oike2022-stackedevolution.
 
-<!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
+<!--
+https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
 https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor
 
 https://image-sensors-world.blogspot.com/2023/06/sonys-world-first-two-layer-image.html
-
 -->
 
 :::{.callout-note title="Pixel Evolution timeline" collapse="false"}
@@ -228,40 +225,6 @@ Here is a timeline for the key milestones described in the sections below.
 | **Deep Photodiode**                 | ~2015+           | Higher sensitivity, dynamic range            |
 | **Stacked Sensor**                  | ~2015+           | Advanced features, compact design            |
 
-<!--
-- **Front-Side Illumination (FSI):** Early standard; light passes through wiring before reaching the photodiode.
-- **Back-Side Illumination (BSI):** Introduced ~2010; light enters from the back, improving efficiency for small pixels.
-- **Deep Trench Isolation (DTI):** Early 2010s; insulating trenches reduce crosstalk between pixels.
-- **Deep Photodiode:** Mid-2010s; deeper photodiodes increase sensitivity and dynamic range.
-- **Stacked Sensor:** Mid-2010s onward; sensor and circuitry are stacked for advanced features and compact design.
-
-
-- **Front-Side Illumination (FSI) (1970s–2000s)**
-    - Standard architecture for early CCD and CMOS sensors.
-    - Light enters from the front, passing through metal wiring and transistors before reaching the photodiode.
-    - Wiring blocks some light, reducing quantum efficiency, especially as pixel sizes shrink.
-
-- **Back-Side Illumination (BSI) (Late 2000s, commercialization ~2007–2010)**
-    - Sensor wafer is thinned and flipped so light enters from the back, directly reaching the photodiode.
-    - Dramatically improves quantum efficiency, especially for small pixels.
-    - First widely adopted in smartphone cameras (e.g., iPhone 4 in 2010).
-
-- **Deep Trench Isolation (DTI) (Early 2010s)**
-    - Introduced to reduce electrical and optical crosstalk between pixels.
-    - Trenches filled with insulating material are etched between pixels, confining photo-generated electrons.
-    - Enables higher pixel density and better color fidelity.
-
-- **Deep Photodiode (Mid 2010s)**
-    - Photodiodes are engineered to extend deeper into the silicon substrate.
-    - Increases the volume for photon absorption, improving sensitivity and full-well capacity.
-    - Particularly beneficial for small pixels and high dynamic range imaging.
-
-- **Stacked Sensor (3D Stacking) (Mid–Late 2010s)**
-    - Sensor and circuitry are fabricated on separate silicon layers and then stacked (bonded) together.
-    - Allows for more complex circuitry (e.g., faster readout, on-chip memory, AI processing) without sacrificing pixel area.
-    - Now common in high-end smartphone and professional sensors.
-  
-  -->
 :::
 
 ## Back-side illuminated (BSI) {#sec-sensor-bsi}

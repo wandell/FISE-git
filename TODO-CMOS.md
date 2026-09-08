@@ -101,38 +101,58 @@ This is the primary home for the transition. Several specific edits are needed:
     - Explains why early Passive Pixel Sensors (PPS) failed (column bus capacitance drowning charge in noise; El Gamal's "unnatural act" critique).
     - Introduces Eric Fossum's Active Pixel Sensor (APS) concept at NASA JPL and in-pixel source-follower buffer, alongside Ted Adelson's "why not put an amplifier in the pixel?" anecdote.
     - Integrates responsive Vimeo animations for both CCD (@fig-ccd-animation) and CMOS (@fig-cmos-animation) with conditional HTML/PDF formatting.
-- [ ] **Enhance the 4T Pixel and Nobukazu Teranishi's Pinned Photodiode (Section 14.3.2, line 94):**
+- [X] **Enhance the 4T Pixel and Nobukazu Teranishi's Pinned Photodiode (`#sec-4T-pixel-design`):**
 
-  - **The Narrative Hook:** When 3T CMOS sensors first appeared in the 1990s, CCD proponents called them noisy toys ("CCD dinosaurs vs. CMOS fleas"). 3T pixels suffered from high dark current and $kTC$ reset noise because reading the voltage required resetting the photodiode, leaving no uncorrupted reference state.
-  - **The Resolution:** The breakthrough that allowed CMOS to match CCD image quality came from adopting a technology originally invented for CCDs! In 1980, **Nobukazu Teranishi** at NEC invented the **pinned photodiode (PPD)** for interline-transfer CCDs to eliminate image lag and dark current.
-  - When the PPD and a transfer gate were integrated into the CMOS pixel (creating the **4T pixel**), charge could be fully transferred from the photodiode to an isolated floating diffusion node.
-  - This enabled **true Correlated Double Sampling (CDS)**: the sensor reads the reset voltage *first*, transfers the charge, and reads the signal voltage *second*, subtracting the two. This completely cancelled $kTC$ reset noise and dramatically lowered dark current.
-  - *Synthesis:* Modern CMOS sensors won because they combined the addressability and low power of CMOS with the low-noise charge-transfer physics of CCDs.
+  - **The Narrative Hook:** Added discussion of the 1990s debate ("CCD dinosaurs vs. CMOS fleas") and early 3T limitations (high dark current, lack of uncorrupted reference state, $kTC$ reset noise; includes author footnote on Stanford fundraising).
+  - **The Resolution:** Added historical recognition of **Nobukazu Teranishi** and colleagues (NEC, 1980) inventing the **pinned photodiode (PPD)** for interline-transfer CCDs, shielding photoelectrons from surface defects.
+  - **4T Integration:** Documented how Kodak and JPL integrated the PPD and transfer gate (TX) into the CMOS pixel, creating the 4T pixel with an isolated floating diffusion node ($C_{fd}$).
+  - **True Correlated Double Sampling (CDS):** Clearly laid out the 3-step sequence (reset FD & read first, pulse TX to transfer charge, read signal second, subtract) to eliminate $kTC$ reset noise and suppress dark current.
+  - **Synthesis:** Explains that modern CMOS triumphed by marrying CMOS addressability/low power with the low-noise charge-transfer physics of CCDs.
 - [X] **Move Rolling & Global Shutter timing from `sensors-02` to `sensors-05`:**
 
   - Created `## Shutter timing: Rolling and global shutters {#sec-rolling-shutter}` in `chapters/sensors-05-control.qmd`, unifying rolling shutter (sequential readout, bullet train demo, ISETCam simulation) with global shutter (simultaneous exposure, in-pixel storage, fill-factor vs. 3D-stacking trade-offs).
   - Left a concise forward reference in `chapters/sensors-02-pixels.qmd` after column multiplexing, keeping `sensors-02` focused on pixel circuits and architectures.
-- [ ] **Harmonize Section 14.4 ("Multiplex readout", lines 107–109):**
+- [X] **Harmonize Section 14.4 ("Multiplex readout", `#sec-cmos-multiplex`):**
 
-  - Connect line 108 back to the "Two Readout Paradigms" section introduced above, reinforcing how column amplifiers and column-parallel ADCs replace the single output amplifier of the classic CCD.
+  - **Status:** Complete.
+  - Linked back to the CCD single corner ADC vs. CMOS parallel column lines.
+  - Structured the three-stage ADC evolutionary progression:
+    1. Early CMOS multiplexed ADCs (sharing 1 ADC across 8–16 columns).
+    2. Modern planar CMOS column-parallel ADCs (one ADC per column pitch for lower speed/noise bandwidth and higher frame rates).
+    3. Modern 3D stacked CMOS pixel-parallel ADCs (Digital Pixel Sensor / Sony α9 III as described in `#sec-digital-pixel`).
+  - Streamlined the 3T pixel circuit description to point cleanly to `@sec-cmos-multiplex`.
 
 ---
 
 ### D. `chapters/sensors-07-innovations.qmd` (Sensor Innovations)
 
-- [x] **Connect the Vera Rubin / LSSTCam CCD section back to this foundational debate:**
-  - In `sensors-07` (@sec-sensor-ccd), you describe why the Vera C. Rubin Observatory chose CCDs over CMOS for the 3.2-gigapixel LSSTCam.
-  - Explicitly reference the concepts established in `sensors-02`: because CCDs channel thousands of pixels through a single output amplifier, the entire 3.2-gigapixel camera only has 3,024 readout channels to calibrate. In contrast, a 3.2-gigapixel CMOS array would have 3.2 billion separate in-pixel amplifiers, each with slightly different gain and offset drift—an astronomical calibration nightmare.
-  - This provides a satisfying closure: CMOS won consumer and mobile imaging where low power and integration dominate, while CCD preserved its reign where absolute photometric calibration is paramount.
+- [X] **Connect the Vera Rubin / LSSTCam CCD section back to this foundational debate:**
+  - In `sensors-07` (@sec-sensor-ccd), the Vera C. Rubin Observatory's choice of CCDs over CMOS for the 3.2-gigapixel LSSTCam is fully articulated.
+  - Explicitly references the concepts established in `sensors-02`: because CCDs channel thousands of pixels through a single output amplifier, the entire 3.2-gigapixel camera only has 3,024 readout channels to calibrate. In contrast, a 3.2-gigapixel CMOS array would have 3.2 billion separate in-pixel amplifiers, each with slightly different gain and offset drift—an astronomical calibration nightmare.
+  - Concludes the narrative arc: CMOS won consumer and mobile imaging where low power and integration dominate, while CCD preserved its reign where absolute photometric calibration is paramount.
 
 ---
 
-## 3. Summary of Files to Modify
+## 3. Summary of Status & Remaining Tasks
 
-| File                                                                                                                       | Status / Action Needed                                                                        |
-| :------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------- |
-| [`TODO-CMOS.md`](file:///Users/wandell/Documents/FISE-git/TODO-CMOS.md)                                                   | **Created** (this planning tracker).                                                    |
-| [`chapters/part-sensors.qmd`](file:///Users/wandell/Documents/FISE-git/chapters/part-sensors.qmd)                         | Add brief framing on Photogeneration (physics) vs. Readout (CCD to CMOS).                     |
-| [`chapters/sensors-01-photoelectric.qmd`](file:///Users/wandell/Documents/FISE-git/chapters/sensors-01-photoelectric.qmd) | Streamline opening (lines 11–16); defer circuit architecture to`sensors-02`.               |
-| [`chapters/sensors-02-pixels.qmd`](file:///Users/wandell/Documents/FISE-git/chapters/sensors-02-pixels.qmd)               | Correct line 29; add "Two Readout Paradigms" subsection; expand 4T / Teranishi PPD narrative. |
-| [`chapters/sensors-07-innovations.qmd`](file:///Users/wandell/Documents/FISE-git/chapters/sensors-07-innovations.qmd)     | Cross-link the Vera Rubin LSSTCam section back to`sensors-02` calibration concepts.         |
+### Status by File
+
+| File | Status | Summary of Changes / Remaining Work |
+| :--- | :--- | :--- |
+| [`TODO-CMOS.md`](file:///Users/wandell/Documents/FISE-2025-Quarto/TODO-CMOS.md) | **Complete** | All core CCD-to-CMOS transition items completed and verified. |
+| [`chapters/part-sensors.qmd`](file:///Users/wandell/Documents/FISE-2025-Quarto/chapters/part-sensors.qmd) | **Complete** | Intro framed with Photogeneration (physics) vs. Readout (engineering). |
+| [`chapters/sensors-01-photoelectric.qmd`](file:///Users/wandell/Documents/FISE-2025-Quarto/chapters/sensors-01-photoelectric.qmd) | **Complete** | Physics-focused intro; bandgap and wavelength sections consolidated here. |
+| [`chapters/sensors-02-pixels.qmd`](file:///Users/wandell/Documents/FISE-2025-Quarto/chapters/sensors-02-pixels.qmd) | **Complete** | Recombination corrected; Two Readout Paradigms (Bucket brigade, CTE note, animations) added; 4T / Teranishi PPD / CDS added; ADC readout evolution clarified; DPS & BSI/stacking added. |
+| [`chapters/sensors-03-parameters.qmd`](file:///Users/wandell/Documents/FISE-2025-Quarto/chapters/sensors-03-parameters.qmd) | **Complete** | $kTC$ reset noise formula, electron units callout, and CDS noise reduction covered. |
+| [`chapters/sensors-07-innovations.qmd`](file:///Users/wandell/Documents/FISE-2025-Quarto/chapters/sensors-07-innovations.qmd) | **Complete (CCD section)** | Rubin LSSTCam calibration trade-off (3,024 channels vs. 3.2B amplifiers) fully written and cross-referenced. |
+
+### Outstanding Content Beyond the Core CCD-to-CMOS Narrative
+
+1. **`sensors-02-pixels.qmd` cleanup:**
+   - Author comments on 4T transistor properties (lines 159–161) and Theuwissen 5T/shared-transistor schematic (lines 183–188) are parked for later consideration as possible future callouts.
+   - [X] Cleaned up commented-out draft text in the Pixel Evolution timeline callout.
+2. **`sensors-06-characterization.qmd`:**
+   - Currently a stub/notes page (noise experiments, ISO 12233 spatial sensitivity, color calibration, ARVS mobile photography critique). Needs full chapter drafting.
+3. **`sensors-07-innovations.qmd`:**
+   - Stubs remain for Split Pixel / HDR (`#sec-sensor-splitpixel`), Foveon / Stacked Color (`#sec-sensor-foveon`), Spectral Imaging (`#sec-sensor-spectral`), and Event Sensors (`#sec-sensor-event`).
+
