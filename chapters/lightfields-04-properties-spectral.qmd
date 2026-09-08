@@ -136,28 +136,15 @@ id: fig-dayweights
 
 -->
 
+## Surface spectral reflectance regularities {#sec-surface-overview}
 
-## Surface spectral reflectance regularities
+Four things can happen when electromagnetic radiation interacts with a surface. The radiation arriving at a surface might be (a) reflected, (b) absorbed, (c) pass through, or (d) interact with the material and generate new radiation (fluorescence). We will consider each of these interactions in different sections of this book.  This section describes some regularities about how light of different wavelengths is reflected from many common materials. 
 
-Vision enables us to interpret the environment by recording the how the ambient illumination interacts with things (e.g., objects) and stuff (e.g., water). Four things can happen when electromagnetic radiation interacts with a surface. The radiation arriving at a surface might be (a) reflected, (b) absorbed, (c) pass through, or (d) interact with the material and generate new radiation (fluorescence). We will consider each of these interactions in different sections of this book. Here, we describe some regularities how light is reflected from many common materials.
+The radiation incident on a small, planar patch of material can come from different directions, which we can specify by two angles. The intensity of the reflected radiation will also vary with direction (two more dimensions). The incident and reflected light can be measured as the intensity for different wavelengths and polarizations (two more dimensions). Hence, a full description of surface spectral reflectance requires specifying multiple parameters [@sec-properties-brdf].
 
-::: {#Things-stuff .callout-note collapse="false" appearance="simple"}
-## Things and Stuff
+Rather than confronting the full complexity right away, we will consider several relatively simple cases that are useful to understand. We will work our way up from the simplest case to increasingly complex descriptions, identifying regularities along the way[^fluorescence-skipped].
 
-I am fond of a distinction that Ted Adelson introduced to help think about the environment: *"things and stuff"* @adelson2001-stuff. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these categories also helps us set computational goals.
-
-![The distinction between *things* and *stuff* plays a role in vision science and now computer vision.  These images, from @Schmidt2025-gu, illustrate what is meant by stuff. The authors explored the appearance of materials and stuff, in contrast to much other work aimed at identifying things.](images/lightfields/04-spectral/01-things-stuff.png){#fig-things-stuff fig-align="center" width="70%"}
-
-The distinction helps separate out the types of algorithms we might apply to understand the environment. Segmentation applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. We wish to be able to recognize such things whatever their material might be. A vision system must also be able to make judgments about a sandy beach, a cloudy sky, a grassy hillside. We wish to be able to recognize such stuff whatever its shape might be.
-
-A related challenge in human vision is quantifying the appearance of things and stuff, and for this challenge surface reflectance, texture, and context (e.g., ambient illumination, or what things and stuff are nearby) all play a role @schmid2023-materialperception. A corresponding concept - something we might call appearance for a computer vision system - seems desirable. One way to formulate the problem of appearance for a computer vision system is to use and estimate of material reflectance and texture to mean appearance for the computer.
-
-[The COCO-Stuff 164k dataset](https://datasetninja.com/cocostuff164k) has many images categorized in terms of 'things' and stuff.
-:::
-
-The radiation incident on a small, planar patch of material can come from different directions, which we can specify by two angles. The intensity of the reflected radiation will also vary with direction (two more dimensions). The incident and reflected light can be measured as the intensity for different wavelengths and polarizations (two more dimensions). We will set aside fluorescence for the present, returning to it later. Hence, a full description of surface spectral reflectance requires specifying multiple parameters.
-
-Despite this potential complexity, there are many relatively simple cases that are simpler to describe and still useful. We will work our way up from the simplest case to increasingly complex descriptions, identifying regularities along the way.
+[^fluorescence-skipped]: We will set aside fluorescence for the present, returning to it later.
 
 ## Diffuse reflectance
 
@@ -220,9 +207,32 @@ Many materials are approximately specular, but not perfectly so. In these materi
 
 ![Comparisons of (a) diffuse, (b) glossy specular, (c) perfect specular, and (d) retroreflective materials. Figure 9.1 from PBR book. https://www.pbr-book.org/4ed/Reflection_Models](images/lightfields/04-spectral/specular-diffuse-retro.png){#fig-specular-diffuse-retro .margin-caption}
 
-The figure includes a fourth interesting case: retroreflective materials. For these materials the reflected ray is sent back in the same direction as the incident ray. These materials can be created by embedding small, spherical, glass beads with a metallic back surface into the material @fig-retroreflective-glass-beads. The glass beads refract the incident ray, the metallic surface returns the ray, which is again refracted, so that the net effect is the reflected ray is returned in the direction of the incident ray. Glass beads with a metallic backing are often built into road markings and road signs. Light from a car's headlight is scattered back towards the driver, increasing the visibility of the road marking or sign during nighttime driving.
+### Retroreflective materials {#sec-retroreflective-materials}
+A fourth interesting case are **retroreflective materials**. For these materials the reflected ray is sent back in the same direction as the incident ray. These materials can be created by embedding small, spherical, glass beads with a metallic back surface into the material @fig-retroreflective-glass-beads. The glass beads refract the incident ray, the metallic surface returns the ray, which is again refracted, so that the net effect is the reflected ray is returned in the direction of the incident ray. Glass beads with a metallic backing are often built into road markings and road signs. Light from a car's headlight is scattered back towards the driver, increasing the visibility of the road marking or sign during nighttime driving.
 
 ![Glass beads made into a retroreflective material. (Source: roadmarkingsupplies.com, https://roadmarkingsupplies.com/reflective-glass-beads-wholesale-for-road-marking-paints/)](images/lightfields/04-spectral/01-retroreflective-glass-beads.png){#fig-retroreflective-glass-beads width="80%"}
+
+Retroreflection relies on specific surface properties that enable a material to reflect light back towards its source, regardless of the angle of incidence. The key property for retroreflection is the incorporation of specialized microscopic structures on or within the material's surface. These elements are designed to intercept incoming light and redirect it back along a path parallel to its original direction. The two main types of these elements are:
+
+* Glass Beads (Microspheres): These are tiny, transparent spheres embedded in a binder material or coated on the surface.2 Light enters the bead, refracts (bends), reflects off a mirrored backing on the opposite side, refracts again as it exits, and is directed back towards the light source. The roundness, clarity, and refractive index of the beads are critical for efficient retroreflection.
+* Cube Corner Prisms (Microprisms): These are tiny, three-sided pyramid-like structures arranged in a precise pattern on the material's surface. Light enters the prism and undergoes total internal reflection off each of the three mutually perpendicular faces. This series of reflections sends the light back towards the source. The angles and smoothness of these prism faces are critical for performance.
+
+The pattern and the number of retroreflective elements per unit area on the surface influence the overall retroreflective intensity and the range of angles over which the material is effective. A higher density of well-aligned elements generally leads to brighter retroreflection. 
+
+::: {.callout-note title="Natural retroreflection" collapse="true"}
+There are natural objects that exhibit retroreflection! 
+
+* Animal Eyeshine: The most well-known natural example is the "eyeshine" seen in the eyes of many nocturnal animals, such as cats, deer, and owls, when light shines on them in the dark. This occurs due to a layer behind the retina called the tapetum lucidum. This layer acts as a retroreflector, reflecting light that has passed through the retina back to the photoreceptor cells, giving the animal a second chance to detect it. This improves their night vision and causes their eyes to appear to glow when illuminated. The mechanism is similar to a "cat's eye" retroreflector design, using a lens (the eye's lens) and a reflective surface (the tapetum lucidum). When I teach about the visual pigments in the retina, I often show this picture taken by William Rushton in his Florida lab of the eye shine from an alligator eye!
+
+![Alligator eyeshine](images/lightfields/04-spectral/alligator-eyeshine.png){#fig-alligator-eyeshine }
+
+* The Moon: The Moon's surface exhibits a significant amount of retroreflection. This is largely due to the powdery dust, called regolith, that covers its surface. The complex structure of this dust scatters light, and a significant portion of it is reflected back towards the direction of the incoming sunlight. This is why the full moon appears much brighter than it would if it were a perfectly diffuse reflector.
+
+* Dew Drops and Spider Silk: Under certain conditions, you can see a bright glow around the shadow of your head cast on dew-covered grass. This phenomenon, called the Heiligenschein, is caused by retroreflection from the spherical dew droplets. Similarly, some spider silk can also exhibit retroreflection due to its fine, cylindrical structure acting as tiny lenses and reflectors.
+
+* Some Insects: Certain insects have structures on their bodies that can cause retroreflection, potentially for camouflage or signaling purposes. The exact mechanisms can vary.
+While the highly efficient and precisely engineered retroreflectors we use for safety and other applications are human-made, nature has independently evolved various mechanisms to achieve the effect of reflecting light back towards its source.
+:::
 
 <!--
     https://roadmarkingsupplies.com/reflective-glass-beads-wholesale-for-road-marking-paints/
@@ -245,22 +255,7 @@ https://docs.google.com/document/d/1BtxldFF14EY4eC9x6KI9cy1RF4GJAy-e7UAgdJ5YsfI/
 
 Maybe say more about retroreflection.
 
-Retroreflection relies on specific surface properties that enable a material to reflect light back towards its source, regardless of the angle of incidence. The key surface properties that contribute to retroreflection are:
-Presence of Retroreflective Elements: The most crucial property is the incorporation of specialized microscopic structures on or within the material's surface. These elements are designed to intercept incoming light and redirect it back along a path parallel to its original direction.1 The two main types of these elements are:
-Glass Beads (Microspheres): These are tiny, transparent spheres embedded in a binder material or coated on the surface.2 Light enters the bead, refracts (bends), reflects off a mirrored backing on the opposite side, refracts again as it exits, and is directed back towards the light source. The roundness, clarity, and refractive index of the beads are critical for efficient retroreflection.3
-Cube Corner Prisms (Microprisms): These are tiny, three-sided pyramid-like structures arranged in a precise pattern on the material's surface.4 Light enters the prism and undergoes total internal reflection off each of the three mutually perpendicular faces. This series of reflections sends the light back towards the source.5 The angles and smoothness of these prism faces are critical for performance.
-Refractive Index (for Glass Beads): For glass bead-based retroreflection, the refractive index of the glass material is important.6 It determines how much the light bends upon entering and exiting the sphere, which affects the focusing and the direction of the reflected light.7
-Reflective Backing (for Glass Beads): A reflective layer (often metallic) on the back of the glass beads is essential to bounce the light back after it has been refracted through the sphere.8
-Smoothness and Precision of Reflective Surfaces (for Cube Corners): In microprismatic retroreflectors, the accuracy and smoothness of the angled surfaces within the cube corners are critical for efficient total internal reflection and precise redirection of light.9
-Arrangement and Density of Retroreflective Elements: The pattern and the number of retroreflective elements per unit area on the surface influence the overall retroreflective intensity and the range of angles over which the material is effective. A higher density of well-aligned elements generally leads to brighter retroreflection.
-Transparency of the Binder/Top Layer (if applicable): If the retroreflective elements are embedded within a material or have a top coating, this layer must be sufficiently transparent to allow light to enter and exit the retroreflective structures with minimal scattering or absorption.
-In essence, retroreflective materials achieve their unique property through the careful design and arrangement of microscopic optical elements that manipulate the path of incident light to send it back towards its origin.10
-Yes, there are definitely natural objects that exhibit retroreflection! It's not solely a human-made phenomenon. Here are some examples:
-Animal Eyeshine: The most well-known natural example is the "eyeshine" seen in the eyes of many nocturnal animals, such as cats, deer, and owls, when light shines on them in the dark. This occurs due to a layer behind the retina called the tapetum lucidum. This layer acts as a retroreflector, reflecting light that has passed through the retina back to the photoreceptor cells, giving the animal a second chance to detect it. This improves their night vision and causes their eyes to appear to glow when illuminated. The mechanism is similar to a "cat's eye" retroreflector design, using a lens (the eye's lens) and a reflective surface (the tapetum lucidum).
-The Moon: The Moon's surface exhibits a significant amount of retroreflection. This is largely due to the powdery dust, called regolith, that covers its surface. The complex structure of this dust scatters light, and a significant portion of it is reflected back towards the direction of the incoming sunlight. This is why the full moon appears much brighter than it would if it were a perfectly diffuse reflector.
-Dew Drops and Spider Silk: Under certain conditions, you can see a bright glow around the shadow of your head cast on dew-covered grass. This phenomenon, called the Heiligenschein, is caused by retroreflection from the spherical dew droplets. Similarly, some spider silk can also exhibit retroreflection due to its fine, cylindrical structure acting as tiny lenses and reflectors.
-Some Insects: Certain insects have structures on their bodies that can cause retroreflection, potentially for camouflage or signaling purposes. The exact mechanisms can vary.
-While the highly efficient and precisely engineered retroreflectors we use for safety and other applications are human-made, nature has independently evolved various mechanisms to achieve the effect of reflecting light back towards its source.
+
 -->
 
 

@@ -13,6 +13,20 @@ Characterizing the spatial statistics of natural images is a second important qu
 
 Over the last four decades, our knowledge about the spatial statistics has grown considerably. The development of machine learning algorithms, particularly diffusion methods for generating natural images, has been a recent striking advance.  In this chapter we will start with the foundations and work our way towards the most recent insights.
 
+::: {#Things-stuff .callout-note collapse="false" appearance="simple"}
+## Things and Stuff
+
+I am fond of a distinction that Ted Adelson introduced to help think about the environment: *"things and stuff"* @adelson2001-stuff. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these categories also helps us set computational goals.
+
+![The distinction between *things* and *stuff* plays a role in vision science and now computer vision.  These images, from @Schmidt2025-gu, illustrate what is meant by stuff. The authors explored the appearance of materials and stuff, in contrast to much other work aimed at identifying things.](images/lightfields/04-spectral/01-things-stuff.png){#fig-things-stuff fig-align="center" width="70%"}
+
+The distinction helps separate out the types of algorithms we might apply to understand the environment. Segmentation applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. We wish to be able to recognize such things whatever their material might be. A vision system must also be able to make judgments about a sandy beach, a cloudy sky, a grassy hillside. We wish to be able to recognize such stuff whatever its shape might be.
+
+A related challenge in human vision is quantifying the appearance of things and stuff, and for this challenge surface reflectance, texture, and context (e.g., ambient illumination, or what things and stuff are nearby) all play a role @schmid2023-materialperception. A corresponding concept - something we might call appearance for a computer vision system - seems desirable. One way to formulate the problem of appearance for a computer vision system is to use an estimate of material reflectance and texture to mean appearance for the computer.
+
+[The COCO-Stuff 164k dataset](https://datasetninja.com/cocostuff164k){target=_blank} has many images categorized in terms of 'things' and stuff.
+:::
+
 ## Spatial correlations  {#sec-spatial-correlations}
 Image scientists were immediately drawn to analyzing the very different spatial statistics of images.  If we examine the three panels of @fig-naturalspatial, one very obvious feature jumps out.  In the left panel, every pixel is completely independent of the other. That was how this image was created:  every pixel intensity is drawn from an independent random simple. This independence is almost never found in natural images; the light level at one point is quite likely to be similar to the level at a nearby point. 
 
