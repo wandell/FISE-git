@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-08-29">
+<meta name="dcterms.date" content="2026-09-08">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>6&nbsp; Spatial regularities – Foundations of Image Systems Engineering</title>
@@ -589,7 +589,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 29, 2026</p>
+      <p class="date">September 8, 2026</p>
     </div>
   </div>
   
@@ -615,7 +615,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: August 29, 2026
+Last updated: September 8, 2026
 !-->
 </div>
 </div>
@@ -625,6 +625,35 @@ Last updated: August 29, 2026
 <p>Information about the spectral characteristics of natural images, including the illuminant and surfaces, is helpful for rendering images and for reasoning about their contents. The reason is simple: the more we know about these statistics, the better we can do at interpreting the images we measure.</p>
 <p>Characterizing the spatial statistics of natural images is a second important quest within image systems engineering and vision science. Knowing about the likely spatial image will enable us to remove measurement noise more effectively, especially to the extent that natural images are not like noise. We can even hope that we do a better job of estimating the spatial properties of images that are just beyond our spatial resolution, being able to interpolate what we do see to a higher resolution based on knowing the likely structure of the object (<a href="lightfields-03-properties.html#sec-image-regularities" class="quarto-xref"><span>Section 4.2</span></a>).</p>
 <p>Over the last four decades, our knowledge about the spatial statistics has grown considerably. The development of machine learning algorithms, particularly diffusion methods for generating natural images, has been a recent striking advance. In this chapter we will start with the foundations and work our way towards the most recent insights.</p>
+<div id="Things-stuff" class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Things and Stuff
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>I am fond of a distinction that Ted Adelson introduced to help think about the environment: <em>“things and stuff”</em> <span class="citation" data-cites="adelson2001-stuff">Adelson (<a href="references.html#ref-adelson2001-stuff" role="doc-biblioref">2001</a>)</span>. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these categories also helps us set computational goals.</p>
+<div id="fig-things-stuff" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-things-stuff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/lightfields/04-spectral/01-things-stuff.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-things-stuff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.1: The distinction between <em>things</em> and <em>stuff</em> plays a role in vision science and now computer vision. These images, from <span class="citation" data-cites="Schmidt2025-gu">Schmidt et al. (<a href="references.html#ref-Schmidt2025-gu" role="doc-biblioref">2025</a>)</span>, illustrate what is meant by stuff. The authors explored the appearance of materials and stuff, in contrast to much other work aimed at identifying things.
+</figcaption>
+</figure>
+</div>
+<p>The distinction helps separate out the types of algorithms we might apply to understand the environment. Segmentation applies to <em>things</em> which are analyzed for object identity and function; in contrast, <em>stuff</em> is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. We wish to be able to recognize such things whatever their material might be. A vision system must also be able to make judgments about a sandy beach, a cloudy sky, a grassy hillside. We wish to be able to recognize such stuff whatever its shape might be.</p>
+<p>A related challenge in human vision is quantifying the appearance of things and stuff, and for this challenge surface reflectance, texture, and context (e.g., ambient illumination, or what things and stuff are nearby) all play a role <span class="citation" data-cites="schmid2023-materialperception">Schmid et al. (<a href="references.html#ref-schmid2023-materialperception" role="doc-biblioref">2023</a>)</span>. A corresponding concept - something we might call appearance for a computer vision system - seems desirable. One way to formulate the problem of appearance for a computer vision system is to use an estimate of material reflectance and texture to mean appearance for the computer.</p>
+<p><a href="https://datasetninja.com/cocostuff164k" target="_blank">The COCO-Stuff 164k dataset</a> has many images categorized in terms of ‘things’ and stuff.</p>
+</div>
+</div>
+</div>
 </section>
 <section id="sec-spatial-correlations" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-spatial-correlations"><span class="header-section-number">6.2</span> Spatial correlations</h2>
@@ -681,6 +710,9 @@ D = 3 - \frac{\eta}{2}
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-adelson2001-stuff" class="csl-entry" role="listitem">
+Adelson EH (2001) On seeing stuff: <span>The</span> perception of materials by humans and machines. In: Human vision and electronic imaging <span>VI</span>. SPIE, pp 1–12
+</div>
 <div id="ref-geisler2008-imagestats" class="csl-entry" role="listitem">
 Geisler WS (2008) <a href="http://dx.doi.org/10.1146/annurev.psych.58.110405.085632">Visual perception and the statistical properties of natural scenes</a>. Annu Rev Psychol 59:167–192
 </div>
@@ -689,6 +721,12 @@ Lee AB, Mumford D, Huang J (2001) <a href="http://dx.doi.org/10.1023/a:101110901
 </div>
 <div id="ref-ruderman1994-imagestats" class="csl-entry" role="listitem">
 Ruderman DL, Bialek W (1994) <a href="http://dx.doi.org/10.1103/PhysRevLett.73.814">Statistics of natural images: Scaling in the woods</a>. Phys Rev Lett 73:814–817
+</div>
+<div id="ref-schmid2023-materialperception" class="csl-entry" role="listitem">
+Schmid AC, Barla P, Doerschner K (2023) <a href="https://www.nature.com/articles/s41562-023-01601-0">Material category of visual objects computed from specular image structure</a>. Nat Hum Behav 7:1152–1169
+</div>
+<div id="ref-Schmidt2025-gu" class="csl-entry" role="listitem">
+Schmidt F, Hebart MN, Schmid AC, Fleming RW (2025) <a href="http://dx.doi.org/10.1073/pnas.2417202122">Core dimensions of human material perception</a>. Proc Natl Acad Sci U S A 122:e2417202122
 </div>
 <div id="ref-simoncelli2001-imagestats" class="csl-entry" role="listitem">
 Simoncelli EP, Olshausen BA (2001) Natural image statistics and neural representation. Annual Review of Neuroscience, Vol 34 24:1193–1216

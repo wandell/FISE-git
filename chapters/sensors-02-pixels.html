@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-07">
+<meta name="dcterms.date" content="2026-09-08">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>17&nbsp; Pixels and sensors – Foundations of Image Systems Engineering</title>
@@ -596,7 +596,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 7, 2026</p>
+      <p class="date">September 8, 2026</p>
     </div>
   </div>
   
@@ -622,7 +622,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 7, 2026
+Last updated: September 8, 2026
 !-->
 </div>
 </div>
@@ -822,7 +822,7 @@ Figure&nbsp;17.4: Two useful overviews visualizations of an early CMOS pixel des
 </section>
 <section id="sec-3T-pixel-design" class="level3" data-number="17.2.4">
 <h3 data-number="17.2.4" class="anchored" data-anchor-id="sec-3T-pixel-design"><span class="header-section-number">17.2.4</span> Three-Transistor (3T) Pixel Design</h3>
-<p>The original CMOS pixel design uses a three-transistor (3T) circuit to store and read out the charge collected by the photodiode (<a href="#fig-sensor-3T-circuit" class="quarto-xref">Figure&nbsp;<span>17.5</span></a>). Each pixel contains three key transistors: <span class="math inline">\(M_{rst}\)</span> (reset), <span class="math inline">\(M_{sel}\)</span> (select), and <span class="math inline">\(M_{sf}\)</span> (source follower). The <span class="math inline">\(M_{rst}\)</span> transistor resets the photodiode by connecting it to the supply voltage (Vdd), clearing any residual charge before image capture. The <span class="math inline">\(M_{sel}\)</span> transistor selects a specific row of pixels, connecting them to the readout circuitry. The <span class="math inline">\(M_{sf}\)</span> transistor acts as a buffer, transferring the stored charge to the analog-to-digital converter (ADC) for measurement. In most sensors, each column has its own ADC, but some designs use a single ADC shared among multiple columns—a technique known as multiplexing (mux).</p>
+<p>The original CMOS pixel design uses a three-transistor (3T) circuit to store and read out the charge collected by the photodiode (<a href="#fig-sensor-3T-circuit" class="quarto-xref">Figure&nbsp;<span>17.5</span></a>). Each pixel contains three key transistors: <span class="math inline">\(M_{rst}\)</span> (reset), <span class="math inline">\(M_{sel}\)</span> (select), and <span class="math inline">\(M_{sf}\)</span> (source follower). The <span class="math inline">\(M_{rst}\)</span> transistor resets the photodiode by connecting it to the supply voltage (Vdd), clearing any residual charge before image capture. The <span class="math inline">\(M_{sel}\)</span> transistor selects a specific row of pixels, connecting them to the column lines. The <span class="math inline">\(M_{sf}\)</span> transistor acts as a buffer, driving the pixel voltage onto the column readout line for measurement by an analog-to-digital converter (ADC), as described below in <a href="#sec-cmos-multiplex" class="quarto-xref"><span>Section 17.3</span></a>.</p>
 <div id="fig-sensor-3T-circuit" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sensor-3T-circuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -867,30 +867,29 @@ Figure&nbsp;17.6: The 4T pixel circuit introduces a pinned photodiode and an add
 </ol>
 <p>Subtracting the reset voltage from the signal voltage eliminates <span class="math inline">\(kTC\)</span> reset noise entirely (<a href="sensors-03-parameters.html#sec-reset-noise-cds" class="quarto-xref"><span>Section 18.6.1</span></a>), while the pinned structure drastically lowers dark current (<a href="sensors-03-parameters.html#sec-dark-current" class="quarto-xref"><span>Section 18.6.2</span></a>). The other circuit elements—the reset, row select, and source follower transistors—remain the same as in the 3T design.</p>
 <p>Today, the 4T pixel is the standard in almost all high-performance CMOS image sensors, including those found in smartphones, industrial cameras, cars, and scientific instruments <span class="citation" data-cites="fossum2014-pinnedpd Fossum2024-nx">(<a href="references.html#ref-fossum2014-pinnedpd" role="doc-biblioref">Fossum and Hondongwa 2014</a>; <a href="references.html#ref-Fossum2024-nx" role="doc-biblioref">Fossum et al. 2024</a>)</span>.</p>
-<!--
-There is also Theuwissen diagram, with five transistors that he calls a 4T circuit.  In the paper 'Linearity analysis ...' @Wang2017-CMOSLinearity.  He says the source follower is shared by multiple rows of pixels. It is Figure 2.  
-
-The text: "Figure 2 shows the schematic of a typical voltage mode 4T pixel. The pixel circuit consists of a pinned photodiode, a charge
-transfer switch (M1), a reset switch (M2), a source follower (M3) and a row select switch (M4). The current source transistor (M5) is shared by multiple rows of pixels. VDD is the power supply while VPIX is the output voltage of pixel. VLN provides an adjustable bias current. In the following analysis, the nonlinearity caused by the row select transistor (M4) is omitted to simplify the analysis."
--->
 </section>
 </section>
 <section id="sec-cmos-multiplex" class="level2" data-number="17.3">
 <h2 data-number="17.3" class="anchored" data-anchor-id="sec-cmos-multiplex"><span class="header-section-number">17.3</span> Multiplex readout</h2>
-<p>The use of unity gain amplifiers at the pixel was one important innovation. A second innovation is the way the pixel data are read from the image sensor. In the original CCD devices, the important innovation was to find a way to move the electrons across the silicon array to a single analog-to-digital converter. But the electrons in the CMOS pixels are voltages on a large number of output lines. How shall we convert the voltages on all of these separate lines into digital readout values?</p>
+<p>In-pixel buffer amplifiers (source followers) solved the challenge of driving charge out of the pixel without noise-corrupting attenuation. The second major architectural challenge was reading out signals across the sensor array. In a classic CCD, charge packets are physically shifted across the entire silicon array to a single output amplifier and ADC at the corner (<a href="#sec-ccd-readout" class="quarto-xref"><span>Section 17.2.1</span></a>). In CMOS sensors, the photoelectrons in each pixel are converted to voltages that drive an addressable matrix of parallel output lines. How do we convert the analog voltages on all of these separate lines into digital values?</p>
 <div id="fig-cmos-multiplex" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cmos-multiplex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/sensors/14-pixels/03-CMOS-multiplex-readout.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cmos-multiplex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17.7: Multiplex readout of the image sensor. The analog-to-digital converters are very fast. Each ADC serves to convert the readout voltages from multiple columns during the readout process.
+Figure&nbsp;17.7: Multiplex readout of the image sensor. In early CMOS architectures, each high-speed ADC sequentially converted the readout voltages from a group of multiplexed columns during row readout. Modern sensors place a dedicated ADC at every column.
 </figcaption>
 </figure>
 </div>
-<p>The readout process begins with a control signal sent to a specific row of pixels, activating the row and placing the voltage from each pixel onto its corresponding column readout line. These column lines are connected to amplifiers, which buffer and amplify the signals to ensure accurate transmission. These amplified signals are then passed to an analog-to-digital converter (ADC). The gain settings on the amplifiers, prior to the ADC, are often adjustable allowing gain settings from 1x to 4x.</p>
-<p>In most CMOS sensors, ADCs are shared among groups of columns to reduce complexity and save space. This sharing is achieved through a process called <strong>multiplexing</strong>, where the ADC sequentially converts the analog signals from each column in its group into digital values. Typically, ADCs multiplex signals from 8 or 16 columns, depending on the sensor design and application. Once the data from the active row is fully read out, the control signal moves to the next row, and the process repeats.</p>
-<p>Because the rows of the sensor are read out sequentially, the exposure duration of each row begins and ends at slightly different times. This sequential row-by-row timing, known as a <strong>rolling shutter</strong>, and its alternative, the <strong>global shutter</strong>, are analyzed in detail in <a href="sensors-05-control.html#sec-rolling-shutter" class="quarto-xref"><span>Section 20.4</span></a>.</p>
+<p>The readout process begins when a row-select control signal activates a specific row of pixels, placing the voltage from each pixel in that row onto its corresponding vertical column readout line. These column lines are connected to column amplifiers, which buffer and amplify the signals to ensure accurate transmission. The analog gain of these amplifiers is often adjustable (typically from 1× to 4× or higher), which is how ISO sensitivity adjustments are implemented in hardware prior to quantization.</p>
+<p>These amplified signals are then passed to an analog-to-digital converter (ADC). The architecture for digitizing these signals has evolved through three distinct stages:</p>
+<ol type="1">
+<li><strong>Multiplexed ADCs (Early CMOS):</strong> In early CMOS sensors, fabrication constraints made ADCs relatively large and power-hungry. To save silicon area, ADCs were shared among groups of columns (<a href="#fig-cmos-multiplex" class="quarto-xref">Figure&nbsp;<span>17.7</span></a>). An analog switch sequentially connected the ADC to each column in its group (typically 8, 16, or 32 columns)—a process called <strong>multiplexing</strong>. Once all columns in the active row were digitized, the readout circuitry moved to the next row.</li>
+<li><strong>Column-Parallel ADCs (Modern Planar CMOS):</strong> As process technologies scaled, engineers shrank ADC circuitry enough to place a dedicated converter at the pitch of every column. Having thousands of converters operating in parallel means each ADC can run at a much slower sampling rate and lower noise bandwidth, while dramatically boosting the total frame rate. Today, column-parallel ADCs are standard in commercial CMOS sensors.</li>
+<li><strong>Pixel-Parallel ADCs (3D Stacked Sensors):</strong> In the future—and increasingly in the present—we are seeing the return of the idea where every individual pixel has its own ADC, as in the Digital Pixel Sensor (<a href="#sec-digital-pixel" class="quarto-xref"><span>Section 17.8</span></a>). With 3D wafer stacking, pixel-parallel digitization has become commercially viable, achieving massive parallel readout without sacrificing light sensitivity. Engineering advances march on, remarkably to me.</li>
+</ol>
+<p>Because the rows of the sensor are addressed and read out sequentially, the exposure duration of each row begins and ends at slightly different times. This sequential row-by-row timing, known as a <strong>rolling shutter</strong>, and its alternative, the <strong>global shutter</strong>, are analyzed in detail in <a href="sensors-05-control.html#sec-rolling-shutter" class="quarto-xref"><span>Section 20.4</span></a>.</p>
 </section>
 <section id="sec-sensor-evolution" class="level2" data-number="17.4">
 <h2 data-number="17.4" class="anchored" data-anchor-id="sec-sensor-evolution"><span class="header-section-number">17.4</span> Sensor evolution</h2>
@@ -898,11 +897,11 @@ Figure&nbsp;17.7: Multiplex readout of the image sensor. The analog-to-digital c
 <p>The sensor architecture I have described is known as <strong>front-side illumination (FSI)</strong>. The architecture has the obvious challenge of placing multiple metal layers above the semiconductor substrate (<a href="#fig-pixel-layers" class="quarto-xref">Figure&nbsp;<span>17.4 (b)</span></a>). Even at the time of the original implementation, it was clear that requiring light to pass through the metal layers to reach the light-sensitive photodiode created many problems.</p>
 <p>Additionally, both the photodiodes and their associated circuitry share the same substrate. Requiring the circuitry and photodiode to share space reduced the sensitivity of the sensor. Finally, the original pixels were fairly large, <span class="math inline">\(6 \mu \text{m}\)</span> or more. As technology scaled and pixels became smaller -many CMOS imagers have pixels as small as <span class="math inline">\(0.8 \mu \text{m}\)</span> and a reduction in area of <span class="math inline">\(50x\)</span>- additional problems arose. Different opportunities arose as well.</p>
 <p>These challenges, and the huge success of CMOS sensors, were met by a massive, world-wide, engineering effort to improve the system. The evolution of image sensor pixel technology that came from this effort enabled dramatic improvements in image quality, sensitivity, and device functionality. The following sections describe the key milestones that were achieved through academic and industry partnerships. For an authoritative review, consult <span class="citation" data-cites="oike2022-stackedevolution">Oike (<a href="references.html#ref-oike2022-stackedevolution" role="doc-biblioref">2022</a>)</span>.</p>
-<!--# https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
+<!--
+https://www.pcmag.com/how-to/whats-the-difference-between-cmos-bsi-cmos-and-stacked-cmos 
 https://news.skhynix.com/evolution-of-pixel-technology-in-cmos-image-sensor
 
 https://image-sensors-world.blogspot.com/2023/06/sonys-world-first-two-layer-image.html
-
 -->
 <div class="callout callout-style-default callout-note callout-titled" title="Pixel Evolution timeline">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
@@ -959,40 +958,6 @@ Pixel Evolution timeline
 </tr>
 </tbody>
 </table>
-<!--
-- **Front-Side Illumination (FSI):** Early standard; light passes through wiring before reaching the photodiode.
-- **Back-Side Illumination (BSI):** Introduced ~2010; light enters from the back, improving efficiency for small pixels.
-- **Deep Trench Isolation (DTI):** Early 2010s; insulating trenches reduce crosstalk between pixels.
-- **Deep Photodiode:** Mid-2010s; deeper photodiodes increase sensitivity and dynamic range.
-- **Stacked Sensor:** Mid-2010s onward; sensor and circuitry are stacked for advanced features and compact design.
-
-
-- **Front-Side Illumination (FSI) (1970s–2000s)**
-    - Standard architecture for early CCD and CMOS sensors.
-    - Light enters from the front, passing through metal wiring and transistors before reaching the photodiode.
-    - Wiring blocks some light, reducing quantum efficiency, especially as pixel sizes shrink.
-
-- **Back-Side Illumination (BSI) (Late 2000s, commercialization ~2007–2010)**
-    - Sensor wafer is thinned and flipped so light enters from the back, directly reaching the photodiode.
-    - Dramatically improves quantum efficiency, especially for small pixels.
-    - First widely adopted in smartphone cameras (e.g., iPhone 4 in 2010).
-
-- **Deep Trench Isolation (DTI) (Early 2010s)**
-    - Introduced to reduce electrical and optical crosstalk between pixels.
-    - Trenches filled with insulating material are etched between pixels, confining photo-generated electrons.
-    - Enables higher pixel density and better color fidelity.
-
-- **Deep Photodiode (Mid 2010s)**
-    - Photodiodes are engineered to extend deeper into the silicon substrate.
-    - Increases the volume for photon absorption, improving sensitivity and full-well capacity.
-    - Particularly beneficial for small pixels and high dynamic range imaging.
-
-- **Stacked Sensor (3D Stacking) (Mid–Late 2010s)**
-    - Sensor and circuitry are fabricated on separate silicon layers and then stacked (bonded) together.
-    - Allows for more complex circuitry (e.g., faster readout, on-chip memory, AI processing) without sacrificing pixel area.
-    - Now common in high-end smartphone and professional sensors.
-  
-  -->
 </div>
 </div>
 </div>
@@ -1107,9 +1072,12 @@ Figure&nbsp;17.12: Scanning electron microscope (SEM) image of a cross section t
 </section>
 <section id="sec-digital-pixel" class="level2" data-number="17.8">
 <h2 data-number="17.8" class="anchored" data-anchor-id="sec-digital-pixel"><span class="header-section-number">17.8</span> Digital pixel sensor</h2>
-<p>The Digital Pixel Sensor (DPS) was a significant parallel development in image sensor technology. The initial ideas were presented in the mid 1990s, at roughly the same time as the APS 3T and 4T circuits were implemented. The APS circuitry included an analog-to-digital conversion (ADC) at the column or chip level. The DPS architecture extended the pixel circuit by including an ADC within the pixel circuit <span class="citation" data-cites="fowler1995-dps-patent">Fowler and El (<a href="references.html#ref-fowler1995-dps-patent" role="doc-biblioref">1995</a>)</span> <span class="citation" data-cites="udoy2025-dps-review">Udoy et al. (<a href="references.html#ref-udoy2025-dps-review" role="doc-biblioref">2025</a>)</span>.</p>
-<p>Digitizing the signal at the pixel had several advantages for high dynamic range imaging, global shuttering and readout speed (<span class="citation" data-cites="elgamal2005-cmos-imagesensors">El Gamal and Eltoukhy (<a href="references.html#ref-elgamal2005-cmos-imagesensors" role="doc-biblioref">2005</a>)</span>, <span class="citation" data-cites="kleinfelder2001-10000fps">Kleinfelder et al. (<a href="references.html#ref-kleinfelder2001-10000fps" role="doc-biblioref">2001</a>)</span>, <span class="citation" data-cites="wandell2002-CommonPrinciples">Wandell et al. (<a href="references.html#ref-wandell2002-CommonPrinciples" role="doc-biblioref">2002</a>)</span>). An important feature of the original digital pixel sensors was that the pixel voltage was read non-destructively and repeatedly, say at 1 ms, 2 ms, 4 ms, and so forth. As the photon generated electrons increased in the well, the voltage was sampled. The voltage for each pixel was reported when the pixel had passed one half well capacity, assuring it was much larger than the noise. It would be reported at a time before the well capacity was reached, so that it was below saturation. The information from each pixel was the voltage and the time at which it reached that voltage. Thus, each pixel had its own exposure duration -or put another way, the sensor had a space-varying exposure duration. Pixels in dark regions of the scene had longer exposure times than pixels in the bright regions. We explain the value of this approach for high dynamic range imaging in <a href="sensors-05-control.html#sec-exposure-control" class="quarto-xref"><span>Section 20.3</span></a>.</p>
-<p>The DPS concept was introduced at an early point in the development of CMOS imagers, and thus it faced significant hurdles in miniaturization. The idea of an ADC on the sensor foreshadowed an opportunity that has arisen as pixel architecture evolves. The stacked pixel structure offers a remedy by allowing the ADC and memory circuits to be placed in a separate layer underneath the photodiode. This enables higher pixel density and broader application of in-pixel conversion. The next generation of image sensors will implement the DPS concept (<span class="citation" data-cites="Fossum2024-nx">Fossum et al. (<a href="references.html#ref-Fossum2024-nx" role="doc-biblioref">2024</a>)</span>).</p>
+<p>The Digital Pixel Sensor (DPS) was a significant parallel development in image sensor technology. The initial ideas were presented in the mid-1990s, at roughly the same time the 3T and 4T active pixel sensor (APS) circuits were being introduced.</p>
+<p>The standard APS architecture routes analog signals from each pixel down a shared column line to an analog-to-digital converter (ADC) located at the edge of the array. The DPS architecture approached the problem differently by placing an ADC within, or directly adjacent to, each pixel <span class="citation" data-cites="fowler1995-dps-patent udoy2025-dps-review">(<a href="references.html#ref-fowler1995-dps-patent" role="doc-biblioref">Fowler and El 1995</a>; <a href="references.html#ref-udoy2025-dps-review" role="doc-biblioref">Udoy et al. 2025</a>)</span>.</p>
+<p>A key capability of the DPS architecture was non-destructive, repeated readout of pixel voltage during an exposure (e.g., at 1 ms, 2 ms, 4 ms, and so forth). Rather than integrating for a single fixed duration, the sensor could sample the accumulating charge at multiple times: * Pixels in bright regions crossed a preset voltage threshold quickly and were read out early to avoid saturation. * Pixels in dark regions continued integrating for the full exposure duration to maximize signal-to-noise ratio.</p>
+<p>The output from each pixel was both the digitized voltage and the timestamp at which that measurement was taken. This effectively provided each pixel with its own autonomous exposure duration — creating a space-varying exposure across the array. Digitizing at the pixel level also enabled massively parallel readout and true global shutter operation without motion distortion <span class="citation" data-cites="elgamal2005-cmos-imagesensors kleinfelder2001-10000fps wandell2002-CommonPrinciples">(<a href="references.html#ref-kleinfelder2001-10000fps" role="doc-biblioref">Kleinfelder et al. 2001</a>; <a href="references.html#ref-wandell2002-CommonPrinciples" role="doc-biblioref">Wandell et al. 2002</a>; <a href="references.html#ref-elgamal2005-cmos-imagesensors" role="doc-biblioref">El Gamal and Eltoukhy 2005</a>)</span>. We explain the value of this approach for high dynamic range imaging in <a href="sensors-05-control.html#sec-exposure-control" class="quarto-xref"><span>Section 20.3</span></a>.</p>
+<p>When first introduced, DPS faced significant practical hurdles. In traditional planar silicon, placing an ADC and memory inside each pixel consumed valuable surface area that would otherwise collect light, severely degrading the fill factor. As <span class="citation" data-cites="Fossum2024-nx">Fossum et al. (<a href="references.html#ref-Fossum2024-nx" role="doc-biblioref">2024</a>)</span> summarize in their review of image sensor evolution, image sensors evolved from chip-level ADCs to column-parallel ADCs, which became the commercial standard because they struck the optimal balance between speed and fill factor in 2D planar silicon.</p>
+<p>Over the past decade, however, 3D stacked sensor technology has revitalized the DPS architecture. By separating the photodiode from the readout circuitry across vertically stacked silicon layers connected by dense Cu-Cu hybrid bonds (<a href="#sec-sensor-stacked" class="quarto-xref"><span>Section 17.7</span></a>), pixel-parallel ADCs and digital memory can now reside directly beneath the photodiode without penalizing fill factor. On-chip ADCs are now ubiquitous, and pixel-parallel digitization is rapidly moving to the forefront of high-speed and scientific imaging.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Commercialization of the digital pixel sensor">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -1122,9 +1090,9 @@ Commercialization of the digital pixel sensor
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>El Gamal co-founded Pixim, Inc.&nbsp;in 1998, a fabless semiconductor company that commercialized chipsets for security cameras based on this DPS technology. A challenge for early DPS implementations was the reduced photodiode area in the planar array due to the additional ADC circuitry. This increased the cost of the chip and narrowed the field of potential applications and prevented widespread mainstream adoption for many years. Pixim was acquired by Sony Electronics in 2012.</p>
-<p>In 2023 Sony introduced the <a href="https://en.wikipedia.org/wiki/Sony_%CE%B19_III">Sony a9 iii</a>. It has 24.6 Megapixels and a global shutter. The camera can operate at high frame rates <a href="https://www.sony.co.uk/interchangeable-lens-cameras/products/ilce-9m3?locale=en_GB">(120 frames per sec)</a>. It appears to be using a digital pixel approach.</p>
-<p><a href="https://sites.google.com/site/yusukeoike">Yusuke Oike</a>, who was a visiting scholar in the El Gamal group from 2010–2012, was the manager in charge of the project that developed the groundbreaking global shutter sensor at the core of the a9 III’s capabilities. He has been with Sony Corporation and Sony Semiconductor Solutions Corporation for many years, leading research and development in CMOS image sensors, pixel architecture, circuit design, and imaging device technologies. He has held leadership positions including Senior General Manager of the Research Division and was appointed CTO of Sony Semiconductor Solutions Corporation in 2025.</p>
+<p>El Gamal co-founded Pixim, Inc.&nbsp;in 1998, a fabless semiconductor company that commercialized chipsets for security cameras based on DPS technology. While early planar implementations had higher fabrication costs and reduced fill factors that limited consumer adoption, Pixim established the viability of in-pixel ADC processing. Pixim was acquired by Sony Electronics in 2012.</p>
+<p>In 2023, Sony introduced the <a href="https://en.wikipedia.org/wiki/Sony_%CE%B19_III">Sony α9 III</a>, featuring a 24.6 Megapixel full-frame sensor with a global shutter capable of capturing full-resolution images at <a href="https://www.sony.co.uk/interchangeable-lens-cameras/products/ilce-9m3?locale=en_GB">120 frames per second</a>. Sony achieved this breakthrough by deploying a 2-layer stacked CMOS architecture with a pixel-parallel ADC array connected via Cu-Cu direct bonding — bringing the digital pixel sensor architecture into flagship commercial cameras.</p>
+<p><a href="https://sites.google.com/site/yusukeoike">Yusuke Oike</a>, who was a visiting scholar in the El Gamal group from 2010–2012, was the project manager and lead architect for the sensor technology at the core of the α9 III. He has spent decades leading CMOS image sensor research at Sony Corporation and Sony Semiconductor Solutions, serving as Senior General Manager of the Research Division and appointed CTO of Sony Semiconductor Solutions in 2025.</p>
 </div>
 </div>
 </div>

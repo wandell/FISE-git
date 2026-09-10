@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-06">
+<meta name="dcterms.date" content="2026-09-08">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>15&nbsp; Wavefront sensing – Foundations of Image Systems Engineering</title>
@@ -567,7 +567,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 6, 2026</p>
+      <p class="date">September 8, 2026</p>
     </div>
   </div>
   
@@ -593,7 +593,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 6, 2026
+Last updated: September 8, 2026
 !-->
 </div>
 </div>
@@ -636,7 +636,8 @@ Hartmann’s screen
 <section id="sec-adaptive-optics-astronomy" class="level2 page-columns page-full" data-number="15.3">
 <h2 data-number="15.3" class="anchored" data-anchor-id="sec-adaptive-optics-astronomy"><span class="header-section-number">15.3</span> Adaptive optics</h2>
 <p>A wavefront sensor becomes especially powerful when paired with a <strong>deformable mirror</strong>. This is a front surface mirror whose shape can be adjusted locally, over small regions. When the rays in a light field are reflected by the mirror the shape of the surface sculpts the direction of the rays, or equivalently we can say the mirror changes the wavefront. An <strong>adaptive optics</strong> system first measures the direction of the rays (the wavefront) and then applies a correction to the rays with the deformable mirror. This reduces the aberrations so that we can focus the light and form a high quality image.</p>
-<p>The concept was first applied in astronomical imaging. The astronomer shines a strong laser into the upper atmosphere to create a signal that will be visible on the ground. The laser is usually set to 589 nm, which excites sodium atoms in a layer of the atmosphere about 90 km (56 miles) above the earth, in the mesosphere. These atoms, which were left behind by microscopic meteorites, are energized and when they relax back emit light in all directions at the same wavelength (resonance fluorescence). Were there no atmosphere, light from these atoms would arrive back to the telescope collimated (a flat wavefront). But atmospheric turbulence distorts the light.</p>
+<p>The concept was first applied in astronomical imaging. The astronomer shines a strong laser, tuned to 589 nm, into the upper atmosphere. This laser excites sodium atoms that are in a layer of the mesosphere roughly 90 km (56 miles) above Earth<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The sodium absorbs the laser light and re-emits it in all directions through resonance fluorescence. This light is called a beacon or guide star.</p>
+<p>The sodium layer is pretty far away, but not quite far enough for the light to arrive adequately collimated (planar wavefront) at the telescope. The arriving light is still a (slightly) diverging spherical wave. On a large aperture, the wavefront sagitta deviates from planarity by about <span class="math inline">\(40\lambda\)</span> on a 4-meter telescope and over <span class="math inline">\(200\lambda\)</span> on a 10-meter telescope. Because this 90 km curvature is predictable, the wavefront sensing optics are set to focus at that altitude. Atmospheric turbulence then adds rapidly fluctuating, irregular phase ripples onto this nominal spherical wave.</p>
 <div id="fig-optics-laser-guidestar" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-optics-laser-guidestar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -647,7 +648,7 @@ Figure&nbsp;15.2: Laser guide star at La Palma, Observatorio del Roque de los Mu
 </figcaption>
 </figure>
 </div>
-<p>A wavefront sensor measures the distorted wavefront and controls a deformable mirror, as illustrated in the gif. The mirror changes its shape by just the amount necessary to correct the wavefront, making the rays collimated (flattening the wavefront).</p>
+<p>A wavefront sensor measures these turbulent phase perturbations and controls a deformable mirror (illustrated below). The mirror alters its surface shape, canceling the atmospheric aberrations so that light from distant astronomical objects (which arrive from infinity) emerges with a flat, collimated wavefront.</p>
 <div id="fig-deformable-mirror" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-deformable-mirror-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -658,7 +659,7 @@ Figure&nbsp;15.3: Deformable mirror
 </figcaption>
 </figure>
 </div>
-<p>This whole process updates fairly rapidly (milliseconds) because the atmosphere is changing quickly. This means the sensing must be fast and the deformable mirror must be fairly light and responsive so it can change shape quickly. The whole system is illustrated in <a href="#fig-wavefront-astronomy" class="quarto-xref">Figure&nbsp;<span>15.4</span></a>. The corrected image of the stars in the sky is much sharper than would be possible by imaging through the atmosphere.</p>
+<p>This whole process updates rapidly (milliseconds) because the atmosphere is changing quickly. This means the sensing must be fast and the deformable mirror must be fairly light and responsive so it can change shape quickly. The whole system is illustrated in <a href="#fig-wavefront-astronomy" class="quarto-xref">Figure&nbsp;<span>15.4</span></a>. The corrected image of the stars in the sky is much sharper than would be possible by imaging through the atmosphere.</p>
 <div id="fig-wavefront-astronomy" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-wavefront-astronomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -772,7 +773,7 @@ TODO & REVIEW ITEMS: ACCURACY AND CLARITY ANALYSIS (optics-08-wavefront-sensing.
 
 1. SCIENTIFIC & TECHNICAL ACCURACY
 --------------------------------------------------------------------------------
-- [ ] 1.1 Laser Guide Star (LGS) Wavefront Curvature vs. Collimation:
+- [x] 1.1 Laser Guide Star (LGS) Wavefront Curvature vs. Collimation:
       * Current text (Line 36): "Were there no atmosphere, light from these atoms would arrive back to the telescope collimated (a flat wavefront)."
       * Issue: The mesospheric sodium layer is at a finite altitude (~90 km). Light radiating from this altitude reaches the telescope aperture as a diverging spherical wave (with curvature radius R ≈ 90 km), not a collimated/flat wave. In large telescopes, this produces focal anisoplanatism (the "cone effect") because the backscattered cone does not sample the identical cylinder of atmospheric turbulence traversed by starlight from infinity.
       * Action: Clarify that light from the beacon arrives as a diverging spherical wave of known curvature (which the telescope optics focus), and turbulence introduces perturbations onto this nominal wavefront.
@@ -838,6 +839,12 @@ TODO & REVIEW ITEMS: ACCURACY AND CLARITY ANALYSIS (optics-08-wavefront-sensing.
 
 
 
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>These atoms were deposited in this layer by vaporizing micrometeorites.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
