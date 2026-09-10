@@ -16,11 +16,11 @@ Over the last four decades, our knowledge about the spatial statistics has grown
 ::: {#Things-stuff .callout-note collapse="false" appearance="simple"}
 ## Things and Stuff
 
-I am fond of a distinction that Ted Adelson introduced to help think about the environment: *"things and stuff"* @adelson2001-stuff. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these categories also helps us set computational goals.
+I am fond of a distinction that Ted Adelson [@adelson2001-stuff] introduced to help think about the environment: *"things and stuff"* . Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these categories also helps us set computational goals.
 
 ![The distinction between *things* and *stuff* plays a role in vision science and now computer vision.  These images, from @Schmidt2025-gu, illustrate what is meant by stuff. The authors explored the appearance of materials and stuff, in contrast to much other work aimed at identifying things.](images/lightfields/04-spectral/01-things-stuff.png){#fig-things-stuff fig-align="center" width="70%"}
 
-The distinction helps separate out the types of algorithms we might apply to understand the environment. Segmentation applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. We wish to be able to recognize such things whatever their material might be. A vision system must also be able to make judgments about a sandy beach, a cloudy sky, a grassy hillside. We wish to be able to recognize such stuff whatever its shape might be.
+The distinction helps separate out the types of algorithms we might apply to understand the environment. Segmentation and edges applies to *things* which are analyzed for object identity and function; in contrast, *stuff* is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. We wish to be able to recognize such things whatever their material might be. A vision system must also be able to make judgments about a sandy beach, a cloudy sky, a grassy hillside. We wish to be able to recognize such stuff whatever its shape might be.
 
 A related challenge in human vision is quantifying the appearance of things and stuff, and for this challenge surface reflectance, texture, and context (e.g., ambient illumination, or what things and stuff are nearby) all play a role @schmid2023-materialperception. A corresponding concept - something we might call appearance for a computer vision system - seems desirable. One way to formulate the problem of appearance for a computer vision system is to use an estimate of material reflectance and texture to mean appearance for the computer.
 
@@ -28,61 +28,29 @@ A related challenge in human vision is quantifying the appearance of things and 
 :::
 
 ## Spatial correlations  {#sec-spatial-correlations}
-Image scientists were immediately drawn to analyzing the very different spatial statistics of images.  If we examine the three panels of @fig-naturalspatial, one very obvious feature jumps out.  In the left panel, every pixel is completely independent of the other. That was how this image was created:  every pixel intensity is drawn from an independent random simple. This independence is almost never found in natural images; the light level at one point is quite likely to be similar to the level at a nearby point. 
+Image scientists were immediately drawn to analyzing the very different spatial statistics of images.  If we examine the three panels of @fig-naturalspatial, one very obvious feature jumps out.  In the left panel, every pixel is completely independent of the other. That was how this image was created:  every pixel intensity is drawn from an independent random simple. This pointwise independence is rarely found in natural images at the scale we see; the light level at one point is quite likely to be similar to the level at a nearby point. 
 
-In the middle panel, the similarity of adjacent pixels is extreme.  Almost all the pixels are the same.  That doesn't happen in natural images either. The image is so unnatural, it might be surprising that we can recognize its contents at all. I often wonder whether other species can interpret such line drawings, that only represent the object boundaries.
+In the middle panel, the similarity of adjacent pixels is extreme.  Almost all the pixels are the same as their neighbor.  That doesn't happen in natural images either. The image is so unnatural, it might be surprising that we can recognize its contents at all. I often wonder whether other species can interpret such line drawings, that only represent the object boundaries.
 
 What are the regularities that make the right panel - synthesized by a diffusion models - appear to be natural? Here are some ideas.
 
 ## Natural scenes and the 1/f spatial frequency falloff  {#sec-spectrum-power-law}
 
-One idea is that natural images must satisfy this simple statistical measure: if we express the image as the weighted sum of harmonic functions (sines and cosines), the amplitudes of the harmonics decline with spatial frequency.  This was the idea suggested in an early paper by Ruderman and Bialek [@ruderman1994-imagestats] who set out to measure natural image spatial statistics. The analysis was confirmed and extended by others, including @simoncelli2001-imagestats, @geisler2008-imagestats, and @lee2001-deadleaves.
+One idea is that natural images satisfy a simple statistical regularity: when an image is expressed as a weighted sum of harmonic functions (sines and cosines), the harmonic amplitudes decline inversely with spatial frequency. This property was demonstrated in an influential paper by @fieldRelationsStatisticsNatural1987 and further measured and analyzed by [@ruderman1994-imagestats], @simoncelli2001-imagestats, and @geisler2008-imagestats.
 
-Field, Olshausen.  I think they have work on this topic?
-
-The power spectrum of natural images follows:
+We can express this property using a simple equation:
 
 $$
-P(\omega) \propto \frac{1}{|\omega|^{2-\eta}} \quad \text{where } \eta \approx 0.8\text{--}1.5
+A(f) \propto \frac{1}{f^\alpha}
 $$
 
-Here, $\omega$ represents spatial frequency magnitude, and $\eta$ controls the decay rate
+where $f$ is spatial frequency and $\alpha$ is a decay parameter typically close to 1. In terms of the power spectrum (amplitude squared), this falloff is approximately $P(f) \propto 1/f^2$ (or $1/f^{2\alpha}$).
 
-The scale invariance of natural images arises from their power-law spectral decay, which mathematically ensures statistical consistency across spatial scales. The connection between $\fract{1}{f}^\alpha$ spectra and scale invariance can be expressed through:
+Because a pure power law has no characteristic scale, this spectral decay implies *scale invariance*: magnifying or demagnifying the scene preserves the same relative distribution of spatial frequencies. As widespread as this notion may be, it has some significant limitations that have always bothered me. For example, @zoran2009-scale-invariance pointed out that real sensor noise breaks scale invariance at fine spatial scales. More fundamentally, representing an image using global harmonics that span the entire field of view fails to capture the localized, object-based structure of natural scenes.
 
-
-
-[^lightfields-properties-3],[^lightfields-properties-4],[^lightfields-properties-5].
-
-[^lightfields-properties-3]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
-
-[^lightfields-properties-4]: https://web.mit.edu/torralba/www/ne3302.pdf
-
-[^lightfields-properties-5]: https://www.sciencedirect.com/science/article/pii/0042698996000028
-
-For scale invariance under spatial scaling $x \to \lambda x$, the power spectrum must satisfy:
-
-$$
-P(\lambda\omega) = \lambda^{-\kappa}P(\omega)
-$$
-
-Substituting the power-law form:
-
-$$
-P(\lambda\omega) = \frac{1}{|\lambda\omega|^{2-\eta}} = \lambda^{-(2-\eta)}P(\omega)
-$$
-
-This matches the scale-invariance condition with $\kappa = 2-\eta$, demonstrating that statistical properties remain consistent across scales[^lightfields-properties-6],[^lightfields-properties-7],[^lightfields-properties-8].
-
-[^lightfields-properties-6]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
-
-[^lightfields-properties-7]: https://web.mit.edu/torralba/www/ne3302.pdf
-
-[^lightfields-properties-8]: http://vigir.missouri.edu/\~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf
 
 ## The dead leaves model {#sec-dead-leaves}
-
-To me, it makes no sense to say that there is a single harmonic across the image.  If there were, then getting closer to it would shift its frequency but not its amplitude.  
+To me, it makes little sense to describe the spatial contrast in an image using harmonics that span the entire image. As we move about - say towards an object - the object occupies a larger part of the visual field, and portions of the visual field that were part of the original scene are clipped out of view. The spatial extent of the harmonics we use to describe the scene when we are far from an object or closer to an object are quite different.
 
 This gets to the importance of phase over amplitude. The coherence length is frequency dependent, I would guess.  This has an impact on the amplitude.  The literature is not good on this point, although this model is helpful.
 
