@@ -6,6 +6,7 @@ This repository’s agent instructions are organized as modular Agent Skills in
 - `quarto-authoring` for `.qmd`, YAML, callouts, layouts, and Quarto rendering;
 - `quarto-publish` for `quarto publish gh-pages` and recovering from a failed
   or interrupted publish;
+- `git-workflow` for git branches, commits, pushing feature branches, and pull requests on GitHub;
 - `bib-crossref-indexing` for `paperpile.bib`, `local.bib`, citations, labels,
   equations, tables, footnotes, and cross-project bibliography sync;
 - `figures-and-media` for images, diagrams, figure labels, captions, and video;
@@ -54,9 +55,13 @@ changes; and state whether a formatting technique works in HTML, PDF, or both.
 
 ## Git workflow
 
-Do work on a feature branch, not directly on `main`. When a change is ready,
-commit it, push the branch, and open a pull request with `gh pr create --web`
-(or otherwise open the PR in a browser) so it's there for review before
-merging. The `ci.yml` GitHub Actions workflow renders the book on every push
-and pull request against `main`; let that check run rather than only relying
-on a local `quarto render`.
+**Never push directly to `main`.** All work must be conducted on a feature branch and merged exclusively via a pull request (PR) on GitHub (<https://github.com/wandell/FISE-git>).
+
+1. **Branch:** Always branch from an up-to-date `main`: `git checkout main && git pull origin main`, then `git checkout -b <branch-name>`.
+2. **Commit:** Keep commits localized and descriptive. Do not commit build artifacts (`_book/`, `.quarto/`).
+3. **Push:** Push the feature branch to origin: `git push -u origin <branch-name>`.
+4. **Open PR:** Create a pull request for review on the main site using `gh pr create --web` (or `gh pr create --fill` and share the PR URL).
+5. **Review & CI:** Allow GitHub Actions (`ci.yml`) to render the book and verify links on the PR.
+6. **Merge:** Complete the merge on GitHub ("the main site"). Once merged, sync local `main`: `git checkout main && git pull origin main`.
+See `.github/skills/git-workflow/SKILL.md` for complete operating procedures.
+
