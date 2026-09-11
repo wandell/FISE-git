@@ -37,7 +37,12 @@ Bad:
 
 ```markdown
 Fossum (1993) [citation needed] said CMOS is useful.
+
+<!-- DO NOT separate multiple citations with commas; Pandoc will treat subsequent keys as suffix text and fail to generate bibliography entries -->
+[@ruderman1994-imagestats, @simoncelli2001-imagestats]
 ```
+
+Always separate multiple citation keys inside brackets with semicolons: `[@key1; @key2; @key3]`. Never use commas.
 
 Keep the book’s existing author-date CSL behavior. Do not paste manually formatted
 references into chapter prose or duplicate the bibliography in a chapter.

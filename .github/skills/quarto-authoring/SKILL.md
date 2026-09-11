@@ -170,7 +170,9 @@ quarto publish gh-pages
 A separate `quarto render --to html` beforehand is unnecessary: `quarto
 publish` renders by default and only skips rendering when passed
 `--no-render`. Do not run `quarto publish gh-pages` on the user's behalf
-without confirmation — it pushes to a shared branch.
+without confirmation — it pushes to a shared branch. Note that `quarto publish`
+only deploys the website to `gh-pages`; all source content changes must be committed
+on a feature branch and merged to `main` via a Pull Request (see `git-workflow` skill).
 
 ## Render diagnosis
 
