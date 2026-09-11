@@ -36,29 +36,36 @@ What are the regularities that make the right panel - synthesized by a diffusion
 
 ## Natural scenes and the 1/f spatial frequency falloff  {#sec-spectrum-power-law}
 
-One idea is that natural images satisfy a simple statistical regularity: when an image is expressed as a weighted sum of harmonic functions (sines and cosines), the harmonic amplitudes decline inversely with spatial frequency. This property was demonstrated in an influential paper by @fieldRelationsStatisticsNatural1987 and further measured and analyzed by [@ruderman1994-imagestats], @simoncelli2001-imagestats, and @geisler2008-imagestats.
+One idea is that natural images satisfy a simple statistical regularity: when an image is expressed as a weighted sum of harmonic functions (sines and cosines), the harmonic amplitudes decline inversely with spatial frequency. This property was demonstrated in an influential paper by @fieldRelationsStatisticsNatural1987 and further measured and analyzed by [@ruderman1994-imagestats, @simoncelli2001-imagestats, @geisler2008-imagestats].
 
 We can express this property using a simple equation:
 
 $$
-A(f) \propto \frac{1}{f^\alpha}
+A(f) = \frac{C}{f^\alpha}
 $$
 
-where $f$ is spatial frequency and $\alpha$ is a decay parameter typically close to 1. In terms of the power spectrum (amplitude squared), this falloff is approximately $P(f) \propto 1/f^2$ (or $1/f^{2\alpha}$).
+where $f$ is spatial frequency, $\alpha$ is a decay parameter typically close to 1, and $C$ is an overall amplitude scaling factor related to image contrast. In terms of the power spectrum (amplitude squared), this falloff is $P(f) \propto 1/f^{2\alpha}$ (often approximated as $1/f^2$).
 
-Because a pure power law has no characteristic scale, this spectral decay implies *scale invariance*: magnifying or demagnifying the scene preserves the same relative distribution of spatial frequencies. As widespread as this notion may be, it has some significant limitations that have always bothered me. For example, @zoran2009-scale-invariance pointed out that real sensor noise breaks scale invariance at fine spatial scales. More fundamentally, representing an image using global harmonics that span the entire field of view fails to capture the localized, object-based structure of natural scenes.
+Notice what is missing from this equation: there is no parameter with units of spatial frequency (such as an $f_0$) that specifies a "typical" size or frequency. This is what is meant by the phrase **has no characteristic spatial scale**. 
 
+To see what this means, consider an image that *does* have a characteristic scale—for example, a brick wall or a checkerboard. In those images, there is a dominant, privileged spatial frequency determined by the physical size of the bricks or squares. If the spectrum were an exponential falloff, $A(f) = C e^{-f/f_0}$, the constant $f_0$ would define a characteristic scale where contrast drops off sharply. 
+
+In a power law, however, scaling the spatial frequency by a factor $s$ (such as magnifying or demagnifying the image) simply multiplies the amplitude by an overall constant: $A(s f) = s^{-\alpha} A(f)$. The relative distribution of frequencies remains identical: the contrast drop across any octave (e.g., from 1 to 2 cycles/deg, or from 10 to 20 cycles/deg) is always the same factor $2^{-\alpha}$. Because no particular scale is privileged, people often say that natural scenes are *scale invariant*: zooming in or out on natural textures—like clouds, coastlines, or rocks—yields images with the same relative frequency statistics.
+
+As widespread as this idea is - and I wouldn't start with it if it weren't widely quoted in the literature - the principle has significant limitations that continue to bother me. First, let's consider whether the principle applies to the light field or to acquired images. If we are describing images, then clearly the optics and sensor noise will have an impact on the relationship. For example, @zoran2009-scale-invariance pointed out that real sensor noise breaks scale invariance at fine spatial scales. 
+
+More fundamentally, the idea of representing an image using harmonics, which are functions that span the entire field of view, is not great. Consider a spatial pattern on an object measured at a distance $d$, where it projects to a spatial frequency of $f$ cycles per degree. Suppose we measure the same object from a distance $d/2$. Because we are half the distance away, the object subtends twice the visual angle, and that same physical pattern now corresponds to a lower spatial frequency, $f/2$. We might expect that the contrast at $f/2$ in the closer image would simply equal the contrast of $f$ at distance $d$. But as the rule is normally expressed, the measured contrast at $f/2$ when measured closer is actually higher. In fact, this is true in many images. Why would the contrast at nominally corresponding physical spatial frequencies change?
+
+To my mind, the answer lies in the fact that the field of view has changed, and with it the **spatial coherence length** of the contrast across the measurement window. When we are close to an object (at $d/2$), the object fills a large fraction—or even the entirety—of our field of view. The pattern is spatially coherent across that whole window, so the global Fourier transform registers high contrast. But when we step back to distance $d$, the field of view expands to encompass a broader scene filled with other objects, textures, and background. The original pattern is now confined to a small patch of the visual field; across the rest of the expanded image, its contrast is not coherent. Because the Fourier transform integrates over the entire field of view, this lack of spatial coherence across the wider aperture dilutes the measured amplitude at that higher frequency.
+
+The traditional framing of the $1/f$ law misses this point entirely. The falloff does not arise because natural scenes intrinsically consist of infinite harmonic waves whose power falls off as $1/f^2$. Rather, it arises because image contrast does not remain coherent across large visual angles. As we zoom or change distance, the coherence length at each spatial frequency scales with object size relative to the field of view. Jon Winawer analyzed this issue in an ISETBio script, and I hope before you rely on this principle you will have a look at that analysis. (Link will go here after it is complete).
 
 ## The dead leaves model {#sec-dead-leaves}
 To me, it makes little sense to describe the spatial contrast in an image using harmonics that span the entire image. As we move about - say towards an object - the object occupies a larger part of the visual field, and portions of the visual field that were part of the original scene are clipped out of view. The spatial extent of the harmonics we use to describe the scene when we are far from an object or closer to an object are quite different.
 
-This gets to the importance of phase over amplitude. The coherence length is frequency dependent, I would guess.  This has an impact on the amplitude.  The literature is not good on this point, although this model is helpful.
+This brings us to the importance of phase and localized structure over global amplitude. Rather than assuming the world is made of waves, the *dead leaves model* [@lee2001-deadleaves] models a scene as an ensemble of occluding shapes (like fallen leaves overlapping on the ground) of various sizes and positions. In this model, contrast is coherent within each "leaf" (an object surface) and discontinuous across its boundaries. The $1/f^\alpha$ power spectrum emerges naturally from the statistics of object occlusion and the fact that spatial coherence lengths scale with object size, rather than from any global harmonic regularity.
 
-@lee2001-deadleaves
-
-Jon's Matlab script as a basis for discussing this. [Software from Jon showing 1/f issues.](https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m)
-
-Also, the deadleaves function in ISETCam.
+Jon's Matlab script provides a helpful 1D demonstration of how clipping and spatial extent influence the $1/f$ relationship: [Software from Jon showing 1/f issues](https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m). You can also explore the `deadleaves` function in ISETCam.
 
 
 ### Scale invariance {#sec-fractals}
