@@ -58,14 +58,18 @@ More fundamentally, the idea of representing an image using harmonics, which are
 
 To my mind, the answer lies in the fact that the field of view has changed, and with it the **spatial coherence length** of the contrast across the measurement window. When we are close to an object (at $d/2$), the object fills a large fraction—or even the entirety—of our field of view. The pattern is spatially coherent across that whole window, so the global Fourier transform registers high contrast. But when we step back to distance $d$, the field of view expands to encompass a broader scene filled with other objects, textures, and background. The original pattern is now confined to a small patch of the visual field; across the rest of the expanded image, its contrast is not coherent. Because the Fourier transform integrates over the entire field of view, this lack of spatial coherence across the wider aperture dilutes the measured amplitude at that higher frequency.
 
-The traditional framing of the $1/f$ law misses this point entirely. The falloff does not arise because natural scenes intrinsically consist of infinite harmonic waves whose power falls off as $1/f^2$. Rather, it arises because image contrast does not remain coherent across large visual angles. As we zoom or change distance, the coherence length at each spatial frequency scales with object size relative to the field of view. Jon Winawer analyzed this issue in an ISETBio script, and I hope before you rely on this principle you will have a look at that analysis. (Link will go here after it is complete).
+The traditional framing of the $1/f$ law misses this point entirely. The falloff does not arise because natural scenes intrinsically consist of infinite harmonic waves whose power falls off as $1/f^2$. Rather, it arises because image contrast does not remain coherent across large visual angles. As we zoom or change distance, the coherence length at each spatial frequency scales with object size relative to the field of view. 
+
+:::{.callout-note title="1/f analysis"}
+Jon's Matlab script provides a helpful 1D demonstration of how clipping and spatial extent influence the $1/f$ relationship: [Software from Jon showing 1/f issues](https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m). You can also explore the `deadleaves` function in ISETCam.
+:::
 
 ## The dead leaves model {#sec-dead-leaves}
 To me, it makes little sense to describe the spatial contrast in an image using harmonics that span the entire image. As we move about - say towards an object - the object occupies a larger part of the visual field, and portions of the visual field that were part of the original scene are clipped out of view. The spatial extent of the harmonics we use to describe the scene when we are far from an object or closer to an object are quite different.
 
 This brings us to the importance of phase and localized structure over global amplitude. Rather than assuming the world is made of waves, the *dead leaves model* [@lee2001-deadleaves] models a scene as an ensemble of occluding shapes (like fallen leaves overlapping on the ground) of various sizes and positions. In this model, contrast is coherent within each "leaf" (an object surface) and discontinuous across its boundaries. The $1/f^\alpha$ power spectrum emerges naturally from the statistics of object occlusion and the fact that spatial coherence lengths scale with object size, rather than from any global harmonic regularity.
 
-Jon's Matlab script provides a helpful 1D demonstration of how clipping and spatial extent influence the $1/f$ relationship: [Software from Jon showing 1/f issues](https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m). You can also explore the `deadleaves` function in ISETCam.
+
 
 
 ### Scale invariance {#sec-fractals}
