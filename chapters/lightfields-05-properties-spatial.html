@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-08">
+<meta name="dcterms.date" content="2026-09-11">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>6&nbsp; Spatial regularities – Foundations of Image Systems Engineering</title>
@@ -589,7 +589,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 8, 2026</p>
+      <p class="date">September 11, 2026</p>
     </div>
   </div>
   
@@ -615,7 +615,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 8, 2026
+Last updated: September 11, 2026
 !-->
 </div>
 </div>
@@ -637,7 +637,7 @@ Things and Stuff
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>I am fond of a distinction that Ted Adelson introduced to help think about the environment: <em>“things and stuff”</em> <span class="citation" data-cites="adelson2001-stuff">Adelson (<a href="references.html#ref-adelson2001-stuff" role="doc-biblioref">2001</a>)</span>. Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these categories also helps us set computational goals.</p>
+<p>I am fond of a distinction that Ted Adelson <span class="citation" data-cites="adelson2001-stuff">(<a href="references.html#ref-adelson2001-stuff" role="doc-biblioref">Adelson 2001</a>)</span> introduced to help think about the environment: <em>“things and stuff”</em> . Things are the countable, discrete objects with defined shapes and boundaries (e.g., cars, chairs, animals). Stuff is amorphous materials or textures without fixed boundaries (e.g., water, grass, sky, sand). Dividing the environment into these categories also helps us set computational goals.</p>
 <div id="fig-things-stuff" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-things-stuff-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -648,7 +648,7 @@ Figure&nbsp;6.1: The distinction between <em>things</em> and <em>stuff</em> play
 </figcaption>
 </figure>
 </div>
-<p>The distinction helps separate out the types of algorithms we might apply to understand the environment. Segmentation applies to <em>things</em> which are analyzed for object identity and function; in contrast, <em>stuff</em> is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. We wish to be able to recognize such things whatever their material might be. A vision system must also be able to make judgments about a sandy beach, a cloudy sky, a grassy hillside. We wish to be able to recognize such stuff whatever its shape might be.</p>
+<p>The distinction helps separate out the types of algorithms we might apply to understand the environment. Segmentation and edges applies to <em>things</em> which are analyzed for object identity and function; in contrast, <em>stuff</em> is regionally based on texture and material properties. A great deal of computer vision focuses on tasks such as naming or counting cars on the road, people in the room, airplanes in the sky. We wish to be able to recognize such things whatever their material might be. A vision system must also be able to make judgments about a sandy beach, a cloudy sky, a grassy hillside. We wish to be able to recognize such stuff whatever its shape might be.</p>
 <p>A related challenge in human vision is quantifying the appearance of things and stuff, and for this challenge surface reflectance, texture, and context (e.g., ambient illumination, or what things and stuff are nearby) all play a role <span class="citation" data-cites="schmid2023-materialperception">Schmid et al. (<a href="references.html#ref-schmid2023-materialperception" role="doc-biblioref">2023</a>)</span>. A corresponding concept - something we might call appearance for a computer vision system - seems desirable. One way to formulate the problem of appearance for a computer vision system is to use an estimate of material reflectance and texture to mean appearance for the computer.</p>
 <p><a href="https://datasetninja.com/cocostuff164k" target="_blank">The COCO-Stuff 164k dataset</a> has many images categorized in terms of ‘things’ and stuff.</p>
 </div>
@@ -657,46 +657,51 @@ Figure&nbsp;6.1: The distinction between <em>things</em> and <em>stuff</em> play
 </section>
 <section id="sec-spatial-correlations" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-spatial-correlations"><span class="header-section-number">6.2</span> Spatial correlations</h2>
-<p>Image scientists were immediately drawn to analyzing the very different spatial statistics of images. If we examine the three panels of <a href="lightfields-03-properties.html#fig-naturalspatial" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, one very obvious feature jumps out. In the left panel, every pixel is completely independent of the other. That was how this image was created: every pixel intensity is drawn from an independent random simple. This independence is almost never found in natural images; the light level at one point is quite likely to be similar to the level at a nearby point.</p>
-<p>In the middle panel, the similarity of adjacent pixels is extreme. Almost all the pixels are the same. That doesn’t happen in natural images either. The image is so unnatural, it might be surprising that we can recognize its contents at all. I often wonder whether other species can interpret such line drawings, that only represent the object boundaries.</p>
+<p>Image scientists were immediately drawn to analyzing the very different spatial statistics of images. If we examine the three panels of <a href="lightfields-03-properties.html#fig-naturalspatial" class="quarto-xref">Figure&nbsp;<span>4.1</span></a>, one very obvious feature jumps out. In the left panel, every pixel is completely independent of the other. That was how this image was created: every pixel intensity is drawn from an independent random simple. This pointwise independence is rarely found in natural images at the scale we see; the light level at one point is quite likely to be similar to the level at a nearby point.</p>
+<p>In the middle panel, the similarity of adjacent pixels is extreme. Almost all the pixels are the same as their neighbor. That doesn’t happen in natural images either. The image is so unnatural, it might be surprising that we can recognize its contents at all. I often wonder whether other species can interpret such line drawings, that only represent the object boundaries.</p>
 <p>What are the regularities that make the right panel - synthesized by a diffusion models - appear to be natural? Here are some ideas.</p>
 </section>
 <section id="sec-spectrum-power-law" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="sec-spectrum-power-law"><span class="header-section-number">6.3</span> Natural scenes and the 1/f spatial frequency falloff</h2>
-<p>One idea is that natural images must satisfy this simple statistical measure: if we express the image as the weighted sum of harmonic functions (sines and cosines), the amplitudes of the harmonics decline with spatial frequency. This was the idea suggested in an early paper by Ruderman and Bialek <span class="citation" data-cites="ruderman1994-imagestats">(<a href="references.html#ref-ruderman1994-imagestats" role="doc-biblioref">Ruderman and Bialek 1994</a>)</span> who set out to measure natural image spatial statistics. The analysis was confirmed and extended by others, including <span class="citation" data-cites="simoncelli2001-imagestats">Simoncelli and Olshausen (<a href="references.html#ref-simoncelli2001-imagestats" role="doc-biblioref">2001</a>)</span>, <span class="citation" data-cites="geisler2008-imagestats">Geisler (<a href="references.html#ref-geisler2008-imagestats" role="doc-biblioref">2008</a>)</span>, and <span class="citation" data-cites="lee2001-deadleaves">Lee et al. (<a href="references.html#ref-lee2001-deadleaves" role="doc-biblioref">2001</a>)</span>.</p>
-<p>Field, Olshausen. I think they have work on this topic?</p>
-<p>The power spectrum of natural images follows:</p>
+<p>One idea is that natural images satisfy a simple statistical regularity: when an image is expressed as a weighted sum of harmonic functions (sines and cosines), the harmonic amplitudes decline inversely with spatial frequency. This property was demonstrated in an influential paper by <span class="citation" data-cites="fieldRelationsStatisticsNatural1987">Field (<a href="references.html#ref-fieldRelationsStatisticsNatural1987" role="doc-biblioref">1987</a>)</span> and further measured and analyzed by <span class="citation" data-cites="ruderman1994-imagestats simoncelli2001-imagestats geisler2008-imagestats">(<a href="references.html#ref-ruderman1994-imagestats" role="doc-biblioref">Ruderman and Bialek 1994</a>; <a href="references.html#ref-simoncelli2001-imagestats" role="doc-biblioref">Simoncelli and Olshausen 2001</a>; <a href="references.html#ref-geisler2008-imagestats" role="doc-biblioref">Geisler 2008</a>)</span>.</p>
+<p>We can express this property using a simple equation:</p>
 <p><span class="math display">\[
-P(\omega) \propto \frac{1}{|\omega|^{2-\eta}} \quad \text{where } \eta \approx 0.8\text{--}1.5
+A(f) = \frac{C}{f^\alpha}
 \]</span></p>
-<p>Here, <span class="math inline">\(\omega\)</span> represents spatial frequency magnitude, and <span class="math inline">\(\eta\)</span> controls the decay rate</p>
-<p>The scale invariance of natural images arises from their power-law spectral decay, which mathematically ensures statistical consistency across spatial scales. The connection between <span class="math inline">\(\fract{1}{f}^\alpha\)</span> spectra and scale invariance can be expressed through:</p>
-<p><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>,<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
-<p>For scale invariance under spatial scaling <span class="math inline">\(x \to \lambda x\)</span>, the power spectrum must satisfy:</p>
-<p><span class="math display">\[
-P(\lambda\omega) = \lambda^{-\kappa}P(\omega)
-\]</span></p>
-<p>Substituting the power-law form:</p>
-<p><span class="math display">\[
-P(\lambda\omega) = \frac{1}{|\lambda\omega|^{2-\eta}} = \lambda^{-(2-\eta)}P(\omega)
-\]</span></p>
-<p>This matches the scale-invariance condition with <span class="math inline">\(\kappa = 2-\eta\)</span>, demonstrating that statistical properties remain consistent across scales<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>,<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
+<p>where <span class="math inline">\(f\)</span> is spatial frequency, <span class="math inline">\(\alpha\)</span> is a decay parameter typically close to 1, and <span class="math inline">\(C\)</span> is an overall amplitude scaling factor related to image contrast. In terms of the power spectrum (amplitude squared), this falloff is <span class="math inline">\(P(f) \propto 1/f^{2\alpha}\)</span> (often approximated as <span class="math inline">\(1/f^2\)</span>).</p>
+<p>Notice what is missing from this equation: there is no parameter with units of spatial frequency (such as an <span class="math inline">\(f_0\)</span>) that specifies a “typical” size or frequency. This is what is meant by the phrase <strong>has no characteristic spatial scale</strong>.</p>
+<p>To see what this means, consider an image that <em>does</em> have a characteristic scale—for example, a brick wall or a checkerboard. In those images, there is a dominant, privileged spatial frequency determined by the physical size of the bricks or squares. If the spectrum were an exponential falloff, <span class="math inline">\(A(f) = C e^{-f/f_0}\)</span>, the constant <span class="math inline">\(f_0\)</span> would define a characteristic scale where contrast drops off sharply.</p>
+<p>In a power law, however, scaling the spatial frequency by a factor <span class="math inline">\(s\)</span> (such as magnifying or demagnifying the image) simply multiplies the amplitude by an overall constant: <span class="math inline">\(A(s f) = s^{-\alpha} A(f)\)</span>. The relative distribution of frequencies remains identical: the contrast drop across any octave (e.g., from 1 to 2 cycles/deg, or from 10 to 20 cycles/deg) is always the same factor <span class="math inline">\(2^{-\alpha}\)</span>. Because no particular scale is privileged, people often say that natural scenes are <em>scale invariant</em>: zooming in or out on natural textures—like clouds, coastlines, or rocks—yields images with the same relative frequency statistics.</p>
+<p>As widespread as this idea is - and I wouldn’t start with it if it weren’t widely quoted in the literature - the principle has significant limitations that continue to bother me. First, let’s consider whether the principle applies to the light field or to acquired images. If we are describing images, then clearly the optics and sensor noise will have an impact on the relationship. For example, <span class="citation" data-cites="zoran2009-scale-invariance">Zoran and Weiss (<a href="references.html#ref-zoran2009-scale-invariance" role="doc-biblioref">2009</a>)</span> pointed out that real sensor noise breaks scale invariance at fine spatial scales.</p>
+<p>More fundamentally, the idea of representing an image using harmonics, which are functions that span the entire field of view, is not great. Consider a spatial pattern on an object measured at a distance <span class="math inline">\(d\)</span>, where it projects to a spatial frequency of <span class="math inline">\(f\)</span> cycles per degree. Suppose we measure the same object from a distance <span class="math inline">\(d/2\)</span>. Because we are half the distance away, the object subtends twice the visual angle, and that same physical pattern now corresponds to a lower spatial frequency, <span class="math inline">\(f/2\)</span>. We might expect that the contrast at <span class="math inline">\(f/2\)</span> in the closer image would simply equal the contrast of <span class="math inline">\(f\)</span> at distance <span class="math inline">\(d\)</span>. But as the rule is normally expressed, the measured contrast at <span class="math inline">\(f/2\)</span> when measured closer is actually higher. In fact, this is true in many images. Why would the contrast at nominally corresponding physical spatial frequencies change?</p>
+<p>To my mind, the answer lies in the fact that the field of view has changed, and with it the <strong>spatial coherence length</strong> of the contrast across the measurement window. When we are close to an object (at <span class="math inline">\(d/2\)</span>), the object fills a large fraction—or even the entirety—of our field of view. The pattern is spatially coherent across that whole window, so the global Fourier transform registers high contrast. But when we step back to distance <span class="math inline">\(d\)</span>, the field of view expands to encompass a broader scene filled with other objects, textures, and background. The original pattern is now confined to a small patch of the visual field; across the rest of the expanded image, its contrast is not coherent. Because the Fourier transform integrates over the entire field of view, this lack of spatial coherence across the wider aperture dilutes the measured amplitude at that higher frequency.</p>
+<p>The traditional framing of the <span class="math inline">\(1/f\)</span> law misses this point entirely. The falloff does not arise because natural scenes intrinsically consist of infinite harmonic waves whose power falls off as <span class="math inline">\(1/f^2\)</span>. Rather, it arises because image contrast does not remain coherent across large visual angles. As we zoom or change distance, the coherence length at each spatial frequency scales with object size relative to the field of view.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="1/f analysis">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+1/f analysis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Jon’s Matlab script provides a helpful 1D demonstration of how clipping and spatial extent influence the <span class="math inline">\(1/f\)</span> relationship: <a href="https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m">Software from Jon showing 1/f issues</a>. You can also explore the <code>deadleaves</code> function in ISETCam.</p>
+</div>
+</div>
 </section>
 <section id="sec-dead-leaves" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="sec-dead-leaves"><span class="header-section-number">6.4</span> The dead leaves model</h2>
-<p>To me, it makes no sense to say that there is a single harmonic across the image. If there were, then getting closer to it would shift its frequency but not its amplitude.</p>
-<p>This gets to the importance of phase over amplitude. The coherence length is frequency dependent, I would guess. This has an impact on the amplitude. The literature is not good on this point, although this model is helpful.</p>
-<p><span class="citation" data-cites="lee2001-deadleaves">Lee et al. (<a href="references.html#ref-lee2001-deadleaves" role="doc-biblioref">2001</a>)</span></p>
-<p>Jon’s Matlab script as a basis for discussing this. <a href="https://github.com/isetbio/isetbio/blob/main/scripts/oneoverf/s_oneOverF1D.m">Software from Jon showing 1/f issues.</a></p>
-<p>Also, the deadleaves function in ISETCam.</p>
+<p>To me, it makes little sense to describe the spatial contrast in an image using harmonics that span the entire image. As we move about - say towards an object - the object occupies a larger part of the visual field, and portions of the visual field that were part of the original scene are clipped out of view. The spatial extent of the harmonics we use to describe the scene when we are far from an object or closer to an object are quite different.</p>
+<p>This brings us to the importance of phase and localized structure over global amplitude. Rather than assuming the world is made of waves, the <em>dead leaves model</em> <span class="citation" data-cites="lee2001-deadleaves">(<a href="references.html#ref-lee2001-deadleaves" role="doc-biblioref">Lee et al. 2001</a>)</span> models a scene as an ensemble of occluding shapes (like fallen leaves overlapping on the ground) of various sizes and positions. In this model, contrast is coherent within each “leaf” (an object surface) and discontinuous across its boundaries. The <span class="math inline">\(1/f^\alpha\)</span> power spectrum emerges naturally from the statistics of object occlusion and the fact that spatial coherence lengths scale with object size, rather than from any global harmonic regularity.</p>
 <section id="sec-fractals" class="level3" data-number="6.4.1">
 <h3 data-number="6.4.1" class="anchored" data-anchor-id="sec-fractals"><span class="header-section-number">6.4.1</span> Scale invariance</h3>
 <p><strong>Fractal connection</strong> The power-law exponent relates to fractal dimension <span class="math inline">\(D\)</span> through:</p>
 <p><span class="math display">\[
 D = 3 - \frac{\eta}{2}
 \]</span></p>
-<p>where <span class="math inline">\(D\)</span> quantifies space-filling characteristics. Natural images typically exhibit <span class="math inline">\(D \approx 2.2\text{--}2.6\)</span>, consistent with their 1/f^α spectra<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>,<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>.</p>
-<p>This mathematical framework shows that 1/f^α spectra inherently encode fractal, scale-invariant structure - the same statistical regularities appear whether analyzing fine details or coarse features of natural scenes<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>,<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>,<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a>.</p>
+<p>where <span class="math inline">\(D\)</span> quantifies space-filling characteristics. Natural images typically exhibit <span class="math inline">\(D \approx 2.2\text{--}2.6\)</span>, consistent with their 1/f^α spectra<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>,<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
+<p>This mathematical framework shows that 1/f^α spectra inherently encode fractal, scale-invariant structure - the same statistical regularities appear whether analyzing fine details or coarse features of natural scenes<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>,<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>,<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
 </section>
 </section>
 <section id="sec-spatial-diffusion" class="level2" data-number="6.5">
@@ -712,6 +717,9 @@ D = 3 - \frac{\eta}{2}
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-adelson2001-stuff" class="csl-entry" role="listitem">
 Adelson EH (2001) On seeing stuff: <span>The</span> perception of materials by humans and machines. In: Human vision and electronic imaging <span>VI</span>. SPIE, pp 1–12
+</div>
+<div id="ref-fieldRelationsStatisticsNatural1987" class="csl-entry" role="listitem">
+Field DJ (1987) Relations between the statistics of natural images and the response properties of cortical cells. Journal of the Optical Society of America A 4:2379–2394
 </div>
 <div id="ref-geisler2008-imagestats" class="csl-entry" role="listitem">
 Geisler WS (2008) <a href="http://dx.doi.org/10.1146/annurev.psych.58.110405.085632">Visual perception and the statistical properties of natural scenes</a>. Annu Rev Psychol 59:167–192
@@ -731,22 +739,19 @@ Schmidt F, Hebart MN, Schmid AC, Fleming RW (2025) <a href="http://dx.doi.org/10
 <div id="ref-simoncelli2001-imagestats" class="csl-entry" role="listitem">
 Simoncelli EP, Olshausen BA (2001) Natural image statistics and neural representation. Annual Review of Neuroscience, Vol 34 24:1193–1216
 </div>
+<div id="ref-zoran2009-scale-invariance" class="csl-entry" role="listitem">
+Zoran D, Weiss Y (2009) <a href="http://dx.doi.org/10.1109/iccv.2009.5459476">Scale invariance and noise in natural images</a>. In: 2009 IEEE 12th international conference on computer vision. IEEE
+</div>
 </div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn1"><p>https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>https://web.mit.edu/torralba/www/ne3302.pdf<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>https://www.sciencedirect.com/science/article/pii/0042698996000028<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>https://web.mit.edu/torralba/www/ne3302.pdf<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>http://vigir.missouri.edu/~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>https://www.nature.com/articles/srep46672<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>https://web.mit.edu/torralba/www/ne3302.pdf<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>http://vigir.missouri.edu/~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf –&gt;<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>https://www.nature.com/articles/srep46672<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>https://web.mit.edu/torralba/www/ne3302.pdf<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>http://vigir.missouri.edu/~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf –&gt;<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
