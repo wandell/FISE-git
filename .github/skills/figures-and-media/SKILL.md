@@ -19,6 +19,21 @@ asset, inspect nearby assets and follow their established local convention.
 - Preserve the source or generating script for any derived scientific figure.
 - Do not overwrite an existing asset without inspecting its usage.
 
+## Image revision workflow
+
+When asked to modify an existing book image, preserve the original asset and
+write the revision as a new, clearly named sibling file. Do not replace the
+source image or update chapter references unless the user explicitly chooses
+the revision.
+
+- For PNG and other raster assets, create a separate edited image at the
+  original resolution unless the requested change requires a different size.
+- For SVG diagrams, retain a vector SVG revision whenever practical; do not
+  rasterize it merely to make an edit.
+- Choose a descriptive suffix that distinguishes the revision (for example,
+  `-revised`, `-annotated`, or `-enhanced`) and inspect nearby filenames to
+  avoid a collision.
+
 ## Captions, labels, and alt text
 
 Every instructional figure needs a concise caption that says what is shown and
