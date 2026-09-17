@@ -62,23 +62,32 @@ To appreciate the paradox that arises from using global harmonics, consider a su
 
 ![Consider a single contrast pattern shown as the black curve at the top of both panels. Panel (A) shows a camera that images a pattern that is close to a harmonic at frequency $f$ from a distsance $d$; panel (B) shows the same camera imaging from a distance $d/2$.  Panel (B) images only a portion of the pattern. When we render the image in the first case the spatial frequency of the pattern is still about $f$, but in panel (B) the truncated and rendered image has a lower spatial frequency of about $f/2$.](images/lightfields/05-spatial/one-over-f-1.png){#fig-one-over-f-1 width="50%"}
 
-Now consider observing the same physical pattern from half the distance, $d/2$ (the yellow shaded region in @fig-one-over-f-1. Because the viewing distance is halved, the visual angle subtended by each cycle doubles, meaning the pattern now has an frequency of $f/2$ cycles per degree. If the Fourier amplitude simply reflected the physical contrast of the surface pattern, the amplitude measured at $f/2$ from distance $d/2$ should equal the amplitude measured at $f$ from distance $d$. Yet the empirical $1/f$ rule asserts that the lower frequency ($f/2$) should have substantially higher amplitude. Why should stepping closer to a surface boost the measured contrast?
+Now consider observing the same physical pattern from half the distance, $d/2$ (the yellow shaded region in @fig-one-over-f-1). Because the viewing distance is halved, the visual angle subtended by each cycle doubles, meaning the pattern now has a frequency of $f/2$ cycles per degree. If the Fourier amplitude simply reflected the physical contrast of the surface pattern, the amplitude measured at $f/2$ from distance $d/2$ should equal the amplitude measured at $f$ from distance $d$. Yet the empirical $1/f$ rule asserts that the lower frequency ($f/2$) should have substantially higher amplitude. Why should stepping closer to a surface boost the measured contrast?
 
-### Spatial coherence length: 1/f paradox resolved {#sec-one-over-f-resolved}
+### Local carrier contrast and spatial coherence length {#sec-one-over-f-coherence}
 
-The resolution to this apparent paradox is that global Fourier analysis presumes infinite sinusoidal coherence, whereas natural image textures possess a finite **spatial coherence length**. Any natural image will modulate in contrast, local frequency, and phase across the image.  It will be consistent only across a limited spatial extent before encountering surface boundaries, occlusions, perspective changes, or just the imperfections of all natural things.
+The resolution to this apparent paradox hinges on distinguishing between **global Fourier amplitude density** and **local carrier contrast**.
 
-When we observe an object from close up (distance $d/2$), a few cycles of the texture fill a large fraction—or the entirety—of the field of view. Over this small number of cycles, the pattern remains relatively coherent, and its Fourier representation exhibits a sharp, high-amplitude peak. However, when viewed from further away (distance $d$), the field of view encompasses a much broader physical region. For the Fourier transform to yield a comparable peak amplitude at frequency $f$, the texture would have to maintain strict phase and frequency coherence across many more cycles (@fig-one-over-f-1). They don't. Physical textures drift in phase and frequency, or sometimes they simply terminate at object boundaries. Calculating the Fourier harmonics over a larger spatial scale is sure to scatter the Fourier energy across adjacent frequencies and reduce the peak amplitude. 
+Global Fourier analysis presumes infinite sinusoidal coherence across the entire field of view. But natural image textures possess a finite **spatial coherence length** ($L_c$). Natural textures modulate in contrast, local frequency, and phase across an image; they remain consistent only across a limited spatial extent before encountering surface boundaries, occlusions, perspective changes, or physical surface irregularities.
 
-Thus, the measured $1/f$ falloff does not imply that natural scenes are composed of harmonics whose local contrast declines as $1/f$. Instead, it reflects the fact that image contrast lacks long-range spatial coherence across large visual angles. 
+Crucially, natural textures tend to remain coherent over a comparable *number of cycles* rather than a fixed angular distance. Consequently, higher spatial frequencies have proportionally shorter spatial coherence lengths:
+$$
+L_c(f) \propto \frac{1}{f}
+$$
 
-:::{.callout-note title="1/f analysis"}
-As a first approximation, natural textures tend to remain coherent over a comparable *number of cycles* rather than a fixed physical distance. Consequently, higher spatial frequencies have proportionally shorter spatial coherence lengths ($L_c \propto 1/f$). When integrated across a finite viewing aperture, this shorter coherence window spreads the energy of high frequencies more broadly, driving their measured peak amplitude down relative to low frequencies. As viewing distance changes, the effective coherence length at each spatial frequency scales with object size relative to the field of view. 
+If we measure the pattern's contrast over an aperture smaller than this coherence length—scaling the measurement window to span a fixed number of cycles ($W(f) \propto 1/f$)—we find that the **local carrier contrast is scale-invariant and roughly constant across frequencies**. A high-frequency texture (like the weave of a shirt or fine bark) has essentially the same physical modulation contrast locally as a low-frequency texture (like large sand dunes or rolling hills).
 
-This is an example calculation.
+The measured reduction in global Fourier amplitude across frequency arises from the loss of spatial coherence, not from a loss of local carrier contrast:
+
+1. **Low spatial frequencies** have long coherence lengths ($L_c \propto 1/f$), meaning they maintain phase coherence across a large fraction of the camera's field of view and sum constructively into a tall, sharp Fourier peak.
+2. **High spatial frequencies** have short coherence lengths. A fixed field of view encompasses many independent, phase-incoherent patches. When integrated across the entire image, destructive phase interference and boundary discontinuities scatter the high-frequency energy across adjacent frequencies, depressing the measured global peak amplitude.
+
+Thus, the $1/f$ rule does not mean that the world fades away in contrast at fine scales. It means that high-frequency contrast is packaged into smaller, spatially localized packets. This is precisely why the visual system—and modern multi-scale representations—abandons global Fourier harmonics in favor of localized receptive fields (wavelets) whose spatial extent scales with wavelength.
+
+:::{.callout-note title="Spatial coherence calculation"}
+This interactive calculation simulates how finite spatial coherence length affects measured Fourier spectra across viewing distances:
 
 [fise_spatialCoherence1d.html](https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/01Lightfields/spatial_coherence/fise_spatialCoherence1d.html){target=_blank}
-
 :::
 
 ## The dead leaves model {#sec-dead-leaves}
