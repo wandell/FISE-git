@@ -62,7 +62,7 @@ To appreciate the paradox that arises from using global harmonics, consider a su
 
 ![Consider a single contrast pattern shown as the black curve at the top of both panels. Panel (A) shows a camera that images a pattern that is close to a harmonic at frequency $f$ from a distsance $d$; panel (B) shows the same camera imaging from a distance $d/2$.  Panel (B) images only a portion of the pattern. When we render the image in the first case the spatial frequency of the pattern is still about $f$, but in panel (B) the truncated and rendered image has a lower spatial frequency of about $f/2$.](images/lightfields/05-spatial/one-over-f-1.png){#fig-one-over-f-1 width="50%"}
 
-Now consider observing the same physical pattern from half the distance, $d/2$ (the yellow shaded region in @fig-one-over-f-1). Because the viewing distance is halved, the visual angle subtended by each cycle doubles, meaning the pattern now has an frequency of $f/2$ cycles per degree. If the Fourier amplitude simply reflected the physical contrast of the surface pattern, the amplitude measured at $f/2$ from distance $d/2$ should equal the amplitude measured at $f$ from distance $d$. Yet the empirical $1/f$ rule asserts that the lower frequency ($f/2$) should have substantially higher amplitude. Why should stepping closer to a surface boost the measured contrast?
+Now consider observing the same physical pattern from half the distance, $d/2$ (the yellow shaded region in @fig-one-over-f-1. Because the viewing distance is halved, the visual angle subtended by each cycle doubles, meaning the pattern now has an frequency of $f/2$ cycles per degree. If the Fourier amplitude simply reflected the physical contrast of the surface pattern, the amplitude measured at $f/2$ from distance $d/2$ should equal the amplitude measured at $f$ from distance $d$. Yet the empirical $1/f$ rule asserts that the lower frequency ($f/2$) should have substantially higher amplitude. Why should stepping closer to a surface boost the measured contrast?
 
 ### Spatial coherence length: 1/f paradox resolved {#sec-one-over-f-resolved}
 
@@ -85,32 +85,10 @@ This is an example calculation.
 To me, it makes little sense to describe the spatial contrast in an image using harmonics that span the entire image. As we move about - say towards an object - the object occupies a larger part of the visual field, and portions of the visual field that were part of the original scene are clipped out of view. The spatial extent of the harmonics we use to describe the scene when we are far from an object or closer to an object are quite different.
 
 This brings us to the importance of phase and localized structure over global amplitude. Rather than assuming the world is made of waves, the *dead leaves model* [@lee2001-deadleaves] models a scene as an ensemble of occluding shapes (like fallen leaves overlapping on the ground) of various sizes and positions. In this model, contrast is coherent within each "leaf" (an object surface) and discontinuous across its boundaries. The $1/f^\alpha$ power spectrum emerges naturally from the statistics of object occlusion and the fact that spatial coherence lengths scale with object size, rather than from any global harmonic regularity.
+:::{.callout-note collapse="true" title="Resource: Fractals and Scale Invariance"}
+For an exploration of the historical connection between $1/f^\alpha$ power spectra, fractal dimension, and texture perception—along with opportunities for student code development in ISETCam—see the resource page on [Fractals, Scale Invariance, and Natural Textures](resources/fractals.qmd).
+:::
 
-
-
-
-### Scale invariance {#sec-fractals}
-
-**Fractal connection** The power-law exponent relates to fractal dimension $D$ through:
-
-$$
-D = 3 - \frac{\eta}{2}
-$$
-
-where $D$ quantifies space-filling characteristics. Natural images typically exhibit $D \approx 2.2\text{--}2.6$, consistent with their 1/f\^α spectra[^lightfields-properties-9],[^lightfields-properties-10].
-
-[^lightfields-properties-9]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
-
-[^lightfields-properties-10]: https://www.nature.com/articles/srep46672
-
-This mathematical framework shows that 1/f\^α spectra inherently encode fractal, scale-invariant structure - the same statistical regularities appear whether analyzing fine details or coarse features of natural scenes[^lightfields-properties-11],[^lightfields-properties-12],[^lightfields-properties-13].
-
-[^lightfields-properties-11]: https://people.csail.mit.edu/danielzoran/zoranweiss09.pdf
-
-[^lightfields-properties-12]: https://web.mit.edu/torralba/www/ne3302.pdf
-
-[^lightfields-properties-13]: http://vigir.missouri.edu/\~gdesouza/Research/Conference_CDs/IEEE_ICCV_2009/contents/pdf/iccv2009_285.pdf
--->
 
 ## Diffusion models {#sec-spatial-diffusion}
 
@@ -118,9 +96,11 @@ Diffusion models implemented in a neural network.
 
 Eero's analysis of the statistical properties of images using diffusion models.
 
+The idea that the networks learn fairly complex image statistics and when we start them out with noise, they drive the image towards something that is within the realm of a natural image.
+
 This doesn't get us to objects.  But it is great for generative, when coupled with a text prompt that guides it to a particular content of natural images.
 
 Explaining such models might be complicated, but let's see if I can get us there from the Simoncelli and other papers.
 
-**Note:** Save image compression and JPEG, which is a big one, for later.  It depends a great deal on human vision and so it is too early here.  But maybe some of the Simoncelli explanations of diffusion imaging networks could fit here.  The idea that the networks learn fairly complex image statistics and when we start them out with noise, they drive the image towards something that is within the realm of a natural image.
+**Note:** Save image compression and JPEG, which is a big one, for later.  It depends a great deal on human vision and so it is too early to describe here. 
 
