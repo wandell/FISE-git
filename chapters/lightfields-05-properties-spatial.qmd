@@ -60,7 +60,7 @@ First, we must distinguish between properties of the incident light field and pr
 
 To appreciate the paradox that arises from using global harmonics, consider a surface texture measured at viewing distance $d$. Suppose the pattern has a spatial frequency of $f$ cycles per degree (@fig-one-over-f-1). 
 
-![Consider a single contrast pattern shown as the black curve at the top of both panels. Panel (A) shows a camera that images a pattern that is close to a harmonic at frequency $f$ from a distsance $d$; panel (B) shows the same camera imaging from a distance $d/2$.  Panel (B) images only a portion of the pattern. When we render the image in the first case the spatial frequency of the pattern is still about $f$, but in panel (B) the truncated and rendered image has a lower spatial frequency of about $f/2$.](images/lightfields/05-spatial/one-over-f-1.png){#fig-one-over-f-1 width="50%"}
+![Consider a single contrast pattern shown as the curve at the top of both panels. Panel (A) shows a camera that images a pattern that is close to a harmonic at frequency $f$ from a distance $d$; panel (B) shows the same camera imaging from a distance $d/2$. Panel (B) images only a portion of the pattern. When we render the image in the first case the spatial frequency of the pattern is still about $f$, but in panel (B) the truncated and rendered image has a lower spatial frequency of about $f/2$.](images/lightfields/05-spatial/one-over-f-1.png){#fig-one-over-f-1 width="60%"}
 
 Now consider observing the same physical pattern from half the distance, $d/2$ (the yellow shaded region in @fig-one-over-f-1). Because the viewing distance is halved, the visual angle subtended by each cycle doubles, meaning the pattern now has a frequency of $f/2$ cycles per degree. If the Fourier amplitude simply reflected the physical contrast of the surface pattern, the amplitude measured at $f/2$ from distance $d/2$ should equal the amplitude measured at $f$ from distance $d$. Yet the empirical $1/f$ rule asserts that the lower frequency ($f/2$) should have substantially higher amplitude. Why should stepping closer to a surface boost the measured contrast?
 
@@ -85,13 +85,15 @@ The measured reduction in global Fourier amplitude across frequency arises from 
 Thus, the $1/f$ rule does not mean that the world fades away in contrast at fine scales. It means that high-frequency contrast is packaged into smaller, spatially localized packets. This is precisely why the visual system—and modern multi-scale representations—abandons global Fourier harmonics in favor of localized receptive fields (wavelets) whose spatial extent scales with wavelength.
 
 :::{.callout-note title="Spatial coherence calculation"}
-This interactive calculation simulates how finite spatial coherence length affects measured Fourier spectra across viewing distances:
+The Matlab calculation in the link below illustrates how a finite spatial coherence length affects measured Fourier spectra across viewing distances. In the simulation, a surface texture is modeled with constant local carrier contrast and a finite coherence length ($N_c \approx 3\text{--}5$ cycles). A camera with a fixed angular field of view records this surface from different viewing distances:
 
-[fise_spatialCoherence1d.html](https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/01Lightfields/spatial_coherence/fise_spatialCoherence1d.html){target=_blank}
+- **Close distance ($d = 0.25$):** The camera's field of view intercepts only a narrow physical region spanning a few cycles ($\sim N_c$). The pattern maintains phase coherence across the aperture, concentrating its contrast into a tall, sharp Fourier peak.
+- **Far distance ($d = 1.00$):** The camera's field of view intercepts a much wider physical region spanning many cycles ($\gg N_c$). Random phase drift across independent patches causes destructive interference, dispersing spectral energy into adjacent frequencies and reducing the measured peak Fourier amplitude.
+
+The coherence loss and spectral broadening produce the empirical $1/f^\alpha$ amplitude falloff. You can view the full calculation, waveforms, and experiment with different parameters, in the ISETCam file linked here [fise_spatialCoherence1d.html](https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/01Lightfields/spatial_coherence/fise_spatialCoherence1d.html){target=_blank}.
 :::
 
 ## The dead leaves model {#sec-dead-leaves}
-
 The spatial coherence analysis highlights the critical role of phase and localized structure. The *dead leaves model* [@lee2001-deadleaves] takes this insight even further, demonstrating that a $1/f$ amplitude spectrum emerges naturally from object occlusion boundaries alone, without requiring any internal surface texture.
 
 ![A synthetic "dead leaves" image. An ensemble of uniform disks with power-law distributed sizes and random gray levels overlap to form occluding boundaries.](images/lightfields/05-spatial/deadleaves-1.png){#fig-dead-leaves width="60%"}
@@ -111,7 +113,7 @@ For an exploration of the historical connection between $1/f^\alpha$ power spect
 :::
 
 ## Diffusion models {#sec-spatial-diffusion}
-
+The analysis to this point has been very classical, based 
 Diffusion models implemented in a neural network.
 
 Eero's analysis of the statistical properties of images using diffusion models.
