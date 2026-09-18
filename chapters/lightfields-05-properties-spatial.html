@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-17">
+<meta name="dcterms.date" content="2026-09-18">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>6&nbsp; Spatial regularities – Foundations of Image Systems Engineering</title>
@@ -596,7 +596,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 17, 2026</p>
+      <p class="date">September 18, 2026</p>
     </div>
   </div>
   
@@ -622,7 +622,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 17, 2026
+Last updated: September 18, 2026
 !-->
 </div>
 </div>
@@ -687,10 +687,10 @@ A(f) = \frac{C}{f^\alpha}
 <div id="fig-one-over-f-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-one-over-f-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/lightfields/05-spatial/one-over-f-1.png" class="img-fluid figure-img" style="width:50.0%">
+<img src="images/lightfields/05-spatial/one-over-f-1.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-one-over-f-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6.2: Consider a single contrast pattern shown as the black curve at the top of both panels. Panel (A) shows a camera that images a pattern that is close to a harmonic at frequency <span class="math inline">\(f\)</span> from a distsance <span class="math inline">\(d\)</span>; panel (B) shows the same camera imaging from a distance <span class="math inline">\(d/2\)</span>. Panel (B) images only a portion of the pattern. When we render the image in the first case the spatial frequency of the pattern is still about <span class="math inline">\(f\)</span>, but in panel (B) the truncated and rendered image has a lower spatial frequency of about <span class="math inline">\(f/2\)</span>.
+Figure&nbsp;6.2: Consider a single contrast pattern shown as the curve at the top of both panels. Panel (A) shows a camera that images a pattern that is close to a harmonic at frequency <span class="math inline">\(f\)</span> from a distance <span class="math inline">\(d\)</span>; panel (B) shows the same camera imaging from a distance <span class="math inline">\(d/2\)</span>. Panel (B) images only a portion of the pattern. When we render the image in the first case the spatial frequency of the pattern is still about <span class="math inline">\(f\)</span>, but in panel (B) the truncated and rendered image has a lower spatial frequency of about <span class="math inline">\(f/2\)</span>.
 </figcaption>
 </figure>
 </div>
@@ -720,8 +720,12 @@ Spatial coherence calculation
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This interactive calculation simulates how finite spatial coherence length affects measured Fourier spectra across viewing distances:</p>
-<p><a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/01Lightfields/spatial_coherence/fise_spatialCoherence1d.html" target="_blank">fise_spatialCoherence1d.html</a></p>
+<p>The Matlab calculation in the link below illustrates how a finite spatial coherence length affects measured Fourier spectra across viewing distances. In the simulation, a surface texture is modeled with constant local carrier contrast and a finite coherence length (<span class="math inline">\(N_c \approx 3\text{--}5\)</span> cycles). A camera with a fixed angular field of view records this surface from different viewing distances:</p>
+<ul>
+<li><strong>Close distance (<span class="math inline">\(d = 0.25\)</span>):</strong> The camera’s field of view intercepts only a narrow physical region spanning a few cycles (<span class="math inline">\(\sim N_c\)</span>). The pattern maintains phase coherence across the aperture, concentrating its contrast into a tall, sharp Fourier peak.</li>
+<li><strong>Far distance (<span class="math inline">\(d = 1.00\)</span>):</strong> The camera’s field of view intercepts a much wider physical region spanning many cycles (<span class="math inline">\(\gg N_c\)</span>). Random phase drift across independent patches causes destructive interference, dispersing spectral energy into adjacent frequencies and reducing the measured peak Fourier amplitude.</li>
+</ul>
+<p>The coherence loss and spectral broadening produce the empirical <span class="math inline">\(1/f^\alpha\)</span> amplitude falloff. You can view the full calculation, waveforms, and experiment with different parameters, in the ISETCam file linked here <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/01Lightfields/spatial_coherence/fise_spatialCoherence1d.html" target="_blank">fise_spatialCoherence1d.html</a>.</p>
 </div>
 </div>
 </section>
@@ -762,7 +766,7 @@ Resource: Dead leaves and scale invariance
 </section>
 <section id="sec-spatial-diffusion" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="sec-spatial-diffusion"><span class="header-section-number">6.5</span> Diffusion models</h2>
-<p>Diffusion models implemented in a neural network.</p>
+<p>The analysis to this point has been very classical, based Diffusion models implemented in a neural network.</p>
 <p>Eero’s analysis of the statistical properties of images using diffusion models.</p>
 <p>The idea that the networks learn fairly complex image statistics and when we start them out with noise, they drive the image towards something that is within the realm of a natural image.</p>
 <p>This doesn’t get us to objects. But it is great for generative, when coupled with a text prompt that guides it to a particular content of natural images.</p>
