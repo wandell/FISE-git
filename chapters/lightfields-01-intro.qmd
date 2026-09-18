@@ -6,6 +6,50 @@ date: last-modified
 
 {{< include "includes/WIP-callout.qmd" >}}
 
+::: {.callout-note collapse="false" icon="false" title="🎙️ Chapter Podcast: Why Movement and Physics Define Vision"}
+
+*An AI-generated discussion (NotebookLM) summarizing the core themes of this chapter.*
+
+```{=html}
+<audio id="chapter-podcast-audio" controls preload="auto" style="width: 100%; margin-top: 0.5em;">
+  <source src="podcasts/Why_Movement_and_Physics_Define_Vision.m4a" type="audio/mp4">
+  Your browser does not support the audio element.
+</audio>
+<script>
+(function() {
+  function initAudio() {
+    var audio = document.getElementById('chapter-podcast-audio');
+    if (audio && (location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
+      var src = audio.querySelector('source') ? audio.querySelector('source').src : audio.src;
+      if (src && !audio.dataset.blobified) {
+        audio.dataset.blobified = 'true';
+        fetch(src)
+          .then(function(res) { return res.blob(); })
+          .then(function(blob) {
+            var objectUrl = URL.createObjectURL(blob);
+            var currentTime = audio.currentTime;
+            var isPaused = audio.paused;
+            audio.src = objectUrl;
+            if (currentTime > 0) audio.currentTime = currentTime;
+            if (!isPaused) audio.play();
+          })
+          .catch(function(err) { console.warn('Local audio blob fetch failed:', err); });
+      }
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAudio);
+  } else {
+    initAudio();
+  }
+})();
+</script>
+```
+
+[Download audio file (M4A)](podcasts/Why_Movement_and_Physics_Define_Vision.m4a)
+
+:::
+
 <!--
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/wandell/FISE-git?quickstart=1)
 -->
@@ -142,3 +186,4 @@ $$ {#eq-lightfield-optical}
 This parameterization is particularly useful because it directly relates to what a light field sensor measures. Of course, it is possible to convert between this two-plane representation and the position-angle representation used for the other light fields.
 
 The data recorded by the sensor is all we have to create an image or interpret the scene. The ability of any system to derive information from the light field is ultimately limited by what portion of the environmental light field passes through the optics to become the optical light field and is finally captured by the sensor.
+
