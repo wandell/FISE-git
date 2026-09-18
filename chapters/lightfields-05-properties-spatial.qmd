@@ -80,7 +80,7 @@ If we measure the pattern's contrast over an aperture smaller than this coherenc
 The measured reduction in global Fourier amplitude across frequency arises from the loss of spatial coherence, not from a loss of local carrier contrast:
 
 1. **Low spatial frequencies** have long coherence lengths ($L_c \propto 1/f$), meaning they maintain phase coherence across a large fraction of the camera's field of view and sum constructively into a tall, sharp Fourier peak.
-2. **High spatial frequencies** have short coherence lengths. A fixed field of view encompasses many independent, phase-incoherent patches. When integrated across the entire image, destructive phase interference and boundary discontinuities scatter the high-frequency energy across adjacent frequencies, depressing the measured global peak amplitude.
+2. **High spatial frequencies** have shorter coherence lengths. A fixed field of view encompasses many independent, phase-incoherent patches. When integrated across the entire image, destructive phase interference and boundary discontinuities scatter the high-frequency energy across adjacent frequencies, depressing the measured global peak amplitude.
 
 Thus, the $1/f$ rule does not mean that the world fades away in contrast at fine scales. It means that high-frequency contrast is packaged into smaller, spatially localized packets. This is precisely why the visual system—and modern multi-scale representations—abandons global Fourier harmonics in favor of localized receptive fields (wavelets) whose spatial extent scales with wavelength.
 
@@ -91,13 +91,24 @@ This interactive calculation simulates how finite spatial coherence length affec
 :::
 
 ## The dead leaves model {#sec-dead-leaves}
-To me, it makes little sense to describe the spatial contrast in an image using harmonics that span the entire image. As we move about - say towards an object - the object occupies a larger part of the visual field, and portions of the visual field that were part of the original scene are clipped out of view. The spatial extent of the harmonics we use to describe the scene when we are far from an object or closer to an object are quite different.
 
-This brings us to the importance of phase and localized structure over global amplitude. Rather than assuming the world is made of waves, the *dead leaves model* [@lee2001-deadleaves] models a scene as an ensemble of occluding shapes (like fallen leaves overlapping on the ground) of various sizes and positions. In this model, contrast is coherent within each "leaf" (an object surface) and discontinuous across its boundaries. The $1/f^\alpha$ power spectrum emerges naturally from the statistics of object occlusion and the fact that spatial coherence lengths scale with object size, rather than from any global harmonic regularity.
-:::{.callout-note collapse="true" title="Resource: Fractals and Scale Invariance"}
+The spatial coherence analysis highlights the critical role of phase and localized structure. The *dead leaves model* [@lee2001-deadleaves] takes this insight even further, demonstrating that a $1/f$ amplitude spectrum emerges naturally from object occlusion boundaries alone, without requiring any internal surface texture.
+
+![A synthetic "dead leaves" image. An ensemble of uniform disks with power-law distributed sizes and random gray levels overlap to form occluding boundaries.](images/lightfields/05-spatial/deadleaves-1.png){#fig-dead-leaves width="60%"}
+
+@fig-dead-leaves illustrates an example. The image is constructed by randomly placing disks of varying sizes and gray levels across the image plane, allowing later disks to occlude earlier ones—much like fallen leaves gathering on the ground[^dead-leaves]. Notice that the disks themselves are completely flat and uniform; all of the image contrast arises strictly from the step edges formed by the occluding boundaries.
+
+Remarkably, when the distribution of object sizes follows a scale-invariant power law ($p(r) \propto r^{-3}$), the resulting image mathematically yields a $1/f^\alpha$ power spectrum (with $\alpha \approx 2$, corresponding to an amplitude spectrum of $1/f$). In this model, the interior of each surface is constant - with no texture - and all the contrast arises from the boundaries. The $1/f$ falloff is thus a geometric consequence of object occlusions and scale-free size distributions in the physical world, rather than a property of wave-like oscillations.
+
+[^dead-leaves]: I may be a sensitive soul, but I would have preferred the name 'fallen leaves'. Too many years in California, I guess.
+
+To me, these two perspectives reflect Ted Adelson's distinction between *things* and *stuff*. The traditional $1/f$ view invites us to think about the spatial statistics of continuous textures (*stuff*). The dead leaves model shows that the very same $1/f$ falloff can emerge entirely from the boundaries between discrete objects (*things*) of many sizes. Both contribute to natural images, of course, but you can choose which intuition resonates more with you. Personally, I find myself in the dead leaves camp.
+
+:::{.callout-note collapse="true" title="Resource: Dead leaves and scale invariance"}
+An upcoming ISETCam script (`fise_deadleaves`) will demonstrate the generation and spectral calculation for synthetic dead leaves images.
+
 For an exploration of the historical connection between $1/f^\alpha$ power spectra, fractal dimension, and texture perception—along with opportunities for student code development in ISETCam—see the resource page on [Fractals, Scale Invariance, and Natural Textures](resources/fractals.qmd).
 :::
-
 
 ## Diffusion models {#sec-spatial-diffusion}
 
