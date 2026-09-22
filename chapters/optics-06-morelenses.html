@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-22">
+<meta name="dcterms.date" content="2026-08-26">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
-<title>7&nbsp; Geometric optics – Foundations of Image Systems Engineering</title>
+<title>12&nbsp; Lenses and ray transfer – Foundations of Image Systems Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -51,8 +51,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/optics-02-wave.html" rel="next">
-<link href="../chapters/part-optics.html" rel="prev">
+<link href="../chapters/optics-07-linear-space.html" rel="next">
+<link href="../chapters/optics-05-thinlens.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -133,7 +133,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-01-geometric.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-06-morelenses.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -228,7 +228,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link active">
+  <a href="../chapters/optics-01-geometric.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></a>
   </div>
 </li>
@@ -258,7 +258,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/optics-06-morelenses.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/optics-06-morelenses.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></a>
   </div>
 </li>
@@ -574,22 +574,31 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#geometric-optics-overview" id="toc-geometric-optics-overview" class="nav-link active" data-scroll-target="#geometric-optics-overview"><span class="header-section-number">7.1</span> Geometric optics overview</a></li>
-  <li><a href="#pinhole-optics" id="toc-pinhole-optics" class="nav-link" data-scroll-target="#pinhole-optics"><span class="header-section-number">7.2</span> Pinhole optics</a>
+  <li><a href="#sec-optics-morelenses-overview" id="toc-sec-optics-morelenses-overview" class="nav-link active" data-scroll-target="#sec-optics-morelenses-overview"><span class="header-section-number">12.1</span> Lenses and ray transfer overview</a></li>
+  <li><a href="#combining-two-thin-lenses" id="toc-combining-two-thin-lenses" class="nav-link" data-scroll-target="#combining-two-thin-lenses"><span class="header-section-number">12.2</span> Combining two thin lenses</a></li>
+  <li><a href="#thick-lens-definitions" id="toc-thick-lens-definitions" class="nav-link" data-scroll-target="#thick-lens-definitions"><span class="header-section-number">12.3</span> Thick lens definitions</a></li>
+  <li><a href="#multi-element-thick-lenses" id="toc-multi-element-thick-lenses" class="nav-link" data-scroll-target="#multi-element-thick-lenses"><span class="header-section-number">12.4</span> Multi-element thick lenses</a>
   <ul class="collapse">
-  <li><a href="#sec-pinhole-collimated" id="toc-sec-pinhole-collimated" class="nav-link" data-scroll-target="#sec-pinhole-collimated"><span class="header-section-number">7.2.1</span> Parallel (collimated) rays</a></li>
-  <li><a href="#pinhole-computer-graphics" id="toc-pinhole-computer-graphics" class="nav-link" data-scroll-target="#pinhole-computer-graphics"><span class="header-section-number">7.2.2</span> Pinhole: Computer graphics</a></li>
-  <li><a href="#pinholes-real-life" id="toc-pinholes-real-life" class="nav-link" data-scroll-target="#pinholes-real-life"><span class="header-section-number">7.2.3</span> Pinholes: real life</a></li>
+  <li><a href="#sec-optics-double-gauss" id="toc-sec-optics-double-gauss" class="nav-link" data-scroll-target="#sec-optics-double-gauss"><span class="header-section-number">12.4.1</span> Double Gauss</a></li>
+  <li><a href="#sec-optics-famous-lenses" id="toc-sec-optics-famous-lenses" class="nav-link" data-scroll-target="#sec-optics-famous-lenses"><span class="header-section-number">12.4.2</span> Tessar, Petzval and Fisheye</a></li>
   </ul></li>
+  <li><a href="#sec-optics-abcd" id="toc-sec-optics-abcd" class="nav-link" data-scroll-target="#sec-optics-abcd"><span class="header-section-number">12.5</span> ABCD matrix optics</a>
+  <ul class="collapse">
+  <li><a href="#refraction---first-surface" id="toc-refraction---first-surface" class="nav-link" data-scroll-target="#refraction---first-surface"><span class="header-section-number">12.5.1</span> Refraction - First Surface</a></li>
+  <li><a href="#translation-through-the-lens" id="toc-translation-through-the-lens" class="nav-link" data-scroll-target="#translation-through-the-lens"><span class="header-section-number">12.5.2</span> Translation Through the Lens</a></li>
+  <li><a href="#refraction---second-surface" id="toc-refraction---second-surface" class="nav-link" data-scroll-target="#refraction---second-surface"><span class="header-section-number">12.5.3</span> Refraction - Second Surface</a></li>
+  <li><a href="#effective-and-back-focal-lengths" id="toc-effective-and-back-focal-lengths" class="nav-link" data-scroll-target="#effective-and-back-focal-lengths"><span class="header-section-number">12.5.4</span> Effective and back focal lengths</a></li>
+  </ul></li>
+  <li><a href="#sec-optics-raytransfer" id="toc-sec-optics-raytransfer" class="nav-link" data-scroll-target="#sec-optics-raytransfer"><span class="header-section-number">12.6</span> Ray transfer functions</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-01-geometric.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-06-morelenses.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-geometric-optics" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Geometric optics</span></span></h1>
+<h1 class="title"><span id="sec-optics-morelenses" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Lenses and ray transfer</span></span></h1>
 </div>
 
 
@@ -600,7 +609,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 22, 2026</p>
+      <p class="date">August 26, 2026</p>
     </div>
   </div>
   
@@ -626,128 +635,365 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 22, 2026
+Last updated: August 26, 2026
 !-->
 </div>
 </div>
 </div>
-<section id="geometric-optics-overview" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="geometric-optics-overview"><span class="header-section-number">7.1</span> Geometric optics overview</h2>
-<p>Modeling light as rays is a useful approximation for many calculations. This method enables us to use simple geometric calculations (e.g., similar triangles), to derive many properties of simple lenses. For this reason this approach is also called <strong>geometric optics</strong>. In this chapter we use geometric optics to describe the simplest image forming optics, a <strong>pinhole</strong>. The ray model has limits, however: the next chapters explain why light must be modeled as waves (<a href="optics-02-wave.html" class="quarto-xref"><span>Chapter 8</span></a>), leading to diffraction and the <strong>point spread function</strong> (<a href="optics-03-diffraction-psf.html" class="quarto-xref"><span>Chapter 9</span></a>), a concept that plays a role in every modeling approach we use in this book. I extend the geometric optics calculations further in the chapters that follow, before turning to linear systems theory and wavefronts (Fourier optics).</p>
+<section id="sec-optics-morelenses-overview" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="sec-optics-morelenses-overview"><span class="header-section-number">12.1</span> Lenses and ray transfer overview</h2>
+<p>The principles of geometric optics and thin lenses are also critical for thick lenses and multi-element lenses(<a href="optics-01-geometric.html" class="quarto-xref"><span>Chapter 7</span></a>). The first lens is traced, and its output is the input to a second lens. We can use the three principles (<a href="optics-05-thinlens.html#sec-optics-3principles" class="quarto-xref"><span>Section 11.5</span></a>) to analyze the lenses in sequence. Using these tools, but with increasing complexity, the methods used to characterize thin lenses (<a href="optics-05-thinlens.html" class="quarto-xref"><span>Chapter 11</span></a>) can be extended to many different optical functions.</p>
+<p>In this chapter, I will illustrate some of the extensions to thick lenses and multi-element lenses. These have been important historically, and they will continue to be with us for some years.</p>
+<p>But let’s start here, with increasingly complex optics.</p>
 </section>
-<section id="pinhole-optics" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="pinhole-optics"><span class="header-section-number">7.2</span> Pinhole optics</h2>
-<p>If we model light as a collection of rays, it is easy to understand why imaging through a pinhole produces an image (<a href="#fig-pinhole-image" class="quarto-xref">Figure&nbsp;<span>7.1</span></a>). The figure shows a set of <em>objects</em> on the left. The camera is a dark chamber with only a pinhole opening. The <em>image</em> is formed on the planar surface, at the right. The light rays travel in a straight line, so only a small subset of the rays from each object passing through the pinhole. We can trace the light path by starting at a point on the image and drawing a straight line into the object space. The geometry illustrates how the rays from adjacent objects arrive at adjacent positions in the image plane, forming a reversed and inverted image.</p>
-<!-- Think about pinhole-size.png as an alternative -->
-<div id="fig-pinhole-image" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pinhole-image-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/optics/06-geometric/pinhole-image.png" class="img-fluid figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinhole-image-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.1: A pinhole makes an image.
-</figcaption>
-</figure>
-</div>
-<p>If the pinhole is small, each image point receives rays from a small region in object space (<a href="#fig-pinhole-blur" class="quarto-xref">Figure&nbsp;<span>7.2</span></a>). As we increase the pinhole diameter, each image point receives rays from larger regions on the objects. If multiple objects contribute rays to an image point, the image will be blurry. Conversely, according to the ray model, reducing the pinhole size should sharpen the image.</p>
-<div id="fig-pinhole-blur" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pinhole-blur-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/optics/06-geometric/pinhole-blur.png" class="img-fluid figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinhole-blur-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.2: Why enlarging the pinhole increases the blur.
-</figcaption>
-</figure>
-</div>
-<section id="sec-pinhole-collimated" class="level3" data-number="7.2.1">
-<h3 data-number="7.2.1" class="anchored" data-anchor-id="sec-pinhole-collimated"><span class="header-section-number">7.2.1</span> Parallel (collimated) rays</h3>
-<p>The rays from a point on an object often radiate in a wide range of directions. A special case -that is important in many practical applications- are the rays from distant points (<a href="#fig-pinhole-distant" class="quarto-xref">Figure&nbsp;<span>7.3</span></a>). When the point is far, only a small angular bundle of rays arrives at the pinhole. When the angle is very small, the rays are nearly parallel. In that case we say the beam of light is <strong>collimated</strong>.</p>
-<div id="fig-pinhole-distant" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pinhole-distant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/optics/06-geometric/pinholePSF.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinhole-distant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.3: Pinhole camera geometry. The rays from a distant objects arrive in parallel (collaimated) at the pinhole. If rays travel in straight lines, they would continue to form an image the size of the pinhole (short dashed black lines). Hence, the size of the point image would be the same for on-axis (A) and off-axis (B) points. However, you can see that although I drew the same pattern of rays for the two points, we expect fewer rays from the off-axis point (B) to pass through the aperture. Its image will be dimmer.
-</figcaption>
-</figure>
-</div>
-<p>For an object point, <strong>A</strong> that is aligned with the pinhole (on-axis), the ray model of light predicts that the rays will continue straight through the pinhole aperture and form an image that is very close to the same size as the pinhole itself. Consider a distant off-axis point, <strong>B</strong>. Its rays, too, will start in many directions and only a narrow, collimated subset of rays will arrive at the pinhole aperture. Because of the angle between the collimated rays and the pinhole, a smaller fraction of the rays will pass through the pinhole aperture. There will be less light from <strong>B</strong> than from <strong>A</strong>. The relative amount of light that makes it through the pinhole depends on the cosine of the angle between the pinhole and the rays. But the shape of the image from the two points does not differ. If the pinhole is circular, on- and off-axis points will produce a circular image with the same diameter as the pinhole.</p>
-<p><a href="lightfields-01-intro.html#fig-ayscough" class="quarto-xref">Figure&nbsp;<span>2.3</span></a> by Ayscough illustrates an image formed by a complex scene, with many points. Each point in the scene is blurred and rendered at a unique position. Also, the intensity at each point will be impacted by its relative angle to the pinhole and image surface. If the image intensity through the pinhole is adequate, and we do not mind the blurring, we will have a satisfactory image.</p>
+<section id="combining-two-thin-lenses" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="combining-two-thin-lenses"><span class="header-section-number">12.2</span> Combining two thin lenses</h2>
+<p>Let’s take a simple step towards more complex optical systems by combining two thin lenses. When we place two lenses in series, the image formed by the first lens becomes the object for the second.</p>
+<p>If the lenses have focal lengths <span class="math inline">\(f_1\)</span> and <span class="math inline">\(f_2\)</span> and are separated by a distance <span class="math inline">\(d\)</span>, the <em>effective focal length</em> (<span class="math inline">\(f\)</span>) of the combination is given by:</p>
+<p><span id="eq-two-thin-lens"><span class="math display">\[
+\frac{1}{f} = \frac{1}{f_1} + \frac{1}{f_2} - \frac{d}{f_1 f_2}
+\tag{12.1}\]</span></span></p>
+<p>This formula gives the focal length of an <em>equivalent</em> single thin lens. However, it’s important to remember that this equivalent lens isn’t located at the position of either of the original lenses. Its position is defined by the system’s principal planes, which we’ll discuss more in the context of thick lenses.</p>
+<p>Recalling that the power of a lens (in diopters) is the inverse of its focal length, <a href="#eq-two-thin-lens" class="quarto-xref">Equation&nbsp;<span>12.1</span></a> shows that: * When the lenses are touching (<span class="math inline">\(d \approx 0\)</span>), their powers simply add up: <span class="math inline">\(P = P_1 + P_2\)</span>. * As the lenses are separated, the total power changes. If <span class="math inline">\(d = f_1 + f_2\)</span>, the total power becomes zero (<span class="math inline">\(f = \infty\)</span>). This specific arrangement is called a <em>focal telescope</em>, and it collimates light, meaning parallel incoming rays emerge as parallel outgoing rays.</p>
+<p>A more practical value is the <strong>back focal length (BFL)</strong>, which is the distance from the back surface of the last lens to the system’s final focal point. For our two-lens system, this is:</p>
+<p><span id="eq-back-focal-length"><span class="math display">\[
+\text{BFL} = \frac{f_2 (d - f_1 )}{d - (f_1 + f_2)}
+\tag{12.2}\]</span></span></p>
+<p>The BFL tells you exactly where to place a sensor to capture a sharp image of an object at infinity. Notice that when <span class="math inline">\(d = f_1 + f_2\)</span>, the denominator is zero, and the BFL becomes infinite, which is consistent with the parallel rays produced by a focal telescope.</p>
+<!--
+Excellent online resource.  Not as nice as mine, but smarter for now.
+https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/24%3A_Geometric_Optics/24.3%3A_Lenses#:~:text=The%20focal%20length%20of%20a,surfaces%20are%20convex%20or%20concave.
+-->
+<p><a href="https://phys.libretexts.org/Bookshelves/University_Physics/Physics_(Boundless)/24%3A_Geometric_Optics/24.3%3A_Lenses#:~:text=The%20focal%20length%20of%20a,surfaces%20are%20convex%20or%20concave.">See around equations 24.3.4</a></p>
 </section>
-<section id="pinhole-computer-graphics" class="level3" data-number="7.2.2">
-<h3 data-number="7.2.2" class="anchored" data-anchor-id="pinhole-computer-graphics"><span class="header-section-number">7.2.2</span> Pinhole: Computer graphics</h3>
-<p>Pinhole cameras are often used in computer graphics calculations. They are simple to compute, tracing light from the recording surface (film or sensor) through the pinhole back into object space. In computer graphics it is fairly common to aim to render a nice looking image, rather than a physically accurate image. The pinhole approximation to optics provides a sharp image with large depth of field that is suitable for many applications.</p>
-<p>It is also possible to use pinhole computations to illustrate the limitations of this model in real image systems. In <a href="#fig-pinhole-chessset" class="quarto-xref">Figure&nbsp;<span>7.4</span></a> I rendered a chess set scene with the pieces, each a few cm tall, positioned about 0.5 meters from the pinhole camera. The four pictures were rendered using different pinhole diameters. The upper left allows only one ray through from each location in the scene. The aperture diameters for the next three pictures are for three different pinhole sizes. The images are brighter as the pinhole size increases. For this example, the image at the two smaller pinhole sizes are tolerable. Depending on your viewing distance from the screen or page, the third pinhole image might be usable. But the largest pinhole, which lets in the most light, loses so much spatial information that the individual pieces blur together in the image (<a href="optics-03-diffraction-psf.html#sec-airy-pattern" class="quarto-xref"><span>Section 9.2</span></a>).</p>
-<div id="fig-pinhole-chessset" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<section id="thick-lens-definitions" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="thick-lens-definitions"><span class="header-section-number">12.3</span> Thick lens definitions</h2>
+<p>The principles of refraction and ray tracing apply to both thin and thick lenses. However, for a <strong>thick lens</strong>, the optical design calculations must account for the distance rays travel <em>within</em> the lens material. This internal propagation distance is assumed to be zero in thin lens calculations, which is a key simplification.</p>
+<p>We can extend the three principles used for thin spherical lenses (<a href="optics-05-thinlens.html#sec-optics-3principles" class="quarto-xref"><span>Section 11.5</span></a>) to analyze thick lenses. The concept of the focal point remains the same: Rays arriving parallel to the optical axis converge toward the image-side focal point (<span class="math inline">\(F_2\)</span>). Conversely, rays passing through the object-side focal point (<span class="math inline">\(F_1\)</span>) emerge parallel to the optical axis.</p>
+<div id="fig-cardinal-points" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pinhole-chessset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/optics/06-geometric/01-pinhole-chessset.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%">
+<div aria-describedby="fig-cardinal-points-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/09-morelens/cardinal-points.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinhole-chessset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.4: A simulated scene rendered through a pinhole camera, using only ray tracing. The size of the pinhole diameter increases from the upper left to the lower right. The relative intensity is preserved in the renderings so that the scene becomes brighter as the pinhole diameter increases. Rendered with <span class="citation" data-cites="pharrPBRTVersion4">(<a href="references.html#ref-pharrPBRTVersion4" role="doc-biblioref">Pharr et al.</a>)</span> and <span class="citation" data-cites="iset3d2022">(<a href="references.html#ref-iset3d2022" role="doc-biblioref">2022</a>)</span>.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cardinal-points-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.1: Nodal points and principal planes of a thick lens.
+</figcaption>
+</figure>
+</div>
+<p>For a thin lens, we noted that a ray passing through the optical center is undeviated. A thick lens has a similar concept, but it involves two <strong>nodal points</strong> (<span class="math inline">\(N_1\)</span> and <span class="math inline">\(N_2\)</span>). A ray directed toward the object-side nodal point (<span class="math inline">\(N_1\)</span>) emerges from the lens as if it came from the image-side nodal point (<span class="math inline">\(N_2\)</span>), traveling parallel to its original direction (Panel A, <a href="#fig-cardinal-points" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>).</p>
+<p>To handle the ray’s path, it is also convenient to define two <strong>principal planes</strong> (<span class="math inline">\(P_1\)</span> and <span class="math inline">\(P_2\)</span>). Consider rays parallel to the optical axis entering the lens. They exit the lens converging toward the focal point. If we extend the incoming parallel ray forward and the outgoing converging ray backward, they intersect. The locus of these intersection points for rays near the optical axis forms the image-side principal plane, <span class="math inline">\(P_2\)</span> (Panel B, <a href="#fig-cardinal-points" class="quarto-xref">Figure&nbsp;<span>12.1</span></a>). A similar construction using rays from the front focal point defines the object-side principal plane, <span class="math inline">\(P_1\)</span>. The intersection of a principal plane with the optical axis is called a <strong>principal point</strong>.</p>
+<p>In the general case, a thick lens is characterized by six <strong>cardinal points</strong>: two focal points, two principal points, and two nodal points. However, in the common situation where the medium on both sides of the lens is the same (e.g., air), the nodal points coincide with the principal points. This simplifies the system considerably (<a href="#fig-thick-cardinal" class="quarto-xref">Figure&nbsp;<span>12.2</span></a>).</p>
+<div id="fig-thick-cardinal" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-thick-cardinal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/09-morelens/thick-cardinal-defintions.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-thick-cardinal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.2: Thick spherical lens definitions. By convention, light travels from left to right. A general thick lens has six cardinal points: two focal points (<span class="math inline">\(F_1, F_2\)</span>), two principal points (<span class="math inline">\(P_1, P_2\)</span>), and two nodal points (<span class="math inline">\(N_1, N_2\)</span>). The principal planes are perpendicular to the optical axis at the principal points. When the medium on both sides of the lens is the same (e.g., air), the nodal points coincide with the principal points (<span class="math inline">\(N_1=P_1, N_2=P_2\)</span>), and the focal lengths are equal.
+</figcaption>
+</figure>
+</div>
+<p>Just as the thin lens has a lensmaker’s formula (<a href="optics-05-thinlens.html#eq-lensmaker" class="quarto-xref">Equation&nbsp;<span>11.4</span></a>), a similar equation exists for a thick spherical lens to calculate its effective focal length:</p>
+<p><span id="eq-lensmaker-thick"><span class="math display">\[
+\frac{1}{f} = (n - 1) \left ( \frac{1}{R_1} - \frac{1}{R_2} + \frac{(n - 1) d}{n R_1 R_2} \right )
+\tag{12.3}\]</span></span></p>
+<p>Here, <span class="math inline">\(n\)</span> is the refractive index of the lens material relative to the surrounding medium, <span class="math inline">\(d\)</span> is the lens thickness, and <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> are the radii of curvature of the two surfaces. The formula differs from the thin lens version by an extra term that accounts for the lens thickness, <span class="math inline">\(d\)</span>.</p>
+<p>While this formula works for a single thick lens, applying it repeatedly for a multi-element system becomes unwieldy. A more powerful and systematic approach uses matrix multiplication, which I will introduce after we discuss multi-element lenses.</p>
+</section>
+<section id="multi-element-thick-lenses" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="multi-element-thick-lenses"><span class="header-section-number">12.4</span> Multi-element thick lenses</h2>
+<!--
+Jensen and White says solving for combinations of lenses of 'appreciable thickness is one of considerable difficulty, but one which can be solved by use of the principles already give'. 
+-->
+<p>The ray tracing principles developed so far are the foundation for the next level of complexity, analyzing combinations of thick lenses. If one has a set of thick lenses in combination, each can be represented by a pair of principal planes. The next step is to combine this pair into a new, single pair, that specifies them jointly. One then continues along this path, adding in new lenses, taking into account various details such as magnification. (J&amp;W page 93).</p>
+<p>Doing this analysis by hand, and using the various formulae, can be quite difficult. The rise of optical design software tools made it possible for many people to engage in the task. Understanding the principles is important for using these software tools well.</p>
+<p>But even before these tools were available, there was great interest in designing useful optics. For example, the development of photography, such as daguerrotype in 1839<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, created a significant market for optical design. People wanted to take pictures of themselves, their family, and their friends. The low light sensitivity of the recording media made it difficult to create portraits using a pinhole camera. Also, the pinhole camera does not produce a flat field image (<a href="optics-01-geometric.html#sec-pinhole-collimated" class="quarto-xref"><span>Section 7.2.1</span></a>). Lens designers set out to make portraits possible. Much of this was enabled by the development of new types of glass with different optical properties, especially from Fraunhofer’s work in Bavaria (<a href="lightfields-04-properties-spectral.html#sec-solar-fraunhofer" class="quarto-xref"><span>Section 5.2</span></a>). Having a palette of materials to use made the design possible.</p>
+<p>The development of mathematical methods for predicting the outcome for lenses with different shapes and materials was also important. Both Gauss and Petzval were mathematicians who developed workable methods for simulating the impact of a design prior to construction. Robert Wood, an American physicist, coined the term “fish-eye” lens to describe how a fish would see the world through a 180° hemisphere of water<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. He designed a lens to mimic this — essentially a hemispherical objective producing a circular image. For all of those designers, mathematics was the key simulation tool. In the modern era, as this book illustrates in many places, mathematics is extended into computable algorithms. These are our modern tools, but don’t sleep on the importance of mathematics!</p>
+<p>Finally, in those days like these, different design goals led to diversity. Gauss was primarily interested in astronomical lenses with low distortion. Petzval proritized light sensitivty for portraiture. Cooke (1893) later produced the famous triplet, which became the Tessar, to achieve a compact lens that balanced aberrations across the field. Woods’ fish-eye became a scientific tool that enabled measurements of the sky, military reconnaissance and artistic architectural overviews.</p>
+<section id="sec-optics-double-gauss" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="sec-optics-double-gauss"><span class="header-section-number">12.4.1</span> Double Gauss</h3>
+<p>The great mathematician Gauss implemented proposed a design, the <strong>Gauss lens</strong> for astronomy. This was improved upon by Alvan Clark and Paul Rudolph, who expanded on Gauss’s idea to introduce the first symmetrical double Gauss arrangement — essentially two of Gauss’s lens pairs, placed symmetrically around the stop . Paul Rudolph at Zeiss refined this into the famous Planar lens (1896), which became the archetypal “double Gauss” photographic objective. This design, with later improvements (e.g.&nbsp;Taylor &amp; Hobson’s Opic lens, 1920), became the dominant fast normal lens type for photography in the 20th century (<a href="#fig-double-gauss" class="quarto-xref">Figure&nbsp;<span>12.3</span></a>).</p>
+<div id="fig-double-gauss" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-double-gauss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/09-morelens/double-gauss-isetlens.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-double-gauss-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.3: Double Gauss multielement lens design. fise_lensExample.m initiated the drawing, which I modified in Affinity Designer. The evolution from Gauss’ original lens design to the double Gauss and Planar design is nicely illustrated in <a href="https://en.wikipedia.org/wiki/Double-Gauss_lens">Wikipedia Double-Gauss</a>.
 </figcaption>
 </figure>
 </div>
 </section>
-<section id="pinholes-real-life" class="level3" data-number="7.2.3">
-<h3 data-number="7.2.3" class="anchored" data-anchor-id="pinholes-real-life"><span class="header-section-number">7.2.3</span> Pinholes: real life</h3>
-<p>The basic idea of the pinhole camera (also called the <strong>camera obscura</strong>) has been known for thousands of years. Surely, many people noticed the phenomenon in different times and places. We have a record that the Chinese philosopher Mozi (c.&nbsp;470–391 BC) wrote that an inverted image is formed through a pinhole, and moreover he explained the phenomenon by positing that light travels in straight lines! The Chinese scientist Shen Kuo (1031–1095) described the process explicitly in his book Dream Pool Essays, also noting that the image is inverted because light rays travel in a straight line from the source to the pinhole and then continue straight to form the image.</p>
-<p>The most significant Islamic figure is Ibn al-Haytham (c.&nbsp;965–1040), also known as Alhazen. His influential work, the Book of Optics, provides a comprehensive analysis of the camera obscura phenomenon. He used the term al-bayt al-muthlim (“the dark room”) to describe the pinhole camera, and he conducted experiments to demonstrate that a small hole could project an image of an external scene onto the opposite wall. Al-Haytham correctly reasoned that the pinhole created a clear image because it isolates and channels individual light rays from different points of the object, preventing them from mixing. His work included many other observations that laid the groundwork for modern optics.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Natural pinholes">
+<section id="sec-optics-famous-lenses" class="level3" data-number="12.4.2">
+<h3 data-number="12.4.2" class="anchored" data-anchor-id="sec-optics-famous-lenses"><span class="header-section-number">12.4.2</span> Tessar, Petzval and Fisheye</h3>
+<p>The three tabs in the image below illustrate the Tessar, Petzval and Fisheye designs. As you can imagine from inspecting these lens diagrams, there is a large university of shapes, spacing, and materials that were open for exploration. As you might also imagine, the ability to search through this space with a goal in mind, and with increasingly large computers and purpose-built software to compute the properties of the optics, has been important to image systems engineering.</p>
+<div id="fig-classic-lenses" class="figure quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-classic-lenses-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Tessar</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Petzval</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Fisheye</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="fig-optics-tessar" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-optics-tessar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/09-morelens/tessar-wikipedia.png" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-classic-lenses">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-optics-tessar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) <a href="https://en.wikipedia.org/wiki/Tessar">Cooke became Tessar lens</a>. An evolution of the Cooke Triplet, adding a fourth element to improve performance and correct aberrations. <a href="https://en.wikipedia.org/wiki/Tessar#/media/File:Tessar.png">Source: wikipedia</a>
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="fig-optics-petzval" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-optics-petzval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/09-morelens/petzval-wikipedia.png" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-classic-lenses">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-optics-petzval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) <a href="https://en.wikipedia.org/wiki/Petzval_lens">Petzval lens</a> for portraits, known for its large aperture but limited field of view. It’s still used in some specialized applications. Big fight. Biotar is another portrait lens.<a href="https://en.wikipedia.org/wiki/Petzval_lens#/media/File:Petzval.png">Source: Wikipedia</a>
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div id="fig-optics-fisheye" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-optics-fisheye-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/09-morelens/fisheye-wikipedia.png" class="img-fluid figure-img" style="width:70.0%" data-ref-parent="fig-classic-lenses">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-optics-fisheye-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) The <a href="https://commons.wikimedia.org/w/index.php?curid-74400757">fish eye lens. CC BY-SA 4.0,</a>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-classic-lenses-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.4: A collection of classic lens designs.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="sec-optics-abcd" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="sec-optics-abcd"><span class="header-section-number">12.5</span> ABCD matrix optics</h2>
+<!-- 
+Maybe write a new ISETCam script with the ABCD implementation? 
+
+This is a very simple and nice tutorial: https://youtu.be/FUc1k393FYo?si=2YByUEmtH-ed3S77
+I am uncertain about three things in this tutorial.  
+
+* The second lens, second surface, should have a curvature that is negative, I think.  He has it as positive.  Yet ...  * n2 and n1 always refer to the IOR of the current material (n1) and the IOR of the next material (n2).  
+* The positive and negative angles w.r.t. the axis.  Positive angles are counter clockwise, as expected.  He doesn't say, and it would be helpful to mention.  
+-->
+<p>Ray tracing provides a physical and intuitive way to understand how light travels. But the method becomes computationally intensive for complex systems with many surfaces. A powerful and systematic method for analyzing such systems is <strong>ray transfer matrix analysis</strong>, often called <strong>ABCD matrix optics</strong>. This approach simplifies the design process by modeling the effect of each optical component on a light ray using a simple <span class="math inline">\(2 \times 2\)</span> matrix.</p>
+<p>This method is accurate for <strong>paraxial</strong> rays; these are rays that are both close to the optical axis and travel at small angles relative to it. The accuracy of the method depends on these small-angle approximations:</p>
+<p><span class="math display">\[
+\sin(\theta) \approx \theta, \quad \tan(\theta) \approx \theta, \quad \cos(\theta) \approx 1
+\]</span></p>
+<p>These approximations are accurate for angles up to about <span class="math inline">\(5^\circ\)</span> and can often be stretched to <span class="math inline">\(10^\circ\)</span> depending on the required accuracy. They also apply to rays that are one-third to one-half of the aperture distance, depending on the lens power.</p>
+<p>A paraxial ray at any point along the optical axis can be described by a vector containing two values: its radial distance (<span class="math inline">\(y\)</span>) from the optical axis and its angle (<span class="math inline">\(\theta\)</span>) with respect to the axis.</p>
+<div id="fig-raytransfer-definitions" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-raytransfer-definitions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/09-morelens/definitions.png" class="img-fluid figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-raytransfer-definitions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.5: Ray transfer matrix parameter definitions. (A) A ray is defined by its height <span class="math inline">\(y\)</span> and angle <span class="math inline">\(\theta\)</span>. By convention, counter-clockwise angles are positive. (B) A surface is defined by its radius of curvature <span class="math inline">\(R\)</span>.
+</figcaption>
+</figure>
+</div>
+<p>We represent the ray as a column vector, <span class="math inline">\(\rho = \begin{pmatrix} y \\ \theta \end{pmatrix}\)</span>. The journey of this ray through an optical system is described by a series of matrix multiplications, where each matrix represents a single optical element (like a lens surface) or the space between elements. The final output ray <span class="math inline">\(\rho_{\text{out}}\)</span> is found by applying the total system matrix <span class="math inline">\(M\)</span> to the input ray <span class="math inline">\(\rho_{\text{in}}\)</span>:</p>
+<p><span class="math display">\[
+\rho_{\text{out}} = M \rho_{\text{in}}
+\quad \text{or} \quad
+\begin{pmatrix} y_{\text{out}} \\ \theta_{\text{out}} \end{pmatrix}
+=
+\begin{pmatrix} A &amp; B \\ C &amp; D \end{pmatrix}
+\begin{pmatrix} y_{\text{in}} \\ \theta_{\text{in}} \end{pmatrix}
+\]</span></p>
+<p>Let’s build the matrices for a thick lens by following a ray as it refracts at the first surface, travels through the lens material, and refracts again at the second surface.</p>
+<section id="refraction---first-surface" class="level3" data-number="12.5.1">
+<h3 data-number="12.5.1" class="anchored" data-anchor-id="refraction---first-surface"><span class="header-section-number">12.5.1</span> Refraction - First Surface</h3>
+<p>Snell’s Law tells us how the rays change direction at the first surface of a spherical lens (<a href="optics-04-lenses.html#eq-snell" class="quarto-xref">Equation&nbsp;<span>10.1</span></a>). As you can see in <a href="#fig-1st-surface" class="quarto-xref">Figure&nbsp;<span>12.6</span></a>, the rays change direction by an amount that depends on their field height. The critical point -I won’t show the derivation- is that the amount of change is proportional to field height. In the paraxial regime the change is the same, no matter what the input ray angle.</p>
+<div id="fig-1st-surface" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1st-surface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/09-morelens/yPhi-1st-surface.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1st-surface-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.6: The output ray angles change proportionally to field height, <span class="math inline">\(y_1\)</span>. Using the sign convention (<a href="#fig-raytransfer-definitions" class="quarto-xref">Figure&nbsp;<span>12.5</span></a>), the constant of proportionality is negative.
+</figcaption>
+</figure>
+</div>
+<p>As the ray passes through the surface, the field height itself does not change. We can use these two observations to create the ray transfer matrix that describes how the input ray, <span class="math inline">\(\rho_1 = (y_1, \theta_1)\)</span> becomes the output ray, <span class="math inline">\(\rho_2\)</span>.</p>
+<p><span class="math display">\[
+M_{S1} =
+\begin{pmatrix}
+1 &amp; 0 \\
+\dfrac{n_1 - n_2}{R_1 ~ n_2} &amp; \dfrac{n_1}{n_2}
+\end{pmatrix}
+\qquad
+\rho_2 = M_{\text{S1}} \rho_1
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(n_1\)</span> is the refractive index of the medium on the left (e.g., air),</li>
+<li><span class="math inline">\(n_2\)</span> is the refractive index of the lens material,</li>
+<li><span class="math inline">\(R_1\)</span> is the radius of curvature of the first surface (positive for convex, negative for concave).</li>
+</ul>
+</section>
+<section id="translation-through-the-lens" class="level3" data-number="12.5.2">
+<h3 data-number="12.5.2" class="anchored" data-anchor-id="translation-through-the-lens"><span class="header-section-number">12.5.2</span> Translation Through the Lens</h3>
+<p>After a light ray crosses a surface boundary, it continues in a straight path. In this case, the situation is reversed: the field height <span class="math inline">\(y\)</span> changes but the angle (direction) does not. The change in field height is proportional to the angle, <span class="math inline">\(y = d \theta\)</span>. This makes the ray transfer matrix through a uniform medium quite simple. <span class="math display">\[
+M_{T} =
+\begin{pmatrix}
+1 &amp; d \\
+0 &amp; 1
+\end{pmatrix}
+\]</span></p>
+</section>
+<section id="refraction---second-surface" class="level3" data-number="12.5.3">
+<h3 data-number="12.5.3" class="anchored" data-anchor-id="refraction---second-surface"><span class="header-section-number">12.5.3</span> Refraction - Second Surface</h3>
+<p>Finally, as the ray passes the second surface into the surrounding medium, we have a ray transfer matrix with different parameters but the same structure as the first surface.</p>
+<p><span class="math display">\[
+M_{S2} =
+\begin{pmatrix}
+1 &amp; 0 \\
+\dfrac{n_2 - n_1}{R_2 n_1} &amp; \dfrac{n_2}{n_1}
+\end{pmatrix}
+\]</span></p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(R_2\)</span> is the radius of curvature of the second surface,</li>
+<li><span class="math inline">\(n_2\)</span> is the refractive index inside the lens,</li>
+<li><span class="math inline">\(n_1\)</span> is the refractive index of the medium outside the lens.</li>
+</ul>
+<p>These three matrices describe the ray’s journey. Their product is the ray transfer matrix of the entire thick lens. The <span class="math inline">\(2 \times 2\)</span> matrix <span class="math inline">\(M\)</span> is called the <strong>ABCD matrix</strong>,</p>
+<p><span class="math display">\[
+M =
+\begin{pmatrix}
+A &amp; B \\
+C &amp; D
+\end{pmatrix} = M_{S2} M_{T} M_{S1}
+\]</span></p>
+<p>If we have optics with more spherical, circularly symmetric surfaces, we can continue to define and apply more matrices to create the ray transfer matrix for the system. We only need to know the indices of refraction and the radii of curvature of each surface. If the lenses are close to spherical near the optical axis, this approach still serves as an approximation of performance.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Thin lens">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Natural pinholes
+Thin lens
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>From time-to-time people report on interesting examples of naturally occurring pinhole cameras. This video shows how the holes at the top of a curtain produce a series of overlaping images of the street below.</p>
-<div id="fig-pinholes-rainmaker" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<p>A useful special case to remember is the ray transfer matrix for a thin spherical lens, with the surrounding medium air, <span class="math inline">\(n_1 = 1\)</span>, and the index of refraction of the material is <span class="math inline">\(n\)</span>. This case is a bit simpler because the thickness is considered to be <span class="math inline">\(d=0\)</span>. For a thin lens, the <span class="math inline">\(y_1\)</span> value of the object side ray is the same as the <span class="math inline">\(y_2\)</span> on the image side. The angle of the input ray angle, <span class="math inline">\(\theta_1\)</span>, becomes a new angle, <span class="math inline">\(\theta_2\)</span>.</p>
+<div id="fig-yPhi" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-pinholes-rainmaker-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<video src="images/optics/06-geometric/pinholes-video-rainmaker.mp4" class="img-fluid quarto-figure quarto-figure-center" style="width:40.0%" controls=""><a href="images/optics/06-geometric/pinholes-video-rainmaker.mp4">Video</a></video>
+<div aria-describedby="fig-yPhi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/09-morelens/yPhi-equation.png" class="img-fluid figure-img" style="width:50.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinholes-rainmaker-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.5: Video of a natural set of pinholes at the upper part of the curtain.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-yPhi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.7: The input rays are parallel to the optic axis, <span class="math inline">\(\theta_1 = 0\)</span>. The output ray angles change proportionally to the input ray field height, <span class="math inline">\(y_1\)</span>. According to the sign convention (<a href="#fig-raytransfer-definitions" class="quarto-xref">Figure&nbsp;<span>12.5</span></a>), the constant of proportionality is negative.
 </figcaption>
 </figure>
 </div>
-<p>(<a href="https://x.com/Rainmaker1973/status/1830854129155031206" target="_blank">See the original source</a>)</p>
-<p><span class="citation" data-cites="torralba2012-mi">Torralba and Freeman (<a href="references.html#ref-torralba2012-mi" role="doc-biblioref">2012</a>)</span> described examples of naturally occurring pinhole cameras, and how to create a pinhole image computationally even when a window is too big to produce a useful image. They say you can take record the very blurry image from a large window opening, and then you can put a small occluder into the window (maybe stand sidewise in the middle of the window) and take a second image. Then, subtract the two images. By the Principle of Superposition, the difference image corresponds to the image when the aperture was the same size as the occluder. This method is more complex to implement because it involves acquiring two (linear) images and then subtracting them. And the world might have changed between the time you took the two image. But it’s a good trick for spies who are desperate to learn where they are being held hostage.</p>
-<div id="fig-torralba" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-torralba-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/optics/06-geometric/torralba.png" class="img-fluid figure-img" style="width:80.0%">
+<p>We can calculate the constant of proportionality <span class="math inline">\(\Phi\)</span> from the lens parameters (indices of refraction and radii of curvature) and medium.</p>
+<p><span id="eq-Phi-ior"><span class="math display">\[
+\Phi = \frac{n_{2}-n_{1}}{n_{1}} \left(\frac{1}{R_{1}} - \frac{1}{R_{2}}\right)
+\tag{12.4}\]</span></span></p>
+<p>We can express the transformation of the ray <span class="math inline">\((y_1, \theta_1)\)</span> into <span class="math inline">\((y_2, \theta_2)\)</span> as 2x2 matrix, accounting for the sign convention,</p>
+<p><span class="math display">\[
+M_{\text{lens}}
+=
+\begin{pmatrix}
+1 &amp; 0 \\
+-\Phi &amp; 1
+\end{pmatrix},
+\]</span></p>
+<p>That’s cool. And for a thin lens, it’s even more cool because really only the focal length really matters. Imagine what happens if the focal length shortens (the angles increase) or lengthens (the angles decrease). In fact we can express the focal length <span class="math inline">\(f\)</span> in terms of the lens parameters this way.</p>
+<p><span id="eq-f-ior"><span class="math display">\[
+\frac{1}{f} =  \left(\frac{n_{2}}{n_{1}} - 1\right)
+\left(\frac{1}{R_{1}} - \frac{1}{R_{2}}\right),
+\tag{12.5}\]</span></span></p>
+<p>so the thin lens matrix can also be written this way</p>
+<p><span class="math display">\[
+M_{\text{lens}}
+=
+\begin{pmatrix}
+1 &amp; 0 \\
+-\tfrac{1}{f} &amp; 1
+\end{pmatrix}.
+\]</span></p>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-torralba-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.6: A pinhole camera image formed by substracting an image with an occluder (left) from an image without the occluder (middle). If the two captured images are linear measures of the photons, then Principle of Superposition implies we can subtract them and be left with a computed image that we would have obtained with through the occluded region. The result is a (noisy) image that Torralba and Freeman call ‘inverse’ pinhole camera.
+</div>
+</div>
+</section>
+<section id="effective-and-back-focal-lengths" class="level3" data-number="12.5.4">
+<h3 data-number="12.5.4" class="anchored" data-anchor-id="effective-and-back-focal-lengths"><span class="header-section-number">12.5.4</span> Effective and back focal lengths</h3>
+<p>Multi-lens systems can be summarized by their ray transfer matrix. This is a very efficient way to communicate about system properties, though it is quite incomplete compared to a full specification of the components and their materials. Because the lens element are not part of the specification, the this characterization of the lens is often called a <strong>black box model</strong> of the optics. We know what it does, just not how it does it.</p>
+<p>We can compute two particularly valuable system properties from the system matrix: the <strong>back focal length (BFL)</strong>, <span class="math inline">\(f_B\)</span>, and the <strong>effective focal length (EFL)</strong>, <span class="math inline">\(f_E\)</span>. The BFL is the distance from the system’s output reference plane to the focal point (for an object at infinity). The EFL is the distance from the secondary principal plane to the focal point.</p>
+<div id="fig-efl-bfl" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-efl-bfl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/09-morelens/efl-bfl.png" class="img-fluid figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-efl-bfl-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12.8: Back focal length and Effective focal length of a black box system.
 </figcaption>
 </figure>
 </div>
-</div>
-</div>
-</div>
+<p>We determine these focal lengths from the system matrix. We compute where an input ray that is parallel to the optical axis emerges and crosses the optical axis. An input ray parallel to the optical axis has the form <span class="math inline">\(\rho_{\text{in}}=(y_{\text{in}},\theta_{\text{in}})=(y,0)\)</span>. Because <span class="math inline">\(\theta_{\text{in}}=0\)</span>, the corresponding output ray depends only on <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span>, <span class="math inline">\(\rho_{\text{out}}=(y_{\text{out}},\theta_{\text{out}})=(A y, C y)\)</span>.</p>
+<p>The two output parameters determine the line the output ray follows in the <span class="math inline">\(z\)</span>-direction. It starts at the output field height and slopes toward the optical axis. The line reaches the optical axis at the <span class="math inline">\(z\)</span> where <span class="math display">\[
+\begin{aligned}
+0 &amp;= y_{\text{out}} + z\,\theta_{\text{out}} \\
+z &amp;= -\frac{y_{\text{out}}}{\theta_{\text{out}}} = -\frac{A}{C}.
+\end{aligned}
+\]</span></p>
+<p>By definition of the principal planes, we can shift the reference planes so the system behaves like a thin lens there (this choice makes <span class="math inline">\(A=1\)</span>, while <span class="math inline">\(C\)</span> is invariant to such shifts). Hence <span class="math display">\[
+f_{B} = -\frac{A}{C},
+\qquad
+f_{E} = -\frac{1}{C}.
+\]</span></p>
+<p>N.B. I use a simple parameterization of the ray state, <span class="math inline">\((y,\theta)\)</span>. Others -and they can be very smart- prefer to use the <strong>reduced-angle convention</strong>. They incorporate the index of refraction into the angle <span class="math inline">\((y,n\,\theta)\)</span>. In that framing, replace <span class="math inline">\(C\)</span> by <span class="math inline">\(C/n_{\text{out}}\)</span>.</p>
+</section>
+</section>
+<section id="sec-optics-raytransfer" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="sec-optics-raytransfer"><span class="header-section-number">12.6</span> Ray transfer functions</h2>
+<p>I expect that we will continue to see computational methods based on rays continue to expand. The ray transfer framing is an important conceptualization and it is thrilling to see the roots of linear algebra and optics coordinate so well. The limitation of the approach to circularly symmetric, paraxial analyses is quite significant. It is clear that we would like to be able to broaden the approach, say by developing functions that map the entire set of input rays to the output rays.</p>
+<p>A number of groups have worked to put together functions that extend the ABCD formulation to a much broader mapping, which <span class="citation" data-cites="goossens2022-raytransferfunctions">Goossens et al. (<a href="references.html#ref-goossens2022-raytransferfunctions" role="doc-biblioref">2022</a>)</span> labeled the <strong>Ray Transfer Function</strong>. Some groups mapped the rays using polynomials (Hopkins, <span class="citation" data-cites="hullin2012-xn">Hullin et al. (<a href="references.html#ref-hullin2012-xn" role="doc-biblioref">2012</a>)</span>), and others have worked with neural networks (<span class="citation" data-cites="Xian2023-cv">Xian et al. (<a href="references.html#ref-Xian2023-cv" role="doc-biblioref">2023</a>)</span>).</p>
+<p>The future of lens manufacturing and design is likely to include metalenses (<a href="optics-04-lenses.html#sec-optics-metalens" class="quarto-xref"><span>Section 10.6.5</span></a>) based on nanoscale structures that cannot be modeled by ray training, it will become increasingly important to develop tools to specify the ray transfer function of optical components. The development of this infrastructure is a large, and interesting, task for the future.</p>
 
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
-<div id="ref-iset3d2022" class="csl-entry" role="listitem">
-(2022) <span>ISET3d</span>
+<div id="ref-goossens2022-raytransferfunctions" class="csl-entry" role="listitem">
+Goossens T, Lyu Z, Ko J, et al (2022) Ray-transfer functions for camera simulation of <span>3D</span> scenes with hidden lens design. Optics Express 30:24031–24047
 </div>
-<div id="ref-pharrPBRTVersion4" class="csl-entry" role="listitem">
-Pharr M, Jakob W, Humphreys G <span>PBRT</span>: <span>Version</span> 4
+<div id="ref-hullin2012-xn" class="csl-entry" role="listitem">
+Hullin MB, Hanika J, Heidrich W (2012) Polynomial optics: <span>A</span> construction kit for efficient ray-tracing of lens systems. Computer Graphics Forum 31:1375–1383
 </div>
-<div id="ref-torralba2012-mi" class="csl-entry" role="listitem">
-Torralba A, Freeman WT (2012) Accidental pinhole and pinspeck cameras: <span>Revealing</span> the scene outside the picture. In: 2012 <span>IEEE</span> conference on computer vision and pattern recognition. pp 374–381
+<div id="ref-Wood1906-go" class="csl-entry" role="listitem">
+Wood RW (1906) <a href="http://dx.doi.org/10.1080/14786440609463529"><span>XXIII</span>. Fish-eye views, and vision under water</a>. Lond Edinb Dublin Philos Mag J Sci 12:159–162
+</div>
+<div id="ref-Xian2023-cv" class="csl-entry" role="listitem">
+Xian W, Božič A, Snavely N, Lassner C (2023) <a href="https://openaccess.thecvf.com/content/CVPR2023/html/Xian_Neural_Lens_Modeling_CVPR_2023_paper.html">Neural lens modeling</a>. In: Proceedings of the IEEE/CVF conference on computer vision and pattern recognition. pp 8435–8445
 </div>
 </div>
 </section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>An early photographic process employing an iodine-sensitized silvered plate and mercury vapor.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>“In discussing the peculiar type of refraction which occurs when light from the sky enters the surface of still water, it seems of interest to ascertain how the external world appears to the fish. As is well known, a sublnerged eye directed towards the surface of still water sees the sky compressed into a comparatively small circle of light, the centre of which is always immediately above the observer, the appearance being as if the pond were covered with an opaque roof provided with a circular aperture or window. If our eyes were adapted to distinct vision under water, it is clear that the objects surrounding the pond, such as trees, horses, fishermen, etc., would appear round the edge of this circle of light. Objects not much elevated above the plane of the water would be seen somewhat compressed and distorted, but the circular picture would contain everything embraced within an angle of 180 deg in every direction, i.e.&nbsp;a complete hemisphere” <span class="citation" data-cites="Wood1906-go">Wood (<a href="references.html#ref-Wood1906-go" role="doc-biblioref">1906</a>)</span><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -1173,13 +1419,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/part-optics.html" class="pagination-link" aria-label="Part II: Optics">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Part II: Optics</span>
+      <a href="../chapters/optics-05-thinlens.html" class="pagination-link" aria-label="Thin lenses">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Thin lenses</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/optics-02-wave.html" class="pagination-link" aria-label="The wave theory of light">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The wave theory of light</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/optics-07-linear-space.html" class="pagination-link" aria-label="Spatial domain">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Spatial domain</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

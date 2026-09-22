@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-07">
+<meta name="dcterms.date" content="2026-09-22">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
-<title>Part III: Sensors – Foundations of Image Systems Engineering</title>
+<title>9&nbsp; Diffraction and the PSF – Foundations of Image Systems Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -32,8 +51,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/sensors-01-photoelectric.html" rel="next">
-<link href="../chapters/optics-10-wavefront-sensing.html" rel="prev">
+<link href="../chapters/optics-04-lenses.html" rel="next">
+<link href="../chapters/optics-02-wave.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -105,7 +124,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles/callouts.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -114,7 +133,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Part III: Sensors</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-03-diffraction-psf.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Diffraction and the PSF</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -221,7 +240,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/optics-03-diffraction-psf.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/optics-03-diffraction-psf.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Diffraction and the PSF</span></span></a>
   </div>
 </li>
@@ -280,7 +299,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/part-sensors.html" class="sidebar-item-text sidebar-link active">
+  <a href="../chapters/part-sensors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Part III: Sensors</span></a>
   </div>
 </li>
@@ -555,25 +574,24 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sensor-topics" id="toc-sensor-topics" class="nav-link active" data-scroll-target="#sensor-topics">Sensor topics</a>
+  <li><a href="#sec-diffraction-overview" id="toc-sec-diffraction-overview" class="nav-link active" data-scroll-target="#sec-diffraction-overview"><span class="header-section-number">9.1</span> Diffraction and PSF overview</a></li>
+  <li><a href="#sec-airy-pattern" id="toc-sec-airy-pattern" class="nav-link" data-scroll-target="#sec-airy-pattern"><span class="header-section-number">9.2</span> Pinhole size or diffraction: which blurs more?</a></li>
+  <li><a href="#sec-pointspread" id="toc-sec-pointspread" class="nav-link" data-scroll-target="#sec-pointspread"><span class="header-section-number">9.3</span> The point spread function</a></li>
+  <li><a href="#pinhole-psfs" id="toc-pinhole-psfs" class="nav-link" data-scroll-target="#pinhole-psfs"><span class="header-section-number">9.4</span> Pinhole PSFs</a>
   <ul class="collapse">
-  <li><a href="#photons-to-electrons" id="toc-photons-to-electrons" class="nav-link" data-scroll-target="#photons-to-electrons">Photons to Electrons</a></li>
-  <li><a href="#pixel-design" id="toc-pixel-design" class="nav-link" data-scroll-target="#pixel-design">Pixel Design</a></li>
-  <li><a href="#sensor-parameters" id="toc-sensor-parameters" class="nav-link" data-scroll-target="#sensor-parameters">Sensor Parameters</a></li>
-  <li><a href="#sensor-components" id="toc-sensor-components" class="nav-link" data-scroll-target="#sensor-components">Sensor Components</a></li>
-  <li><a href="#sensor-control" id="toc-sensor-control" class="nav-link" data-scroll-target="#sensor-control">Sensor Control</a></li>
-  <li><a href="#sensor-characterization" id="toc-sensor-characterization" class="nav-link" data-scroll-target="#sensor-characterization">Sensor Characterization</a></li>
-  <li><a href="#sensor-innovations" id="toc-sensor-innovations" class="nav-link" data-scroll-target="#sensor-innovations">Sensor Innovations</a></li>
+  <li><a href="#pinhole-and-distance" id="toc-pinhole-and-distance" class="nav-link" data-scroll-target="#pinhole-and-distance"><span class="header-section-number">9.4.1</span> Pinhole and distance</a></li>
+  <li><a href="#pinhole-shapes" id="toc-pinhole-shapes" class="nav-link" data-scroll-target="#pinhole-shapes"><span class="header-section-number">9.4.2</span> Pinhole shapes</a></li>
+  <li><a href="#human-psf" id="toc-human-psf" class="nav-link" data-scroll-target="#human-psf"><span class="header-section-number">9.4.3</span> Human PSF</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Part III: Sensors</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-03-diffraction-psf.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Diffraction and the PSF</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-part-sensors" class="quarto-section-identifier">Part III: Sensors</span></h1>
+<h1 class="title"><span id="sec-diffraction" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Diffraction and the PSF</span></span></h1>
 </div>
 
 
@@ -584,7 +602,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 7, 2026</p>
+      <p class="date">September 22, 2026</p>
     </div>
   </div>
   
@@ -610,93 +628,200 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 7, 2026
+Last updated: September 22, 2026
 !-->
 </div>
 </div>
 </div>
-<p>This part of the book explains how the analog light image formed by the optics is converted into a digital signal. This conversion involves two fundamental challenges:</p>
-<ol type="1">
-<li><strong>Photogeneration (Physics):</strong> Converting incident photons into mobile electrons inside silicon via the photoelectric effect. The quantum nature of light dictates the fundamental limits of sensor performance (shot noise), a physical process that is identical whether in a CCD or a CMOS sensor.</li>
-<li><strong>Readout Architecture (Engineering):</strong> Collecting, transporting, and measuring those tiny charge packets across an array of millions of pixels. We trace this engineering journey from Willard Boyle and George Smith’s charge-domain shifting in charge-coupled devices (CCD) to modern voltage-domain CMOS active-pixel architectures.</li>
-</ol>
-<p>We then define the key parameters that characterize sensor performance, such as quantum efficiency, read noise, and dynamic range. The final chapters describe the complete sensor system, including color filter arrays and control electronics, and survey the landscape of modern sensor innovations.</p>
-<ul>
-<li>photoelectric effect and photons</li>
-<li>pixel design</li>
-<li>parameters</li>
-<li>sensor components</li>
-<li>sensor control systems</li>
-<li>sensor characterization</li>
-<li>innovations</li>
-</ul>
-<section id="sensor-topics" class="level2">
-<h2 class="anchored" data-anchor-id="sensor-topics">Sensor topics</h2>
-<section id="photons-to-electrons" class="level3">
-<h3 class="anchored" data-anchor-id="photons-to-electrons">Photons to Electrons</h3>
-<p>This chapter covers the initial and most critical step in digital imaging: the conversion of light particles (photons) into electrical charge (electrons).</p>
-<ul>
-<li>Explains the photoelectric effect and the quantum nature of light.</li>
-<li>Introduces the concept of shot noise, arising from the Poisson distribution of photon arrivals, which sets a fundamental limit on signal quality.</li>
-<li>Describes the process of converting photons into photoelectrons within a silicon photodiode.</li>
-</ul>
+<section id="sec-diffraction-overview" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="sec-diffraction-overview"><span class="header-section-number">9.1</span> Diffraction and PSF overview</h2>
+<p>Geometric optics predicts that a smaller pinhole produces a sharper image, but in physical optics diffraction sets a fundamental limit: shrink the aperture too far, and the image blurs again. In this chapter we examine the trade-off between geometric blur and wave diffraction, introducing the Airy disk formula for circular apertures. We then define the <strong>point spread function (PSF)</strong>—the fundamental description of how an optical system images a single point. Using the PSF within a linear systems framework (superposition and convolution), we explore how aperture geometry (rectangular, polygonal) and optical imperfections shape the PSF, concluding with the PSF of the human eye.</p>
 </section>
-<section id="pixel-design" class="level3">
-<h3 class="anchored" data-anchor-id="pixel-design">Pixel Design</h3>
-<p>Here, we examine the architecture of a single pixel, the building block of the image sensor.</p>
-<ul>
-<li>Details the architecture of a modern CMOS pixel (e.g., the 4T pixel).</li>
-<li>Explains the function of key components: photodiode, transfer gate, floating diffusion, and source follower amplifier.</li>
-<li>Discusses the readout process and the origin of different noise sources within the pixel.</li>
-</ul>
+<section id="sec-airy-pattern" class="level2 page-columns page-full" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="sec-airy-pattern"><span class="header-section-number">9.2</span> Pinhole size or diffraction: which blurs more?</h2>
+<p>From these simple considerations, we have seen that the image is blurred by two effects: the pinhole size and diffraction. Increasing the pinhole would create a larger spot on the wall, but decreasing the pinhole size reveals the spherical nature of the wavefront and also increases the size of the spot on the wall. We can compare the size of these two effects numerically.</p>
+<div id="fig-blur-comparison" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-cap-location="margin">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-blur-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/06-geometric/blur-comparison.png" class="img-fluid figure-img" style="width:80.0%" data-fig-cap-location="margin">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-blur-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: The Airy pattern of a pinhole camera.
+</figcaption>
+</figure>
+</div>
+<p>First, consider what we expect from the ray model. If the pinhole diameter is <span class="math inline">\(D\)</span>, a far-away point on the main axis will produce a blurred spot in the image of size <span class="math inline">\(D\)</span>. Also, the pinhole-blur predicted by the ray model is the same no matter how far the image plane is from the pinhole.</p>
+<p>Second, consider the light pattern we expect for a plane wave passing through a pinhole aperture. This pattern can be calculated using a formula derived by the astronomer, George B. Airy <span class="citation" data-cites="airy-1835-diffraction">(<a href="references.html#ref-airy-1835-diffraction" role="doc-biblioref">Airy 1835</a>)</span> and is shown in <a href="#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>. The Airy pattern has a central bright spot (the Airy disk), which is surrounded by a series of concentric rings. The size of the pattern depends on the wavelength of the light <span class="math inline">\(\lambda\)</span>, the diameter of the pinhole <span class="math inline">\(D\)</span>. Unlike the ray model, for the diffraction case the rays are expanding so that the distance <span class="math inline">\(L\)</span> from the pinhole to the image plane matters. The image is radially symmetric with a bright spot in the center, surrounded by a set of concentric rings of decreasing intensity. The Airy disk contains about 85% of the total energy. The mathematical notation for the Airy pattern is a bit complex, but the diameter of the Airy disk, <span class="math inline">\(d\)</span>, has a simple formula</p>
+<p><span id="eq-airy1"><span class="math display">\[
+d = 2.44~L~(\lambda / D)
+\tag{9.1}\]</span></span></p>
+<p>Suppose we calculate the size of the diffraction diameter when the image plane is 1 m away, so <span class="math inline">\(L=1\)</span>, and for a wavelength of light is 550 nm. Suppose the pinhole diameter is <span class="math inline">\(D = 10^{-4} m\)</span>. The diameter of the Airy disk, <span class="math inline">\(d\)</span>, will be</p>
+<p><span id="eq-airydisk1"><span class="math display">\[
+d = 2.44 \times (1 m) (550 \times 10^{-9} m )/ 1 \times 10^{-4}m) = 0.0134 m
+\tag{9.2}\]</span></span></p>
+<!--
+The diffraction spread is larger than the pinhole spread when $d$ exceeds $D$. We do the calculation in the scripts in this [ISETCam script](https://htmlpreview.github.io/?https://github.com/wandell/FISE-git/blob/main/code/fise_diffraction.html).  For $L = 1m$ the pinhole blur is larger than the diffraction blur for a diameter of about $1 mm$.  When $L$ is much closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
+-->
+<p>The diffraction spread exceeds the pinhole spread when <span class="math inline">\(d\)</span> exceeds <span class="math inline">\(D\)</span>. We do the calculation for different assumptions about the distance to the image plane <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_diffraction.html">ISETCam:fise_diffraction</a>. As an example, we find that when the distance to the image plane is <span class="math inline">\(L = 1m\)</span>, the pinhole blur is larger than the diffraction blur for a pinhole diameter of about <span class="math inline">\(1 mm\)</span>. When the image plane distance, <span class="math inline">\(L\)</span>, is closer, say <span class="math inline">\(10 mm\)</span>, the pinhole blur exceeds the diffraction blur when the diameter is <span class="math inline">\(100 \mu\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="The diameter of the diffraction point spread">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The diameter of the diffraction point spread
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>In a paper entitled “On the Diffraction of an Object-glass with Circular Aperture”, George Airy provided the mathematical description of the diffraction pattern <span class="citation" data-cites="airy-1835-diffraction">(<a href="references.html#ref-airy-1835-diffraction" role="doc-biblioref">Airy 1835</a>)</span>. A modern derivation of the full point spread function for both the circular aperture and other shapes is in <span class="citation" data-cites="Goodman2022-fv">Goodman (<a href="references.html#ref-Goodman2022-fv" role="doc-biblioref">2022</a>)</span> (pages 88-94). The computation is implemented and frequently used in ISETCam. It is explained <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetcam/blob/main/tutorials/optics/t_opticsAiryDisk.html">in this tutorial</a>.</p>
+<p>In the main text, we expressed the formula for a particular distance from the pinhole to an image plane. For a pinhole, the formula is usually given in terms of the angle of the bundle of rays emerging from the pinhole.</p>
+<p><span class="math display">\[sin(\theta) = 1.22 \lambda / D\]</span></p>
+<p>When the angle is small, <span class="math inline">\(\theta &lt; 10 \deg\)</span>, the formula is very accurately approximated as</p>
+<p><span class="math display">\[
+\theta = 1.22 \lambda / D
+\]</span></p>
+<p>The size of the spot on the image plane depends on the distance how far away the pinhole is from the pinhole, as you can see in <a href="optics-05-thinlens.html#eq-airy2" class="quarto-xref">Equation&nbsp;<span>11.5</span></a>. In <a href="optics-05-thinlens.html" class="quarto-xref"><span>Chapter 11</span></a> we provide a formula for the Airy disk size for ideal lenses.</p>
+</div>
+</div>
+</div>
 </section>
-<section id="sensor-parameters" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-parameters">Sensor Parameters</h3>
-<p>This chapter defines the essential metrics used to quantify and compare the performance of image sensors.</p>
-<ul>
-<li>Defines quantum efficiency (QE), full well capacity, and conversion gain.</li>
-<li>Explains different noise sources, particularly read noise and dark noise.</li>
-<li>Derives key performance figures like Signal-to-Noise Ratio (SNR) and Dynamic Range (DR).</li>
-</ul>
+<section id="sec-pointspread" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="sec-pointspread"><span class="header-section-number">9.3</span> The point spread function</h2>
+<p>Throughout this section, we have analyzed optical systems by asking a simple question: what does the image of a single point of light look like? The resulting image pattern is called the <strong>point spread function (PSF)</strong>, and it is a fundamental measure of optical performance. The Airy pattern, for example, is the PSF for a diffraction-limited circular aperture. We will encounter other types of PSFs when we analyze optical systems using linear systems theory (<a href="optics-07-linear-space.html" class="quarto-xref"><span>Chapter 13</span></a>).</p>
+<p>The PSF is a cornerstone of lens simulation, characterization, and computational imaging. Its importance stems from a crucial property of many optical systems: they are approximately <strong>linear</strong>. This means that the image of two points added together is the same as the sum of the images of each point individually (a property known as superposition).</p>
+<p>Because of linearity, we can simulate the image of any complex scene. We can model the scene as a vast collection of individual light points. If we know the PSF, we can calculate the final image by scaling the PSF by the intensity of each point in the scene and summing all the resulting patterns. This process might involve millions of points, but it is a task that modern computers handle with ease.</p>
+<p>In an idealized system, the PSF might be the same for every point in the scene, merely shifted in position. Such a system is called <strong>linear and space-invariant (LSI)</strong>, and in that case the scaling and summing is called <strong>convolution</strong>. In most real-world optics, however, the system is <strong>space-variant</strong>: the PSF’s shape and size change depending on the point’s position in the field of view (e.g., its distance from the center, or <strong>field height</strong>).</p>
+<p>The concept of building an image from the sum of PSFs is foundational, and we will use the ideas of linear systems throughout this book. The appendices provide more mathematical detail on general linear systems (<a href="appendix-01-linearsystems.html#sec-appendix-linear-systems-overview" class="quarto-xref"><span>Section 36.1</span></a>) and the special case of LSI systems (<a href="appendix-02-spaceinvariance.html" class="quarto-xref"><span>Chapter 38</span></a>).</p>
 </section>
-<section id="sensor-components" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-components">Sensor Components</h3>
-<p><em>This chapter is planned. It will describe the components that make up a complete sensor package beyond the individual pixels.</em></p>
-<ul>
-<li><em>Explains the role of microlens arrays in improving light collection efficiency.</em></li>
-<li><em>Describes the design and function of Color Filter Arrays (CFAs), particularly the Bayer pattern.</em></li>
-<li><em>Covers the Analog-to-Digital Converter (ADC) and its role in quantizing the signal.</em></li>
-</ul>
+<section id="pinhole-psfs" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="pinhole-psfs"><span class="header-section-number">9.4</span> Pinhole PSFs</h2>
+<section id="pinhole-and-distance" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="pinhole-and-distance"><span class="header-section-number">9.4.1</span> Pinhole and distance</h3>
+<p>Even for a simple pinhole, the PSF isn’t a single, fixed pattern. Its shape depends on how far the light source is from the aperture. This distance determines which of two diffraction regimes applies.</p>
+<p>When the point source is far away, its rays arrive collimated and thus the wavefront is a plane. This is the realm of <strong>Fraunhofer diffraction</strong> (or far-field diffraction). In this common scenario, the PSF for a circular pinhole is the classic Airy pattern we discussed earlier.</p>
+<p>When the point source is close to the pinhole, its rays arrive diverging and the wavefront is a curved, spherical wavefront. This situation is described by <strong>Fresnel diffraction</strong> (or near-field diffraction). In the near field, the PSF’s shape and size change with the distance between the source and the pinhole.</p>
 </section>
-<section id="sensor-control" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-control">Sensor Control</h3>
-<p><em>This chapter is planned. It will cover the electronics and timing signals required to operate the sensor.</em></p>
-<ul>
-<li><em>Explains the difference between rolling shutter and global shutter readout modes.</em></li>
-<li><em>Discusses exposure control, gain settings (ISO), and frame rate.</em></li>
-<li><em>Introduces the basic principles of sensor timing and control logic.</em></li>
-</ul>
+<section id="pinhole-shapes" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="pinhole-shapes"><span class="header-section-number">9.4.2</span> Pinhole shapes</h3>
+<p>So far, we have focused on circular pinholes. This is a practical choice, as many apertures—from the human pupil to camera lenses—are approximately circular. A key advantage of a circular aperture is its rotational symmetry; rotating the camera (or your head) doesn’t change the image blur. The resulting PSF, like the Airy pattern, is also circularly symmetric and can be described simply by its radial profile.</p>
+<p>However, both nature and technology provide many examples of non-circular apertures. These produce more complex, two-dimensional PSFs that are not rotationally symmetric. In the following sections, we will use an ISETCam script to explore how to calculate the diffraction-limited PSF for some of these interesting shapes.</p>
+<section id="rectangular-pinholes" class="level4" data-number="9.4.2.1">
+<h4 data-number="9.4.2.1" class="anchored" data-anchor-id="rectangular-pinholes"><span class="header-section-number">9.4.2.1</span> Rectangular pinholes</h4>
+<p>The script <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_oiAperture.html" target="_blank">fise_oiAperture</a> illustrates how to calculate the PSF for a rectangular aperture in ISETCam. An image computed using the PSF from a diffraction limited rectangular pinhole, and the PSF for that pinhole, are shown in <a href="#fig-pinhole-rectangle" class="quarto-xref">Figure&nbsp;<span>9.2</span></a>. The images illustrate a case for the rectangular aperture is three times wider (x) than high (y). The larger vertical height causes less blur in the y-direction, making the image sharper for the horizontal stripes.</p>
+<div id="fig-pinhole-rectangle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pinhole-rectangle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/06-geometric/pinhole-rectangle-both.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinhole-rectangle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: Simulating a diffraction-limited rectangular pinhole that is 3x higher than wide. The test pattern has spatial frequency increasing from left to right, and orientation varying up to down. The horizontal lines retain their contrast as frequency increases; the vertical lines lose theirs. The PSF (550 nm) for the rectangular aperture is plotted on the right. See <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_oiAperture.html" target="_blank">fise_oiAperture</a>.
+</figcaption>
+</figure>
+</div>
+<p>There is a formula for the rectangular diffraction-limited PSF, given in terms of distance on the sensor surface.</p>
+<p><span class="math display">\[
+\text{PSF}(x',y') \;\propto\;
+\left[\operatorname{sinc}\!\left(\frac{\pi a}{\lambda f}\,x'\right)\right]^2
+\;\left[\operatorname{sinc}\!\left(\frac{\pi b}{\lambda f}\,y'\right)\right]^2,
+\]</span></p>
+<p>where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are the aperture widths in the <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> directions, <span class="math inline">\(f\)</span> is the focal length, and <span class="math inline">\(\lambda\)</span> is the wavelength. We define <span class="math inline">\(\operatorname{sinc}(u) = \tfrac{\sin(u)}{u}\)</span>.</p>
+<p>In the script, you will see that I didn’t use the formula directly. Rather, I simply defined the shape of the aperture and ran a calculation. In <a href="optics-09-wavefront.html" class="quarto-xref"><span>Chapter 15</span></a> I will explain that calculation. Being able to numerically compute with the wavefront means we can find the PSF for many different shapes.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Animal pupil shapes.">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Animal pupil shapes.
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Approximately rectangular pupils are fairly common in biology, as well, and the pupil shape is associated with how they live their lives (<span class="citation" data-cites="Banks2015-yr">Banks et al. (<a href="references.html#ref-Banks2015-yr" role="doc-biblioref">2015</a>)</span>). Vertically elongated pupils are associated with ambush predators that are active both day and night. So beware! Horizontally elongated pupils are more likely to be found in prey, who also have laterally placed eyes that helps them look all around.</p>
+<div id="fig-cat-pupil" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cat-pupil-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/06-geometric/catpupil.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cat-pupil-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.3: The cat has a vertical pupil - appropriate for a killing machine. There are many, many images of the cat pupil on the web. The cat is capable of closing its pupil nearly completely. The images on the right are examples provided by <span class="citation" data-cites="Banks2015-yr">Banks et al. (<a href="references.html#ref-Banks2015-yr" role="doc-biblioref">2015</a>)</span>.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
 </section>
-<section id="sensor-characterization" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-characterization">Sensor Characterization</h3>
-<p><em>This chapter is planned. It will describe the practical methods for measuring the performance parameters defined earlier.</em></p>
-<ul>
-<li><em>Introduces standard measurement procedures, such as the EMVA 1288 standard.</em></li>
-<li><em>Explains how to measure key parameters like read noise, QE, and linearity from test charts.</em></li>
-<li><em>Discusses the creation of a noise model for a sensor.</em></li>
-</ul>
+<section id="regular-polygons" class="level4" data-number="9.4.2.2">
+<h4 data-number="9.4.2.2" class="anchored" data-anchor-id="regular-polygons"><span class="header-section-number">9.4.2.2</span> Regular polygons</h4>
+<p>Classic cameras with mechanical shutters often had regular polygon shapes (left) or the interesting ‘leaf’ pattern at the right. These apertures introduce structure into the PSF that differs from a circularly symmetric aperture.</p>
+<div id="fig-pinhole-polygon" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pinhole-polygon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/06-geometric/mechanical-shutters.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinhole-polygon-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.4: A sampling of mechanical shutter shapes. The array on the left are different regular polygons. The one on the right is called a ‘leaf’ shutter. I have wanted to simulate its PSF, but I haven’t gotten around to it. Let me know if you try. You might start with the script described above, and introduce the aperture shape from an image. Or start with the image and define a mathematical function for the shape. You can see why I never did it. I just can’t choose.
+</figcaption>
+</figure>
+</div>
+<!--
+This is a mechanical shutter.  This is a leaf https://www.photoreview.com.au/tips/shooting/mechanical-vs-electronic-shutters/
+This is a polygon https://stackoverflow.com/questions/56467558/trying-to-create-a-camera-shutter-effect-with-divs
+-->
+<p>The impact of the regular polygon shape is quite visible in high dynamic range (HDR) scenes that include light sources. The script <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_oiAperture.html" target="_blank">fise_oiAperture</a> simulates an HDR scene, superimposing some very bright light sources on the background image. These apertures produce the flare pattern that one often sees in professional productions, including movies and sports shows. The three images show the flare pattern for polygons with different numbers of sides.</p>
+<div id="fig-pinhole-hdr" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pinhole-hdr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/06-geometric/pinhole-shape-hdr.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinhole-hdr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.5: High dynamic range images simulated through a lens with a regular polygon aperture.
+</figcaption>
+</figure>
+</div>
+<p>For the simulation in <a href="#fig-pinhole-hdr" class="quarto-xref">Figure&nbsp;<span>9.5</span></a>, I also added some scratches and dust on to the lens for realism. The brightest light in each scene (left) is five orders of magnitude (<span class="math inline">\(10^5\)</span>) more intense than the dimmest light (right), which is barely visible. The lights are all the same size, but the bright ones appear larger because of the blurring by the PSF.</p>
 </section>
-<section id="sensor-innovations" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-innovations">Sensor Innovations</h3>
-<p><em>This chapter is planned. It will survey the landscape of modern and emerging sensor technologies.</em></p>
-<ul>
-<li><em>Covers stacked and backside-illuminated (BSI) sensor architectures.</em></li>
-<li><em>Introduces novel sensor types like event cameras, curved sensors, and Single-Photon Avalanche Diodes (SPADs).</em></li>
-<li><em>Discusses trends in computational sensors, such as quaternary and transparent CFAs.</em></li>
-</ul>
+</section>
+<section id="human-psf" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="human-psf"><span class="header-section-number">9.4.3</span> Human PSF</h3>
+<p>Human eyes have approximately circular pupils. In bright light the pupil is contracted to about 3 mm diameter, and the PSF can be roughly circularly symmetric. In darker environments, the pupil widens and imperfections of the human optics (cornea, lens) often have a very large and irregular impact on the PSF. The pupil aperture is circular, but the optical imperfections distort the PSF and it takes on a very irregular shape (<span class="citation" data-cites="thibos2020-qs">Thibos (<a href="references.html#ref-thibos2020-qs" role="doc-biblioref">2020</a>)</span> <span class="citation" data-cites="thibosStatisticalVariationAberration2002">Thibos et al. (<a href="references.html#ref-thibosStatisticalVariationAberration2002" role="doc-biblioref">2002</a>)</span>).</p>
+<!-- Isn't there some notion that the astigmatism can be well-modeled as two types (horizontal and vertical)?  Is that true, or just old fashioned stuff.-->
+<p>Even though the PSF is quite irregular, we often approximate its shape. One approximation summarizes whether or not the PSF is very different in two directions. If it is very different in two perpendicular directions, we say the person is <strong>astigmatic</strong>. <a href="#fig-astigmatism" class="quarto-xref">Figure&nbsp;<span>9.6</span></a> shows PSFs with some defocus and astigmatism. These were simulated using the same wavefront methods I described above and that will be covered in <a href="optics-09-wavefront.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
+<div id="fig-astigmatism" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-astigmatism-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/06-geometric/astigmatism-defocus.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-astigmatism-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.6: Illustration of astigmatism. s_wvfAstigmatism. Top row of the plot.
+</figcaption>
+</figure>
+</div>
+<p>I will show simulations of a range of human PSFs in <a href="human-03-retinal-encoding.html" class="quarto-xref"><span>Chapter 26</span></a>. You can assess your own PSF easily. Glasses or contact lenses are typically designed to sharpen the PSF and counter any astigmatism. To see the PSF of your lens, take off your glasses or contact lenses, and look with one eye at a small spot of light in the dark -maybe a night light from across the room, or one of the LED lights on electronic gear- against in the presence of a uniform background such as a wall. The image you see is the PSF of your own visual system. If you are looking in a dark room, your pupil is probably relatively large. By squinting, you reduce the size of your eye’s aperture, and this is likely to sharpen the PSF. The squinting reduces how much the lens contributes to image formation. If the aperture is made quite small, say by using an artifical pupile, the image will be diffraction limited.</p>
 
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-airy-1835-diffraction" class="csl-entry" role="listitem">
+Airy GB (1835) On the diffraction of an object-glass with circular aperture. Transactions of the Cambridge Philosophical Society 5:283
+</div>
+<div id="ref-Banks2015-yr" class="csl-entry" role="listitem">
+Banks MS, Sprague WW, Schmoll J, et al (2015) <a href="http://dx.doi.org/10.1126/sciadv.1500391">Why do animal eyes have pupils of different shapes?</a> Sci Adv 1:e1500391
+</div>
+<div id="ref-Goodman2022-fv" class="csl-entry" role="listitem">
+Goodman JW (2022) Introduction to fourier optics, 4th edn. W.H. Freeman, New York, NY
+</div>
+<div id="ref-thibos2020-qs" class="csl-entry" role="listitem">
+Thibos LN (2020) Retinal image formation and sampling in a three-dimensional world. Annual review of vision science 6:469–489
+</div>
+<div id="ref-thibosStatisticalVariationAberration2002" class="csl-entry" role="listitem">
+Thibos LN, Hong X, Bradley A, Cheng X (2002) Statistical variation of aberration structure and image quality in a normal population of healthy eyes. Journal of the Optical Society of America A 19:2329–2348
+</div>
+</div>
 </section>
 </section>
 
@@ -1123,13 +1248,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/optics-10-wavefront-sensing.html" class="pagination-link" aria-label="Wavefront sensing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wavefront sensing</span></span>
+      <a href="../chapters/optics-02-wave.html" class="pagination-link" aria-label="The wave theory of light">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">The wave theory of light</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/sensors-01-photoelectric.html" class="pagination-link" aria-label="Photons and Electrons">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/optics-04-lenses.html" class="pagination-link" aria-label="Lens principles">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lens principles</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

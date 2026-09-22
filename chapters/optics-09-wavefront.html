@@ -9,7 +9,7 @@
 <meta name="dcterms.date" content="2026-09-07">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
-<title>Part III: Sensors – Foundations of Image Systems Engineering</title>
+<title>15&nbsp; Wavefronts – Foundations of Image Systems Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,8 +32,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/sensors-01-photoelectric.html" rel="next">
-<link href="../chapters/optics-10-wavefront-sensing.html" rel="prev">
+<link href="../chapters/optics-10-wavefront-sensing.html" rel="next">
+<link href="../chapters/optics-08-linear-transform.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -114,7 +114,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Part III: Sensors</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-09-wavefront.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wavefronts</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -257,7 +257,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/optics-09-wavefront.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/optics-09-wavefront.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></a>
   </div>
 </li>
@@ -280,7 +280,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/part-sensors.html" class="sidebar-item-text sidebar-link active">
+  <a href="../chapters/part-sensors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Part III: Sensors</span></a>
   </div>
 </li>
@@ -555,25 +555,29 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sensor-topics" id="toc-sensor-topics" class="nav-link active" data-scroll-target="#sensor-topics">Sensor topics</a>
+  <li><a href="#sec-optics-wavefront-overview" id="toc-sec-optics-wavefront-overview" class="nav-link active" data-scroll-target="#sec-optics-wavefront-overview"><span class="header-section-number">15.1</span> Wavefronts overview</a></li>
+  <li><a href="#wavefronts" id="toc-wavefronts" class="nav-link" data-scroll-target="#wavefronts"><span class="header-section-number">15.2</span> Wavefronts</a></li>
+  <li><a href="#sec-optics-wavefront-aberration" id="toc-sec-optics-wavefront-aberration" class="nav-link" data-scroll-target="#sec-optics-wavefront-aberration"><span class="header-section-number">15.3</span> Wavefront aberration function</a></li>
+  <li><a href="#sec-optics-wavefront-time" id="toc-sec-optics-wavefront-time" class="nav-link" data-scroll-target="#sec-optics-wavefront-time"><span class="header-section-number">15.4</span> Wavefront description: time course</a>
   <ul class="collapse">
-  <li><a href="#photons-to-electrons" id="toc-photons-to-electrons" class="nav-link" data-scroll-target="#photons-to-electrons">Photons to Electrons</a></li>
-  <li><a href="#pixel-design" id="toc-pixel-design" class="nav-link" data-scroll-target="#pixel-design">Pixel Design</a></li>
-  <li><a href="#sensor-parameters" id="toc-sensor-parameters" class="nav-link" data-scroll-target="#sensor-parameters">Sensor Parameters</a></li>
-  <li><a href="#sensor-components" id="toc-sensor-components" class="nav-link" data-scroll-target="#sensor-components">Sensor Components</a></li>
-  <li><a href="#sensor-control" id="toc-sensor-control" class="nav-link" data-scroll-target="#sensor-control">Sensor Control</a></li>
-  <li><a href="#sensor-characterization" id="toc-sensor-characterization" class="nav-link" data-scroll-target="#sensor-characterization">Sensor Characterization</a></li>
-  <li><a href="#sensor-innovations" id="toc-sensor-innovations" class="nav-link" data-scroll-target="#sensor-innovations">Sensor Innovations</a></li>
+  <li><a href="#mutual-incoherence-and-independent-scene-points" id="toc-mutual-incoherence-and-independent-scene-points" class="nav-link" data-scroll-target="#mutual-incoherence-and-independent-scene-points"><span class="header-section-number">15.4.1</span> Mutual incoherence and independent scene points</a></li>
+  <li><a href="#the-wavefront-representation-as-a-complex-number" id="toc-the-wavefront-representation-as-a-complex-number" class="nav-link" data-scroll-target="#the-wavefront-representation-as-a-complex-number"><span class="header-section-number">15.4.2</span> The wavefront representation as a complex number</a></li>
   </ul></li>
+  <li><a href="#pupil-functions-and-the-psf" id="toc-pupil-functions-and-the-psf" class="nav-link" data-scroll-target="#pupil-functions-and-the-psf"><span class="header-section-number">15.5</span> Pupil functions and the PSF</a></li>
+  <li><a href="#computations-with-the-pupil-function" id="toc-computations-with-the-pupil-function" class="nav-link" data-scroll-target="#computations-with-the-pupil-function"><span class="header-section-number">15.6</span> Computations with the pupil function</a>
+  <ul class="collapse">
+  <li><a href="#paraxial-regime-and-space-invariance" id="toc-paraxial-regime-and-space-invariance" class="nav-link" data-scroll-target="#paraxial-regime-and-space-invariance"><span class="header-section-number">15.6.1</span> Paraxial regime and space-invariance</a></li>
+  </ul></li>
+  <li><a href="#modeling-wavefront-aberrations-zernike-polynomials" id="toc-modeling-wavefront-aberrations-zernike-polynomials" class="nav-link" data-scroll-target="#modeling-wavefront-aberrations-zernike-polynomials"><span class="header-section-number">15.7</span> Modeling wavefront aberrations: Zernike polynomials</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Part III: Sensors</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-09-wavefront.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wavefronts</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-part-sensors" class="quarto-section-identifier">Part III: Sensors</span></h1>
+<h1 class="title"><span id="sec-optics-wavefront" class="quarto-section-identifier"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wavefronts</span></span></h1>
 </div>
 
 
@@ -615,89 +619,215 @@ Last updated: September 7, 2026
 </div>
 </div>
 </div>
-<p>This part of the book explains how the analog light image formed by the optics is converted into a digital signal. This conversion involves two fundamental challenges:</p>
-<ol type="1">
-<li><strong>Photogeneration (Physics):</strong> Converting incident photons into mobile electrons inside silicon via the photoelectric effect. The quantum nature of light dictates the fundamental limits of sensor performance (shot noise), a physical process that is identical whether in a CCD or a CMOS sensor.</li>
-<li><strong>Readout Architecture (Engineering):</strong> Collecting, transporting, and measuring those tiny charge packets across an array of millions of pixels. We trace this engineering journey from Willard Boyle and George Smith’s charge-domain shifting in charge-coupled devices (CCD) to modern voltage-domain CMOS active-pixel architectures.</li>
+<section id="sec-optics-wavefront-overview" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="sec-optics-wavefront-overview"><span class="header-section-number">15.1</span> Wavefronts overview</h2>
+<p>When we reviewed why Newton’s ray model is clearly wrong, we also realized the need for Huygens’s model of light as a wave <a href="optics-03-diffraction-psf.html" class="quarto-xref"><span>Chapter 9</span></a>. I delayed a full discussion because it wasn’t really necessary to rely on wavefronts until after we finished several other basic principles of optics. Many of the important principles can be described using rays, and three hundred years of practice has taught us that working with rays is useful. Wrong, but useful.</p>
+<p>Here we develop more of the infrastructure that is used to describe light as waves. I want you to understand how we use wavefronts in the ISETCam calculations for optics. In the next chapter we will review how we can measure wavefronts using specialized instrumentation (<a href="optics-10-wavefront-sensing.html#sec-shack-hartmann" class="quarto-xref"><span>Section 16.2</span></a>). We will also learn about how adaptive optics systems use wavefront measurements in applications ranging from astronomy (<a href="optics-10-wavefront-sensing.html#sec-adaptive-optics-astronomy" class="quarto-xref"><span>Section 16.3</span></a>) to ophthalmology (<a href="human-02-physiological-optics.html#sec-adaptive-optics-human" class="quarto-xref"><span>Section 25.4</span></a>).</p>
+</section>
+<section id="wavefronts" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="wavefronts"><span class="header-section-number">15.2</span> Wavefronts</h2>
+<p>In <a href="optics-04-lenses.html#sec-optics-rays-wavefronts" class="quarto-xref"><span>Section 10.2</span></a> we introduced the connection between the idea of light as a wave and a ray. Recall that given a sketch of a wavefront, we can draw the perpendicular along the wavefront to find the local ray direction <a href="optics-04-lenses.html#fig-waves-rays" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>. If a point is relatively far from the aperture, the rays in the incident light field will be nearly parallel (collimated). If the point is close, the rays will be diverging. If the rays have passed through a turbulent medium, they may point in many different directions (<a href="optics-04-lenses.html#fig-waves-rays" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>). In each case, the surface perpendicular to these rays is the wavefront.</p>
+<p>The wavefront is a description of the light from a single point in the scene. A complete scene is composed of light from many different points, each with its own wavefront. In the following sections, we describe the light from a single point as a wavefront, and then explain why light from different scene points can be analyzed independently.</p>
+</section>
+<section id="sec-optics-wavefront-aberration" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="sec-optics-wavefront-aberration"><span class="header-section-number">15.3</span> Wavefront aberration function</h2>
+<p>The <strong>wavefront aberration</strong> is a way to describe how a lens transforms an incident wavefront, just as the point spread function is a way to describe how the lens transforms a point of light in the scene. As the word ‘aberration’ implies, it is the difference between the measured and ideal wavefronts. We measure the difference as the optical path difference between the actual and reference wavefronts at each point in the pupil, typically in units of microns.</p>
+<p>Commonly, the reference is a spherical wavefront. Such a wavefront would converge to a sharp image point. Because many pupils are circular—like the pupil in your eye—we parameterize the input and output wavefronts using polar coordinates: <span class="math inline">\(\rho\)</span> represents the distance from the pupil center and <span class="math inline">\(\theta\)</span> the angle around the center. We will write the wavefront aberration function as <span class="math inline">\(W(\rho, \theta)\)</span> <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<div id="fig-wave-aberration" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wave-aberration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/12-wavefront/wavefront-lens-aberration.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wave-aberration-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.1: The blue waves on the left show a set of parallel waves from a single source. The wavefront is identified by the dashed lines through the peaks of the waves. The wavefront is flat as it arrives at the lens. The lens directs the rays to a single focal point, changing the wavefront shape. Were the focus perfect, the wavefront would be spherical (dark curve). The actual wavefront (red curve) is not spherical. The deviation is called the <strong>wavefront aberration</strong> <span class="math inline">\(W(\rho)\)</span>, written as a function of <span class="math inline">\(\rho\)</span> alone because this example is circularly symmetric: only the distance from the center matters, not the angle around it.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-wave-aberration" class="quarto-xref">Figure&nbsp;<span>15.1</span></a> illustrates the idea: the gap between the actual wavefront (red) and the ideal wavefront (black) is the wavefront aberration. For a perfect lens, with no aberrations, the actual wavefront coincides with the reference wavefront, and the wavefront aberration is zero: <span class="math inline">\(W(\rho, \theta)=0\)</span>.</p>
+</section>
+<section id="sec-optics-wavefront-time" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="sec-optics-wavefront-time"><span class="header-section-number">15.4</span> Wavefront description: time course</h2>
+<p><a href="#fig-wave-aberration" class="quarto-xref">Figure&nbsp;<span>15.1</span></a> shows the rays as waves rather than straight lines, and indeed they are electric field oscillations traveling away from the point source. A light wave’s electric field in air propagates at the speed of light in that medium, and its wavelength is very short: between 400 and 700 nm for visible light. As a result, the oscillation is at a very high temporal frequency, on the order of <span class="math inline">\(10^{14}\text{ Hz}\)</span>.</p>
+<p><span id="eq-efield-time"><span class="math display">\[
+E(t) = a(t)\sin(2\pi \nu_0 t + \phi(t))
+\tag{15.1}\]</span></span></p>
+<p>Here <span class="math inline">\(\nu_0\)</span> is called the carrier frequency, the sine term is the <strong>carrier</strong>, <span class="math inline">\(a(t)\)</span> is the wave <strong>amplitude</strong>, and <span class="math inline">\(\phi(t)\)</span> is the <strong>phase</strong>. Natural sources, such as the sun or an incandescent bulb, emit light through countless independent atomic events, so the field’s amplitude and phase fluctuate randomly over time. Hence, the amplitude and phase are not perfectly steady; they fluctuate about the mean randomly, remaining approximately constant over a fairly short interval called the <strong>coherence time</strong>.</p>
+<div id="fig-wavefront-time" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wavefront-time-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/12-wavefront/wavefront-time.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wavefront-time-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.2: Time course of the electric field for two independent light sources, both centered at 500 nm. Each field’s amplitude and phase drift randomly on a timescale of femtoseconds.
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Temporal frequency of a light wave">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Temporal frequency of a light wave
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>The temporal frequency of a light wave at a fixed position is very high. We can compute it from the relationship between speed, wavelength, and temporal frequency <span class="math inline">\(\nu\)</span>:</p>
+<p><span class="math display">\[
+c = \nu \lambda \implies \nu = \frac{c}{\lambda}
+\]</span></p>
+<ul>
+<li>Visible light wavelength (<span class="math inline">\(\lambda\)</span>) typically spans roughly <span class="math inline">\(400\text{ nm}\)</span> to <span class="math inline">\(700\text{ nm}\)</span> (<span class="math inline">\(0.4\)</span>–<span class="math inline">\(0.7\ \mu\text{m}\)</span>).</li>
+<li>The speed of light (<span class="math inline">\(c\)</span>) in vacuum is approximately <span class="math inline">\(3 \times 10^8\text{ m/s}\)</span>.</li>
+</ul>
+<p>For light near the middle of the visible range (<span class="math inline">\(\lambda \approx 500\text{ nm} = 0.5 \times 10^{-6}\text{ m}\)</span>), this gives:</p>
+<p><span class="math display">\[
+\nu = \frac{c}{\lambda} \approx \frac{3 \times 10^8\text{ m/s}}{0.5 \times 10^{-6}\text{ m}} \approx 6 \times 10^{14}\text{ cycles/sec (Hz)}
+\]</span></p>
+<p>The amplitude and phase are random, but they stay correlated only over the coherence time — about a femtosecond (<span class="math inline">\(10^{-14}\)</span> to <span class="math inline">\(10^{-15}\text{ s}\)</span>) for typical, broadband visible light (<a href="#fig-wavefront-time" class="quarto-xref">Figure&nbsp;<span>15.2</span></a>). On longer time scales, the peaks and troughs of the carrier wash out along with the phase.</p>
+</div>
+</div>
+</div>
+<!-- fise_wavetimecourse('ncycles',30); -->
+<section id="mutual-incoherence-and-independent-scene-points" class="level3" data-number="15.4.1">
+<h3 data-number="15.4.1" class="anchored" data-anchor-id="mutual-incoherence-and-independent-scene-points"><span class="header-section-number">15.4.1</span> Mutual incoherence and independent scene points</h3>
+<p><a href="#fig-wavefront-time" class="quarto-xref">Figure&nbsp;<span>15.2</span></a> illustrates two independent light sources centered at <span class="math inline">\(500\text{ nm}\)</span>. Because natural light is emitted through countless independent atomic events, the phase difference between light originating from two different scene points wanders randomly on a timescale of femtoseconds.</p>
+<p>Although the instantaneous electric fields from different points superimpose in space (<span class="math inline">\(E(t) = E_1(t) + E_2(t)\)</span>), their time courses are uncorrelated (orthogonal) over any macroscopic duration. For imaging applications, the integration time of the sensor ranges from tens of microseconds to many milliseconds—trillions of carrier cycles and orders of magnitude longer than the coherence time. Over that integration time, the interference cross-term <span class="math inline">\(\langle 2 E_1(t) E_2(t) \rangle\)</span> averages strictly to zero.</p>
+<p>As a consequence, natural scene points are <strong>mutually incoherent</strong>: their irradiances add independently on the sensor plane. This fundamental property justifies why we can analyze the optical transformation—the wavefront aberration, the pupil function, and the point spread function—for a single scene point, and then build the full image by summing the irradiances contributed by each point in the scene.</p>
+</section>
+<section id="the-wavefront-representation-as-a-complex-number" class="level3" data-number="15.4.2">
+<h3 data-number="15.4.2" class="anchored" data-anchor-id="the-wavefront-representation-as-a-complex-number"><span class="header-section-number">15.4.2</span> The wavefront representation as a complex number</h3>
+<p>For a single point source, the light arriving across the pupil is spatially coherent. Because only the time-averaged irradiance (the mean squared amplitude), not the instantaneous electric field oscillation, is measured by the sensor, we can drop the rapid temporal carrier (<span class="math inline">\(2\pi \nu_0 t\)</span>) and describe the spatial variation of the wave using complex phasor notation. We write the amplitude and phase at each position <span class="math inline">\(\mathbf{x}\)</span> on the wavefront as</p>
+<p><span id="eq-wavefront-complex"><span class="math display">\[
+U(\mathbf{x}) = a(\mathbf{x}) e^{i\phi(\mathbf{x})}
+\tag{15.2}\]</span></span></p>
+<p>The rate of energy arriving per unit area at a surface is its irradiance (<a href="lightfields-02-measurement.html#sec-lfmeasurement-overview" class="quarto-xref"><span>Section 3.1</span></a>). The irradiance is equal to the squared magnitude of the complex wavefront arriving at that position <span class="math inline">\(\mathbf{x} = (x, y)\)</span> on the sensor plane:</p>
+<p><span id="eq-irradiance-magnitude"><span class="math display">\[
+I(\mathbf{x}) = \vert{}U(\mathbf{x})\vert{}^2 = a(\mathbf{x})^2
+\tag{15.3}\]</span></span></p>
+<p>As you can see, the phase of the wavefront does not influence the amount of energy (irradiance) we record. That depends only on the amplitude<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. The irradiance has units of (Watts/m<span class="math inline">\(^2\)</span>). In imaging and photon-based modeling, irradiance is commonly expressed directly as photon flux density<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p>
+<p><span class="math display">\[
+\left[\frac{\text{photons}}{\text{s} \cdot \text{m}^2}\right] \quad \text{or} \quad \left[\frac{\text{q}}{\text{s} \cdot \text{m}^2}\right]
+\]</span></p>
+</section>
+</section>
+<section id="pupil-functions-and-the-psf" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="pupil-functions-and-the-psf"><span class="header-section-number">15.5</span> Pupil functions and the PSF</h2>
+<p>How does a lens transform an incident wave? We asked this same type of question when we considered points of light as input, and this led to the idea of the point spread function (<a href="optics-03-diffraction-psf.html#sec-pointspread" class="quarto-xref"><span>Section 9.3</span></a>). Here we ask how the lens transforms the input wavefront into an output wavefront. We call the transformation the <strong>pupil function</strong>, and this idea will be tightly coupled to the idea of the point spread function.</p>
+<p>The pupil function is defined by combining the wavefront aberration <span class="math inline">\(W\)</span> and the amplitude transmission across the exit pupil (or the aperture plane for a simple thin lens):</p>
+<p><span id="eq-pupil-function"><span class="math display">\[
+P(\rho, \theta) = a(\rho, \theta) \, e^{i \, \frac{2\pi}{\lambda} W(\rho, \theta)}
+\tag{15.4}\]</span></span></p>
+<p>The pupil function of a distant point, whose rays are collimated, contains the information needed to predict the image. That image is the point spread function.</p>
+<p>The complex field in the image plane (at best focus) is proportional to the <strong>Fourier transform</strong> <span class="math inline">\(\mathcal{F}\)</span> of the pupil function:</p>
+<p><span id="eq-psf-fourier"><span class="math display">\[
+U(x, y) \propto \mathcal{F}\{ P(\rho, \theta) \}
+\tag{15.5}\]</span></span></p>
+<p>The <strong>PSF</strong> is the <strong>intensity</strong> of this field:</p>
+<p><span id="eq-psf-definition"><span class="math display">\[
+\text{PSF}(x, y) = |U(x, y)|^2
+\tag{15.6}\]</span></span></p>
+<p>The Fourier transform of the pupil function does depend on the wavefront aberration. Hence, the wavefront shape and the PSF are linked together.</p>
+</section>
+<section id="computations-with-the-pupil-function" class="level2" data-number="15.6">
+<h2 data-number="15.6" class="anchored" data-anchor-id="computations-with-the-pupil-function"><span class="header-section-number">15.6</span> Computations with the pupil function</h2>
+<section id="paraxial-regime-and-space-invariance" class="level3" data-number="15.6.1">
+<h3 data-number="15.6.1" class="anchored" data-anchor-id="paraxial-regime-and-space-invariance"><span class="header-section-number">15.6.1</span> Paraxial regime and space-invariance</h3>
+<p>When we introduced the point spread function, we recognized that in some special cases changing the position of the input point only changed the position of the PSF, but not its shape (<a href="optics-03-diffraction-psf.html#sec-pointspread" class="quarto-xref"><span>Section 9.3</span></a>, <a href="appendix-02-spaceinvariance.html#sec-ls-shiftinvariance" class="quarto-xref"><span>Section 38.1</span></a>).</p>
+<p>When we describe lenses using wavefronts, there is a corresponding notion: the <em>paraxial</em> regime. This refers to the range of angles over which planar wavefronts share the same wavefront aberration. Changing the angle of the planar wavefront is like changing the position of the input point; keeping the same wavefront aberration means that the PSF will be unchanged apart from position. In optics and astronomy, the angular region over which the wavefront aberration and PSF remain essentially constant is called the <strong>isoplanatic patch</strong>. Within this patch, the optical system is space-invariant.</p>
+</section>
+</section>
+<section id="modeling-wavefront-aberrations-zernike-polynomials" class="level2" data-number="15.7">
+<h2 data-number="15.7" class="anchored" data-anchor-id="modeling-wavefront-aberrations-zernike-polynomials"><span class="header-section-number">15.7</span> Modeling wavefront aberrations: Zernike polynomials</h2>
+<p>The ISETCam software calculations that accompany this book use both wavefront and ray methods<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+<p>The wavefront function <span class="math inline">\(W(\rho, \theta)\)</span> is often expanded in terms of <strong>Zernike polynomials</strong> <span class="math inline">\(Z_n^m(\rho, \theta)\)</span>, which form an orthonormal basis over the <strong>unit disk</strong> (<span class="math inline">\(0 \le \rho \le 1\)</span>, where <span class="math inline">\(\rho = r / R_{\text{pupil}}\)</span> is the normalized pupil radius):</p>
+<p><span id="eq-zernike-expansion"><span class="math display">\[
+W(\rho, \theta) = \sum_{n,m} c_n^m Z_n^m(\rho, \theta)
+\tag{15.7}\]</span></span></p>
+<p>Here <span class="math inline">\(n \ge 0\)</span> is the <strong>radial order</strong> (the degree of the polynomial in <span class="math inline">\(\rho\)</span>) and <span class="math inline">\(m\)</span> is the <strong>azimuthal frequency</strong> (the angular variation, running from <span class="math inline">\(-n\)</span> to <span class="math inline">\(+n\)</span> in steps of 2). Each coefficient <span class="math inline">\(c_n^m\)</span> has units of optical path difference (typically microns, <span class="math inline">\(\mu\text{m}\)</span>) and weights a specific aberration mode:</p>
+<ul>
+<li><span class="math inline">\(n=2, m=0\)</span>: defocus</li>
+<li><span class="math inline">\(n=2, m=\pm 2\)</span>: astigmatism</li>
+<li><span class="math inline">\(n=3, m=\pm 1\)</span>: coma</li>
+<li><span class="math inline">\(n=3, m=\pm 3\)</span>: trefoil</li>
+<li><span class="math inline">\(n=4, m=0\)</span>: primary spherical aberration</li>
+</ul>
+<p>This representation enables:</p>
+<ul>
+<li>systematic control over image degradation</li>
+<li>parametric simulations of optical quality</li>
+<li>statistical modeling (e.g., for manufacturing tolerances or biological variation)</li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Diffraction limited</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Defocus limited</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="fig-optics-pupil-diffraction" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-pupil-diffraction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/12-wavefront/wavefront-pupil-diffraction.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-pupil-diffraction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.3: Pupil amplitude, pupil phase, and resulting Airy disc PSF for a diffraction-limited system with zero wavefront aberration (<span class="math inline">\(W=0\)</span>). The phase is completely flat across the aperture, concentrating light into a compact, high-peak Airy disc.
+</figcaption>
+</figure>
+</div>
+<p>When the wavefront aberration is zero (<span class="math inline">\(W=0\)</span>), the pupil phase is uniform across the aperture. As predicted by the Fourier transform in <a href="#eq-psf-fourier" class="quarto-xref">Equation&nbsp;<span>15.5</span></a>, this produces the sharpest possible image for that aperture size: the diffraction-limited Airy pattern.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="fig-optics-pupil-defocus" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-pupil-defocus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/12-wavefront/wavefront-pupil-defocus.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-pupil-defocus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.4: Pupil amplitude, pupil phase, and resulting PSF with defocus aberration (<span class="math inline">\(Z_2^0\)</span>). The quadratic phase curvature across the pupil spreads energy into a broadened, flattened distribution with ring structure, substantially reducing peak intensity.
+</figcaption>
+</figure>
+</div>
+<p>With defocus aberration, the phase is no longer flat; quadratic curvature appears as concentric phase rings in the pupil. The Fourier transform of this phase distribution yields a broadened, flat-topped PSF with ring structure, drastically reducing peak image contrast.</p>
+</div>
+</div>
+</div>
+<!-- Seidel aberrations Link to Resource.
+
+Explain the Zernike polynomials as an approximation to the wavefront aberration.  Born and Wolf description of derivation might be good here.
+
+This pdf from the Born and Wolf book might be what I mean:  appVII circle_polynomials_of_zernike_921
+It has a lot of functional equations.
+ -->
+<div id="fig-optics-zernike-gallery" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-zernike-gallery-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/12-wavefront/wavefront-pupil-gallery.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-zernike-gallery-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.5: Point spread functions (PSFs) produced in the image plane by individual Zernike aberration modes: defocus (<span class="math inline">\(Z_2^0\)</span>), vertical astigmatism (<span class="math inline">\(Z_2^2\)</span>), primary spherical aberration (<span class="math inline">\(Z_4^0\)</span>), and vertical trefoil (<span class="math inline">\(Z_3^{-3}\)</span>). Each mode introduces a distinctive spatial distortion and energy spread away from the diffraction-limited point.
+</figcaption>
+</figure>
+</div>
+<!--
+TODO / REVIEW ITEMS:
+
+4. Incomplete Content & Narrative Gaps:
+   - ISETCam integration: Section 7.1 mentions understanding how ISETCam calculates optics with wavefronts, but no ISETCam code/workflow (e.g. wvfCreate, Zernikes to PSF) is demonstrated.
+   - [x] Figure tabsets: Diffraction-limited vs defocus-limited figures have explanatory text/captions.
+   - [x] Zernike gallery: Figure @fig-optics-zernike-gallery explains PSFs produced by radial order n and azimuthal index m.
+-->
+
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Although it is specified separately for each wavelength of light, <span class="math inline">\(\lambda\)</span>, for now we will not mention wavelength.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Please excuse me for not explaining why the energy is <span class="math inline">\(a()^2\)</span> and not <span class="math inline">\(a()\)</span>. It has a good answer that I hope to put into the Resource section some day, involving the electric field of the light and its impact on the electric field within the substrate.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>ISETCam has methods to convert back and forth between these two types of units.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The ISETCam optics calculations use the wave model. The ISET3d graphics calculations use the ray model.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-<p>We then define the key parameters that characterize sensor performance, such as quantum efficiency, read noise, and dynamic range. The final chapters describe the complete sensor system, including color filter arrays and control electronics, and survey the landscape of modern sensor innovations.</p>
-<ul>
-<li>photoelectric effect and photons</li>
-<li>pixel design</li>
-<li>parameters</li>
-<li>sensor components</li>
-<li>sensor control systems</li>
-<li>sensor characterization</li>
-<li>innovations</li>
-</ul>
-<section id="sensor-topics" class="level2">
-<h2 class="anchored" data-anchor-id="sensor-topics">Sensor topics</h2>
-<section id="photons-to-electrons" class="level3">
-<h3 class="anchored" data-anchor-id="photons-to-electrons">Photons to Electrons</h3>
-<p>This chapter covers the initial and most critical step in digital imaging: the conversion of light particles (photons) into electrical charge (electrons).</p>
-<ul>
-<li>Explains the photoelectric effect and the quantum nature of light.</li>
-<li>Introduces the concept of shot noise, arising from the Poisson distribution of photon arrivals, which sets a fundamental limit on signal quality.</li>
-<li>Describes the process of converting photons into photoelectrons within a silicon photodiode.</li>
-</ul>
-</section>
-<section id="pixel-design" class="level3">
-<h3 class="anchored" data-anchor-id="pixel-design">Pixel Design</h3>
-<p>Here, we examine the architecture of a single pixel, the building block of the image sensor.</p>
-<ul>
-<li>Details the architecture of a modern CMOS pixel (e.g., the 4T pixel).</li>
-<li>Explains the function of key components: photodiode, transfer gate, floating diffusion, and source follower amplifier.</li>
-<li>Discusses the readout process and the origin of different noise sources within the pixel.</li>
-</ul>
-</section>
-<section id="sensor-parameters" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-parameters">Sensor Parameters</h3>
-<p>This chapter defines the essential metrics used to quantify and compare the performance of image sensors.</p>
-<ul>
-<li>Defines quantum efficiency (QE), full well capacity, and conversion gain.</li>
-<li>Explains different noise sources, particularly read noise and dark noise.</li>
-<li>Derives key performance figures like Signal-to-Noise Ratio (SNR) and Dynamic Range (DR).</li>
-</ul>
-</section>
-<section id="sensor-components" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-components">Sensor Components</h3>
-<p><em>This chapter is planned. It will describe the components that make up a complete sensor package beyond the individual pixels.</em></p>
-<ul>
-<li><em>Explains the role of microlens arrays in improving light collection efficiency.</em></li>
-<li><em>Describes the design and function of Color Filter Arrays (CFAs), particularly the Bayer pattern.</em></li>
-<li><em>Covers the Analog-to-Digital Converter (ADC) and its role in quantizing the signal.</em></li>
-</ul>
-</section>
-<section id="sensor-control" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-control">Sensor Control</h3>
-<p><em>This chapter is planned. It will cover the electronics and timing signals required to operate the sensor.</em></p>
-<ul>
-<li><em>Explains the difference between rolling shutter and global shutter readout modes.</em></li>
-<li><em>Discusses exposure control, gain settings (ISO), and frame rate.</em></li>
-<li><em>Introduces the basic principles of sensor timing and control logic.</em></li>
-</ul>
-</section>
-<section id="sensor-characterization" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-characterization">Sensor Characterization</h3>
-<p><em>This chapter is planned. It will describe the practical methods for measuring the performance parameters defined earlier.</em></p>
-<ul>
-<li><em>Introduces standard measurement procedures, such as the EMVA 1288 standard.</em></li>
-<li><em>Explains how to measure key parameters like read noise, QE, and linearity from test charts.</em></li>
-<li><em>Discusses the creation of a noise model for a sensor.</em></li>
-</ul>
-</section>
-<section id="sensor-innovations" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-innovations">Sensor Innovations</h3>
-<p><em>This chapter is planned. It will survey the landscape of modern and emerging sensor technologies.</em></p>
-<ul>
-<li><em>Covers stacked and backside-illuminated (BSI) sensor architectures.</em></li>
-<li><em>Introduces novel sensor types like event cameras, curved sensors, and Single-Photon Avalanche Diodes (SPADs).</em></li>
-<li><em>Discusses trends in computational sensors, such as quaternary and transparent CFAs.</em></li>
-</ul>
-
-
-
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1123,13 +1253,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/optics-10-wavefront-sensing.html" class="pagination-link" aria-label="Wavefront sensing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wavefront sensing</span></span>
+      <a href="../chapters/optics-08-linear-transform.html" class="pagination-link" aria-label="Transform domain">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Transform domain</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/sensors-01-photoelectric.html" class="pagination-link" aria-label="Photons and Electrons">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/optics-10-wavefront-sensing.html" class="pagination-link" aria-label="Wavefront sensing">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wavefront sensing</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

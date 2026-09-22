@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-07">
+<meta name="dcterms.date" content="2026-09-08">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
-<title>Part III: Sensors – Foundations of Image Systems Engineering</title>
+<title>16&nbsp; Wavefront sensing – Foundations of Image Systems Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,8 +32,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/sensors-01-photoelectric.html" rel="next">
-<link href="../chapters/optics-10-wavefront-sensing.html" rel="prev">
+<link href="../chapters/part-sensors.html" rel="next">
+<link href="../chapters/optics-09-wavefront.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -105,7 +105,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles/callouts.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -114,7 +114,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Part III: Sensors</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-10-wavefront-sensing.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wavefront sensing</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -263,7 +263,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/optics-10-wavefront-sensing.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/optics-10-wavefront-sensing.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wavefront sensing</span></span></a>
   </div>
 </li>
@@ -280,7 +280,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/part-sensors.html" class="sidebar-item-text sidebar-link active">
+  <a href="../chapters/part-sensors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Part III: Sensors</span></a>
   </div>
 </li>
@@ -555,25 +555,20 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sensor-topics" id="toc-sensor-topics" class="nav-link active" data-scroll-target="#sensor-topics">Sensor topics</a>
-  <ul class="collapse">
-  <li><a href="#photons-to-electrons" id="toc-photons-to-electrons" class="nav-link" data-scroll-target="#photons-to-electrons">Photons to Electrons</a></li>
-  <li><a href="#pixel-design" id="toc-pixel-design" class="nav-link" data-scroll-target="#pixel-design">Pixel Design</a></li>
-  <li><a href="#sensor-parameters" id="toc-sensor-parameters" class="nav-link" data-scroll-target="#sensor-parameters">Sensor Parameters</a></li>
-  <li><a href="#sensor-components" id="toc-sensor-components" class="nav-link" data-scroll-target="#sensor-components">Sensor Components</a></li>
-  <li><a href="#sensor-control" id="toc-sensor-control" class="nav-link" data-scroll-target="#sensor-control">Sensor Control</a></li>
-  <li><a href="#sensor-characterization" id="toc-sensor-characterization" class="nav-link" data-scroll-target="#sensor-characterization">Sensor Characterization</a></li>
-  <li><a href="#sensor-innovations" id="toc-sensor-innovations" class="nav-link" data-scroll-target="#sensor-innovations">Sensor Innovations</a></li>
-  </ul></li>
+  <li><a href="#sec-optics-wavefront-sensing-overview" id="toc-sec-optics-wavefront-sensing-overview" class="nav-link active" data-scroll-target="#sec-optics-wavefront-sensing-overview"><span class="header-section-number">16.1</span> Wavefront sensing overview</a></li>
+  <li><a href="#sec-shack-hartmann" id="toc-sec-shack-hartmann" class="nav-link" data-scroll-target="#sec-shack-hartmann"><span class="header-section-number">16.2</span> Shack-Hartmann wavefront sensor</a></li>
+  <li><a href="#sec-adaptive-optics-astronomy" id="toc-sec-adaptive-optics-astronomy" class="nav-link" data-scroll-target="#sec-adaptive-optics-astronomy"><span class="header-section-number">16.3</span> Adaptive optics</a></li>
+  <li><a href="#sec-SLM" id="toc-sec-SLM" class="nav-link" data-scroll-target="#sec-SLM"><span class="header-section-number">16.4</span> Spatial light modulators</a></li>
+  <li><a href="#isetcam-simulation-flare-and-wavefronts" id="toc-isetcam-simulation-flare-and-wavefronts" class="nav-link" data-scroll-target="#isetcam-simulation-flare-and-wavefronts"><span class="header-section-number">16.5</span> ISETCam simulation: Flare and wavefronts</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Part III: Sensors</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-10-wavefront-sensing.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wavefront sensing</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-part-sensors" class="quarto-section-identifier">Part III: Sensors</span></h1>
+<h1 class="title"><span id="sec-optics-wavefront-sensing" class="quarto-section-identifier"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wavefront sensing</span></span></h1>
 </div>
 
 
@@ -584,7 +579,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 7, 2026</p>
+      <p class="date">September 8, 2026</p>
     </div>
   </div>
   
@@ -610,94 +605,258 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 7, 2026
+Last updated: September 8, 2026
 !-->
 </div>
 </div>
 </div>
-<p>This part of the book explains how the analog light image formed by the optics is converted into a digital signal. This conversion involves two fundamental challenges:</p>
-<ol type="1">
-<li><strong>Photogeneration (Physics):</strong> Converting incident photons into mobile electrons inside silicon via the photoelectric effect. The quantum nature of light dictates the fundamental limits of sensor performance (shot noise), a physical process that is identical whether in a CCD or a CMOS sensor.</li>
-<li><strong>Readout Architecture (Engineering):</strong> Collecting, transporting, and measuring those tiny charge packets across an array of millions of pixels. We trace this engineering journey from Willard Boyle and George Smith’s charge-domain shifting in charge-coupled devices (CCD) to modern voltage-domain CMOS active-pixel architectures.</li>
+<section id="sec-optics-wavefront-sensing-overview" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="sec-optics-wavefront-sensing-overview"><span class="header-section-number">16.1</span> Wavefront sensing overview</h2>
+<p>The previous chapter described how to represent a wavefront, <span class="math inline">\(W(\rho,\theta)\)</span>, and how that representation determines the point spread function (<a href="optics-09-wavefront.html" class="quarto-xref"><span>Chapter 15</span></a>). But the wavefront itself is not something an ordinary image sensor can measure directly—a sensor records the intensity of light, not its phase. This chapter describes an instrument that measures the wavefront, the Shack-Hartmann wavefront sensor, and how it can be coupled with other optical instruments for applications ranging from astronomy to ophthalmology.</p>
+</section>
+<section id="sec-shack-hartmann" class="level2 page-columns page-full" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="sec-shack-hartmann"><span class="header-section-number">16.2</span> Shack-Hartmann wavefront sensor</h2>
+<p>The <strong>Shack-Hartmann wavefront sensor</strong> measures <span class="math inline">\(W\)</span> indirectly, using the fact that a lenslet focuses collimated light to a point that shifts when the incoming rays are tilted.</p>
+<p>The sensor places a lenslet array in front of an image sensor, with a small sensor region behind each lenslet (<a href="#fig-shack-hartmann" class="quarto-xref">Figure&nbsp;<span>16.1</span></a>). Each lenslet samples a small sub-aperture of the pupil. If the wavefront were flat over that sub-aperture, the lenslet would focus its light to a spot centered on its axis; a locally tilted wavefront shifts the spot away from center by an amount proportional to the local slope, <span class="math inline">\(\nabla W\)</span>. Measuring the spot displacement at every lenslet therefore samples <span class="math inline">\(\nabla W(\rho,\theta)\)</span> across the whole pupil, from which <span class="math inline">\(W\)</span> itself can be reconstructed—for example by fitting Zernike polynomials to the measured slopes and integrating. This is a direct extension of the ray-based lenslet measurement introduced in <a href="lightfields-02-measurement.html#sec-lightfield-measurement" class="quarto-xref"><span>Section 3.2</span></a>: assembling many lenslets, each with its own small sensor region, turns a single local-angle measurement into a sampled estimate of the wavefront across the entire pupil.</p>
+<div id="fig-shack-hartmann" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-shack-hartmann-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/13-wavefront-sensing/02-Shack-Hartmann.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig margin-caption" id="fig-shack-hartmann-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.1: Principles of the Shack-Hartmann wavefront sensor.
+</figcaption>
+</figure>
+</div>
+<p>Using Zernike decomposition on the measured slopes allows immediate interpretation and simulation without needing to reconstruct PSFs from images.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Hartmann's screen">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Hartmann’s screen
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Johannes Franz Hartmann, a German astronomer, faced a version of this problem around 1900: how to measure whether a telescope objective sent out parallel rays from an on-axis point source. He covered the aperture with a screen pierced by an array of pinholes and photographed the resulting spots on either side of focus. A ray bundle emerging parallel to the axis produced a spot centered behind its pinhole; any deviation from parallel displaced the spot, revealing the local ray error. Diffraction blurred each pinhole’s image into a small spot rather than a point, and the pinholes passed little light, so the technique was not very sensitive.</p>
+<p>Roland Shack and Ben Platt’s 1971 innovation was to replace each pinhole with a small lens—a lenslet—which collects far more light and focuses it to a sharper spot: the design described above.</p>
+<p><a href="https://www.optics.arizona.edu/sites/default/files/2022-07/Historical-Development-Shack-Hartman-Wavefront-Sensor.pdf">Arizona history of the Shack-Hartmann sensor.</a></p>
+</div>
+</div>
+</section>
+<section id="sec-adaptive-optics-astronomy" class="level2 page-columns page-full" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="sec-adaptive-optics-astronomy"><span class="header-section-number">16.3</span> Adaptive optics</h2>
+<p>A wavefront sensor becomes especially powerful when paired with a <strong>deformable mirror</strong>. This is a front surface mirror whose shape can be adjusted locally, over small regions. When the rays in a light field are reflected by the mirror the shape of the surface sculpts the direction of the rays, or equivalently we can say the mirror changes the wavefront. An <strong>adaptive optics</strong> system first measures the direction of the rays (the wavefront) and then applies a correction to the rays with the deformable mirror. This reduces the aberrations so that we can focus the light and form a high quality image.</p>
+<p>The concept was first applied in astronomical imaging. The astronomer shines a strong laser, tuned to 589 nm, into the upper atmosphere. This laser excites sodium atoms that are in a layer of the mesosphere roughly 90 km (56 miles) above Earth<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The sodium absorbs the laser light and re-emits it in all directions through resonance fluorescence. This light is called a beacon or guide star.</p>
+<p>The sodium layer is pretty far away, but not quite far enough for the light to arrive adequately collimated (planar wavefront) at the telescope. The arriving light is still a (slightly) diverging spherical wave. On a large aperture, the wavefront sagitta deviates from planarity by about <span class="math inline">\(40\lambda\)</span> on a 4-meter telescope and over <span class="math inline">\(200\lambda\)</span> on a 10-meter telescope. Because this 90 km curvature is predictable, the wavefront sensing optics are set to focus at that altitude. Atmospheric turbulence then adds rapidly fluctuating, irregular phase ripples onto this nominal spherical wave.</p>
+<div id="fig-optics-laser-guidestar" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-laser-guidestar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/13-wavefront-sensing/laser-guide-star.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-laser-guidestar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.2: Laser guide star at La Palma, Observatorio del Roque de los Muchachos. The 4.2m William Herschel Telescope Canary adaptive optics system was used together with the ESO laser guide star unit. <a href="https://www.eso.org/public/blog/making-lgs-even-brighter/">Source</a>
+</figcaption>
+</figure>
+</div>
+<p>A wavefront sensor measures these turbulent phase perturbations and controls a deformable mirror (illustrated below). The mirror alters its surface shape, canceling the atmospheric aberrations so that light from distant astronomical objects (which arrive from infinity) emerges with a flat, collimated wavefront.</p>
+<div id="fig-deformable-mirror" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-deformable-mirror-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/13-wavefront-sensing/deformable_mirror.gif" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig margin-caption" id="fig-deformable-mirror-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.3: Deformable mirror
+</figcaption>
+</figure>
+</div>
+<p>This whole process updates rapidly (milliseconds) because the atmosphere is changing quickly. This means the sensing must be fast and the deformable mirror must be fairly light and responsive so it can change shape quickly. The whole system is illustrated in <a href="#fig-wavefront-astronomy" class="quarto-xref">Figure&nbsp;<span>16.4</span></a>. The corrected image of the stars in the sky is much sharper than would be possible by imaging through the atmosphere.</p>
+<div id="fig-wavefront-astronomy" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-wavefront-astronomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/13-wavefront-sensing/01-wavefront-sensing.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig margin-caption" id="fig-wavefront-astronomy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.4: Wavefront-sensing architecture used in astronomy and ophthalmology. The incoming light can be from a star or reflected from the back of the eye. Adapted from <a href="https://www.exosens.com/news/short-wave-infrared-adaptive-optics-and-applications">Exosens, “Short-wave infrared adaptive optics and applications,” Fig. 1</a>, which credits C. Max, Center for Adaptive Optics.
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="YouTube: Explanations of adaptive optics">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+YouTube: Explanations of adaptive optics
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Here are two helpful video explanations of adaptive optics in astronomy: the first offers an intuitive conceptual overview, while the second provides a detailed look at the engineering, including how to build a deformable mirror.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Conceptual overview</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Building a deformable mirror</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p>Here is an informal, very nice explanation of the adaptive optics system for astronomy. Maybe a little too cute, or maybe just perfect? I like it.</p>
+<!-- Responsive, centered YouTube embed -->
+<div style="max-width: 800px; margin: 0 auto;">
+<div style="position: relative; width: 100%; padding-top: 56.25%;">
+<!-- 16:9 --> <iframe src="https://www.youtube.com/embed/gDGvNyVApgg?si=66-yeXvR2vX7Y_-G" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""> </iframe>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Here is an excellent, detailed video describing the use of adaptive optics in astronomical imaging, where the author describes how to build a deformable mirror. Very enjoyable!</p>
+<!-- Responsive, centered YouTube embed -->
+<div style="max-width: 800px; margin: 0 auto;">
+<div style="position: relative; width: 100%; padding-top: 56.25%;">
+<!-- 16:9 --> <iframe src="https://www.youtube.com/embed/TPyQI7bJo6Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""> </iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The same architecture measures the optics of the human eye, where the aberrating medium is the cornea and lens rather than the atmosphere; we describe that application, and the resulting adaptive-optics imaging of the retina, in <a href="human-02-physiological-optics.html#sec-adaptive-optics-human" class="quarto-xref"><span>Section 25.4</span></a>.</p>
+</section>
+<section id="sec-SLM" class="level2" data-number="16.4">
+<h2 data-number="16.4" class="anchored" data-anchor-id="sec-SLM"><span class="header-section-number">16.4</span> Spatial light modulators</h2>
+<p>What if the way a lens focuses light could be reconfigured rapidly? Perhaps even in a way that depends on the input. Sounds cool.</p>
+<p><strong>Spatial light modulators (SLMs)</strong> dynamically control the properties of a light field, on a pixel-by-pixel basis. They are arrays of small, programmable optical elements. The way we describe them is based on the representation of light in terms of wavefronts (<a href="optics-09-wavefront.html" class="quarto-xref"><span>Chapter 15</span></a>). We can build devices that modulate the phase or the amplitude of the local electric field.</p>
+<p>The SLMs come in two general types.</p>
+<ul>
+<li><strong>Phase SLMs</strong>, often based on liquid crystal arrays, can locally alter the phase of light, effectively acting as a reconfigurable lens or diffraction grating. They can be used to correct for aberrations in real-time or to sculpt a light beam into a complex pattern.</li>
+<li><strong>Amplitude SLMs</strong>, which use technologies like MEMS (micro-electro-mechanical systems) mirrors, modulate the intensity of light at each pixel.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="An SLM device">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+An SLM device
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>With pixel sizes on the order of microns and arrays containing millions of elements, SLMs are powerful tools in adaptive optics, holography, and advanced imaging systems. This figure shows a recent phase SLM with extremely high resolution.</p>
+<div id="fig-slm-holoeye" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-slm-holoeye-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/07-principles/slm-holoeye.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-slm-holoeye-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.5: Holoeye phase spatial light modulator based on reflective LCOS. Max resolution 4160 x 2464, pixel Pitch 3.74 µm, Active Area 15.56 x 9.22 mm (0.7″ Diagonal, 8 Bit, 60 Hz frame rate). The small part is the SLM; the big part is the electronics. <a href="https://holoeye.com/products/spatial-light-modulators/gaea-2-phase-only/" target="_blank">See Holoeye</a>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p><a href="#fig-optics-phaseramp" class="quarto-xref">Figure&nbsp;<span>16.6</span></a> illustrates how a phase SLM might be programmed to change the direction of a planar wavefront (collimated bundle of rays). We can set the elements to introduce a linear phase shift across space. This has the effect of changing the angle of the wavefront, but leaving it as planar. This phase shift changes the direction of the wave, or equivalently, the collimated bundle of rays.</p>
+<div id="fig-optics-phaseramp" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-optics-phaseramp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/12-wavefront/wavefront-phaseramp.png" class="img-fluid figure-img" style="width:80.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-optics-phaseramp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.6: This phase ramp leaves the rays parallel, but changes the orientation of the wavefront. The ray direction is perpendicular to the wavefront.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="isetcam-simulation-flare-and-wavefronts" class="level2" data-number="16.5">
+<h2 data-number="16.5" class="anchored" data-anchor-id="isetcam-simulation-flare-and-wavefronts"><span class="header-section-number">16.5</span> ISETCam simulation: Flare and wavefronts</h2>
+<p>Let’s finish this chapter with ISETCam flare examples. We will illustrate the impact of the aperture shape and scratches. Illustrate the use of the pupil functions in automotive modeling. We will do it again when we simulate the human eye pupil function.</p>
+<ul>
+<li><strong>Stopping down the aperture and changing its shape</strong> Modify <span class="math inline">\(a(\rho, \theta)\)</span> to reduce the pupil radius</li>
+<li><strong>Adding obscurations, vignetting, or scratches</strong> Mask parts of <span class="math inline">\(a(\rho, \theta)\)</span> or add amplitude modulation (scratches)</li>
+<li><strong>Simulating phase plates or diffractive elements</strong> Alter <span class="math inline">\(W(\rho, \theta)\)</span> with custom phase profiles - this will require a new tutorial with linear phase ramp</li>
+</ul>
+<!--
+================================================================================
+TODO & REVIEW ITEMS: ACCURACY AND CLARITY ANALYSIS (optics-08-wavefront-sensing.qmd)
+================================================================================
+
+1. SCIENTIFIC & TECHNICAL ACCURACY
+--------------------------------------------------------------------------------
+- [x] 1.1 Laser Guide Star (LGS) Wavefront Curvature vs. Collimation:
+      * Current text (Line 36): "Were there no atmosphere, light from these atoms would arrive back to the telescope collimated (a flat wavefront)."
+      * Issue: The mesospheric sodium layer is at a finite altitude (~90 km). Light radiating from this altitude reaches the telescope aperture as a diverging spherical wave (with curvature radius R ≈ 90 km), not a collimated/flat wave. In large telescopes, this produces focal anisoplanatism (the "cone effect") because the backscattered cone does not sample the identical cylinder of atmospheric turbulence traversed by starlight from infinity.
+      * Action: Clarify that light from the beacon arrives as a diverging spherical wave of known curvature (which the telescope optics focus), and turbulence introduces perturbations onto this nominal wavefront.
+
+- [ ] 1.2 Deformable Mirror Reflection Factor of 2:
+      * Current text (Line 40): "The mirror changes it shape by just the amount necessary to correct the wavefront, making the rays collimated (flattening the wavefront)."
+      * Issue: Reflective geometry doubles the optical path difference: a physical surface displacement of Δz introduces a wavefront change of ΔW = 2·Δz (for near-normal incidence).
+      * Action: Note that the mirror surface needs to displace by only half the measured wavefront error (Δz = -W/2). Fix typo "changes it shape" -> "changes its shape".
+
+- [ ] 1.3 Shack-Hartmann Quantitative Geometry & Pupil Conjugation:
+      * Current text (Line 17): "shifts the spot away from center by an amount proportional to the local slope, ∇W."
+      * Action: State the quantitative geometric relation: Δx = f_L · (∂W/∂x) and Δy = f_L · (∂W/∂y), where f_L is the focal length of the lenslet. This cleanly connects ray angles to wave slope.
+      * Action: Clarify that in practical systems, the lenslet array is placed at an optical conjugate to the pupil plane (via relay optics), so that each lenslet samples a known sub-aperture of the entrance pupil.
+
+- [ ] 1.4 Wavefront Reconstruction (Modal vs. Zonal):
+      * Current text (Line 17): "from which W itself can be reconstructed—for example by fitting Zernike polynomials to the measured slopes and integrating."
+      * Issue: In modal Zernike reconstruction, slopes are not integrated first. Because the spatial derivatives of Zernike polynomials (∇Z_n^m) are known analytically, the coefficient vector c is solved directly by linear least-squares (s = G·c) from the measured spot slopes.
+      * Action: Rephrase to distinguish modal fitting (least-squares fit directly on slope gradients) from numerical zonal integration (e.g., Southwell or Fried grids).
+
+- [ ] 1.5 Spatial Light Modulator (SLM) Phase Wrapping:
+      * Current text (Line 123): Describes programming a phase ramp to tilt a planar wavefront.
+      * Action: Mention phase wrapping (modulo 2π). Because physical liquid crystal layers have a limited stroke (typically 0 to 2π phase retardation), steep ramps and lens profiles are implemented via 2π blazed phase discontinuities (analogous to a Fresnel lens or diffraction grating).
+
+
+2. CLARITY, STRUCTURE & NARRATIVE FLOW
+--------------------------------------------------------------------------------
+- [x] 2.1 Section Hierarchy for Spatial Light Modulators:
+      * Current: Section 8.4 is `### Spatial Light Modulators {#sec-SLM}` nested as an H3 under `## Adaptive optics`.
+      * Issue: SLMs are general-purpose wavefront modulation devices (used across displays, beam shaping, microscopy, holography, and ophthalmology), and @sec-SLM is referenced from earlier chapters (e.g., lightfields-02).
+      * Action: Promote to a top-level section: `## Spatial light modulators {#sec-SLM}`.
+
+- [ ] 2.2 Reconcile or Complete Section 8.5 ("ISETCam simulation: Flare and wavefronts"):
+      * Current text (Lines 128-137): Contains only an introductory paragraph and three bullet points with placeholder reminders.
+      * Structural question: Does flare from aperture shape and scratches belong in Chapter 8 (Wavefront Sensing), or in Chapter 7 ("Wavefronts", alongside pupil function calculations), or Chapter 1b ("Diffraction")?
+      * Action:
+        - If kept here: Complete the planned simulation code/figures demonstrating how aperture masks a(ρ, θ) and scratches/phase profiles W(ρ, θ) generate flare in ISETCam.
+        - Alternatively: Replace or supplement with an ISETCam wavefront sensing demo (e.g., creating a wavefront, sampling slopes, and fitting Zernike coefficients using wvfCreate).
+
+- [x] 2.3 Consolidate Dual YouTube Callout Boxes:
+      * Current (Lines 55-103): Two consecutive YouTube video callout boxes back-to-back disrupt reading rhythm.
+      * Action: Combine into a single curated callout or clearly differentiate their roles (e.g., conceptual primer vs. DIY hardware construction).
+
+- [ ] 2.4 Bridge to Ophthalmology:
+      * Figure @fig-wavefront-astronomy and Chapter 7 explicitly promise connections to ophthalmology, but the text currently has only a one-sentence forward-pointer (Line 105) to Chapter human-02.
+      * Action: Add 1-2 paragraphs contrasting astronomical AO (compensating rapidly fluctuating atmospheric turbulence using guide stars) with ophthalmic aberrometry (compensating static/slow ocular aberrations using a retinal beacon).
+
+
+3. TYPOS, EDITORIAL ARTIFACTS & FORMATTING
+--------------------------------------------------------------------------------
+- [x] 3.1 Line 28: Clean tracking parameters from Arizona history link (`?utm_source=chatgpt.com`).
+- [x] 3.2 Line 40: "changes it shape" -> "changes its shape".
+- [x] 3.3 Line 56: "or maybe just pefect?" -> "or maybe just perfect?".
+- [x] 3.4 Line 100: PDF link description for the second video is an identical duplicate of the first video's text; update to describe the deformable mirror DIY video.
+- [x] 3.5 Line 110: "The way we describe them is is based..." -> "The way we describe them is based...".
+- [x] 3.6 Line 110: "devices the modulate" -> "devices that modulate".
+- [x] 3.7 Line 110: "electrical field" -> "electric field".
+- [x] 3.8 Line 123: "introduce a the linear phase shift" -> "introduce a linear phase shift".
+- [x] 3.9 Line 125: Caption of @fig-optics-phaseramp contains an internal editorial note: "This should point to the spatial light modulator @sec-SLM". Remove this sentence from the published caption.
+- [x] 3.10 Line 129: "Illustrate the use of the pupil functions for in automotive modeling." -> "...functions in automotive modeling."
+- [x] 3.11 Line 134: Notation discrepancy: Uses capital $A(\rho, \theta)$ instead of lowercase $a(\rho, \theta)$ as defined in @eq-pupil-function.
+================================================================================
+-->
+
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>These atoms were deposited in this layer by vaporizing micrometeorites.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-<p>We then define the key parameters that characterize sensor performance, such as quantum efficiency, read noise, and dynamic range. The final chapters describe the complete sensor system, including color filter arrays and control electronics, and survey the landscape of modern sensor innovations.</p>
-<ul>
-<li>photoelectric effect and photons</li>
-<li>pixel design</li>
-<li>parameters</li>
-<li>sensor components</li>
-<li>sensor control systems</li>
-<li>sensor characterization</li>
-<li>innovations</li>
-</ul>
-<section id="sensor-topics" class="level2">
-<h2 class="anchored" data-anchor-id="sensor-topics">Sensor topics</h2>
-<section id="photons-to-electrons" class="level3">
-<h3 class="anchored" data-anchor-id="photons-to-electrons">Photons to Electrons</h3>
-<p>This chapter covers the initial and most critical step in digital imaging: the conversion of light particles (photons) into electrical charge (electrons).</p>
-<ul>
-<li>Explains the photoelectric effect and the quantum nature of light.</li>
-<li>Introduces the concept of shot noise, arising from the Poisson distribution of photon arrivals, which sets a fundamental limit on signal quality.</li>
-<li>Describes the process of converting photons into photoelectrons within a silicon photodiode.</li>
-</ul>
-</section>
-<section id="pixel-design" class="level3">
-<h3 class="anchored" data-anchor-id="pixel-design">Pixel Design</h3>
-<p>Here, we examine the architecture of a single pixel, the building block of the image sensor.</p>
-<ul>
-<li>Details the architecture of a modern CMOS pixel (e.g., the 4T pixel).</li>
-<li>Explains the function of key components: photodiode, transfer gate, floating diffusion, and source follower amplifier.</li>
-<li>Discusses the readout process and the origin of different noise sources within the pixel.</li>
-</ul>
-</section>
-<section id="sensor-parameters" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-parameters">Sensor Parameters</h3>
-<p>This chapter defines the essential metrics used to quantify and compare the performance of image sensors.</p>
-<ul>
-<li>Defines quantum efficiency (QE), full well capacity, and conversion gain.</li>
-<li>Explains different noise sources, particularly read noise and dark noise.</li>
-<li>Derives key performance figures like Signal-to-Noise Ratio (SNR) and Dynamic Range (DR).</li>
-</ul>
-</section>
-<section id="sensor-components" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-components">Sensor Components</h3>
-<p><em>This chapter is planned. It will describe the components that make up a complete sensor package beyond the individual pixels.</em></p>
-<ul>
-<li><em>Explains the role of microlens arrays in improving light collection efficiency.</em></li>
-<li><em>Describes the design and function of Color Filter Arrays (CFAs), particularly the Bayer pattern.</em></li>
-<li><em>Covers the Analog-to-Digital Converter (ADC) and its role in quantizing the signal.</em></li>
-</ul>
-</section>
-<section id="sensor-control" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-control">Sensor Control</h3>
-<p><em>This chapter is planned. It will cover the electronics and timing signals required to operate the sensor.</em></p>
-<ul>
-<li><em>Explains the difference between rolling shutter and global shutter readout modes.</em></li>
-<li><em>Discusses exposure control, gain settings (ISO), and frame rate.</em></li>
-<li><em>Introduces the basic principles of sensor timing and control logic.</em></li>
-</ul>
-</section>
-<section id="sensor-characterization" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-characterization">Sensor Characterization</h3>
-<p><em>This chapter is planned. It will describe the practical methods for measuring the performance parameters defined earlier.</em></p>
-<ul>
-<li><em>Introduces standard measurement procedures, such as the EMVA 1288 standard.</em></li>
-<li><em>Explains how to measure key parameters like read noise, QE, and linearity from test charts.</em></li>
-<li><em>Discusses the creation of a noise model for a sensor.</em></li>
-</ul>
-</section>
-<section id="sensor-innovations" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-innovations">Sensor Innovations</h3>
-<p><em>This chapter is planned. It will survey the landscape of modern and emerging sensor technologies.</em></p>
-<ul>
-<li><em>Covers stacked and backside-illuminated (BSI) sensor architectures.</em></li>
-<li><em>Introduces novel sensor types like event cameras, curved sensors, and Single-Photon Avalanche Diodes (SPADs).</em></li>
-<li><em>Discusses trends in computational sensors, such as quaternary and transparent CFAs.</em></li>
-</ul>
-
-
-
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1123,13 +1282,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/optics-10-wavefront-sensing.html" class="pagination-link" aria-label="Wavefront sensing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wavefront sensing</span></span>
+      <a href="../chapters/optics-09-wavefront.html" class="pagination-link" aria-label="Wavefronts">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wavefronts</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/sensors-01-photoelectric.html" class="pagination-link" aria-label="Photons and Electrons">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/part-sensors.html" class="pagination-link" aria-label="Part III: Sensors">
+        <span class="nav-page-text">Part III: Sensors</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

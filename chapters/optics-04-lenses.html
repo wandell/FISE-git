@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-07">
+<meta name="dcterms.date" content="2026-09-03">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
-<title>Part III: Sensors – Foundations of Image Systems Engineering</title>
+<title>10&nbsp; Lens principles – Foundations of Image Systems Engineering</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -32,8 +51,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../chapters/sensors-01-photoelectric.html" rel="next">
-<link href="../chapters/optics-10-wavefront-sensing.html" rel="prev">
+<link href="../chapters/optics-05-thinlens.html" rel="next">
+<link href="../chapters/optics-03-diffraction-psf.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -114,7 +133,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Part III: Sensors</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-04-lenses.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lens principles</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -227,7 +246,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/optics-04-lenses.html" class="sidebar-item-text sidebar-link">
+  <a href="../chapters/optics-04-lenses.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lens principles</span></span></a>
   </div>
 </li>
@@ -280,7 +299,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../chapters/part-sensors.html" class="sidebar-item-text sidebar-link active">
+  <a href="../chapters/part-sensors.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Part III: Sensors</span></a>
   </div>
 </li>
@@ -555,25 +574,33 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sensor-topics" id="toc-sensor-topics" class="nav-link active" data-scroll-target="#sensor-topics">Sensor topics</a>
+  <li><a href="#sec-optics-lenses-overview" id="toc-sec-optics-lenses-overview" class="nav-link active" data-scroll-target="#sec-optics-lenses-overview"><span class="header-section-number">10.1</span> Lens principles overview</a></li>
+  <li><a href="#sec-optics-rays-wavefronts" id="toc-sec-optics-rays-wavefronts" class="nav-link" data-scroll-target="#sec-optics-rays-wavefronts"><span class="header-section-number">10.2</span> Rays and wavefronts</a></li>
+  <li><a href="#material-interactions" id="toc-material-interactions" class="nav-link" data-scroll-target="#material-interactions"><span class="header-section-number">10.3</span> Material interactions</a>
   <ul class="collapse">
-  <li><a href="#photons-to-electrons" id="toc-photons-to-electrons" class="nav-link" data-scroll-target="#photons-to-electrons">Photons to Electrons</a></li>
-  <li><a href="#pixel-design" id="toc-pixel-design" class="nav-link" data-scroll-target="#pixel-design">Pixel Design</a></li>
-  <li><a href="#sensor-parameters" id="toc-sensor-parameters" class="nav-link" data-scroll-target="#sensor-parameters">Sensor Parameters</a></li>
-  <li><a href="#sensor-components" id="toc-sensor-components" class="nav-link" data-scroll-target="#sensor-components">Sensor Components</a></li>
-  <li><a href="#sensor-control" id="toc-sensor-control" class="nav-link" data-scroll-target="#sensor-control">Sensor Control</a></li>
-  <li><a href="#sensor-characterization" id="toc-sensor-characterization" class="nav-link" data-scroll-target="#sensor-characterization">Sensor Characterization</a></li>
-  <li><a href="#sensor-innovations" id="toc-sensor-innovations" class="nav-link" data-scroll-target="#sensor-innovations">Sensor Innovations</a></li>
+  <li><a href="#sec-snells-law" id="toc-sec-snells-law" class="nav-link" data-scroll-target="#sec-snells-law"><span class="header-section-number">10.3.1</span> Snell’s Law</a></li>
+  <li><a href="#sec-chromatic-aberration" id="toc-sec-chromatic-aberration" class="nav-link" data-scroll-target="#sec-chromatic-aberration"><span class="header-section-number">10.3.2</span> Wavelength dependence</a></li>
   </ul></li>
+  <li><a href="#lenses-control-ray-directions" id="toc-lenses-control-ray-directions" class="nav-link" data-scroll-target="#lenses-control-ray-directions"><span class="header-section-number">10.4</span> Lenses control ray directions</a></li>
+  <li><a href="#making-a-lens" id="toc-making-a-lens" class="nav-link" data-scroll-target="#making-a-lens"><span class="header-section-number">10.5</span> Making a lens</a></li>
+  <li><a href="#innovations-in-lens-design" id="toc-innovations-in-lens-design" class="nav-link" data-scroll-target="#innovations-in-lens-design"><span class="header-section-number">10.6</span> Innovations in Lens Design</a>
+  <ul class="collapse">
+  <li><a href="#spherical-aberration" id="toc-spherical-aberration" class="nav-link" data-scroll-target="#spherical-aberration"><span class="header-section-number">10.6.1</span> Spherical Aberration</a></li>
+  <li><a href="#multi-element-lens" id="toc-multi-element-lens" class="nav-link" data-scroll-target="#multi-element-lens"><span class="header-section-number">10.6.2</span> Multi-element lens</a></li>
+  <li><a href="#aspheric-lenses" id="toc-aspheric-lenses" class="nav-link" data-scroll-target="#aspheric-lenses"><span class="header-section-number">10.6.3</span> Aspheric Lenses</a></li>
+  <li><a href="#grin-lenses" id="toc-grin-lenses" class="nav-link" data-scroll-target="#grin-lenses"><span class="header-section-number">10.6.4</span> GRIN Lenses</a></li>
+  <li><a href="#sec-optics-metalens" id="toc-sec-optics-metalens" class="nav-link" data-scroll-target="#sec-optics-metalens"><span class="header-section-number">10.6.5</span> Metalenses</a></li>
+  </ul></li>
+  <li><a href="#onward" id="toc-onward" class="nav-link" data-scroll-target="#onward"><span class="header-section-number">10.7</span> Onward</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Sensors</a></li><li class="breadcrumb-item"><a href="../chapters/part-sensors.html">Part III: Sensors</a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/part-optics.html">Optics</a></li><li class="breadcrumb-item"><a href="../chapters/optics-04-lenses.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lens principles</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span id="sec-part-sensors" class="quarto-section-identifier">Part III: Sensors</span></h1>
+<h1 class="title"><span id="sec-optics-lenses" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Lens principles</span></span></h1>
 </div>
 
 
@@ -584,7 +611,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 7, 2026</p>
+      <p class="date">September 3, 2026</p>
     </div>
   </div>
   
@@ -596,6 +623,9 @@ window.Quarto = {
 </header>
 
 
+<!-- 
+See notes at end of file
+-->
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -610,94 +640,329 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 7, 2026
+Last updated: September 3, 2026
 !-->
 </div>
 </div>
 </div>
-<p>This part of the book explains how the analog light image formed by the optics is converted into a digital signal. This conversion involves two fundamental challenges:</p>
-<ol type="1">
-<li><strong>Photogeneration (Physics):</strong> Converting incident photons into mobile electrons inside silicon via the photoelectric effect. The quantum nature of light dictates the fundamental limits of sensor performance (shot noise), a physical process that is identical whether in a CCD or a CMOS sensor.</li>
-<li><strong>Readout Architecture (Engineering):</strong> Collecting, transporting, and measuring those tiny charge packets across an array of millions of pixels. We trace this engineering journey from Willard Boyle and George Smith’s charge-domain shifting in charge-coupled devices (CCD) to modern voltage-domain CMOS active-pixel architectures.</li>
+<section id="sec-optics-lenses-overview" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="sec-optics-lenses-overview"><span class="header-section-number">10.1</span> Lens principles overview</h2>
+<p>A small pinhole renders a perfectly good image. Why do we need to add any optics? The critical reason is that pinhole apertures, by definition, only measure a small amount of electromagnetic radiation. We often find ourselves in conditions where the amount of radiation passing through the aperture is a limiting factor. We need more signal!</p>
+<p>Let me tell you what I mean by <strong>small</strong>. Suppose we are in a dim room illuminated by a light with a broad wavelength spectrum (10 <span class="math inline">\(cd/m^2\)</span>). Consider a camera with a 1 mm pinhole, a sensor with 1 micron pixels, a focal length of 4mm, and an exposure duration of 50 milliseconds. In that case only about 35 photons arrive at each pixel. If we want to see in color, we must further divide up the wavelength range and the situation worsens. Because of the inescapable randomness of photon absorptions (<a href="sensors-01-photoelectric.html#sec-photons-poisson" class="quarto-xref"><span>Section 17.6</span></a>) this signal only permits a reliable discrimination when the absorptions in two pixels differ by more than 20% (i.e., one captures 20% more than the other, see <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_opticsCountingPhotons.html">fise_opticsCountingPhotons</a>).</p>
+<p>A lens, or more generally optics, is a way to enlarge the entrance aperture, and thus acquire more photons, without paying a big penalty in spatial blur or geometric distortions. Lenses must have great value because they are used by many different animal species.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Optics in animals">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Optics in animals
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>The most primitive animal eyes are called ‘pigment cup’. These are made of a small receptor surface, about 0.1mm in diameter, and the eye is simply open. The size of the opening is a bit large to be considered a pinhole. The eyes of some animals, in particular molluscs, have pinhole architectures. The receptor surface itself is 10 mm in diameter, and the opening is 0.4 - 2.8mm. These eyes evolved about 500 million years ago and have little changed.</p>
+<div id="fig-mollusc" class="quarto-float quarto-figure quarto-figure-center anchored" width="70%">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mollusc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/07-principles/mollusc-pinhole-monterrybay.png" id="fig-mollusc" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-mollusc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.1
+</figcaption>
+</figure>
+</div>
+<p>The vast majority of animals have evolved visual systems with a lens. You might enjoy <a href="https://www.britannica.com/science/photoreception/Single-chambered-eyes" target="_blank">this lovely article by Michael Land</a>, a distinguished vision scientist who taught us much about animal vision systems.</p>
+<!--
+# https://www.perplexity.ai/search/there-are-many-animals-that-ha-QJcp0_O_Ru6a0nVWEFkkmw  
+Perplexity search about tradeoffs between pinhole optics and lenses, particularly concerning biological systems. 
+-->
+</div>
+</div>
+</div>
+</section>
+<section id="sec-optics-rays-wavefronts" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="sec-optics-rays-wavefronts"><span class="header-section-number">10.2</span> Rays and wavefronts</h2>
+<p>In the section on thin lenses, we describe lenses and treat light as rays (geometric optics). The reader may find this odd, given the clear demonstration of light as waves <a href="optics-02-wave.html#sec-lightfields-diffraction" class="quarto-xref"><span>Section 8.2</span></a>, and the obvious failure of the ray model. But to model refraction, and many other optics characteristics, geometric optics is both intuitive and accurate. We will return to calculations using waves later, when we consider more advanced calculations (<a href="optics-09-wavefront.html" class="quarto-xref"><span>Chapter 15</span></a>).</p>
+<p>It is useful to draw the connection between geometric and wave representations. In <strong>wave optics</strong> a collection of rays headed in the same direction, and of the same wavelength and phase, are represented as a plane wave (<a href="#fig-waves-rays" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>). We can visualize the wave by drawing a line through the peaks of their (in-phase, common amplitude) waves. We call this line the <strong>wavefront</strong>. The wavefront diagrams do not show the amplitude of the wave. Various ray-wavefront combinations are illustrated in the different panels of <a href="#fig-waves-rays" class="quarto-xref">Figure&nbsp;<span>10.2</span></a>.</p>
+<!-- 
+**Notes about wavefront representations** 
+(https://www.rp-photonics.com/wavefronts.html).  
+-->
+<div id="fig-waves-rays" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-cap-location="bottom" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-waves-rays-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/07-principles/rays-wave.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%" data-fig-cap-location="bottom">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-waves-rays-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.2: Relationship between the ray (arrows) and wavefront (dashed) representations. (a) A collimated set of rays is a planar wavefront. (b) Rays from a point source form a spherical wavefront. (The image shows a slice through the sphere). (c) Smoothly varying wavefronts with many different shapes are common. Often these shapes are due to imperfections (aberrations) in the optics. We reason about them as a collection of rays; the direction of each ray is drawn perpendicular to the tangent of the wavefront. (d) Only a narrow section of the rays from a distant point are incident at the entrance aperture of the imaging device. Hence, the incident light field from the point is close to a planar wavefront.
+</figcaption>
+</figure>
+</div>
+<p>We will return to the representation of light as waves, wavefronts, and wavefront aberrations in <a href="optics-09-wavefront.html" class="quarto-xref"><span>Chapter 15</span></a>.</p>
+</section>
+<section id="material-interactions" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="material-interactions"><span class="header-section-number">10.3</span> Material interactions</h2>
+<p>When a light rays arrive at the boundary between regions with different optical properties - whether those regions contain matter (like glass or water), air or vacuum - several things can happen (<a href="#fig-reflected-scattered" class="quarto-xref">Figure&nbsp;<span>10.3</span></a>). The rays might be reflected back, as in a mirror. Or, the rays might enter into the material, undergo a series of internal reflections, and emerge back in one of many different directions. Also, the rays might enter the material and be absorbed, giving up their energy to the atoms in the material. (Maybe reference the dichromatic reflection model here?)</p>
+<div id="fig-reflected-scattered" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-reflected-scattered-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/07-principles/snell-reflected-scattered.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-reflected-scattered-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.3: When rays arrive at the boundary of two regions, The rays (a) might be reflected, (b) might enter the medium, be internally reflected multiple times, and emerge in one of many different directions (scattering). (Not shown) The ray may might enter the medium and be absorbed.
+</figcaption>
+</figure>
+</div>
+<p>The most important case for controlling the rays, and thus for optical design, is this other possibility: the ray enters the new material and continues on its way. We call this change in direction <strong>refraction</strong>.</p>
+<div id="fig-snell-law" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-cap-location="bottom" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-snell-law-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/07-principles/snell-refraction.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" data-fig-cap-location="bottom">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-snell-law-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.4: A ray crossing the boundary between two materials may continue but change direction. The change occurs because the speed of electromagnetic waves differs between the regions. The <em>refraction index</em> (<span class="math inline">\(n\)</span> and <span class="math inline">\(n'\)</span>) is the material parameter that describes the speed.
+</figcaption>
+</figure>
+</div>
+<section id="sec-snells-law" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="sec-snells-law"><span class="header-section-number">10.3.1</span> Snell’s Law</h3>
+<p>Snell’s Law quantifies how light changes direction when passing between regions with different optical properties. The mathematical formulation of Snell’s Law is defined using the variables shown in <a href="#fig-snell-law" class="quarto-xref">Figure&nbsp;<span>10.4</span></a>. A light ray (Incident ray) is shown crossing a planar boundary between one medium (say, air) in a second medium (say, glass). The angle between the incident ray and a line perpendicular to the surface (the surface normal) is <span class="math inline">\(\phi\)</span>. The refracted ray changes direction and thus has a different angle, <span class="math inline">\(\phi '\)</span>, with respect to the surface normal. Snell’s Law captures the relationship between these two ray angles</p>
+<p><span id="eq-snell"><span class="math display">\[
+n \sin(\phi) = n' \sin(\phi')
+\tag{10.1}\]</span></span></p>
+<p>The variables <span class="math inline">\(n\)</span> and <span class="math inline">\(n'\)</span> are the <em>refraction index</em> of the materials, which is related to the speed of the electromagnetic radiation in the material.</p>
+<p><span id="eq-indexofrefraction"><span class="math display">\[
+n = \frac{c}{v}
+\tag{10.2}\]</span></span></p>
+<p>where <span class="math inline">\(c\)</span> is the speed of light in a vacuum, <span class="math inline">\(v\)</span> is the speed in the material. By definition, <span class="math inline">\(n=1\)</span> in a vacuum. It is very close to <span class="math inline">\(1.0\)</span> in air. In some materials, such as glass, the velocity of light is much slower, so that the index might be <span class="math inline">\(1.3\)</span> or even <span class="math inline">\(1.5\)</span>.</p>
+<p>In many common materials the velocity is reduced because the light, which is electromagnetic radiation, induces an electrical signal in the electrons of the material. The specific properties of this signal depend on the material. The induced electrical signal sums with the electrical field of the light. The combined signal is predicted to travel slower and in a different direction, with the exact change in speed and direction dependent on the electrical properties of the material<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Interestingly, there are less common materials (e.g.,liquid crystals) that have more complex interactions with the electrical field of light. These materials create interesting and useful effects (birefringence) that we will describe in <a href="displays-01-principles.html#sec-display-principles-overview" class="quarto-xref"><span>Section 29.1</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="YouTube:  Why lenses bend light (Don Lincoln)">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+YouTube: Why lenses bend light (Don Lincoln)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>This is a very nice tutorial from Fermilab about the physical basis of refraction. The speaker first discusses various common -but wrong- explanations. He then explains refraction using principles derived from Maxwell’s equations. Very clear and cool stuff.</p>
+<!-- Responsive, centered YouTube embed -->
+<div style="max-width: 800px; margin: 0 auto;">
+<div style="position: relative; width: 100%; padding-top: 56.25%;">
+<!-- 16:9 --> <iframe src="https://www.youtube.com/embed/NLmpNM0sgYk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""> </iframe>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-chromatic-aberration" class="level3" data-number="10.3.2">
+<h3 data-number="10.3.2" class="anchored" data-anchor-id="sec-chromatic-aberration"><span class="header-section-number">10.3.2</span> Wavelength dependence</h3>
+<!-- [Abbe Number](https://chatgpt.com/share/676a2564-e72c-8002-923a-d865491f30ed) -->
+<p>For many materials that index of refraction is wavelength dependent. Following Snell’s Law, light at different wavelengths change direction by different amounts. Consequently, when we set the lens to be in best focus for one wavelength, it will not be in best focus for other wavelengths. The inability to produce a good focus for all wavelengths simultaenously is called <strong>chromatic aberration</strong>.</p>
+<p>For most materials the change of the refraction index over the visible wavelength is roughly linear, just varying in extent. It is common to summarize the dispersion using the <em>Abbe number</em>, <span class="math inline">\(V_d\)</span>, which is computed by comparing the refraction index at three different wavelengths.</p>
+<p><span id="eq-abbe"><span class="math display">\[
+V_d = \frac{n_{489.3} - 1}{n_{486.1} - n_{653.3}}
+\tag{10.3}\]</span></span></p>
+<p>Conventionally, an Abbe number greater than 50 implies very little dispersion and a number less than 30 implies significant dispersion that will impact image quality. The human eye has very significant chromatic aberration, with an Abbe number of about 15.</p>
+<p>When possible, it is my preference in computation to provide numerical values describing the index of refraction as a function of wavelength and to measure the impact by computing the line spread or point spread function. We will perform analyses of chromatic aberration several times in this book, including in <a href="human-03-retinal-encoding.html#sec-human-cone-psf-wavelength" class="quarto-xref"><span>Section 26.5.2</span></a>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Historical note:  Refraction">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Historical note: Refraction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>The Greek astronomer Ptolemy studed refraction in about the year 150 (<span class="citation" data-cites="Smith1982-vr">Smith (<a href="references.html#ref-Smith1982-vr" role="doc-biblioref">1982</a>)</span>). He documented that rays passing from air into, say water or glass, change direction<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Ibn Sahl in Persia, around 930, quantified the change in direction as light crossed the boundary between certain materials, and he used this knowledge to design lenses.</p>
+<!-- 
+- Feynman copies in Ptolemy's tables, see footnote.
+- Feynman lecturing on the relationship of Mathematics to Physics:  https://youtu.be/IaSN-3JAVTg?si=U3d7Kybo5gZKVGsF
+- A longer discussion of the history of Ptolemy is here by Smith: Ptolemy's Search for a Law of Refraction: A Case-Study in the Classical Methodology of "Saving the Appearances" and its Limitations.  He says that the work was largely ignored.
+- Descartes' crazy idea of infinite and then faster.  A bit of Buzz Lightyear.
+-->
+<p>The formula for refraction was discovered independently by two scientists in the 17th century. Willebrord Snellius (also known as Snell) first found the mathematical relationship in 1621, but his work wasn’t published during his lifetime. He was an astronomer, and in 1617 he determined the size of the earth based on measurements of its curvature between the cities of Alkmaar and Bergen-op-Zoom.</p>
+<div id="fig-snell-descartes" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-snell-descartes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/people/Snell-Descartes.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-snell-descartes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.5: Snell (left) and Descartes (right).
+</figcaption>
+</figure>
+</div>
+<p>Renée Descartes independently discovered the relationship as well, and he published it in 1637. Although Descartes published first, the formula became known as Snell’s Law to acknowledge Snell’s earlier discovery. In modern times, the French still frequently refer to Snell’s Law as “la loi de Descartes” or “la loi de Snell-Descartes”.</p>
+<p>The physicist Christiaan Huygens showed that Snell’s Law could be explained by treating light as a wave that travels at different speeds in different materials. More about the history of the discovery and quantification, including the references, <a href="https://en.wikipedia.org/wiki/Snell%27s_law#History">makes for interesting reading</a>.</p>
+<!-- 
+I think the wikipedia article attributes the discovery to yet another person, too.
+-->
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="lenses-control-ray-directions" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="lenses-control-ray-directions"><span class="header-section-number">10.4</span> Lenses control ray directions</h2>
+<div class="margin">
+<div id="fig-pinhole-rays" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pinhole-rays-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/07-principles/pinhole-rays-lens.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pinhole-rays-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.6: (A) The rays from a nearby point that pass through a relatively large pinhole diverge. They form an image of the point that is larger than the pinhole. (B) Lenses transform the direction of the rays in the incident light field, redirecting the rays to converge at the image surface.Diffraction imposes a limit on the precision of the convergence.
+</figcaption>
+</figure>
+</div>
+</div>
+<p>Consider the rays from a point as they pass through a pinhole. The image they form will not be sharp because the ray directions are diverging. Narrowing the pinhole sharpend the image formation by selecting a small subset of the rays.</p>
+<p>We can sharpen the image by redirecting some of the rays to converge at the image plane. One way to think about optical devices is that they are built to control the direction of the environmental light field rays at the image system entrance aperture. When forming a sharp image is the goal, we evaluate the optics by asking whether they adjust the ray directions so that the image of a point in the scene is also a point. A useful fact to remember is that diffraction means the best (sharpest) we can do for a circular aperture is defined by the diameter of the Airy disk.</p>
+</section>
+<section id="making-a-lens" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="making-a-lens"><span class="header-section-number">10.5</span> Making a lens</h2>
+<p>To make a lens that focuses a light field into an image plane requires changing the direction of many rays. The simple case of rays from one point is easy to see.</p>
+<div id="fig-thinlens-prism" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-thinlens-prism-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/07-principles/thinlens-prism.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-thinlens-prism-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.7: Refraction transforms the rays diverging from an object point (left) to converging to an image point (right).
+</figcaption>
+</figure>
+</div>
+<p>Imagine that the rays are diverging from an object point at the left. Were the rays passing through a pinhole, they would continue to diverge. Refraction by the prism changes the direction of the rays at the from upward to downward (upper prism). Similarly, refraction changes the ray directions from downward to upward (lower prism). These two prisms converge the rays from the object point onto a point on a properly positioned image plane.</p>
+<!--# This link describes the issues in making a diffraction limited thin lens.  I think the problem is a flat sensor surface will not work with a spherical lens surface. You need a aspheric. It has other interesting facts. To get close to diffraction limited spherical you need to use a multi element optics to correct for different aberrations.  It is possible to change the materials (GRIN) or shape (aspherics) as well.
+https://chatgpt.com/share/6748e5dc-267c-8002-844c-a83ee0cdb144 
+
+Diffraction limited thin lens issues.  Roughly same as the one above.
+https://chatgpt.com/c/6748e492-0310-8002-8da3-89a1517a6062 
+-->
+<div id="fig-thinlens-prism" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-thinlens-prism-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/07-principles/thinlens-assembled.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-thinlens-prism-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.8: A lens can be approximated as many small prisms. The outline shows a spherical surface on the entrance and exit side.
+</figcaption>
+</figure>
+</div>
+<p>Expanding on this idea, we can stack a collection of prisms to gather more of the rays. Or, more likely, we might polish a glass surface to have two spherical surfaces, forming a continuous form of the stacked prisms. The entrance aperture of this lens can capture much more light than a pinhole, and it guides the rays to converge. Spherical lenses are quite popular because they are easy to manufacture. Using Snell’s Law it is relatively straightforward to calculate the refraction for a ray arriving at any location on the sphere <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<p>The diagram makes it clear that there are many lens design choices. For example, we might change the shape of the lens surfaces. Also, we might use different materials in the prisms. What considerations would guide such choices?</p>
+</section>
+<section id="innovations-in-lens-design" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="innovations-in-lens-design"><span class="header-section-number">10.6</span> Innovations in Lens Design</h2>
+<p>An overarching goal in optical design is to create a lens that is free from imperfections, known as aberrations. The choices in lens design involve trade-offs between performance, cost, size, and weight. The following sections introduce a range of solutions, from classical to cutting-edge, that address these challenges.</p>
+<section id="spherical-aberration" class="level3" data-number="10.6.1">
+<h3 data-number="10.6.1" class="anchored" data-anchor-id="spherical-aberration"><span class="header-section-number">10.6.1</span> Spherical Aberration</h3>
+<p>Spherical surfaces are relatively easy to manufacture and thus cost-effective. However, they have a fundamental flaw first documented by the 11th-century scientist Alhazen in his “Book of Optics” (<em>Kitāb al-Manāẓir</em>). He observed that spherical lenses produce blurry images because they refract light more strongly near their edges than near their center. As a result, rays passing through the periphery of the lens do not converge at the same focal point as rays passing through the center. This imperfection is called <strong>spherical aberration</strong>. The severity of this aberration depends on factors like the lens aperture, curvature, and material.</p>
+</section>
+<section id="multi-element-lens" class="level3" data-number="10.6.2">
+<h3 data-number="10.6.2" class="anchored" data-anchor-id="multi-element-lens"><span class="header-section-number">10.6.2</span> Multi-element lens</h3>
+<p>A classical solution to spherical and other aberrations is to combine multiple spherical lenses into a single optical system. In these <strong>multi-element optics</strong>, additional lenses are carefully arranged to cancel out the aberrations of the primary lens. Famous designs like the <em>Double-Gauss</em> or <em>Petzval</em> lens systems use this principle to achieve high image quality. While effective, this approach often results in large, heavy, and complex assemblies, as seen in high-end camera lenses. I will describe these classic designs in <a href="optics-06-morelenses.html#sec-optics-famous-lenses" class="quarto-xref"><span>Section 12.4.2</span></a>. As you will see, in the early days determining how to combine even a few spherical components was an intellectual challenge, and quite important.</p>
+<p>Modern optics with multiple elements has achieved very remarkable advances. And, in some important cases, the size and weight are not a limit. The important company, ASML, working with <a href="https://www.zeiss.com/semiconductor-manufacturing-technology/smt-magazine/duv-lithography.html" target="_blank">Zeiss</a>, has produced entirely remarkable lenses. These enable people to use lithography to manufacture of integrated circuits at nanometer resolution. Now that’s a lens.</p>
+<div id="fig-zeiss-lithography" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-zeiss-lithography-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/optics/07-principles/zeiss-lithography.jpg" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-zeiss-lithography-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10.9: ASML-Zeiss lens
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="aspheric-lenses" class="level3" data-number="10.6.3">
+<h3 data-number="10.6.3" class="anchored" data-anchor-id="aspheric-lenses"><span class="header-section-number">10.6.3</span> Aspheric Lenses</h3>
+<p>Instead of adding more lenses, another approach is to change the shape of the lens surface itself. An <strong>aspheric lens</strong> deviates from a perfect spherical shape, with its curvature changing from the center to the edge. This tailored profile allows it to correct for spherical aberration in a single element, enabling more compact and lightweight designs.</p>
+<p>Historically, aspheric lenses were difficult and expensive to produce. However, advances in computer-controlled polishing and glass/plastic molding have made them common in everything from smartphone cameras to research-grade instruments. The surface of an aspheric lens, its <em>sag</em> <span class="math inline">\(z\)</span>, is often described as a function of the radial distance <span class="math inline">\(\rho\)</span> from the optical axis:</p>
+<p><span id="eq-aspheric"><span class="math display">\[
+z(\rho) = \frac{\rho^2 / R}{1 + \sqrt{1 - (1 + k)(\rho/R)^2}} + A_4 \rho^4 + A_6 \rho^6 + \cdots
+\tag{10.4}\]</span></span></p>
+<p>Here, <span class="math inline">\(R\)</span> is the radius of curvature at the lens vertex, <span class="math inline">\(k\)</span> is the conic constant that defines the basic shape (e.g., parabolic, hyperbolic), and the <span class="math inline">\(A_i\)</span> terms are higher-order coefficients that fine-tune the surface to minimize aberrations.</p>
+</section>
+<section id="grin-lenses" class="level3" data-number="10.6.4">
+<h3 data-number="10.6.4" class="anchored" data-anchor-id="grin-lenses"><span class="header-section-number">10.6.4</span> GRIN Lenses</h3>
+<p>Another way to control light is to vary the material properties within the lens instead of changing its surface shape. A <strong>gradient-index (GRIN)</strong> lens has a refractive index that changes continuously within the material, typically decreasing from the center to the edge.</p>
+<p>Long before this became practical, in 1854, James Clerk Maxwell theorized that such a gradient could eliminate spherical aberration in a spherical lens, a design now known as the “Maxwell fisheye.” It was later discovered that many animal eyes use this exact principle. While more challenging to manufacture than aspheres, GRIN lenses offer unique design possibilities, especially in compact systems like endoscopes. Maxwell’s work in this area -and later when we discuss his work in color- are an example of the interplay between physics, engineering, and biology<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
+</section>
+<section id="sec-optics-metalens" class="level3" data-number="10.6.5">
+<h3 data-number="10.6.5" class="anchored" data-anchor-id="sec-optics-metalens"><span class="header-section-number">10.6.5</span> Metalenses</h3>
+<p>The most recent revolution in optics miniaturization comes from <strong>metalenses</strong>. These are not lenses in the traditional sense but are flat surfaces, like a sliver of glass, patterned with an array of nanoscale structures (“meta-atoms”). Each nanostructure is smaller than the wavelength of light and is engineered to impart a specific phase shift to the light passing through it.</p>
+<p>By arranging these meta-atoms in a precise pattern, a metalens can bend light just like a conventional curved lens but without the bulk. This technology promises to replace complex, multi-element systems with a single, ultra-thin optical element. Researchers are developing metalenses that can perform sophisticated tasks, such as focusing different colors to the same point or routing specific wavelengths to different locations (<span class="citation" data-cites="Catrysse2022-vs">Catrysse et al. (<a href="references.html#ref-Catrysse2022-vs" role="doc-biblioref">2022</a>)</span>, <span class="citation" data-cites="Catrysse2023-kx">Catrysse and Fan (<a href="references.html#ref-Catrysse2023-kx" role="doc-biblioref">2023</a>)</span>). While still an active area of research, metalenses have the potential to fundamentally change optical design.</p>
+<p><em>Note: <span class="citation" data-cites="Froch2025-fa">Fröch et al. (<a href="references.html#ref-Froch2025-fa" role="doc-biblioref">2025</a>)</span> dealing with chromatic aberration, broadband imaging challenge.</em></p>
+</section>
+</section>
+<section id="onward" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="onward"><span class="header-section-number">10.7</span> Onward</h2>
+<p>The next sections will take you through the logical development from the simple thin lens to the analysis of a thick lens, and then to multielement lenses. Those principles are the foundation that has led to these developments.</p>
+<!-- I downloaded these slides. Some good concepts for this book. Overlaps a lot with my class, but additions. Link to PDF http://graphics.cs.cmu.edu/courses/15-463/2020_fall/lectures/lecture3.pdf 
+
+Link to Born and Wolf anniversary edition
+https://www-cambridge-org.stanford.idm.oclc.org/core/books/principles-of-optics/9D54D6FF0317074912CB285C3FF7341C
+
+I used Jenkins and White, which I have in PDF.
+
+This is a nice, but flawed, online book with a lot of good stuff.
+https://pressbooks.online.ucf.edu/osuniversityphysics3/chapter/thin-lenses/
+
+The Feynman lectures have a lot of great stuff about optics.  And color!
+https://www.feynmanlectures.caltech.edu/
+-->
+<!--
+From Perplexity search
+
+https://www.perplexity.ai/search/when-did-it-become-cost-effect-bqLBLfjZTRuYA.uF6hOvnA#2
+
+https://www.laserfocusworld.com/directory/finished-optics-coatings-components/lenses/blog/14310615/avantier-inc-replacing-spherical-lens-with-aspheric-lens?t
+
+https://www.shanghai-optics.com/about-us/resources/technical-articles/optical-revolution-aspheric-lenses-advances-and-solutions/?t
+
+https://avantierinc.com/resources/technical-article/aspheric-lens-breakthroughs/?t
+
+[See this page and fise_aspherics.m for the shape formula of aspherical lenses.](https://chatgpt.com/c/6748e492-0310-8002-8da3-89a1517a6062).[Also this page.](https://g.co/gemini/share/a89a3d193d26)
+-->
+
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-Catrysse2022-vs" class="csl-entry" role="listitem">
+Catrysse PB, Zhao N, Jin W, Fan S (2022) <a href="http://dx.doi.org/10.1515/nanoph-2022-0069">Subwavelength bayer <span>RGB</span> color routers with perfect optical efficiency</a>. Nanophotonics 11:2381–2387
+</div>
+<div id="ref-Catrysse2023-kx" class="csl-entry" role="listitem">
+Catrysse P, Fan S (2023) <a href="http://dx.doi.org/10.1063/5.0176587">Spectral routers for snapshot multispectral imaging</a>. Appl Phys Lett
+</div>
+<div id="ref-feynman1963-lectures" class="csl-entry" role="listitem">
+Feynman RP, Leighton RB, Sands M (1963) The feynman lectures on physics, vol. <span>I</span>: Mainly mechanics, radiation, and heat. Addison-Wesley, Reading, MA
+</div>
+<div id="ref-Froch2025-fa" class="csl-entry" role="listitem">
+Fröch JE, Chakravarthula P, Sun J, et al (2025) <a href="http://dx.doi.org/10.1038/s41467-025-58208-4">Beating spectral bandwidth limits for large aperture broadband nano-optics</a>. Nat Commun 16:3025
+</div>
+<div id="ref-Smith1982-vr" class="csl-entry" role="listitem">
+Smith AM (1982) <a href="https://www.jstor.org/stable/41133649?utm_source=chatgpt.com">Ptolemy’s search for a law of refraction: A case-study in the classical methodology of <span>“saving the appearances”</span> and its limitations</a>. Arch Hist Exact Sci 26:221–240
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>This excellent pair of (nicely snarky) Fermilab videos from Don Lincoln explain the change in <a href="https://www.youtube.com/watch?v=CUjt36SD3h8">velocity</a> and <a href="https://www.youtube.com/watch?v=NLmpNM0sgYk">direction.</a>. We can thank James Clerk Maxwell for providing the basis of this understanding.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>In Chapter 26 of his book of lectures, “Optics: The Principle of Least Time”, Feynman works from Ptolemy’s data to derive Snell’s law (<span class="citation" data-cites="feynman1963-lectures">Feynman et al. (<a href="references.html#ref-feynman1963-lectures" role="doc-biblioref">1963</a>)</span>). Some say that Ptolemy held back science by not noticing the relationship. Seems a bit harsh to me.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Put the formula for refraction of a ray at a spherical lens in here.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Michael Land’s <a href="https://www.britannica.com/science/photoreception/Single-chambered-eyes" target="_blank">Britannica article</a> has lots of interesting examples of animal eyes and the story about GRIN lenses and Maxwell.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-<p>We then define the key parameters that characterize sensor performance, such as quantum efficiency, read noise, and dynamic range. The final chapters describe the complete sensor system, including color filter arrays and control electronics, and survey the landscape of modern sensor innovations.</p>
-<ul>
-<li>photoelectric effect and photons</li>
-<li>pixel design</li>
-<li>parameters</li>
-<li>sensor components</li>
-<li>sensor control systems</li>
-<li>sensor characterization</li>
-<li>innovations</li>
-</ul>
-<section id="sensor-topics" class="level2">
-<h2 class="anchored" data-anchor-id="sensor-topics">Sensor topics</h2>
-<section id="photons-to-electrons" class="level3">
-<h3 class="anchored" data-anchor-id="photons-to-electrons">Photons to Electrons</h3>
-<p>This chapter covers the initial and most critical step in digital imaging: the conversion of light particles (photons) into electrical charge (electrons).</p>
-<ul>
-<li>Explains the photoelectric effect and the quantum nature of light.</li>
-<li>Introduces the concept of shot noise, arising from the Poisson distribution of photon arrivals, which sets a fundamental limit on signal quality.</li>
-<li>Describes the process of converting photons into photoelectrons within a silicon photodiode.</li>
-</ul>
-</section>
-<section id="pixel-design" class="level3">
-<h3 class="anchored" data-anchor-id="pixel-design">Pixel Design</h3>
-<p>Here, we examine the architecture of a single pixel, the building block of the image sensor.</p>
-<ul>
-<li>Details the architecture of a modern CMOS pixel (e.g., the 4T pixel).</li>
-<li>Explains the function of key components: photodiode, transfer gate, floating diffusion, and source follower amplifier.</li>
-<li>Discusses the readout process and the origin of different noise sources within the pixel.</li>
-</ul>
-</section>
-<section id="sensor-parameters" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-parameters">Sensor Parameters</h3>
-<p>This chapter defines the essential metrics used to quantify and compare the performance of image sensors.</p>
-<ul>
-<li>Defines quantum efficiency (QE), full well capacity, and conversion gain.</li>
-<li>Explains different noise sources, particularly read noise and dark noise.</li>
-<li>Derives key performance figures like Signal-to-Noise Ratio (SNR) and Dynamic Range (DR).</li>
-</ul>
-</section>
-<section id="sensor-components" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-components">Sensor Components</h3>
-<p><em>This chapter is planned. It will describe the components that make up a complete sensor package beyond the individual pixels.</em></p>
-<ul>
-<li><em>Explains the role of microlens arrays in improving light collection efficiency.</em></li>
-<li><em>Describes the design and function of Color Filter Arrays (CFAs), particularly the Bayer pattern.</em></li>
-<li><em>Covers the Analog-to-Digital Converter (ADC) and its role in quantizing the signal.</em></li>
-</ul>
-</section>
-<section id="sensor-control" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-control">Sensor Control</h3>
-<p><em>This chapter is planned. It will cover the electronics and timing signals required to operate the sensor.</em></p>
-<ul>
-<li><em>Explains the difference between rolling shutter and global shutter readout modes.</em></li>
-<li><em>Discusses exposure control, gain settings (ISO), and frame rate.</em></li>
-<li><em>Introduces the basic principles of sensor timing and control logic.</em></li>
-</ul>
-</section>
-<section id="sensor-characterization" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-characterization">Sensor Characterization</h3>
-<p><em>This chapter is planned. It will describe the practical methods for measuring the performance parameters defined earlier.</em></p>
-<ul>
-<li><em>Introduces standard measurement procedures, such as the EMVA 1288 standard.</em></li>
-<li><em>Explains how to measure key parameters like read noise, QE, and linearity from test charts.</em></li>
-<li><em>Discusses the creation of a noise model for a sensor.</em></li>
-</ul>
-</section>
-<section id="sensor-innovations" class="level3">
-<h3 class="anchored" data-anchor-id="sensor-innovations">Sensor Innovations</h3>
-<p><em>This chapter is planned. It will survey the landscape of modern and emerging sensor technologies.</em></p>
-<ul>
-<li><em>Covers stacked and backside-illuminated (BSI) sensor architectures.</em></li>
-<li><em>Introduces novel sensor types like event cameras, curved sensors, and Single-Photon Avalanche Diodes (SPADs).</em></li>
-<li><em>Discusses trends in computational sensors, such as quaternary and transparent CFAs.</em></li>
-</ul>
-
-
-
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1123,13 +1388,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/optics-10-wavefront-sensing.html" class="pagination-link" aria-label="Wavefront sensing">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Wavefront sensing</span></span>
+      <a href="../chapters/optics-03-diffraction-psf.html" class="pagination-link" aria-label="Diffraction and the PSF">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Diffraction and the PSF</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../chapters/sensors-01-photoelectric.html" class="pagination-link" aria-label="Photons and Electrons">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Photons and Electrons</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../chapters/optics-05-thinlens.html" class="pagination-link" aria-label="Thin lenses">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Thin lenses</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
