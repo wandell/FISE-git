@@ -113,16 +113,35 @@ For an exploration of the historical connection between $1/f^\alpha$ power spect
 :::
 
 ## Diffusion models {#sec-spatial-diffusion}
-The analysis to this point has been very classical, based 
+The analysis to this point has been very classical, based on statistics such as the local correlation and 1/f falloff.  These statistics have been interesting and advanced our understanding, but the dead leaves model illustrates how there is much more than local correlations.  The spatial distribution of edges across the images - a decidedly non-local statistic - can produce images that match some of the measures such as 1/f.  Plainly, the dead leaves image in @fig-dead-leaves is not a natural image, and we might conclude that there is a great deal missing from the local correlations and 1/f summary.
+
+The rise of large scale computational models, in particular neural networks with many billions of parameters, has led investigators to consider far more complex image statistics.  One particular analytical thread from Eero Simoncelli strikes me as particularly interesting.  
+
 Diffusion models implemented in a neural network.
 
 Eero's analysis of the statistical properties of images using diffusion models.
+
+The machine learning community arrived at diffusion through non-equilibrium thermodynamics (@Sohl2015-diffusion) and score-based modeling (@Ermon2019-diffusion, @Ho2020-denoising). The computational imaging community arrived at the exact same destination from the opposite direction: through empirical Bayes and natural image statistics (Kadkhodaie & Simoncelli, 2020/2021).
 
 The idea that the networks learn fairly complex image statistics and when we start them out with noise, they drive the image towards something that is within the realm of a natural image.
 
 This doesn't get us to objects.  But it is great for generative, when coupled with a text prompt that guides it to a particular content of natural images.
 
-Explaining such models might be complicated, but let's see if I can get us there from the Simoncelli and other papers.
+Notes
+
+* Eero Simoncelli and collaborators formalized the concept that an optimal denoiser acts as an implicit score estimator of the natural image distribution, demonstrating how coarse-to-fine Bayesian denoising can both sample from the image manifold and solve general inverse problems (Kadkhodaie & Simoncelli, 2020). Subsequent theoretical work from his group further established that the generalization ability of deep denoisers in diffusion architectures stems from an inductive bias toward geometry-adaptive harmonic bases (Kadkhodaie et al., 2023).
+
+* Simoncelli's Core Framework: Denoising as an Implicit PriorThe foundational paper by Kadkhodaie & Simoncelli (2020) demonstrated that a convolutional neural network (CNN) trained strictly for least-squares Gaussian denoising implicitly encodes the score function $\nabla_x \log p_\sigma(x)$ via Miyasawa’s (and Tweedie's) formulation. Rather than formulating explicit parametric priors (such as Gaussian Scale Mixtures or Markov random fields), the authors showed that:Sampling from the Manifold: Iterating coarse-to-fine stochastic gradient ascent steps using only the denoiser's residual vector field generates novel, visually coherent images from pure white noise.
+
+* Universal Inverse Problem Solving: By projecting the denoising updates onto measurement constraints, the implicit prior solves deblurring, super-resolution, inpainting, and compressive sensing without task-specific retraining (Kadkhodaie & Simoncelli, 2020).To address whether these networks truly learn a continuous manifold density or merely memorize discrete data points, Kadkhodaie et al. (2023) analyzed the mathematical mechanics of trained denoisers. They proved that deep neural denoisers exhibit strong generalization: independent networks trained on disjoint subsets of image datasets converge to virtually identical score functions. Mechanistically, the networks decompose images using geometry-adaptive harmonic bases (GAHBs), performing localized shrinkage along continuous contours and homogeneous regions (Kadkhodaie et al., 2023).
+
+* Supporting Paradigms from Other GroupsRegularization by Denoising (RED): Preceding the full diffusion formulation, Romano et al. (2017) introduced RED, proposing that any arbitrary, state-of-the-art image denoiser could serve directly as an explicit regularizer within an optimization objective. This established that modular denoisers encode sufficient natural image statistics to resolve ill-posed inverse problems (Romano et al., 2017).Multi-Scale Score Matching: Working in parallel from a machine learning perspective, Song & Ermon (2019) introduced Noise-Conditioned Score Networks (NCSN). They demonstrated that perturbing images with multiple scales of Gaussian noise resolves the problem of ill-defined score gradients in low-density regions, proving that annealed Langevin dynamics over learned denoisers accurately samples the true data manifold (Song & Ermon, 2019).
+
+* Debates, Critiques, and Alternative InterpretationsNon-Conservative Vector Fields and Asymmetric Jacobians: A key dispute regarding the "denoiser as prior" framework emerged around whether deep neural denoisers actually define a valid probability density. Reehorst & Schniter (2019) demonstrated that practical CNN denoisers generally do not possess symmetric Jacobians. Because a conservative vector field requires a symmetric Jacobian ($\nabla^2 f(x) = (\nabla^2 f(x))^T$), practical denoisers do not strictly correspond to the gradient of any scalar energy functional or true prior density. Reehorst & Schniter (2019) proposed "Score-Matching by Denoising" (SMD) to clarify that iterative denoising algorithms are better interpreted as score estimators rather than variational minimizers of an explicit prior.
+
+* Manifold Learning vs. Empirical Memorization: While Kadkhodaie et al. (2023) emphasize strong inductive biases toward smooth harmonic representations, empirical security and privacy studies present a contrasting perspective. Carlini et al. (2023) demonstrated that large-scale diffusion models can memorize specific training instances and reproduce them with high fidelity during inference. This disputes the ideal assumption that diffusion models strictly sample from a smooth, continuous manifold, showing that capacity, replication, and conditioning can distort the learned score field into localized memorization basins (Carlini et al., 2023).
+
+* Diffusion vs. LLMs on the Image Manifold: While discrete autoregressive models (analogous to Large Language Models) model images by quantizing patches into sequences of categorical tokens (e.g., via VQ-VAE or discrete codebooks), diffusion architectures operate over continuous probability spaces. Denoising diffusion models interact directly with the continuous geometry and differential topology of the image manifold via gradient fields, whereas autoregressive token models capture joint distributions through next-token cross-entropy without an explicit continuous score mechanism.
 
 **Note:** Save image compression and JPEG, which is a big one, for later.  It depends a great deal on human vision and so it is too early to describe here. 
 
