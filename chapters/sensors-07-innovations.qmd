@@ -7,7 +7,11 @@ date: last-modified
 
 ## Sensor innovations overview {#sec-sensor-innovations-overview}
 
-Over time, as technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
+As technology has scaled, more complex electrical circuitry has been placed on the sensor. Modern image sensors frequently include circuitry that performs local processing to increase the dynamic range of the sensor (well recycling), or to reduce the intrinsic noise (correlated double sampling). Some of this processing is *adaptive*, that is the circuit actions depend on the property of the input image. Consequently, the sensor output can depend upon both the control parameters set by the user and the image content.
+
+Beyond the control architecture advances, there have been many interesting developments to overcome limitations such as capturing the full dynamic range of natural scenes, or managing faster readouts, or making better estimates of the spectral characteristics of the light.  In this chapter I give a brief explanation of the new innovations with links to resource chapters containing deeper dives.  
+
+Finally, I come back to explain a fascinating research application in which the investigators abandoned all of these new advances in favor of returning to the venerable CCD! 
 
 ## Well recycling?
 
@@ -22,6 +26,20 @@ We will review many algorithms for interpreting images, but one overarching prin
 > The general rule determining the ideas of vision that are formed whenever an impression is made on the eye, is that *such objects are always imagined as being present in the field of vision as would have to be there in order to produce the same impression on the nervous mechanism*. [Italics in the original; from *Treatise on Physiological Optics*, Vol. III, 1867]
 
 Understanding the light field—how it interacts with objects, how it is measured by instruments, and how it is interpreted—is fundamental to achieving that goal. We are still working on the project assigned to us by Helmholtz.  We will return to this important issue later in the book.
+-->
+
+## Pixel binning {#sec-samsung-nonacell}
+<!--
+The engineering trade-offs behind using many small pixels arranged under shared color filters and microlenses (such as Samsung’s 3×3 Nonacell or 2×2 Tetracell) come down to flexibility across variable shooting conditions:
+
+Dual-Mode Operation (Resolution vs. Sensitivity): In bright outdoor conditions, the sensor uses remosaicing algorithms to read subpixels individually, delivering ultra-high spatial resolution (e.g., 108 MP) and enabling high-quality in-sensor digital crop zoom without dedicated optical zoom lenses. In low-light environments, reading tiny subpixels individually yields poor signal-to-noise ratio (SNR) due to shot noise and readout noise; binning them in charge/voltage mode effectively emulates a much larger physical pixel (e.g., merging nine 0.8 µm pixels into a single 2.4 µm virtual pixel) to maintain low-noise output.
+
+Expanded High Dynamic Range (HDR): Dividing each color unit into multiple subpixels enables staggered exposures or variable gains simultaneously within a single frame capture. Some subpixels can run at short exposure/low conversion gain while others run at long exposure/high conversion gain, which prevents clipping in highlights while retaining deep shadow details without motion artifacts.
+
+Overcoming Form Factor and Shutter Limits: A single native 108 MP or 200 MP standard Bayer sensor would be excessively noisy in low light and prohibitively slow to read out for video. A binning architecture allows the sensor to read out grouped lines quickly for high-framerate 4K/8K video recording or viewfinder previews, reserving full raster readouts only for well-lit static photo captures.
+
+For a breakdown of how Samsung applies pixel binning to optimize both bright and low-light scenarios, check out Samsung's 108Mp Mobile Image Sensor ISOCELL HM3.
+This video is relevant because it illustrates how Samsung arranges 3×3 pixel clusters for Nonacell binning to balance low-light sensitivity, autofocus speed, and extended dynamic range.
 -->
 
 ## Split Pixel and HDR Sensors {#sec-sensor-splitpixel}
