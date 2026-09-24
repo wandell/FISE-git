@@ -22,13 +22,14 @@ In an idealized system, the PSF might be the same for every point in the scene, 
 
 The concept of building an image from the sum of PSFs is foundational, and we will use the ideas of linear systems throughout this book. The appendices provide more mathematical detail on general linear systems (@sec-appendix-linear-systems-overview) and the special case of LSI systems (@sec-appendix-spaceinvariance-overview).
 
-## Circular pinholes and Airy disk {#sec-airy-pattern}
+## Sources of blur {#sec-airy-pinhole}
 
+### Pinhole blur {#sec-pinhole-blur}
 From these simple considerations, we have seen that the image is blurred by two effects: the pinhole size and diffraction. Increasing the pinhole would create a larger spot on the wall, but decreasing the pinhole size reveals the wavefront which predicts an increase of the size of the spot on the wall. We can compare the size of these two effects numerically.
 
-![The Airy pattern of a pinhole camera.](images/optics/06-geometric/blur-comparison.png){#fig-blur-comparison fig-cap-location="margin" width="80%"}
-
 First, consider what we expect from the pinhole size. If the pinhole diameter is $D$, a far-away point on the main axis will produce a blurred spot in the image of size $D$. Also, the pinhole-blur predicted by the ray model is the same no matter how far the image plane is from the pinhole.
+
+### The Airy pattern {#sec-airy-pattern}
 
 Second, consider the light pattern we expect for light from a distant point (and thus a plane wave) passing through a circular pinhole aperture. This pattern was derived by the astronomer George B. Airy [@airy-1835-diffraction] and is shown in @fig-blur-comparison. The intensity of the pattern as a function of the radial distance $x$ from the center on the image plane is given by
 
@@ -37,6 +38,8 @@ $$
 $$ {#eq-airy-formula}
 
 where $D$ is the pinhole diameter, $\lambda$ is the wavelength, $L$ is the distance from the pinhole to the image plane, $I_0$ is the peak intensity at the center, and $J_1$ is the first-order Bessel function of the first kind.
+
+![The Airy pattern of a pinhole camera.](images/optics/06-geometric/blur-comparison.png){#fig-blur-comparison fig-cap-location="margin" width="80%"}
 
 The Airy pattern has a central bright spot (the Airy disk), surrounded by a series of concentric rings of decreasing intensity. The Airy disk contains about 85% of the total light energy. Because the first zero of the Bessel function $J_1(u)$ occurs at $u \approx 1.22\pi$ (or $3.832$), the radius of the central bright disk is $x_0 = 1.22~L(\lambda / D)$. The full diameter of the Airy disk, $d = 2x_0$, therefore has the simple formula
 
@@ -55,6 +58,8 @@ $$ {#eq-airydisk1}
 The diffraction spread is larger than the pinhole spread when $d$ exceeds $D$. We do the calculation in the scripts in this [ISETCam script](https://htmlpreview.github.io/?https://github.com/wandell/FISE-git/blob/main/code/fise_diffraction.html).  For $L = 1m$ the pinhole blur is larger than the diffraction blur for a diameter of about $1 mm$.  When $L$ is much closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
 -->
 ```
+
+### Comparing diffraction and pinhole blur
 
 The diffraction spread exceeds the pinhole spread when $d$ exceeds $D$. We do the calculation for different assumptions about the distance to the image plane [ISETCam:fise_diffraction](https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_diffraction.html). As an example, we find that when the distance to the image plane is $L = 1m$, the pinhole blur is larger than the diffraction blur for a pinhole diameter of about $1 mm$. When the image plane distance, $L$, is closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
 
