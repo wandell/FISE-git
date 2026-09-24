@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-23">
+<meta name="dcterms.date" content="2026-09-24">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>9&nbsp; Diffraction and the PSF – Foundations of Image Systems Engineering</title>
@@ -576,7 +576,12 @@ window.Quarto = {
   <ul>
   <li><a href="#sec-diffraction-overview" id="toc-sec-diffraction-overview" class="nav-link active" data-scroll-target="#sec-diffraction-overview"><span class="header-section-number">9.1</span> Diffraction and PSF overview</a></li>
   <li><a href="#sec-pointspread" id="toc-sec-pointspread" class="nav-link" data-scroll-target="#sec-pointspread"><span class="header-section-number">9.2</span> The point spread function</a></li>
-  <li><a href="#sec-airy-pattern" id="toc-sec-airy-pattern" class="nav-link" data-scroll-target="#sec-airy-pattern"><span class="header-section-number">9.3</span> Circular pinholes and Airy disk</a></li>
+  <li><a href="#sec-airy-pinhole" id="toc-sec-airy-pinhole" class="nav-link" data-scroll-target="#sec-airy-pinhole"><span class="header-section-number">9.3</span> Sources of blur</a>
+  <ul class="collapse">
+  <li><a href="#sec-pinhole-blur" id="toc-sec-pinhole-blur" class="nav-link" data-scroll-target="#sec-pinhole-blur"><span class="header-section-number">9.3.1</span> Pinhole blur</a></li>
+  <li><a href="#sec-airy-pattern" id="toc-sec-airy-pattern" class="nav-link" data-scroll-target="#sec-airy-pattern"><span class="header-section-number">9.3.2</span> The Airy pattern</a></li>
+  <li><a href="#comparing-diffraction-and-pinhole-blur" id="toc-comparing-diffraction-and-pinhole-blur" class="nav-link" data-scroll-target="#comparing-diffraction-and-pinhole-blur"><span class="header-section-number">9.3.3</span> Comparing diffraction and pinhole blur</a></li>
+  </ul></li>
   <li><a href="#pinhole-and-distance-fraunhofer-and-fresnel" id="toc-pinhole-and-distance-fraunhofer-and-fresnel" class="nav-link" data-scroll-target="#pinhole-and-distance-fraunhofer-and-fresnel"><span class="header-section-number">9.4</span> Pinhole and distance: Fraunhofer and Fresnel</a></li>
   <li><a href="#pinhole-shapes" id="toc-pinhole-shapes" class="nav-link" data-scroll-target="#pinhole-shapes"><span class="header-section-number">9.5</span> Pinhole shapes</a></li>
   <li><a href="#rectangular-apertures" id="toc-rectangular-apertures" class="nav-link" data-scroll-target="#rectangular-apertures"><span class="header-section-number">9.6</span> Rectangular apertures</a></li>
@@ -601,7 +606,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 23, 2026</p>
+      <p class="date">September 24, 2026</p>
     </div>
   </div>
   
@@ -627,7 +632,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 23, 2026
+Last updated: September 24, 2026
 !-->
 </div>
 </div>
@@ -644,9 +649,20 @@ Last updated: September 23, 2026
 <p>In an idealized system, the PSF might be the same for every point in the scene, merely shifted in position. Such a system is called <strong>linear and space-invariant (LSI)</strong>, and in that case the scaling and summing is called <strong>convolution</strong>. In most real-world optics, however, the system is <strong>space-variant</strong>: the PSF’s shape and size change depending on the point’s position in the field of view (e.g., its distance from the center, or <strong>field height</strong>).</p>
 <p>The concept of building an image from the sum of PSFs is foundational, and we will use the ideas of linear systems throughout this book. The appendices provide more mathematical detail on general linear systems (<a href="appendix-01-linearsystems.html#sec-appendix-linear-systems-overview" class="quarto-xref"><span>Section 36.1</span></a>) and the special case of LSI systems (<a href="appendix-02-spaceinvariance.html" class="quarto-xref"><span>Chapter 38</span></a>).</p>
 </section>
-<section id="sec-airy-pattern" class="level2 page-columns page-full" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="sec-airy-pattern"><span class="header-section-number">9.3</span> Circular pinholes and Airy disk</h2>
+<section id="sec-airy-pinhole" class="level2 page-columns page-full" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="sec-airy-pinhole"><span class="header-section-number">9.3</span> Sources of blur</h2>
+<section id="sec-pinhole-blur" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="sec-pinhole-blur"><span class="header-section-number">9.3.1</span> Pinhole blur</h3>
 <p>From these simple considerations, we have seen that the image is blurred by two effects: the pinhole size and diffraction. Increasing the pinhole would create a larger spot on the wall, but decreasing the pinhole size reveals the wavefront which predicts an increase of the size of the spot on the wall. We can compare the size of these two effects numerically.</p>
+<p>First, consider what we expect from the pinhole size. If the pinhole diameter is <span class="math inline">\(D\)</span>, a far-away point on the main axis will produce a blurred spot in the image of size <span class="math inline">\(D\)</span>. Also, the pinhole-blur predicted by the ray model is the same no matter how far the image plane is from the pinhole.</p>
+</section>
+<section id="sec-airy-pattern" class="level3 page-columns page-full" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="sec-airy-pattern"><span class="header-section-number">9.3.2</span> The Airy pattern</h3>
+<p>Second, consider the light pattern we expect for light from a distant point (and thus a plane wave) passing through a circular pinhole aperture. This pattern was derived by the astronomer George B. Airy <span class="citation" data-cites="airy-1835-diffraction">(<a href="references.html#ref-airy-1835-diffraction" role="doc-biblioref">Airy 1835</a>)</span> and is shown in <a href="#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>. The intensity of the pattern as a function of the radial distance <span class="math inline">\(x\)</span> from the center on the image plane is given by</p>
+<p><span id="eq-airy-formula"><span class="math display">\[
+\text{Airy}(x) = I_0 \left[ \frac{2 J_1\!\left(\frac{\pi D x}{\lambda L}\right)}{\frac{\pi D x}{\lambda L}} \right]^2
+\tag{9.1}\]</span></span></p>
+<p>where <span class="math inline">\(D\)</span> is the pinhole diameter, <span class="math inline">\(\lambda\)</span> is the wavelength, <span class="math inline">\(L\)</span> is the distance from the pinhole to the image plane, <span class="math inline">\(I_0\)</span> is the peak intensity at the center, and <span class="math inline">\(J_1\)</span> is the first-order Bessel function of the first kind.</p>
 <div id="fig-blur-comparison" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full" data-fig-cap-location="margin">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
 <div aria-describedby="fig-blur-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -657,12 +673,6 @@ Figure&nbsp;9.1: The Airy pattern of a pinhole camera.
 </figcaption>
 </figure>
 </div>
-<p>First, consider what we expect from the pinhole size. If the pinhole diameter is <span class="math inline">\(D\)</span>, a far-away point on the main axis will produce a blurred spot in the image of size <span class="math inline">\(D\)</span>. Also, the pinhole-blur predicted by the ray model is the same no matter how far the image plane is from the pinhole.</p>
-<p>Second, consider the light pattern we expect for light from a distant point (and thus a plane wave) passing through a circular pinhole aperture. This pattern was derived by the astronomer George B. Airy <span class="citation" data-cites="airy-1835-diffraction">(<a href="references.html#ref-airy-1835-diffraction" role="doc-biblioref">Airy 1835</a>)</span> and is shown in <a href="#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>. The intensity of the pattern as a function of the radial distance <span class="math inline">\(x\)</span> from the center on the image plane is given by</p>
-<p><span id="eq-airy-formula"><span class="math display">\[
-\text{Airy}(x) = I_0 \left[ \frac{2 J_1\!\left(\frac{\pi D x}{\lambda L}\right)}{\frac{\pi D x}{\lambda L}} \right]^2
-\tag{9.1}\]</span></span></p>
-<p>where <span class="math inline">\(D\)</span> is the pinhole diameter, <span class="math inline">\(\lambda\)</span> is the wavelength, <span class="math inline">\(L\)</span> is the distance from the pinhole to the image plane, <span class="math inline">\(I_0\)</span> is the peak intensity at the center, and <span class="math inline">\(J_1\)</span> is the first-order Bessel function of the first kind.</p>
 <p>The Airy pattern has a central bright spot (the Airy disk), surrounded by a series of concentric rings of decreasing intensity. The Airy disk contains about 85% of the total light energy. Because the first zero of the Bessel function <span class="math inline">\(J_1(u)\)</span> occurs at <span class="math inline">\(u \approx 1.22\pi\)</span> (or <span class="math inline">\(3.832\)</span>), the radius of the central bright disk is <span class="math inline">\(x_0 = 1.22~L(\lambda / D)\)</span>. The full diameter of the Airy disk, <span class="math inline">\(d = 2x_0\)</span>, therefore has the simple formula</p>
 <p><span id="eq-airy1"><span class="math display">\[
 d = 2.44~L~(\lambda / D)
@@ -674,6 +684,9 @@ d = 2.44 \times (1 m) (550 \times 10^{-9} m )/ 1 \times 10^{-4}m) = 0.0134 m
 <!--
 The diffraction spread is larger than the pinhole spread when $d$ exceeds $D$. We do the calculation in the scripts in this [ISETCam script](https://htmlpreview.github.io/?https://github.com/wandell/FISE-git/blob/main/code/fise_diffraction.html).  For $L = 1m$ the pinhole blur is larger than the diffraction blur for a diameter of about $1 mm$.  When $L$ is much closer, say $10 mm$, the pinhole blur exceeds the diffraction blur when the diameter is $100 \mu$.
 -->
+</section>
+<section id="comparing-diffraction-and-pinhole-blur" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="comparing-diffraction-and-pinhole-blur"><span class="header-section-number">9.3.3</span> Comparing diffraction and pinhole blur</h3>
 <p>The diffraction spread exceeds the pinhole spread when <span class="math inline">\(d\)</span> exceeds <span class="math inline">\(D\)</span>. We do the calculation for different assumptions about the distance to the image plane <a href="https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/02Optics/fise_diffraction.html">ISETCam:fise_diffraction</a>. As an example, we find that when the distance to the image plane is <span class="math inline">\(L = 1m\)</span>, the pinhole blur is larger than the diffraction blur for a pinhole diameter of about <span class="math inline">\(1 mm\)</span>. When the image plane distance, <span class="math inline">\(L\)</span>, is closer, say <span class="math inline">\(10 mm\)</span>, the pinhole blur exceeds the diffraction blur when the diameter is <span class="math inline">\(100 \mu\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="The diameter of the diffraction point spread">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
@@ -698,6 +711,7 @@ The diameter of the diffraction point spread
 </div>
 </div>
 </div>
+</section>
 </section>
 <section id="pinhole-and-distance-fraunhofer-and-fresnel" class="level2" data-number="9.4">
 <h2 data-number="9.4" class="anchored" data-anchor-id="pinhole-and-distance-fraunhofer-and-fresnel"><span class="header-section-number">9.4</span> Pinhole and distance: Fraunhofer and Fresnel</h2>
