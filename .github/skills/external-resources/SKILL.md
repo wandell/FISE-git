@@ -42,7 +42,7 @@ Starting points, not an exhaustive catalog:
 - **3Blue1Brown** (YouTube channel / <https://www.3blue1brown.com/>) —
   animated math explainers (linear algebra, calculus, Fourier transforms,
   convolution, neural networks). Good for: linear-systems and Fourier-optics
-  material (e.g. `optics-05-linear-space.qmd`, `optics-06-linear-transform.qmd`)
+  material (e.g. `optics-07-linear-space.qmd`, `optics-08-linear-transform.qmd`)
   where an animated intuition-builder for convolution or the Fourier transform
   would help a reader who finds the equations alone opaque.
 - **Khan Academy** (<https://www.khanacademy.org/>) — broad, approachable

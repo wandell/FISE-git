@@ -65,11 +65,8 @@ interrupted the *original* run (see below).
 3. `git worktree remove --force <the-directory>`.
 4. Retry `quarto publish gh-pages`.
 
-This sequence resolved the failure in this repo on 2026-08-26 (twice, with
-two different leftover worktrees). A subsequent `quarto publish gh-pages`
-run completed successfully afterward, confirmed by `git worktree list`
-showing no leftover worktree and `gh-pages` no longer marked as checked out
-anywhere — the cleanup `finally` block ran to completion that time.
+After a successful retry, `git worktree list` should show no leftover
+worktree and `gh-pages` should not be checked out anywhere.
 
 ## Prevention
 

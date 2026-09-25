@@ -74,6 +74,12 @@ Plot.plot({
 
 ## Pattern B: WebAssembly (Wasm), Rust, and Plotly (For Heavy Computation)
 
+FISE does not yet contain a Wasm figure: `chapters/interactive/`, the
+`qmrust_wasm*` and `ir-shared.js` files, and the `project.resources` entry
+below do not exist in this repository. Treat this section as the pattern to
+follow when adding the first one, and create those assets and the
+`_quarto.yml` entry as part of that work.
+
 ### Core Components
 1. **WebAssembly (Wasm)**: Heavy equations, numerical integration, and fitting routines compiled from Rust to `.wasm`.
 2. **JavaScript ("Glue" Layer)**:
@@ -140,4 +146,4 @@ Caption describing the interactive simulation.
 When adapting quantitative MRI or signal modules from the qMRLab mOOC (Massive Open Online Course):
 - Contributed by Mathieu Boudreau (`https://qmrlab.org/mooc/`, `https://github.com/qMRLab/mooc`).
 - **License**: Creative Commons Attribution 4.0 International (CC BY 4.0).
-- **Attribution**: Include attribution in figure captions and retain third-party notices in `THIRD-PARTY-NOTICES.md`.
+- **Attribution**: Include attribution in figure captions and record third-party notices in `THIRD-PARTY-NOTICES.md` (create it at the repository root; it does not exist yet).

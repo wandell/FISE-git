@@ -15,19 +15,23 @@ description: Use this when running, testing, or evaluating Matlab .m scripts on 
 ls /Applications | rg -i '^MATLAB_R'
 ```
 
-- Prefer the newest installed release unless the user specifies otherwise or the newest one fails for a version-specific reason.
+- Prefer the newest installed release unless the user specifies otherwise or the newest one fails for a version-specific reason. The examples below use `$MATLAB`; set it in the same shell command that uses it (shell variables do not persist between agent tool calls):
+
+```bash
+MATLAB="/Applications/$(ls /Applications | rg -i '^MATLAB_R' | sort | tail -1)/bin/matlab"
+```
 
 ## Running non-interactively
 
 - Use `-batch`, not `-r`, for evaluation. `-batch` runs headless (no splash, no desktop), still processes Matlab's normal startup files, exits automatically when the statement finishes, and — critically — returns a non-zero exit code and prints the error to stderr if the statement throws. `-r` requires an explicit `exit`/`quit` call and manual `try/catch` to avoid hanging or masking failures.
 
 ```bash
-/Applications/MATLAB_R2026a.app/bin/matlab -batch "run('path/to/fise_script.m')"
+"$MATLAB" -batch "run('path/to/fise_script.m')"
 echo "exit: $?"
 ```
 
 - Always check `$?` after the call — Matlab does not reliably signal failure through terminal text alone.
-- Assume anything unfamiliar could hang: scripts with `pause`, `input`, `keyboard`, or `waitfor` will block a batch session with no one to answer the prompt. Run first attempts with a bash timeout wrapper.
+- Assume anything unfamiliar could hang: scripts with `pause`, `input`, `keyboard`, or `waitfor` will block a batch session with no one to answer the prompt. Run first attempts under a timeout. macOS has no `timeout` command; use the agent's own command timeout, or `gtimeout` after `brew install coreutils`.
 
 ## Toolbox Path Management
 
@@ -65,7 +69,7 @@ which functionName    % Shows path resolution
 
 ### Path Setup Example
 ```bash
-/Applications/MATLAB_R2026a.app/bin/matlab -batch "\
+"$MATLAB" -batch "\
 addpath(genpath('~/Documents/MATLAB/isetcam')); \
 addpath(genpath('~/Documents/MATLAB/isetbio')); \
 addpath(genpath('~/Documents/MATLAB/isetfise')); \
@@ -88,38 +92,13 @@ iePublish('~/Documents/MATLAB/isetfise/fise/02Optics/fise_diffraction.m')"
 2. Confirm it runs cleanly:
 
 ```bash
-/Applications/MATLAB_R2026a.app/bin/matlab -batch "addpath(genpath('~/Documents/MATLAB/isetcam')); addpath(genpath('~/Documents/MATLAB/isetbio')); run('fise_script.m')"
+"$MATLAB" -batch "addpath(genpath('~/Documents/MATLAB/isetcam')); addpath(genpath('~/Documents/MATLAB/isetbio')); run('fise_script.m')"
 ```
 
 3. Once it runs cleanly, publish it to a self-contained HTML file with `iePublish` (from `isetcam`):
 
 ```bash
-/Applications/MATLAB_R2026a.app/bin/matlab -batch "addpath(genpath('~/Documents/MATLAB/isetcam')); iePublish('fise_script.m')"
+"$MATLAB" -batch "addpath(genpath('~/Documents/MATLAB/isetcam')); iePublish('fise_script.m')"
 ```
 
 4. `iePublish` writes the HTML next to the source `.m` file in `isetfise/fise/`. Confirm the output landed where expected and that figures embedded correctly before updating links in `chapters/resources/code-html-links.qmd` or book chapters.
-
-## Best Practices & Warnings
-
-1. **MATLAB Path Resolution**
-   - Never assume `matlab` is in `$PATH` - always use full executable path
-   - List installed versions: `ls /Applications | rg -i '^MATLAB_R'`
-
-2. **Execution Mode**
-   - Prefer `-batch` over `-r` for better error handling
-   - Always check exit status: `echo "exit: $?"`
-
-3. **Toolbox Management**
-   - Add only required toolboxes (`isetcam`, `isetbio`, `iset3d`, `isetfise`) to avoid conflicts
-   - Never use wholesale `addpath(genpath('~/Documents/MATLAB'))`
-   - Verify paths with diagnostic commands
-
-4. **Blocking Calls**
-   - Use timeout wrappers for scripts with `pause`, `input`, or `waitfor`
-   ```bash
-   timeout 30s matlab -batch "command" # 30-second timeout
-   ```
-
-5. **Working Directory**
-   - `-batch` inherits shell's working directory
-   - Use explicit `cd` in MATLAB or shell when needed
