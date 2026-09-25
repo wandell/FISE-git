@@ -1,0 +1,98 @@
+---
+date: last-modified
+---
+
+# Optics glossary: Basic distances and planes {#sec-resource-optics-glossary}
+
+{{< include "../includes/WIP-callout.qmd" >}}
+
+[Return to Thin Lenses](../optics-05-thinlens.qmd) | [Return to book home](../../index.qmd)
+
+In geometric optics and camera design, students frequently encounter terms that sound deceptively similar—particularly terms containing the word "focus." Using ambiguous vocabulary often leads to confusion between the physical properties of a lens, the optical location where an image forms, and the mechanical placement of a camera sensor.
+
+This glossary defines four core terms and clarifies their proper usage.
+
+## Summary table
+
+The table below summarizes these key parameters and their distinct roles in imaging systems.
+
+| Term | Symbol | Primary Concept | Category | Common Misconception / Guidance |
+|:-----|:------:|:----------------|:---------|:--------------------------------|
+| **Focal Length** | $f$ | Distance from lens to the image of an object at infinity ($d_o = \infty$) | Lens specification (intrinsic property) | **Reserve strictly for the lens parameter.** Do not use "focal distance" as a synonym for image or object position. |
+| **Image Distance** (or *Conjugate Image Distance*) | $d_i$ | Distance from lens to where the image actually comes into sharp focus for an object at $d_o$ | Optical conjugate location | Governed by $\frac{1}{f} = \frac{1}{d_o} + \frac{1}{d_i}$. Note that $d_i = f$ **only** when $d_o = \infty$; for closer objects, $d_i > f$. |
+| **Sensor Distance** (or *Detector Plane*) | $d_s$ | Physical distance from the lens to the silicon sensor array or film | Hardware / mechanical position | The physical surface capturing light. In-focus imaging requires aligning the sensor plane with the image plane ($d_s = d_i$). |
+| **"Focal Distance"** | — | Ambiguous phrase used loosely in casual speech and graphics software | **Avoid** (or clarify) | Often confused with focal length ($f$), image distance ($d_i$), or object distance ($d_o$). Use explicit terms instead. |
+
+: Key optical distance terms and their distinct roles. {#tbl-optics-glossary}
+
+---
+
+## Detailed definitions
+
+### 1. Focal length ($f$)
+
+The **focal length** ($f$) is an intrinsic optical parameter of a lens. It specifies the distance from the rear principal plane of the lens to the focal point where incident parallel rays (rays arriving from an object at infinity, $d_o = \infty$) converge to a sharp focus.
+
+* **Key characteristic:** It is a property of the lens itself—determined by surface curvatures and glass refractive indices via the lensmaker's equation (@sec-optics-lensmaker). 
+* **Units:** Typically millimeters (e.g., $f = 50\text{ mm}$, $f = 24\text{ mm}$).
+* **Usage guidance:** Reserve "focal length" strictly for this lens parameter. A $50\text{ mm}$ prime lens has a focal length of $50\text{ mm}$ regardless of where you point it, what object you view, or where you position the sensor.
+* **Thick and multi-element lenses:** In multi-element systems (@sec-optics-morelenses), this parameter is often called the **effective focal length (EFL)**, measured from the rear principal plane $P_2$. It is distinguished from the **back focal length (BFL)**, which is the physical distance from the rearmost lens surface to the focal point.
+
+### 2. Image distance ($d_i$) or conjugate image distance
+
+The **image distance** ($d_i$)—also referred to as the **conjugate image distance**—is the distance from the lens to the plane where rays from a point on an object at distance $d_o$ converge into a sharp image point.
+
+* **Thin lens relationship:** For a thin lens with focal length $f$, the relationship between object distance $d_o$ and image distance $d_i$ is given by the lens formula (@eq-lensformula):
+  $$
+  \frac{1}{f} = \frac{1}{d_o} + \frac{1}{d_i} \implies d_i = \frac{f \cdot d_o}{d_o - f}
+  $$
+* **Crucial distinction from $f$:**
+  * When an object is infinitely far away ($d_o \to \infty$), then $d_i = f$.
+  * When an object is brought closer ($d_o < \infty$), the rays entering the lens diverge more steeply, causing them to converge further behind the lens: $d_i > f$.
+* **Conjugate planes:** The object plane at distance $d_o$ in front of the lens and the image plane at distance $d_i$ behind the lens are called *optical conjugates*. Light emitted from any point on the object plane is imaged onto a corresponding point on the conjugate image plane.
+
+### 3. Sensor distance ($d_s$) and detector plane
+
+The **sensor distance** ($d_s$)—often designated as the location of the **detector plane** or **sensor plane**—is the actual physical, mechanical position of the silicon image sensor (CMOS, CCD) or photographic film relative to the lens.
+
+* **Optical vs. physical:** While the image distance $d_i$ is an *optical result* (where the light rays actually converge), the sensor distance $d_s$ is a *physical hardware position* (where the silicon chip is mounted in the camera body).
+* **The in-focus condition:** An image is sharply focused on the sensor if and only if the detector plane coincides with the conjugate image plane:
+  $$
+  d_s = d_i
+  $$
+* **Defocus and the circle of confusion:** If the detector plane is located in front of or behind the conjugate image plane ($d_s \neq d_i$), the converging or diverging ray cone intersects the sensor over a patch of nonzero area. This blur spot is known as the **circle of confusion** (@sec-optics-coc). The diameter of the blur circle increases proportionally with the defocus distance $|d_s - d_i|$.
+* **Focusing a camera:** In traditional prime camera lenses, "focusing" on an object at a closer distance $d_o$ is accomplished by mechanically moving the lens forward away from the sensor. This increases $d_s$ so that it matches the expanded image distance $d_i$.
+
+### 4. Why avoid "focal distance"?
+
+The phrase **"focal distance"** should be avoided or used with great caution because it has no universally agreed-upon definition and frequently misleads students:
+
+1. **Confusion with focal length:** Students hearing "focal distance" often assume it means the lens's focal length $f$.
+2. **Confusion with object distance:** In computer graphics (e.g., Blender, Unity, ray-tracing packages) and consumer photography manuals, "focal distance" or "focus distance" is frequently used to denote the *distance from the camera to the subject in focus* (i.e., the object distance $d_o$).
+3. **Confusion with image distance:** In other contexts, writers have used "focal distance" to describe the distance from the lens to the image plane ($d_i$).
+
+To avoid ambiguity in image systems engineering, always use the explicit terms:
+
+* Use **focal length** ($f$) for the lens rating.
+* Use **object distance** ($d_o$) for how far away the target is.
+* Use **image distance** ($d_i$) or **conjugate image distance** for where the optical image plane forms.
+* Use **sensor distance** ($d_s$) or **detector plane** for the physical sensor hardware location.
+
+---
+
+## Practical guide: Four questions to ask
+
+When setting up or analyzing an optical imaging system, keep these four questions distinct:
+
+| Question | Correct Term | Notation | Typical Example |
+|:---------|:-------------|:--------:|:----------------|
+| *"What lens are we using?"* | **Focal length** | $f$ | $50\text{ mm}$ |
+| *"How far away is the object of interest?"* | **Object distance** | $d_o$ | $2.0\text{ m}$ ($2000\text{ mm}$) |
+| *"Where does the optical image of that object form?"* | **Image distance** | $d_i = \frac{f d_o}{d_o - f}$ | $51.28\text{ mm}$ |
+| *"Where must we place the silicon chip for a sharp image?"* | **Sensor distance / Detector plane** | $d_s = d_i$ | $51.28\text{ mm}$ behind lens |
+
+: Quick rule of thumb to keep optical terms distinct. {#tbl-optics-questions}
+
+---
+
+[Return to Thin Lenses](../optics-05-thinlens.qmd) | [Return to book home](../../index.qmd)
