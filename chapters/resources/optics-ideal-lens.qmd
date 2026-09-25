@@ -1,0 +1,72 @@
+---
+date: last-modified
+---
+
+# The ideal thin lens {#sec-resource-optics-ideal-lens}
+
+{{< include "../includes/WIP-callout.qmd" >}}
+
+[Return to Thin Lenses](../optics-05-thinlens.qmd) | [Return to Lens Principles](../optics-04-lenses.qmd) | [Return to book home](../../index.qmd)
+
+An optical system is **diffraction-limited** when its wavefront errors and geometric aberrations are smaller than diffraction effects (satisfying the Maréchal criterion, where the wavefront deformation is less than $\lambda / 14$ RMS, or peak-to-valley wavefront error $<\lambda / 4$).
+
+Depending on whether you use an aspherical profile or a spherical singlet, the conditions and formulas are derived as follows.
+
+## 1. The exact aspheric profile: Cartesian ovals and hyperboloids {#sec-aspheric-profile}
+
+To eliminate all on-axis geometric aberrations (specifically spherical aberration) at a specific design wavelength, the lens surface must enforce **equal optical path lengths (OPL)** from the source to the focus according to Fermat’s Principle.
+
+For an incoming collimated beam (an object at infinity) focused to a point at focal length $f$ through a lens with refractive index $n$:
+
+* If the flat surface faces the object (a plano-convex lens), the curved exit surface that yields a stigmatic (perfect) geometric focus is a **Cartesian oval**—specifically a **hyperboloid of revolution**.
+* The sag equation $z(r)$ (the thickness profile as a function of radial distance $r = \sqrt{x^2 + y^2}$) is given by:
+
+$$
+z(r) = \frac{r^2}{R \left(1 + \sqrt{1 - (1 + \kappa)\frac{r^2}{R^2}}\right)}
+$$ {#eq-aspheric-hyperboloid-sag}
+
+where:
+
+* $R = (n - 1)f$ is the radius of curvature at the apex.
+* $\kappa = -n^2$ is the **conic constant**. Because $\kappa < -1$, the surface is a **hyperbola**.
+
+Because this profile has zero spherical aberration, the spot size on-axis is determined entirely by diffraction, creating an **Airy disk** of radius:
+
+$$
+r_{\text{Airy}} = 1.22 \, \lambda \, (\mathrm{f}/\#)
+$$ {#eq-ideal-lens-airy}
+
+## 2. Spherical singlets: The "best-form" bending formula {#sec-best-form-singlet}
+
+If constrained to strictly **spherical surfaces**, spherical aberration cannot be completely zeroed out for a single lens, but it can be minimized.
+
+Using third-order aberration theory, the shape that minimizes spherical aberration is governed by the **Coddington shape factor** $B$:
+
+$$
+B = \frac{R_2 + R_1}{R_2 - R_1}
+$$ {#eq-coddington-shape}
+
+For an object at infinity, the value of $B$ that minimizes spherical aberration is:
+
+$$
+B^* = -\frac{2(n^2 - 1)}{n + 2}
+$$ {#eq-coddington-optimal}
+
+For standard crown glass ($n \approx 1.5$), $B^* \approx -0.71$, which corresponds to an asymmetric bi-convex lens (often approximated by a plano-convex lens with the curved side facing the object).
+
+A spherical lens constructed to this "best-form" formula will be **diffraction-limited** as long as the aperture is kept small enough (a sufficiently large $\mathrm{f}/\#$) such that the geometric blur is smaller than the Airy disk blur:
+
+$$
+\mathrm{f}/\# \gtrsim \left(\frac{f}{128 \, n(n-1) \lambda}\right)^{1/4}
+$$ {#eq-best-form-fnumber}
+
+## Limitations in real construction {#sec-ideal-lens-limitations}
+
+While the mathematical formula for a diffraction-limited singlet is exact:
+
+* **Monochromatic Only:** A single lens cannot simultaneously correct for **chromatic aberration**; it is diffraction-limited only at or near a single design wavelength (or with a laser).
+* **Field of View:** A single aspheric surface corrects on-axis spherical aberration, but off-axis aberrations (coma and astigmatism) degrade the image away from the optical axis. Broad field imaging requires multi-element lens systems.
+
+---
+
+[Return to Thin Lenses](../optics-05-thinlens.qmd) | [Return to Lens Principles](../optics-04-lenses.qmd) | [Return to book home](../../index.qmd)
