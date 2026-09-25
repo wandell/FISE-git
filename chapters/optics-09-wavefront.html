@@ -521,20 +521,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/resources/optics-glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Optics glossary: Basic distances and planes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/resources/history-Poisson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">History: Poisson photon statistics and vision</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">History: Poisson photon statistics and vision</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/resources/history-linear-algebra.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Teaching linear optics and the history of linear algebra</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Teaching linear optics and the history of linear algebra</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/resources/Artal-2024/Artal-2024.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Characterization of Visual Stimuli</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Characterization of Visual Stimuli</span></span></a>
   </div>
 </li>
       </ul>
@@ -569,6 +575,7 @@ window.Quarto = {
   <li><a href="#paraxial-regime-and-space-invariance" id="toc-paraxial-regime-and-space-invariance" class="nav-link" data-scroll-target="#paraxial-regime-and-space-invariance"><span class="header-section-number">15.6.1</span> Paraxial regime and space-invariance</a></li>
   </ul></li>
   <li><a href="#modeling-wavefront-aberrations-zernike-polynomials" id="toc-modeling-wavefront-aberrations-zernike-polynomials" class="nav-link" data-scroll-target="#modeling-wavefront-aberrations-zernike-polynomials"><span class="header-section-number">15.7</span> Modeling wavefront aberrations: Zernike polynomials</a></li>
+  <li><a href="#sec-optics-wavefront-bigpicture" id="toc-sec-optics-wavefront-bigpicture" class="nav-link" data-scroll-target="#sec-optics-wavefront-bigpicture"><span class="header-section-number">15.8</span> The Big Picture</a></li>
   </ul>
 </nav>
     </div>
@@ -729,7 +736,7 @@ U(x, y) \propto \mathcal{F}\{ P(\rho, \theta) \}
 <p><span id="eq-psf-definition"><span class="math display">\[
 \text{PSF}(x, y) = |U(x, y)|^2
 \tag{15.6}\]</span></span></p>
-<p>The Fourier transform of the pupil function does depend on the wavefront aberration. Hence, the wavefront shape and the PSF are linked together.</p>
+<p>The Fourier transform of the pupil function depends on both the aperture opening and the wavefront aberration. Notice that if the optics have no aberrations (<span class="math inline">\(W = 0\)</span>), the exponential phase term vanishes and the pupil function reduces strictly to the aperture opening <span class="math inline">\(a\)</span>—a classic result emphasized in Fourier optics courses. But as we will explore in <a href="#sec-optics-wavefront-bigpicture" class="quarto-xref"><span>Section 15.8</span></a>, most imaging systems must account for both aperture diffraction and wavefront phase errors.</p>
 </section>
 <section id="computations-with-the-pupil-function" class="level2" data-number="15.6">
 <h2 data-number="15.6" class="anchored" data-anchor-id="computations-with-the-pupil-function"><span class="header-section-number">15.6</span> Computations with the pupil function</h2>
@@ -816,6 +823,20 @@ TODO / REVIEW ITEMS:
    - [x] Figure tabsets: Diffraction-limited vs defocus-limited figures have explanatory text/captions.
    - [x] Zernike gallery: Figure @fig-optics-zernike-gallery explains PSFs produced by radial order n and azimuthal index m.
 -->
+</section>
+<section id="sec-optics-wavefront-bigpicture" class="level2" data-number="15.8">
+<h2 data-number="15.8" class="anchored" data-anchor-id="sec-optics-wavefront-bigpicture"><span class="header-section-number">15.8</span> The Big Picture</h2>
+<p>In my classroom experience, students who have taken Fourier transform courses are often struck by the elegant principle that the point spread function (PSF) of a diffraction-limited imaging system can be described directly by the shape of the aperture. It is a neat observation that has the great virtue of being true. In the context of an engineering course, however, this observation can be slippery to integrate because the qualifier <em>“diffraction-limited”</em> slips by so easily. I want to take a few paragraphs to build an intuitive, physical picture integrating what we have learned about apertures, real lenses, wavefronts, and even pinholes. There are crucial subtleties in how these factors interact, and as my wise colleague Stuart Anstis once advised me, <em>“Subtlety doesn’t work.”</em> So let’s not be subtle.</p>
+<p><strong>First</strong>, the wavefront at the exit pupil and the image intensity are mathematically linked. The complex pupil function (<a href="#eq-pupil-function" class="quarto-xref">Equation&nbsp;<span>15.4</span></a>) describes both the aperture transmission <span class="math inline">\(a(\rho, \theta)\)</span> and the phase shape of the exiting wavefront. The Fourier transform of this pupil function yields the complex amplitude spread function (<a href="#eq-psf-fourier" class="quarto-xref">Equation&nbsp;<span>15.5</span></a>), and its squared magnitude determines the recorded image intensity, which is the PSF (<a href="#eq-psf-definition" class="quarto-xref">Equation&nbsp;<span>15.6</span></a>).</p>
+<p><strong>Second</strong>, the phase term in the pupil function, <span class="math inline">\(W(\rho, \theta)\)</span>, is defined as the deviation from an ideal spherical wavefront converging precisely onto the sensor plane. Because of this definition, if we change the location of the sensor—moving it away from the conjugate focus (<span class="math inline">\(d_s \neq d_i\)</span>)—the reference sphere changes, and a phase error (defocus) appears in <span class="math inline">\(W(\rho, \theta)\)</span><a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
+<p><strong>Third</strong>, when an optical system is truly diffraction-limited, the optics introduce zero wavefront errors, meaning <span class="math inline">\(W(\rho, \theta) = 0\)</span>. In that ideal case, the pupil function reduces strictly to the binary aperture mask, <span class="math inline">\(a(\rho, \theta)\)</span>. This is where the rule in the Fourier transform course originates: in this case the PSF is determined entirely by the Fourier transform of the aperture opening alone.</p>
+<p><strong>Fourth</strong>, real optical systems rarely remain diffraction-limited across a wide range of conditions. In general, image blur arises from two competing contributions: edge diffraction set by the aperture geometry <span class="math inline">\(a\)</span>, and geometric/optical blur described by phase errors <span class="math inline">\(W\)</span>. The relative importance of the two depends heavily on the operating regime:</p>
+<ul>
+<li>If the aperture is stopped down, phase errors <span class="math inline">\(W\)</span> are typically tiny across the narrow opening, and edge diffraction <span class="math inline">\(a\)</span> dominates the blur.</li>
+<li>If the aperture is widened, diffraction blur shrinks, but lens aberrations (or defocus) grow rapidly, causing phase errors <span class="math inline">\(W\)</span> to dominate the blur.</li>
+</ul>
+<p>We encountered a version of this tradeoff earlier when analyzing the simple pinhole camera (<a href="optics-01-geometric.html#fig-pinhole-chessset" class="quarto-xref">Figure&nbsp;<span>7.4</span></a>, <a href="optics-03-diffraction-psf.html#sec-airy-pinhole" class="quarto-xref"><span>Section 9.3</span></a>). For a pinhole of diameter <span class="math inline">\(D\)</span>, an extremely small hole blurs the image through edge diffraction, while an oversized hole blurs the image through geometric projection. The exact same principle governs general lens systems: total blur is an ongoing balance between aperture diffraction and wavefront phase errors.</p>
+<p>So enjoy the pure mathematics showing that the aperture shape determines the PSF of a diffraction-limited system. But remember the practical reality: both the aperture boundary and wavefront phase aberrations matter, and we manage them together using the pupil function.</p>
 
 
 
@@ -827,6 +848,7 @@ TODO / REVIEW ITEMS:
 <li id="fn2"><p>Please excuse me for not explaining why the energy is <span class="math inline">\(a()^2\)</span> and not <span class="math inline">\(a()\)</span>. It has a good answer that I hope to put into the Resource section some day, involving the electric field of the light and its impact on the electric field within the substrate.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>ISETCam has methods to convert back and forth between these two types of units.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>The ISETCam optics calculations use the wave model. The ISET3d graphics calculations use the ray model.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Furthermore, the physical distance to the image plane sets the spatial scale of the diffraction pattern on the sensor (<span class="math inline">\(w \propto \lambda d_i / D\)</span>).<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
