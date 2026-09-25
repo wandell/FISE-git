@@ -150,7 +150,7 @@ still frame for PDF, using the same fig-style attributes on both.
 ```
 
 This is the established pattern for every local video in the book (e.g.
-`human-01-seeing.qmd`, `optics-06-linear-transform.qmd`,
+`human-01-seeing.qmd`, `optics-08-linear-transform.qmd`,
 `sensors-02-pixels.qmd`). Reuse the same `#fig-` id on both variants; only one
 survives in a given render, so it isn't a duplicate-label conflict.
 
@@ -180,25 +180,18 @@ an HTML-only `content-visible` block, paired with a plain link for PDF:
 :::
 ```
 
-**Gotcha, confirmed in this repo (2026-09-01):** this `content-visible`/`<iframe>`
-block must sit **inside an ordinary block container** — a `.callout-note`, a
-`.column-margin`, any div — not as a bare, direct child of the chapter body.
-Placed bare, the outer `padding-top: 56.25%` aspect-ratio div collapses to
-zero visible height in this book's rendered page-grid layout, even though the
-HTML in the rendered output is byte-for-byte identical to a working copy
-sitting inside a callout a few lines below it. This is not about the video
-itself (both the working and the broken copy passed a YouTube oEmbed check
-confirming the video allows embedding) and not about Quarto's Markdown
-resolution (`quarto render -M keep-md:true` showed the resolved Markdown and
-the final `_book/**/*.html` both contained the correct, complete markup in
-both cases). It only shows up visually, and only in the actual browser
-rendering — confirmed by rendering to `_book/`, serving it
-(`python3 -m http.server`), and screenshotting with headless Chrome
+This `content-visible`/`<iframe>` block must sit **inside an ordinary block
+container** — a `.callout-note`, a `.column-margin`, any div — not as a bare,
+direct child of the chapter body. Placed bare, the outer `padding-top: 56.25%`
+aspect-ratio div collapses to zero visible height in this book's page-grid
+layout, although the rendered HTML is correct. The failure is visible only in
+a browser: render to `_book/`, serve it (`python3 -m http.server`), and
+screenshot with headless Chrome
 (`google-chrome --headless --disable-gpu --window-size=W,H --screenshot=out.png URL`);
-diffing the source or the rendered HTML text will not reveal it.
+diffing the source or the rendered HTML will not reveal it.
 
 Good: wrap the embed in `::: {.callout-note title="..."} ... :::` (as done
-for every working YouTube embed in `optics-08-wavefront-sensing.qmd`).
+for every working YouTube embed in `optics-10-wavefront-sensing.qmd`).
 
 Bad: paste the iframe block directly between two paragraphs with no
 enclosing div/callout — it will render in the HTML source and in

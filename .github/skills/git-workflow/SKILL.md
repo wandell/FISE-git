@@ -76,8 +76,7 @@ git branch -d <branch-name>       # delete local feature branch
 git fetch --prune origin          # clean up remote tracking refs
 ```
 
-## Prohibited Actions
-- **DO NOT** run `git push origin main` or `git push` while checked out on `main`.
-- **DO NOT** commit directly to `main` without creating a feature branch first.
-- **DO NOT** bypass PR review on GitHub for book edits, chapter revisions, or configuration changes.
-- **DO NOT** force-push (`--force`) to `main`.
+## Prohibited actions
+Never push to `main` (including a bare `git push` while on `main`), commit
+directly to `main`, force-push `main`, or land book, chapter, or configuration
+changes without a PR. Each one bypasses the review and CI described above.

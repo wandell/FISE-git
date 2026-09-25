@@ -19,7 +19,12 @@ This repository’s agent instructions are organized as modular Agent Skills in
 - `external-resources` for surfacing supplementary videos, interactive demos,
   or related books (e.g., a colleague's computational-photography book,
   3Blue1Brown, Khan Academy, or Wandell's *Foundations of Vision*) worth
-  linking to from a chapter.
+  linking to from a chapter;
+- `crossref-indexing` for adding backward-pointing `@fig-`/`@sec-` references
+  from a chapter (often a review chapter) to where each concept was introduced;
+- `resource-authoring` for creating or restructuring pages in
+  `chapters/resources/`; and
+- `chapter-podcasts` for compressing and embedding chapter audio overviews.
 
 ## Code and Computational Foundations
 

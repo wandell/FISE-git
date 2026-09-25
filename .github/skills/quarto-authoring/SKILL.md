@@ -131,7 +131,7 @@ For background, see [the history of these ideas](resources/optics-diffraction.qm
 Being listed under `book.chapters`' `"Resources"` part is **not** required
 for the link or the render to work — confirmed in this repo: multiple
 resource pages (e.g. `chapters/resources/history-2D-fourier-transform.qmd`,
-linked from `optics-06-linear-transform.qmd`) render into `_book/` and are
+linked from `optics-08-linear-transform.qmd`) render into `_book/` and are
 linked correctly despite never appearing in `_quarto.yml`'s `Resources`
 part. Listing a page there only controls whether it appears in the book's
 table of contents/sidebar navigation, not whether it renders or resolves.
