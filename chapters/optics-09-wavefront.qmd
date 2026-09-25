@@ -116,7 +116,7 @@ $$
 \text{PSF}(x, y) = |U(x, y)|^2
 $$ {#eq-psf-definition}
 
-The Fourier transform of the pupil function does depend on the wavefront aberration. Hence, the wavefront shape and the PSF are linked together.
+The Fourier transform of the pupil function depends on both the aperture opening and the wavefront aberration. Notice that if the optics have no aberrations ($W = 0$), the exponential phase term vanishes and the pupil function reduces strictly to the aperture opening $a$—a classic result emphasized in Fourier optics courses. But as we will explore in @sec-optics-wavefront-bigpicture, most imaging systems must account for both aperture diffraction and wavefront phase errors.
 
 ## Computations with the pupil function
 
@@ -184,3 +184,27 @@ TODO / REVIEW ITEMS:
    - [x] Figure tabsets: Diffraction-limited vs defocus-limited figures have explanatory text/captions.
    - [x] Zernike gallery: Figure @fig-optics-zernike-gallery explains PSFs produced by radial order n and azimuthal index m.
 -->
+
+## The Big Picture {#sec-optics-wavefront-bigpicture}
+
+In my classroom experience, students who have taken Fourier transform courses are often struck by the elegant principle that the point spread function (PSF) of a diffraction-limited imaging system can be described directly by the shape of the aperture. It is a neat observation that has the great virtue of being true. In the context of an engineering course, however, this observation can be slippery to integrate because the qualifier *"diffraction-limited"* slips by so easily. I want to take a few paragraphs to build an intuitive, physical picture integrating what we have learned about apertures, real lenses, wavefronts, and even pinholes.  There are crucial subtleties in how these factors interact, and as my wise colleague Stuart Anstis once advised me, *"Subtlety doesn't work."*  So let's not be subtle.
+
+**First**, the wavefront at the exit pupil and the image intensity are mathematically linked. The complex pupil function (@eq-pupil-function) describes both the aperture transmission $a(\rho, \theta)$ and the phase shape of the exiting wavefront. The Fourier transform of this pupil function yields the complex amplitude spread function (@eq-psf-fourier), and its squared magnitude determines the recorded image intensity, which is the PSF (@eq-psf-definition).
+
+**Second**, the phase term in the pupil function, $W(\rho, \theta)$, is defined as the deviation from an ideal spherical wavefront converging precisely onto the sensor plane. Because of this definition, if we change the location of the sensor—moving it away from the conjugate focus ($d_s \neq d_i$)—the reference sphere changes, and a phase error (defocus) appears in $W(\rho, \theta)$[^wavefront-sensor].
+
+[^wavefront-sensor]: Furthermore, the physical distance to the image plane sets the spatial scale of the diffraction pattern on the sensor ($w \propto \lambda d_i / D$).
+
+**Third**, when an optical system is truly diffraction-limited, the optics introduce zero wavefront errors, meaning $W(\rho, \theta) = 0$. In that ideal case, the pupil function reduces strictly to the binary aperture mask, $a(\rho, \theta)$. This is where the rule in the Fourier transform course originates: in this case the PSF is determined entirely by the Fourier transform of the aperture opening alone.
+
+**Fourth**, real optical systems rarely remain diffraction-limited across a wide range of conditions. In general, image blur arises from two competing contributions: edge diffraction set by the aperture geometry $a$, and geometric/optical blur described by phase errors $W$. The relative importance of the two depends heavily on the operating regime:
+
+* If the aperture is stopped down, phase errors $W$ are typically tiny across the narrow opening, and edge diffraction $a$ dominates the blur.
+* If the aperture is widened, diffraction blur shrinks, but lens aberrations (or defocus) grow rapidly, causing phase errors $W$ to dominate the blur.
+
+We encountered a version of this tradeoff earlier when analyzing the simple pinhole camera (@fig-pinhole-chessset, @sec-airy-pinhole). For a pinhole of diameter $D$, an extremely small hole blurs the image through edge diffraction, while an oversized hole blurs the image through geometric projection. The exact same principle governs general lens systems: total blur is an ongoing balance between aperture diffraction and wavefront phase errors.
+
+So enjoy the pure mathematics showing that the aperture shape determines the PSF of a diffraction-limited system. But remember the practical reality: both the aperture boundary and wavefront phase aberrations matter, and we manage them together using the pupil function.
+
+
+
