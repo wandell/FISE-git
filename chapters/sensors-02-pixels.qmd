@@ -138,9 +138,9 @@ The role of the other essential pixel components, the color filter arrays and mi
 
 ### Three-Transistor (3T) Pixel Design {#sec-3T-pixel-design}
 
-The original CMOS pixel design uses a three-transistor (3T) circuit to store and read out the charge collected by the photodiode (@fig-sensor-3T-circuit). Each pixel contains three key transistors: $M_{rst}$ (reset), $M_{sel}$ (select), and $M_{sf}$ (source follower). The $M_{rst}$ transistor resets the photodiode by connecting it to the supply voltage (Vdd), clearing any residual charge before image capture. The $M_{sel}$ transistor selects a specific row of pixels, connecting them to the column lines. The $M_{sf}$ transistor acts as a buffer, driving the pixel voltage onto the column readout line for measurement by an analog-to-digital converter (ADC), as described below in @sec-cmos-multiplex.
+The original CMOS pixel design uses a three-transistor (3T) circuit to store and read out the charge collected by the photodiode (@fig-sensor-3T-circuit). Each pixel contains three key transistors: $M_{rst}$ (reset), $M_{sel}$ (select), and $M_{sf}$ (source follower). The $M_{rst}$ transistor resets the photodiode by connecting it to the supply voltage at the reset drain, clearing any residual charge before image capture. The $M_{sel}$ transistor selects a specific row of pixels, connecting them to the column lines. The $M_{sf}$ transistor acts as a source follower (buffer), driving the pixel voltage onto the column readout line for measurement by an analog-to-digital converter (ADC), as described below in @sec-cmos-multiplex.
 
-![The classic CMOS 3-transistor (3T) active pixel circuit design (see @fossum1997-early).](images/sensors/14-pixels/03-3T-Circuit.png){#fig-sensor-3T-circuit width="60%"}
+![The CMOS 3-transistor (3T) active pixel circuit design (see @fossum1997-early).](images/sensors/14-pixels/03-3T-Circuit.png){#fig-sensor-3T-circuit width="80%"}
 
 Ideally, the photodiode’s response to light is linear, with the number of generated electrons following Poisson statistics. However, the surrounding circuitry introduces additional sources of noise and nonlinearity. For example, the storage capacitor has a limited capacity, so it can saturate at high light levels. The transistors used for readout can also introduce noise and small nonlinearities. Furthermore, variations in pixel properties across the sensor array can cause fixed-pattern noise. In modern CMOS sensors, these nonlinearities and noise sources are typically small—on the order of a few percent [@wang2017-CMOSLinearity] -but they can still affect image quality. Careful characterization and calibration are necessary to minimize these effects and produce high-quality images.
 
@@ -167,7 +167,7 @@ The breakthrough that allowed CMOS to match and eventually exceed CCD image qual
 
 In the mid-1990s, teams at Kodak and JPL integrated the pinned photodiode and an additional **transfer gate (TX)** transistor into the active pixel, creating the **four-transistor (4T) pixel** [@lee1995-4T-aps; @lee1997-4T-aps-patent; @guidash1997-4t-aps-cds]. In this design (@fig-sensor-4T-circuit), the photodiode is decoupled from the readout circuitry by the transfer gate. Photoelectrons accumulate in the pinned photodiode during exposure, and are then transferred completely to an isolated sensing capacitor called the **floating diffusion node** (with capacitance $C_{fd}$). 
 
-![The 4T pixel circuit introduces a pinned photodiode and an additional transfer gate transistor. When activated, the transfer gate moves the accumulated charge from the photodiode to the floating diffusion node ($C_{fd}$). The rest of the circuit—reset ($M_{rst}$), source follower ($M_{sf}$), and row select ($M_{sel}$)—operates similarly to the 3T design.](images/sensors/14-pixels/03-4T-Circuit.png){#fig-sensor-4T-circuit width="60%"}
+![The 4T pixel circuit introduces a pinned photodiode and an additional transfer gate transistor. When activated, the transfer gate moves the accumulated charge from the photodiode to the floating diffusion node ($C_{fd}$). The rest of the circuit—reset ($M_{rst}$), source follower ($M_{sf}$), and row select ($M_{sel}$)—operates similarly to the 3T design.](images/sensors/14-pixels/03-4T-Circuit.png){#fig-sensor-4T-circuit width="80%"}
 
 Separating charge collection from the readout node is what makes true **Correlated Double Sampling (CDS)** possible:
 
@@ -183,6 +183,11 @@ Today, the 4T pixel is the standard in almost all high-performance CMOS image se
 
 In-pixel buffer amplifiers (source followers) solved the challenge of driving charge out of the pixel without noise-corrupting attenuation. The second major architectural challenge was reading out signals across the sensor array. In a classic CCD, charge packets are physically shifted across the entire silicon array to a single output amplifier and ADC at the corner (@sec-ccd-readout). In CMOS sensors, the photoelectrons in each pixel are converted to voltages that drive an addressable matrix of parallel output lines. How do we convert the analog voltages on all of these separate lines into digital values?
 
+<!-- TODO
+
+The figure should have circuit that looks more like the 4T above.
+
+-->
 ![Multiplex readout of the image sensor. In early CMOS architectures, each high-speed ADC sequentially converted the readout voltages from a group of multiplexed columns during row readout. Modern sensors place a dedicated ADC at every column.](images/sensors/14-pixels/03-CMOS-multiplex-readout.png){#fig-cmos-multiplex width=70%}
 
 The readout process begins when a row-select control signal activates a specific row of pixels, placing the voltage from each pixel in that row onto its corresponding vertical column readout line. These column lines are connected to column amplifiers, which buffer and amplify the signals to ensure accurate transmission. The analog gain of these amplifiers is often adjustable (typically from 1× to 4× or higher), which is how ISO sensitivity adjustments are implemented in hardware prior to quantization.
