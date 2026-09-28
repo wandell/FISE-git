@@ -131,11 +131,45 @@ Exposure bracketing means capturing several images of the same scene at differen
 Modern digital cameras often provide an exposure bracketing feature. Typically, the user selects the best image from the set, but it is also possible to combine the bracketed images to create a composite with improved dynamic range.
 
 ### Burst Photography {#sec-exposure-burst}
-To prevent pixel saturation, a team at Google proposed capturing a sequence of images using short exposure durations—a technique known as **burst photography** @hasinoff2016-burst-photography. Their method involves aligning the individual images and summing them to reduce shot noise (@sec-shot-noise).
 
-This approach is particularly effective when sensor read noise is low and shot noise is the dominant noise source. In this scenario, each pixel measurement can be modeled as a Poisson random variable with mean $\lambda$. Summing $N$ such measurements yields another Poisson variable with mean $N\lambda$, improving the signal-to-noise ratio.
+To prevent pixel saturation while managing motion blur, modern digital and mobile cameras capture a rapid sequence of short-exposure frames—a technique known as **burst photography** [@hasinoff2016-burst-photography]. The individual frames are digitally aligned and combined into a final high-quality image.
 
-The main advantage of burst photography is that it allows the use of short exposures to avoid saturation in bright regions, while still achieving high image quality by combining multiple frames. However, this method requires accurate alignment of the images. If there is motion in the scene or camera shake—especially if objects move in front of one another (occlusion)—alignment becomes challenging or may fail. Burst photography works best with static scenes and a stable camera, but can still provide benefits in more dynamic situations, even if not every frame can be perfectly aligned.
+#### Signal-to-noise ratio in burst photography
+
+Because each short frame integrates light for only a brief duration $\Delta t$, a single frame collects relatively few electrons (mean $\mu$). If shot noise were the only noise source, a single frame would have an $\text{SNR} = \sqrt{\mu}$ (@sec-shot-noise). 
+
+Aligning and summing $N$ such frames increases the total signal to $N\mu$. Because photon arrivals across separate frames are independent, their Poisson variances also sum ($N\mu$), yielding an overall shot noise of $\sqrt{N\mu}$ and improving the shot-noise SNR by a factor of $\sqrt{N}$:
+
+$$
+\text{SNR}_{\text{shot}} = \frac{N\mu}{\sqrt{N\mu}} = \sqrt{N}\sqrt{\mu}
+$$ {#eq-burst-shot-snr}
+
+#### The read noise tradeoff: $N$ short frames vs. one long frame
+
+In practice, total sensor noise includes both shot noise and electronic **read noise** ($\sigma_{\text{read}}$, @sec-sensor-readnoise). When evaluating burst photography, an important comparison is between $N$ short frames of duration $\Delta t$ and a single long frame of duration $N\Delta t$:
+
+* **One long exposure ($N\Delta t$):** The sensor collects the total signal $N\mu$ with shot noise $\sqrt{N\mu}$, and incurs only a single read noise penalty $\sigma_{\text{read}}$. The total noise variance is $N\mu + \sigma_{\text{read}}^2$.
+* **Sum of $N$ short exposures ($N \times \Delta t$):** The total signal is again $N\mu$ with identical shot noise $\sqrt{N\mu}$. However, because the sensor is read out $N$ times, each frame contributes independent read noise. Variances add, so the total read noise variance is $N \sigma_{\text{read}}^2$, giving an overall noise variance of:
+
+$$
+\sigma_{\text{total}}^2 = N\mu + N \sigma_{\text{read}}^2
+$$ {#eq-burst-total-noise}
+
+The effective read noise standard deviation increases from $\sigma_{\text{read}}$ to $\sqrt{N}\sigma_{\text{read}}$. Therefore, relative to an ideal, blur-free long exposure, burst photography never *improves* read noise—in fact, it increases it by $\sqrt{N}$.
+
+#### Why burst photography is widely used
+
+Given that read noise increases with $N$, why do modern cameras rely so heavily on burst capture?
+
+1. **Preventing pixel saturation:** A long exposure that allows dark regions to collect sufficient light will clip bright areas (skies, direct lighting) beyond the pixel's full well capacity. Short exposures keep bright regions within the sensor's linear range, dramatically extending dynamic range.
+2. **Eliminating motion blur:** A handheld long exposure suffers from severe camera shake and subject motion blur. Short exposures freeze motion; digital alignment algorithms can then register matching regions and reject moving elements.
+3. **Ultra-low modern read noise:** In modern CMOS sensors, read noise is extremely small—often on the order of $1\text{–}2\,e^-$. For most scene illuminations, shot noise ($N\mu$) substantially exceeds total read noise ($N\sigma_{\text{read}}^2$). The slight increase in read noise is therefore a negligible price to pay for the massive benefits of high dynamic range and sharp, blur-free images.
+
+A major challenge for burst photography in practice is image registration. Individual frames are noisy, and when scenes contain objects at different depths, camera motion introduces motion parallax and occlusions that cannot be modeled by simple 2D transformations. When alignment fails, it introduces distinct artifacts:
+
+* **Ghosting:** Moving subjects appear semi-transparent or duplicated across blended frames.
+* **Parallax blur:** Misalignment between foreground and background structures causes loss of sharpness along depth boundaries.
+* **Occlusion seams:** Regions revealed or hidden between frames produce patchy or mottled noise textures.
 
 ### Space-varying exposure duration {#sec-exposure-dps}
 The entire problem of exposure control becomes greatly simplified if there is not one exposure time, but there is a space-varying exposure time. In that case, the pixels in dark parts of the image can have a longer exposure time than pixels in the light part. This idea was implemented by the digital pixel sensor (@sec-digital-pixel). Recall that the voltage on each pixel, or small group of pixels, was measured non-destructively by the ADC. The voltage ($v_i$) and sample time ($t_i$) were recorded for the $i^{th}$ pixel. These two values, together, estimate the effective intensity ($E = v_i / t_i$).
