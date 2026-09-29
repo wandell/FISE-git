@@ -91,32 +91,31 @@ $$
 $$
 
 ### Optical Transfer Function {#sec-OTF}
-The **optical transfer function (OTF)**, $\mathcal{O}(f)$, is defined as the Fourier transform of the output divided by the Fourier transform of the input. From its definition, it is also the Fourier transform of the point spread function.
+The **optical transfer function (OTF)**, $\mathcal{O}(f)$, is defined as the normalized Fourier transform of the point spread function:
+
 $$
-\mathcal{O}(f) = \frac{\mathscr{F}\{g\}}{\mathscr{F}\{i\}} = \mathscr{F}\{h\}.
+\mathcal{O}(f) = \frac{\mathscr{F}\{h\}}{\mathscr{F}\{h\}(0)} = \frac{\int_{-\infty}^{\infty} h(x)\, e^{-i 2\pi f x}\,dx}{\int_{-\infty}^{\infty} h(x)\,dx}.
 $$ {#eq-otf-definition}
 
-The OTF is a complex function of spatial frequency. It can be written in magnitude–phase form as
+Because the point spread function represents light energy distribution ($h(x) \ge 0$), the denominator $\mathscr{F}\{h\}(0)$ is simply the total light transmitted by the optics. Normalizing by this zero-frequency (DC) value ensures that $\mathcal{O}(0) = 1$.
+
+The OTF is a complex-valued function of spatial frequency. It can be written in magnitude–phase form as
 $$
 \mathcal{O}(f) = \mathcal{M}(f)\, e^{\,i\,\mathcal{P}(f)},
 $$ {#eq-otf-definition-complex}
 
-The term $\mathcal{M}(f)$ is the real-valued amplitude scaling factor, and $\mathcal{P}(f)$ is the phase shift (in radians).
-
-The OTF provides a powerful way to predict the system's output. Using the convolution theorem (@sec-ls-convolution-theorem), we can calculate the output image, $g(x,y)$, by multiplying the Fourier transform of the input image, $i(x,y)$, with the OTF and then taking the inverse Fourier transform:
-$$
-g(x) = \mathscr{F}^{-1}\!\big( \mathcal{O}(f)\,\mathscr{F}\{i\} \big).
-$$ {#eq-otf-calculation}
-
-Just like its partner in the space domain, the point spread function, the OTF completely characterizes a linear, space-invariant system.
+where $\mathcal{M}(f)$ is the real-valued amplitude (or contrast) scaling factor, and $\mathcal{P}(f)$ is the phase shift (in radians).
 
 ### Modulation Transfer Function {#sec-MTF}
-Many times we are primarily interested in how the system affects the contrast (or modulation) of the input harmonics, without regard to the phase shift. This is captured by the **modulation transfer function (MTF)**:
+In imaging systems, we are often primarily interested in how optics attenuate the contrast (or modulation) of input harmonics, without regard to spatial phase shifts. This is captured by the **modulation transfer function (MTF)**, defined as the magnitude of the normalized OTF:
+
 $$
 \mathcal{M}(f) = |\mathcal{O}(f)|.
 $$ {#eq-MTF-defined}
 
-For many optical systems, particularly those with symmetric point spread functions, the phase shifts are small (i.e., $\mathcal{P}(f)\approx 0$), in which case the OTF is approximately real and non‑negative.
+Because the OTF is normalized to unity at zero frequency, the MTF also satisfies $\mathcal{M}(0) = 1$. As spatial frequency increases, optical diffraction and aberrations attenuate contrast, causing $\mathcal{M}(f)$ to roll off toward zero.
+
+For many well-aligned optical systems, particularly those with symmetric point spread functions, spatial phase shifts are negligible ($\mathcal{P}(f) \approx 0$). In such cases, the OTF is purely real and non-negative, so $\mathcal{O}(f) = \mathcal{M}(f)$.
 
 @fig-optics-harmonics-mtf illustrates the effect of the MTF. An input image with a sweep of spatial frequencies (top) is passed through an optical system. The output image (bottom) shows that the contrast of the high-frequency patterns is significantly reduced, a direct visualization of the MTF's attenuation of higher frequencies.
 
@@ -208,7 +207,7 @@ How did we get to the close connection of imaging and the 2D Fourier Transform?
 
 Sir William Bragg and Sir William Bragg (father and son) demonstrated that the pattern of X-rays scattered by a crystal is directly related to the crystal’s internal periodic structure. This led people to the understanding that the diffraction pattern is, in fact, the Fourier transform of the crystal’s electron density. This insight became a fundamental part of studying the 3D atomic structure of molecules.  In fact, it led them to measuring the 3D diffraction pattern (the frequency domain data) and then performing an inverse 3D Fourier transform to get back to the spatial domain structure. A large part of crystallography became a practical problem of applied Fourier analysis.
 
-[Ron Bracewell](https://trees.stanford.edu/bracewell.htm){target=_blank} was an electrical engineer and applied mathematician who used his mastery of signal and imaging theory to revolutionize fields like radio astronomy and medical imaging. He developed the Projection-Slice theorem[^Projection-Slice], giving it a clear and elegant statement, and he wrote an important book, *The Fourier Transform and Its Applications [1965]*, 
+[Ron Bracewell](https://trees.stanford.edu/bracewell.htm){target=_blank} was an electrical engineer and applied mathematician who used his mastery of signal and imaging theory to revolutionize fields like radio astronomy and medical imaging. He formulated the Projection-Slice theorem[^Projection-Slice] in his pioneering 1956 radio astronomy research, providing a foundational mathematical principle that later underpinned medical tomography (CT and PET). He also authored the classic 1965 text *The Fourier Transform and Its Applications*, followed by *Two-Dimensional Imaging* (1995).
 
 [Joe Goodman](https://youtu.be/Aoj-JfaXcfw?si=t3dirvqJcwU6BYH5){target=_blank}, was Bracewell's colleague at Stanford.  His main field is Electrical Engineering, with a profound specialization in optical information processing and statistical optics. Goodman's important book, *Introduction to Fourier Optics*, educated a generation of physicists and engineers, cementing the 2D Fourier transform as the standard tool for analyzing optical systems, filters, and image formation.
 
@@ -216,7 +215,7 @@ In fact, the connection is even more direct: Joe Goodman was a student in Ron Br
 
 [^Projection-Slice]: The 1D Fourier transform of a projection of a 2D function is equal to a slice through the 2D Fourier transform of the function.
 
-![Joe Goodman (left) and Ron Bracewell (right), shown together. The radio telescopes Bracewell built were located in the Stanford hills, just across the highway from the 150-foot radio telescope know as the **Dish*. The area is a popular hiking spot near Stanford.](images/people/Bracewell_Goodman_Dish.png){#fig-bracewell-goodman width="80%"}
+![Joe Goodman (left) and Ron Bracewell (right), shown together. In the Stanford foothills, Bracewell designed and operated a radio interferometer array consisting of 32 parabolic antennas dedicated to daily mapping of solar radiation. The site was near Felt Lake, across the hills from the landmark 150-foot radio telescope known as the Stanford Dish.](images/people/Bracewell_Goodman_Dish.png){#fig-bracewell-goodman width="80%"}
 
 <!--
 https://www.sfgate.com/bayarea/article/Scientific-innovator-Stanford-engineer-Ronald-2546679.php
