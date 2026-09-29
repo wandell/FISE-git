@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-06">
+<meta name="dcterms.date" content="2026-09-28">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>21&nbsp; Control systems – Foundations of Image Systems Engineering</title>
@@ -625,7 +625,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 6, 2026</p>
+      <p class="date">September 28, 2026</p>
     </div>
   </div>
   
@@ -651,7 +651,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 6, 2026
+Last updated: September 28, 2026
 !-->
 </div>
 </div>
@@ -839,9 +839,42 @@ Figure&nbsp;21.6: Shift from defocus. Needs work. Also, could do it with the Che
 </section>
 <section id="sec-exposure-burst" class="level3" data-number="21.3.3">
 <h3 data-number="21.3.3" class="anchored" data-anchor-id="sec-exposure-burst"><span class="header-section-number">21.3.3</span> Burst Photography</h3>
-<p>To prevent pixel saturation, a team at Google proposed capturing a sequence of images using short exposure durations—a technique known as <strong>burst photography</strong> <span class="citation" data-cites="hasinoff2016-burst-photography">Hasinoff et al. (<a href="references.html#ref-hasinoff2016-burst-photography" role="doc-biblioref">2016</a>)</span>. Their method involves aligning the individual images and summing them to reduce shot noise (<a href="sensors-01-photoelectric.html#sec-shot-noise" class="quarto-xref"><span>Section 17.7</span></a>).</p>
-<p>This approach is particularly effective when sensor read noise is low and shot noise is the dominant noise source. In this scenario, each pixel measurement can be modeled as a Poisson random variable with mean <span class="math inline">\(\lambda\)</span>. Summing <span class="math inline">\(N\)</span> such measurements yields another Poisson variable with mean <span class="math inline">\(N\lambda\)</span>, improving the signal-to-noise ratio.</p>
-<p>The main advantage of burst photography is that it allows the use of short exposures to avoid saturation in bright regions, while still achieving high image quality by combining multiple frames. However, this method requires accurate alignment of the images. If there is motion in the scene or camera shake—especially if objects move in front of one another (occlusion)—alignment becomes challenging or may fail. Burst photography works best with static scenes and a stable camera, but can still provide benefits in more dynamic situations, even if not every frame can be perfectly aligned.</p>
+<p>To prevent pixel saturation while managing motion blur, modern digital and mobile cameras capture a rapid sequence of short-exposure frames—a technique known as <strong>burst photography</strong> <span class="citation" data-cites="hasinoff2016-burst-photography">(<a href="references.html#ref-hasinoff2016-burst-photography" role="doc-biblioref">Hasinoff et al. 2016</a>)</span>. The individual frames are digitally aligned and combined into a final high-quality image.</p>
+<section id="signal-to-noise-ratio-in-burst-photography" class="level4" data-number="21.3.3.1">
+<h4 data-number="21.3.3.1" class="anchored" data-anchor-id="signal-to-noise-ratio-in-burst-photography"><span class="header-section-number">21.3.3.1</span> Signal-to-noise ratio in burst photography</h4>
+<p>Because each short frame integrates light for only a brief duration <span class="math inline">\(\Delta t\)</span>, a single frame collects relatively few electrons (mean <span class="math inline">\(\mu\)</span>). If shot noise were the only noise source, a single frame would have an <span class="math inline">\(\text{SNR} = \sqrt{\mu}\)</span> (<a href="sensors-01-photoelectric.html#sec-shot-noise" class="quarto-xref"><span>Section 17.7</span></a>).</p>
+<p>Aligning and summing <span class="math inline">\(N\)</span> such frames increases the total signal to <span class="math inline">\(N\mu\)</span>. Because photon arrivals across separate frames are independent, their Poisson variances also sum (<span class="math inline">\(N\mu\)</span>), yielding an overall shot noise of <span class="math inline">\(\sqrt{N\mu}\)</span> and improving the shot-noise SNR by a factor of <span class="math inline">\(\sqrt{N}\)</span>:</p>
+<p><span id="eq-burst-shot-snr"><span class="math display">\[
+\text{SNR}_{\text{shot}} = \frac{N\mu}{\sqrt{N\mu}} = \sqrt{N}\sqrt{\mu}
+\tag{21.2}\]</span></span></p>
+</section>
+<section id="the-read-noise-tradeoff-n-short-frames-vs.-one-long-frame" class="level4" data-number="21.3.3.2">
+<h4 data-number="21.3.3.2" class="anchored" data-anchor-id="the-read-noise-tradeoff-n-short-frames-vs.-one-long-frame"><span class="header-section-number">21.3.3.2</span> The read noise tradeoff: <span class="math inline">\(N\)</span> short frames vs.&nbsp;one long frame</h4>
+<p>In practice, total sensor noise includes both shot noise and electronic <strong>read noise</strong> (<span class="math inline">\(\sigma_{\text{read}}\)</span>, <span class="quarto-unresolved-ref">?sec-sensor-readnoise</span>). When evaluating burst photography, an important comparison is between <span class="math inline">\(N\)</span> short frames of duration <span class="math inline">\(\Delta t\)</span> and a single long frame of duration <span class="math inline">\(N\Delta t\)</span>:</p>
+<ul>
+<li><strong>One long exposure (<span class="math inline">\(N\Delta t\)</span>):</strong> The sensor collects the total signal <span class="math inline">\(N\mu\)</span> with shot noise <span class="math inline">\(\sqrt{N\mu}\)</span>, and incurs only a single read noise penalty <span class="math inline">\(\sigma_{\text{read}}\)</span>. The total noise variance is <span class="math inline">\(N\mu + \sigma_{\text{read}}^2\)</span>.</li>
+<li><strong>Sum of <span class="math inline">\(N\)</span> short exposures (<span class="math inline">\(N \times \Delta t\)</span>):</strong> The total signal is again <span class="math inline">\(N\mu\)</span> with identical shot noise <span class="math inline">\(\sqrt{N\mu}\)</span>. However, because the sensor is read out <span class="math inline">\(N\)</span> times, each frame contributes independent read noise. Variances add, so the total read noise variance is <span class="math inline">\(N \sigma_{\text{read}}^2\)</span>, giving an overall noise variance of:</li>
+</ul>
+<p><span id="eq-burst-total-noise"><span class="math display">\[
+\sigma_{\text{total}}^2 = N\mu + N \sigma_{\text{read}}^2
+\tag{21.3}\]</span></span></p>
+<p>The effective read noise standard deviation increases from <span class="math inline">\(\sigma_{\text{read}}\)</span> to <span class="math inline">\(\sqrt{N}\sigma_{\text{read}}\)</span>. Therefore, relative to an ideal, blur-free long exposure, burst photography never <em>improves</em> read noise—in fact, it increases it by <span class="math inline">\(\sqrt{N}\)</span>.</p>
+</section>
+<section id="why-burst-photography-is-widely-used" class="level4" data-number="21.3.3.3">
+<h4 data-number="21.3.3.3" class="anchored" data-anchor-id="why-burst-photography-is-widely-used"><span class="header-section-number">21.3.3.3</span> Why burst photography is widely used</h4>
+<p>Given that read noise increases with <span class="math inline">\(N\)</span>, why do modern cameras rely so heavily on burst capture?</p>
+<ol type="1">
+<li><strong>Preventing pixel saturation:</strong> A long exposure that allows dark regions to collect sufficient light will clip bright areas (skies, direct lighting) beyond the pixel’s full well capacity. Short exposures keep bright regions within the sensor’s linear range, dramatically extending dynamic range.</li>
+<li><strong>Eliminating motion blur:</strong> A handheld long exposure suffers from severe camera shake and subject motion blur. Short exposures freeze motion; digital alignment algorithms can then register matching regions and reject moving elements.</li>
+<li><strong>Ultra-low modern read noise:</strong> In modern CMOS sensors, read noise is extremely small—often on the order of <span class="math inline">\(1\text{–}2\,e^-\)</span>. For most scene illuminations, shot noise (<span class="math inline">\(N\mu\)</span>) substantially exceeds total read noise (<span class="math inline">\(N\sigma_{\text{read}}^2\)</span>). The slight increase in read noise is therefore a negligible price to pay for the massive benefits of high dynamic range and sharp, blur-free images.</li>
+</ol>
+<p>A major challenge for burst photography in practice is image registration. Individual frames are noisy, and when scenes contain objects at different depths, camera motion introduces motion parallax and occlusions that cannot be modeled by simple 2D transformations. When alignment fails, it introduces distinct artifacts:</p>
+<ul>
+<li><strong>Ghosting:</strong> Moving subjects appear semi-transparent or duplicated across blended frames.</li>
+<li><strong>Parallax blur:</strong> Misalignment between foreground and background structures causes loss of sharpness along depth boundaries.</li>
+<li><strong>Occlusion seams:</strong> Regions revealed or hidden between frames produce patchy or mottled noise textures.</li>
+</ul>
+</section>
 </section>
 <section id="sec-exposure-dps" class="level3" data-number="21.3.4">
 <h3 data-number="21.3.4" class="anchored" data-anchor-id="sec-exposure-dps"><span class="header-section-number">21.3.4</span> Space-varying exposure duration</h3>

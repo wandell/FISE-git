@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-09">
+<meta name="dcterms.date" content="2026-09-28">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>18&nbsp; Pixels and sensors – Foundations of Image Systems Engineering</title>
@@ -620,7 +620,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 9, 2026</p>
+      <p class="date">September 28, 2026</p>
     </div>
   </div>
   
@@ -646,7 +646,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 9, 2026
+Last updated: September 28, 2026
 !-->
 </div>
 </div>
@@ -846,14 +846,14 @@ Figure&nbsp;18.4: Two useful overviews visualizations of an early CMOS pixel des
 </section>
 <section id="sec-3T-pixel-design" class="level3" data-number="18.2.4">
 <h3 data-number="18.2.4" class="anchored" data-anchor-id="sec-3T-pixel-design"><span class="header-section-number">18.2.4</span> Three-Transistor (3T) Pixel Design</h3>
-<p>The original CMOS pixel design uses a three-transistor (3T) circuit to store and read out the charge collected by the photodiode (<a href="#fig-sensor-3T-circuit" class="quarto-xref">Figure&nbsp;<span>18.5</span></a>). Each pixel contains three key transistors: <span class="math inline">\(M_{rst}\)</span> (reset), <span class="math inline">\(M_{sel}\)</span> (select), and <span class="math inline">\(M_{sf}\)</span> (source follower). The <span class="math inline">\(M_{rst}\)</span> transistor resets the photodiode by connecting it to the supply voltage (Vdd), clearing any residual charge before image capture. The <span class="math inline">\(M_{sel}\)</span> transistor selects a specific row of pixels, connecting them to the column lines. The <span class="math inline">\(M_{sf}\)</span> transistor acts as a buffer, driving the pixel voltage onto the column readout line for measurement by an analog-to-digital converter (ADC), as described below in <a href="#sec-cmos-multiplex" class="quarto-xref"><span>Section 18.3</span></a>.</p>
+<p>The original CMOS pixel design uses a three-transistor (3T) circuit to store and read out the charge collected by the photodiode (<a href="#fig-sensor-3T-circuit" class="quarto-xref">Figure&nbsp;<span>18.5</span></a>). Each pixel contains three key transistors: <span class="math inline">\(M_{rst}\)</span> (reset), <span class="math inline">\(M_{sel}\)</span> (select), and <span class="math inline">\(M_{sf}\)</span> (source follower). The <span class="math inline">\(M_{rst}\)</span> transistor resets the photodiode by connecting it to the supply voltage at the reset drain, clearing any residual charge before image capture. The <span class="math inline">\(M_{sel}\)</span> transistor selects a specific row of pixels, connecting them to the column lines. The <span class="math inline">\(M_{sf}\)</span> transistor acts as a source follower (buffer), driving the pixel voltage onto the column readout line for measurement by an analog-to-digital converter (ADC), as described below in <a href="#sec-cmos-multiplex" class="quarto-xref"><span>Section 18.3</span></a>.</p>
 <div id="fig-sensor-3T-circuit" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sensor-3T-circuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/sensors/14-pixels/03-3T-Circuit.png" class="img-fluid figure-img" style="width:60.0%">
+<img src="images/sensors/14-pixels/03-3T-Circuit.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensor-3T-circuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18.5: The classic CMOS 3-transistor (3T) active pixel circuit design (see <span class="citation" data-cites="fossum1997-early">Fossum (<a href="references.html#ref-fossum1997-early" role="doc-biblioref">1997</a>)</span>).
+Figure&nbsp;18.5: The CMOS 3-transistor (3T) active pixel circuit design (see <span class="citation" data-cites="fossum1997-early">Fossum (<a href="references.html#ref-fossum1997-early" role="doc-biblioref">1997</a>)</span>).
 </figcaption>
 </figure>
 </div>
@@ -876,7 +876,7 @@ Resources has a good markdown file about the properties required of the various 
 <div id="fig-sensor-4T-circuit" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sensor-4T-circuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/sensors/14-pixels/03-4T-Circuit.png" class="img-fluid figure-img" style="width:60.0%">
+<img src="images/sensors/14-pixels/03-4T-Circuit.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sensor-4T-circuit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;18.6: The 4T pixel circuit introduces a pinned photodiode and an additional transfer gate transistor. When activated, the transfer gate moves the accumulated charge from the photodiode to the floating diffusion node (<span class="math inline">\(C_{fd}\)</span>). The rest of the circuit—reset (<span class="math inline">\(M_{rst}\)</span>), source follower (<span class="math inline">\(M_{sf}\)</span>), and row select (<span class="math inline">\(M_{sel}\)</span>)—operates similarly to the 3T design.
@@ -896,10 +896,15 @@ Figure&nbsp;18.6: The 4T pixel circuit introduces a pinned photodiode and an add
 <section id="sec-cmos-multiplex" class="level2" data-number="18.3">
 <h2 data-number="18.3" class="anchored" data-anchor-id="sec-cmos-multiplex"><span class="header-section-number">18.3</span> Multiplex readout</h2>
 <p>In-pixel buffer amplifiers (source followers) solved the challenge of driving charge out of the pixel without noise-corrupting attenuation. The second major architectural challenge was reading out signals across the sensor array. In a classic CCD, charge packets are physically shifted across the entire silicon array to a single output amplifier and ADC at the corner (<a href="#sec-ccd-readout" class="quarto-xref"><span>Section 18.2.1</span></a>). In CMOS sensors, the photoelectrons in each pixel are converted to voltages that drive an addressable matrix of parallel output lines. How do we convert the analog voltages on all of these separate lines into digital values?</p>
+<!-- TODO
+
+The figure should have circuit that looks more like the 4T above.
+
+-->
 <div id="fig-cmos-multiplex" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cmos-multiplex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/sensors/14-pixels/03-CMOS-multiplex-readout.png" class="img-fluid figure-img" style="width:70.0%">
+<img src="images/sensors/14-pixels/03-CMOS-multiplex-readout.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cmos-multiplex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;18.7: Multiplex readout of the image sensor. In early CMOS architectures, each high-speed ADC sequentially converted the readout voltages from a group of multiplexed columns during row readout. Modern sensors place a dedicated ADC at every column.

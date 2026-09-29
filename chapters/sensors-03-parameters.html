@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-08-26">
+<meta name="dcterms.date" content="2026-09-28">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>19&nbsp; Sensor parameters – Foundations of Image Systems Engineering</title>
@@ -602,7 +602,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 26, 2026</p>
+      <p class="date">September 28, 2026</p>
     </div>
   </div>
   
@@ -628,7 +628,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: August 26, 2026
+Last updated: September 28, 2026
 !-->
 </div>
 </div>
@@ -643,9 +643,27 @@ Last updated: August 26, 2026
 <section id="sec-pixel-sensitivity-fillfactor" class="level2" data-number="19.2">
 <h2 data-number="19.2" class="anchored" data-anchor-id="sec-pixel-sensitivity-fillfactor"><span class="header-section-number">19.2</span> Pixel sensitivity and fill factor</h2>
 <p>Because modern pixels are so small, each photodiode often collects only a modest number of photons—even under good lighting. For example, a <span class="math inline">\(1~\mu\text{m}^2\)</span> pixel in a dim scene (with a fast f/2 lens) might receive just 200 photons during an exposure. Photon arrivals follow Poisson statistics, so the standard deviation is <span class="math inline">\(\sqrt{200} \approx 14\)</span>, or about 7% of the mean. This photon noise is a fundamental limit: it sets the minimum possible noise level and constrains the signal-to-noise ratio (SNR) in low-light conditions.</p>
-<p>The photodiode occupies only a portion of the pixel area; some of the pixel area is taken up by the circuitry. The proportion of the pixel area that is sensitive to light—the photodiode area—further limits light sensitivity. This proportion is called the <strong>fill factor</strong>. A higher fill factor means more of the pixel is used to detect light, increasing sensitivity. Fill factor is usually expressed as a value between 0 and 1, or as a percentage between 0% and 100%. The first-generation of CMOS image sensors were built with semiconductor technology with feature size on the order of 350 nm, and thus the circuitry might occupy as much as half of the pixel area (fill factor of 0.5). Over years the feature size has shrunk considerably and the fill factor of modern pixels can be greater than 0.9. The fill factor combined with the light sensitivity of the photodiode might result in about 150 electrons generated from the 200 photons. This number, too, is Poisson distributed so the short noise will be about <span class="math inline">\(\sqrt{150} \approx 14\)</span>, about 8% of the mean.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Photons per pixel">
+<p>The photodiode occupies only a portion of the pixel area; some of the pixel area is taken up by the circuitry. The proportion of the pixel area that is sensitive to light—the photodiode area—further limits light sensitivity. This proportion is called the <strong>fill factor</strong>. A higher fill factor means more of the pixel is used to detect light, increasing sensitivity. Fill factor is usually expressed as a value between 0 and 1, or as a percentage between 0% and 100%.</p>
+<p>The first-generation of CMOS image sensors were built with semiconductor technology with feature size on the order of 350 nm, and thus the circuitry might occupy as much as half of the pixel area (fill factor of 0.5). Over years the feature size has shrunk considerably and the fill factor of modern pixels can be greater than 0.9. The fill factor combined with the light sensitivity of the photodiode might result in about 150 electrons generated from the 200 photons. This number, too, is Poisson distributed so the shot noise will be about <span class="math inline">\(\sqrt{150} \approx 12\)</span>, about 8% of the mean.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Scanning instruments and dwell time">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Scanning instruments and dwell time
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>In conventional 2D image sensors, exposure duration <span class="math inline">\(\Delta t\)</span> is the interval the shutter remains open across the pixel array. In <strong>scanning instruments</strong>—such as confocal laser-scanning microscopes, scanning LiDAR, or scanning electron microscopes (SEMs)—the image is formed sequentially, point by point. In these systems, the effective exposure time is the <strong>dwell time</strong>: the brief interval the focused probe beam pauses or integrates over a single spot (often on the order of microseconds or nanoseconds).</p>
+<p>The underlying physics remains identical: a pixel dwell time of <span class="math inline">\(1\,\mu\text{s}\)</span> under a given photon flux produces the exact same Poisson photon statistics and shot noise limit as a <span class="math inline">\(1\,\mu\text{s}\)</span> shutter duration on a 2D camera pixel.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Photons per pixel">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -654,7 +672,7 @@ Photons per pixel
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>The number of photons arriving at a pixel depends on many factors, including the light intensity, the optics, and the size of the pixel. ISETCam is a useful tool for estimating quantities such as the number of incident photons. The variance in the number of photons at a <span class="math inline">\(1~\mu\text{m}^2\)</span> pixel under moderate to dim lighting is considerable. Here is an image calculated using ISETCam, showing the Poisson variation in the number of photons across a small region.</p>
 <p><img src="images/sensors/15-parameters/03-photonimage.png" id="fig-photonimage" class="img-fluid" style="width:60.0%" alt="Poisson noise in a uniform region of a dim scene. Each pixel is $1~\mu\text{m}^2$ and the scene intensity is 50 nits.">.</p>
@@ -708,7 +726,7 @@ CG = 1 / C
 <p>Digital sensors control their relative sensitivity by circuitry that modulates the conversion gain. One widely used approach, <strong>dual conversion gain</strong>, adjusts the floating diffusion node capacitance. This is implemented using a switchable capacitor that can be connected, or not, to the node. The connection is controlled by a switchable transistor signal. In low conversion gain (<strong>LCG</strong>) mode, the capacitor is connected to the floating diffusion node; this increases the total capacitance and lowers the conversion gain (<a href="#eq-conversion-gain-capacitance" class="quarto-xref">Equation&nbsp;<span>19.2</span></a>). In high conversion gain (<strong>HCG</strong>) mode, the capacitor is disconnected; this reduces the total capacitance and increases the conversion gain.</p>
 <p>The LCG mode is used under normal or bright scene illumination. The HCG is useful when the scene is dark and there are relatively few photon generated electrons. The well capacity varies between these modes, so that the dynamic range of the sensor is reduced when it is in HCG mode. Of course, once an engineer builds a system with dual conversion modes you can expect another engineer to build a system with four or eight nodes: (<strong>multi-capacitor gain switching</strong>).</p>
 <div id="note-sensor-speed" class="callout callout-style-default callout-note callout-titled" title="Sensor speed">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -717,7 +735,7 @@ Sensor speed
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The dual conversion gain method is a true sensitivity adjustment: the method genuinely changes the signal-to-noise by modifying the well capacity. We will review the formulae relating different circuit parameters and signal-to-noise in <a href="sensors-06-characterization.html#sec-system-modeling-overview" class="quarto-xref"><span>Section 22.1</span></a>.</p>
 <p>Commercial vendors use other methods to approximate ISO speed. In one approach, after the charge is converted to a voltage the signal is amplified by an analog amplifier prior to ADC. This approach amplifies both the signal and noise. Its value is that in low light conditions the output spans the full bit depth.</p>
@@ -749,7 +767,7 @@ Sensor speed
 <p>In the 4T pixel, the circuit first measures the voltage on the floating diffusion node before transferring charge from the photodiode (capturing a baseline), and then again after the charge is transferred. The difference between these two measurements represents the pixel signal. This subtraction cancels much of the reset noise, improving signal-to-noise ratio.</p>
 <p>The 4T design is now standard due to its superior noise performance. Further innovations, such as dual conversion gain and stacked pixel structures have also expanded the dynamic range of CMOS sensors. We will explore some of these developments in <a href="sensors-07-innovations.html" class="quarto-xref"><span>Chapter 23</span></a>.</p>
 <div id="sensor-ktc" class="callout callout-style-default callout-note callout-titled" title="Reset noise units">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -758,7 +776,7 @@ Reset noise units
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The reset noise formula in <a href="#eq-ktc-volts" class="quarto-xref">Equation&nbsp;<span>19.3</span></a> gives the noise variance in units of volts. However, it is often more useful to express reset noise in terms of the number of electrons. The equivalent formula for the variance in charge is</p>
 <p><span id="eq-ktc-electrons"><span class="math display">\[
@@ -784,7 +802,7 @@ I_d(T) \propto T^3 e^{-E_g/kT}
 <p>We can convert the dark current (in <span class="math inline">\(C/s\)</span>) to a rate of electrons per second by dividing by the elementary charge (<span class="math inline">\(1.602 \times 10^{-19}~C/e^-\)</span>). The symbol <span class="math inline">\(C\)</span> is Coulombs. The number of dark electrons is random and follows a Poisson distribution with a mean equal to the expected number of dark electrons for the exposure time.</p>
 <p>The dark current level depends on multiple features of the circuit and is hard to predict from first principles. The dark current level is usually determined empirically and reported in the data sheets describing the sensor.</p>
 <div id="sensor-dark-current" class="callout callout-style-default callout-note callout-titled" title="Dark current units">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -793,7 +811,7 @@ Dark current units
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <!-- https://www.onsemi.com/pdf/datasheet/noii4sm6600a-d.pdf -->
 <p>A data sheet for a (discontinued) ON Semiconductor sensor specifies a dark current of <span class="math inline">\(78~e^{-}/\text{s}\)</span> at <span class="math inline">\(T = 21^\circ\text{C} = 294.15~\text{K}\)</span>. If we take a picture with a 0.03 second exposure, we expect an average of <span class="math inline">\(2.34\)</span> dark electrons per pixel. If the temperature rises by <span class="math inline">\(30\)</span> Kelvin, to <span class="math inline">\(324.15~\text{K}\)</span>, the mean number of dark electrons increases to <span class="math inline">\(3.13\)</span>. The number of dark electrons is Poisson distributed, so the variance equals the mean.</p>

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-06">
+<meta name="dcterms.date" content="2026-09-28">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>17&nbsp; Photons and Electrons – Foundations of Image Systems Engineering</title>
@@ -596,7 +596,10 @@ window.Quarto = {
   <li><a href="#sec-wavelength-effects" id="toc-sec-wavelength-effects" class="nav-link" data-scroll-target="#sec-wavelength-effects"><span class="header-section-number">17.5.2</span> Wavelength effects in silicon sensors</a></li>
   </ul></li>
   <li><a href="#sec-photons-poisson" id="toc-sec-photons-poisson" class="nav-link" data-scroll-target="#sec-photons-poisson"><span class="header-section-number">17.6</span> The random nature of photon absorptions</a></li>
-  <li><a href="#sec-shot-noise" id="toc-sec-shot-noise" class="nav-link" data-scroll-target="#sec-shot-noise"><span class="header-section-number">17.7</span> Statistics of the photoelectric effect</a></li>
+  <li><a href="#sec-shot-noise" id="toc-sec-shot-noise" class="nav-link" data-scroll-target="#sec-shot-noise"><span class="header-section-number">17.7</span> Statistics of the photoelectric effect</a>
+  <ul class="collapse">
+  <li><a href="#sec-shot-noise-parameters" id="toc-sec-shot-noise-parameters" class="nav-link" data-scroll-target="#sec-shot-noise-parameters"><span class="header-section-number">17.7.1</span> Physical factors that determine <span class="math inline">\(\mu\)</span></a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -616,7 +619,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 6, 2026</p>
+      <p class="date">September 28, 2026</p>
     </div>
   </div>
   
@@ -642,7 +645,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 6, 2026
+Last updated: September 28, 2026
 !-->
 </div>
 </div>
@@ -874,10 +877,20 @@ Figure&nbsp;17.4: Siméon Denis Poisson.
 </div>
 </div>
 </div>
-<p>The Poisson formula describes the probability of observing <span class="math inline">\(n\)</span> electron events, given a mean <span class="math inline">\(\lambda\)</span>: <span class="math display">\[
-P(n; \lambda) = \frac{\lambda^n e^{-\lambda}}{n!}
+<p>The Poisson formula describes the probability of observing <span class="math inline">\(n\)</span> electron events, given a mean <span class="math inline">\(\mu\)</span>: <span class="math display">\[
+P(n; \mu) = \frac{\mu^n e^{-\mu}}{n!}
 \]</span></p>
-<p>Here, <span class="math inline">\(\lambda\)</span> is both the expected (mean) number of events and the variance of the distribution. For large <span class="math inline">\(\lambda\)</span> (greater than about 15 or 20), the Poisson distribution closely resembles the Normal (Gaussian) distribution (<a href="#fig-sensor-poisson" class="quarto-xref">Figure&nbsp;<span>17.5</span></a>). The main differences are that the Poisson distribution only takes integer values and is skewed for small <span class="math inline">\(\lambda\)</span>. As <span class="math inline">\(\lambda\)</span> increases, the distribution becomes more symmetric and approaches the Normal distribution.</p>
+<p>Here, <span class="math inline">\(\mu\)</span> is both the expected (mean) number of events and the variance of the distribution (<span class="math inline">\(\sigma^2 = \mu\)</span>). When quantifying noise in physical systems, we use the standard deviation (<span class="math inline">\(\sigma\)</span>). The <strong>shot noise</strong> is therefore the standard deviation of this count:</p>
+<p><span id="eq-sensor-shot-noise"><span class="math display">\[
+\sigma_{\text{shot}} = \sqrt{\mu}
+\tag{17.3}\]</span></span></p>
+<p>This leads directly to a fundamental relationship in imaging: the signal-to-noise ratio (<span class="math inline">\(\text{SNR}\)</span>) due to shot noise is the ratio of the mean signal to the shot noise:</p>
+<p><span id="eq-sensor-shot-snr"><span class="math display">\[
+\text{SNR} = \frac{\mu}{\sigma_{\text{shot}}} = \frac{\mu}{\sqrt{\mu}} = \sqrt{\mu}
+\tag{17.4}\]</span></span></p>
+<p>Because the SNR increases with the square root of the signal, higher signal levels (more captured photons) produce relatively cleaner, less noisy measurements.</p>
+<p>The Poisson distribution fundamentally describes discrete, independent quantum events (individual photon arrivals), whereas the Gaussian distribution arises from the aggregate of many such events and is continuous. Even so, for large <span class="math inline">\(\mu\)</span> (greater than about 15 or 20), the Poisson distribution closely resembles what one would find from a discretization of the Normal (Gaussian) distribution (<a href="#fig-sensor-poisson" class="quarto-xref">Figure&nbsp;<span>17.5</span></a>).</p>
+<p>A primary difference between the two is that the Poisson distribution is defined only on non-negative integers, and for small values it exhibits a positive skew. As <span class="math inline">\(\mu\)</span> grows, this skewness vanishes and the distribution becomes symmetric and bell-shaped.</p>
 <div id="fig-sensor-poisson" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sensor-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -888,7 +901,26 @@ Figure&nbsp;17.5: Poisson distribution examples. The Poisson formula (red lines)
 </figcaption>
 </figure>
 </div>
-<p>A key fact we will use later: for a Poisson distribution, the mean and variance are equal. This property distinguishes Poisson noise from other types of noise.</p>
+<p>A key fact we will use repeatedly: for a Poisson distribution, the mean and variance are equal (<span class="math inline">\(\sigma^2 = \mu\)</span>). This property distinguishes Poisson noise from other sensor noise sources (such as read noise), where the noise variance is independent of the signal level.</p>
+<section id="sec-shot-noise-parameters" class="level3" data-number="17.7.1">
+<h3 data-number="17.7.1" class="anchored" data-anchor-id="sec-shot-noise-parameters"><span class="header-section-number">17.7.1</span> Physical factors that determine <span class="math inline">\(\mu\)</span></h3>
+<p>The mean number of electrons generated by a pixel, <span class="math inline">\(\mu\)</span>, is not a statistical abstraction—it is determined directly by the scene illumination, camera optics, and sensor geometry:</p>
+<p><span id="eq-mu-physical-factors"><span class="math display">\[
+\mu \approx \left(\frac{\pi}{4}\right) \left(\frac{1}{\mathrm{f}/\#}\right)^2 \Delta t \cdot A_{\text{pixel}} \cdot \int L(\lambda) \cdot \mathrm{QE}(\lambda) \, d\lambda
+\tag{17.5}\]</span></span></p>
+<p>where <span class="math inline">\(\lambda\)</span> is the optical wavelength. In practical terms, the mean signal <span class="math inline">\(\mu\)</span> scales proportionally with four key factors:</p>
+<ol type="1">
+<li><strong>Scene Radiance (<span class="math inline">\(L\)</span>):</strong> Brighter objects emit or reflect more photons per unit time and area.</li>
+<li><strong>Aperture Area (<span class="math inline">\(\propto 1/(\mathrm{f}/\#)^2\)</span>):</strong> A larger aperture (smaller <span class="math inline">\(\mathrm{f}/\#\)</span>) collects more light from each scene point.</li>
+<li><strong>Exposure Duration (<span class="math inline">\(\Delta t\)</span>):</strong> Longer exposure times integrate photon arrivals over a longer duration.</li>
+<li><strong>Pixel Area (<span class="math inline">\(A_{\text{pixel}}\)</span>):</strong> Larger physical pixels collect more incident photons than smaller ones.</li>
+</ol>
+<section id="small-mu-vs.-large-mu-regimes" class="level4" data-number="17.7.1.1">
+<h4 data-number="17.7.1.1" class="anchored" data-anchor-id="small-mu-vs.-large-mu-regimes"><span class="header-section-number">17.7.1.1</span> Small <span class="math inline">\(\mu\)</span> vs.&nbsp;large <span class="math inline">\(\mu\)</span> regimes</h4>
+<ul>
+<li><strong>Small <span class="math inline">\(\mu\)</span> (<span class="math inline">\(\mu &lt; 10\)</span>):</strong> Typical in low-light environments (dim indoor scenes or night photography) and with small smartphone pixels (<span class="math inline">\(A_{\text{pixel}} &lt; 1\,\mu\text{m}^2\)</span>). Here, pixels capture only a handful of electrons. The Poisson distribution is visibly skewed, discrete photon arrival counts dominate the measurement, and shot noise is high relative to the signal (<span class="math inline">\(\text{SNR} = \sqrt{\mu} \le 3\)</span>). In this regime, captured images appear grainy and noisy.</li>
+<li><strong>Large <span class="math inline">\(\mu\)</span> (<span class="math inline">\(\mu &gt; 100\)</span> to <span class="math inline">\(10{,}000+\)</span>):</strong> Typical in daylight or with large pixels (<span class="math inline">\(A_{\text{pixel}} \ge 25\,\mu\text{m}^2\)</span>) and longer exposures. Here, the pixel wells accumulate thousands of electrons. The Poisson distribution is practically indistinguishable from a continuous Gaussian distribution, and the SNR is high (<span class="math inline">\(\text{SNR} = \sqrt{\mu} &gt; 100\)</span>), yielding clean, smooth images.</li>
+</ul>
 <div id="shotnoise-poisson" class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -938,6 +970,8 @@ Pirenne MH (1951) <a href="http://dx.doi.org/10.1016/s0096-4174(18)30026-x">Quan
 Preece BL, Haefner DP (2022) <a href="http://dx.doi.org/10.1364/AO.452166"><span>3D</span> noise photon transfer curve</a>. Appl Opt 61:6202–6212
 </div>
 </div>
+</section>
+</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

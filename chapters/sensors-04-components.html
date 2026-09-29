@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-08-26">
+<meta name="dcterms.date" content="2026-09-28">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>20&nbsp; System components – Foundations of Image Systems Engineering</title>
@@ -595,7 +595,8 @@ window.Quarto = {
   <li><a href="#sec-sensor-wavelength" id="toc-sec-sensor-wavelength" class="nav-link" data-scroll-target="#sec-sensor-wavelength"><span class="header-section-number">20.3</span> Spectral components</a>
   <ul class="collapse">
   <li><a href="#sec-sensor-irfilter" id="toc-sec-sensor-irfilter" class="nav-link" data-scroll-target="#sec-sensor-irfilter"><span class="header-section-number">20.3.1</span> UV/IR filters</a></li>
-  <li><a href="#sec-sensor-cfa" id="toc-sec-sensor-cfa" class="nav-link" data-scroll-target="#sec-sensor-cfa"><span class="header-section-number">20.3.2</span> Color filter arrays (CFA)</a></li>
+  <li><a href="#sec-sensor-olpf" id="toc-sec-sensor-olpf" class="nav-link" data-scroll-target="#sec-sensor-olpf"><span class="header-section-number">20.3.2</span> Optical low-pass (anti-aliasing) filters</a></li>
+  <li><a href="#sec-sensor-cfa" id="toc-sec-sensor-cfa" class="nav-link" data-scroll-target="#sec-sensor-cfa"><span class="header-section-number">20.3.3</span> Color filter arrays (CFA)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -616,7 +617,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 26, 2026</p>
+      <p class="date">September 28, 2026</p>
     </div>
   </div>
   
@@ -642,7 +643,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: August 26, 2026
+Last updated: September 28, 2026
 !-->
 </div>
 </div>
@@ -713,10 +714,15 @@ Figure&nbsp;20.4: The UV/IR blocking filter is placed above the microlens. These
 </figcaption>
 </figure>
 </div>
-<p>Early digital cameras often included an additional laminated layer called an <strong>optical low pass filter (OLPF)</strong>, which slightly blurred the image. The OLPF ensured that light from a point in the scene would be spread over a small area (such as a 2x2 pixel region). This blur was useful because adjacent pixels have different color filters, but their outputs are combined and treated as coming from a single point in the scene. In recent cameras, pixel sizes have become so small that diffraction already spreads the light across multiple pixels (<a href="optics-03-diffraction-psf.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>), making the OLPF unnecessary.</p>
+<p>The properties of the IR blocking filter have a significant impact on downstream color processing. In practice, engineers sometimes choose filters that cut off light at wavelengths as short as 640–650 nm—even though the human eye remains sensitive out to 700 nm. One reason is that the spectral transmittance of the green and blue filters often increases at longer wavelengths. Blocking light starting at 640 nm prevents near-infrared light from leaking into these other color channels, which would significantly degrade color accuracy.</p>
 </section>
-<section id="sec-sensor-cfa" class="level3" data-number="20.3.2">
-<h3 data-number="20.3.2" class="anchored" data-anchor-id="sec-sensor-cfa"><span class="header-section-number">20.3.2</span> Color filter arrays (CFA)</h3>
+<section id="sec-sensor-olpf" class="level3" data-number="20.3.2">
+<h3 data-number="20.3.2" class="anchored" data-anchor-id="sec-sensor-olpf"><span class="header-section-number">20.3.2</span> Optical low-pass (anti-aliasing) filters</h3>
+<p>Early digital cameras often included an additional layer called an <strong>optical low-pass filter (OLPF)</strong>—commonly referred to as an <strong>anti-aliasing (AA) filter</strong>—typically laminated directly to the UV/IR filter package. The primary purpose of this filter is to prevent <strong>spatial aliasing</strong> (such as moiré patterns and false color artifacts) by attenuating spatial frequencies beyond the sensor’s Nyquist limit before the scene is sampled by the pixel grid.</p>
+<p>Because color filter arrays (such as the Bayer pattern, <a href="#sec-sensor-cfa" class="quarto-xref"><span>Section 20.3.3</span></a>) subsample each color channel on an even sparser grid than the physical pixels, high-frequency repetitive details can produce severe color moiré. The OLPF achieves anti-aliasing either through diffusing glass that slightly scatters the light, or through birefringent crystal plates (such as quartz or lithium niobate) that split an incoming ray into multiple closely spaced paths, spreading the optical point spread function across a small area (such as a <span class="math inline">\(2 \times 2\)</span> super-pixel region). In modern high-megapixel sensors, pixel pitches have become so small that lens diffraction already spreads the light across multiple pixels (<a href="optics-03-diffraction-psf.html#fig-blur-comparison" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>), making physical anti-aliasing filters largely unnecessary and allowing camera manufacturers to omit them in favor of maximum image sharpness.</p>
+</section>
+<section id="sec-sensor-cfa" class="level3" data-number="20.3.3">
+<h3 data-number="20.3.3" class="anchored" data-anchor-id="sec-sensor-cfa"><span class="header-section-number">20.3.3</span> Color filter arrays (CFA)</h3>
 <p>Below the UV/IR blocking filter, color cameras have a <strong>color filter array (CFA)</strong> (<a href="sensors-02-pixels.html#fig-pixel-layers" class="quarto-xref">Figure&nbsp;<span>18.4 (b)</span></a>). Typically, the CFA consists of three types of filters arranged in a repeating pattern. The smallest repeating unit is called a <strong>super pixel</strong>. Pixels behind each filter type form a mosaic that samples the image, and together these mosaics create three interleaved <strong>color channels</strong>. For consumer photography, the most common CFA pattern is the Bayer pattern <span class="citation" data-cites="bayerColorImagingArray1976">(<a href="references.html#ref-bayerColorImagingArray1976" role="doc-biblioref">1976</a>)</span>, which uses two green filters, one red, and one blue in each super pixel (<a href="#fig-cfa-pattern" class="quarto-xref">Figure&nbsp;<span>20.5</span></a>).</p>
 <div id="fig-cfa-pattern" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
