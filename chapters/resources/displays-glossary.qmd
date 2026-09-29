@@ -1,0 +1,70 @@
+---
+date: last-modified
+---
+
+# Displays and color glossary {#sec-resource-displays-glossary}
+
+{{< include "../includes/WIP-callout.qmd" >}}
+
+[Return to Displays Overview](../part-displays.qmd) | [Return to Display Principles](../displays-01-principles.qmd) | [Return to book home](../../index.qmd)
+
+Electronic displays recreate spatial, spectral, and temporal light distributions for human observers. This glossary defines key photometric units, colorimetric metrics, and engineering parameters used to characterize display systems.
+
+---
+
+## 1. Photometric and radiometric metrics
+
+| Term | Symbol | Primary Concept | Units | Key Definition |
+|:-----|:------:|:----------------|:-----:|:---------------|
+| **Luminance** | $L_v$ | Photometrically weighted luminous intensity per unit projected area | $\text{cd/m}^2$ (or nits) | Integrates spectral radiance weighted by the human photopic luminous efficiency function $V(\lambda)$ |
+| **Nit** | — | Practical industry name for one candela per square meter | $\text{cd/m}^2$ | Standard unit of display brightness ($1\text{ nit} = 1\text{ cd/m}^2$) |
+| **Illuminance** | $E_v$ | Total luminous flux incident on a display surface per unit area | Lux ($\text{lx} = \text{lm/m}^2$) | Ambient room light falling onto the display screen |
+| **Contrast Ratio** | $\text{CR}$ | Ratio of peak white luminance to deepest black luminance | Dimensionless | $\text{CR} = \frac{L_{\text{white}}}{L_{\text{black}}}$ (often $1{,}000:1$ for LCDs; $> 1{,}000{,}000:1$ for OLEDs) |
+
+: Photometric metrics for display devices. {#tbl-displays-glossary-photometry}
+
+### Luminance and the nit
+**Luminance** ($L_v$) quantifies the perceived brightness of an emitting or reflecting surface. The standard SI unit is candela per square meter ($\text{cd/m}^2$), universally called a **nit** in display engineering. Typical consumer display targets:
+* Standard office monitor: $200\text{--}350\text{ nits}$
+* Smartphone outdoors (direct sunlight): $1{,}000\text{--}2{,}000+\text{ nits}$
+* High Dynamic Range (HDR) peak highlights: $1{,}000\text{--}4{,}000\text{ nits}$
+
+### Contrast ratio
+The **contrast ratio** dictates the dynamic range of the display. Emissive displays (OLED, microLED) can turn individual subpixels completely off ($L_{\text{black}} \approx 0$), achieving nearly infinite static contrast ratios. Transmissive displays (LCDs) rely on a backlight modulated by liquid crystal shutters, where small light leakage through closed crystals limits native contrast to roughly $1{,}000:1$ (improved by local-dimming mini-LED backlights).
+
+---
+
+## 2. Color reproduction and gamuts
+
+| Term | Primary Concept | Standard Examples |
+|:-----|:----------------|:------------------|
+| **Display Primaries** | The fixed spectral power distributions (Red, Green, Blue) emitted or transmitted by display subpixels | LED phosphors, OLED emitters, quantum dots |
+| **Color Gamut** | The triangular region in chromaticity space encompassing all colors achievable by linear combinations of the three primaries | sRGB / Rec. 709, DCI-P3, Rec. 2020 |
+| **White Point** | The chromaticity coordinate and correlated color temperature produced when $R=G=B=\text{max}$ | CIE Standard Illuminant D65 ($6500\text{ K}$) |
+
+: Color reproduction specifications. {#tbl-displays-glossary-color}
+
+### Color gamut
+A display creates color by additive mixture of its three **primaries**. By Grassmann's laws, the set of reproducible chromaticities forms a triangle in the CIE $1931$ $(x, y)$ chromaticity diagram whose vertices are the primaries:
+* **sRGB / Rec. 709:** The historical baseline standard for web content and HDTV.
+* **DCI-P3:** Cinema and modern mobile/desktop standard covering roughly $25\%$ larger gamut area than sRGB (richer reds and greens).
+* **Rec. 2020:** Wide-gamut target standard for ultra-high-definition television (UHDTV) and HDR content.
+
+---
+
+## 3. Electro-optical transfer and modeling
+
+* **Tone Reproduction Curve (TRC) / Gamma ($\gamma$):** The non-linear transfer function relating digital frame buffer code values ($V \in [0, 1]$) to relative emitted luminance ($L \in [0, 1]$), historically approximated by a power law:
+  $$
+  L = V^\gamma \quad (\text{typically } \gamma \approx 2.2)
+  $$
+* **Standard Display Model (SDM):** A matrix-vector computational model that predicts the full spectral power distribution $S(\lambda)$ emitted by a display from RGB frame buffer values:
+  $$
+  S(\lambda) = \sum_{c \in \{R,G,B\}} T_c(V_c) \, P_c(\lambda)
+  $$
+  where $T_c(V_c)$ is the non-linear tone reproduction curve for channel $c$, and $P_c(\lambda)$ is the invariant spectral power distribution of primary $c$.
+* **Subpixel:** The smallest addressable physical color element on a display. A conventional pixel consists of three side-by-side subpixels (Red, Green, Blue stripe); alternative layouts include PenTile arrays and RGBW patterns.
+
+---
+
+[Return to Displays Overview](../part-displays.qmd) | [Return to Display Principles](../displays-01-principles.qmd) | [Return to book home](../../index.qmd)

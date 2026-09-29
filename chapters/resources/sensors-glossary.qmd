@@ -1,0 +1,73 @@
+---
+date: last-modified
+---
+
+# Image sensors glossary {#sec-resource-sensors-glossary}
+
+{{< include "../includes/WIP-callout.qmd" >}}
+
+[Return to Sensor Overview](../part-sensors.qmd) | [Return to Photons to Electrons](../sensors-01-photoelectric.qmd) | [Return to book home](../../index.qmd)
+
+Image sensors convert spatial light distributions into calibrated digital numbers through photogeneration, charge collection, voltage conversion, and quantization. This glossary defines fundamental terms, physical units, and parameters used to characterize image sensors.
+
+---
+
+## 1. Photogeneration and pixel architecture
+
+| Term | Symbol | Primary Concept | Units | Key Formula / Definition |
+|:-----|:------:|:----------------|:-----:|:-------------------------|
+| **Quantum Efficiency** | $\text{QE}(\lambda)$ | Fraction of incident photons converted into collected photoelectrons | Dimensionless ($0\text{--}1$ or %) | $\text{QE}(\lambda) = \frac{\text{electrons collected}}{\text{photons incident}}$ |
+| **Fill Factor** | $\text{FF}$ | Ratio of light-sensitive photodiode area to total pixel area | Dimensionless ($0\text{--}1$ or %) | $\text{FF} = \frac{A_{\text{photodiode}}}{A_{\text{pixel}}}$ |
+| **Full Well Capacity** | $\text{FWC}$ | Maximum number of photoelectrons a pixel can hold before saturation | $e^-$ | Upper limit of linear charge accumulation |
+| **Conversion Gain** | $\text{CG}$ | Voltage change produced on the floating diffusion node per electron | $\mu\text{V}/e^-$ | $\text{CG} = \frac{q}{C_{\text{FD}}}$ where $C_{\text{FD}}$ is floating diffusion capacitance |
+| **Dark Current** | $I_{\text{dark}}$ | Rate of thermally generated electrons in the absence of light | $e^-/\text{pixel/s}$ | Highly temperature-dependent, roughly doubling every $6\text{--}8^\circ\text{C}$ |
+
+: Fundamental photogeneration and pixel metrics. {#tbl-sensors-glossary-photogeneration}
+
+### Quantum efficiency ($\text{QE}$)
+The **quantum efficiency** specifies the probability that a photon of wavelength $\lambda$ incident on the pixel generates a photoelectron that is successfully collected in the photodiode potential well. $\text{QE}$ depends on silicon absorption depth, antireflection coatings, and color filter transmission.
+
+### Fill factor ($\text{FF}$)
+The **fill factor** is the fraction of the pixel surface area dedicated to light collection. In front-illuminated sensors with in-pixel circuitry (such as 3T or 4T CMOS architectures), metal interconnects block light, reducing $\text{FF}$. Modern backside-illuminated (BSI) sensors and on-chip microlens arrays achieve effective fill factors approaching $100\%$.
+
+### Full well capacity ($\text{FWC}$)
+The **full well capacity** is the maximum charge packet a photodiode or floating diffusion can store before charge spills over into neighboring pixels (blooming) or voltage response becomes non-linear. Larger physical pixel areas generally provide higher $\text{FWC}$.
+
+### Conversion gain ($\text{CG}$)
+The **conversion gain** describes how efficiently collected charge is transformed into a measurable voltage at the floating diffusion node: $\text{CG} = q / C_{\text{FD}}$, where $q$ is the elementary charge ($1.602 \times 10^{-19}\text{ C}$) and $C_{\text{FD}}$ is the capacitance. A smaller capacitance yields higher conversion gain, which is advantageous for low-light sensitivity.
+
+---
+
+## 2. Noise, dynamic range, and signal quality
+
+| Term | Symbol | Primary Concept | Units | Key Formula / Definition |
+|:-----|:------:|:----------------|:-----:|:-------------------------|
+| **Shot Noise** | $\sigma_{\text{shot}}$ | Fundamental quantum noise from Poisson photon arrival statistics | $e^-$ rms | $\sigma_{\text{shot}} = \sqrt{\mu}$, where $\mu$ is the mean signal |
+| **Read Noise** | $\sigma_{\text{read}}$ | Electronic noise introduced by pixel readout circuitry and amplifiers | $e^-$ rms | Measured in darkness; sets the noise floor |
+| **Signal-to-Noise Ratio** | $\text{SNR}$ | Ratio of mean signal to total standard deviation of noise | Dimensionless or $\text{dB}$ | $\text{SNR} = \frac{\mu}{\sqrt{\mu + \sigma_{\text{read}}^2}}$ |
+| **Dynamic Range** | $\text{DR}$ | Ratio of maximum measurable signal to the read noise floor | Dimensionless or $\text{dB}$ | $\text{DR} = \frac{\text{FWC}}{\sigma_{\text{read}}} \quad \left[\text{or } 20\log_{10}\!\left(\frac{\text{FWC}}{\sigma_{\text{read}}}\right)\text{ dB}\right]$ |
+
+: Noise and signal quality metrics. {#tbl-sensors-glossary-noise}
+
+### Shot noise ($\sigma_{\text{shot}}$)
+**Shot noise** arises from the discrete, quantum nature of photon emission and absorption (@sec-sensor-shot-noise). Because photon arrivals obey Poisson statistics, the variance equals the mean ($\sigma^2 = \mu$), and the standard deviation is $\sqrt{\mu}$. Shot noise is unavoidable and inherent to the physical signal.
+
+### Read noise ($\sigma_{\text{read}}$)
+**Read noise** comprises the combined electronic noise sources generated during pixel readout, including thermal (Johnson) noise, reset noise ($kTC$ noise, largely mitigated by correlated double sampling), source-follower $1/f$ noise, and ADC quantization noise. Read noise is independent of the optical signal level.
+
+### Dynamic range ($\text{DR}$)
+The **dynamic range** defines the ratio between the brightest unclipped signal a pixel can record ($\text{FWC}$) and the dimmest signal distinguishable from the dark noise floor ($\sigma_{\text{read}}$). Extending dynamic range is a primary motivation for techniques like burst photography (@sec-exposure-burst) and multi-exposure HDR capture.
+
+---
+
+## 3. Optical components and sensor timing
+
+* **Color Filter Array (CFA):** A spatial mosaic of microscopic spectral filters (such as the standard Bayer RGB pattern) deposited directly over the pixel array to enable color sensing with a single sensor chip (@sec-sensor-cfa).
+* **Optical Low-Pass Filter (OLPF / Anti-Aliasing Filter):** An optical plate (often birefringent crystal) placed in front of the sensor that slightly spreads the optical point spread function to attenuate spatial frequencies above the sensor's Nyquist limit, preventing moiré patterns (@sec-sensor-olpf).
+* **IR Cut Filter (Hot Mirror):** An optical filter placed above the sensor array that blocks near-infrared and ultraviolet light, restricting captured wavelengths to the human visible range ($400\text{--}650\text{ nm}$).
+* **Rolling Shutter:** An electronic exposure mode where rows of pixels are exposed and read out sequentially from top to bottom, which can induce skew or wobble artifacts for fast-moving subjects.
+* **Global Shutter:** An electronic exposure mode where all pixels across the entire array integrate light simultaneously, completely eliminating motion-induced geometric distortions.
+
+---
+
+[Return to Sensor Overview](../part-sensors.qmd) | [Return to Photons to Electrons](../sensors-01-photoelectric.qmd) | [Return to book home](../../index.qmd)

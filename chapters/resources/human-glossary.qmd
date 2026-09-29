@@ -1,0 +1,69 @@
+---
+date: last-modified
+---
+
+# Human vision and eye optics glossary {#sec-resource-human-glossary}
+
+{{< include "../includes/WIP-callout.qmd" >}}
+
+[Return to Human Vision Overview](../part-human.qmd) | [Return to Seeing](../human-01-seeing.qmd) | [Return to book home](../../index.qmd)
+
+Human vision provides the ultimate performance target and physical constraints for image systems engineered for human viewing. This glossary summarizes the core geometric, optical, retinal, and psychophysical terms used in vision science and imaging systems engineering.
+
+---
+
+## 1. Eye optics and spatial geometry
+
+| Term | Symbol | Primary Concept | Units | Key Formula / Definition |
+|:-----|:------:|:----------------|:-----:|:-------------------------|
+| **Visual Angle** | $\theta$ | Angle subtended by an object at the eye's nodal point | Degrees ($^\circ$) or arcmin ($'$) | $\theta \approx 2 \arctan\!\left(\frac{w}{2d}\right)$, where $w$ is target width and $d$ is distance |
+| **Cycles per Degree** | $\text{cpd}$ | Standard unit of spatial frequency in vision science | $\text{cycles/deg}$ | Number of sinusoidal luminance cycles spanning $1^\circ$ of visual angle |
+| **Diopter** | $D$ | Optical power of refractive surfaces (cornea, crystalline lens) | $\text{m}^{-1}$ | $D = \frac{1}{f\text{ [meters]}}$. Unaccommodated human eye is $\sim 60\text{ D}$. |
+| **Accommodation** | — | Dynamic adjustment of crystalline lens curvature to focus objects | Diopters ($D$) | Controlled by the ciliary muscle; capacity declines with age (presbyopia) |
+| **Fovea** | — | High-acuity central retinal zone spanning the central $\sim 1\text{--}2^\circ$ | Degrees ($^\circ$) | Rod-free center dominated by tightly packed L and M cones |
+
+: Geometric and optical parameters of human vision. {#tbl-human-glossary-optics}
+
+### Visual angle ($\theta$)
+Because retinal image size depends simultaneously on an object's physical dimension and viewing distance, vision scientists specify stimuli in terms of **visual angle**. At a standard reading distance ($40\text{ cm}$), $1\text{ cm}$ subtends roughly $1.4^\circ$ ($1^\circ \approx 7\text{ mm}$ on the page, or about the width of an index thumbnail at arm's length).
+
+### Cycles per degree ($\text{cpd}$)
+In image systems engineering, display resolution is often specified in pixels per inch (PPI). In human vision, resolution is expressed as spatial frequency in **cycles per degree (cpd)**. 20/20 human visual acuity corresponds to resolving a grating of approximately $30\text{ cpd}$ (each stripe spanning $1\text{ arcmin} = 1/60^\circ$).
+
+---
+
+## 2. Photoreceptors and retinal encoding
+
+| Term | Symbol | Primary Concept | Peak Sensitivity | Functional Regime |
+|:-----|:------:|:----------------|:----------------:|:------------------|
+| **Rods** | — | Highly sensitive monochromatic photoreceptors | $\sim 500\text{ nm}$ | Scotopic vision (night / low-light); saturate in daylight |
+| **L Cones** | $L$ | Long-wavelength sensitive cone photoreceptors | $\sim 560\text{ nm}$ | Photopic vision (daylight, color perception) |
+| **M Cones** | $M$ | Medium-wavelength sensitive cone photoreceptors | $\sim 530\text{ nm}$ | Photopic vision (daylight, color perception) |
+| **S Cones** | $S$ | Short-wavelength sensitive cone photoreceptors | $\sim 420\text{ nm}$ | Photopic vision; sparsest cone population ($\sim 5\text{--}10\%$) |
+
+: Human photoreceptor classes. {#tbl-human-glossary-receptors}
+
+### Photopic, scotopic, and mesopic regimes
+* **Photopic Vision:** Vision under bright daylight conditions ($> 3\text{ cd/m}^2$). Cones mediate sharp, full-color visual perception while rods are largely saturated.
+* **Scotopic Vision:** Vision under very dim illumination ($< 0.01\text{ cd/m}^2$). Rods mediate monochromatic vision with low spatial acuity and no color perception.
+* **Mesopic Vision:** Intermediate twilight regime ($0.01\text{--}3\text{ cd/m}^2$) where both rods and cones contribute to visual signals.
+
+### Cone mosaic
+The **cone mosaic** is the irregular 2D spatial arrangement of L, M, and S cones tiling the retina. Unlike a commercial camera's periodic Bayer pattern, the human cone mosaic is quasi-random, exhibits substantial individual variation in L:M ratio, and completely excludes S cones from the central foveola.
+
+---
+
+## 3. Color matching, trichromacy, and sensitivity metrics
+
+* **Trichromacy:** The fundamental principle that any visible spectral distribution can be matched for human perception by a linear combination of three primary lights, because early visual encoding reduces the continuous spectrum to three cone catches ($L, M, S$).
+* **Metamerism:** The phenomenon where two physically distinct spectral power distributions evoke identical cone absorptions ($L_1 = L_2, M_1 = M_2, S_1 = S_2$) and thus appear visually indistinguishable.
+* **Color Matching Functions (CMFs):** The amounts of three primary lights needed to match monochromatic test lights across the visible spectrum (such as the CIE $1931$ standard observer functions $\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)$ or physiologically based cone fundamentals).
+* **Michelson Contrast:** The standard metric used to quantify the contrast of periodic patterns (gratings):
+  $$
+  C_{\text{Michelson}} = \frac{L_{\text{max}} - L_{\text{min}}}{L_{\text{max}} + L_{\text{min}}}
+  $$
+* **Contrast Sensitivity Function (CSF):** The threshold sensitivity of the human visual system (reciprocal of minimum detectable contrast) as a function of spatial frequency. The photopic CSF typically peaks around $3\text{--}5\text{ cpd}$ and drops to zero near $50\text{--}60\text{ cpd}$.
+
+---
+
+[Return to Human Vision Overview](../part-human.qmd) | [Return to Seeing](../human-01-seeing.qmd) | [Return to book home](../../index.qmd)
