@@ -60,7 +60,14 @@ Philipp Lenard refined the early photoelectric experiments of Hertz by introduci
 - **Adjustable voltage:** an adjustable potential difference between the cathode and anode.
 - **Electrometer:** a sensitive measuring device to record the resulting current (not shown).
 
-When he illuminated the metal cathode, electrons were produced (the photoelectric effect) and ejected into the vacuum.  They were collected by the anode. The rig could both apply a voltage between the anode and cathode as well as measure the current.  In the experiments he measured how the current changed as light was presented and the potential difference was varied. He found that the photoelectric current reached a **saturation level** when all emitted electrons were collected, and it dropped to zero when the applied voltage was sufficiently negative to repel even the most energetic electrons.
+When he illuminated the metal cathode, electrons were produced (the photoelectric effect) and ejected into the vacuum.  They were collected by the anode. The rig could both apply a voltage between the anode and cathode as well as measure the current.  In the experiments he measured how the current changed as light was presented and the potential difference was varied.
+
+By sweeping the voltage, Lenard traced out a complete current-versus-voltage curve. Two features of the curve gave him two separate measurements:
+
+- **The saturation level (number of electrons).** When the anode is positive, it collects every electron the light ejects, and the current levels off. The height of this plateau is the number of electrons emitted per second.
+- **The cutoff voltage (energy of the electrons).** When the anode is made negative, it repels the electrons. Only electrons with enough kinetic energy can climb the barrier and reach the anode, so the current falls as the voltage becomes more negative. The current reaches zero at the **stopping potential**, where even the most energetic electrons are turned back. The position of this cutoff measures the maximum kinetic energy.
+
+The plateau tells us how many electrons there are, and the cutoff tells us how energetic they are. Because they appear in different parts of the curve, Lenard could change the light and see which feature moved.
 
 **How the Electron Energy Was Deduced**
 
@@ -74,8 +81,8 @@ where $e$ is the electron charge and $v_{\text{max}}$ is the velocity of the fas
 
 By systematically changing the **light intensity** and **wavelength**, Lenard discovered two key laws:
 
-1. **Increasing intensity** (at fixed wavelength) increased the number of emitted electrons, and thus the measured current, but **did not change** the stopping potential ($V_s$).
-2. **Increasing frequency** (decreasing wavelength) increased the stopping potential—hence, the **energy** of the electrons.
+1. **Increasing intensity** (at fixed wavelength) raised the saturation plateau, because more electrons were emitted, but the cutoff stayed at the same voltage. The stopping potential ($V_s$) **did not change**.
+2. **Increasing frequency** (decreasing wavelength) moved the cutoff to a more negative voltage, increasing the stopping potential—hence, the **energy** of the electrons.
 
 These findings showed that the energy of photoelectrons depends on the **frequency** of the incident light, not its intensity—a result that could not be explained by classical wave theory.
 
@@ -85,6 +92,60 @@ e V_s = h \nu - \phi,
 $$
 
 where $h$ is Planck’s constant, $\nu$ is the light frequency, and $\phi$ is the minimum energy required to emit the electron from a material into a vacuum. It is a surface-dependent material property (typically 2–5 eV for metals). In semiconductors used for photodiodes,this  threshold is set by the bandgap, which for silicon is 1.12 eV.
+
+<!--
+Yes, exactly: the stopping voltage ($V_0$ or $V_{\text{stop}}$) is a retarding potential applied between the plates specifically to oppose the flow of electrons.
+
+In normal forward operation, the collector plate (anode) is held at a positive potential relative to the emitter (cathode) to attract the liberated electrons. To find the stopping potential, the polarity of the variable voltage supply is reversed:
+
+* The cathode is set positive.
+
+
+* The anode is set negative.
+
+Because like charges repel, the negative anode creates an opposing electric field that decelerates the ejected electrons as they travel across the vacuum gap. To reach the anode and register as a current on the electrometer, an electron must possess enough kinetic energy to overcome that electrostatic potential barrier:
+
+$$e V_{\text{retard}} \le K$$
+
+As the retarding voltage increases, fewer and fewer electrons have enough kinetic energy to reach the plate. The precise voltage where the current reaches **exactly zero** is the **stopping voltage ($V_0$)**. At this cutoff point, even the fastest, most energetic electrons ($K_{\max}$) are turned back just before touching the plate:
+
+$$K_{\max} = e V_0$$
+
+---
+
+### How Lenard Separated Electron Number from Electron Energy
+
+Lenard separated the two quantities by measuring the full current-versus-voltage ($I\text{–}V$) curve under different experimental conditions. The electrometer measures total current, $I = \frac{dQ}{dt}$, which reflects the arrival rate of charges (number of electrons per second). By varying the voltage, he could probe the energy distribution independently of the rate.
+
+```
+       Current (I)
+            ^
+Saturation  |            /----------------- High Intensity
+   Current  |           /
+ (Rate/No.) |          /------------------- Low Intensity
+            |         /
+            |        /
+            +-------+---------------------- Applied Voltage (V)
+                 -V_0   0   (Forward Bias)
+            (Same cutoff!)
+
+
+#### 1. Measuring the *Number* of Electrons (Saturation Current)
+
+When a positive voltage is placed on the anode, it sweeps up all electrons kicked off the cathode. Once the voltage is high enough to collect everything emitted, the current levels off into a horizontal line called the **saturation current**.
+
+* **Varying Intensity:** When Lenard increased the light intensity (brightness) at a fixed wavelength, the saturation current scaled up proportionally. More photons meant more total electrons emitted per second.
+
+#### 2. Measuring the *Energy* of Individual Electrons (Voltage Cutoff)
+
+When he applied the retarding voltage, he looked exclusively at the zero-crossing on the voltage axis ($V_0$):
+
+* **Changing Intensity:** Doubling or tripling the light's intensity produced far more electrons (a much larger saturation current), but the current hit zero at the **exact same stopping voltage** ($V_0$). A million electrons hit the barrier, but none had enough energy to clear a potential higher than $V_0$. This proved that individual electron energy does not depend on the beam's total energy/brightness.
+
+* **Changing Frequency:** When he shifted to higher-frequency (shorter wavelength) light, $V_0$ moved further negative. Individual electrons now had higher maximum kinetic energy and required a steeper electric hill to turn them back.
+
+By treating the horizontal plateau ($I_{\text{sat}}$) as the gauge of **emission rate** and the horizontal intercept ($-V_0$) as the gauge of **peak single-particle energy**, the two variables were neatly decoupled.
+-->
 :::
 
 At the same time, physicists were trying to explain the spectrum of light emitted by a blackbody—a perfect absorber and emitter of radiation. In 1900, **Max Planck** tackled this problem. He found a formula that matched the observed spectrum, but only if he assumed that energy exchange (joules) between matter and radiation occurred in discrete amounts.
