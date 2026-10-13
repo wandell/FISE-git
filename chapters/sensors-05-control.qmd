@@ -289,15 +289,23 @@ This [ISETCam script](https://htmlpreview.github.io/?https://github.com/ISET/ise
 
 ### Global shutter {#sec-global-shutter-concept}
 
-To eliminate motion skew, wobble (the "jello effect"), and flash banding caused by rolling shutters, an image sensor must expose all pixels at the exact same instant in time. This capture mode is known as a [**global shutter**]{#def-global-shutter}.
+To eliminate motion skew caused by rolling shutters, an image sensor must expose all pixels at the exact same instant in time. This capture mode is known as a [**global shutter**]{#def-global-shutter}. The challenge in achieving a global shutter with the standard 4T design is that exposure ends everywhere at once, but readout cannot. In the 4T pixel, correlated double sampling (@sec-reset-noise-cds) works because each row is read in two steps: the floating diffusion is reset and its reset level is read, and then the transfer gate moves the photodiode charge onto the floating diffusion and the signal level is read. Both steps happen just before that row is digitized, so the signal charge can stay in the photodiode until the row is addressed. 
 
-In a global shutter sensor:
+If every pixel ends its exposure at the same instant, the charge in most rows must wait, sometimes for many milliseconds, before the row is read. The floating diffusion is a poor place to wait. It is not shielded from light, it leaks charge, and it must be reset to measure the reset level, which would erase the stored signal. The pixel needs a separate **memory node (MN)** that is shielded from light and that holds the signal charge until the row is read.
 
-1. **Simultaneous Exposure:** All pixels across the entire array begin exposure simultaneously via a global reset pulse, and all stop exposing simultaneously.
-2. **In-Pixel Storage:** Because all pixels finish exposure at the same time but readout must still proceed sequentially row-by-row, each pixel must have an in-pixel analog storage node (a shielded capacitor or memory element) to hold the accumulated charge or voltage until its turn to be read.
-3. **Sequential Readout:** Once charge is safely transferred into the shielded storage node, the rows can be digitized sequentially without accumulating any additional light.
+![The global shutter can be implemented by adding a memory node (MN), shielded from the light, to the pixel circuit. Relative to the 4T pixel, two transistors are added (6T): a photodiode reset (CLR) and a second transfer gate (TX2). The original transfer gate (TX1) becomes a global gate that moves charge from the pinned photodiode (PPD) to the shielded memory node (MN) in all pixels at once. TX2 is pulsed row by row to move the charge from MN to the floating diffusion (FD). With a charge-domain memory node, the reset level can still be sampled just before the signal, so correlated double sampling is preserved.](images/sensors/17-control/CMOS-6T-global-shutter-pixel.png){#fig-global-shutter-pixel width="70%"}
 
-In classic front-side illuminated planar CMOS sensors, adding a shielded storage node inside each pixel reduced the silicon area available for the photodiode, significantly lowering the sensor's fill factor and sensitivity. As we explore in @sec-sensor-stacked, modern 3D stacked silicon architectures (such as Cu-Cu direct bonding) solve this trade-off by placing the storage and readout electronics on a separate layer beneath the photodiode array. This enables modern high-speed cameras—such as the Sony $\alpha9$ III (@sec-digital-pixel)—to achieve full-frame global shutter capture at high frame rates (120 frames per second) with zero motion distortion.
+The readout still happens sequentially, one row at a time. The sequence of events is this:
+
+1. **Simultaneous exposure:** All photodiodes in the array are reset together by a global CLR pulse, and they all integrate light for the same interval.
+2. **Global transfer and in-pixel storage:** At the end of the exposure, a global TX1 pulse moves the charge from every photodiode into its shielded memory node (MN) at the same instant. This transfer defines the end of the exposure. The photodiode can begin integrating the next frame while the memory node holds the current one. Because the memory node is shielded, the charge it holds is not changed by light while it waits to be read.
+3. **Sequential readout with CDS:** During readout, which takes place row-by-row as in the 4T case, the floating diffusion is reset (RST), and its level is read. TX2 then moves the stored charge from the memory node, MN, onto the floating diffusion, and the signal level is read again. The difference of the two reads is the pixel value. Thus, the same reset voltage, including its random reset noise, is present in both reads, and it is canceled by CDS.
+
+::: {.callout-note}
+This charge-domain design is what makes true CDS possible with a global shutter. Some global-shutter pixels instead store a *voltage* on a capacitor. In that case the reset level must be sampled before the exposure ends, so the two samples are no longer correlated. The $kTC$ noise of the sampling capacitor then adds to the read noise, which is one reason charge-domain storage is preferred in low-noise sensors.
+:::
+
+In classic front-side illuminated planar CMOS sensors, adding a shielded memory node inside each pixel reduced the silicon area available for the photodiode, significantly lowering the sensor's fill factor and sensitivity. As we explore in @sec-sensor-stacked, modern 3D stacked silicon architectures (such as Cu-Cu direct bonding) solve this trade-off by placing the storage and readout electronics on a separate layer beneath the photodiode array. This enables modern high-speed cameras—such as the Sony $\alpha9$ III (@sec-digital-pixel)—to achieve full-frame global shutter capture at high frame rates (120 frames per second) with zero motion distortion.
 
 
 
