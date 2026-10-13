@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-08-31">
+<meta name="dcterms.date" content="2026-10-13">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>27&nbsp; Human wavelength encoding – Foundations of Image Systems Engineering</title>
@@ -586,14 +586,13 @@ window.Quarto = {
    
   <ul>
   <li><a href="#sec-human-wavelength-encoding-overview" id="toc-sec-human-wavelength-encoding-overview" class="nav-link active" data-scroll-target="#sec-human-wavelength-encoding-overview"><span class="header-section-number">27.1</span> Human wavelength encoding overview</a></li>
-  <li><a href="#wavelength-sampling---thomas-young" id="toc-wavelength-sampling---thomas-young" class="nav-link" data-scroll-target="#wavelength-sampling---thomas-young"><span class="header-section-number">27.2</span> Wavelength sampling - Thomas Young</a></li>
-  <li><a href="#color-matching-principles---maxwell" id="toc-color-matching-principles---maxwell" class="nav-link" data-scroll-target="#color-matching-principles---maxwell"><span class="header-section-number">27.3</span> Color matching principles - Maxwell</a></li>
-  <li><a href="#photoreceptor-wavelength-encoding---thomas-young" id="toc-photoreceptor-wavelength-encoding---thomas-young" class="nav-link" data-scroll-target="#photoreceptor-wavelength-encoding---thomas-young"><span class="header-section-number">27.4</span> Photoreceptor wavelength encoding - Thomas Young</a>
+  <li><a href="#color-matching-principles" id="toc-color-matching-principles" class="nav-link" data-scroll-target="#color-matching-principles"><span class="header-section-number">27.2</span> Color matching principles</a></li>
+  <li><a href="#photoreceptor-wavelength-encoding---thomas-young" id="toc-photoreceptor-wavelength-encoding---thomas-young" class="nav-link" data-scroll-target="#photoreceptor-wavelength-encoding---thomas-young"><span class="header-section-number">27.3</span> Photoreceptor wavelength encoding - Thomas Young</a>
   <ul class="collapse">
-  <li><a href="#color-matching" id="toc-color-matching" class="nav-link" data-scroll-target="#color-matching"><span class="header-section-number">27.4.1</span> Color-matching</a></li>
-  <li><a href="#human-chromatic-aberrations" id="toc-human-chromatic-aberrations" class="nav-link" data-scroll-target="#human-chromatic-aberrations"><span class="header-section-number">27.4.2</span> Human chromatic aberrations</a></li>
+  <li><a href="#color-matching" id="toc-color-matching" class="nav-link" data-scroll-target="#color-matching"><span class="header-section-number">27.3.1</span> Color-matching</a></li>
+  <li><a href="#human-chromatic-aberrations" id="toc-human-chromatic-aberrations" class="nav-link" data-scroll-target="#human-chromatic-aberrations"><span class="header-section-number">27.3.2</span> Human chromatic aberrations</a></li>
   </ul></li>
-  <li><a href="#retinal-prostheses" id="toc-retinal-prostheses" class="nav-link" data-scroll-target="#retinal-prostheses"><span class="header-section-number">27.5</span> Retinal prostheses</a></li>
+  <li><a href="#retinal-prostheses" id="toc-retinal-prostheses" class="nav-link" data-scroll-target="#retinal-prostheses"><span class="header-section-number">27.4</span> Retinal prostheses</a></li>
   </ul>
 </nav>
     </div>
@@ -613,7 +612,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 31, 2026</p>
+      <p class="date">October 13, 2026</p>
     </div>
   </div>
   
@@ -639,7 +638,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: August 31, 2026
+Last updated: October 13, 2026
 !-->
 </div>
 </div>
@@ -652,25 +651,35 @@ Last updated: August 31, 2026
 - <a href="https://wandell.github.io/FOV-1995/chapter-4-wavelength-encoding.html" target="_blank">Wavelength encoding</a></p>
 <section id="sec-human-wavelength-encoding-overview" class="level2" data-number="27.1">
 <h2 data-number="27.1" class="anchored" data-anchor-id="sec-human-wavelength-encoding-overview"><span class="header-section-number">27.1</span> Human wavelength encoding overview</h2>
-<p>Vision scientists have learned a great deal about the first stages of vision. We have excellent measurements of how the eye’s optics (the cornea and lens) transform light from the world into an image on the retina, and we know how the retina’s photoreceptors encode that image into neural signals. This knowledge is not just academic; it’s a practical guide for designing any system that reproduces images for people.</p>
-<p>Consider color. A camera designed for human viewing should capture the same portion of the electromagnetic spectrum that we see: visible light. Capturing less of the spectrum would lead to poor color reproduction. Capturing more—like infrared or ultraviolet—would be wasteful, consuming resources to record information we can’t see anyway. In this sense, human wavelength sensitivity sets a clear target for camera design.</p>
-<p>Spatial resolution presents a different challenge. It would be a disappointment if a camera failed to capture details as fine as those the human eye can resolve. We expect our photos to be at least as sharp as what we see. However, unlike with color, people are often pleased if a camera captures a scene at a <em>finer</em> resolution than the eye can perceive. We can always zoom in on the digital image to see details we might have missed. This extra information doesn’t interfere with the viewing experience; it just requires more storage and processing power.</p>
+<p>Vision scientists have learned a great deal about the first stages of vision. We have excellent measurements of how the eye’s optics (the cornea and lens) transform light from the world into an image on the retina, and we know how the retina’s photoreceptors encode that image into neural signals. This knowledge serves as a practical guide for designing any system that reproduces images for people.</p>
+<p>Consider color. A camera designed for human viewing should capture the same portion of the electromagnetic spectrum that we see: visible light. Capturing less of the spectrum would lead to poor color reproduction. Capturing more—like infrared or ultraviolet—would be wasteful, consuming resources to record information we can’t see anyway. Worse yet, if we add in these signals into a reproduction the appearance would fail to match what we see. Our knowledge of human wavelength sensitivity sets a clear target for an image system designed for consumer photography.</p>
+<p>Spatial resolution presents a different challenge. It would be a disappointment if a camera failed to capture details as fine as those the human eye can resolve. We expect our photos to be at least as sharp as what we see. However, unlike color, people are generally pleased if a camera captures a scene at a <em>finer</em> resolution than the eye encodes. We zoom in on the digital image to see details we might have missed. This extra information doesn’t interfere with the viewing experience; it just requires more storage and processing power.</p>
 <p>So, we have two different engineering constraints derived from human vision:</p>
 <ul>
-<li><strong>Wavelength:</strong> Human vision sets a <em>target range</em>. Capturing more is wasteful.</li>
-<li><strong>Spatial Resolution:</strong> Human vision sets a <em>minimum bar</em>. Capturing more can be beneficial.</li>
+<li><strong>Wavelength:</strong> Human vision sets a <em>target range</em>.</li>
+<li><strong>Spatial Resolution:</strong> Human vision sets a <em>minimum bar</em>.</li>
 </ul>
-<p>In this section, we will review the key properties of the eye that define these limits. The way our visual system samples space and encodes wavelength creates fundamental bottlenecks on what we can perceive. Understanding these limits doesn’t explain everything about what we see, but it tells us what we <em>cannot</em> see—essential knowledge for the field of image systems engineering.</p>
+<p>In this section, we will review the key properties of the eye that define these limits. The way our visual system encodes wavelength and samples space sets limits on what we want to encode in an image system. Understanding these limits doesn’t explain everything about what we see, but it tells us what we <em>cannot</em> see—essential knowledge for the field of image systems engineering.</p>
 </section>
-<section id="wavelength-sampling---thomas-young" class="level2" data-number="27.2">
-<h2 data-number="27.2" class="anchored" data-anchor-id="wavelength-sampling---thomas-young"><span class="header-section-number">27.2</span> Wavelength sampling - Thomas Young</h2>
-</section>
-<section id="color-matching-principles---maxwell" class="level2" data-number="27.3">
-<h2 data-number="27.3" class="anchored" data-anchor-id="color-matching-principles---maxwell"><span class="header-section-number">27.3</span> Color matching principles - Maxwell</h2>
+<section id="color-matching-principles" class="level2" data-number="27.2">
+<h2 data-number="27.2" class="anchored" data-anchor-id="color-matching-principles"><span class="header-section-number">27.2</span> Color matching principles</h2>
 <p>James Clerk Maxwell’s color matching experiments Color representations: XYZ, luminance, chromaticity, cones</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled" title="Color appearance: Biology or physics">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Color appearance: Biology or physics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mainly point to FOV. But say a little bit about Thomas Young, Brewster, Helmholtz and Maxwell.</p>
+</div>
+</div>
 </section>
-<section id="photoreceptor-wavelength-encoding---thomas-young" class="level2" data-number="27.4">
-<h2 data-number="27.4" class="anchored" data-anchor-id="photoreceptor-wavelength-encoding---thomas-young"><span class="header-section-number">27.4</span> Photoreceptor wavelength encoding - Thomas Young</h2>
+<section id="photoreceptor-wavelength-encoding---thomas-young" class="level2" data-number="27.3">
+<h2 data-number="27.3" class="anchored" data-anchor-id="photoreceptor-wavelength-encoding---thomas-young"><span class="header-section-number">27.3</span> Photoreceptor wavelength encoding - Thomas Young</h2>
 <!--
 https://chatgpt.com/s/t_68af5af69c688191b21118844094d0b5
 
@@ -682,17 +691,17 @@ Thomas Young wrote a reply (@young1804-reply)
 
  > A MAN who has a proper regard for the dignity of his own character, although his sensibility may sometimes be awakened by the unjust attacks of interested malevolence, will esteem it ingeneral more advisable to bear, in silence, the temporary effects of a short lived injury, than to suffer his own pursuits to be interrupted, in making an effort to repel the invective, and to punish the aggressor. 
 -->
-<section id="color-matching" class="level3" data-number="27.4.1">
-<h3 data-number="27.4.1" class="anchored" data-anchor-id="color-matching"><span class="header-section-number">27.4.1</span> Color-matching</h3>
+<section id="color-matching" class="level3" data-number="27.3.1">
+<h3 data-number="27.3.1" class="anchored" data-anchor-id="color-matching"><span class="header-section-number">27.3.1</span> Color-matching</h3>
 </section>
-<section id="human-chromatic-aberrations" class="level3" data-number="27.4.2">
-<h3 data-number="27.4.2" class="anchored" data-anchor-id="human-chromatic-aberrations"><span class="header-section-number">27.4.2</span> Human chromatic aberrations</h3>
+<section id="human-chromatic-aberrations" class="level3" data-number="27.3.2">
+<h3 data-number="27.3.2" class="anchored" data-anchor-id="human-chromatic-aberrations"><span class="header-section-number">27.3.2</span> Human chromatic aberrations</h3>
 <p>fise_human* script exists.</p>
 <p>Wavelength dependence (chromatic aberration)</p>
 </section>
 </section>
-<section id="retinal-prostheses" class="level2" data-number="27.5">
-<h2 data-number="27.5" class="anchored" data-anchor-id="retinal-prostheses"><span class="header-section-number">27.5</span> Retinal prostheses</h2>
+<section id="retinal-prostheses" class="level2" data-number="27.4">
+<h2 data-number="27.4" class="anchored" data-anchor-id="retinal-prostheses"><span class="header-section-number">27.4</span> Retinal prostheses</h2>
 <p>Now that we know so much about the retinal encoding, the Palanker project would fit well.</p>
 <p>THe Chichilnisky project gets thrown in at the end as next generation. Palanker fits well with the cones going forward. The Chichilnisky project fits well with motivating why we want to know what the retinal circuitry does so we address diseases when the bipolar cells (inner nuclear layer) are damaged.</p>
 

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-28">
+<meta name="dcterms.date" content="2026-10-13">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>17&nbsp; Photons and Electrons – Foundations of Image Systems Engineering</title>
@@ -637,7 +637,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 28, 2026</p>
+      <p class="date">October 13, 2026</p>
     </div>
   </div>
   
@@ -663,7 +663,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 28, 2026
+Last updated: October 13, 2026
 !-->
 </div>
 </div>
@@ -732,7 +732,13 @@ Figure&nbsp;17.1: Lenard’s experimental apparatus (conceptual). Image by ChatG
 <li><strong>Adjustable voltage:</strong> an adjustable potential difference between the cathode and anode.</li>
 <li><strong>Electrometer:</strong> a sensitive measuring device to record the resulting current (not shown).</li>
 </ul>
-<p>When he illuminated the metal cathode, electrons were produced (the photoelectric effect) and ejected into the vacuum. They were collected by the anode. The rig could both apply a voltage between the anode and cathode as well as measure the current. In the experiments he measured how the current changed as light was presented and the potential difference was varied. He found that the photoelectric current reached a <strong>saturation level</strong> when all emitted electrons were collected, and it dropped to zero when the applied voltage was sufficiently negative to repel even the most energetic electrons.</p>
+<p>When he illuminated the metal cathode, electrons were produced (the photoelectric effect) and ejected into the vacuum. They were collected by the anode. The rig could both apply a voltage between the anode and cathode as well as measure the current. In the experiments he measured how the current changed as light was presented and the potential difference was varied.</p>
+<p>By sweeping the voltage, Lenard traced out a complete current-versus-voltage curve. Two features of the curve gave him two separate measurements:</p>
+<ul>
+<li><strong>The saturation level (number of electrons).</strong> When the anode is positive, it collects every electron the light ejects, and the current levels off. The height of this plateau is the number of electrons emitted per second.</li>
+<li><strong>The cutoff voltage (energy of the electrons).</strong> When the anode is made negative, it repels the electrons. Only electrons with enough kinetic energy can climb the barrier and reach the anode, so the current falls as the voltage becomes more negative. The current reaches zero at the <strong>stopping potential</strong>, where even the most energetic electrons are turned back. The position of this cutoff measures the maximum kinetic energy.</li>
+</ul>
+<p>The plateau tells us how many electrons there are, and the cutoff tells us how energetic they are. Because they appear in different parts of the curve, Lenard could change the light and see which feature moved.</p>
 <p><strong>How the Electron Energy Was Deduced</strong></p>
 <p>The crucial measurement in Lenard’s experiment was the <strong>stopping potential</strong>, <span class="math inline">\(V_s\)</span>, the retarding voltage required to reduce the photoelectric current to zero. This provided a direct measure of the maximum kinetic energy of the emitted electrons:</p>
 <p><span class="math display">\[
@@ -741,14 +747,67 @@ e V_s = \tfrac{1}{2} m v_{\text{max}}^2
 <p>where <span class="math inline">\(e\)</span> is the electron charge and <span class="math inline">\(v_{\text{max}}\)</span> is the velocity of the fastest emitted electrons.</p>
 <p>By systematically changing the <strong>light intensity</strong> and <strong>wavelength</strong>, Lenard discovered two key laws:</p>
 <ol type="1">
-<li><strong>Increasing intensity</strong> (at fixed wavelength) increased the number of emitted electrons, and thus the measured current, but <strong>did not change</strong> the stopping potential (<span class="math inline">\(V_s\)</span>).</li>
-<li><strong>Increasing frequency</strong> (decreasing wavelength) increased the stopping potential—hence, the <strong>energy</strong> of the electrons.</li>
+<li><strong>Increasing intensity</strong> (at fixed wavelength) raised the saturation plateau, because more electrons were emitted, but the cutoff stayed at the same voltage. The stopping potential (<span class="math inline">\(V_s\)</span>) <strong>did not change</strong>.</li>
+<li><strong>Increasing frequency</strong> (decreasing wavelength) moved the cutoff to a more negative voltage, increasing the stopping potential—hence, the <strong>energy</strong> of the electrons.</li>
 </ol>
 <p>These findings showed that the energy of photoelectrons depends on the <strong>frequency</strong> of the incident light, not its intensity—a result that could not be explained by classical wave theory.</p>
 <p>Einstein’s photoelectric equation (1905) explains Lenard’s observations: <span class="math display">\[
 e V_s = h \nu - \phi,
 \]</span></p>
 <p>where <span class="math inline">\(h\)</span> is Planck’s constant, <span class="math inline">\(\nu\)</span> is the light frequency, and <span class="math inline">\(\phi\)</span> is the minimum energy required to emit the electron from a material into a vacuum. It is a surface-dependent material property (typically 2–5 eV for metals). In semiconductors used for photodiodes,this threshold is set by the bandgap, which for silicon is 1.12 eV.</p>
+<!--
+Yes, exactly: the stopping voltage ($V_0$ or $V_{\text{stop}}$) is a retarding potential applied between the plates specifically to oppose the flow of electrons.
+
+In normal forward operation, the collector plate (anode) is held at a positive potential relative to the emitter (cathode) to attract the liberated electrons. To find the stopping potential, the polarity of the variable voltage supply is reversed:
+
+* The cathode is set positive.
+
+
+* The anode is set negative.
+
+Because like charges repel, the negative anode creates an opposing electric field that decelerates the ejected electrons as they travel across the vacuum gap. To reach the anode and register as a current on the electrometer, an electron must possess enough kinetic energy to overcome that electrostatic potential barrier:
+
+$$e V_{\text{retard}} \le K$$
+
+As the retarding voltage increases, fewer and fewer electrons have enough kinetic energy to reach the plate. The precise voltage where the current reaches **exactly zero** is the **stopping voltage ($V_0$)**. At this cutoff point, even the fastest, most energetic electrons ($K_{\max}$) are turned back just before touching the plate:
+
+$$K_{\max} = e V_0$$
+
+---
+
+### How Lenard Separated Electron Number from Electron Energy
+
+Lenard separated the two quantities by measuring the full current-versus-voltage ($I\text{–}V$) curve under different experimental conditions. The electrometer measures total current, $I = \frac{dQ}{dt}$, which reflects the arrival rate of charges (number of electrons per second). By varying the voltage, he could probe the energy distribution independently of the rate.
+
+```
+       Current (I)
+            ^
+Saturation  |            /----------------- High Intensity
+   Current  |           /
+ (Rate/No.) |          /------------------- Low Intensity
+            |         /
+            |        /
+            +-------+---------------------- Applied Voltage (V)
+                 -V_0   0   (Forward Bias)
+            (Same cutoff!)
+
+
+#### 1. Measuring the *Number* of Electrons (Saturation Current)
+
+When a positive voltage is placed on the anode, it sweeps up all electrons kicked off the cathode. Once the voltage is high enough to collect everything emitted, the current levels off into a horizontal line called the **saturation current**.
+
+* **Varying Intensity:** When Lenard increased the light intensity (brightness) at a fixed wavelength, the saturation current scaled up proportionally. More photons meant more total electrons emitted per second.
+
+#### 2. Measuring the *Energy* of Individual Electrons (Voltage Cutoff)
+
+When he applied the retarding voltage, he looked exclusively at the zero-crossing on the voltage axis ($V_0$):
+
+* **Changing Intensity:** Doubling or tripling the light's intensity produced far more electrons (a much larger saturation current), but the current hit zero at the **exact same stopping voltage** ($V_0$). A million electrons hit the barrier, but none had enough energy to clear a potential higher than $V_0$. This proved that individual electron energy does not depend on the beam's total energy/brightness.
+
+* **Changing Frequency:** When he shifted to higher-frequency (shorter wavelength) light, $V_0$ moved further negative. Individual electrons now had higher maximum kinetic energy and required a steeper electric hill to turn them back.
+
+By treating the horizontal plateau ($I_{\text{sat}}$) as the gauge of **emission rate** and the horizontal intercept ($-V_0$) as the gauge of **peak single-particle energy**, the two variables were neatly decoupled.
+-->
 </div>
 </div>
 </div>
