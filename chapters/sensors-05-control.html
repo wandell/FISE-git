@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-28">
+<meta name="dcterms.date" content="2026-10-13">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>21&nbsp; Control systems – Foundations of Image Systems Engineering</title>
@@ -643,7 +643,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 28, 2026</p>
+      <p class="date">October 13, 2026</p>
     </div>
   </div>
   
@@ -669,7 +669,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 28, 2026
+Last updated: October 13, 2026
 !-->
 </div>
 </div>
@@ -1044,14 +1044,38 @@ Figure&nbsp;21.8: Simulated rolling shutter effect.
 </section>
 <section id="sec-global-shutter-concept" class="level3" data-number="21.4.2">
 <h3 data-number="21.4.2" class="anchored" data-anchor-id="sec-global-shutter-concept"><span class="header-section-number">21.4.2</span> Global shutter</h3>
-<p>To eliminate motion skew, wobble (the “jello effect”), and flash banding caused by rolling shutters, an image sensor must expose all pixels at the exact same instant in time. This capture mode is known as a <span id="def-global-shutter"><strong>global shutter</strong></span>.</p>
-<p>In a global shutter sensor:</p>
+<p>To eliminate motion skew caused by rolling shutters, an image sensor must expose all pixels at the exact same instant in time. This capture mode is known as a <span id="def-global-shutter"><strong>global shutter</strong></span>. The challenge in achieving a global shutter with the standard 4T design is that exposure ends everywhere at once, but readout cannot. In the 4T pixel, correlated double sampling (<a href="sensors-03-parameters.html#sec-reset-noise-cds" class="quarto-xref"><span>Section 19.6.1</span></a>) works because each row is read in two steps: the floating diffusion is reset and its reset level is read, and then the transfer gate moves the photodiode charge onto the floating diffusion and the signal level is read. Both steps happen just before that row is digitized, so the signal charge can stay in the photodiode until the row is addressed.</p>
+<p>If every pixel ends its exposure at the same instant, the charge in most rows must wait, sometimes for many milliseconds, before the row is read. The floating diffusion is a poor place to wait. It is not shielded from light, it leaks charge, and it must be reset to measure the reset level, which would erase the stored signal. The pixel needs a separate <strong>memory node (MN)</strong> that is shielded from light and that holds the signal charge until the row is read.</p>
+<div id="fig-global-shutter-pixel" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-global-shutter-pixel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/sensors/17-control/CMOS-6T-global-shutter-pixel.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-global-shutter-pixel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;21.9: The global shutter can be implemented by adding a memory node (MN), shielded from the light, to the pixel circuit. Relative to the 4T pixel, two transistors are added (6T): a photodiode reset (CLR) and a second transfer gate (TX2). The original transfer gate (TX1) becomes a global gate that moves charge from the pinned photodiode (PPD) to the shielded memory node (MN) in all pixels at once. TX2 is pulsed row by row to move the charge from MN to the floating diffusion (FD). With a charge-domain memory node, the reset level can still be sampled just before the signal, so correlated double sampling is preserved.
+</figcaption>
+</figure>
+</div>
+<p>The readout still happens sequentially, one row at a time. The sequence of events is this:</p>
 <ol type="1">
-<li><strong>Simultaneous Exposure:</strong> All pixels across the entire array begin exposure simultaneously via a global reset pulse, and all stop exposing simultaneously.</li>
-<li><strong>In-Pixel Storage:</strong> Because all pixels finish exposure at the same time but readout must still proceed sequentially row-by-row, each pixel must have an in-pixel analog storage node (a shielded capacitor or memory element) to hold the accumulated charge or voltage until its turn to be read.</li>
-<li><strong>Sequential Readout:</strong> Once charge is safely transferred into the shielded storage node, the rows can be digitized sequentially without accumulating any additional light.</li>
+<li><strong>Simultaneous exposure:</strong> All photodiodes in the array are reset together by a global CLR pulse, and they all integrate light for the same interval.</li>
+<li><strong>Global transfer and in-pixel storage:</strong> At the end of the exposure, a global TX1 pulse moves the charge from every photodiode into its shielded memory node (MN) at the same instant. This transfer defines the end of the exposure. The photodiode can begin integrating the next frame while the memory node holds the current one. Because the memory node is shielded, the charge it holds is not changed by light while it waits to be read.</li>
+<li><strong>Sequential readout with CDS:</strong> During readout, which takes place row-by-row as in the 4T case, the floating diffusion is reset (RST), and its level is read. TX2 then moves the stored charge from the memory node, MN, onto the floating diffusion, and the signal level is read again. The difference of the two reads is the pixel value. Thus, the same reset voltage, including its random reset noise, is present in both reads, and it is canceled by CDS.</li>
 </ol>
-<p>In classic front-side illuminated planar CMOS sensors, adding a shielded storage node inside each pixel reduced the silicon area available for the photodiode, significantly lowering the sensor’s fill factor and sensitivity. As we explore in <a href="sensors-02-pixels.html#sec-sensor-stacked" class="quarto-xref"><span>Section 18.7</span></a>, modern 3D stacked silicon architectures (such as Cu-Cu direct bonding) solve this trade-off by placing the storage and readout electronics on a separate layer beneath the photodiode array. This enables modern high-speed cameras—such as the Sony <span class="math inline">\(\alpha9\)</span> III (<a href="sensors-02-pixels.html#sec-digital-pixel" class="quarto-xref"><span>Section 18.8</span></a>)—to achieve full-frame global shutter capture at high frame rates (120 frames per second) with zero motion distortion.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This charge-domain design is what makes true CDS possible with a global shutter. Some global-shutter pixels instead store a <em>voltage</em> on a capacitor. In that case the reset level must be sampled before the exposure ends, so the two samples are no longer correlated. The <span class="math inline">\(kTC\)</span> noise of the sampling capacitor then adds to the read noise, which is one reason charge-domain storage is preferred in low-noise sensors.</p>
+</div>
+</div>
+<p>In classic front-side illuminated planar CMOS sensors, adding a shielded memory node inside each pixel reduced the silicon area available for the photodiode, significantly lowering the sensor’s fill factor and sensitivity. As we explore in <a href="sensors-02-pixels.html#sec-sensor-stacked" class="quarto-xref"><span>Section 18.7</span></a>, modern 3D stacked silicon architectures (such as Cu-Cu direct bonding) solve this trade-off by placing the storage and readout electronics on a separate layer beneath the photodiode array. This enables modern high-speed cameras—such as the Sony <span class="math inline">\(\alpha9\)</span> III (<a href="sensors-02-pixels.html#sec-digital-pixel" class="quarto-xref"><span>Section 18.8</span></a>)—to achieve full-frame global shutter capture at high frame rates (120 frames per second) with zero motion distortion.</p>
 
 
 

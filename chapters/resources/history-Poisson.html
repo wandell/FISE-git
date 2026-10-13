@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-17">
+<meta name="dcterms.date" content="2026-09-30">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>48&nbsp; History: Poisson photon statistics and vision – Foundations of Image Systems Engineering</title>
@@ -22,7 +22,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -585,8 +604,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#einstein-1909-poisson-like-but-more-than-poisson" id="toc-einstein-1909-poisson-like-but-more-than-poisson" class="nav-link active" data-scroll-target="#einstein-1909-poisson-like-but-more-than-poisson"><span class="header-section-number">48.1</span> Einstein 1909 — Poisson-like, but More Than Poisson</a></li>
-  <li><a href="#the-vision-science-crowd" id="toc-the-vision-science-crowd" class="nav-link" data-scroll-target="#the-vision-science-crowd"><span class="header-section-number">48.2</span> The vision science crowd</a></li>
+  <li><a href="#the-50-year-puzzle-from-einstein-to-poisson-photo-electrons" id="toc-the-50-year-puzzle-from-einstein-to-poisson-photo-electrons" class="nav-link active" data-scroll-target="#the-50-year-puzzle-from-einstein-to-poisson-photo-electrons"><span class="header-section-number">48.1</span> The 50-year puzzle: From Einstein to Poisson photo-electrons</a></li>
+  <li><a href="#einstein-1909-poisson-like-but-more-than-poisson" id="toc-einstein-1909-poisson-like-but-more-than-poisson" class="nav-link" data-scroll-target="#einstein-1909-poisson-like-but-more-than-poisson"><span class="header-section-number">48.2</span> Einstein (1909): Poisson-like, but more than Poisson</a></li>
+  <li><a href="#the-vision-science-path-thresholds-and-retinal-noise" id="toc-the-vision-science-path-thresholds-and-retinal-noise" class="nav-link" data-scroll-target="#the-vision-science-path-thresholds-and-retinal-noise"><span class="header-section-number">48.3</span> The vision science path: Thresholds and retinal noise</a>
+  <ul class="collapse">
+  <li><a href="#hecht-shlaer-and-pirenne-1942" id="toc-hecht-shlaer-and-pirenne-1942" class="nav-link" data-scroll-target="#hecht-shlaer-and-pirenne-1942"><span class="header-section-number">48.3.1</span> Hecht, Shlaer, and Pirenne (1942)</a></li>
+  <li><a href="#pirenne-1951-and-barlow-1956" id="toc-pirenne-1951-and-barlow-1956" class="nav-link" data-scroll-target="#pirenne-1951-and-barlow-1956"><span class="header-section-number">48.3.2</span> Pirenne (1951) and Barlow (1956)</a></li>
+  <li><a href="#sakitt-and-barlow-1972" id="toc-sakitt-and-barlow-1972" class="nav-link" data-scroll-target="#sakitt-and-barlow-1972"><span class="header-section-number">48.3.3</span> Sakitt and Barlow (1972)</a></li>
+  </ul></li>
+  <li><a href="#the-quantum-optics-path-mandel-wolf-and-photo-electron-counting" id="toc-the-quantum-optics-path-mandel-wolf-and-photo-electron-counting" class="nav-link" data-scroll-target="#the-quantum-optics-path-mandel-wolf-and-photo-electron-counting"><span class="header-section-number">48.4</span> The quantum optics path: Mandel, Wolf, and photo-electron counting</a></li>
+  <li><a href="#reflections-two-parallel-traditions" id="toc-reflections-two-parallel-traditions" class="nav-link" data-scroll-target="#reflections-two-parallel-traditions"><span class="header-section-number">48.5</span> Reflections: Two parallel traditions</a></li>
   </ul>
 </nav>
     </div>
@@ -606,7 +633,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 17, 2026</p>
+      <p class="date">September 30, 2026</p>
     </div>
   </div>
   
@@ -632,66 +659,109 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 17, 2026
+Last updated: September 30, 2026
 !-->
 </div>
 </div>
 </div>
 <p><a href="../../chapters/sensors-01-photoelectric.html">Return to Photoelectric Effect</a> | <a href="../../index.html">Return to book home</a></p>
-<p>The story of the basic discovery of the photoelectric effect, and the role of Hertz, Einstein, Planck and Lenard fascinated me. As a practical matter these days, perhaps the most important engineering insight is that the number of photons incident at the photodiode, and the number of electrons generated by these photons, has a Poisson distribution. I spent some time trying to understand who developed that specific insight - not just that these are random but specifically that they are Poisson. It was a real surprise to me that this formulation had to wait about 50 years after Einstein’s work. Here is my understanding.</p>
-<p>&lt;!– Here’s a block quote suitable for a textbook callout, clearly written for advanced undergraduates and historically accurate:</p>
-<p>From the ChatGPT interactions about Mandel, photons, Einstein.</p>
-<hr>
-<blockquote class="blockquote">
-<p><strong>Photon Statistics and the Limits of Vision</strong></p>
-</blockquote>
-<blockquote class="blockquote">
-<p>In their landmark 1942 paper, Selig Hecht, Simon Shlaer, and Maurice Pirenne demonstrated that the threshold for human vision corresponds to the absorption of just a handful of photons—roughly 5 to 7 at the cornea, with only a subset absorbed in the retina. While they did not explicitly name a statistical model, their analysis implied that variability in perception arose from random fluctuations in photon absorption. In modern terms, these fluctuations are described by the <strong>Poisson distribution</strong>, which governs the probability of discrete events (like photon arrivals) occurring in a fixed interval.</p>
-</blockquote>
-<blockquote class="blockquote">
-<p>In 1956, Horace Barlow formalized this interpretation, reasoning that visual sensitivity is limited not by retinal inefficiency but by the quantum nature of light itself—a constraint imposed by the probabilistic arrival of photons. Although the formal derivation of Poisson statistics in quantum optics came later—most notably through the work of Mandel and Wolf in 1959—Barlow’s insight preceded and anticipated that mathematical foundation. Hecht and his collaborators, though writing before this statistical framework was fully developed, laid the experimental groundwork for what is now a central idea in sensory neuroscience: <strong>that perception at the threshold is governed by quantum shot noise</strong>.</p>
-</blockquote>
-<hr>
-<p>Let me know if you’d like to add a visual illustration (e.g.&nbsp;threshold detection curve with Poisson overlays), or to tailor the language for a sidebar vs.&nbsp;main text.</p>
-<p>–&gt; Long exchange about Einstein, Lenard, Mandel, Wolf, Pirenne, Barlow. Stored here in ChatGPT. https://chatgpt.com/share/682ceccb-4c9c-8002-9e5d-d623a14348d9</p>
-<section id="einstein-1909-poisson-like-but-more-than-poisson" class="level2" data-number="48.1">
-<h2 data-number="48.1" class="anchored" data-anchor-id="einstein-1909-poisson-like-but-more-than-poisson"><span class="header-section-number">48.1</span> Einstein 1909 — Poisson-like, but More Than Poisson</h2>
-<p>Einstein’s 1909 analysis of energy fluctuations in blackbody radiation marks an important early step toward our modern understanding of photon statistics. He examined the variance of the energy contained within a small subvolume of a cavity in thermal equilibrium and found it consisted of two distinct terms: one linear and one quadratic in the mean photon number. The linear term corresponds to fluctuations from discrete, independently arriving photons—what we now recognize as <strong>shot noise</strong>, characteristic of <strong>Poisson statistics</strong>. The quadratic term, however, arises from interference effects and reflects <strong>wave-like correlations</strong>, which do not occur in a purely Poisson process.</p>
+<p>The story of the discovery of the photoelectric effect, and the role of Hertz, Einstein, Planck, and Lenard, is fascinating. The stochastic nature of photon absorption was recognized from the earliest days of quantum mechanics. Yet when I spent some time trying to understand who developed that specific insight—not just that absorptions are random, but specifically that the count of photo-electrons follows a <strong>Poisson distribution</strong>—it was a genuine surprise to discover that a rigorous mathematical proof had to wait until about 1958–1960, more than fifty years after Einstein’s 1905 paper.</p>
+<!--
+Background notes and chat log on Einstein, Lenard, Mandel, Wolf, Pirenne, Barlow:
+https://chatgpt.com/share/682ceccb-4c9c-8002-9e5d-d623a14348d9
+-->
+<section id="the-50-year-puzzle-from-einstein-to-poisson-photo-electrons" class="level2" data-number="48.1">
+<h2 data-number="48.1" class="anchored" data-anchor-id="the-50-year-puzzle-from-einstein-to-poisson-photo-electrons"><span class="header-section-number">48.1</span> The 50-year puzzle: From Einstein to Poisson photo-electrons</h2>
+<p>Why did this derivation take so long? Part of the answer seems to be technological: as a friend pointed out to me, practical devices capable of measuring and counting individual electrons only began to mature in the late 1950s, 1960s, and 1970s. Once counting electrons became common practice, a precise statistical theory of photo-electron arrivals had a clear practical purpose, and formal theory followed.</p>
+<p>Another part of the answer is that the idea was already “in the air” decades earlier, but it developed along two separate, largely independent tracks:</p>
+<ol type="1">
+<li><strong>Sensory physiology and vision science</strong>, where researchers studying the absolute limits of human vision recognized that dark-adapted photoreceptors can respond to single quanta, leading them to grapple with Poisson absorption statistics as early as the 1940s and 1950s.</li>
+<li><strong>Quantum optics and physics</strong>, where theorists in the late 1950s formalized semiclassical and quantum photon-counting distributions for optical fields.</li>
+</ol>
+<p>Here is my understanding of how those threads unfolded.</p>
+</section>
+<section id="einstein-1909-poisson-like-but-more-than-poisson" class="level2" data-number="48.2">
+<h2 data-number="48.2" class="anchored" data-anchor-id="einstein-1909-poisson-like-but-more-than-poisson"><span class="header-section-number">48.2</span> Einstein (1909): Poisson-like, but more than Poisson</h2>
+<p>Einstein’s 1909 analysis of energy fluctuations in blackbody radiation examined the variance of the energy contained within a small subvolume of a cavity assumed to be in thermal equilibrium. He found it consisted of two distinct terms: one linear and one quadratic in the mean photon number:</p>
 <p><span class="math display">\[
 \langle (\Delta E)^2 \rangle = h \nu \langle n \rangle + \left( h \nu \langle n \rangle \right)^2
 \]</span></p>
 <p>Here, <span class="math inline">\(\langle n \rangle\)</span> is the average number of photons at frequency <span class="math inline">\(\nu\)</span>, and <span class="math inline">\(h\)</span> is Planck’s constant.</p>
-<p>Einstein interpreted this two-part structure as evidence that light cannot be fully described either as a particle or as a wave alone—it exhibits both aspects, depending on the observable under consideration. This insight was a remarkable early hint of <strong>wave-particle duality</strong>, predating the formal development of quantum electrodynamics by decades.</p>
-<p>While this analysis includes a term that resembles Poissonian fluctuations, it goes beyond the framework of simple photon counting. By considering energy fluctuations in a volume—not just discrete detection events—Einstein’s approach was more general and conceptually distinct from the later, more focused treatments of photon counting and the photoelectric effect.</p>
-<p>In summary, Einstein’s result contains a Poisson-like term but also highlights wave-induced correlations, making it richer than a purely Poisson model. The full realization that photon arrivals at a detector follow a Poisson distribution—under suitable conditions—emerged later with the advent of quantum optics and the formal theory of photon statistics.</p>
+<p>Einstein interpreted this two-part structure as evidence that light cannot be fully described either as a particle or as a wave alone—it exhibits both aspects, depending on the observable under consideration: - The <strong>linear term</strong> corresponds to fluctuations from discrete, independently arriving particles—what we now recognize as <strong>shot noise</strong>, characteristic of <strong>Poisson statistics</strong>. - The <strong>quadratic term</strong>, however, arises from wave interference effects and reflects <strong>wave-like correlations</strong>, which do not occur in a purely Poisson process.</p>
+<p>This insight was a remarkable early hint of <strong>wave-particle duality</strong>, predating the formal development of quantum electrodynamics by decades.</p>
+<p>While this analysis includes a term that resembles Poisson fluctuations, it goes beyond the framework of simple photon counting. By considering energy fluctuations in an entire cavity volume—rather than discrete detection events at an absorbing surface—Einstein’s approach was more general and conceptually distinct from later treatments of photon counting in the photoelectric effect.</p>
+<p>In summary, Einstein’s analysis of the energy in the cavity has a Poisson-like term, but wave-induced correlations make it more complex than a purely Poisson model. The full realization that photon arrivals at a detector follow a Poisson distribution—under suitable conditions—emerged later.</p>
 </section>
-<section id="the-vision-science-crowd" class="level2" data-number="48.2">
-<h2 data-number="48.2" class="anchored" data-anchor-id="the-vision-science-crowd"><span class="header-section-number">48.2</span> The vision science crowd</h2>
-<p>The section about Poisson distribution, Barlow, and such is here.</p>
-<p>Barlow (1956) In his influential paper, “Retinal noise and absolute threshold” (J. Opt. Soc. Am.), Barlow proposed that the variability in visual threshold is due to random fluctuations in photon arrival, and he interpreted Hecht’s findings in terms of quantum shot noise. While Barlow did not explicitly name the Poisson distribution, he was clearly using Poisson-like reasoning — modeling the discrete and probabilistic nature of photon arrivals at low light levels.</p>
-<p>Emil Mandel, along with Leonard Mandel (no relation) and Emil Wolf, provided the rigorous quantum-optical foundations for the Poisson statistics of coherent light sources — such as lasers or thermal light in certain regimes. Their work clarified when and why the number of photon detections should follow a Poisson distribution, and established this as a consequence of the quantum state of the light field.</p>
-<p>Barlow was conceptually ahead of Mandel in applying Poisson reasoning to photon absorption in the retina. But Mandel and Wolf provided the formal, quantum-theoretic justification for using Poisson statistics in photon counting, which wasn’t fully developed until the late 1950s and early 1960s.</p>
-<p>Suggested text from ChatGPT:</p>
-<p>“In 1956, Horace Barlow formalized this interpretation, reasoning that visual sensitivity is limited not by retinal inefficiency but by the quantum nature of light itself—a constraint imposed by the probabilistic arrival of photons. Although the formal derivation of Poisson statistics in quantum optics came later—most notably through the work of Mandel and Wolf in 1959—Barlow’s insight preceded and anticipated that mathematical foundation.”</p>
-<p>Equation 1 in this paper states that absorptions are Poisson. He writes “The Poisson distribution is not particularly convenient to deal with, but fortunately, the values have been tabulated by Molina25 over a wide range.”</p>
-<p>Barlow, H. B. (1956). “Retinal noise and absolute threshold.” Journal of the Optical Society of America, 46(8), 634–639. https://doi.org/10.1364/JOSA.46.000634</p>
-<p>But now, I see that Barlow cites Pirenne for the Poisson “This probability is quite independent of the number of similar events in the past or the neighboring retina, and therefore the number of events in a given retinal area and time follows the Poisson distribution as shown in detail by Pirenne. 7 (b)” And in fact, Pirenne has a whole section of his 1951 paper, see Equation (2) for the derivation of the Poisson distribution for retinal absorptions.</p>
-<p>Pirenne’s insights were instrumental in shaping subsequent research on visual thresholds. His work provided a theoretical foundation that influenced Horace Barlow’s 1956 paper, “Retinal Noise and Absolute Threshold”, where Barlow cites Pirenne’s 1951 study as a key authority on the statistical nature of photon absorption. Barlow extended Pirenne’s ideas, suggesting that the limits of visual sensitivity are imposed by the quantum properties of light itself, rather than by imperfections in the visual system.</p>
-<p>Thus, Pirenne’s 1951 paper stands as a pivotal work that bridged the gap between quantum physics and biological vision, laying the groundwork for the application of Poisson statistics in understanding the fundamental limits of human visual perception.</p>
-<p>In Foundations of Vision I should explain that Barlow concluded (a) one quantum excites a rod, but (b) several rods must be excited to generate a percept. I think that was the conclusion in Cornsweet. It is a good project for ISETCam and the class.</p>
-<p>Correct — based on available records and close examination of Mandel and Wolf’s early publications (especially Mandel’s 1958 and 1959 papers and their later comprehensive work, <em>Optical Coherence and Quantum Optics</em>), it appears that <strong>they did not cite Pirenne</strong>.</p>
-<p>Mandel and Wolf were focused primarily on building a rigorous quantum theory of photon statistics, often referencing foundational work in quantum electrodynamics and statistical optics rather than physiological or psychophysical studies of vision. Their mathematical formalism emerged somewhat independently of the vision science tradition.</p>
-<p>In contrast, <strong>Pirenne (1951)</strong> and <strong>Barlow (1956)</strong> came from a sensory physiology perspective, using Poisson statistics to explain photon absorption in the retina based on empirical and theoretical arguments grounded in visual detection thresholds.</p>
-<p>So, although Pirenne clearly articulated the use of the Poisson distribution in photon absorption well before Mandel and Wolf’s formal treatments, his work appears to have been <strong>overlooked or simply outside the citation scope</strong> of their quantum optics papers. The convergence of ideas from physiology and quantum optics happened more fully in later decades as interdisciplinary fields like biophotonics matured.</p>
-<p>I should have realized that Barbara Sakkitt and Horace must have worked on this question together - even in the 1970s when she published her work.</p>
-<p>The stochastic nature of absorptions was recognized since the earliest days of quantum mechanics. Specifically showing that the number of electrons generated by light will be Poisson distributed is widely credited to work by Mandel and Wolf in papers starting around 1958. I am genuinely surprised that the Poisson statistics of photon counting was not rigorously demonstrated until about 1960.</p>
-<p>One reason for my surprise is that the stochastic nature was known and even used in human experiments by Hecht, Schaler and Pirenne that are quite famous in the vision science literature. But they did not specifically name the distribution of absorptions. The idea was somehow ‘in the air’, as the remarkable vision scientist, Horace Barlow, included it in a famous 1956 paper that</p>
-<p>A friend pointed out to me that practical devices to measure electrons were only starting to arise in the 60s and 70s. Perhaps once counting electrons became widespread, a more precise theory of the randomness of photo-electrons had a practical purpose and the theory followed.</p>
+<section id="the-vision-science-path-thresholds-and-retinal-noise" class="level2" data-number="48.3">
+<h2 data-number="48.3" class="anchored" data-anchor-id="the-vision-science-path-thresholds-and-retinal-noise"><span class="header-section-number">48.3</span> The vision science path: Thresholds and retinal noise</h2>
+<p>Vision scientists in the 1940s and 1950s were at the forefront of describing the Poisson characteristics of absorption, driven by the extraordinary sensitivity of the dark-adapted human eye.</p>
+<section id="hecht-shlaer-and-pirenne-1942" class="level3" data-number="48.3.1">
+<h3 data-number="48.3.1" class="anchored" data-anchor-id="hecht-shlaer-and-pirenne-1942"><span class="header-section-number">48.3.1</span> Hecht, Shlaer, and Pirenne (1942)</h3>
+<p>In their landmark paper, “Energy, Quanta and Vision” <span class="citation" data-cites="hechtenergyquantavision1942">(<a href="../references.html#ref-hechtenergyquantavision1942" role="doc-biblioref">Hecht et al. 1942</a>)</span>, Selig Hecht, Simon Shlaer, and Maurice Pirenne demonstrated that the threshold for human vision corresponds to the absorption of just a handful of photons—roughly 5 to 7 at the cornea, with only a small subset absorbed in the retina. While they did not explicitly name a statistical distribution or write down a formal proof, their analysis implied that trial-to-trial variability in perception arose from random fluctuations in photon absorption rather than biological instability. In modern terms, these fluctuations are described by the Poisson distribution.</p>
+</section>
+<section id="pirenne-1951-and-barlow-1956" class="level3" data-number="48.3.2">
+<h3 data-number="48.3.2" class="anchored" data-anchor-id="pirenne-1951-and-barlow-1956"><span class="header-section-number">48.3.2</span> Pirenne (1951) and Barlow (1956)</h3>
+<p>In 1951, Maurice Pirenne took the next step in a theoretical review <span class="citation" data-cites="pirenne1951-poisson">(<a href="../references.html#ref-pirenne1951-poisson" role="doc-biblioref">Pirenne 1951</a>)</span>. Pirenne included a whole section—see Equation (2)—deriving the Poisson distribution for retinal photon absorptions from first principles. Because the probability of any given visual pigment molecule absorbing a quantum from a weak flash is independent and very small, the number of absorbed quanta in a given retinal area and time interval follows a Poisson distribution.</p>
+<p>Pirenne’s theoretical insights directly influenced Horace Barlow’s classic 1956 paper, “Retinal noise and absolute threshold” <span class="citation" data-cites="barlow1956-retinalnoise">(<a href="../references.html#ref-barlow1956-retinalnoise" role="doc-biblioref">Barlow 1956</a>)</span>. Barlow proposed that visual sensitivity is limited not by retinal inefficiency, but by the quantum nature of light itself, alongside spontaneous thermal isomerizations in the photoreceptors (“retinal noise” or “dark light”). Barlow explicitly cites Pirenne for the Poisson distribution:</p>
+<blockquote class="blockquote">
+<p>“This probability is quite independent of the number of similar events in the past or the neighboring retina, and therefore the number of events in a given retinal area and time follows the Poisson distribution as shown in detail by Pirenne.” <span class="citation" data-cites="barlow1956-retinalnoise">(<a href="../references.html#ref-barlow1956-retinalnoise" role="doc-biblioref">Barlow 1956, p. 634</a>)</span></p>
+</blockquote>
+<p>Barlow thus extended Pirenne’s ideas, crystallizing a central principle of sensory neuroscience: perception at threshold is governed by quantum shot noise.</p>
+</section>
+<section id="sakitt-and-barlow-1972" class="level3" data-number="48.3.3">
+<h3 data-number="48.3.3" class="anchored" data-anchor-id="sakitt-and-barlow-1972"><span class="header-section-number">48.3.3</span> Sakitt and Barlow (1972)</h3>
+<p>I should also mention that Barbara Sakitt and Horace Barlow continued working on this problem together at Cambridge and Berkeley. In her 1972 paper, “Counting Every Quantum” <span class="citation" data-cites="sakitt1972-countingquantum">(<a href="../references.html#ref-sakitt1972-countingquantum" role="doc-biblioref">Sakitt 1972</a>)</span>, Sakitt showed through a rating-scale experiment that human observers can reliably distinguish between flashes that result in 1, 2, 3, 4, 5, or 6 quantum absorptions in the rod retina—a direct psychophysical demonstration of Poisson photon counting in vision.</p>
+</section>
+</section>
+<section id="the-quantum-optics-path-mandel-wolf-and-photo-electron-counting" class="level2" data-number="48.4">
+<h2 data-number="48.4" class="anchored" data-anchor-id="the-quantum-optics-path-mandel-wolf-and-photo-electron-counting"><span class="header-section-number">48.4</span> The quantum optics path: Mandel, Wolf, and photo-electron counting</h2>
+<p>While vision scientists were modeling retinal absorptions, physicists were approaching the problem from electromagnetic field theory and quantum optics.</p>
+<p>Leonard Mandel, collaborating with Emil Wolf (with whom he later wrote the definitive treatise <em>Optical Coherence and Quantum Optics</em>), provided the rigorous theoretical foundations for the Poisson statistics of coherent light and photo-electron counting <span class="citation" data-cites="mandel1958-photoncounting mandel1959-poissonabsorptions">(<a href="../references.html#ref-mandel1958-photoncounting" role="doc-biblioref">Mandel 1958</a>, <a href="../references.html#ref-mandel1959-poissonabsorptions" role="doc-biblioref">1959</a>)</span>.</p>
+<p>Mandel’s 1958 and 1959 papers derived what is now known as Mandel’s formula: the probability <span class="math inline">\(P(n, T)\)</span> of emitting <span class="math inline">\(n\)</span> photo-electrons during a time interval <span class="math inline">\(T\)</span> given an integrated light intensity <span class="math inline">\(W\)</span>:</p>
+<p><span class="math display">\[
+P(n, T) = \int_0^\infty \frac{(\alpha W)^n}{n!} e^{-\alpha W} P(W) \, dW
+\]</span></p>
+<p>where <span class="math inline">\(\alpha\)</span> is the quantum efficiency of the detector. When the light source is stable and coherent (so that intensity fluctuations are negligible and <span class="math inline">\(P(W)\)</span> is a delta function), this expression reduces directly to a pure <strong>Poisson distribution</strong>:</p>
+<p><span class="math display">\[
+P(n) = \frac{\langle n \rangle^n}{n!} e^{-\langle n \rangle}
+\]</span></p>
+<p>For fluctuating thermal sources, Mandel’s formula reproduces Bose-Einstein statistics, elegantly capturing both the discrete particle shot noise and the wave interference correlations that Einstein had identified in 1909.</p>
+<p>Mandel and Wolf were focused on quantum electrodynamics and statistical optics rather than physiological studies of vision. In their early papers, <strong>they did not cite Pirenne or Barlow</strong>. Their mathematical formalism emerged independently to support the physics of lasers and photoelectric detectors.</p>
+</section>
+<section id="reflections-two-parallel-traditions" class="level2" data-number="48.5">
+<h2 data-number="48.5" class="anchored" data-anchor-id="reflections-two-parallel-traditions"><span class="header-section-number">48.5</span> Reflections: Two parallel traditions</h2>
+<p>Looking back, Barlow and Pirenne were conceptually ahead of Mandel and Wolf in applying Poisson reasoning to photon absorption in the retina. But Mandel and Wolf provided the formal, quantum-theoretic justification for using Poisson statistics in photon counting, which wasn’t fully developed until the late 1950s and early 1960s.</p>
+<p>It makes good sense why each community arrived when they did:</p>
+<ul>
+<li>The <strong>vision scientists</strong> were studying an extraordinary biological detector: the dark-adapted human rod, which can respond to single photons. Because human threshold vision operates right at the quantum limit, sensory physiologists had to confront Poisson statistics decades before electronic image sensors existed.</li>
+<li>The <strong>physicists</strong> were developing the formal theory of quantum optics just as laboratory technology (photomultiplier tubes, coincidence counters, and lasers) made counting individual photo-electrons a practical reality in the late 1950s and 1960s.</li>
+</ul>
+<p>Although Pirenne clearly articulated the Poisson distribution for light absorption in 1951, his work was published in a biophysics journal and remained outside the citation scope of the physics community. The convergence of these two traditions into modern biophotonics and quantum optics took several decades, but both paths arrived at the same fundamental truth: at low light levels, the world is governed by the Poisson statistics of quanta.</p>
 <hr>
 <p><a href="../../chapters/sensors-01-photoelectric.html">Return to Photoelectric Effect</a> | <a href="../../index.html">Return to book home</a></p>
 
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-barlow1956-retinalnoise" class="csl-entry" role="listitem">
+Barlow HB (1956) <a href="http://dx.doi.org/10.1364/JOSA.46.000634">Retinal noise and absolute threshold</a>. J Opt Soc Am 46:634–639
+</div>
+<div id="ref-hechtenergyquantavision1942" class="csl-entry" role="listitem">
+Hecht S, Schlaer S, Pirenne MH (1942) Energy, quanta and vision. Journal of the Optical Society of America 38:196–208
+</div>
+<div id="ref-mandel1958-photoncounting" class="csl-entry" role="listitem">
+Mandel L (1958) <a href="http://dx.doi.org/10.1088/0370-1328/72/6/312/meta">Fluctuations of photon beams and their correlations</a>. Proc Phys Soc 72:1037–1048
+</div>
+<div id="ref-mandel1959-poissonabsorptions" class="csl-entry" role="listitem">
+Mandel L (1959) <a href="http://dx.doi.org/10.1088/0370-1328/74/3/301">Fluctuations of photon beams: The distribution of the photo-electrons</a>. Proc Phys Soc 74:233–243
+</div>
+<div id="ref-pirenne1951-poisson" class="csl-entry" role="listitem">
+Pirenne MH (1951) <a href="http://dx.doi.org/10.1016/s0096-4174(18)30026-x">Quantum physics of vision theoretical discussion</a>. Prog Biophys Biophys Chem 2:193–223
+</div>
+<div id="ref-sakitt1972-countingquantum" class="csl-entry" role="listitem">
+Sakitt B (1972) Counting every quantum. 223:131–150
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->

@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-28">
+<meta name="dcterms.date" content="2026-10-13">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>19&nbsp; Sensor parameters – Foundations of Image Systems Engineering</title>
@@ -620,7 +620,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 28, 2026</p>
+      <p class="date">October 13, 2026</p>
     </div>
   </div>
   
@@ -646,7 +646,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 28, 2026
+Last updated: October 13, 2026
 !-->
 </div>
 </div>
@@ -768,8 +768,8 @@ Sensor speed
 <p>If we acquire the same image repeatedly, even with no change in the scene, there will be fluctuations in a pixel’s output. The difference in a pixel’s output across time is called <strong>temporal noise</strong>. There are several contributors to this variation. We have already reviewed one important contributor, the Poisson distribution of the electrons at the photodiode (Section <a href="sensors-01-photoelectric.html#sec-shot-noise" class="quarto-xref"><span>Section 17.7</span></a>). Each of the different components of the pixel are potential sources of temporal noise. Here is a list.</p>
 <section id="sec-reset-noise-cds" class="level3" data-number="19.6.1">
 <h3 data-number="19.6.1" class="anchored" data-anchor-id="sec-reset-noise-cds"><span class="header-section-number">19.6.1</span> Reset noise and correlated double sampling</h3>
-<p>In the 3T and 4T circuits, we must transfer the electrons from the photodiode (in 3T) or from the floating diffusion node (in 4T). In both cases, there is the possibility that as we start to collect the electrons there will be a random number of electrons left over from the prior image capture. This variable number of unwanted electrons is a failure to reset the storage to exactly the same state, thus it is called <strong>reset noise</strong>.</p>
-<p>This noise is present in both 3T and 4T circuits, but it has different properties because the storage location differs (<a href="sensors-02-pixels.html#sec-4T-pixel-design" class="quarto-xref"><span>Section 18.2.5</span></a>). An important feature of the 4T circuit is that the floating diffusion noise can be read just prior to transferring the electrons from the photodiode, and then again after electrons have been transferred. The difference is read out as the pixel value. This process is called <strong>correlated double sampling (CDS)</strong>, and it significantly reduces reset noise.</p>
+<p>In the 3T and 4T circuits, the voltage on the sense node is set by a reset transistor before each readout: the photodiode in the 3T circuit, and the floating diffusion in the 4T circuit. When the reset transistor turns off, thermal motion of the electrons in the transistor channel leaves a random voltage on the node. This voltage differs a little from one reset to the next, even though the reset is performed in exactly the same way. This random variation is called <strong>reset noise</strong>, and it is the same thing as <span class="math inline">\(kTC\)</span> noise (<a href="#eq-ktc-volts" class="quarto-xref">Equation&nbsp;<span>19.3</span></a>).</p>
+<p>Reset noise is present in both 3T and 4T circuits, but the two circuits differ in how it can be handled (<a href="sensors-02-pixels.html#sec-4T-pixel-design" class="quarto-xref"><span>Section 18.2.5</span></a>). In the 4T circuit, the floating diffusion is reset first and its voltage is read. The charge is then transferred from the photodiode onto the same node <em>without</em> another reset, and the voltage is read a second time. Both reads contain the same random reset voltage, so subtracting the first from the second leaves only the voltage due to the transferred charge. This process is called <strong>correlated double sampling (CDS)</strong>: the two samples are correlated because they share a single reset event. CDS removes the reset noise, and it also removes fixed offsets that differ from pixel to pixel, such as transistor threshold variations. It does not remove the read noise that each of the two measurements adds independently.</p>
 <p>In a 3T pixel, reading the voltage on the photodiode disturbs the accumulated charge. CDS relies on making two non-destructive measurements, which is not possible on the photodiode itself in the 3T circuit.</p>
 <p>Reset noise is also known as <span class="math inline">\(kTC\)</span> noise because its size depends on a formula related to the capacitance of the floating diffusion node. The most common representation of the noise is with respect to the pixel voltage.</p>
 <p><span id="eq-ktc-volts"><span class="math display">\[
