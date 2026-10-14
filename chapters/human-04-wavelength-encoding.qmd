@@ -28,17 +28,84 @@ So, we have two different engineering constraints derived from human vision:
 *   **Wavelength:** Human vision sets a *target range*. 
 *   **Spatial Resolution:** Human vision sets a *minimum bar*. 
 
-In this section, we will review the key properties of the eye that define these limits. The way our visual system encodes wavelength and samples space sets limits on what we want to encode in an image system. Understanding these limits doesn't explain everything about what we see, but it tells us what we *cannot* see—essential knowledge for the field of image systems engineering.
+In this section, we will review the key properties of the eye that define these limits. The way our visual system encodes wavelength, and the way it spatially samples the image, both have implications for how we design an image system. Understanding the human visual system properties is not explanation of what we see; it is good guidance for what we *cannot* see.  This is essential knowledge for designing image systems for consumer photography.
 
 ## Color matching principles
+The most important concepts of color encoding were beautifully explained and tested in experiments by James Clerk Maxwell [@maxwell1857-XVIIIExperimentsColourPerceived; @maxwell1860-IVTheoryCompound]. He did this work just prior to taking on the challenges of unifying the equations for electicity and magnetism, and thus discovering that light is also electromagnetic radiation. I am so pleased that color science can call Maxwell one of our own[^color-history].
 
-James Clerk Maxwell's color matching experiments 
-Color representations: XYZ, luminance, chromaticity, cones
+[^color-history]: John Mollon wrote an excellent chapter describing the history of color vision [@mollon2003-Origins-Color]. There is much to be learned from his description, and I would particularly draw the reader's attention to how much was known implicitly by commercial firms prior to the fundamental analysis by Maxwell. This type of exchange is present throughout the field of image systems, and likely far beyond. 
 
-::: {.callout title="Color appearance: Biology or physics"}
-Mainly point to FOV.  But say a little bit about Thomas Young, Brewster, Helmholtz and Maxwell.
+In the decades prior to Maxwell, there was considerable uncertainty as to whether our color percepts reflected properties of the physics of light or rather that they were imposed by the properties of the eye. Thomas Young, giving the Bakerian lectures at the Royal Society in 1802 [@young1802-bakerian-light], directly explained why we should think that the 3-dimensionality of color -which was widely used in industry- was a property of the eye. But even serious scientists, such as Brewster, continued to argue that light itself was of reduced dimensionality [@brewsterIVNewAnalysis1834]. Helmholtz accepted that the idea that biology was essential, but his initial writings were based on flawed analyses that suggested there were five, not three, color receptors in the eye.
+
+::: {}
+
+::: {.callout-note title="Color appearance: Biology or physics" collapse="true"}
+Young's writings were severely criticized by Henry Brougham in Edinburgh Review, an ardent admirer of Newton, criticizing Thomas Young’s Bakerian Lectures.
+
+>  ...this paper contains nothing which deserves the name, either of experiment or of discovery, and as it is, in fact, destitute of every species of merit. We now dismiss, for the present, the feeble lucubrations of this author, in which we have searched without success for some traces of learning, acuteness, and ingenuity, that might compensate his evident deficiency in the powers of solid thinking, calm and patient investigation … 
+
+@young1804-reply replied
+
+ > A MAN who has a proper regard for the dignity of his own character, although his sensibility may sometimes be awakened by the unjust attacks of interested malevolence, will esteem it ingeneral more advisable to bear, in silence, the temporary effects of a short lived injury, than to suffer his own pursuits to be interrupted, in making an effort to repel the invective, and to punish the aggressor. 
+
+ Science can be quite personal.
+
 :::
 
+<!--
+Did Palmer "really know" about trichromacy?
+Mollon’s reading of Palmer’s 1777 tract (Theory of Colours and Vision) and his subsequent 1781/1786 writings reveals a mix of prescient biological intuition and physical error:
+
+What Palmer actually asserted: Palmer proposed that the retina possesses three distinct types of particles, fibres, or membranes (corresponding to red, yellow, and blue), and that equal stimulation of all three gives rise to the perception of white. In 1781 (writing under the pseudonym Giros von Gentilly), he extended this to argue that color blindness occurs when one or two of these three molecular classes are missing or inactive—which Mollon notes as arguably the earliest proposal of an inherited receptor-level defect.
+
+The caveat: Palmer did not deduce trichromacy from quantitative color matching, nor did he realize that physical light is a continuous distribution of wavelengths. Palmer believed that light itself physically consists of only three types of rays. Young’s later advance was realizing that physical light is a continuum, making trichromacy strictly a limitation of the eye's physiological sensors.
+
+Concerning Mollon's chapter in the Shevell book, I think he credits Waller too much.  That author wrote that the primary colors cannot be created from other colors, but all others can be created from the primaries.  That is false about lights.  Any three lights will do as primaries.  It has a bit (only a bit) more validity for subtractive matches because if you throw light away there isn't much that can be done.  But subtractive color mixing is a plague that should be avoided, certainly in the case of initial teaching.
+
+
+
+-->
+<!--
+You are entirely correct to point that out. The mistake in the earlier account mischaracterized both the yellow match (which works additively) and the actual logic Helmholtz employed in his 1852 paper.
+
+Here is a revised, accurate historical review centering on how color matching developed, the specific conceptual mistake Helmholtz made, and how Maxwell resolved it.
+
+---
+
+### 1. Color Matching Before Maxwell: Empirical Craft vs. Additive Tests
+
+Before Maxwell’s quantitative colorimetry in the 1850s, the notion of three-dimensionality existed primarily as an industrial rule of thumb, along with a handful of qualitative optical experiments:
+
+* **The Practical / Subtractive Tradition:** Early printers and painters knew empirically that a small palette of pigments could span the gamut of hues. Jacob Christoph Le Blon (1710s–1720s) commercialized three-color mezzotint printing using red, yellow, and blue inks. Tobias Mayer (1758) and Johann Heinrich Lambert (1772) later formalized pigment mixtures into triangular color solids. However, these subtractive mixtures conflated pigment physics with light mixture, entrenching the mistaken belief that green light was physically composed of yellow and blue light.
+* **Christian Ernst Wünsch (1792):** As John Mollon has documented, Wünsch conducted the first decisive additive mixture experiments using prisms to isolate and superimpose spectral bands. He proved that spectral red and spectral green additively produce yellow, and identified red, green, and violet as the true fundamental lights.
+* **Thomas Young (1801–1802):** Young took the critical step of shifting trichromacy from an assumed property of light to a property of human physiology. Because light spans an infinite physical spectrum, the eye cannot possess infinite resonators; Young asserted that the retina contains three types of sensitive nerve fibers (red, green, violet). Young’s hypothesis, however, remained an untested physical-physiological conjecture; he performed no systematic color-matching experiments to prove that all colors could be represented in a 3D linear space.
+
+Remember that Brewster still thought color was a physical property.  Maxwell did some simple, decisive experiments by interposing a filter on metamers to show that they transmitted differently and thus the lights were not the same.  They only appeared to be the same and thus the color matches were biological, not physical.
+
+---
+
+### 2. Helmholtz’s 1852 Logic: Segmenting the Spectrum
+
+When Hermann von Helmholtz took up the problem in his 1852 paper (*Über die Theorie der zusammengesetzten Farben*), he set out to test Newton’s color circle and Young’s hypothesis using a V-shaped slit and prism apparatus to superimpose pairs of narrow spectral bands:
+
+* **The Stepping Procedure:** Rather than attempting three-variable color matching, Helmholtz fixed one spectral wavelength and gradually moved a second wavelength further away along the spectrum, mixing them to see whether intermediate spectral hues could be reproduced.
+* **The Failure of Two-Wavelength Segments:** As soon as the two wavelengths were separated by more than a certain interval, their mixture could no longer match the appearance of the wavelengths between them. By continuing this "stepping" across the visible range, Helmholtz partitioned the spectrum into **five distinct segments**: red, yellow, green, blue, and violet.
+* **The Flawed Premise:** Underlying Helmholtz’s reasoning was the assumption that each primary sensation operated essentially in isolation—that a pure, monochromatic wavelength was detected by one primary element at a time. If mixing the end-points of a segment failed to capture the sensations inside the next, he concluded that Young’s three-receptor scheme was insufficient and that the eye must require **at least five primary sensations** (or a continuum of them).
+
+---
+
+### 3. Grassmann’s Mathematics and Maxwell’s Resolution
+
+The breakthrough came from abandoning Helmholtz's assumption of independent, segmented primary channels:
+
+* **Hermann Grassmann (1853):** Grassmann recognized that Helmholtz’s experimental logic violated basic linear geometry. Grassmann showed theoretically that if color matching obeyed three basic rules (superposition, homogeneity, and transitivity), any human color sensation could be represented as an element in a **three-dimensional vector space**. Grassmann argued that Helmholtz’s failure to reproduce spectral colors with two-primary steps did not disprove trichromacy; rather, it arose from treating color mixture as piecewise combinations rather than simultaneous vector mixtures of three primaries.
+
+* **Maxwell’s Coterminal Curves (1855–1860):** Maxwell grasped what Helmholtz had missed: **the eye’s sensitive elements must have broad, overlapping spectral sensitivities**. Under this framework, light at any single wavelength (such as 580 nm) simultaneously stimulates multiple receptor classes in a fixed ratio. Mixing a spectral red and a spectral green stimulates those same classes in that exact same ratio, producing a complete perceptual match to 580 nm.
+
+* **Maxwell's Quantitative Metric:** Using spinning tops and his calibrated color box, Maxwell carried out the world's first true quantitative color-matching experiments, determining the linear color-matching functions and proving that human color vision is strictly three-dimensional.
+
+* **Helmholtz’s Conversion:** Convinced by Grassmann’s linear formulation and Maxwell’s empirical measurements, Helmholtz retracted his five-primary interpretation. In his *Handbuch der physiologischen Optik* (1860), he embraced Young’s three-receptor framework combined with Maxwell’s overlapping broadband sensitivities, synthesizing it with Johannes Müller's law of specific nerve energies into the modern Young–Helmholtz theory.
+-->
 ## Photoreceptor wavelength encoding - Thomas Young
 
 ```{=html}
