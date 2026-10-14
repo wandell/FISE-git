@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-10-13">
+<meta name="dcterms.date" content="2026-10-14">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>27&nbsp; Human wavelength encoding – Foundations of Image Systems Engineering</title>
@@ -22,7 +22,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -587,12 +606,6 @@ window.Quarto = {
   <ul>
   <li><a href="#sec-human-wavelength-encoding-overview" id="toc-sec-human-wavelength-encoding-overview" class="nav-link active" data-scroll-target="#sec-human-wavelength-encoding-overview"><span class="header-section-number">27.1</span> Human wavelength encoding overview</a></li>
   <li><a href="#color-matching-principles" id="toc-color-matching-principles" class="nav-link" data-scroll-target="#color-matching-principles"><span class="header-section-number">27.2</span> Color matching principles</a></li>
-  <li><a href="#photoreceptor-wavelength-encoding---thomas-young" id="toc-photoreceptor-wavelength-encoding---thomas-young" class="nav-link" data-scroll-target="#photoreceptor-wavelength-encoding---thomas-young"><span class="header-section-number">27.3</span> Photoreceptor wavelength encoding - Thomas Young</a>
-  <ul class="collapse">
-  <li><a href="#color-matching" id="toc-color-matching" class="nav-link" data-scroll-target="#color-matching"><span class="header-section-number">27.3.1</span> Color-matching</a></li>
-  <li><a href="#human-chromatic-aberrations" id="toc-human-chromatic-aberrations" class="nav-link" data-scroll-target="#human-chromatic-aberrations"><span class="header-section-number">27.3.2</span> Human chromatic aberrations</a></li>
-  </ul></li>
-  <li><a href="#retinal-prostheses" id="toc-retinal-prostheses" class="nav-link" data-scroll-target="#retinal-prostheses"><span class="header-section-number">27.4</span> Retinal prostheses</a></li>
   </ul>
 </nav>
     </div>
@@ -612,7 +625,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 13, 2026</p>
+      <p class="date">October 14, 2026</p>
     </div>
   </div>
   
@@ -638,7 +651,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: October 13, 2026
+Last updated: October 14, 2026
 !-->
 </div>
 </div>
@@ -659,25 +672,91 @@ Last updated: October 13, 2026
 <li><strong>Wavelength:</strong> Human vision sets a <em>target range</em>.</li>
 <li><strong>Spatial Resolution:</strong> Human vision sets a <em>minimum bar</em>.</li>
 </ul>
-<p>In this section, we will review the key properties of the eye that define these limits. The way our visual system encodes wavelength and samples space sets limits on what we want to encode in an image system. Understanding these limits doesn’t explain everything about what we see, but it tells us what we <em>cannot</em> see—essential knowledge for the field of image systems engineering.</p>
+<p>In this section, we will review the key properties of the eye that define these limits. The way our visual system encodes wavelength, and the way it spatially samples the image, both have implications for how we design an image system. Understanding the human visual system properties is not explanation of what we see; it is good guidance for what we <em>cannot</em> see. This is essential knowledge for designing image systems for consumer photography.</p>
 </section>
 <section id="color-matching-principles" class="level2" data-number="27.2">
 <h2 data-number="27.2" class="anchored" data-anchor-id="color-matching-principles"><span class="header-section-number">27.2</span> Color matching principles</h2>
-<p>James Clerk Maxwell’s color matching experiments Color representations: XYZ, luminance, chromaticity, cones</p>
-<div class="callout callout-style-simple callout-none no-icon callout-titled" title="Color appearance: Biology or physics">
-<div class="callout-header d-flex align-content-center">
+<p>The most important concepts of color encoding were beautifully explained and tested in experiments by James Clerk Maxwell <span class="citation" data-cites="maxwell1857-XVIIIExperimentsColourPerceived maxwell1860-IVTheoryCompound">(<a href="references.html#ref-maxwell1857-XVIIIExperimentsColourPerceived" role="doc-biblioref">Maxwell 1857</a>; <a href="references.html#ref-maxwell1860-IVTheoryCompound" role="doc-biblioref">Maxwell 1860</a>)</span>. He did this work just prior to taking on the challenges of unifying the equations for electicity and magnetism, and thus discovering that light is also electromagnetic radiation. I am so pleased that color science can call Maxwell one of our own<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>In the decades prior to Maxwell, there was considerable uncertainty as to whether our color percepts reflected properties of the physics of light or rather that they were imposed by the properties of the eye. Thomas Young, giving the Bakerian lectures at the Royal Society in 1802 <span class="citation" data-cites="young1802-bakerian-light">(<a href="references.html#ref-young1802-bakerian-light" role="doc-biblioref">Young 1802</a>)</span>, directly explained why we should think that the 3-dimensionality of color -which was widely used in industry- was a property of the eye. But even serious scientists, such as Brewster, continued to argue that light itself was of reduced dimensionality <span class="citation" data-cites="brewsterIVNewAnalysis1834">(<a href="references.html#ref-brewsterIVNewAnalysis1834" role="doc-biblioref">Brewster 1834</a>)</span>. Helmholtz accepted that the idea that biology was essential, but his initial writings were based on flawed analyses that suggested there were five, not three, color receptors in the eye.</p>
+<div>
+<div class="callout callout-style-default callout-note callout-titled" title="Color appearance: Biology or physics">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Color appearance: Biology or physics
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Mainly point to FOV. But say a little bit about Thomas Young, Brewster, Helmholtz and Maxwell.</p>
+<p>Young’s writings were severely criticized by Henry Brougham in Edinburgh Review, an ardent admirer of Newton, criticizing Thomas Young’s Bakerian Lectures.</p>
+<blockquote class="blockquote">
+<p>…this paper contains nothing which deserves the name, either of experiment or of discovery, and as it is, in fact, destitute of every species of merit. We now dismiss, for the present, the feeble lucubrations of this author, in which we have searched without success for some traces of learning, acuteness, and ingenuity, that might compensate his evident deficiency in the powers of solid thinking, calm and patient investigation …</p>
+</blockquote>
+<p><span class="citation" data-cites="young1804-reply">Young (<a href="references.html#ref-young1804-reply" role="doc-biblioref">1804</a>)</span> replied</p>
+<blockquote class="blockquote">
+<p>A MAN who has a proper regard for the dignity of his own character, although his sensibility may sometimes be awakened by the unjust attacks of interested malevolence, will esteem it ingeneral more advisable to bear, in silence, the temporary effects of a short lived injury, than to suffer his own pursuits to be interrupted, in making an effort to repel the invective, and to punish the aggressor.</p>
+</blockquote>
+<p>Science can be quite personal.</p>
 </div>
 </div>
-</section>
+</div>
+<!--
+Did Palmer "really know" about trichromacy?
+Mollon’s reading of Palmer’s 1777 tract (Theory of Colours and Vision) and his subsequent 1781/1786 writings reveals a mix of prescient biological intuition and physical error:
+
+What Palmer actually asserted: Palmer proposed that the retina possesses three distinct types of particles, fibres, or membranes (corresponding to red, yellow, and blue), and that equal stimulation of all three gives rise to the perception of white. In 1781 (writing under the pseudonym Giros von Gentilly), he extended this to argue that color blindness occurs when one or two of these three molecular classes are missing or inactive—which Mollon notes as arguably the earliest proposal of an inherited receptor-level defect.
+
+The caveat: Palmer did not deduce trichromacy from quantitative color matching, nor did he realize that physical light is a continuous distribution of wavelengths. Palmer believed that light itself physically consists of only three types of rays. Young’s later advance was realizing that physical light is a continuum, making trichromacy strictly a limitation of the eye's physiological sensors.
+
+Concerning Mollon's chapter in the Shevell book, I think he credits Waller too much.  That author wrote that the primary colors cannot be created from other colors, but all others can be created from the primaries.  That is false about lights.  Any three lights will do as primaries.  It has a bit (only a bit) more validity for subtractive matches because if you throw light away there isn't much that can be done.  But subtractive color mixing is a plague that should be avoided, certainly in the case of initial teaching.
+
+
+
+-->
+<!--
+You are entirely correct to point that out. The mistake in the earlier account mischaracterized both the yellow match (which works additively) and the actual logic Helmholtz employed in his 1852 paper.
+
+Here is a revised, accurate historical review centering on how color matching developed, the specific conceptual mistake Helmholtz made, and how Maxwell resolved it.
+
+---
+
+### 1. Color Matching Before Maxwell: Empirical Craft vs. Additive Tests
+
+Before Maxwell’s quantitative colorimetry in the 1850s, the notion of three-dimensionality existed primarily as an industrial rule of thumb, along with a handful of qualitative optical experiments:
+
+* **The Practical / Subtractive Tradition:** Early printers and painters knew empirically that a small palette of pigments could span the gamut of hues. Jacob Christoph Le Blon (1710s–1720s) commercialized three-color mezzotint printing using red, yellow, and blue inks. Tobias Mayer (1758) and Johann Heinrich Lambert (1772) later formalized pigment mixtures into triangular color solids. However, these subtractive mixtures conflated pigment physics with light mixture, entrenching the mistaken belief that green light was physically composed of yellow and blue light.
+* **Christian Ernst Wünsch (1792):** As John Mollon has documented, Wünsch conducted the first decisive additive mixture experiments using prisms to isolate and superimpose spectral bands. He proved that spectral red and spectral green additively produce yellow, and identified red, green, and violet as the true fundamental lights.
+* **Thomas Young (1801–1802):** Young took the critical step of shifting trichromacy from an assumed property of light to a property of human physiology. Because light spans an infinite physical spectrum, the eye cannot possess infinite resonators; Young asserted that the retina contains three types of sensitive nerve fibers (red, green, violet). Young’s hypothesis, however, remained an untested physical-physiological conjecture; he performed no systematic color-matching experiments to prove that all colors could be represented in a 3D linear space.
+
+Remember that Brewster still thought color was a physical property.  Maxwell did some simple, decisive experiments by interposing a filter on metamers to show that they transmitted differently and thus the lights were not the same.  They only appeared to be the same and thus the color matches were biological, not physical.
+
+---
+
+### 2. Helmholtz’s 1852 Logic: Segmenting the Spectrum
+
+When Hermann von Helmholtz took up the problem in his 1852 paper (*Über die Theorie der zusammengesetzten Farben*), he set out to test Newton’s color circle and Young’s hypothesis using a V-shaped slit and prism apparatus to superimpose pairs of narrow spectral bands:
+
+* **The Stepping Procedure:** Rather than attempting three-variable color matching, Helmholtz fixed one spectral wavelength and gradually moved a second wavelength further away along the spectrum, mixing them to see whether intermediate spectral hues could be reproduced.
+* **The Failure of Two-Wavelength Segments:** As soon as the two wavelengths were separated by more than a certain interval, their mixture could no longer match the appearance of the wavelengths between them. By continuing this "stepping" across the visible range, Helmholtz partitioned the spectrum into **five distinct segments**: red, yellow, green, blue, and violet.
+* **The Flawed Premise:** Underlying Helmholtz’s reasoning was the assumption that each primary sensation operated essentially in isolation—that a pure, monochromatic wavelength was detected by one primary element at a time. If mixing the end-points of a segment failed to capture the sensations inside the next, he concluded that Young’s three-receptor scheme was insufficient and that the eye must require **at least five primary sensations** (or a continuum of them).
+
+---
+
+### 3. Grassmann’s Mathematics and Maxwell’s Resolution
+
+The breakthrough came from abandoning Helmholtz's assumption of independent, segmented primary channels:
+
+* **Hermann Grassmann (1853):** Grassmann recognized that Helmholtz’s experimental logic violated basic linear geometry. Grassmann showed theoretically that if color matching obeyed three basic rules (superposition, homogeneity, and transitivity), any human color sensation could be represented as an element in a **three-dimensional vector space**. Grassmann argued that Helmholtz’s failure to reproduce spectral colors with two-primary steps did not disprove trichromacy; rather, it arose from treating color mixture as piecewise combinations rather than simultaneous vector mixtures of three primaries.
+
+* **Maxwell’s Coterminal Curves (1855–1860):** Maxwell grasped what Helmholtz had missed: **the eye’s sensitive elements must have broad, overlapping spectral sensitivities**. Under this framework, light at any single wavelength (such as 580 nm) simultaneously stimulates multiple receptor classes in a fixed ratio. Mixing a spectral red and a spectral green stimulates those same classes in that exact same ratio, producing a complete perceptual match to 580 nm.
+
+* **Maxwell's Quantitative Metric:** Using spinning tops and his calibrated color box, Maxwell carried out the world's first true quantitative color-matching experiments, determining the linear color-matching functions and proving that human color vision is strictly three-dimensional.
+
+* **Helmholtz’s Conversion:** Convinced by Grassmann’s linear formulation and Maxwell’s empirical measurements, Helmholtz retracted his five-primary interpretation. In his *Handbuch der physiologischen Optik* (1860), he embraced Young’s three-receptor framework combined with Maxwell’s overlapping broadband sensitivities, synthesizing it with Johannes Müller's law of specific nerve energies into the modern Young–Helmholtz theory.
+-->
 <section id="photoreceptor-wavelength-encoding---thomas-young" class="level2" data-number="27.3">
 <h2 data-number="27.3" class="anchored" data-anchor-id="photoreceptor-wavelength-encoding---thomas-young"><span class="header-section-number">27.3</span> Photoreceptor wavelength encoding - Thomas Young</h2>
 <!--
@@ -707,6 +786,34 @@ Thomas Young wrote a reply (@young1804-reply)
 
 
 
+</section>
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-brewsterIVNewAnalysis1834" class="csl-entry" role="listitem">
+Brewster D (1834) <span>IV</span>. <span>On</span> a <span>New Analysis</span> of <span>Solar Light</span>, indicating three <span>Primary Colours</span>, forming <span>Coincident Spectra</span> of equal length. Earth Environ Sci Trans R Soc Edinb 12:123–136
+</div>
+<div id="ref-maxwell1860-IVTheoryCompound" class="csl-entry" role="listitem">
+Maxwell JC (1860) <span>IV</span>. <span>On</span> the theory of compound colours, and the relations of the colours of the spectrum. 150:57–84
+</div>
+<div id="ref-maxwell1857-XVIIIExperimentsColourPerceived" class="csl-entry" role="listitem">
+Maxwell JC (1857) <span>XVIII</span>.—<span>Experiments</span> on <span>Colour</span>, as perceived by the <span>Eye</span>, with <span>Remarks</span> on <span>Colour-Blindness</span>. Earth Environ Sci Trans R Soc Edinb 21:275–298
+</div>
+<div id="ref-mollon2003-Origins-Color" class="csl-entry" role="listitem">
+Mollon JD (2003) The <span>Origins</span> of <span>Modern Color Science</span>. In: Shevell SK (ed) The <span>Science</span> of <span>Color</span>. Elsevier, pp 1–39
+</div>
+<div id="ref-young1802-bakerian-light" class="csl-entry" role="listitem">
+Young T (1802) <span>II</span>. <span>The Bakerian Lecture</span>. <span>On</span> the theory of light and colours. Philosophical Transactions of the Royal Society of London 92:12–48
+</div>
+<div id="ref-young1804-reply" class="csl-entry" role="listitem">
+Young T (1804) A reply to the animadversions of the <span>Edinburgh</span> reviewers, on some papers, published in the philosophical transactions. <span>Savage and Easingwood</span>
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>John Mollon wrote an excellent chapter describing the history of color vision <span class="citation" data-cites="mollon2003-Origins-Color">(<a href="references.html#ref-mollon2003-Origins-Color" role="doc-biblioref">Mollon 2003</a>)</span>. There is much to be learned from his description, and I would particularly draw the reader’s attention to how much was known implicitly by commercial firms prior to the fundamental analysis by Maxwell. This type of exchange is present throughout the field of image systems, and likely far beyond.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->

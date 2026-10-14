@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-10-13">
+<meta name="dcterms.date" content="2026-10-14">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>19&nbsp; Sensor parameters – Foundations of Image Systems Engineering</title>
@@ -593,8 +593,9 @@ window.Quarto = {
   <li><a href="#sec-pixel-noise" id="toc-sec-pixel-noise" class="nav-link" data-scroll-target="#sec-pixel-noise"><span class="header-section-number">19.6</span> Pixel noise</a>
   <ul class="collapse">
   <li><a href="#sec-reset-noise-cds" id="toc-sec-reset-noise-cds" class="nav-link" data-scroll-target="#sec-reset-noise-cds"><span class="header-section-number">19.6.1</span> Reset noise and correlated double sampling</a></li>
-  <li><a href="#sec-dark-current" id="toc-sec-dark-current" class="nav-link" data-scroll-target="#sec-dark-current"><span class="header-section-number">19.6.2</span> Dark current</a></li>
-  <li><a href="#sec-temperature-effects" id="toc-sec-temperature-effects" class="nav-link" data-scroll-target="#sec-temperature-effects"><span class="header-section-number">19.6.3</span> Temperature effects</a></li>
+  <li><a href="#ktc-noise" id="toc-ktc-noise" class="nav-link" data-scroll-target="#ktc-noise"><span class="header-section-number">19.6.2</span> <span class="math inline">\(kTC\)</span> noise</a></li>
+  <li><a href="#sec-dark-current" id="toc-sec-dark-current" class="nav-link" data-scroll-target="#sec-dark-current"><span class="header-section-number">19.6.3</span> Dark current</a></li>
+  <li><a href="#sec-temperature-effects" id="toc-sec-temperature-effects" class="nav-link" data-scroll-target="#sec-temperature-effects"><span class="header-section-number">19.6.4</span> Temperature effects</a></li>
   </ul></li>
   <li><a href="#sec-array-noise" id="toc-sec-array-noise" class="nav-link" data-scroll-target="#sec-array-noise"><span class="header-section-number">19.7</span> Array noise</a>
   <ul class="collapse">
@@ -620,7 +621,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 13, 2026</p>
+      <p class="date">October 14, 2026</p>
     </div>
   </div>
   
@@ -646,7 +647,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: October 13, 2026
+Last updated: October 14, 2026
 !-->
 </div>
 </div>
@@ -768,10 +769,14 @@ Sensor speed
 <p>If we acquire the same image repeatedly, even with no change in the scene, there will be fluctuations in a pixel’s output. The difference in a pixel’s output across time is called <strong>temporal noise</strong>. There are several contributors to this variation. We have already reviewed one important contributor, the Poisson distribution of the electrons at the photodiode (Section <a href="sensors-01-photoelectric.html#sec-shot-noise" class="quarto-xref"><span>Section 17.7</span></a>). Each of the different components of the pixel are potential sources of temporal noise. Here is a list.</p>
 <section id="sec-reset-noise-cds" class="level3" data-number="19.6.1">
 <h3 data-number="19.6.1" class="anchored" data-anchor-id="sec-reset-noise-cds"><span class="header-section-number">19.6.1</span> Reset noise and correlated double sampling</h3>
-<p>In the 3T and 4T circuits, the voltage on the sense node is set by a reset transistor before each readout: the photodiode in the 3T circuit, and the floating diffusion in the 4T circuit. When the reset transistor turns off, thermal motion of the electrons in the transistor channel leaves a random voltage on the node. This voltage differs a little from one reset to the next, even though the reset is performed in exactly the same way. This random variation is called <strong>reset noise</strong>, and it is the same thing as <span class="math inline">\(kTC\)</span> noise (<a href="#eq-ktc-volts" class="quarto-xref">Equation&nbsp;<span>19.3</span></a>).</p>
-<p>Reset noise is present in both 3T and 4T circuits, but the two circuits differ in how it can be handled (<a href="sensors-02-pixels.html#sec-4T-pixel-design" class="quarto-xref"><span>Section 18.2.5</span></a>). In the 4T circuit, the floating diffusion is reset first and its voltage is read. The charge is then transferred from the photodiode onto the same node <em>without</em> another reset, and the voltage is read a second time. Both reads contain the same random reset voltage, so subtracting the first from the second leaves only the voltage due to the transferred charge. This process is called <strong>correlated double sampling (CDS)</strong>: the two samples are correlated because they share a single reset event. CDS removes the reset noise, and it also removes fixed offsets that differ from pixel to pixel, such as transistor threshold variations. It does not remove the read noise that each of the two measurements adds independently.</p>
-<p>In a 3T pixel, reading the voltage on the photodiode disturbs the accumulated charge. CDS relies on making two non-destructive measurements, which is not possible on the photodiode itself in the 3T circuit.</p>
-<p>Reset noise is also known as <span class="math inline">\(kTC\)</span> noise because its size depends on a formula related to the capacitance of the floating diffusion node. The most common representation of the noise is with respect to the pixel voltage.</p>
+<p>In the 3T and 4T circuits, the voltage on the sense node is set by a reset transistor before each readout: the photodiode in the 3T circuit, and the floating diffusion in the 4T circuit. When the reset transistor turns off, thermal motion of the electrons in the transistor channel leaves a random voltage on the node. This voltage differs a little from one reset to the next, even though the reset is performed in exactly the same way. This random variation is called <strong>reset noise</strong>. We would like to remove it, and the method for doing so is called <strong>correlated double sampling (CDS)</strong>.</p>
+<p>CDS requires a reference measurement of the reset level that shares the same reset event as the signal measurement. This is not possible in the 3T circuit. The photodiode is both the place where the charge is stored and the node that is reset. The reset that sets the reference level also erases the signal, so the reference cannot be measured on the same node before the signal is read.</p>
+<p>Reset noise can be reduced in the 4T circuit (<a href="sensors-02-pixels.html#sec-4T-pixel-design" class="quarto-xref"><span>Section 18.2.5</span></a>). In that case, the floating diffusion is reset first and its voltage is read. The charge is then transferred from the photodiode onto the same node <em>without</em> another reset, and the voltage is read a second time. Both reads contain the same random reset voltage, so subtracting the first from the second leaves only the voltage due to the transferred charge. The two samples are called <em>correlated</em> because they share a single reset event. In the 4T circuit, the two samples are taken one after the other within the readout time of a row. Rows are staggered by one row time, and the photodiodes of the other rows continue to integrate light while a row is read.</p>
+<p>CDS removes the reset noise, and it also removes fixed offsets that differ from pixel to pixel, such as transistor threshold variations (<a href="#sec-array-noise" class="quarto-xref"><span>Section 19.7</span></a>). It does not remove the read noise that each of the two measurements adds independently.</p>
+</section>
+<section id="ktc-noise" class="level3" data-number="19.6.2">
+<h3 data-number="19.6.2" class="anchored" data-anchor-id="ktc-noise"><span class="header-section-number">19.6.2</span> <span class="math inline">\(kTC\)</span> noise</h3>
+<p>The random variation during a reset is also called <span class="math inline">\(kTC\)</span> noise (<a href="#eq-ktc-volts" class="quarto-xref">Equation&nbsp;<span>19.3</span></a>). It is named for the formula for its size, which depends on the temperature <span class="math inline">\(T\)</span> and the capacitance <span class="math inline">\(C\)</span> of the floating diffusion node. The most common representation of the noise is with respect to the pixel voltage.</p>
 <p><span id="eq-ktc-volts"><span class="math display">\[
 {\sigma_V}^2 = \frac{kT}{C}
 \tag{19.3}\]</span></span></p>
@@ -809,8 +814,8 @@ Reset noise units
 </div>
 </div>
 </section>
-<section id="sec-dark-current" class="level3" data-number="19.6.2">
-<h3 data-number="19.6.2" class="anchored" data-anchor-id="sec-dark-current"><span class="header-section-number">19.6.2</span> Dark current</h3>
+<section id="sec-dark-current" class="level3" data-number="19.6.3">
+<h3 data-number="19.6.3" class="anchored" data-anchor-id="sec-dark-current"><span class="header-section-number">19.6.3</span> Dark current</h3>
 <p>Even in the absence of light, electrons are generated within the semiconductor material. These electrons make up the <strong>dark current</strong>. The size of the dark current depends on factors such as the temperature and the bandgap of the material. The number of accumulated dark electrons increases over time.</p>
 <p>Dark electrons accumulate in the same storage as photon-generated electrons and are indistinguishable from them in the readout. But the dark electrons are not informative about the scene; in fact, they interfere with inferences one would make about the scene.</p>
 <p>There is a relatively large impact of temperature on dark current <span class="math inline">\(I_d\)</span>. The scaling of the current with temperature is specified by this standard formula:</p>
@@ -837,8 +842,8 @@ Dark current units
 </div>
 </div>
 </section>
-<section id="sec-temperature-effects" class="level3" data-number="19.6.3">
-<h3 data-number="19.6.3" class="anchored" data-anchor-id="sec-temperature-effects"><span class="header-section-number">19.6.3</span> Temperature effects</h3>
+<section id="sec-temperature-effects" class="level3" data-number="19.6.4">
+<h3 data-number="19.6.4" class="anchored" data-anchor-id="sec-temperature-effects"><span class="header-section-number">19.6.4</span> Temperature effects</h3>
 <p>The sections on reset noise and dark current were two examples of how noise depends on temperature. CMOS image sensors are sensitive to temperature in other ways as well, because many of their key physical processes depend on thermal energy. Here is a summary of the factors that change as temperature rises:</p>
 <ul>
 <li><strong>Dark current increases exponentially</strong>, adding background signal and noise even in the absence of light.</li>
@@ -872,7 +877,7 @@ Figure&nbsp;19.2: Sensor fixed pattern noise. On average, the pixel response is 
 </div>
 <section id="sec-dark-signal-nonuniformity" class="level3" data-number="19.7.1">
 <h3 data-number="19.7.1" class="anchored" data-anchor-id="sec-dark-signal-nonuniformity"><span class="header-section-number">19.7.1</span> Dark signal nonuniformity (DSNU)</h3>
-<p><strong>Dark signal nonuniformity (DSNU)</strong> refers to the variation in the dark current across the pixels. Some pixels may accumulate dark current at slightly different rates. As a result, when we consider their response to increasing amounts of light, they will start at slightly different levels. This is illustrated in the variation of the starting positions at zero illumination level in <a href="#fig-sensor-noise" class="quarto-xref">Figure&nbsp;<span>19.2</span></a>. Recall that the pixel dark current depends on several factors, including temperature and exposure time (<a href="#sec-dark-current" class="quarto-xref"><span>Section 19.6.2</span></a>). Hence, the DSNU will also depend on these factors.</p>
+<p><strong>Dark signal nonuniformity (DSNU)</strong> refers to the variation in the dark current across the pixels. Some pixels may accumulate dark current at slightly different rates. As a result, when we consider their response to increasing amounts of light, they will start at slightly different levels. This is illustrated in the variation of the starting positions at zero illumination level in <a href="#fig-sensor-noise" class="quarto-xref">Figure&nbsp;<span>19.2</span></a>. Recall that the pixel dark current depends on several factors, including temperature and exposure time (<a href="#sec-dark-current" class="quarto-xref"><span>Section 19.6.3</span></a>). Hence, the DSNU will also depend on these factors.</p>
 </section>
 <section id="sec-photoresponse-nonuniformity" class="level3" data-number="19.7.2">
 <h3 data-number="19.7.2" class="anchored" data-anchor-id="sec-photoresponse-nonuniformity"><span class="header-section-number">19.7.2</span> Photoresponse nonuniformity (PRNU)</h3>
