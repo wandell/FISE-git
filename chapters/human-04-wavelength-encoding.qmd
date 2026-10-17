@@ -28,29 +28,39 @@ So, we have two different engineering constraints derived from human vision:
 *   **Wavelength:** Human vision sets a *target range*. 
 *   **Spatial Resolution:** Human vision sets a *minimum bar*. 
 
-In this section, we will review the key properties of the eye that define these limits. The way our visual system encodes wavelength, and the way it spatially samples the image, both have implications for how we design an image system. Understanding the human visual system properties is not explanation of what we see; it is good guidance for what we *cannot* see.  This is essential knowledge for designing image systems for consumer photography.
+In this section, we will review the way our visual system encodes wavelength and spatially samples the image.  Understanding the human visual system properties is good guidance for what we *cannot* see. This is essential knowledge for designing image systems intended for consumer photography.
 
-## Color matching principles
-The most important concepts of color encoding were beautifully explained and tested in experiments by James Clerk Maxwell [@maxwell1857-XVIIIExperimentsColourPerceived; @maxwell1860-IVTheoryCompound]. He did this work just prior to taking on the challenges of unifying the equations for electicity and magnetism, and thus discovering that light is also electromagnetic radiation. I am so pleased that color science can call Maxwell one of our own[^color-history].
+## Color matching background
+Thomas Young, giving the Bakerian lectures at the Royal Society in 1802 [@young1802-bakerian-light], directly explained why we should think that the 3-dimensionality of color -which was widely used in industry- was a property of the eye. But in the following years serious scientists, such as Brewster and Helmholtz, still made significant errors.  Brewster argued that light was of reduced dimensionality [@brewsterIVNewAnalysis1834]. Helmholtz accepted that the idea that biology was essential, but a flawed experimental analysis made him think that there are five, not three, color receptors in the eye [@helmholtzLXXXITheoryCompound1852][^color-history].  
 
-[^color-history]: John Mollon wrote an excellent chapter describing the history of color vision [@mollon2003-Origins-Color]. There is much to be learned from his description, and I would particularly draw the reader's attention to how much was known implicitly by commercial firms prior to the fundamental analysis by Maxwell. This type of exchange is present throughout the field of image systems, and likely far beyond. 
+[^color-history]: John Mollon wrote an excellent chapter describing the history of color vision [@mollon2003-Origins-Color]. There is much to be learned from his historical account. I draw the reader's attention to how much was known implicitly by commercial firms prior to Maxwell's scientific analysis. The exchange between commerce and science is present throughout the field of image systems and far beyond. As Lawrence J. Henderson is said to have put it, "Science owes more to the steam engine than the steam engine owes to science" [@gillispie1960-edge-objectivity, p. 357].
 
-In the decades prior to Maxwell, there was considerable uncertainty as to whether our color percepts reflected properties of the physics of light or rather that they were imposed by the properties of the eye. Thomas Young, giving the Bakerian lectures at the Royal Society in 1802 [@young1802-bakerian-light], directly explained why we should think that the 3-dimensionality of color -which was widely used in industry- was a property of the eye. But even serious scientists, such as Brewster, continued to argue that light itself was of reduced dimensionality [@brewsterIVNewAnalysis1834]. Helmholtz accepted that the idea that biology was essential, but his initial writings were based on flawed analyses that suggested there were five, not three, color receptors in the eye.
-
-::: {}
 
 ::: {.callout-note title="Color appearance: Biology or physics" collapse="true"}
-Young's writings were severely criticized by Henry Brougham in Edinburgh Review, an ardent admirer of Newton, criticizing Thomas Young’s Bakerian Lectures.
+There were also people who were devoted to prior work and were unwilling to change. Most prominent among these was Henry Brougham , an ardent admirer of Newton, who criticized Thomas Young’s Bakerian Lectures in the Edinburgh Review:
 
 >  ...this paper contains nothing which deserves the name, either of experiment or of discovery, and as it is, in fact, destitute of every species of merit. We now dismiss, for the present, the feeble lucubrations of this author, in which we have searched without success for some traces of learning, acuteness, and ingenuity, that might compensate his evident deficiency in the powers of solid thinking, calm and patient investigation … 
 
-@young1804-reply replied
+Brougham's intense commitment to Newton’s corpuscular framework explains both the intellectual conviction and the dogmatism behind his caustic attacks on Thomas Young’s wave theory. He treated Young's undulatory hypotheses -really Huygen's hypothesis- not just as unproven, but as an unscientific betrayal of Newton’s inductivist legacy. What he really disliked was Young's revival of the wave theory of light, and he spent much effort trying to measure and explain diffraction in terms of particles bending near corners.  Being in a cult is something we should all try to avoid.
+
+@young1804-reply replied in a dignified pamphlet in reply (1804)—"A Reply to the Animadversions of the Edinburgh Reviewers"—in which he defended his experiments on fringes and the principle of interferences. 
 
  > A MAN who has a proper regard for the dignity of his own character, although his sensibility may sometimes be awakened by the unjust attacks of interested malevolence, will esteem it ingeneral more advisable to bear, in silence, the temporary effects of a short lived injury, than to suffer his own pursuits to be interrupted, in making an effort to repel the invective, and to punish the aggressor. 
 
- Science can be quite personal.
-
+Reportedly, only a single copy was sold, while the Edinburgh Review was circulating to thousands of educated readers.
+For this reason, Brougham’s broadsides had a devastating real-world impact. He undermined Young's authority as Professor of Natural Philosophy at the Royal Institution. Wounded and frustrated by the reception of his work, Young largely withdrew from public optical debate for more than a decade, turning his attention to Egyptian hieroglyphs (the Rosetta Stone), medical writing, and insurance mathematics. More than 200 years later, this still pisses me off.
 :::
+
+Ultimately, the dual questions of (a) the biological basis and (b) trichromacy were settled by Maxwell. He did so in a way that established a clear conceptual structure that we still use today[@maxwell1857-XVIIIExperimentsColourPerceived; @maxwell1860-IVTheoryCompound]. Beyond theory, he collaborated with Thomas Sutton to produce the first color photographs [@fig-maxwell-sutton], demonstrating that his understanding was true and useful [@Sutton1861-color; @maxwell1861-three-primary][^feynman-maxwell]. 
+
+[^feynman-maxwell]: I think of Feynman's comment, "What I cannot create, I do not understand". Maxwell created.
+
+Maxwell did the color work just prior to taking on the challenges of unifying the equations for electicity and magnetism and discovering that light is also electromagnetic radiation. I am so pleased that color science can call Maxwell one of our own.
+
+<!-- TODO: No primary source for the Henderson quote has been found (often dated 1917). Gillispie (1960) is the earliest print appearance, cited without a source. Kelvin attribution is unverified; local.bib has thomson1889-presidential-address if it is confirmed. -->
+<!--
+Concerning Mollon's chapter in the Shevell book, I think he credits Waller too much.  That author wrote that the primary colors cannot be created from other colors, but all others can be created from the primaries.  That is false about lights.  Any three lights will do as primaries.  It has a bit (only a bit) more validity for subtractive matches because if you throw light away there isn't much that can be done.  But subtractive color mixing is a plague that should be avoided, certainly in the case of initial teaching.
+-->
 
 <!--
 Did Palmer "really know" about trichromacy?
@@ -59,12 +69,8 @@ Mollon’s reading of Palmer’s 1777 tract (Theory of Colours and Vision) and h
 What Palmer actually asserted: Palmer proposed that the retina possesses three distinct types of particles, fibres, or membranes (corresponding to red, yellow, and blue), and that equal stimulation of all three gives rise to the perception of white. In 1781 (writing under the pseudonym Giros von Gentilly), he extended this to argue that color blindness occurs when one or two of these three molecular classes are missing or inactive—which Mollon notes as arguably the earliest proposal of an inherited receptor-level defect.
 
 The caveat: Palmer did not deduce trichromacy from quantitative color matching, nor did he realize that physical light is a continuous distribution of wavelengths. Palmer believed that light itself physically consists of only three types of rays. Young’s later advance was realizing that physical light is a continuum, making trichromacy strictly a limitation of the eye's physiological sensors.
-
-Concerning Mollon's chapter in the Shevell book, I think he credits Waller too much.  That author wrote that the primary colors cannot be created from other colors, but all others can be created from the primaries.  That is false about lights.  Any three lights will do as primaries.  It has a bit (only a bit) more validity for subtractive matches because if you throw light away there isn't much that can be done.  But subtractive color mixing is a plague that should be avoided, certainly in the case of initial teaching.
-
-
-
 -->
+
 <!--
 You are entirely correct to point that out. The mistake in the earlier account mischaracterized both the yellow match (which works additively) and the actual logic Helmholtz employed in his 1852 paper.
 
@@ -106,34 +112,8 @@ The breakthrough came from abandoning Helmholtz's assumption of independent, seg
 
 * **Helmholtz’s Conversion:** Convinced by Grassmann’s linear formulation and Maxwell’s empirical measurements, Helmholtz retracted his five-primary interpretation. In his *Handbuch der physiologischen Optik* (1860), he embraced Young’s three-receptor framework combined with Maxwell’s overlapping broadband sensitivities, synthesizing it with Johannes Müller's law of specific nerve energies into the modern Young–Helmholtz theory.
 -->
-## Photoreceptor wavelength encoding - Thomas Young
+## Maxwell's color matching experiments
 
-```{=html}
-<!--
-https://chatgpt.com/s/t_68af5af69c688191b21118844094d0b5
+## Calculations
 
-By Henry Brougham in Edinburgh Review, an ardent admirer of Newton, criticizing Thomas Young’s Bakerian Lectures.
-
->  ...this paper contains nothing which deserves the name, either of experiment or of discovery, and as it is, in fact, destitute of every species of merit. We now dismiss, for the present, the feeble lucubrations of this author, in which we have searched without success for some traces of learning, acuteness, and ingenuity, that might compensate his evident deficiency in the powers of solid thinking, calm and patient investigation … 
-
-Thomas Young wrote a reply (@young1804-reply)
-
- > A MAN who has a proper regard for the dignity of his own character, although his sensibility may sometimes be awakened by the unjust attacks of interested malevolence, will esteem it ingeneral more advisable to bear, in silence, the temporary effects of a short lived injury, than to suffer his own pursuits to be interrupted, in making an effort to repel the invective, and to punish the aggressor. 
--->
-```
-
-### Color-matching
-
-### Human chromatic aberrations
-
-fise_human* script exists.
-
-Wavelength dependence (chromatic aberration)
-
-
-## Retinal prostheses
-
-Now that we know so much about the retinal encoding, the Palanker project would fit well.
-
-THe Chichilnisky project gets thrown in at the end as next generation.  Palanker fits well with the cones going forward.  The Chichilnisky project fits well with motivating why we want to know what the retinal circuitry does so we address diseases when the bipolar cells (inner nuclear layer) are damaged.
 
