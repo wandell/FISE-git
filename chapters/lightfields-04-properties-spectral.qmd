@@ -21,10 +21,46 @@ https://cie.co.at/datatable/components-relative-spectral-distribution-daylight
 -->
 ```
 
+## Measuring spectra and superposition {#sec-spectral-measurement-superposition}
+
+Isaac Newton discovered that light, say from the sun, could be separated into different wavelengths. The diagram includes multiple interesting experimental features that I describe in more detail in Foundations of Vision.
+
+![Newton's diagram showing how he used a prism to separate light into 'rays of differing refrangibility'.](images/lightfields/04-spectral/26_newton-prism-experiment.png){#fig-newton-prism}
+
+We still measure the power of radiation present at each wavelength, the spectral power distribution, using instruments that are similar to Newton's design. The instruments have three parts: a way to select a narrow band of wavelengths (a prism, a diffraction grating, or a set of filters), a lens that collects the light, and a detector that records the power in each band. 
+
+The instrument that makes these measurements is the **spectroradiometer**. It measures the light emitted by a source, or reflected from a surface, and returns the spectral radiance (or irradiance) in each wavelength band. We use it to measure lights, displays, and the sky. The result is a **spectral power distribution** (SPD): the power at each wavelength.
+
+### Superposition of incoherent lights {#sec-spectral-superposition}
+
+Suppose two lights with SPDs $S_1(\lambda)$ and $S_2(\lambda)$ arrive at the same place at the same time, say from two lamps illuminating one surface. For almost all natural and artificial sources (the Sun, incandescent and fluorescent lamps, LEDs, displays) the lights are **incoherent**: their phases are unrelated and fluctuate rapidly. For incoherent lights the interference terms average to zero, and the powers simply add. The SPD of the combination is
+
+$$
+S_{12}(\lambda) = S_1(\lambda) + S_2(\lambda).
+$$ {#eq-spd-superposition}
+
+Scaling a light by a factor $a$ scales its SPD by $a$. Together, adding and scaling are **linear** operations, so SPDs behave like vectors in a vector space. This property is called **superposition**.
+
+![Additivity (superposition) of spectral power distributions.](images/lightfields/04-spectral/29_spectral-power-superposition-prism-lenses.png){#fig-spd-superposition width="80%"}
+
+Superposition is a central regularity for image systems. It means that we can:
+
+- Measure the SPD of each source separately and predict the SPD of any mixture.
+- Describe a light as a weighted sum of basis functions, as in the daylight model below.
+- Predict the light a display emits by summing its primaries, each scaled by its intensity.
+- Predict how a sensor, such as the human cone photoreceptors, responds to mixtures. Each sensor integrates the SPD with a fixed sensitivity, and integration is also linear.
+
+The linearity of the light spectra is an essential property we will invoke later when we explain human color-matching (@sec-human-wavelength-encoding-overview).
+
+::: {.callout-note title="Coherent light" collapse="true"}
+Superposition of *power* is a property of incoherent light. For coherent sources such as lasers, the electromagnetic *fields* add, and the phase relationships between them produce interference (@sec-wave-theory). Two coherent beams can combine to produce less power than either one alone. We return to interference in the optics chapters.
+:::
+
+## Blackbody radiation {#sec-blackbody-radiation}
+
+Explain the formula, Planck's role.  Illustrate the radiance curves.  Offer a script for computing.  To be compared with the solar radiation that follows next.
+
 ## Solar Radiation {#sec-solar-fraunhofer}
-<!-- 
-Define blackbody radiation.  Formula here first.  It may come up again later in photons and electrons 
--->
 
 The Sun serves as Earth's primary radiation source. The radiation emitted from the Sun's surface in the visible spectrum remains relatively consistent over time. Due to its significance for imaging and human vision, skylight became an early subject of scientific investigation.
 
@@ -32,7 +68,7 @@ In 1814, Joseph Fraunhofer observed and carefully documented numerous dark lines
 
 ![The black curve displays the relative solar spectrum, which is stable over time. The red lines indicate are drawn at wavelengths where the spectrum exhibits narrow intensity reductions, known as Fraunhofer lines, that originate from ions and atoms in the Sun's outer layers. The blue dotted lines mark intensity reductions caused by atmospheric water vapor.](images/lightfields/04-spectral/01-Solar-Lines.png){#fig-solarspectrum width="60%" fig-align="center" width="70%"}
 
-::: {.callout-note collapse="false" appearance="simple"}
+::: {.callout-note collapse="true" appearance="simple"}
 
 ## Fraunhofer {#sec-fraunhofer}
 
@@ -56,7 +92,7 @@ A number of different groups have reported measurements of solar radiation at th
 
 These combined factors—atmospheric composition and path length variations—create a complex, but restricted, distribution of sky radiances at the Earth's surface. To summarize the regularities, scientists and engineers have created linear models that can represent the natural variations. The original model was introduced by Judd, Macadam and Wyszecki [@judd1964-daylight]. They analyzed skylight at the Earth's surface using about 650 different measurements. They found that the spectral power distributions, normalized to remove absolute radiance level, could be modeled as the weighted sum of three terms: a mean and two basis functions (@fig-ciedaylight). Such a model is useful because it enables us to represent any particular sample using just three numbers, the two weights and an overall scalar to match the level. The model is also useful for applications in which a scene is acquired under full sky illumination, and we would like to estimate the spectral power distribution of the skylight. We only need to estimate the weights, and from those we can make a good estimate of the full spectrum.
 
-![The solid curve shows the mean daylight spectrum measured by Judd, Macadam and Wyszecki @judd1964-daylight. Their measurements evolved into a CIE standard linear model for daylights across the Earth's surface. The solid circles are placed at the wavelengths of Fraunhofer and atmospheric water vapor lines. The dotted and dashed curves are basis functions. Together with the mean, these three curves are a linear model of daylight spectral power distributions.](images/lightfields/04-spectral/01-solar-basis.png){#fig-ciedaylight width="50%" fig-align="center"}
+![The solid curve shows the mean daylight spectrum measured by Judd, Macadam and Wyszecki @judd1964-daylight. Their measurements evolved into a CIE standard linear model for daylights across the Earth's surface. The solid circles are placed at the wavelengths of Fraunhofer and atmospheric water vapor lines. The dotted and dashed curves are basis functions. Together with the mean, these three curves are a linear model of daylight spectral power distributions.](images/lightfields/04-spectral/01-solar-basis.png){#fig-ciedaylight width="70%" fig-align="center"}
 
 ```{=html}
 <!--
@@ -69,7 +105,7 @@ Moonlight regularities. Used for space travel.https://chatgpt.com/share/67410dd0
 
 When he was a student at Stanford, Jeff DiCarlo decided to measure the daylight outside his office for himself [@diCarlo2000-daylight]. Checking things for himself is in his nature. Jeff pointed a spectral radiometer at a calibrated surface outside his window and configured a computer to make about ten thousand measurements, one a minute, during the course of a few rainy weeks in California (January 28, 2000 to February 16, 2000). I included a sample of 1000 of these measurements in ISETCam, and I have the whole group along with time stamps if you want them.
 
-![Average daylight measurements on the Stanford campus (solid) and CIE daylight basis fit to the measured average (dotted). The solid circles are placed at the locations of Fraunhofer and water vapor wavelengths.](images/lightfields/04-spectral/01-solar-stanford.png){#fig-stanfordsun fig-cap-location="bottom" width="50%" fig-align="center"}
+![Average daylight measurements on the Stanford campus (solid) and CIE daylight basis fit to the measured average (dotted). The solid circles are placed at the locations of Fraunhofer and water vapor wavelengths.](images/lightfields/04-spectral/01-solar-stanford.png){#fig-stanfordsun fig-cap-location="bottom" width="70%" fig-align="center"}
 
 @fig-stanfordsun shows the mean spectral power distribution of these measurements. You can see that the instrument recorded several 'notches' in the spectrum at wavelengths corresponding to the Fraunhofer and water vapor lines. We also asked whether these data could be fit by the CIE linear model - and the least-squares fit is shown by the dotted line. I suspect there is an instrument calibration error of a few nanometers at wavelengths above 700nm, and were I to write a research paper based on these data, I would probably introduce the correction because I believe the physics on the locations of these wavelengths is secure. This analysis might provide you with a sense of the relative accuracy of measuring and approximating spectra with conventional lab equipment.
 :::
@@ -89,7 +125,7 @@ fig-cap: "Test GIF"
 width: 372
 ```
 
-::: {.callout-note title="Daylight weights" collapse="false" appearance="simple"}
+::: {.callout-note title="Daylight weights" collapse="true" appearance="simple"}
 
 ### Correlated weights
 
