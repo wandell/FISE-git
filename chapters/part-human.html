@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-29">
+<meta name="dcterms.date" content="2026-10-22">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>Part IV: Human Vision – Foundations of Image Systems Engineering</title>
@@ -364,7 +364,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/human-04-wavelength-encoding.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Human wavelength encoding</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Wavelength encoding</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -563,8 +563,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../chapters/resources/history-color.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Color science historical notes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../chapters/resources/Artal-2024/Artal-2024.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Characterization of Visual Stimuli</span></span></a>
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Characterization of Visual Stimuli</span></span></a>
   </div>
 </li>
       </ul>
@@ -606,7 +612,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 29, 2026</p>
+      <p class="date">October 22, 2026</p>
     </div>
   </div>
   
@@ -632,7 +638,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 29, 2026
+Last updated: October 22, 2026
 !-->
 </div>
 </div>
@@ -648,6 +654,15 @@ Last updated: September 29, 2026
 <p>The new material in this volume will emphasize the human vision engineering standards, reducing the emphasis on biology that is part of FOV.</p>
 <section id="sec-human-topics" class="level2">
 <h2 class="anchored" data-anchor-id="sec-human-topics">Human Vision Topics</h2>
+<p>Vision scientists have learned a great deal about the first stages of vision. We have excellent measurements of how the eye’s optics (the cornea and lens) transform light from the world into an image on the retina, and we know how the retina’s photoreceptors encode that image into neural signals. This knowledge serves as a practical guide for designing any system that reproduces images for people.</p>
+<p>Consider color. A camera designed for human viewing should capture the same portion of the electromagnetic spectrum that we see: visible light. Capturing less of the spectrum would lead to poor color reproduction. Capturing more—like infrared or ultraviolet—would be wasteful, consuming resources to record information we can’t see anyway. Worse yet, if we added these signals into a reproduction, the appearance would fail to match what we see. Our knowledge of human wavelength sensitivity sets a clear target for an image system designed for consumer photography.</p>
+<p>Spatial resolution presents a different challenge. It would be a disappointment if a camera failed to capture details as fine as those the human eye can resolve. We expect our photos to be at least as sharp as what we see. However, unlike color, people are generally pleased if a camera captures a scene at a <em>finer</em> resolution than the eye encodes. We zoom in on the digital image to see details we might have missed. This extra information doesn’t interfere with the viewing experience; it just requires more storage and processing power.</p>
+<p>So, we have two different engineering constraints derived from human vision:</p>
+<ul>
+<li><strong>Wavelength:</strong> Human vision sets a <em>target range</em>.</li>
+<li><strong>Spatial Resolution:</strong> Human vision sets a <em>minimum bar</em>.</li>
+</ul>
+<p>In this section of the book, we will review the way our visual system encodes wavelength and spatially samples the image. Understanding the human visual system properties is good guidance for what we <em>cannot</em> see. This is essential knowledge for designing image systems intended for consumer photography.</p>
 <ul>
 <li>Seeing</li>
 <li>Physiological optics</li>
@@ -656,15 +671,6 @@ Last updated: September 29, 2026
 <li>Image quality metrics</li>
 </ul>
 <p>When designing a digital camera, how good does it need to be? The answer depends on the intended use case. If the images are for a person to see, the camera’s design must be guided by the capabilities and limits of the human visual system. This principle has profound consequences for engineering.</p>
-<p>Vision scientists have learned a great deal about the initial stages of vision. We have excellent measurements of how the eye’s optics transform light into an image on the retina, and we understand how the retinal photoreceptors encode that image into neural signals. This knowledge is a practical guide for designing any system that creates or displays images for people.</p>
-<p>Consider spatial resolution. It would be a disappointment if a camera failed to capture details as fine as those the human eye can resolve. We expect our photos to be at least as sharp as what we see. However, unlike with color, people are often pleased if a camera captures a scene at a <em>finer</em> resolution than the eye can perceive. We can always zoom in on the digital image to see details we might have missed. This extra information does not interfere with the viewing experience; it just requires more storage and processing power.</p>
-<p>Next, consider color. A camera designed for human viewing should capture the same portion of the electromagnetic spectrum that we see: visible light. Capturing less of the spectrum would lead to poor color reproduction. Capturing more—like infrared or ultraviolet—would be wasteful, consuming resources to record information we cannot see. In this sense, human wavelength sensitivity sets a clear target for camera design.</p>
-<p>These two aspects of human vision provide different quantitative engineering constraints:</p>
-<ul>
-<li><strong>Spatial Resolution:</strong> Human vision sets a <em>minimum bar</em>. Capturing more detail can be beneficial.</li>
-<li><strong>Wavelength Sensitivity:</strong> Human vision defines a <em>target range</em>. Capturing information outside this range is generally wasteful.</li>
-</ul>
-<p>After discussing the general principles of seeing, we will delve into the quantitative properties of human vision that guide engineering decisions for spatial and color reproduction. We will then describe an array of image quality metrics that are based on these properties and are commonly used in commercial applications.</p>
 </section>
 <section id="human-vision-resources" class="level2">
 <h2 class="anchored" data-anchor-id="human-vision-resources">Human vision resources</h2>
