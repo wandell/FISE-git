@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-10-25">
+<meta name="dcterms.date" content="2026-10-26">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>27&nbsp; Wavelength encoding – Foundations of Image Systems Engineering</title>
@@ -618,9 +618,14 @@ window.Quarto = {
   </ul></li>
   <li><a href="#matrix-formulation-of-color-matching" id="toc-matrix-formulation-of-color-matching" class="nav-link" data-scroll-target="#matrix-formulation-of-color-matching"><span class="header-section-number">27.4</span> Matrix formulation of color matching</a>
   <ul class="collapse">
-  <li><a href="#measuring-the-color-matching-matrix-mathbfc" id="toc-measuring-the-color-matching-matrix-mathbfc" class="nav-link" data-scroll-target="#measuring-the-color-matching-matrix-mathbfc"><span class="header-section-number">27.4.1</span> Measuring the color-matching matrix <span class="math inline">\(\mathbf{C}\)</span></a></li>
+  <li><a href="#dimensionality-of-the-cmfs" id="toc-dimensionality-of-the-cmfs" class="nav-link" data-scroll-target="#dimensionality-of-the-cmfs"><span class="header-section-number">27.4.1</span> Dimensionality of the CMFs</a></li>
+  <li><a href="#measuring-the-color-matching-matrix-mathbfc" id="toc-measuring-the-color-matching-matrix-mathbfc" class="nav-link" data-scroll-target="#measuring-the-color-matching-matrix-mathbfc"><span class="header-section-number">27.4.2</span> Measuring the color-matching matrix <span class="math inline">\(\mathbf{C}\)</span></a></li>
+  <li><a href="#color-matching-functions" id="toc-color-matching-functions" class="nav-link" data-scroll-target="#color-matching-functions"><span class="header-section-number">27.4.3</span> Color matching functions</a></li>
+  <li><a href="#negative-values-in-the-cmf" id="toc-negative-values-in-the-cmf" class="nav-link" data-scroll-target="#negative-values-in-the-cmf"><span class="header-section-number">27.4.4</span> Negative values in the CMF</a></li>
+  <li><a href="#uniqueness-of-the-cmfs" id="toc-uniqueness-of-the-cmfs" class="nav-link" data-scroll-target="#uniqueness-of-the-cmfs"><span class="header-section-number">27.4.5</span> Uniqueness of the CMFs</a></li>
   </ul></li>
-  <li><a href="#color-matching-functions" id="toc-color-matching-functions" class="nav-link" data-scroll-target="#color-matching-functions"><span class="header-section-number">27.5</span> Color matching functions</a></li>
+  <li><a href="#cie-standards" id="toc-cie-standards" class="nav-link" data-scroll-target="#cie-standards"><span class="header-section-number">27.5</span> CIE Standards</a></li>
+  <li><a href="#color-differences" id="toc-color-differences" class="nav-link" data-scroll-target="#color-differences"><span class="header-section-number">27.6</span> Color differences</a></li>
   </ul>
 </nav>
     </div>
@@ -640,7 +645,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 25, 2026</p>
+      <p class="date">October 26, 2026</p>
     </div>
   </div>
   
@@ -666,7 +671,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: October 25, 2026
+Last updated: October 26, 2026
 !-->
 </div>
 </div>
@@ -786,8 +791,13 @@ Figure&nbsp;27.4: Linearity of the color-matching experiment expressed in matrix
 <p><span id="eq-color-match"><span class="math display">\[
 \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2
 \tag{27.1}\]</span></span></p>
-<section id="measuring-the-color-matching-matrix-mathbfc" class="level3" data-number="27.4.1">
-<h3 data-number="27.4.1" class="anchored" data-anchor-id="measuring-the-color-matching-matrix-mathbfc"><span class="header-section-number">27.4.1</span> Measuring the color-matching matrix <span class="math inline">\(\mathbf{C}\)</span></h3>
+<section id="dimensionality-of-the-cmfs" class="level3" data-number="27.4.1">
+<h3 data-number="27.4.1" class="anchored" data-anchor-id="dimensionality-of-the-cmfs"><span class="header-section-number">27.4.1</span> Dimensionality of the CMFs</h3>
+<p>How do we know that we should use three primary lights, and not two or four? The answer is based on experiments.</p>
+<p>If we provide people with only one or two primary lights, there will be test lights that cannot be matched. If we provide four primary lights, observers can set satisfactory matches with many different combinations of the primaries, so the match is not unique. With three primaries, a match can be found for every test light (allowing primaries to be added to the test side, as described below), and the match is unique. Three is the right number.</p>
+</section>
+<section id="measuring-the-color-matching-matrix-mathbfc" class="level3" data-number="27.4.2">
+<h3 data-number="27.4.2" class="anchored" data-anchor-id="measuring-the-color-matching-matrix-mathbfc"><span class="header-section-number">27.4.2</span> Measuring the color-matching matrix <span class="math inline">\(\mathbf{C}\)</span></h3>
 <p>How do we determine the entries of the matrix <span class="math inline">\(\mathbf{C}\)</span>? Linear systems theory provides a straightforward answer: measure the system’s response to impulse inputs. In optics, an impulse is a point of light, and the response is the point spread function (<a href="appendix-01-linearsystems.html#sec-ls-point-matrix" class="quarto-xref"><span>Section 36.4</span></a>). In color matching, an impulse is a monochromatic (single-wavelength) test light.</p>
 <p>Suppose the test light is a monochromatic light at wavelength <span class="math inline">\(\lambda_k\)</span> with unit power. Its spectral vector <span class="math inline">\(\mathbf{t}\)</span> contains zeros everywhere except for a value of 1 at entry <span class="math inline">\(k\)</span>. When we multiply <span class="math inline">\(\mathbf{C} \mathbf{t}\)</span>, this unit impulse simply extracts the <span class="math inline">\(k^{\text{th}}\)</span> column of <span class="math inline">\(\mathbf{C}\)</span> (<a href="#fig-matching-monochromatic" class="quarto-xref">Figure&nbsp;<span>27.5</span></a>).</p>
 <div id="fig-matching-monochromatic" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -802,9 +812,8 @@ Figure&nbsp;27.5: Measuring the color-matching matrix with monochromatic test li
 </div>
 <p>By measuring the primary intensities needed to match monochromatic test lights across all sampled wavelengths of the visible spectrum, we directly measure every column of <span class="math inline">\(\mathbf{C}\)</span>.</p>
 </section>
-</section>
-<section id="color-matching-functions" class="level2" data-number="27.5">
-<h2 data-number="27.5" class="anchored" data-anchor-id="color-matching-functions"><span class="header-section-number">27.5</span> Color matching functions</h2>
+<section id="color-matching-functions" class="level3" data-number="27.4.3">
+<h3 data-number="27.4.3" class="anchored" data-anchor-id="color-matching-functions"><span class="header-section-number">27.4.3</span> Color matching functions</h3>
 <p>The rows of the matrix <span class="math inline">\(\mathbf{C}\)</span> are functions of wavelength, known as the <strong>color-matching functions (CMFs)</strong>, conventionally written as <span class="math inline">\(r(\lambda), g(\lambda), b(\lambda)\)</span>.</p>
 <p>An example of color-matching functions measured using three monochromatic primaries (at 645.2 nm, 526.3 nm, and 444.4 nm from the Stiles &amp; Burch 10-degree observer) is shown in <a href="#fig-rgb-cmfs" class="quarto-xref">Figure&nbsp;<span>27.6</span></a>.</p>
 <div id="fig-rgb-cmfs" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -817,24 +826,81 @@ Figure&nbsp;27.6: Stiles &amp; Burch (1959) 10-degree RGB color-matching functio
 </figcaption>
 </figure>
 </div>
-<p>A notable feature of these curves is that <span class="math inline">\(r(\lambda)\)</span> takes on negative values between approximately 480 nm and 530 nm. In this spectral region, monochromatic test lights appear more saturated in color than any additive mixture of the green and blue primaries can produce. To achieve a visual match, the experimenter adds some of the red primary to the <em>test light</em> side of the bipartite field, desaturating it until the remaining green and blue primaries can complete the match. Because color matching obeys superposition, adding primary light to the test field is mathematically equivalent to subtracting it from the primary side, resulting in negative coefficients in the color-matching functions.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Maxwell on color as a mental science">
+<div class="callout callout-style-default callout-note callout-titled" title="Reading the CMFS">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Maxwell on color as a mental science
+Reading the CMFS
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<p>When I teach, I often forget the wavelengths of the primary lights. But it is possible to deduce them from the graphs; can you see how? The principle is straightforward. When a monochromatic test light matches one of the primary lights, the primary settings will be one of these three values: <span class="math inline">\((1,0,0)\)</span>, <span class="math inline">\((0,1,0)\)</span>, or <span class="math inline">\((0,0,1)\)</span>. Read the curves to find the wavelengths at which the primaries have those values. You won’t be very precise, but you can get a close estimate.</p>
+</div>
+</div>
+</section>
+<section id="negative-values-in-the-cmf" class="level3" data-number="27.4.4">
+<h3 data-number="27.4.4" class="anchored" data-anchor-id="negative-values-in-the-cmf"><span class="header-section-number">27.4.4</span> Negative values in the CMF</h3>
+<p>A notable feature of these curves is that <span class="math inline">\(r(\lambda)\)</span> takes on negative values between approximately 480 nm and 530 nm. In this spectral region, monochromatic test lights appear more saturated in color than any additive mixture of the green and blue primaries can produce. To achieve a visual match, the experimenter adds some of the red primary to the <em>test light</em> side of the bipartite field, desaturating it until the remaining green and blue primaries can complete the match. Because color matching obeys superposition, adding primary light to the test field is mathematically equivalent to subtracting it from the primary side, resulting in negative coefficients in the color-matching functions.</p>
+<p>This point matters in practice when we describe the colors a display can produce. A display has three primary lights, and there is no way to add a primary to the test side. Colors that would require negative primary values cannot be produced. This limitation defines the display <em>gamut</em> (<a href="displays-01-principles.html#sec-display-principles-overview" class="quarto-xref"><span>Section 29.1</span></a>).</p>
+</section>
+<section id="uniqueness-of-the-cmfs" class="level3" data-number="27.4.5">
+<h3 data-number="27.4.5" class="anchored" data-anchor-id="uniqueness-of-the-cmfs"><span class="header-section-number">27.4.5</span> Uniqueness of the CMFs</h3>
+<p>Two groups, A and B, who use different sets of primary lights, <span class="math inline">\(\mathbf{P}_A\)</span> and <span class="math inline">\(\mathbf{P}_B\)</span>, will measure different CMFs. But the two sets of CMFs are related.</p>
+<p>To see why, suppose group A measures the matches to the primaries of group B. Group A can then predict the matches that group B would set for any test light.</p>
+<p>Represent the primaries as <span class="math inline">\(N \times 3\)</span> matrices, <span class="math inline">\(\mathbf{P}_A\)</span> and <span class="math inline">\(\mathbf{P}_B\)</span>, whose columns are the spectral power distributions of the three primaries. Let <span class="math inline">\(\mathbf{C}_A\)</span> and <span class="math inline">\(\mathbf{C}_B\)</span> be the <span class="math inline">\(3 \times N\)</span> CMF matrices measured by the two groups. By definition, <span class="math inline">\(\mathbf{P}_B (\mathbf{C}_B \mathbf{t})\)</span> is a mixture of group B’s primaries that matches <span class="math inline">\(\mathbf{t}\)</span>. Because matched lights produce the same group A matching values, applying <span class="math inline">\(\mathbf{C}_A\)</span> gives</p>
+<p><span class="math display">\[
+\mathbf{C}_A \mathbf{t} = \mathbf{C}_A \mathbf{P}_B (\mathbf{C}_B \mathbf{t}).
+\]</span></p>
+<p>The <span class="math inline">\(3 \times 3\)</span> matrix <span class="math inline">\(\mathbf{M}_{B,A} = \mathbf{C}_A \mathbf{P}_B\)</span> converts group B primary values into group A primary values. Because this holds for every test light <span class="math inline">\(\mathbf{t}\)</span>,</p>
+<p><span id="eq-cmf-conversion"><span class="math display">\[
+\mathbf{C}_A = \mathbf{M}_{B,A} \, \mathbf{C}_B .
+\tag{27.2}\]</span></span></p>
+<p>Any two sets of CMFs are related by a <span class="math inline">\(3 \times 3\)</span> linear transformation.</p>
+<p>The converse also holds. Multiply both sides of <a href="#eq-color-match" class="quarto-xref">Equation&nbsp;<span>27.1</span></a> by any invertible <span class="math inline">\(3 \times 3\)</span> matrix, <span class="math inline">\(\mathbf{A}\)</span>. The predicted matches are unchanged:</p>
+<p><span id="eq-uniqueness-1"><span class="math display">\[
+\mathbf{A} \mathbf{C} \mathbf{t}_1 = \mathbf{A} \mathbf{C} \mathbf{t}_2 \quad \Longleftrightarrow \quad \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2 .
+\tag{27.3}\]</span></span></p>
+<p>Thus the CMFs are unique only up to an invertible linear transformation. We do not need to use the measured CMFs directly. We can use any linear transformation of them that is more convenient.</p>
+</section>
+</section>
+<section id="cie-standards" class="level2" data-number="27.5">
+<h2 data-number="27.5" class="anchored" data-anchor-id="cie-standards"><span class="header-section-number">27.5</span> CIE Standards</h2>
+<p>This freedom is what the standards bodies exploit. The Commission Internationale de l’Éclairage (CIE) defined a standard observer in 1931, based on color matches measured for small (2-degree) fields. The CIE derived the CIE 1931 <span class="math inline">\(\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)\)</span> functions by applying a linear transformation to measured RGB CMFs. The transformation was chosen so that the functions are non-negative, and so that <span class="math inline">\(\bar{y}(\lambda)\)</span> equals the photopic luminosity function. A second standard was defined in 1964 for larger (10-degree) fields; the Stiles &amp; Burch data in <a href="#fig-rgb-cmfs" class="quarto-xref">Figure&nbsp;<span>27.6</span></a> are from that field size.</p>
+<!-- TODO: add figure of the CIE 1931 and 1964 XYZ functions, and the chromaticity diagram. Verify the history of the transformation and the 1964 data sources before review. -->
+<div class="callout callout-style-default callout-note callout-titled" title="Color matching, biology, and psychology">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Color matching, biology, and psychology
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="baylor-and-cone-response-functions" class="level3" data-number="27.5.1">
+<h3 data-number="27.5.1" class="anchored" data-anchor-id="baylor-and-cone-response-functions"><span class="header-section-number">27.5.1</span> Baylor and cone response functions</h3>
+<p>Just point to Foundations of Vision. I don’t want to repeat the story in both places, cool as it is.</p>
+</section>
+<section id="maxwell-the-psychologist" class="level3" data-number="27.5.2">
+<h3 data-number="27.5.2" class="anchored" data-anchor-id="maxwell-the-psychologist"><span class="header-section-number">27.5.2</span> Maxwell the Psychologist</h3>
 <p>Maxwell recognized that it is possible to create an exact quantitative science based on perceptual observations, and that this science is an exploration of our conscious experience:</p>
 <blockquote class="blockquote">
 <p>If the sensation which we call colour has any laws, it must be in our own nature which determines the form of these laws; and I need not tell you that the only evidence we can obtain respecting ourselves is derived from consciousness.</p>
 <p>The science of colour must therefore be regarded as essentially a mental science. It differs from the greater part of what is called mental science in the large use which it makes of the physical sciences, and in particular of optics and anatomy. But it gives evidence that it is a mental science by the numerous illustrations which it furnishes of various operations of the mind <span class="citation" data-cites="maxwell1872-colorvision">(<a href="references.html#ref-maxwell1872-colorvision" role="doc-biblioref">Maxwell 1872</a>)</span>.</p>
 </blockquote>
+<p>Something about the simplicity of matching compared to appearance. We have one worked out, not the other. More on this in Foundations of Vision.</p>
+</section>
 </div>
 </div>
+</div>
+</section>
+<section id="color-differences" class="level2" data-number="27.6">
+<h2 data-number="27.6" class="anchored" data-anchor-id="color-differences"><span class="header-section-number">27.6</span> Color differences</h2>
+<p>Transition comments here into the metrics chapter.</p>
 
 
 
