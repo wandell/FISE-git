@@ -97,6 +97,11 @@ $$
 \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2
 $${#eq-color-match}
 
+### Dimensionality of the CMFs
+How do we know that we should use three primary lights, and not two or four? The answer is based on experiments.
+
+If we provide people with only one or two primary lights, there will be test lights that cannot be matched. If we provide four primary lights, observers can set satisfactory matches with many different combinations of the primaries, so the match is not unique. With three primaries, a match can be found for every test light (allowing primaries to be added to the test side, as described below), and the match is unique. Three is the right number.
+
 ### Measuring the color-matching matrix $\mathbf{C}$
 
 How do we determine the entries of the matrix $\mathbf{C}$? Linear systems theory provides a straightforward answer: measure the system's response to impulse inputs. In optics, an impulse is a point of light, and the response is the point spread function (@sec-ls-point-matrix). In color matching, an impulse is a monochromatic (single-wavelength) test light.
@@ -107,22 +112,75 @@ Suppose the test light is a monochromatic light at wavelength $\lambda_k$ with u
 
 By measuring the primary intensities needed to match monochromatic test lights across all sampled wavelengths of the visible spectrum, we directly measure every column of $\mathbf{C}$.
 
-## Color matching functions
+### Color matching functions
 
 The rows of the matrix $\mathbf{C}$ are functions of wavelength, known as the **color-matching functions (CMFs)**, conventionally written as $r(\lambda), g(\lambda), b(\lambda)$.
 
-An example of color-matching functions measured using three monochromatic primaries (at 645.2 nm, 526.3 nm, and 444.4 nm from the Stiles & Burch 10-degree observer) is shown in @fig-rgb-cmfs.
+An example of color-matching functions measured using three monochromatic primaries (at 645.2 nm, 526.3 nm, and 444.4 nm from the Stiles & Burch 10-degree observer) is shown in @fig-rgb-cmfs. 
 
 ![Stiles & Burch (1959) 10-degree RGB color-matching functions measured with monochromatic primaries. In the cyan spectral region between 480 nm and 530 nm, the red primary curve is negative, indicating that the red primary light was added to the test light to achieve a match.](images/human/03-wavelength-encoding/matching/50_rgb-color-matching-functions.png){#fig-rgb-cmfs width="80%"}
 
+::: {.callout-note title="Reading the CMFS"}
+When I teach, I often forget the wavelengths of the primary lights. But it is possible to deduce them from the graphs; can you see how? The principle is straightforward. When a monochromatic test light matches one of the primary lights, the primary settings will be one of these three values: $(1,0,0)$, $(0,1,0)$, or $(0,0,1)$.  Read the curves to find the wavelengths at which the primaries have those values. You won't be very precise, but you can get a close estimate.
+:::
+
+### Negative values in the CMF
 A notable feature of these curves is that $r(\lambda)$ takes on negative values between approximately 480 nm and 530 nm. In this spectral region, monochromatic test lights appear more saturated in color than any additive mixture of the green and blue primaries can produce. To achieve a visual match, the experimenter adds some of the red primary to the *test light* side of the bipartite field, desaturating it until the remaining green and blue primaries can complete the match. Because color matching obeys superposition, adding primary light to the test field is mathematically equivalent to subtracting it from the primary side, resulting in negative coefficients in the color-matching functions.
 
-::: {.callout-note title="Maxwell on color as a mental science"}
+This point matters in practice when we describe the colors a display can produce. A display has three primary lights, and there is no way to add a primary to the test side. Colors that would require negative primary values cannot be produced. This limitation defines the display *gamut* (@sec-display-principles-overview).
+
+### Uniqueness of the CMFs
+Two groups, A and B, who use different sets of primary lights, $\mathbf{P}_A$ and $\mathbf{P}_B$, will measure different CMFs. But the two sets of CMFs are related.
+
+To see why, suppose group A measures the matches to the primaries of group B. Group A can then predict the matches that group B would set for any test light.
+
+Represent the primaries as $N \times 3$ matrices, $\mathbf{P}_A$ and $\mathbf{P}_B$, whose columns are the spectral power distributions of the three primaries. Let $\mathbf{C}_A$ and $\mathbf{C}_B$ be the $3 \times N$ CMF matrices measured by the two groups. By definition, $\mathbf{P}_B (\mathbf{C}_B \mathbf{t})$ is a mixture of group B's primaries that matches $\mathbf{t}$. Because matched lights produce the same group A matching values, applying $\mathbf{C}_A$ gives
+
+$$
+\mathbf{C}_A \mathbf{t} = \mathbf{C}_A \mathbf{P}_B (\mathbf{C}_B \mathbf{t}).
+$$
+
+The $3 \times 3$ matrix $\mathbf{M}_{B,A} = \mathbf{C}_A \mathbf{P}_B$ converts group B primary values into group A primary values. Because this holds for every test light $\mathbf{t}$,
+
+$$
+\mathbf{C}_A = \mathbf{M}_{B,A} \, \mathbf{C}_B .
+$$ {#eq-cmf-conversion}
+
+Any two sets of CMFs are related by a $3 \times 3$ linear transformation.
+
+The converse also holds. Multiply both sides of @eq-color-match by any invertible $3 \times 3$ matrix, $\mathbf{A}$. The predicted matches are unchanged:
+
+$$
+\mathbf{A} \mathbf{C} \mathbf{t}_1 = \mathbf{A} \mathbf{C} \mathbf{t}_2 \quad \Longleftrightarrow \quad \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2 .
+$$ {#eq-uniqueness-1}
+
+Thus the CMFs are unique only up to an invertible linear transformation. We do not need to use the measured CMFs directly. We can use any linear transformation of them that is more convenient.
+
+## CIE Standards
+
+This freedom is what the standards bodies exploit. The Commission Internationale de l'Éclairage (CIE) defined a standard observer in 1931, based on color matches measured for small (2-degree) fields. The CIE derived the CIE 1931 $\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)$ functions by applying a linear transformation to measured RGB CMFs. The transformation was chosen so that the functions are non-negative, and so that $\bar{y}(\lambda)$ equals the photopic luminosity function. A second standard was defined in 1964 for larger (10-degree) fields; the Stiles & Burch data in @fig-rgb-cmfs are from that field size.
+
+<!-- TODO: add figure of the CIE 1931 and 1964 XYZ functions, and the chromaticity diagram. Verify the history of the transformation and the 1964 data sources before review. -->
+
+::: {.callout-note title="Color matching, biology, and psychology" collapse="true"}
+
+### Baylor and cone response functions
+
+Just point to Foundations of Vision.  I don't want to repeat the story in both places, cool as it is.
+
+### Maxwell the Psychologist
+
 Maxwell recognized that it is possible to create an exact quantitative science based on perceptual observations, and that this science is an exploration of our conscious experience:
 
 > If the sensation which we call colour has any laws, it must be in our own nature which determines the form of these laws; and I need not tell you that the only evidence we can obtain respecting ourselves is derived from consciousness.
 >
 > The science of colour must therefore be regarded as essentially a mental science. It differs from the greater part of what is called mental science in the large use which it makes of the physical sciences, and in particular of optics and anatomy. But it gives evidence that it is a mental science by the numerous illustrations which it furnishes of various operations of the mind [@maxwell1872-colorvision].
+
+Something about the simplicity of matching compared to appearance.  We have one worked out, not the other.  More on this in Foundations of Vision.
 :::
+
+## Color differences
+
+Transition comments here into the metrics chapter.
 
 
