@@ -81,26 +81,43 @@ As illustrated in @fig-color-matching-additivity, superposition in color matchin
 
 ## Matrix formulation of color matching
 
-Because color matching satisfies superposition, we can express the relationship between any test light and the primary intensities needed to match it using linear matrix algebra.
+The color matching experiment satisfies superposition. A psychological experiment that satisfies superposition is extremely rare; in fact, I am unaware of only one other impactful perceptual experiment that satisfies superposition (flicker photometry). When linearity is satisfied, we can characterize the system thoroughly.
 
-Suppose we represent a test light as a column vector, $\mathbf{t}$, whose entries $t[\lambda]$ specify the light's spectral power at sampled wavelengths $\lambda$. Because the system is linear, the primary intensities $(R, G, B)$ required for a match can be calculated by multiplying $\mathbf{t}$ by a $3 \times N$ matrix, $\mathbf{C}$:
+In this case, we express the relationship between any test light and the primary intensities needed to match it using multidimensional linear algebra[^grassmann-history]. Suppose we represent a test light as a column vector, $\mathbf{t}$, whose entries $t[\lambda]$ specify the light's spectral power at sampled wavelengths $\lambda$. Because the system is linear, the primary intensities $(R, G, B)$ required for a match can be calculated by multiplying $\mathbf{t}$ by a $3 \times N$ matrix, $\mathbf{C}$:
+
+[^grassmann-history]: Linear algebra was first invented by Grassman (@grassmann1995-newbranch) and applied to color science almost right away [@grassmann-1854]!
 
 $$
 \begin{pmatrix} R \\ G \\ B \end{pmatrix} = \mathbf{C} \mathbf{t}
-$$
+$${#eq-color-match-matrix}
 
 ![Linearity of the color-matching experiment expressed in matrix tableau.](images/human/03-wavelength-encoding/matching/48_color-matching-matrix-equation.png){#fig-matching-tableau width="70%"}
 
-The matrix equation shows how two lights are related in appearance. Any particular test light $\mathbf{t}_1$ matches the appearance of a second test light $\mathbf{t}_2$ if and only if their primary matching intensities are identical:
+The matrix equation shows how we can determine whether two lights have the same appearance. Two test lights, say $\mathbf{t}_1$ and $\mathbf{t}_2$ match in appearance if and only if the primary matching intensities computed from @eq-color-match-matrix are equal, 
 
 $$
 \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2
-$${#eq-color-match}
+$${#eq-color-match-metamers}
+
+We call this pair of test lights *metamers*.  It is useful to note that the difference between two metamers satisfies
+
+$$
+\mathbf{0}  = \mathbf{C} {\mathbf{t}_2 - mathbf{t}_1}
+$${#eq-color-null-space}
+
+In modern terms we say the difference between any pair of metamers is in the *null space* of the color matching functions.  The null space is one of many linear algebra concepts described first by Grassmann (@sec-grassmann-color).
 
 ### Dimensionality of the CMFs
-How do we know that we should use three primary lights, and not two or four? The answer is based on experiments.
+How do we know that we should use three primary lights, and not two or four? 
 
-If we provide people with only one or two primary lights, there will be test lights that cannot be matched. If we provide four primary lights, observers can set satisfactory matches with many different combinations of the primaries, so the match is not unique. With three primaries, a match can be found for every test light (allowing primaries to be added to the test side, as described below), and the match is unique. Three is the right number.
+If we provide people with just one or two primary lights, there will be many test lights that cannot be matched. That sets the minimum.  If we provide four primary lights, people set satisfactory matches with many different combinations of primary intensities. The match is not unique. With three primaries, a match can be set for every test light.
+
+There is one detail, however.  In some cases, adding the three primaries together does not quite get there. To make a match we must add one (or even two) of the primaries into the test light side. In this case, we record its intensity as negative. Allowing for this caveat, a unique match can always be made with three primaries. That is why we say color-matching is three-dimensional.
+
+You may have questions about the universality of this finding (color blindness, women with four cones, and just inter-observer variability).  All good questions.  More on this in the metrics chapter.
+<!--
+See the human-tetrachromacy.qmd file for more.
+-->
 
 ### Measuring the color-matching matrix $\mathbf{C}$
 
@@ -114,15 +131,11 @@ By measuring the primary intensities needed to match monochromatic test lights a
 
 ### Color matching functions
 
-The rows of the matrix $\mathbf{C}$ are functions of wavelength, known as the **color-matching functions (CMFs)**, conventionally written as $r(\lambda), g(\lambda), b(\lambda)$.
-
-An example of color-matching functions measured using three monochromatic primaries (at 645.2 nm, 526.3 nm, and 444.4 nm from the Stiles & Burch 10-degree observer) is shown in @fig-rgb-cmfs. 
+The rows of the matrix $\mathbf{C}$ are functions of wavelength, known as the **color-matching functions (CMFs)**, are conventionally written as $r(\lambda), g(\lambda), b(\lambda)$. The color-matching functions measured using three monochromatic primaries (at 645.2 nm, 526.3 nm, and 444.4 nm from the Stiles & Burch 10-degree observer) are shown in @fig-rgb-cmfs. 
 
 ![Stiles & Burch (1959) 10-degree RGB color-matching functions measured with monochromatic primaries. In the cyan spectral region between 480 nm and 530 nm, the red primary curve is negative, indicating that the red primary light was added to the test light to achieve a match.](images/human/03-wavelength-encoding/matching/50_rgb-color-matching-functions.png){#fig-rgb-cmfs width="80%"}
 
-::: {.callout-note title="Reading the CMFS"}
 When I teach, I often forget the wavelengths of the primary lights. But it is possible to deduce them from the graphs; can you see how? The principle is straightforward. When a monochromatic test light matches one of the primary lights, the primary settings will be one of these three values: $(1,0,0)$, $(0,1,0)$, or $(0,0,1)$.  Read the curves to find the wavelengths at which the primaries have those values. You won't be very precise, but you can get a close estimate.
-:::
 
 ### Negative values in the CMF
 A notable feature of these curves is that $r(\lambda)$ takes on negative values between approximately 480 nm and 530 nm. In this spectral region, monochromatic test lights appear more saturated in color than any additive mixture of the green and blue primaries can produce. To achieve a visual match, the experimenter adds some of the red primary to the *test light* side of the bipartite field, desaturating it until the remaining green and blue primaries can complete the match. Because color matching obeys superposition, adding primary light to the test field is mathematically equivalent to subtracting it from the primary side, resulting in negative coefficients in the color-matching functions.
