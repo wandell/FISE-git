@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-10-27">
+<meta name="dcterms.date" content="2026-10-28">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>27&nbsp; Wavelength encoding – Foundations of Image Systems Engineering</title>
@@ -645,7 +645,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 27, 2026</p>
+      <p class="date">October 28, 2026</p>
     </div>
   </div>
   
@@ -671,7 +671,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: October 27, 2026
+Last updated: October 28, 2026
 !-->
 </div>
 </div>
@@ -746,7 +746,7 @@ Figure&nbsp;27.1: Maxwell’s color wheel, used to produce quantitative color ma
 <img src="images/human/03-wavelength-encoding/matching/44_cone-color-matching-apparatus-box.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-color-matching-experiment-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;27.2: Conceptual description of the color matching experiment. The observer views a bipartite field with the test light <span class="math inline">\(T\)</span> on one side and a mixture of three adjustable primary lights (<span class="math inline">\(R, G, B\)</span>) on the other side. The first color matching instrument, <a href="https://maxwell-color-experiment.vercel.app/" target="_blank">built by Maxwell</a>, used an ingenious but more complex optical design.
+Figure&nbsp;27.2: Conceptual description of the color matching experiment. The observer views a bipartite field with the test light <span class="math inline">\(T\)</span> on one side and a mixture of three adjustable primary lights (<span class="math inline">\(R, G, B\)</span>) on the other side. The first color matching instrument, <a href="https://wandell.github.io/maxwell-color-experiment/" target="_blank">built by Maxwell</a>, used an ingenious but more complex optical design.
 </figcaption>
 </figure>
 </div>
@@ -772,11 +772,11 @@ Figure&nbsp;27.3: Linearity of the color-matching experiment: additivity and hom
 </section>
 <section id="matrix-formulation-of-color-matching" class="level2" data-number="27.4">
 <h2 data-number="27.4" class="anchored" data-anchor-id="matrix-formulation-of-color-matching"><span class="header-section-number">27.4</span> Matrix formulation of color matching</h2>
-<p>Because color matching satisfies superposition, we can express the relationship between any test light and the primary intensities needed to match it using linear matrix algebra.</p>
-<p>Suppose we represent a test light as a column vector, <span class="math inline">\(\mathbf{t}\)</span>, whose entries <span class="math inline">\(t[\lambda]\)</span> specify the light’s spectral power at sampled wavelengths <span class="math inline">\(\lambda\)</span>. Because the system is linear, the primary intensities <span class="math inline">\((R, G, B)\)</span> required for a match can be calculated by multiplying <span class="math inline">\(\mathbf{t}\)</span> by a <span class="math inline">\(3 \times N\)</span> matrix, <span class="math inline">\(\mathbf{C}\)</span>:</p>
-<p><span class="math display">\[
+<p>The color matching experiment satisfies superposition. A psychological experiment that satisfies superposition is extremely rare; in fact, I am unaware of only one other impactful perceptual experiment that satisfies superposition (flicker photometry). When linearity is satisfied, we can characterize the system thoroughly.</p>
+<p>In this case, we express the relationship between any test light and the primary intensities needed to match it using multidimensional linear algebra<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Suppose we represent a test light as a column vector, <span class="math inline">\(\mathbf{t}\)</span>, whose entries <span class="math inline">\(t[\lambda]\)</span> specify the light’s spectral power at sampled wavelengths <span class="math inline">\(\lambda\)</span>. Because the system is linear, the primary intensities <span class="math inline">\((R, G, B)\)</span> required for a match can be calculated by multiplying <span class="math inline">\(\mathbf{t}\)</span> by a <span class="math inline">\(3 \times N\)</span> matrix, <span class="math inline">\(\mathbf{C}\)</span>:</p>
+<p><span id="eq-color-match-matrix"><span class="math display">\[
 \begin{pmatrix} R \\ G \\ B \end{pmatrix} = \mathbf{C} \mathbf{t}
-\]</span></p>
+\tag{27.1}\]</span></span></p>
 <div id="fig-matching-tableau" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-matching-tableau-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -787,14 +787,23 @@ Figure&nbsp;27.4: Linearity of the color-matching experiment expressed in matrix
 </figcaption>
 </figure>
 </div>
-<p>The matrix equation shows how two lights are related in appearance. Any particular test light <span class="math inline">\(\mathbf{t}_1\)</span> matches the appearance of a second test light <span class="math inline">\(\mathbf{t}_2\)</span> if and only if their primary matching intensities are identical:</p>
-<p><span id="eq-color-match"><span class="math display">\[
+<p>The matrix equation shows how we can determine whether two lights have the same appearance. Two test lights, say <span class="math inline">\(\mathbf{t}_1\)</span> and <span class="math inline">\(\mathbf{t}_2\)</span> match in appearance if and only if the primary matching intensities computed from <a href="#eq-color-match-matrix" class="quarto-xref">Equation&nbsp;<span>27.1</span></a> are equal,</p>
+<p><span id="eq-color-match-metamers"><span class="math display">\[
 \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2
-\tag{27.1}\]</span></span></p>
+\tag{27.2}\]</span></span></p>
+<p>We call this pair of test lights <em>metamers</em>. It is useful to note that the difference between two metamers satisfies</p>
+<p><span id="eq-color-null-space"><span class="math display">\[
+\mathbf{0}  = \mathbf{C} {\mathbf{t}_2 - mathbf{t}_1}
+\tag{27.3}\]</span></span></p>
+<p>In modern terms we say the difference between any pair of metamers is in the <em>null space</em> of the color matching functions. The null space is one of many linear algebra concepts described first by Grassmann (<a href="resources/history-color.html#sec-grassmann-color" class="quarto-xref"><span>Section 50.6</span></a>).</p>
 <section id="dimensionality-of-the-cmfs" class="level3" data-number="27.4.1">
 <h3 data-number="27.4.1" class="anchored" data-anchor-id="dimensionality-of-the-cmfs"><span class="header-section-number">27.4.1</span> Dimensionality of the CMFs</h3>
-<p>How do we know that we should use three primary lights, and not two or four? The answer is based on experiments.</p>
-<p>If we provide people with only one or two primary lights, there will be test lights that cannot be matched. If we provide four primary lights, observers can set satisfactory matches with many different combinations of the primaries, so the match is not unique. With three primaries, a match can be found for every test light (allowing primaries to be added to the test side, as described below), and the match is unique. Three is the right number.</p>
+<p>How do we know that we should use three primary lights, and not two or four?</p>
+<p>If we provide people with just one or two primary lights, there will be many test lights that cannot be matched. That sets the minimum. If we provide four primary lights, people set satisfactory matches with many different combinations of primary intensities. The match is not unique. With three primaries, a match can be set for every test light.</p>
+<p>There is one detail, however. In some cases, adding the three primaries together does not quite get there. To make a match we must add one (or even two) of the primaries into the test light side. In this case, we record its intensity as negative. Allowing for this caveat, a unique match can always be made with three primaries. That is why we say color-matching is three-dimensional.</p>
+<p>You may have questions about the universality of this finding (color blindness, women with four cones, and just inter-observer variability). All good questions. More on this in the metrics chapter. <!--
+See the human-tetrachromacy.qmd file for more.
+--></p>
 </section>
 <section id="measuring-the-color-matching-matrix-mathbfc" class="level3" data-number="27.4.2">
 <h3 data-number="27.4.2" class="anchored" data-anchor-id="measuring-the-color-matching-matrix-mathbfc"><span class="header-section-number">27.4.2</span> Measuring the color-matching matrix <span class="math inline">\(\mathbf{C}\)</span></h3>
@@ -814,8 +823,7 @@ Figure&nbsp;27.5: Measuring the color-matching matrix with monochromatic test li
 </section>
 <section id="color-matching-functions" class="level3" data-number="27.4.3">
 <h3 data-number="27.4.3" class="anchored" data-anchor-id="color-matching-functions"><span class="header-section-number">27.4.3</span> Color matching functions</h3>
-<p>The rows of the matrix <span class="math inline">\(\mathbf{C}\)</span> are functions of wavelength, known as the <strong>color-matching functions (CMFs)</strong>, conventionally written as <span class="math inline">\(r(\lambda), g(\lambda), b(\lambda)\)</span>.</p>
-<p>An example of color-matching functions measured using three monochromatic primaries (at 645.2 nm, 526.3 nm, and 444.4 nm from the Stiles &amp; Burch 10-degree observer) is shown in <a href="#fig-rgb-cmfs" class="quarto-xref">Figure&nbsp;<span>27.6</span></a>.</p>
+<p>The rows of the matrix <span class="math inline">\(\mathbf{C}\)</span> are functions of wavelength, known as the <strong>color-matching functions (CMFs)</strong>, are conventionally written as <span class="math inline">\(r(\lambda), g(\lambda), b(\lambda)\)</span>. The color-matching functions measured using three monochromatic primaries (at 645.2 nm, 526.3 nm, and 444.4 nm from the Stiles &amp; Burch 10-degree observer) are shown in <a href="#fig-rgb-cmfs" class="quarto-xref">Figure&nbsp;<span>27.6</span></a>.</p>
 <div id="fig-rgb-cmfs" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-rgb-cmfs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -826,19 +834,7 @@ Figure&nbsp;27.6: Stiles &amp; Burch (1959) 10-degree RGB color-matching functio
 </figcaption>
 </figure>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Reading the CMFS">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Reading the CMFS
-</div>
-</div>
-<div class="callout-body-container callout-body">
 <p>When I teach, I often forget the wavelengths of the primary lights. But it is possible to deduce them from the graphs; can you see how? The principle is straightforward. When a monochromatic test light matches one of the primary lights, the primary settings will be one of these three values: <span class="math inline">\((1,0,0)\)</span>, <span class="math inline">\((0,1,0)\)</span>, or <span class="math inline">\((0,0,1)\)</span>. Read the curves to find the wavelengths at which the primaries have those values. You won’t be very precise, but you can get a close estimate.</p>
-</div>
-</div>
 </section>
 <section id="negative-values-in-the-cmf" class="level3" data-number="27.4.4">
 <h3 data-number="27.4.4" class="anchored" data-anchor-id="negative-values-in-the-cmf"><span class="header-section-number">27.4.4</span> Negative values in the CMF</h3>
@@ -856,12 +852,12 @@ Reading the CMFS
 <p>The <span class="math inline">\(3 \times 3\)</span> matrix <span class="math inline">\(\mathbf{M}_{B,A} = \mathbf{C}_A \mathbf{P}_B\)</span> converts group B primary values into group A primary values. Because this holds for every test light <span class="math inline">\(\mathbf{t}\)</span>,</p>
 <p><span id="eq-cmf-conversion"><span class="math display">\[
 \mathbf{C}_A = \mathbf{M}_{B,A} \, \mathbf{C}_B .
-\tag{27.2}\]</span></span></p>
+\tag{27.4}\]</span></span></p>
 <p>Any two sets of CMFs are related by a <span class="math inline">\(3 \times 3\)</span> linear transformation.</p>
-<p>The converse also holds. Multiply both sides of <a href="#eq-color-match" class="quarto-xref">Equation&nbsp;<span>27.1</span></a> by any invertible <span class="math inline">\(3 \times 3\)</span> matrix, <span class="math inline">\(\mathbf{A}\)</span>. The predicted matches are unchanged:</p>
+<p>The converse also holds. Multiply both sides of <span class="quarto-unresolved-ref">?eq-color-match</span> by any invertible <span class="math inline">\(3 \times 3\)</span> matrix, <span class="math inline">\(\mathbf{A}\)</span>. The predicted matches are unchanged:</p>
 <p><span id="eq-uniqueness-1"><span class="math display">\[
 \mathbf{A} \mathbf{C} \mathbf{t}_1 = \mathbf{A} \mathbf{C} \mathbf{t}_2 \quad \Longleftrightarrow \quad \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2 .
-\tag{27.3}\]</span></span></p>
+\tag{27.5}\]</span></span></p>
 <p>Thus the CMFs are unique only up to an invertible linear transformation. We do not need to use the measured CMFs directly. We can use any linear transformation of them that is more convenient.</p>
 </section>
 </section>
@@ -870,7 +866,7 @@ Reading the CMFS
 <p>This freedom is what the standards bodies exploit. The Commission Internationale de l’Éclairage (CIE) defined a standard observer in 1931, based on color matches measured for small (2-degree) fields. The CIE derived the CIE 1931 <span class="math inline">\(\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)\)</span> functions by applying a linear transformation to measured RGB CMFs. The transformation was chosen so that the functions are non-negative, and so that <span class="math inline">\(\bar{y}(\lambda)\)</span> equals the photopic luminosity function. A second standard was defined in 1964 for larger (10-degree) fields; the Stiles &amp; Burch data in <a href="#fig-rgb-cmfs" class="quarto-xref">Figure&nbsp;<span>27.6</span></a> are from that field size.</p>
 <!-- TODO: add figure of the CIE 1931 and 1964 XYZ functions, and the chromaticity diagram. Verify the history of the transformation and the 1964 data sources before review. -->
 <div class="callout callout-style-default callout-note callout-titled" title="Color matching, biology, and psychology">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -879,11 +875,11 @@ Color matching, biology, and psychology
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<section id="baylor-and-cone-response-functions" class="level3" data-number="27.5.1">
-<h3 data-number="27.5.1" class="anchored" data-anchor-id="baylor-and-cone-response-functions"><span class="header-section-number">27.5.1</span> Baylor and cone response functions</h3>
-<p>Just point to Foundations of Vision. I don’t want to repeat the story in both places, cool as it is.</p>
+<section id="color-matching-and-biology" class="level3" data-number="27.5.1">
+<h3 data-number="27.5.1" class="anchored" data-anchor-id="color-matching-and-biology"><span class="header-section-number">27.5.1</span> Color matching and biology</h3>
+<p>The scientific story that led to the characterization of the biological substrate for color-matching is also impressive.</p>
 </section>
 <section id="maxwell-the-psychologist" class="level3" data-number="27.5.2">
 <h3 data-number="27.5.2" class="anchored" data-anchor-id="maxwell-the-psychologist"><span class="header-section-number">27.5.2</span> Maxwell the Psychologist</h3>
@@ -907,6 +903,12 @@ Color matching, biology, and psychology
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-brewsterIVNewAnalysis1834" class="csl-entry" role="listitem">
 Brewster D (1834) <span>IV</span>. <span>On</span> a <span>New Analysis</span> of <span>Solar Light</span>, indicating three <span>Primary Colours</span>, forming <span>Coincident Spectra</span> of equal length. Earth Environ Sci Trans R Soc Edinb 12:123–136
+</div>
+<div id="ref-grassmann-1854" class="csl-entry" role="listitem">
+Grassmann (1854) <span>XXXVII</span>. <span>On</span> the theory of compound colours. The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science 7:254–264
+</div>
+<div id="ref-grassmann1995-newbranch" class="csl-entry" role="listitem">
+Grassmann H (1995) A new branch of mathematics: The <span>A</span>usdehnungslehre of 1844, and other works. Open Court, Chicago, IL
 </div>
 <div id="ref-helmholtzLXXXITheoryCompound1852" class="csl-entry" role="listitem">
 Helmholtz H (1852) <span>LXXXI</span>. <span>On</span> the theory of compound colours. The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science 4:519–534
@@ -947,6 +949,7 @@ Young T (1802) <span>II</span>. <span>The Bakerian Lecture</span>. <span>On</spa
 <hr>
 <ol>
 <li id="fn1"><p>I think of Feynman’s comment, “What I cannot create, I do not understand”.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Linear algebra was first invented by Grassman (<span class="citation" data-cites="grassmann1995-newbranch">Grassmann (<a href="references.html#ref-grassmann1995-newbranch" role="doc-biblioref">1995</a>)</span>) and applied to color science almost right away <span class="citation" data-cites="grassmann-1854">(<a href="references.html#ref-grassmann-1854" role="doc-biblioref">Grassmann 1854</a>)</span>!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
