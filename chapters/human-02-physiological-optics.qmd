@@ -24,7 +24,7 @@ Many of the imaging system components characterized in previous chapters can be 
 
 For parts of the human visual system, we can apply the same systems engineering approach. The eye's cornea and crystalline lens form an optical system whose transformation of incident light can be measured directly. Similarly, the photoreceptor mosaic provides the input to retinal neural circuitry, while the action potentials along retinal ganglion cell axons form the output.
 
-![Human vision encodes the light field and then has many processing stages. The earliest stages, optics and photoreceptor encoding, and retina, are the basis for many important engineering metrics.](images/human/02-spatial-encoding/02-encoding-overview-human.png){#fig-human-encoding-overview width="80%"}
+![Human vision encodes the light field and then has many processing stages. The earliest stages, optics and photoreceptor encoding, and retina, are the basis for many important engineering metrics.](images/human/02-physiological-optics/02-encoding-overview-human.png){#fig-human-encoding-overview width="80%"}
 
 In this book, we focus on the early stages of the visual pathway that can be characterized with measurable transfer functions. This chapter reviews the first of these steps: how optical blur introduced by the eye's physiological optics establishes a fundamental bottleneck on spatial resolution. The next chapter, @sec-human-retinal-encoding, reviews the second bottleneck, spatial sampling by the photoreceptor mosaic. Spatial information lost at these initial stages cannot be recovered by downstream neural processing. Consequently, these early limits provide a principled foundation for creating quantitative image quality metrics (see @sec-human-spatial-metrics and @sec-human-color-metrics).
 
@@ -35,7 +35,7 @@ This chapter is deliberately targeted: we quantify how the eye's physiological o
 ## The eye's optical system {#sec-human-encoding-systems}
 Two systems in the eye function together to convert the scene electromagnetic radiation into a neural signal that the brain interprets: the physiological optics and the retina.
 
-![A cross-section of the human eye, showing the cornea, lens, iris, and retina. Radiation is focused by the optics onto the photoreceptor layer of the retina. We call the radiation that the eye converts into a neural signal *light*. Source: Eye anatomy: [Scientific Animations](https://www.scientificanimations.com).](images/human/02-spatial-encoding/2048px-3D_Medical_Animation_Eye_Structure.jpg){#fig-human-eyeball width="60%"}
+![A cross-section of the human eye, showing the cornea, lens, iris, and retina. Radiation is focused by the optics onto the photoreceptor layer of the retina. We call the radiation that the eye converts into a neural signal *light*. Source: Eye anatomy: [Scientific Animations](https://www.scientificanimations.com).](images/human/02-physiological-optics/2048px-3D_Medical_Animation_Eye_Structure.jpg){#fig-human-eyeball width="60%"}
 
 The **physiological optics**—the cornea and lens—gather the incident light field at the eye, focusing it to an image within the retina. The optics are an adaptive system.  When the illumination level is high or low the aperture shrinks or expands; when the object of interest is close or far the lens power adjusts its power to bring the object into focus onto the photoreceptors. In addition to neural signals from the brain to the eye that control pupil size and lens power, the system also controls eye, head, and body positions.  These signals combine to determine which part of the visual world falls on the retina. These neural signals do not reach the retina itself, but they control which parts of the scene arrive at the retina and how the image is focused.
 
@@ -53,11 +53,11 @@ Notice that the pupil size determines which part of the cornea and lens contribu
 
 ### Eyeball image
 
-![Image of the physiological optics](images/human/02-spatial-encoding/eyeball-image.png){#fig-eyeball-image width="50%"}
+![Image of the physiological optics](images/human/02-physiological-optics/eyeball-image.png){#fig-eyeball-image width="50%"}
 
 ### Eyeball sketch
 
-![Schematic of the physiological optics](images/human/02-spatial-encoding/eyeball-sketch.png){#fig-eyeball-sketch width="50%"}
+![Schematic of the physiological optics](images/human/02-physiological-optics/eyeball-sketch.png){#fig-eyeball-sketch width="50%"}
 :::
 The physiological optics of the human eye. The cornea provides most of the eye's fixed optical power. The lens adjusts its shape and optical power, which changes the in-focus plane.
 :::
@@ -79,11 +79,11 @@ David Williams, at the University of Rochester, had the important insight that t
 
 The principle of the human wavefront measurement is illustrated in @fig-wavefront-aberrometer. A narrow beam of light is directed through the center of the pupil. Some of the light is reflected from the retina, at the layer between the inner and outer segments of the receptors. The reflected light is Lambertian (spread in all directions) and fills up the lens as it passes back through the optics. If the optics were perfect, the rays exiting the eye from the small spot would be close to collimated and the wavefront would be a constant. But the rays are not parallel and thus the wavefront has some deviations from constant. These are the aberrations that we measure with the Shack-Hartmann wavefront sensor; they are introduced by the optics of the eye.
 
-![Wavefront measurement from an on-axis point in the human eye.](images/human/02-spatial-encoding/wavefront-aberrometer.png){#fig-wavefront-aberrometer width="60%"}
+![Wavefront measurement from an on-axis point in the human eye.](images/human/02-physiological-optics/wavefront-aberrometer.png){#fig-wavefront-aberrometer width="60%"}
 
 Just as in the case of astronomy, knowledge of the wavefront distortion lets us pre-distort an image before it passes through the optics, so that the aberrations cancel and the retinal image is diffraction limited. The resulting image, from a small region of the retina, is sharp enough to visualize single cones.
 
-![Overview of the adaptive optics system, including a wavefront sensor, control computer, and a deformable mirror](images/human/02-spatial-encoding/human-adaptive-optics.png){#fig-human-adaptive-optics width="80%"}
+![Overview of the adaptive optics system, including a wavefront sensor, control computer, and a deformable mirror](images/human/02-physiological-optics/human-adaptive-optics.png){#fig-human-adaptive-optics width="80%"}
 
 The same correction can be applied to a create a spot that is scanned across the retina. When the pupil aperture is fairly large, say 7 mm diameter, the diffraction-limited PSF (Airy disk) diameter is about 3 microns. Scanning a corrected spot across the retina therefore creates a point-by-point image at the back of the eye, at about the same spatial resolution as an individual cone. This technique, adaptive optics scanning laser ophthalmoscopy (**AOSLO**). Austin Roorda - who lead a group for many years at UC Berkeley and is now at the University of Waterloo - developed and spread this technology over the last twenty years [@roorda2002-aoslo; @roorda2011-review; @roorda2015-ophthalmoscopy].
 
@@ -94,7 +94,7 @@ There have been great advances in this technology in recent years from Don Mille
 ::: {.callout-note title="Human eye wavefront sensing" collapse="false"}
 Working with Junzhong Liang and Donald Miller, he built the first adaptive optics system for the living human eye and demonstrated "supernormal vision"—retinal images sharper than the eye's own optics would otherwise allow [@liang1997-sm; @williams2023-oa].
 
-![The first rig using adaptive optics to measure the optical quality of the human eye.  Source: @liang1997-sm](images/human/02-spatial-encoding/williams-ao.png){#fig-williams-ao width="80%"}
+![The first rig using adaptive optics to measure the optical quality of the human eye.  Source: @liang1997-sm](images/human/02-physiological-optics/williams-ao.png){#fig-williams-ao width="80%"}
 :::
 
 <!--
