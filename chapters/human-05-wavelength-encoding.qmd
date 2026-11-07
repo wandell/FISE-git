@@ -101,7 +101,7 @@ $${#eq-color-match-metamers}
 We call this pair of test lights *metamers*.  It is useful to note that the difference between two metamers satisfies
 
 $$
-\mathbf{0}  = \mathbf{C} {\mathbf{t}_2 - mathbf{t}_1}
+\mathbf{0}  = \mathbf{C} {\mathbf{t}_2 - \mathbf{t}_1}
 $${#eq-color-null-space}
 
 In modern terms we say the difference between any pair of metamers is in the *null space* of the color matching functions.  The null space is one of many linear algebra concepts described first by Grassmann (@sec-grassmann-color).
@@ -113,7 +113,7 @@ If we provide people with just one or two primary lights, there will be many tes
 
 There is one detail, however.  In some cases, adding the three primaries together does not quite get there. To make a match we must add one (or even two) of the primaries into the test light side. In this case, we record its intensity as negative. Allowing for this caveat, a unique match can always be made with three primaries. That is why we say color-matching is three-dimensional.
 
-You may have questions about the universality of this finding (color blindness, women with four cones, and just inter-observer variability).  All good questions.  More on this in the metrics chapter.
+You may have questions about the universality of this finding (color blindness, women with four cones, and just inter-observer variability).  All good questions.  More on this in @sec-human-color-metrics.
 <!--
 See the human-tetrachromacy.qmd file for more.
 -->
@@ -160,7 +160,7 @@ $$ {#eq-cmf-conversion}
 
 Any two sets of CMFs are related by a $3 \times 3$ linear transformation.
 
-The converse also holds. Multiply both sides of @eq-color-match by any invertible $3 \times 3$ matrix, $\mathbf{A}$. The predicted matches are unchanged:
+The converse also holds. Multiply both sides of @eq-color-match-metamers by any invertible $3 \times 3$ matrix, $\mathbf{A}$. The predicted matches are unchanged:
 
 $$
 \mathbf{A} \mathbf{C} \mathbf{t}_1 = \mathbf{A} \mathbf{C} \mathbf{t}_2 \quad \Longleftrightarrow \quad \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2 .
@@ -168,31 +168,43 @@ $$ {#eq-uniqueness-1}
 
 Thus the CMFs are unique only up to an invertible linear transformation. We do not need to use the measured CMFs directly. We can use any linear transformation of them that is more convenient.
 
-## CIE Standards
-
-This freedom is what the standards bodies exploit. The Commission Internationale de l'Éclairage (CIE) defined a standard observer in 1931, based on color matches measured for small (2-degree) fields. The CIE derived the CIE 1931 $\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)$ functions by applying a linear transformation to measured RGB CMFs. The transformation was chosen so that the functions are non-negative, and so that $\bar{y}(\lambda)$ equals the photopic luminosity function. A second standard was defined in 1964 for larger (10-degree) fields; the Stiles & Burch data in @fig-rgb-cmfs are from that field size.
-
-<!-- TODO: add figure of the CIE 1931 and 1964 XYZ functions, and the chromaticity diagram. Verify the history of the transformation and the 1964 data sources before review. -->
-
 ::: {.callout-note title="Color matching, biology, and psychology" collapse="true"}
 
 ### Color matching and biology
-The scientific story that led to the characterization of the biological substrate for color-matching is also impressive. 
+The experimental search for the biological substrate for color-matching is also very inspiring. I cover part of this story in [Foundations of Vision](https://wandell.github.io/FOV-1995/chapter-4-wavelength-encoding.html#the-biological-basis-of-photopic-color-matching){target=_blank}.  I often remark in class that the unification of experiments from Newton's analysis of light, to Young and Maxwell's color-matching, to the quantification of the biology (cone photoreceptors) may well be the most thorough complete and thorough understanding neuroscientists have of a perceptual phenomenon.
 
-
-### Maxwell the Psychologist
-
-Maxwell recognized that it is possible to create an exact quantitative science based on perceptual observations, and that this science is an exploration of our conscious experience:
+Something that is quite meaningful to me - Maxwell recognized that it is possible to create an exact quantitative science based on perceptual observations.  He recognized that this science is an exploration of our conscious experience:
 
 > If the sensation which we call colour has any laws, it must be in our own nature which determines the form of these laws; and I need not tell you that the only evidence we can obtain respecting ourselves is derived from consciousness.
 >
 > The science of colour must therefore be regarded as essentially a mental science. It differs from the greater part of what is called mental science in the large use which it makes of the physical sciences, and in particular of optics and anatomy. But it gives evidence that it is a mental science by the numerous illustrations which it furnishes of various operations of the mind [@maxwell1872-colorvision].
 
-Something about the simplicity of matching compared to appearance.  We have one worked out, not the other.  More on this in Foundations of Vision.
+A quantitative mental science still seems like a good project to me.  Not easy to do, and perhaps not a good path to financial gain. Nonetheless, if we mean to understand ourselves it seems like a wonderful scientific topic.
 :::
 
-## Color differences
+## CIE Standards {#sec-cie-standards}
 
-Transition comments here into the metrics chapter.
+This freedom is what the standards bodies exploit. The Commission Internationale de l'Éclairage (CIE) defined a standard observer in 1931, based on color matches measured for small (2-degree) fields. The CIE derived the CIE 1931 $\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)$ functions by applying a linear transformation to measured RGB CMFs. The transformation was chosen so that the functions are non-negative, and so that $\bar{y}(\lambda)$ equals the photopic luminosity function. A second standard was defined in 1964 for larger (10-degree) fields; the Stiles & Burch data in @fig-rgb-cmfs are from that field size.
 
+<!-- TODO: add figure of the CIE 1931 and 1964 XYZ functions, and the chromaticity diagram. Verify the history of the transformation and the 1964 data sources before review. -->
+
+## Setting display primary intensities {#sec-display-color-matching}
+
+One of the most direct and important applications of the color-matching functions is calculating the intensities of a display's three primaries needed to match a target spectral power distribution $\mathbf{t}$.
+
+Suppose a display has three primaries whose spectral power distributions form the columns of an $N \times 3$ matrix $\mathbf{P} = [\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3]$. When the primaries are driven with relative weights $\mathbf{w} = (w_1, w_2, w_3)^T$, the emitted light has spectral power distribution $\mathbf{P}\mathbf{w}$. For the displayed light to match the target light $\mathbf{t}$ in appearance, their tristimulus values under the color-matching matrix $\mathbf{C}$ (such as the CIE $\mathbf{XYZ}$ functions) must be equal:
+
+$$
+\mathbf{C}\mathbf{t} = \mathbf{C}(\mathbf{P}\mathbf{w}) = (\mathbf{C}\mathbf{P})\mathbf{w} .
+$$ {#eq-display-primary-match}
+
+Because $\mathbf{C}\mathbf{P}$ is a $3 \times 3$ matrix whose columns are simply the tristimulus values of the three display primaries, we can solve for the required display primary weights directly:
+
+$$
+\mathbf{w} = (\mathbf{C}\mathbf{P})^{-1}\mathbf{C}\mathbf{t} .
+$$ {#eq-display-primary-weights}
+
+Physical displays can only emit non-negative amounts of light ($w_i \ge 0$) up to each primary's maximum intensity ($w_i \le 1$). Target lights $\mathbf{t}$ for which the solution $\mathbf{w}$ contains negative entries or entries greater than 1 lie outside the display's **color gamut**.
+
+In the next chapter (@sec-human-color-metrics), we extend these tristimulus coordinates to chromaticity diagrams, perceptual color difference metrics (CIELAB), and spatial-color metrics (S-CIELAB). In Part V (@sec-display-principles), we combine this linear primary calculation with display gamma curves and subpixel point spread functions to form the complete Standard Display Model.
 

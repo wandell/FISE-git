@@ -201,59 +201,11 @@ The two tabs show simulations of the cone excitations in response to a point of 
 
 For the 450 nm light in the right panel, the PSF is spread over a larger retinal region. But again, click on the image to see it enlarged in a new tab.  The number of S-cones excited by the short-wavelength PSF is still only 3-5, as in @fig-cone-psf-wavelength.  The number of excitations of all the cones, including the S-cones, is much lower for the short-wavelength light.  Recall that the short-wavelength light is absorbed by the cornea, lens, and macular pigment.  To equate the number of absorptions, we would need to scale the intensity of the light quite a bit.
 
-## Spatial sensitivity in the transform domain {#sec-human-csf}
-The usefulness of the analyses in the transform domain, in engineering generally and optics specifically, led vision scientists to ask whether measurements using harmonics could be useful for understanding and characterizing the human visual system. Perhaps the first person to see the potential application was the image systems engineer Otto Schade.  This is the person who developed the concept of the modulation transfer function (MTF) for  image systems engineering questions (@sec-MTF).
-
-I created four Google docs with historical information about CSF measurements, how to download the historical data, and how to imlement the modern models of the historical and more modern data.  Integrate those pages here and write some Matlab scripts to create figures.
-
-Show the data he collected of the CSF (1/MTF) he measured that I include in FOV.  Maybe in the human spatial encoding chapter.
-
-The use of harmonics to probe the visual system is quite different from their use in studying typical systems.  At many points in this volume I have pointed out that harmonics are particularly valuable stimuli for space-invariant linear systems @sec-appendix-spaceinvariance-overview. These systems have an input and an output. THe use of harmonic stimuli in human vision faces two significant limitations.  First, as we have just seen, the system is not at all space-invariant (@fig-cone-mosaic-density). It is justifiable to use harmonics as special stimuli over small regions of the retina, which can be close to space-invariant. Stimuli that span more than a degree or two will not have the special property (harmonics being nearly eigenfunctions) that make them so useful in systems analysis.
-
-Second, even at the earliest stages of vision the neural encoding is not restricted to a single system.
-
-### Contrast sensitivity functions (CSF)  {#sec-contrast-sensitivity}
-Optical scientists use both the space domain (PSF) and the transform domain (MTF) to study their system, and vision scientists use both domains as well. The nonuniformity of the optical blur, coupled with the nonuniformity of the cone spatial sampling, imply that shift-invariant methods only make sense over patches of the visual field. As a result, the carefully controlled harmonics used in vision experiments are modulated over relatively small regions of space.
-
-There are several ways in which this modulation is accomplished in experiments, though perhaps the most common is to use a **Gabor function**; named after Denis Gabor, the Nobel Laureate credited with the discovery of the laser.
-
-$$
-\begin{aligned}
-g(x,y) &= \exp\!\left(
-  -\frac{(x - x_0)^2 + (y - y_0)^2}{2\sigma^2}
-\right)
-[1 + a \cos\!\big(2\pi f x +  \phi\big)]
-\end{aligned}
-$$ {#eq-gabor-function}
-
-Gabor functions are harmonics modulated by a Gaussian.  The standard deviation of the Gaussian ($\sigma$) controls the spatial spread; the frequency of the harmonic $f$, controls the center frequency of the image. The phase term, $\phi$, controls the spatial relationship between the harmonic and the peak of the Gaussian.  The central position in the visual field is $(x_0,y_0)$, and the amplitude of the harmonic is controlled by $a$.
-
-Figure:  Show images of different Gabors.
-
-Show classic contrast sensitivity functions  (CSF) measured with Gabor patches shown here.
-
-Note:  Should we adjust $f$ and $\sigma$ together, or should we fix $\sigma$ and adjust $f$ on its own.  Thinking about the space-variant part of the human visual system, we realize both are important parameters.
-
-### Vernier acuity
-
-Gerald and Suzanne lead the discussion of Vernier acuity.
-
-::: {.callout-note title="Pierre Vernier" collapse=true}
-
-https://www.fisicanet.com.ar/biografias/cientificos/v/vernier-pierre.php
-
-Something about Vernier calipers and the story of Pierre Vernier.
-
-![Pierre Vernier.](images/human/02-spatial-encoding/Vernier_fisica.png){#fig-vernier width="60%"}
-
-Historical
-
-https://en.wikisource.org/wiki/1911_Encyclop%C3%A6dia_Britannica/Vernier,_Pierre
-
-:::
-
 ## Retinal prostheses
+Link to a section in Foundations of Vision that will cover retinal prostheses.  I think that is more of a biology topic than image systems engineering.
 
-Now that we know so much about the retinal encoding, the Palanker project would fit well.
+Both the Palanker project and the Chichilnisky projects get covered.  Maybe others, say Roska optogenetics.  In the cortical section we can say something about Neuralink Blindsight, Dobelle, Yoshor, Brindley.
 
-THe Chichilnisky project gets thrown in at the end as next generation.  Palanker fits well with the cones going forward.  The Chichilnisky project fits well with motivating why we want to know what the retinal circuitry does so we address diseases when the bipolar cells (inner nuclear layer) are damaged.
+Palanker fits well with the cones going forward.  The Chichilnisky project fits well with motivating why we want to know what the retinal circuitry does so we address diseases when the bipolar cells (inner nuclear layer) are damaged.
+
+Next, in @sec-human-spatial-metrics, we move from the anatomical and optical limits of retinal sampling to behavioral measurements of spatial pattern sensitivity and the engineering metrics built from them.
