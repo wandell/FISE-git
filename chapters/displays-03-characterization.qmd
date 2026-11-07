@@ -6,29 +6,131 @@ date: last-modified
 
 {{< include "includes/WIP-callout.qmd" >}}
 
-
 ## Display characterization overview {#sec-display-characterization-overview}
 
-Metrics for assessing display quality.
+If the standard display model (@sec-standard-display-model) describes the device under test, then calibration requires a very small set of display measurements—gamma, spectral power distribution (SPD), subpixel point spread function (PSF), and temporal response—to fully describe the physical radiance of displayed stimuli.
 
-Gamma
+Display characterization and calibration can be conceived as two steps:
 
-spatial uniformity (Mura)
+1. Measuring how well the key model assumptions hold (**pixel independence**, **spectral homogeneity**, and **spatial homogeneity**), and
+2. Using the calibration measurements together with computational simulations and human visual metrics (@sec-human-color-metrics) to evaluate display performance for specific applications.
 
-The single-word metric you are likely recalling is Mura.
+## Testing display model assumptions {#sec-display-calibration}
 
-The term Mura (村) is a Japanese word meaning non-uniformity or unevenness and is the standard industry term used to describe noise-like, spotty, or cloudy variations in brightness or color (non-uniformity of pixel intensities) across a flat panel display.
+### Pixel independence {#sec-display-pixel-independence}
 
-Mura: The Noise-Like Non-Uniformity
-What it is: Mura is a visible defect characterized by blotchy, often irregular patterns of varying brightness or chrominance (color) on a screen that is supposed to be displaying a uniform color (like a mid-grey or white background).
+The radiance emitted by a subpixel should depend only on the digital frame buffer value controlling that subpixel.  Equivalently, the radiance emitted by a collection of pixels must not change as the digital values of other pixels change. Displays often satisfy this pixel independence principle for a large range of stimuli (Farrell et al, 2008; Cooper et al, 2013), but there are displays and certain types of stimuli that fail this test (Lyons and Farrell, 1989; Elze and Tanner, 2012).  
 
-The "Noise-Like" Aspect: While Mura is technically a fixed-pattern noise (it stays in the same place), it often presents as a large, low-frequency, cloudy variation that can look like noise or dirt, especially on OLED and LCD screens.
+For example, CRTs (@sec-displays-crt) must sweep the intensity of the electron beam very rapidly across each row of pixels.  There are limits to how rapidly the beam intensity can change (a maximum “slew rate”). If a very different intensity is required for a pair of adjacent row pixels, the beam may not be able to adjust in time and independence is violated, and the standard display model will not be useful for characterizing the spatial-spectral radiance of such stimuli (Lyons and Farrell, 1989; Naiman and Makous, 1992).  
 
-The Cause: Mura is typically caused by manufacturing issues, such as:
+LCDs (@sec-displays-lcd) are limited by the rate at which liquid crystals can change their state in response to a change in voltage polarity, as well as the asymmetry in their response to the “on” or “off” states. LCDs typically combine sample and hold circuitry to switch between different LC states and a flickering backlight to minimize the visibility of motion blur.   LCDs with these features (sample and hold circuitry with flickering LED or fluorescent backlights) can be modeled as a linear system (Farrell et al, 2008).    Departure from display linearity occurs, however, when LCD manufacturers introduce “overdrive” and “undershoot” circuitry to minimize the visibility of motion blur or when they locally dim LED backlight panels to increase dynamic range.  These new features make it very difficult to control and calibrate visual stimuli, particularly for studies that require precise control of timing (Elze and Tanner, 2012).  
 
-In LCDs: Non-uniform cell gap, impurities, or inconsistent backlight brightness (Light Source Non-Uniformity, or LSNU).
+There are several ways to test pixel independence (Lyons and Farrell, 1989; Pelli, 1997; Farrell et al, 2008), but the general principle is simple. Separately measure the radiance from the middle of a large patch of pixels.  Make the measurement with a few different digital values. Then create spatial patterns that are made up with half the pixels at one digital value and half at the other.  The radiance from these mixed patches should be the average of the radiance from the large patches, measured individually.  
 
-In OLEDs: Variations in the thickness or efficiency of the organic layers across the panel.
+A key assessment is to evaluate how well independence is satisfied for the planned experimental stimuli.  For example, CRTs often fail pixel independence for high spatial frequency stimuli because of the finite slew rate of the electron beam.  Nonetheless, CRTs are very useful for visual experiments that use low frequency stimuli, such as studies of human color vision. The standard display model, like any useful model, will have some compliance range, and the practical question is whether the model can be used given a specific experimental plan.
 
-Significance: It is one of the most critical metrics for display quality, as it directly relates to user experience. Displays are typically tested for Mura using a uniformity test (or "flat field" test) and are measured using statistical methods like standard deviation or by modeling the Noise Power Spectrum (NPS), which assesses the spatial frequency of the noise pattern.
+OLEDs (@sec-displays-oled) are excellent devices for vision research because they can meet the requirements of the standard display model (Cooper et al, 2013).  Display electronics control the rate at which the pixel intensities can be changed (the update rate), but OLED pixels can be rapidly turned on and off.   Thus while the update rate limits the motion velocities that can be represented, the higher refresh rates minimize the visibility of motion blur and flicker.  And, unlike the LCDs that modulate the intensity of a backlight, OLED pixels can be turned off, creating a very dark background.
 
+Given these benefits, and the fact that the cost of manufacturing OLED displays is decreasing, one might consider these displays to be ideal devices for vision research. There is, however, one potentially problematic aspect of OLED development for vision research.  OLED display manufacturers are experimenting with different types of color pixel patterns and developing proprietary methods for rendering images on these new displays.  Unless it is possible to turn off or at least control the proprietary display rendering, which may vary depending on the presented image, it may be difficult to know the spatial distribution of the spectral energy in displayed stimuli. 
+
+Head-mounted displays (@sec-displays-ar-vr) that use graphics engines for display rendering also pose challenges for vision researchers.
+
+### Spectral homogeneity {#sec-display-spectral-homogeneity}
+
+The relative spectral radiance from a subpixel should be the same as its intensity is varied.  Any change in the relative spectral radiance will be manifest as an unwanted color shift, and the display will be difficult to calibrate.  Recall that the intensity of the light from an LC display depends on the rotation of the polarization angle caused by the birefringent liquid crystal.  In some displays, the polarization effect is wavelength dependent and this violates the spectral homogeneity assumption (Wandell and Silverstein, 2003).  These failures occur because the LC polarization is not precisely the same for all wavelengths and also as a result of spectral variations in polarizer extinction.
+
+A second deviation from the standard display model occurs when the display emission is angle-dependent.  In fact, the first generation of LCDs had a very large angle-dependence so that even small changes in the viewing position had a large impact on the spectral radiance at the cornea. The reason for this strong dependence is that the path followed by a ray through the LC and the polarizers has an influence on the likelihood of transmission, and this function is wavelength dependent (Silverstein and Fiske, 1993). Manufacturers have reduced these viewing angle dependencies by placing retardation films in the optical path (Yakovlev et al, 2015).  
+
+For visual psychophysics experiments, it is typical to fix the subject’s head position relative to the screen, typically by using a chin-rest or a bite bar placed on-axis facing the middle of the display. Instruments used for display calibration should be placed at this position.  If the spectroradiometer and the eye are located at any other angle, the spectral radiance from the display may be different. 
+
+### Spatial homogeneity and mura {#sec-display-spatial-homogeneity}
+
+When a subject is close to the display surface, the angle-dependence of the spectral radiance appears as a spatial inhomogeneity: the spectral radiance at the cornea differs between on-axis (center) and off-axis (edge) pixels.  At further distances, say 1 m away, the angle between the center and edge is smaller and the spatial homogeneity is better. 
+
+A second source of spatial inhomogeneity arises from the fact that it is difficult to maintain perfect uniformity of the pixels across the relatively large display surfaces.  Such non-uniformities are referred to as **mura** (村), which is a Japanese word for "unevenness" and is the standard industry term used to describe noise-like, spotty, or cloudy variations in brightness or color across a flat panel display. While mura is technically a fixed-pattern noise (it stays in the same place), it often presents as a large, low-frequency, cloudy variation that can look like noise or dirt on a screen that is supposed to be displaying a uniform color.
+
+For LCDs, there are several sources of mura, including non-uniformity in the TFT thickness, LC material density, color filter variations, backlight illumination (Light Source Non-Uniformity, or LSNU), and variations in the optical filters.  Additional possible sources are impurities in the LC material, non-uniform gap between substrates, and warped light guides. On LCDs, mura appears as blemishes and dark spots; manufacturers attempt to eliminate these sources during the manufacturing process.
+
+For OLEDs, mura is mainly due to variations in the thickness or efficiency of the organic layers across the panel or non-uniformity in the currents in spatially adjacent diodes, appearing as black lines, blotches, dots, and faint stains that are more visible in the dark areas of an image. This can be mitigated during the manufacturing process by introducing feedback circuitry that adjusts the pixel transistor current during a calibration procedure (McCreary, 2014). Displays are typically tested for mura using a uniformity ("flat field") test and evaluated using statistical measures or by modeling the Noise Power Spectrum (NPS) together with the human Contrast Sensitivity Function (@sec-human-spatial-metrics).
+
+## Display simulations {#sec-display-simulations}
+
+The standard display model serves as a foundation for display simulation technology, implemented in the open-source ISETBio and ISETCam distributions[^isetbio]. In this section, we present two examples that couple display simulation with the human visual color metrics introduced in @sec-human-color-metrics. The examples illustrate the use of display simulation to answer questions about the appropriate use of display technology in vision research and engineering.
+
+[^isetbio]: [https://github.com/isetbio/isetbio](https://github.com/isetbio/isetbio/wiki): Tools for modeling image systems engineering in the human visual system front end.
+
+### Color discriminations: the impact of bit-depth
+
+First, we consider how the number of digital steps (frame buffer levels) limits the ability to make threshold color and luminance discrimination measurements. Using the simulator, we calculated the CIE XYZ values for each of 27 different RGB levels, and we then calculated the CIELAB $\Delta E$ value (@sec-cielab) between each of these 27 points and all of its neighbors within 2 digital steps.  We repeated this simulation assuming a frame buffer with 10-bits (1024 levels), the actual display resolution, and a coarser step size of 8-bits (256 levels) but equivalent gamma.
+
+![CIELAB ΔE differences between nearby values on a 10 bit and 8 bit display. Twenty-seven red, green, and blue points were selected, and the CIELAB ΔE values was calculated between the selected point and other points within two digital steps. The histograms shows the distribution of ΔE values for the 10 bit (top) and 8 bit (bottom) simulation. For the 10 bit display, two steps is below threshold, but for the 8 bit display one or two steps is at or above visual threshold. Hence, a 10 bit intensity resolution is necessary to measure psychophysical discrimination functions that require multiple near-threshold measures.](images/displays/display-cielab.png){#fig-display-cielab width="80%"}
+
+The distributions of CIELAB $\Delta E$ differences for the 10-bit and 8-bit displays are shown in the upper and lower histograms of @fig-display-cielab, respectively.  For a 10-bit display, the signals within two digital steps are below $\Delta E=1$.  In this case, the visual discriminability is small enough to measure a psychophysical discrimination curve.  If the display has only 8-bits of intensity resolution, the two digital steps frequently exceed $\Delta E=1$. This explains why threshold measurements are impractical on 8-bit displays.  For commercial purposes, however, one step is about $\Delta E=1$, which explains why 8-bits renders a reasonable reproduction.  
+
+### Spatial-spectral discriminations
+
+Next, we analyzed the visual impact of changing the subpixel point spread function (see @fig-display-pixel). In this example, we compared two displays with the same primaries and spatial resolution (96 dots per inch), but with different pixel point spread functions.  In one case, the point spread function is the conventional set of three parallel stripes (Dell LCD Display Model 1905FP), while in the second case the point spread is three adjacent chevrons (Dell LCD Display Model 1907FPc).  We used the standard display model to calculate the spatial-spectral radiance of the 52 upper and lower case letters on both displays.  The spatial-spectral radiance image data are represented as 3D matrices or hypercubes where each plane in the hypercube contains the stimulus intensity for points sampled across the display $(x,y)$ for each of the sampled wavelengths ($\lambda$).  To visualize the data, we map the vector describing the spectral radiance for each pixel into CIE XYZ values and convert these into sRGB display values (see inset in @fig-display-letter). 
+
+![Visible difference between letters rendered on displays with different subpixel points spread functions but the same primary spectral power distributions and spatial resolution (96 dpi). The graph shows the median SCIELAB error, averaged across 52 upper- and lowercase letters (+/− 1 s.d.) plotted as a function of viewing distances. The inset at the upper right is a magnified version of the letter “g” that illustrates the different subpixel point spread functions.](images/displays/display-letter.png){#fig-display-letter width="80%"}
+
+We used the spatial-spectral radiance data to calculate the Spatial-CIELAB (S-CIELAB) $\Delta E$ difference (@sec-scielab; Zhang and Wandell, 1997) between each letter simulated on the two displays and viewed from different distances.  @fig-display-letter plots the median S-CIELAB $\Delta E$ value as a function of viewing distance.  The analysis predicts no visible differences between pairs of letters rendered on the two displays at any of the viewing distances.  And indeed, we did not find significant differences between subjects' judgments about the quality of letters rendered on the two different displays (Farrell et al, 2008).
+
+## Summary
+
+The standard display model guides both the calibration and simulation of visual stimuli. The model can be used to characterize visual stimuli so that others can replicate vision experiments. It can be used to simulate different types of displays and rendering algorithms and, in this way, makes it possible to evaluate the capabilities of displays during the engineering design process (Farrell et al, 2008).  Finally, the standard display model supports the development of computational models for human vision by making it possible to calculate the irradiance incident at the eye (Farrell et al, 2014). 
+
+The standard display model assumes that the light generated by each subpixel is additive, independent, and shift-invariant.   These assumptions, referred to as spectral homogeneity, pixel independence, and spatial homogeneity, can be tested in the calibration process.   A particular display may not meet these conditions for all stimuli, yet the model may still be used to predict the spatial-spectral radiance of a restricted class of visual stimuli.  As an example, the standard display model does not predict the spectral radiance of high frequency gratings presented on a CRT (Lyons and Farrell, 1989; Pelli, 1997; Farrell et al, 2008), but the model does predict the spatial-spectral radiance of large uniform colors (Brainard et al, 2002; Post, 1992).  The standard display model can predict the steady-state spatial-spectral radiance of high frequency gratings and text rendered on many LCD displays (Farrell et al, 2008), particularly in the absence of complex circuitry to overdrive or undershoot pixel intensity (Lee et al 2001; Lee et al, 2006) and locally dim LED backlights (Seetzen et al, 2004).
+
+Addressing the challenges of emerging far-field and near-field (AR/VR) displays (@sec-displays-ar-vr)—such as the vergence-accommodation conflict and passthrough latency—requires extending display characterization beyond the planar standard display model to comprehensive system simulation that models light-emitting elements, waveguides, optical components, and timing.
+
+<!--
+References from the Artal 2024 handbook chapter (preserved for migrating into paperpile.bib / local.bib):
+
+Adelson, E.H. and Bergen, J. R. (1991) ‘The Plenoptic Function and the Elements of Early Vision’, in Computational Models of Image Processing, (ed. M. L. a J. A. Movshon) MIT Press: Cambridge, MA. pp. 3 - 20.
+Bale, M., Carter, J. C., Creighton, C. J., Gregory, H. J., Lyon, P. H., Ng, P., Webb, L., Wehrum, A. (2006), “Ink-Jet Printing: The Route to Production of Full-Color P-OLED Displays”. Journal of the Society for Information Display 14.5, pp 453-459.
+Brainard, D. H. (1989) "Calibration of a Computer Controlled Color Monitor", Color Research & Application 14.1, pp. 23-34
+Brainard, D. H., and B. A. Wandell (1990) "Calibrated Processing of Image Color", Color Research & Application, 15.5, pp. 266-71
+Brainard, D. H., Brunt, W. A., and Speigle, J.M. (1997). “Color constancy in the nearly natural image. 1. Asymmetric matches”, Journal of the Optical Society of America A, 14, pp. 2091-2110.
+Brainard, David H. (1997), “The Psychophysics Toolbox.” Spatial Vision 10.4, pp. 433–436
+Brainard, D. H., Pelli, D. G., & Robson, T. (2002) Display characterization. In: J. Hornak (Ed.) Encyclopedia of Imaging Science and Technology, pp. 172-188, Wiley
+Castellano, Joseph A. (1992), Handbook Of Display Technology. San Diego: Academic Press
+Cooper, E. A., H. Jiang, V. Vildavski, J. E. Farrell, and A. M. Norcia. (2013), "Assessment of OLED Displays for Vision Research." Journal of Vision, 13.12. #16.
+Engel, S. (1997) “Retinotopic Organization in Human Visual Cortex and the Spatial Precision of Functional MRI.” Cerebral Cortex 7.2, pp. 181–192
+Farrell, J. E. (1986) An analytical method for predicting perceived flicker, Behavior and Information Technology, vol 5, no 4, pp. 349-358
+Farrell, J., G. Ng, Xiaowei Ding, K. Larson, and B. Wandell. (2008), "A Display Simulation Toolbox for Image Quality Evaluation." Journal of Display Technology, Vol 4, No. 2, pp. 262-70
+Florence, James M., and Lars A. Yoder. (1996), “Display System Architectures for Digital Micromirror Device (DMD)-Based Projectors”, Proceedings of the SPIE, Vol. 2650, pp. 193-208.
+Gershun, A. (1939), “The Light Field” Translated by P. Moon and G. Timoshenko in Journal of Mathematics and Physics 18, pp. 51-151.
+Holliman, Nicolas S. et al. (2011), “Three-Dimensional Displays: A Review And Applications Analysis.” IEEE Transactions on Broadcasting 57.2, pp. 362–371.
+Kawamoto, H. (2002), "The History of Liquid-crystal Displays." Proceedings of the IEEE, Vol. 90, No. 4, pp. 460-500
+Kelley, E. F., Lang, K., Silverstein, L. D., Brill, M. H. (2009). “Projector Flux from Color Primaries”, SID Symposium Digest of Technical Papers, Volume 40, Issue 1, pages 224–227.
+Kress, B., and Starner, T. (2013) "A review of head-mounted displays (HMD) technologies and applications for consumer electronics." Proceedings of the SPIE, Vol 8720, 87200A.
+Law, H.B. (1976) "The Shadow Mask Color Picture Tube: How It Began: An Eyewitness Account of Its Early History." IEEE Transactions on Electron Devices, Vol 23, No. 7, pp. 752-59
+Lee, B-W., Park, C., Kim, S., Jeon, M., Heo, J., Sagong, D., Kim, J. and Souk, J. (2001) “Reducing gray-level response to one frame: dynamic capacitance compensation,” SID Symposium Digest Tech Papers Vol. 32, pp. 1260–1263.
+Lee, S-W., Kim, M., Souk, J. H. and Kim, S. S. (2006). “Motion artifact elimination technology for liquid-crystal-display monitors: Advanced dynamic capacitance compensation method”. Journal of the Society for Information Display, Vol. 14, No. 4, pp 387-394.
+Liu, X. and Li, H. (2014) “The Progress of Light-Field 3-D Displays”, Information Display, June, 2014, pp. 6-13
+Lyons, N. P and Farrell, J. E. (1989) Linear systems analysis of CRT displays, SID Digest, Vol. 10, pp. 220-223.
+McCreary, J. L. (2014). “Correction of TFT Non-uniformity in AMOLED Display”, US Patent 8624805, Jan 7, 2014
+Naiman, Avi C., and Walter Makous. (1992). “Spatial nonlinearities of gray-scale CRT pixels”, Proceedings of the SPIE, Vol 1666, pp. 41-56.
+Packer, O., Diller, L. C., Verweij, J., Lee, B. B., Pokorny, J., Williams, D. R., Dacey, D. M., and Brainard, D. H. (2001) "Characterization and Use of a Digital Light Projector for Vision Research." Vision Research Vol. 41, No. 4, pp. 427-39.
+Pelli, D. G. (1997) “Pixel independence: measuring spatial interactions on a CRT display”, Spatial Vision, Vol. 10, No. 4, pp. 443-336.
+Post, D. L. (1992). “Colorimetric measurement, calibration and characterization of self-luminous displays”, in H. Widdel and D. L. Post, eds. Color in Electronic Displays, Plenum, NY, pp. 299-312.
+Poynton, C. A. (1993) “Gamma’ And Its Disguises: The Nonlinear Mappings of Intensity in Perception, CRTs, Film, and Video.” SMPTE Motion Imaging Journal, Vol. 102, No. 12, pp. 1099–1108
+Poynton, Charles. (2003) “Digital Video Interfaces.” Digital Video and HDTV, pp. 127–138.
+Poynton, Charles, and Brian Funt. (2014) “Perceptual Uniformity in Digital Image Representation and Display.” Color Research & Application Vol. 39, No. 1, pp. 6–15.
+Seetzen, H., Heidrich, W., Stuerzlinger, W., Ward, G., Whitehead, L., Trentacoste, M., Ghosh, A. and Vorozcovs, A. (2004). High dynamic range display systems. In ACM SIGGRAPH 2004, pp. 760-768.
+Silverstein, L. D., and Thomas G. Fiske. (1993) "Colorimetric and photometric modeling of liquid crystal displays." Color and Imaging Conference, Vol. 1993, No. 1.
+Stevens, S. S. (1957) “On The Psychophysical Law.” Psychological Review 64.3, pp. 153–181.
+Tang, C. W., and S. A. VanSlyke. (1987) "Organic Electroluminescent Diodes." Applied Physics Letters, Vol. 51, 913
+Elze, T. and Tanner, T. G. (2012) "Temporal Properties of Liquid Crystal Displays: Implications for Vision Science Experiments." PLoS ONE 7.9, E44048
+Tsujimura, Takatoshi. (2012). OLED Display: Fundamentals and Applications. Hoboken, NJ: Wiley
+Wandell and Silverstein (2003), Digital Color Reproduction in The Science of Color 2nd edition, Ed. S. Shevell, Optical Society of America.
+Watson, A. B., Jr. A. J. Ahumada, and J. E. Farrell. (1986) "Window of Visibility: A Psychophysical Theory of Fidelity in Time-sampled Visual Motion Displays." Journal of the Optical Society of America A, Vol 3, No. 3, pp 300-307
+Wyszecki G., and Stiles, W. S. (1967). Color Science: Concepts and Methods, Quantitative Data and Formulas. New York: Wiley.
+Yakovlev, D. A., Chigrinov, V. G., and Kwok, H-S. (2015) Modeling and Optimization of LCD Optical Performance. John Wiley & Sons
+Yang, Deng-Ke, and Shin-Tson Wu. (2006) Fundamentals Of Liquid Crystal Devices. Chichester: John Wiley.
+Younse, J.M. (1993) “Mirrors On a Chip.” IEEE Spectrum 30.11 (1993): pp. 27–31.
+Zhang, X., and Wandell, B. A. (1997). "A Spatial Extension of CIELAB for Digital Color-image Reproduction." Journal of the Society for Information Display, Vol. 5, No. 1, 61
+Zhang, X., and Wandell, B. A. (1998). "Color Image Fidelity Metrics Evaluated Using Image Distortion Maps." Signal Processing, Vol. 70, No. 3, pp. 201-14.
+Zhang, X. and Farrell, J. E. (2003) “Sequential color breakup measured with induced saccades,” Proceedings of the IS&T/SPIE 15th Annual Symposium on Electronic Imaging, Volume 5007, pp. 210–217
+Zhang, Y., Song, W., and Teunissen, K. (2008) “A tradeoff between motion blur and flicker visibility of electronic display devices”, Proc. of SPIE Vol. 6625, 662503
+-->
