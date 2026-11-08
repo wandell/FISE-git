@@ -22,18 +22,30 @@ This skill is about *scouting and suggesting*, not automatic insertion — see
 
 Starting points, not an exhaustive catalog:
 
-- **Computational Photography: An AI-powered Slopendium**
-  (<https://comp-photo-book.pages.dev/>) — a colleague's in-progress online
+- **Foundations of Visual Computing — Yuhao Zhu**
+  (<https://learnvisualcomputing.github.io/>) — an online textbook by Yuhao Zhu
+  (University of Rochester) that treats visual computing across optics, image
+  capture/sensors, human visual perception (spatial, temporal, and color),
+  computer graphics/rendering, and display technologies. Good for: checking
+  when drafting or revising FISE chapters on optics, sensors, human vision
+  (retinal encoding, wavelength encoding, color spaces, CSFs), displays, or
+  image processing. Note that while there is much excellent material, its
+  pedagogical framing and mathematical conventions do not always match the
+  linear-systems / forward-model approach used in FISE — evaluate whether a
+  specific section aligns with FISE's perspective before recommending a link.
+- **Computational Photography: An AI-powered Slopendium — Frédo Durand**
+  (<https://comp-photo-book.pages.dev/>) — Frédo Durand's in-progress online
   book. Overlaps FISE on imaging fundamentals, optics, sensors, linear
   systems/Fourier methods, and color/perception, and goes beyond FISE's scope
   into probabilistic and learning-based methods (Bayesian inference, learned
   ISP operators, diffusion/generative models) and performance engineering
   (Halide, GPU/NPU backends). Good for: pointing a reader from a FISE
   optics/sensors/linear-systems section toward a complementary or more
-  ML-forward treatment, or checking that a new FISE section wouldn't just
-  duplicate a page that already exists there. It is a moving draft (versioned,
-  e.g. "v0.1.258" as of this writing) — re-check that a specific page still
-  exists and still says what you remember before recommending or citing it.
+  ML-forward treatment, or checking whether a topic has a clear treatment we
+  can link to instead of writing from scratch. As with Zhu's book, check
+  whether its approach matches FISE's viewpoint, and verify that the specific
+  page still exists (it is a moving draft, e.g. "v0.1.258" as of this writing)
+  before recommending or citing it.
 - **Foundations of Vision (1995)** (<https://wandell.github.io/FOV-1995/>) —
   Wandell's earlier vision-science book. Good for: pointing readers to a
   deeper, classic treatment of retinal/cortical vision topics (photoreceptor
