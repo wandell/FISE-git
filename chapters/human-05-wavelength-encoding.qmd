@@ -133,11 +133,35 @@ By measuring the primary intensities needed to match monochromatic test lights a
 
 ### Color matching functions
 
-The rows of the matrix $\mathbf{C}$ are functions of wavelength, known as the **color-matching functions (CMFs)**, are conventionally written as $r(\lambda), g(\lambda), b(\lambda)$. The color-matching functions measured using three monochromatic primaries (at 645.2 nm, 526.3 nm, and 444.4 nm from the Stiles & Burch 10-degree observer) are shown in @fig-rgb-cmfs. 
+The rows of the measured matrix $\mathbf{C}$ are functions of wavelength, and they are conventionally written as $r(\lambda), g(\lambda), b(\lambda)$. Stiles and Burch directly measured RGB color-matching functions using monochromatic primaries (645.2 nm, 526.3 nm, and 444.4 nm) for both a 2-degree field [@stiles1955-he] and a 10-degree field [@stiles-colourmatching1959]. 
 
+
+::: {#fig-sb-cmf-panel .figure}
+::: {.panel-tabset}
+
+### Stiles & Burch 10° (1959)
+![Stiles & Burch (1959) 10-degree RGB color-matching functions (energy basis), with long wavelengths corrected for rod intrusion by Stockman and Sharpe (2000).](images/human/05-wavelength-encoding/matching/cmf-SB1959-10deg-energy.png){#fig-sb-1959-10deg width="72%"}
+
+### Stiles & Burch 2° (1955)
+![Stiles & Burch (1955) 2-degree RGB color-matching functions (energy basis) measured in the central fovea.](images/human/05-wavelength-encoding/matching/cmf-SB1955-2deg-energy.png){#fig-sb-1955-2deg width="72%"}
+
+:::
+Directly measured RGB color-matching functions for 10-degree and 2-degree bipartite fields using monochromatic primaries at 645.2 nm, 526.3 nm, and 444.4 nm. Source: `fise_cmfStilesBurch.m`.
+:::
+
+Human color matches depend slightly on the angular size of the bipartite stimulus field. Comparing the two tabs in @fig-sb-cmf-panel shows how field size alters the relative primary energies, particularly at short and middle wavelengths.
+
+There are several reasons for this difference.  The central 2 degrees of the retina (the fovea) is covered by **macular pigment**, which absorbs short-wavelength (blue) light before it reaches the photoreceptors, and foveal cones have longer outer segments (higher photopigment optical density) than peripheral cones. For larger fields spanning 10 degrees, most of the stimulus falls outside the macula, increasing short-wavelength sensitivity and shifting the matches.
+
+<!--
 ![Stiles & Burch (10-degree) RGB color-matching functions measured with monochromatic primaries. In the cyan spectral region between 480 nm and 530 nm, the red primary curve is negative, indicating that the red primary light was added to the test light to achieve a match.](images/human/05-wavelength-encoding/matching/rgb-color-matching-functions-10deg.png){#fig-rgb-cmfs width="80%"}
+-->
 
-When I teach, I often forget the wavelengths of the primary lights. But it is possible to deduce them from the graphs; can you see how? The principle is straightforward. When a monochromatic test light matches one of the primary lights, the primary settings will be one of these three values: $(1,0,0)$, $(0,1,0)$, or $(0,0,1)$.  Read the curves to find the wavelengths at which the primaries have those values. You won't be very precise, but you can get a close estimate.
+::: {.callout-note title="Reading the CMF"}
+When I teach, I often forget the wavelengths of the primary lights. But it is possible to deduce them from the graphs; can you see how? 
+
+The principle is straightforward. When a monochromatic test light matches one of the primary lights, the primary intensities will be one of these three values: $(1,0,0)$, $(0,1,0)$, or $(0,0,1)$.  Read the curves to find the wavelengths at which the primaries have those values. You can get a close estimate.
+:::
 
 ### Negative values in the CMF
 A notable feature of these curves is that $r(\lambda)$ takes on negative values between approximately 480 nm and 530 nm. In this spectral region, monochromatic test lights appear more saturated in color than any additive mixture of the green and blue primaries can produce. To achieve a visual match, the experimenter adds some of the red primary to the *test light* side of the bipartite field, desaturating it until the remaining green and blue primaries can complete the match. Because color matching obeys superposition, adding primary light to the test field is mathematically equivalent to subtracting it from the primary side, resulting in negative coefficients in the color-matching functions.
@@ -149,10 +173,10 @@ Two groups, A and B, who use different sets of primary lights, $\mathbf{P}_A$ an
 
 To see why, suppose group A measures the matches to the primaries of group B. Group A can then predict the matches that group B would set for any test light.
 
-Represent the primaries as $N \times 3$ matrices, $\mathbf{P}_A$ and $\mathbf{P}_B$, whose columns are the spectral power distributions of the three primaries. Let $\mathbf{C}_A$ and $\mathbf{C}_B$ be the $3 \times N$ CMF matrices measured by the two groups. By definition, $\mathbf{P}_B (\mathbf{C}_B \mathbf{t})$ is a mixture of group B's primaries that matches $\mathbf{t}$. Because matched lights produce the same group A matching values, applying $\mathbf{C}_A$ gives
+Represent the primaries as $N \times 3$ matrices, $\mathbf{P}_A$ and $\mathbf{P}_B$, whose columns are the spectral power distributions of the three primaries. Let $\mathbf{C}_A$ and $\mathbf{C}_B$ be the $3 \times N$ CMF matrices measured by the two groups. By definition, $(\mathbf{P}_B \mathbf{C}_B) \mathbf{t}$ is the spectral power distribution of group B's primaries that matches $\mathbf{t}$. That light must be metameric to $t$. So 
 
 $$
-\mathbf{C}_A \mathbf{t} = \mathbf{C}_A \mathbf{P}_B (\mathbf{C}_B \mathbf{t}).
+\mathbf{C}_A \mathbf{t} = \mathbf{C}_A (\mathbf{P}_B \mathbf{C}_B) \mathbf{t}.
 $$
 
 The $3 \times 3$ matrix $\mathbf{M}_{B,A} = \mathbf{C}_A \mathbf{P}_B$ converts group B primary values into group A primary values. Because this holds for every test light $\mathbf{t}$,
@@ -161,49 +185,67 @@ $$
 \mathbf{C}_A = \mathbf{M}_{B,A} \, \mathbf{C}_B .
 $$ {#eq-cmf-conversion}
 
-Any two sets of CMFs are related by a $3 \times 3$ linear transformation.
-
 The converse also holds. Multiply both sides of @eq-color-match-metamers by any invertible $3 \times 3$ matrix, $\mathbf{A}$. The predicted matches are unchanged:
 
 $$
 \mathbf{A} \mathbf{C} \mathbf{t}_1 = \mathbf{A} \mathbf{C} \mathbf{t}_2 \quad \Longleftrightarrow \quad \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2 .
 $$ {#eq-uniqueness-1}
 
-Thus the CMFs are unique only up to an invertible linear transformation. We do not need to use the measured CMFs directly. We can use any linear transformation of them that is more convenient.
+In words: *Any pair of CMFs is related by a $3 \times 3$ linear transformation.*
+
+As a practical matter this means we do not need to use the measured CMFs. Instead, we can use any linear transformation of the measured functions we like. 
 
 ::: {.callout-note title="Color matching, biology, and psychology" collapse="true"}
 
 ### Color matching and biology
-The search for the biological substrate of color-matching is a very inspiring story that I cover in [Foundations of Vision](https://wandell.github.io/FOV-1995/chapter-4-wavelength-encoding.html#the-biological-basis-of-photopic-color-matching){target=_blank}.  The story of color-mathching, from Newton's analysis of light, to Young and Maxwell's color-matching, to the quantification of the biology (cone photoreceptors), is the most thorough complete and thorough understanding neuroscientists have of a perceptual phenomenon.
+The search for the biological substrate of color-matching is a very inspiring story that I cover in [Foundations of Vision](https://wandell.github.io/FOV-1995/chapter-4-wavelength-encoding.html#the-biological-basis-of-photopic-color-matching){target=_blank}.  The story spans Newton's analysis of light, Young and Maxwell's color-matching, the identification of the cone photoreceptors, and finally the quantification of the cone photoreceptor responses. This story is the most thorough understanding neuroscientists have of a perceptual phenomenon.
 
-We shouldn't leave the implications for psychology out of the story. After his work on color-matching, Maxwell recognized that it is possible to create a quantitative science of consciousness based on perceptual observations. 
+Let's not leave the implications for psychology out of the story. After his work on color-matching, Maxwell wrote that it is possible to create a quantitative science of consciousness based on perceptual observations. 
 
 > If the sensation which we call colour has any laws, it must be in our own nature which determines the form of these laws; and I need not tell you that the only evidence we can obtain respecting ourselves is derived from consciousness.
 >
 > The science of colour must therefore be regarded as essentially a mental science. It differs from the greater part of what is called mental science in the large use which it makes of the physical sciences, and in particular of optics and anatomy. But it gives evidence that it is a mental science by the numerous illustrations which it furnishes of various operations of the mind [@maxwell1872-colorvision].
 
-A quantitative mental science is not easy to do. But if we mean to understand ourselves, and improve ourselves, it seems like a wonderful scientific topic.
+Creating a quantitative mental science is not easy. But if we mean to understand ourselves, and improve ourselves, it seems like a wonderful scientific topic.
 :::
 
 ## CIE Standards {#sec-cie-standards}
 
-This freedom is what the standards bodies exploit. The Commission Internationale de l'Éclairage (CIE) defined a standard observer in 1931, based on color matches measured for small (2-degree) fields. The CIE derived the CIE 1931 $\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)$ functions by applying a linear transformation to measured RGB CMFs. The transformation was chosen so that the functions are non-negative, and so that $\bar{y}(\lambda)$ equals the photopic luminosity function. 
+Standards bodies exploit this linear-transformation freedom (@eq-uniqueness-1) to define shared reference observers for science and industry. Rather than tabulating CMFs tied to a particular laboratory's RGB primaries—which inevitably have negative lobes—the Commission Internationale de l'Éclairage (CIE) applies an invertible $3 \times 3$ transformation to measured RGB matches so that the resulting color-matching functions are non-negative everywhere and the middle function equals the photopic luminous efficiency function $V(\lambda)$.
 
-![CIE XYZ 1931](images/human/05-wavelength-encoding/matching/XYZ-functions.png){#fig-XYZ-1931 width="70%"}
+### CIE XYZ and physiologically based cone standards
 
-A second standard was defined in 1964 for larger (10-degree) fields; the Stiles & Burch data in @fig-rgb-cmfs are from that field size.
+ISETCam includes three generations of [CIE color standards](https://github.com/ISET/isetcam/blob/main/data/human/README.md).  You can compare them in @fig-cie-standards-panel:
 
-![CIE XYZ 1964](images/human/05-wavelength-encoding/matching/XYZ-functions.png){#fig-XYZ-1964 width="70%"}
+1. **CIE 1931 2-degree XYZ ($\bar{x}, \bar{y}, \bar{z}$):** The original standard observer, reconstructed from the 2-degree chromaticity measurements of Wright and Guild combined with the CIE 1924 photopic luminosity function $V(\lambda)$ [@wyszeckicolorscienceconcepts1982].
+2. **CIE 1964 10-degree XYZ ($\bar{x}_{10}, \bar{y}_{10}, \bar{z}_{10}$):** The large-field standard observer, derived by linearly transforming the 10-degree RGB color-matching functions of Stiles and Burch [@stiles-colourmatching1959] (with a small weight given to the measurements of Speranskaya, 1959).
+3. **Judd–Vos revisions and CIE 2006 / 2012 physiological standards:** The CIE 1924 $V(\lambda)$ function—and therefore the CIE 1931 XYZ standard—substantially underestimated human sensitivity at short wavelengths (below 460 nm). Judd [@judd1951b-artificialdaylight] and later Vos (1978) introduced modified 2-degree observers to correct this short-wavelength error. Building on the Stiles and Burch color matches and spectral sensitivity measurements in observers of known photopigment genotype, Stockman and Sharpe [@stockmanSpectralSensitivitiesMiddle2000; @stockmanConeFundamentalsCIE2019] derived the 2-degree and 10-degree L-, M-, and S-cone spectral sensitivities. The CIE adopted these curves as the **CIE 2006 cone fundamentals** [@cieFundamentalChromaticityDiagram2007] and defined a corresponding linear transformation—the **CIE 2012 (2015) physiologically based XYZ** functions ($\bar{x}_{\mathrm{F}}, \bar{y}_{\mathrm{F}}, \bar{z}_{\mathrm{F}}$)—that reconciles tristimulus colorimetry directly with human cone excitations.
 
-More historical information about these two sets of XYZ functions.  
+::: {#fig-cie-standards-panel .figure}
+::: {.panel-tabset}
 
-Also something about the Judd correction.
+### CIE 1931 XYZ (2°)
+![CIE 1931 2-degree standard observer tristimulus functions $\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)$.](images/human/05-wavelength-encoding/matching/cmf-CIE1931-2deg-XYZ.png){#fig-XYZ-1931 width="72%"}
 
-The Stockman cone fundamentals.
+### CIE 1964 XYZ (10°)
+![CIE 1964 10-degree standard observer tristimulus functions $\bar{x}_{10}(\lambda), \bar{y}_{10}(\lambda), \bar{z}_{10}(\lambda)$.](images/human/05-wavelength-encoding/matching/cmf-CIE1964-10deg-XYZ.png){#fig-XYZ-1964 width="72%"}
 
-All of these could go in a tabset panel
+### CIE 2012 XYZ (2°)
+![CIE 2012 (TR 170-2:2015) 2-degree physiologically based tristimulus functions $\bar{x}_{\mathrm{F}}(\lambda), \bar{y}_{\mathrm{F}}(\lambda), \bar{z}_{\mathrm{F}}(\lambda)$, defined as a linear transformation of the CIE 2006 2-degree cone fundamentals.](images/human/05-wavelength-encoding/matching/cmf-CIE2012-2deg-XYZ.png){#fig-XYZ-2012 width="72%"}
 
-<!-- TODO: add figure of the CIE 1931 and 1964 XYZ functions, and the chromaticity diagram. Verify the history of the transformation and the 1964 data sources before review. -->
+### CIE 2006 Cones (2°)
+![CIE 2006 (Stockman & Sharpe, 2000) 2-degree LMS cone fundamentals (energy basis, normalized to unit peak). Notice the slight inflection near 460 nm due to macular pigment absorption.](images/human/05-wavelength-encoding/matching/cones-CIE2006-2deg-energy.png){#fig-cones-2006-2deg width="72%"}
+
+### CIE 2006 Cones (10°)
+![CIE 2006 (Stockman & Sharpe, 2000) 10-degree LMS cone fundamentals (energy basis, normalized to unit peak).](images/human/05-wavelength-encoding/matching/cones-CIE2006-10deg-energy.png){#fig-cones-2006-10deg width="72%"}
+
+:::
+CIE standard color-matching functions and physiologically based cone fundamentals (energy basis). Source: `fise_cieStandards.m`.
+:::
+
+It was a great pleasure to discover that Maxwell's measurements are extremely close to the modern standards! 
+
+![The color matching data reported by @maxwell1860-IVTheoryCompound compared with modern standards. The dashed curves are the current CIE cone fundamentals linearly transformed to match the CIE 1931 functions. The points are were measured by Maxwell in two observers (J, squares; K, circles), but linearly transformed to match the CIE 1931 functions. Source: @wandell2024-cone-fundamentals.](images/human/05-wavelength-encoding/matching/maxwell-cmf-modern.png){#fig-maxwell-cmf-modern width="70%"}
 
 ## Setting display primary intensities {#sec-display-color-matching}
 
