@@ -68,6 +68,27 @@ fise_exportFigure(gcf, 'test.png');  % copied somewhere later
 
 Verify text size, line weights, color contrast, units, and axis labels at the width used in the chapter. A generated plot must be understandable in grayscale or with non-color cues when color encodes category.
 
+### Publication-quality plots from `isetcam` data
+
+When plotting spectral or human-vision data from `isetcam` (such as CMFs, cone fundamentals, luminosity functions, illuminants, or reflectances in `isetcam/data/human/`):
+
+1. **Initialize and load by name**: Call `ieInit; fise_plotDefaults;` at the top of the `fise_*.m` script in `isetfise/fise/<topic>/` and load spectral files by name with `ieReadSpectra` (see `isetcam/data/human/README.md`).
+2. **Use a clean white background (do not use `iePlotShadeBackground`)**:
+   - Create the figure with `hdl = ieFigure([], 'default');` and explicit pixel size (e.g., `set(hdl, 'Units', 'pixels', 'Position', [100 100 760 520]);`).
+   - Keep `ax.Box = 'off'`, `ax.TickDir = 'out'`, `ax.LineWidth = 1.2`, `ax.FontName = 'Georgia'`, `ax.FontSize = 16`, and a subtle grid (`grid(ax, 'on'); ax.GridAlpha = 0.2; ax.GridColor = [0.3 0.3 0.3];`).
+   - For trichromatic (RGB / XYZ / LMS) curves on white backgrounds, use high-legibility colors rather than saturated `[0 1 0]` green:
+     ```matlab
+     triColors = [0.85 0.15 0.20; 0.15 0.65 0.25; 0.15 0.38 0.85];
+     ```
+     with `LineWidth = 2.4`, and add a dashed zero reference line (`yline(ax, 0, '--', ...)`) whenever curves take negative values.
+3. **Lock axis limits across `.panel-tabset` siblings**: When generating multiple plots intended for tabs in the same Quarto `.panel-tabset` (e.g., 2° vs. 10° observers), enforce identical `xlim`, `ylim`, `xticks`, and `yticks` so clicking between tabs never shifts the axes.
+4. **Export at 300 DPI via `fiseBookPath`**:
+   ```matlab
+   outFile = fullfile(fiseBookPath, 'chapters', 'images', ...);
+   exportgraphics(hdl, outFile, 'Resolution', 300);
+   ```
+   Reference the generating script in the Quarto figure caption (`Source: fise_<name>.m`). See `fise_cmfStilesBurch.m` and `fise_cieStandards.m` in `isetfise/fise/04Human/` for canonical examples.
+
 ## Live-script export and Quarto integration
 
 `fise_exportMD(liveScriptPath, outputPath)` exports a live script to Markdown with HTML accepted. Inspect exported Markdown before publishing: repair only localized formatting needed for Quarto, and preserve a clear link to the `.mlx` source. Do not assume that MATLAB-exported HTML, embedded images, or interactive behavior will render equivalently in the main book.
