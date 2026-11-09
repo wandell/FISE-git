@@ -86,13 +86,15 @@ In this case, we express the relationship between any test light and the primary
 
 [^grassmann-history]: Linear algebra was first invented by Grassman (@grassmann1995-newbranch) and applied to color science almost right away [@grassmann-1854]!
 
+![Linearity of the color-matching experiment expressed in matrix tableau.](images/human/05-wavelength-encoding/matching/48_color-matching-matrix-equation.png){#fig-matching-tableau width="70%"}
+
+We can write this as a very simple mathematical expression.
+
 $$
 \begin{pmatrix} R \\ G \\ B \end{pmatrix} = \mathbf{C} \mathbf{t}
 $${#eq-color-match-matrix}
 
-![Linearity of the color-matching experiment expressed in matrix tableau.](images/human/05-wavelength-encoding/matching/48_color-matching-matrix-equation.png){#fig-matching-tableau width="70%"}
-
-The matrix equation shows how we can determine whether two lights have the same appearance. Two test lights, say $\mathbf{t}_1$ and $\mathbf{t}_2$ match in appearance if and only if the primary matching intensities computed from @eq-color-match-matrix are equal, 
+Thus equation shows how we can determine whether two lights have the same appearance. Two test lights, say $\mathbf{t}_1$ and $\mathbf{t}_2$ match in appearance if and only if the primary matching intensities computed from @eq-color-match-matrix are equal, 
 
 $$
 \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2
@@ -106,19 +108,6 @@ $${#eq-color-null-space}
 
 In modern terms we say the difference between any pair of metamers is in the *null space* of the color matching functions.  The null space is one of many linear algebra concepts described first by Grassmann (@sec-grassmann-color).
 
-### Measured CMF
-
-How do we calculate the CMF matrix? Use monochromatic lights.  Each RGB setting is a column of the matrix.
-
-![Principles of calculation](images/human/05-wavelength-encoding/matching/49_monochromatic-color-matching-equation.png){#fig-cmf-estimate width="70%"}
-
-Here is a measured RGB set by Stiles and Burch, 10 deg.  Get the reference in here and the specific primaries.
-
-![Measured color matching functions using primaries at](images/human/05-wavelength-encoding/matching/rgb-color-matching-functions-10deg.png){#fig-rgb-cmf-10deg width="70%"}
-
-::: {.callout-note title="Reading the CMF"}
-Explain how we know what the primaries are from the curve.
-:::
 
 ### Dimensionality of the CMFs
 How do we know that we should use three primary lights, and not two or four? 
@@ -132,13 +121,13 @@ You may have questions about the universality of this finding (color blindness, 
 See the human-tetrachromacy.qmd file for more.
 -->
 
-### Measuring the color-matching matrix $\mathbf{C}$
+### Measured CMF
 
 How do we determine the entries of the matrix $\mathbf{C}$? Linear systems theory provides a straightforward answer: measure the system's response to impulse inputs. In optics, an impulse is a point of light, and the response is the point spread function (@sec-ls-point-matrix). In color matching, an impulse is a monochromatic (single-wavelength) test light.
 
 Suppose the test light is a monochromatic light at wavelength $\lambda_k$ with unit power. Its spectral vector $\mathbf{t}$ contains zeros everywhere except for a value of 1 at entry $k$. When we multiply $\mathbf{C} \mathbf{t}$, this unit impulse simply extracts the $k^{\text{th}}$ column of $\mathbf{C}$ (@fig-matching-monochromatic). 
 
-![Measuring the color-matching matrix with monochromatic test lights. A unit-intensity spectral light selects a single column of the matrix $\mathbf{C}$, directly revealing the primary intensities required to match that wavelength.](images/human/05-wavelength-encoding/matching/49_monochromatic-color-matching-equation.png){#fig-matching-monochromatic width="70%"}
+![Measuring the color-matching matrix with monochromatic test lights. A unit-intensity spectral light selects a single column of the matrix $\mathbf{C}$, directly revealing the primary intensities required to match that wavelength.](images/human/05-wavelength-encoding/matching/cmf-estimation.png){#fig-matching-monochromatic width="70%"}
 
 By measuring the primary intensities needed to match monochromatic test lights across all sampled wavelengths of the visible spectrum, we directly measure every column of $\mathbf{C}$.
 
@@ -185,15 +174,15 @@ Thus the CMFs are unique only up to an invertible linear transformation. We do n
 ::: {.callout-note title="Color matching, biology, and psychology" collapse="true"}
 
 ### Color matching and biology
-The experimental search for the biological substrate for color-matching is also very inspiring. I cover part of this story in [Foundations of Vision](https://wandell.github.io/FOV-1995/chapter-4-wavelength-encoding.html#the-biological-basis-of-photopic-color-matching){target=_blank}.  I often remark in class that the unification of experiments from Newton's analysis of light, to Young and Maxwell's color-matching, to the quantification of the biology (cone photoreceptors) may well be the most thorough complete and thorough understanding neuroscientists have of a perceptual phenomenon.
+The search for the biological substrate of color-matching is a very inspiring story that I cover in [Foundations of Vision](https://wandell.github.io/FOV-1995/chapter-4-wavelength-encoding.html#the-biological-basis-of-photopic-color-matching){target=_blank}.  The story of color-mathching, from Newton's analysis of light, to Young and Maxwell's color-matching, to the quantification of the biology (cone photoreceptors), is the most thorough complete and thorough understanding neuroscientists have of a perceptual phenomenon.
 
-Something that is quite meaningful to me - Maxwell recognized that it is possible to create an exact quantitative science based on perceptual observations.  He recognized that this science is an exploration of our conscious experience:
+We shouldn't leave the implications for psychology out of the story. After his work on color-matching, Maxwell recognized that it is possible to create a quantitative science of consciousness based on perceptual observations. 
 
 > If the sensation which we call colour has any laws, it must be in our own nature which determines the form of these laws; and I need not tell you that the only evidence we can obtain respecting ourselves is derived from consciousness.
 >
 > The science of colour must therefore be regarded as essentially a mental science. It differs from the greater part of what is called mental science in the large use which it makes of the physical sciences, and in particular of optics and anatomy. But it gives evidence that it is a mental science by the numerous illustrations which it furnishes of various operations of the mind [@maxwell1872-colorvision].
 
-A quantitative mental science still seems like a good project to me.  Not easy to do, and perhaps not a good path to financial gain. Nonetheless, if we mean to understand ourselves it seems like a wonderful scientific topic.
+A quantitative mental science is not easy to do. But if we mean to understand ourselves, and improve ourselves, it seems like a wonderful scientific topic.
 :::
 
 ## CIE Standards {#sec-cie-standards}
