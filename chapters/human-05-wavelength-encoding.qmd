@@ -247,13 +247,35 @@ It was a great pleasure to discover that Maxwell's measurements are extremely cl
 
 ![The color matching data reported by @maxwell1860-IVTheoryCompound compared with modern standards. The dashed curves are the current CIE cone fundamentals linearly transformed to match the CIE 1931 functions. The points are were measured by Maxwell in two observers (J, squares; K, circles), but linearly transformed to match the CIE 1931 functions. Source: @wandell2024-cone-fundamentals.](images/human/05-wavelength-encoding/matching/maxwell-cmf-modern.png){#fig-maxwell-cmf-modern width="70%"}
 
-## Setting display primary intensities {#sec-display-color-matching}
+## Display primary intensities {#sec-display-color-matching}
 
-One of the most direct and important applications of the color-matching functions is calculating the intensities of a display's three primaries needed to match a target spectral power distribution $\mathbf{t}$.
+The facts of color-matching are why we can make visual displays that create color images that appear to be the same as a natural scene without reproducing the original spectral data. We present the viewers with metamers to the original data. This was Maxwell's original insight.  Measure a light, calculate how it would be matched by three primaries, and then build an image that has the right amounts of each of the three primaries.
 
-The principle can be understood from these simple matrix tableaus.
+All of our visual displays work on this principle.  The mathematics of the idea is straightforward, and in this section I will introduce the key ideas using a classic - and now largely abandoned - display technology, the cathode ray tube (CRT).
 
-![Color matching on a display when the desired XYZ values at a pixel are known](images/human/05-wavelength-encoding/matching/57_historical-derivation-of-xyz-functions.png)
+Explain the CRT here.  Emphasize that each pixel is like a little color-matching experiment.
+
+![The components of a CRT.](images/human/05-wavelength-encoding/matching/crt-display.png){#fig-crt-display width=60%}
+
+Think of the pixel as comprising three primary lights.
+
+![CRT subpixels from two types of displays](images/human/05-wavelength-encoding/matching/crt-pixel.png){#fig-crt-pixel width="60%"}
+
+The possible spectra from each pixel in the display is always the weighted sum of the three display primaries. The linearity of the superposition of incoherent light sources is what we show in this image.
+
+![Display SPD.](images/human/05-wavelength-encoding/matching/007-display-primary-spd-superposition.png)
+
+We can express that, as we have above, using this matrix tableau.
+
+![Matrix tableau](images/human/05-wavelength-encoding/matching/crt-primary-matrix.png){#fig-crt-matrix width="70%"}
+
+Without explaining how, we imagine that the signal captured by the camera is used to estimate the XYZ value at each pixel.  That is the information sent to the display.
+
+![Color matching on a display when the desired XYZ values at a pixel are known](images/human/05-wavelength-encoding/matching/009-xyz-to-display-primary-intensities.png){#fig-xyz-primaries width="70%"}
+
+![Color matching on a display when the desired XYZ values at a pixel are known](images/human/05-wavelength-encoding/matching/010-xyz-to-display-primary-equation.png){#fig-xyz-primary-equation width="70%"}
+
+![Color matching on a display when the desired XYZ values at a pixel are known](images/human/05-wavelength-encoding/matching/011-display-color-matching-inverse-matrix.png){#fig-xyz-primaries-inverse width="70%"}
 
 Suppose a display has three primaries whose spectral power distributions form the columns of an $N \times 3$ matrix $\mathbf{P} = [\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3]$. 
 
