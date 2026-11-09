@@ -10,9 +10,9 @@ date: last-modified
 
 @sec-human-wavelength-encoding introduced the color-matching functions and the CIE $\mathbf{XYZ}$ standard observer. The CMFs enable us to determine when two spectral power distributions match in appearance, and how a $3 \times 3$ matrix calculation determines the display primary intensities needed to reproduce a target light.
 
-However, color matching only tells us whether two lights look *identical* ($\mathbf{C}\mathbf{t}_1 = \mathbf{C}\mathbf{t}_2$). When two lights do *not* match—for example, when a color falls outside a display's gamut, when sensor noise perturbs pixel values, or when an 8-bit frame buffer quantizes primary intensities—color matching alone does not tell us how large the perceptual difference will appear to a human observer.
+However, color matching only tells us whether two lights look *identical* ($\mathbf{C}\mathbf{t}_1 = \mathbf{C}\mathbf{t}_2$). But it misses two important facts.  First, the CMF calculation doesn't tell us what the light looks like; is it red, yellow, blue?  Second, when two lights do not match precisely the CMF calculation doesn't tell us how large the perceptual difference will appear.  These are important questions for image systems engineers.
 
-This chapter introduces the standard representations and perceptual metrics used by engineers to visualize color gamuts and quantify visible color differences:
+This chapter introduces the tools used by engineers to visualize color gamuts and quantify visible color differences:
 
 1. **Chromaticity coordinates** for separating relative spectral composition from overall intensity and visualizing display gamuts in two dimensions.
 2. **CIELAB ($\Delta E_{ab}^*$)** for transforming linear tristimulus values into an approximately perceptually uniform space to measure large-field color differences.
@@ -20,8 +20,31 @@ This chapter introduces the standard representations and perceptual metrics used
 
 ## Chromaticity coordinates {#sec-chromaticity-coordinates}
 
-<!-- TODO: Introduce CIE (x, y) chromaticity coordinates: x = X / (X + Y + Z), y = Y / (X + Y + Z).
-Show the spectrum locus, convex combinations of additive mixtures, and the triangle of display primaries defining the display gamut. -->
+Introduce CIE (x, y) chromaticity coordinates: 
+
+$$
+ x = X / (X + Y + Z), ~ y = Y / (X + Y + Z), ~ z = Z/(X + Y+Z)
+$$
+
+Notice that by definition $1 = x + y + z$.
+
+Show the spectrum locus, convex combinations of additive mixtures, and the triangle of display primaries defining the display gamut.
+
+![Chromaticity formula](images/human/06-color-metrics/chromaticity/041-chromaticity-diagram-construction.png){#fig-chromaticity-construction width="60%"}
+
+![Chromaticity formula](images/human/06-color-metrics/chromaticity/042-cie-xy-chromaticity-geometry.png){#fig-chromaticity-geometry width="60%"}
+
+![Chromaticity formula](images/human/06-color-metrics/chromaticity/043-cie-1931-chromaticity-diagram.png){#fig-chromaticity-diagram width="60%"}
+
+![Chromaticity formula](images/human/06-color-metrics/chromaticity/044-blackbody-locus.png){#fig-chromaticity-blackbody width="60%"}
+
+![Chromaticity formula](images/human/06-color-metrics/chromaticity/045-complementary-colors.png){#fig-chromaticity-complementary width="60%"}
+
+![Chromaticity formula](images/human/06-color-metrics/chromaticity/046-dominant-wavelength.png){#fig-chromaticity-dominant width="60%"}
+
+![Chromaticity formula](images/human/06-color-metrics/chromaticity/047-display-gamut-triangle.png){#fig-chromaticity-gamut width="60%"}
+
+![Chromaticity formula multiple gamuts](images/human/06-color-metrics/chromaticity/048-human-vision-and-hdtv-gamut.png){#fig-chromaticity-multiple-gamuts width="60%"}
 
 ## Perceptual uniformity and CIELAB {#sec-cielab}
 
