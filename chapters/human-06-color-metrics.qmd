@@ -6,7 +6,7 @@ date: last-modified
 
 {{< include "includes/WIP-callout.qmd" >}}
 
-## Color metrics overview {#sec-human-color-metrics-overview}
+## Color representations and metrics overview {#sec-human-color-metrics-overview}
 
 @sec-human-wavelength-encoding introduced the color-matching functions and the CIE $\mathbf{XYZ}$ standard observer. The CMFs enable us to determine when two spectral power distributions match in appearance, and how a $3 \times 3$ matrix calculation determines the display primary intensities needed to reproduce a target light.
 
@@ -20,31 +20,108 @@ This chapter introduces the tools used by engineers to visualize color gamuts an
 
 ## Chromaticity coordinates {#sec-chromaticity-coordinates}
 
-Introduce CIE (x, y) chromaticity coordinates: 
+When we describe the appearance of a light, it is natural to separate its overall brightness from its hue and saturation. How can we convert the three-dimensional CIE tristimulus values, $(X, Y, Z)$, into a two-dimensional representation that isolates relative spectral composition from intensity?
+
+**Chromaticity coordinates** are the oldest and most widely used approach. If we normalize each tristimulus coordinate by the sum $X + Y + Z$, scaling the intensity of a light by a positive factor cancels out in the ratio. Because the three normalized coordinates sum to one, only two of them—conventionally $(x, y)$—are independent:
 
 $$
- x = X / (X + Y + Z), ~ y = Y / (X + Y + Z), ~ z = Z/(X + Y+Z)
+x = \frac{X}{X + Y + Z}, \qquad y = \frac{Y}{X + Y + Z}, \qquad z = \frac{Z}{X + Y + Z} = 1 - x - y .
+$$ {#eq-chromaticity}
+
+We can visualize the geometry of this mapping in two steps (@fig-chromaticity-projection). First, for any tristimulus vector $(X, Y, Z)$, the normalized vector $(x, y, z)$ lies at the intersection of the ray from the origin through $(X, Y, Z)$ and the unit plane $x + y + z = 1$ (the shaded gray triangle in @fig-cie-chromaticity). Second, tracing the rays for monochromatic lights across the visible spectrum sweeps out a horseshoe-shaped curve on that unit plane called the **spectrum locus** (@fig-chromaticity-geometry). Projecting the unit plane orthographically onto the $(x, y)$ axes produces the standard two-dimensional **CIE $(x, y)$ chromaticity diagram** (@fig-chromaticity-appearance).
+
+::: {#fig-chromaticity-projection layout-ncol=2}
+![A ray from the origin through $(X, Y, Z)$ intersects the unit plane $x + y + z = 1$ at $(x, y, z)$.](images/human/06-color-metrics/chromaticity/cie-xy-chromaticity-geometry.png){#fig-cie-chromaticity}
+
+![Monochromatic lights trace out the spectrum locus on the unit plane $x + y + z = 1$.](images/human/06-color-metrics/chromaticity/chromaticity-3d.png){#fig-chromaticity-geometry}
+
+Geometric construction of the CIE chromaticity coordinates on the plane $x + y + z = 1$ before orthographic projection onto the $(x, y)$ plane.
+:::
+
+The spectrum locus is fundamental because it forms the outer boundary of the chromaticity coordinates for all physical lights. This property follows directly from a geometric rule of chromaticity diagrams: the chromaticity of an additive mixture of two lights always lies on the straight line segment connecting their individual chromaticities (see @nte-chromaticity-mixture). Because every physical light is a non-negative mixture of spectral lights, the chromaticity of any real light must lie inside the convex hull of the spectrum locus, bounded below by the straight "line of purples" connecting the short- and long-wavelength ends of the spectrum.
+
+::: {.callout-note title="Chromaticity of the mixture of two lights" collapse="true" #nte-chromaticity-mixture}
+The chromaticity coordinate of an additive mixture of two lights lies on the straight line segment connecting their chromaticities.
+
+Suppose Light 1 and Light 2 have CIE tristimulus vectors $\mathbf{C}_1 = (X_1, Y_1, Z_1)$ and $\mathbf{C}_2 = (X_2, Y_2, Z_2)$, with coordinate sums
+
+$$
+S_1 = X_1 + Y_1 + Z_1 \quad \text{and} \quad S_2 = X_2 + Y_2 + Z_2 .
 $$
 
-Notice that by definition $1 = x + y + z$.
+From @eq-chromaticity, the 2D chromaticity coordinates $\mathbf{c}_1 = (x_1, y_1)$ and $\mathbf{c}_2 = (x_2, y_2)$ satisfy
 
-Show the spectrum locus, convex combinations of additive mixtures, and the triangle of display primaries defining the display gamut.
+$$
+(X_1, Y_1) = S_1 (x_1, y_1) \quad \text{and} \quad (X_2, Y_2) = S_2 (x_2, y_2) .
+$$
 
-![Chromaticity formula](images/human/06-color-metrics/chromaticity/041-chromaticity-diagram-construction.png){#fig-chromaticity-construction width="60%"}
+By superposition, mixing the two lights sums their tristimulus vectors:
 
-![Chromaticity formula](images/human/06-color-metrics/chromaticity/042-cie-xy-chromaticity-geometry.png){#fig-chromaticity-geometry width="60%"}
+$$
+\mathbf{C}_3 = (X_1 + X_2, \; Y_1 + Y_2, \; Z_1 + Z_2) .
+$$
 
-![Chromaticity formula](images/human/06-color-metrics/chromaticity/043-cie-1931-chromaticity-diagram.png){#fig-chromaticity-diagram width="60%"}
+The coordinate sum of the mixture is $S_3 = S_1 + S_2$, so the chromaticity of the mixture $\mathbf{c}_3 = (x_3, y_3)$ is
 
-![Chromaticity formula](images/human/06-color-metrics/chromaticity/044-blackbody-locus.png){#fig-chromaticity-blackbody width="60%"}
+$$
+\begin{aligned}
+x_3 &= \frac{X_1 + X_2}{S_1 + S_2} = \frac{S_1 x_1 + S_2 x_2}{S_1 + S_2} = \left(\frac{S_1}{S_1 + S_2}\right) x_1 + \left(\frac{S_2}{S_1 + S_2}\right) x_2 , \\
+y_3 &= \frac{Y_1 + Y_2}{S_1 + S_2} = \frac{S_1 y_1 + S_2 y_2}{S_1 + S_2} = \left(\frac{S_1}{S_1 + S_2}\right) y_1 + \left(\frac{S_2}{S_1 + S_2}\right) y_2 .
+\end{aligned}
+$$
 
-![Chromaticity formula](images/human/06-color-metrics/chromaticity/045-complementary-colors.png){#fig-chromaticity-complementary width="60%"}
+Defining $\alpha = \frac{S_1}{S_1 + S_2}$, we see that $1 - \alpha = \frac{S_2}{S_1 + S_2}$, with $0 < \alpha < 1$ whenever $S_1, S_2 > 0$. In vector form, the chromaticity of the mixture is a convex combination of $\mathbf{c}_1$ and $\mathbf{c}_2$:
 
-![Chromaticity formula](images/human/06-color-metrics/chromaticity/046-dominant-wavelength.png){#fig-chromaticity-dominant width="60%"}
+$$
+\mathbf{c}_3 = \alpha \mathbf{c}_1 + (1 - \alpha) \mathbf{c}_2 .
+$$
 
-![Chromaticity formula](images/human/06-color-metrics/chromaticity/047-display-gamut-triangle.png){#fig-chromaticity-gamut width="60%"}
+As the relative intensities of the two lights vary, $\mathbf{c}_3$ sweeps out the line segment connecting $\mathbf{c}_1$ and $\mathbf{c}_2$ in the $(x, y)$ chromaticity diagram.
+:::
 
-![Chromaticity formula multiple gamuts](images/human/06-color-metrics/chromaticity/048-human-vision-and-hdtv-gamut.png){#fig-chromaticity-multiple-gamuts width="60%"}
+### Commonly used features of the chromaticity diagram
+
+Several classic colorimetric concepts and engineering tools are described on the chromaticity diagram:
+
+**Blackbody (Planckian) locus** As the temperature of a blackbody radiator increases from $2000\text{ K}$ to $9000\text{ K}$, its spectral power distribution shifts toward shorter wavelengths, tracing a smooth arc from orange-red through neutral white to bluish-white near the center of the chromaticity diagram (@fig-chromaticity-blackbody).
+
+The approximate color appearance across the CIE 1931 $(x, y)$ chromaticity diagram is illustrated schematically in @fig-chromaticity-appearance. White and neutral grays fall near the center of the diagram—where the blackbody locus traces the chromaticities of thermal radiators across color temperatures (@fig-chromaticity-blackbody)—while saturated spectral hues lie along the outer boundary.
+
+![Schematic illustration of color appearance across the CIE 1931 $(x, y)$ chromaticity diagram.](images/human/06-color-metrics/chromaticity/chromaticityDiagram.png){#fig-chromaticity-appearance width="50%"}
+
+**Complementary wavelengths** are defined as a pair of monochromatic lights whose additive mixture can match a chosen reference white (such as CIE D65). (@fig-chromaticity-complementary). **Dominant wavelength** is defined by a ray from the reference white point through a test light's chromaticity out to the spectrum locus (@fig-chromaticity-dominant). The fractional distance along the segment from white to the boundary quantifies the excitation **purity**. 
+
+![Spectral power distributions of blackbody radiators from $3000\text{ K}$ to $9000\text{ K}$ (left) and their corresponding Planckian locus on the CIE $(x, y)$ chromaticity diagram (right).](images/human/06-color-metrics/chromaticity/044-blackbody-locus.png){#fig-chromaticity-blackbody width="75%"}
+
+::: {#fig-chromaticity-complementary-dominant layout-ncol=2}
+![Pairs of monochromatic wavelengths whose additive mixtures pass through the D65 white point are complementary.](images/human/06-color-metrics/chromaticity/045-complementary-colors.png){#fig-chromaticity-complementary}
+
+![A ray from the white point through a test chromaticity to the spectrum locus defines the test light's dominant wavelength.](images/human/06-color-metrics/chromaticity/046-dominant-wavelength.png){#fig-chromaticity-dominant}
+
+Complementary wavelengths and dominant wavelength constructions on the CIE $(x, y)$ chromaticity diagram.
+:::
+
+### Display chromaticity gamuts {#sec-chromaticity-gamuts}
+
+Extending the two-light mixture rule (@nte-chromaticity-mixture) to three primary lights explains how engineers visualize a display's color range. A display with three primaries ($R$, $G$, and $B$) can produce any additive mixture of its primaries with non-negative weights (@sec-display-color-matching). In the $(x, y)$ diagram, the set of all convex combinations of three points is the **triangle** whose vertices are the chromaticities of the three primaries (@fig-chromaticity-gamut).
+
+::: {#fig-chromaticity-gamuts-panel .figure}
+::: {.panel-tabset}
+
+### Display primary triangle
+![The chromaticities of three display primaries ($R, G, B$) form the vertices of a triangle enclosing all chromaticities the display can reproduce.](images/human/06-color-metrics/chromaticity/047-display-gamut-triangle.png){#fig-chromaticity-gamut width="75%"}
+
+### Display gamut vs. human vision
+![Comparison of a standard HDTV (sRGB / Rec. 709) chromaticity triangle against the full CIE 1931 chromaticity diagram of human vision.](images/human/06-color-metrics/chromaticity/048-human-vision-and-hdtv-gamut.png){#fig-chromaticity-multiple-gamuts width="75%"}
+
+:::
+Visualizing display color reproduction limits as triangles in the CIE $(x, y)$ chromaticity diagram.
+:::
+
+Any chromaticity inside the triangle can be reproduced by the display; any chromaticity outside the triangle would require a negative weight on at least one primary (@eq-display-primary-weights) and is out of gamut. Notice, however, two important caveats when interpreting these triangles:
+
+1. **Chromaticity omits luminance:** The $(x, y)$ triangle is a 2D projection of a 3D color solid; it does not show how the range of achievable chromaticities shrinks near the display's peak luminance or black level.
+2. **Displays have primary gamuts; sensors do not:** While a three-primary display is physically restricted to the convex triangle of its emitters (@fig-chromaticity-multiple-gamuts), a camera sensor does not emit primaries—its ability to distinguish spectra depends on whether its spectral sensitivities are a linear transformation of the human color-matching functions and on sensor noise.
 
 ## Perceptual uniformity and CIELAB {#sec-cielab}
 
