@@ -654,8 +654,8 @@ Last updated: November 9, 2026
 <section id="sec-human-color-metrics-overview" class="level2" data-number="29.1">
 <h2 data-number="29.1" class="anchored" data-anchor-id="sec-human-color-metrics-overview"><span class="header-section-number">29.1</span> Color metrics overview</h2>
 <p><a href="human-05-wavelength-encoding.html" class="quarto-xref"><span>Chapter 28</span></a> introduced the color-matching functions and the CIE <span class="math inline">\(\mathbf{XYZ}\)</span> standard observer. The CMFs enable us to determine when two spectral power distributions match in appearance, and how a <span class="math inline">\(3 \times 3\)</span> matrix calculation determines the display primary intensities needed to reproduce a target light.</p>
-<p>However, color matching only tells us whether two lights look <em>identical</em> (<span class="math inline">\(\mathbf{C}\mathbf{t}_1 = \mathbf{C}\mathbf{t}_2\)</span>). When two lights do <em>not</em> match—for example, when a color falls outside a display’s gamut, when sensor noise perturbs pixel values, or when an 8-bit frame buffer quantizes primary intensities—color matching alone does not tell us how large the perceptual difference will appear to a human observer.</p>
-<p>This chapter introduces the standard representations and perceptual metrics used by engineers to visualize color gamuts and quantify visible color differences:</p>
+<p>However, color matching only tells us whether two lights look <em>identical</em> (<span class="math inline">\(\mathbf{C}\mathbf{t}_1 = \mathbf{C}\mathbf{t}_2\)</span>). But it misses two important facts. First, the CMF calculation doesn’t tell us what the light looks like; is it red, yellow, blue? Second, when two lights do not match precisely the CMF calculation doesn’t tell us how large the perceptual difference will appear. These are important questions for image systems engineers.</p>
+<p>This chapter introduces the tools used by engineers to visualize color gamuts and quantify visible color differences:</p>
 <ol type="1">
 <li><strong>Chromaticity coordinates</strong> for separating relative spectral composition from overall intensity and visualizing display gamuts in two dimensions.</li>
 <li><strong>CIELAB (<span class="math inline">\(\Delta E_{ab}^*\)</span>)</strong> for transforming linear tristimulus values into an approximately perceptually uniform space to measure large-field color differences.</li>
@@ -664,8 +664,85 @@ Last updated: November 9, 2026
 </section>
 <section id="sec-chromaticity-coordinates" class="level2" data-number="29.2">
 <h2 data-number="29.2" class="anchored" data-anchor-id="sec-chromaticity-coordinates"><span class="header-section-number">29.2</span> Chromaticity coordinates</h2>
-<!-- TODO: Introduce CIE (x, y) chromaticity coordinates: x = X / (X + Y + Z), y = Y / (X + Y + Z).
-Show the spectrum locus, convex combinations of additive mixtures, and the triangle of display primaries defining the display gamut. -->
+<p>When we talk about the appearance of a light, it is natural to describe its overall brightness separately from the hue and saturation. How can we convert the CIE values, <span class="math inline">\((X,Y,Z)\)</span> into a helpful representation of color appearance?</p>
+<p>Chromaticity coordinates are the oldest helpful approach. If we consider brightness to be roughly approximated by overall intensity, and we approximate intensity by the sum of the <span class="math inline">\((X,Y,Z)\)</span> values, this formula eliminates intensity and leaves us with two indepedent variables, <span class="math inline">\((x,y)\)</span></p>
+<p><span class="math display">\[
+x = X / (X + Y + Z), ~ y = Y / (X + Y + Z), ~ z = Z/(X + Y+Z) = 1 - x - y
+\]</span></p>
+<p>Graphically, the chromaticity coordinates</p>
+<p>Show the spectrum locus, convex combinations of additive mixtures, and the triangle of display primaries defining the display gamut. <!--
+![Chromaticity formula](images/human/06-color-metrics/chromaticity/041-chromaticity-diagram-construction.png){#fig-chromaticity-construction width="60%"}
+--></p>
+<div id="fig-chromaticity-geometry" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chromaticity-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/chromaticity/042-cie-xy-chromaticity-geometry.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromaticity-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.1: Chromaticity formula
+</figcaption>
+</figure>
+</div>
+<div id="fig-chromaticity-diagram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chromaticity-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/chromaticity/043-cie-1931-chromaticity-diagram.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromaticity-diagram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.2: Chromaticity formula
+</figcaption>
+</figure>
+</div>
+<div id="fig-chromaticity-blackbody" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chromaticity-blackbody-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/chromaticity/044-blackbody-locus.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromaticity-blackbody-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.3: Chromaticity formula
+</figcaption>
+</figure>
+</div>
+<div id="fig-chromaticity-complementary" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chromaticity-complementary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/chromaticity/045-complementary-colors.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromaticity-complementary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.4: Chromaticity formula
+</figcaption>
+</figure>
+</div>
+<div id="fig-chromaticity-dominant" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chromaticity-dominant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/chromaticity/046-dominant-wavelength.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromaticity-dominant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.5: Chromaticity formula
+</figcaption>
+</figure>
+</div>
+<div id="fig-chromaticity-gamut" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chromaticity-gamut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/chromaticity/047-display-gamut-triangle.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromaticity-gamut-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.6: Chromaticity formula
+</figcaption>
+</figure>
+</div>
+<div id="fig-chromaticity-multiple-gamuts" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chromaticity-multiple-gamuts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/chromaticity/048-human-vision-and-hdtv-gamut.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromaticity-multiple-gamuts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.7: Chromaticity formula multiple gamuts
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="sec-cielab" class="level2" data-number="29.3">
 <h2 data-number="29.3" class="anchored" data-anchor-id="sec-cielab"><span class="header-section-number">29.3</span> Perceptual uniformity and CIELAB</h2>

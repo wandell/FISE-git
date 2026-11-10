@@ -624,15 +624,17 @@ window.Quarto = {
   </ul></li>
   <li><a href="#matrix-formulation-of-color-matching" id="toc-matrix-formulation-of-color-matching" class="nav-link" data-scroll-target="#matrix-formulation-of-color-matching"><span class="header-section-number">28.4</span> Matrix formulation of color matching</a>
   <ul class="collapse">
-  <li><a href="#measured-cmf" id="toc-measured-cmf" class="nav-link" data-scroll-target="#measured-cmf"><span class="header-section-number">28.4.1</span> Measured CMF</a></li>
-  <li><a href="#dimensionality-of-the-cmfs" id="toc-dimensionality-of-the-cmfs" class="nav-link" data-scroll-target="#dimensionality-of-the-cmfs"><span class="header-section-number">28.4.2</span> Dimensionality of the CMFs</a></li>
-  <li><a href="#measuring-the-color-matching-matrix-mathbfc" id="toc-measuring-the-color-matching-matrix-mathbfc" class="nav-link" data-scroll-target="#measuring-the-color-matching-matrix-mathbfc"><span class="header-section-number">28.4.3</span> Measuring the color-matching matrix <span class="math inline">\(\mathbf{C}\)</span></a></li>
-  <li><a href="#color-matching-functions" id="toc-color-matching-functions" class="nav-link" data-scroll-target="#color-matching-functions"><span class="header-section-number">28.4.4</span> Color matching functions</a></li>
-  <li><a href="#negative-values-in-the-cmf" id="toc-negative-values-in-the-cmf" class="nav-link" data-scroll-target="#negative-values-in-the-cmf"><span class="header-section-number">28.4.5</span> Negative values in the CMF</a></li>
-  <li><a href="#uniqueness-of-the-cmfs" id="toc-uniqueness-of-the-cmfs" class="nav-link" data-scroll-target="#uniqueness-of-the-cmfs"><span class="header-section-number">28.4.6</span> Uniqueness of the CMFs</a></li>
+  <li><a href="#dimensionality-of-the-cmfs" id="toc-dimensionality-of-the-cmfs" class="nav-link" data-scroll-target="#dimensionality-of-the-cmfs"><span class="header-section-number">28.4.1</span> Dimensionality of the CMFs</a></li>
+  <li><a href="#measured-cmf" id="toc-measured-cmf" class="nav-link" data-scroll-target="#measured-cmf"><span class="header-section-number">28.4.2</span> Measured CMF</a></li>
+  <li><a href="#color-matching-functions" id="toc-color-matching-functions" class="nav-link" data-scroll-target="#color-matching-functions"><span class="header-section-number">28.4.3</span> Color matching functions</a></li>
+  <li><a href="#negative-values-in-the-cmf" id="toc-negative-values-in-the-cmf" class="nav-link" data-scroll-target="#negative-values-in-the-cmf"><span class="header-section-number">28.4.4</span> Negative values in the CMF</a></li>
+  <li><a href="#uniqueness-of-the-cmfs" id="toc-uniqueness-of-the-cmfs" class="nav-link" data-scroll-target="#uniqueness-of-the-cmfs"><span class="header-section-number">28.4.5</span> Uniqueness of the CMFs</a></li>
   </ul></li>
-  <li><a href="#sec-cie-standards" id="toc-sec-cie-standards" class="nav-link" data-scroll-target="#sec-cie-standards"><span class="header-section-number">28.5</span> CIE Standards</a></li>
-  <li><a href="#sec-display-color-matching" id="toc-sec-display-color-matching" class="nav-link" data-scroll-target="#sec-display-color-matching"><span class="header-section-number">28.6</span> Setting display primary intensities</a></li>
+  <li><a href="#sec-cie-standards" id="toc-sec-cie-standards" class="nav-link" data-scroll-target="#sec-cie-standards"><span class="header-section-number">28.5</span> CIE Standards</a>
+  <ul class="collapse">
+  <li><a href="#cie-xyz-and-physiologically-based-cone-standards" id="toc-cie-xyz-and-physiologically-based-cone-standards" class="nav-link" data-scroll-target="#cie-xyz-and-physiologically-based-cone-standards"><span class="header-section-number">28.5.1</span> CIE XYZ and physiologically based cone standards</a></li>
+  </ul></li>
+  <li><a href="#sec-display-color-matching" id="toc-sec-display-color-matching" class="nav-link" data-scroll-target="#sec-display-color-matching"><span class="header-section-number">28.6</span> Display primary intensities</a></li>
   </ul>
 </nav>
     </div>
@@ -783,9 +785,6 @@ Figure&nbsp;28.3: Linearity of the color-matching experiment: additivity and hom
 <h2 data-number="28.4" class="anchored" data-anchor-id="matrix-formulation-of-color-matching"><span class="header-section-number">28.4</span> Matrix formulation of color matching</h2>
 <p>The color matching experiment satisfies superposition. A psychological experiment that satisfies superposition is extremely rare; in fact, I am unaware of only one other impactful perceptual experiment that satisfies superposition (flicker photometry). When linearity is satisfied, we can characterize the system thoroughly.</p>
 <p>In this case, we express the relationship between any test light and the primary intensities needed to match it using multidimensional linear algebra<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Suppose we represent a test light as a column vector, <span class="math inline">\(\mathbf{t}\)</span>, whose entries <span class="math inline">\(t[\lambda]\)</span> specify the light’s spectral power at sampled wavelengths <span class="math inline">\(\lambda\)</span>. Because the system is linear, the primary intensities <span class="math inline">\((R, G, B)\)</span> required for a match can be calculated by multiplying <span class="math inline">\(\mathbf{t}\)</span> by a <span class="math inline">\(3 \times N\)</span> matrix, <span class="math inline">\(\mathbf{C}\)</span>:</p>
-<p><span id="eq-color-match-matrix"><span class="math display">\[
-\begin{pmatrix} R \\ G \\ B \end{pmatrix} = \mathbf{C} \mathbf{t}
-\tag{28.1}\]</span></span></p>
 <div id="fig-matching-tableau" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-matching-tableau-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -796,7 +795,11 @@ Figure&nbsp;28.4: Linearity of the color-matching experiment expressed in matrix
 </figcaption>
 </figure>
 </div>
-<p>The matrix equation shows how we can determine whether two lights have the same appearance. Two test lights, say <span class="math inline">\(\mathbf{t}_1\)</span> and <span class="math inline">\(\mathbf{t}_2\)</span> match in appearance if and only if the primary matching intensities computed from <a href="#eq-color-match-matrix" class="quarto-xref">Equation&nbsp;<span>28.1</span></a> are equal,</p>
+<p>We can write this as a very simple mathematical expression.</p>
+<p><span id="eq-color-match-matrix"><span class="math display">\[
+\begin{pmatrix} R \\ G \\ B \end{pmatrix} = \mathbf{C} \mathbf{t}
+\tag{28.1}\]</span></span></p>
+<p>Thus equation shows how we can determine whether two lights have the same appearance. Two test lights, say <span class="math inline">\(\mathbf{t}_1\)</span> and <span class="math inline">\(\mathbf{t}_2\)</span> match in appearance if and only if the primary matching intensities computed from <a href="#eq-color-match-matrix" class="quarto-xref">Equation&nbsp;<span>28.1</span></a> are equal,</p>
 <p><span id="eq-color-match-metamers"><span class="math display">\[
 \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2
 \tag{28.2}\]</span></span></p>
@@ -805,30 +808,77 @@ Figure&nbsp;28.4: Linearity of the color-matching experiment expressed in matrix
 \mathbf{0}  = \mathbf{C} {\mathbf{t}_2 - \mathbf{t}_1}
 \tag{28.3}\]</span></span></p>
 <p>In modern terms we say the difference between any pair of metamers is in the <em>null space</em> of the color matching functions. The null space is one of many linear algebra concepts described first by Grassmann (<a href="resources/history-color.html#sec-grassmann-color" class="quarto-xref"><span>Section 51.6</span></a>).</p>
-<section id="measured-cmf" class="level3" data-number="28.4.1">
-<h3 data-number="28.4.1" class="anchored" data-anchor-id="measured-cmf"><span class="header-section-number">28.4.1</span> Measured CMF</h3>
-<p>How do we calculate the CMF matrix? Use monochromatic lights. Each RGB setting is a column of the matrix.</p>
-<div id="fig-cmf-estimate" class="quarto-float quarto-figure quarto-figure-center anchored">
+<section id="dimensionality-of-the-cmfs" class="level3" data-number="28.4.1">
+<h3 data-number="28.4.1" class="anchored" data-anchor-id="dimensionality-of-the-cmfs"><span class="header-section-number">28.4.1</span> Dimensionality of the CMFs</h3>
+<p>How do we know that we should use three primary lights, and not two or four?</p>
+<p>If we provide people with just one or two primary lights, there will be many test lights that cannot be matched. That sets the minimum. If we provide four primary lights, people set satisfactory matches with many different combinations of primary intensities. The match is not unique. With three primaries, a match can be set for every test light.</p>
+<p>There is one detail, however. In some cases, adding the three primaries together does not quite get there. To make a match we must add one (or even two) of the primaries into the test light side. In this case, we record its intensity as negative. Allowing for this caveat, a unique match can always be made with three primaries. That is why we say color-matching is three-dimensional.</p>
+<p>You may have questions about the universality of this finding (color blindness, women with four cones, and just inter-observer variability). All good questions. More on this in <a href="human-06-color-metrics.html" class="quarto-xref"><span>Chapter 29</span></a>. <!--
+See the human-tetrachromacy.qmd file for more.
+--></p>
+</section>
+<section id="measured-cmf" class="level3" data-number="28.4.2">
+<h3 data-number="28.4.2" class="anchored" data-anchor-id="measured-cmf"><span class="header-section-number">28.4.2</span> Measured CMF</h3>
+<p>How do we determine the entries of the matrix <span class="math inline">\(\mathbf{C}\)</span>? Linear systems theory provides a straightforward answer: measure the system’s response to impulse inputs. In optics, an impulse is a point of light, and the response is the point spread function (<a href="appendix-01-linearsystems.html#sec-ls-point-matrix" class="quarto-xref"><span>Section 37.4</span></a>). In color matching, an impulse is a monochromatic (single-wavelength) test light.</p>
+<p>Suppose the test light is a monochromatic light at wavelength <span class="math inline">\(\lambda_k\)</span> with unit power. Its spectral vector <span class="math inline">\(\mathbf{t}\)</span> contains zeros everywhere except for a value of 1 at entry <span class="math inline">\(k\)</span>. When we multiply <span class="math inline">\(\mathbf{C} \mathbf{t}\)</span>, this unit impulse simply extracts the <span class="math inline">\(k^{\text{th}}\)</span> column of <span class="math inline">\(\mathbf{C}\)</span> (<a href="#fig-matching-monochromatic" class="quarto-xref">Figure&nbsp;<span>28.5</span></a>).</p>
+<div id="fig-matching-monochromatic" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cmf-estimate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/05-wavelength-encoding/matching/49_monochromatic-color-matching-equation.png" class="img-fluid figure-img" style="width:70.0%">
+<div aria-describedby="fig-matching-monochromatic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/cmf-estimation.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cmf-estimate-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;28.5: Principles of calculation
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matching-monochromatic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.5: Measuring the color-matching matrix with monochromatic test lights. A unit-intensity spectral light selects a single column of the matrix <span class="math inline">\(\mathbf{C}\)</span>, directly revealing the primary intensities required to match that wavelength.
 </figcaption>
 </figure>
 </div>
-<p>Here is a measured RGB set by Stiles and Burch, 10 deg. Get the reference in here and the specific primaries.</p>
-<div id="fig-rgb-cmf-10deg" class="quarto-float quarto-figure quarto-figure-center anchored">
+<p>By measuring the primary intensities needed to match monochromatic test lights across all sampled wavelengths of the visible spectrum, we directly measure every column of <span class="math inline">\(\mathbf{C}\)</span>.</p>
+</section>
+<section id="color-matching-functions" class="level3" data-number="28.4.3">
+<h3 data-number="28.4.3" class="anchored" data-anchor-id="color-matching-functions"><span class="header-section-number">28.4.3</span> Color matching functions</h3>
+<p>The rows of the measured matrix <span class="math inline">\(\mathbf{C}\)</span> are functions of wavelength, and they are conventionally written as <span class="math inline">\(r(\lambda), g(\lambda), b(\lambda)\)</span>. Stiles and Burch directly measured RGB color-matching functions using monochromatic primaries (645.2 nm, 526.3 nm, and 444.4 nm) for both a 2-degree field <span class="citation" data-cites="stiles1955-he">(<a href="references.html#ref-stiles1955-he" role="doc-biblioref">Stiles and Burch 1955</a>)</span> and a 10-degree field <span class="citation" data-cites="stiles-colourmatching1959">(<a href="references.html#ref-stiles-colourmatching1959" role="doc-biblioref">Stiles and Burch 1959</a>)</span>.</p>
+<div id="fig-sb-cmf-panel" class="figure quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-rgb-cmf-10deg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/05-wavelength-encoding/matching/rgb-color-matching-functions-10deg.png" class="img-fluid figure-img" style="width:70.0%">
+<div aria-describedby="fig-sb-cmf-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Stiles &amp; Burch 10° (1959)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Stiles &amp; Burch 2° (1955)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="fig-sb-1959-10deg" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-sb-1959-10deg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/cmf-SB1959-10deg-energy.png" class="img-fluid figure-img" style="width:72.0%" data-ref-parent="fig-sb-cmf-panel">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rgb-cmf-10deg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;28.6: Measured color matching functions using primaries at
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-sb-1959-10deg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Stiles &amp; Burch (1959) 10-degree RGB color-matching functions (energy basis), with long wavelengths corrected for rod intrusion by Stockman and Sharpe (2000).
 </figcaption>
 </figure>
 </div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="fig-sb-1955-2deg" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-sb-1955-2deg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/cmf-SB1955-2deg-energy.png" class="img-fluid figure-img" style="width:72.0%" data-ref-parent="fig-sb-cmf-panel">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-sb-1955-2deg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Stiles &amp; Burch (1955) 2-degree RGB color-matching functions (energy basis) measured in the central fovea.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sb-cmf-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.6: Directly measured RGB color-matching functions for 10-degree and 2-degree bipartite fields using monochromatic primaries at 645.2 nm, 526.3 nm, and 444.4 nm. Source: <code>fise_cmfStilesBurch.m</code>.
+</figcaption>
+</figure>
+</div>
+<p>Human color matches depend slightly on the angular size of the bipartite stimulus field. Comparing the two tabs in <a href="#fig-sb-cmf-panel" class="quarto-xref">Figure&nbsp;<span>28.6</span></a> shows how field size alters the relative primary energies, particularly at short and middle wavelengths.</p>
+<p>There are several reasons for this difference. The central 2 degrees of the retina (the fovea) is covered by <strong>macular pigment</strong>, which absorbs short-wavelength (blue) light before it reaches the photoreceptors, and foveal cones have longer outer segments (higher photopigment optical density) than peripheral cones. For larger fields spanning 10 degrees, most of the stimulus falls outside the macula, increasing short-wavelength sensitivity and shifting the matches.</p>
+<!--
+![Stiles & Burch (10-degree) RGB color-matching functions measured with monochromatic primaries. In the cyan spectral region between 480 nm and 530 nm, the red primary curve is negative, indicating that the red primary light was added to the test light to achieve a match.](images/human/05-wavelength-encoding/matching/rgb-color-matching-functions-10deg.png){#fig-rgb-cmfs width="80%"}
+-->
 <div class="callout callout-style-default callout-note callout-titled" title="Reading the CMF">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -839,73 +889,34 @@ Reading the CMF
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Explain how we know what the primaries are from the curve.</p>
+<p>When I teach, I often forget the wavelengths of the primary lights. But it is possible to deduce them from the graphs; can you see how?</p>
+<p>The principle is straightforward. When a monochromatic test light matches one of the primary lights, the primary intensities will be one of these three values: <span class="math inline">\((1,0,0)\)</span>, <span class="math inline">\((0,1,0)\)</span>, or <span class="math inline">\((0,0,1)\)</span>. Read the curves to find the wavelengths at which the primaries have those values. You can get a close estimate.</p>
 </div>
 </div>
 </section>
-<section id="dimensionality-of-the-cmfs" class="level3" data-number="28.4.2">
-<h3 data-number="28.4.2" class="anchored" data-anchor-id="dimensionality-of-the-cmfs"><span class="header-section-number">28.4.2</span> Dimensionality of the CMFs</h3>
-<p>How do we know that we should use three primary lights, and not two or four?</p>
-<p>If we provide people with just one or two primary lights, there will be many test lights that cannot be matched. That sets the minimum. If we provide four primary lights, people set satisfactory matches with many different combinations of primary intensities. The match is not unique. With three primaries, a match can be set for every test light.</p>
-<p>There is one detail, however. In some cases, adding the three primaries together does not quite get there. To make a match we must add one (or even two) of the primaries into the test light side. In this case, we record its intensity as negative. Allowing for this caveat, a unique match can always be made with three primaries. That is why we say color-matching is three-dimensional.</p>
-<p>You may have questions about the universality of this finding (color blindness, women with four cones, and just inter-observer variability). All good questions. More on this in <a href="human-06-color-metrics.html" class="quarto-xref"><span>Chapter 29</span></a>. <!--
-See the human-tetrachromacy.qmd file for more.
---></p>
-</section>
-<section id="measuring-the-color-matching-matrix-mathbfc" class="level3" data-number="28.4.3">
-<h3 data-number="28.4.3" class="anchored" data-anchor-id="measuring-the-color-matching-matrix-mathbfc"><span class="header-section-number">28.4.3</span> Measuring the color-matching matrix <span class="math inline">\(\mathbf{C}\)</span></h3>
-<p>How do we determine the entries of the matrix <span class="math inline">\(\mathbf{C}\)</span>? Linear systems theory provides a straightforward answer: measure the system’s response to impulse inputs. In optics, an impulse is a point of light, and the response is the point spread function (<a href="appendix-01-linearsystems.html#sec-ls-point-matrix" class="quarto-xref"><span>Section 37.4</span></a>). In color matching, an impulse is a monochromatic (single-wavelength) test light.</p>
-<p>Suppose the test light is a monochromatic light at wavelength <span class="math inline">\(\lambda_k\)</span> with unit power. Its spectral vector <span class="math inline">\(\mathbf{t}\)</span> contains zeros everywhere except for a value of 1 at entry <span class="math inline">\(k\)</span>. When we multiply <span class="math inline">\(\mathbf{C} \mathbf{t}\)</span>, this unit impulse simply extracts the <span class="math inline">\(k^{\text{th}}\)</span> column of <span class="math inline">\(\mathbf{C}\)</span> (<a href="#fig-matching-monochromatic" class="quarto-xref">Figure&nbsp;<span>28.7</span></a>).</p>
-<div id="fig-matching-monochromatic" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-matching-monochromatic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/05-wavelength-encoding/matching/49_monochromatic-color-matching-equation.png" class="img-fluid figure-img" style="width:70.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-matching-monochromatic-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;28.7: Measuring the color-matching matrix with monochromatic test lights. A unit-intensity spectral light selects a single column of the matrix <span class="math inline">\(\mathbf{C}\)</span>, directly revealing the primary intensities required to match that wavelength.
-</figcaption>
-</figure>
-</div>
-<p>By measuring the primary intensities needed to match monochromatic test lights across all sampled wavelengths of the visible spectrum, we directly measure every column of <span class="math inline">\(\mathbf{C}\)</span>.</p>
-</section>
-<section id="color-matching-functions" class="level3" data-number="28.4.4">
-<h3 data-number="28.4.4" class="anchored" data-anchor-id="color-matching-functions"><span class="header-section-number">28.4.4</span> Color matching functions</h3>
-<p>The rows of the matrix <span class="math inline">\(\mathbf{C}\)</span> are functions of wavelength, known as the <strong>color-matching functions (CMFs)</strong>, are conventionally written as <span class="math inline">\(r(\lambda), g(\lambda), b(\lambda)\)</span>. The color-matching functions measured using three monochromatic primaries (at 645.2 nm, 526.3 nm, and 444.4 nm from the Stiles &amp; Burch 10-degree observer) are shown in <a href="#fig-rgb-cmfs" class="quarto-xref">Figure&nbsp;<span>28.8</span></a>.</p>
-<div id="fig-rgb-cmfs" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-rgb-cmfs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/05-wavelength-encoding/matching/rgb-color-matching-functions-10deg.png" class="img-fluid figure-img" style="width:80.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rgb-cmfs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;28.8: Stiles &amp; Burch (10-degree) RGB color-matching functions measured with monochromatic primaries. In the cyan spectral region between 480 nm and 530 nm, the red primary curve is negative, indicating that the red primary light was added to the test light to achieve a match.
-</figcaption>
-</figure>
-</div>
-<p>When I teach, I often forget the wavelengths of the primary lights. But it is possible to deduce them from the graphs; can you see how? The principle is straightforward. When a monochromatic test light matches one of the primary lights, the primary settings will be one of these three values: <span class="math inline">\((1,0,0)\)</span>, <span class="math inline">\((0,1,0)\)</span>, or <span class="math inline">\((0,0,1)\)</span>. Read the curves to find the wavelengths at which the primaries have those values. You won’t be very precise, but you can get a close estimate.</p>
-</section>
-<section id="negative-values-in-the-cmf" class="level3" data-number="28.4.5">
-<h3 data-number="28.4.5" class="anchored" data-anchor-id="negative-values-in-the-cmf"><span class="header-section-number">28.4.5</span> Negative values in the CMF</h3>
+<section id="negative-values-in-the-cmf" class="level3" data-number="28.4.4">
+<h3 data-number="28.4.4" class="anchored" data-anchor-id="negative-values-in-the-cmf"><span class="header-section-number">28.4.4</span> Negative values in the CMF</h3>
 <p>A notable feature of these curves is that <span class="math inline">\(r(\lambda)\)</span> takes on negative values between approximately 480 nm and 530 nm. In this spectral region, monochromatic test lights appear more saturated in color than any additive mixture of the green and blue primaries can produce. To achieve a visual match, the experimenter adds some of the red primary to the <em>test light</em> side of the bipartite field, desaturating it until the remaining green and blue primaries can complete the match. Because color matching obeys superposition, adding primary light to the test field is mathematically equivalent to subtracting it from the primary side, resulting in negative coefficients in the color-matching functions.</p>
 <p>This point matters in practice when we describe the colors a display can produce. A display has three primary lights, and there is no way to add a primary to the test side. Colors that would require negative primary values cannot be produced. This limitation defines the display <em>gamut</em> (<a href="displays-01-principles.html#sec-display-principles-overview" class="quarto-xref"><span>Section 30.1</span></a>).</p>
 </section>
-<section id="uniqueness-of-the-cmfs" class="level3" data-number="28.4.6">
-<h3 data-number="28.4.6" class="anchored" data-anchor-id="uniqueness-of-the-cmfs"><span class="header-section-number">28.4.6</span> Uniqueness of the CMFs</h3>
+<section id="uniqueness-of-the-cmfs" class="level3" data-number="28.4.5">
+<h3 data-number="28.4.5" class="anchored" data-anchor-id="uniqueness-of-the-cmfs"><span class="header-section-number">28.4.5</span> Uniqueness of the CMFs</h3>
 <p>Two groups, A and B, who use different sets of primary lights, <span class="math inline">\(\mathbf{P}_A\)</span> and <span class="math inline">\(\mathbf{P}_B\)</span>, will measure different CMFs. But the two sets of CMFs are related.</p>
 <p>To see why, suppose group A measures the matches to the primaries of group B. Group A can then predict the matches that group B would set for any test light.</p>
-<p>Represent the primaries as <span class="math inline">\(N \times 3\)</span> matrices, <span class="math inline">\(\mathbf{P}_A\)</span> and <span class="math inline">\(\mathbf{P}_B\)</span>, whose columns are the spectral power distributions of the three primaries. Let <span class="math inline">\(\mathbf{C}_A\)</span> and <span class="math inline">\(\mathbf{C}_B\)</span> be the <span class="math inline">\(3 \times N\)</span> CMF matrices measured by the two groups. By definition, <span class="math inline">\(\mathbf{P}_B (\mathbf{C}_B \mathbf{t})\)</span> is a mixture of group B’s primaries that matches <span class="math inline">\(\mathbf{t}\)</span>. Because matched lights produce the same group A matching values, applying <span class="math inline">\(\mathbf{C}_A\)</span> gives</p>
+<p>Represent the primaries as <span class="math inline">\(N \times 3\)</span> matrices, <span class="math inline">\(\mathbf{P}_A\)</span> and <span class="math inline">\(\mathbf{P}_B\)</span>, whose columns are the spectral power distributions of the three primaries. Let <span class="math inline">\(\mathbf{C}_A\)</span> and <span class="math inline">\(\mathbf{C}_B\)</span> be the <span class="math inline">\(3 \times N\)</span> CMF matrices measured by the two groups. By definition, <span class="math inline">\((\mathbf{P}_B \mathbf{C}_B) \mathbf{t}\)</span> is the spectral power distribution of group B’s primaries that matches <span class="math inline">\(\mathbf{t}\)</span>. That light must be metameric to <span class="math inline">\(t\)</span>. So</p>
 <p><span class="math display">\[
-\mathbf{C}_A \mathbf{t} = \mathbf{C}_A \mathbf{P}_B (\mathbf{C}_B \mathbf{t}).
+\mathbf{C}_A \mathbf{t} = \mathbf{C}_A (\mathbf{P}_B \mathbf{C}_B) \mathbf{t}.
 \]</span></p>
 <p>The <span class="math inline">\(3 \times 3\)</span> matrix <span class="math inline">\(\mathbf{M}_{B,A} = \mathbf{C}_A \mathbf{P}_B\)</span> converts group B primary values into group A primary values. Because this holds for every test light <span class="math inline">\(\mathbf{t}\)</span>,</p>
 <p><span id="eq-cmf-conversion"><span class="math display">\[
 \mathbf{C}_A = \mathbf{M}_{B,A} \, \mathbf{C}_B .
 \tag{28.4}\]</span></span></p>
-<p>Any two sets of CMFs are related by a <span class="math inline">\(3 \times 3\)</span> linear transformation.</p>
 <p>The converse also holds. Multiply both sides of <a href="#eq-color-match-metamers" class="quarto-xref">Equation&nbsp;<span>28.2</span></a> by any invertible <span class="math inline">\(3 \times 3\)</span> matrix, <span class="math inline">\(\mathbf{A}\)</span>. The predicted matches are unchanged:</p>
 <p><span id="eq-uniqueness-1"><span class="math display">\[
 \mathbf{A} \mathbf{C} \mathbf{t}_1 = \mathbf{A} \mathbf{C} \mathbf{t}_2 \quad \Longleftrightarrow \quad \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2 .
 \tag{28.5}\]</span></span></p>
-<p>Thus the CMFs are unique only up to an invertible linear transformation. We do not need to use the measured CMFs directly. We can use any linear transformation of them that is more convenient.</p>
+<p>In words: <em>Any pair of CMFs is related by a <span class="math inline">\(3 \times 3\)</span> linear transformation.</em></p>
+<p>As a practical matter this means we do not need to use the measured CMFs. Instead, we can use any linear transformation of the measured functions we like.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Color matching, biology, and psychology">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -917,15 +928,15 @@ Color matching, biology, and psychology
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<section id="color-matching-and-biology" class="level3 callout-body-container callout-body" data-number="28.4.7">
-<h3 data-number="28.4.7" class="anchored" data-anchor-id="color-matching-and-biology"><span class="header-section-number">28.4.7</span> Color matching and biology</h3>
-<p>The experimental search for the biological substrate for color-matching is also very inspiring. I cover part of this story in <a href="https://wandell.github.io/FOV-1995/chapter-4-wavelength-encoding.html#the-biological-basis-of-photopic-color-matching" target="_blank">Foundations of Vision</a>. I often remark in class that the unification of experiments from Newton’s analysis of light, to Young and Maxwell’s color-matching, to the quantification of the biology (cone photoreceptors) may well be the most thorough complete and thorough understanding neuroscientists have of a perceptual phenomenon.</p>
-<p>Something that is quite meaningful to me - Maxwell recognized that it is possible to create an exact quantitative science based on perceptual observations. He recognized that this science is an exploration of our conscious experience:</p>
+<section id="color-matching-and-biology" class="level3 callout-body-container callout-body" data-number="28.4.6">
+<h3 data-number="28.4.6" class="anchored" data-anchor-id="color-matching-and-biology"><span class="header-section-number">28.4.6</span> Color matching and biology</h3>
+<p>The search for the biological substrate of color-matching is a very inspiring story that I cover in <a href="https://wandell.github.io/FOV-1995/chapter-4-wavelength-encoding.html#the-biological-basis-of-photopic-color-matching" target="_blank">Foundations of Vision</a>. The story spans Newton’s analysis of light, Young and Maxwell’s color-matching, the identification of the cone photoreceptors, and finally the quantification of the cone photoreceptor responses. This story is the most thorough understanding neuroscientists have of a perceptual phenomenon.</p>
+<p>Let’s not leave the implications for psychology out of the story. After his work on color-matching, Maxwell wrote that it is possible to create a quantitative science of consciousness based on perceptual observations.</p>
 <blockquote class="blockquote">
 <p>If the sensation which we call colour has any laws, it must be in our own nature which determines the form of these laws; and I need not tell you that the only evidence we can obtain respecting ourselves is derived from consciousness.</p>
 <p>The science of colour must therefore be regarded as essentially a mental science. It differs from the greater part of what is called mental science in the large use which it makes of the physical sciences, and in particular of optics and anatomy. But it gives evidence that it is a mental science by the numerous illustrations which it furnishes of various operations of the mind <span class="citation" data-cites="maxwell1872-colorvision">(<a href="references.html#ref-maxwell1872-colorvision" role="doc-biblioref">Maxwell 1872</a>)</span>.</p>
 </blockquote>
-<p>A quantitative mental science still seems like a good project to me. Not easy to do, and perhaps not a good path to financial gain. Nonetheless, if we mean to understand ourselves it seems like a wonderful scientific topic.</p>
+<p>Creating a quantitative mental science is not easy. But if we mean to understand ourselves, and improve ourselves, it seems like a wonderful scientific topic.</p>
 </section>
 </div>
 </div>
@@ -933,42 +944,175 @@ Color matching, biology, and psychology
 </section>
 <section id="sec-cie-standards" class="level2" data-number="28.5">
 <h2 data-number="28.5" class="anchored" data-anchor-id="sec-cie-standards"><span class="header-section-number">28.5</span> CIE Standards</h2>
-<p>This freedom is what the standards bodies exploit. The Commission Internationale de l’Éclairage (CIE) defined a standard observer in 1931, based on color matches measured for small (2-degree) fields. The CIE derived the CIE 1931 <span class="math inline">\(\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)\)</span> functions by applying a linear transformation to measured RGB CMFs. The transformation was chosen so that the functions are non-negative, and so that <span class="math inline">\(\bar{y}(\lambda)\)</span> equals the photopic luminosity function.</p>
+<p>Standards bodies exploit this linear-transformation freedom (<a href="#eq-uniqueness-1" class="quarto-xref">Equation&nbsp;<span>28.5</span></a>) to define shared reference observers for science and industry. Rather than tabulating CMFs tied to a particular laboratory’s RGB primaries—which inevitably have negative lobes—the Commission Internationale de l’Éclairage (CIE) applies an invertible <span class="math inline">\(3 \times 3\)</span> transformation to measured RGB matches so that the resulting color-matching functions are non-negative everywhere and the middle function equals the photopic luminous efficiency function <span class="math inline">\(V(\lambda)\)</span>.</p>
+<section id="cie-xyz-and-physiologically-based-cone-standards" class="level3" data-number="28.5.1">
+<h3 data-number="28.5.1" class="anchored" data-anchor-id="cie-xyz-and-physiologically-based-cone-standards"><span class="header-section-number">28.5.1</span> CIE XYZ and physiologically based cone standards</h3>
+<p>ISETCam includes three generations of <a href="https://github.com/ISET/isetcam/blob/main/data/human/README.md">CIE color standards</a>. You can compare them in <a href="#fig-cie-standards-panel" class="quarto-xref">Figure&nbsp;<span>28.7</span></a>:</p>
+<ol type="1">
+<li><strong>CIE 1931 2-degree XYZ (<span class="math inline">\(\bar{x}, \bar{y}, \bar{z}\)</span>):</strong> The original standard observer, reconstructed from the 2-degree chromaticity measurements of Wright and Guild combined with the CIE 1924 photopic luminosity function <span class="math inline">\(V(\lambda)\)</span> <span class="citation" data-cites="wyszeckicolorscienceconcepts1982">(<a href="references.html#ref-wyszeckicolorscienceconcepts1982" role="doc-biblioref">Wyszecki and Stiles 1982</a>)</span>.</li>
+<li><strong>CIE 1964 10-degree XYZ (<span class="math inline">\(\bar{x}_{10}, \bar{y}_{10}, \bar{z}_{10}\)</span>):</strong> The large-field standard observer, derived by linearly transforming the 10-degree RGB color-matching functions of Stiles and Burch <span class="citation" data-cites="stiles-colourmatching1959">(<a href="references.html#ref-stiles-colourmatching1959" role="doc-biblioref">Stiles and Burch 1959</a>)</span> (with a small weight given to the measurements of Speranskaya, 1959).</li>
+<li><strong>Judd–Vos revisions and CIE 2006 / 2012 physiological standards:</strong> The CIE 1924 <span class="math inline">\(V(\lambda)\)</span> function—and therefore the CIE 1931 XYZ standard—substantially underestimated human sensitivity at short wavelengths (below 460 nm). Judd <span class="citation" data-cites="judd1951b-artificialdaylight">(<a href="references.html#ref-judd1951b-artificialdaylight" role="doc-biblioref">Judd 1951</a>)</span> and later Vos (1978) introduced modified 2-degree observers to correct this short-wavelength error. Building on the Stiles and Burch color matches and spectral sensitivity measurements in observers of known photopigment genotype, Stockman and Sharpe <span class="citation" data-cites="stockmanSpectralSensitivitiesMiddle2000 stockmanConeFundamentalsCIE2019">(<a href="references.html#ref-stockmanSpectralSensitivitiesMiddle2000" role="doc-biblioref">Stockman and Sharpe 2000</a>; <a href="references.html#ref-stockmanConeFundamentalsCIE2019" role="doc-biblioref">Stockman 2019</a>)</span> derived the 2-degree and 10-degree L-, M-, and S-cone spectral sensitivities. The CIE adopted these curves as the <strong>CIE 2006 cone fundamentals</strong> <span class="citation" data-cites="cieFundamentalChromaticityDiagram2007">(<a href="references.html#ref-cieFundamentalChromaticityDiagram2007" role="doc-biblioref">CIE 2007</a>)</span> and defined a corresponding linear transformation—the <strong>CIE 2012 (2015) physiologically based XYZ</strong> functions (<span class="math inline">\(\bar{x}_{\mathrm{F}}, \bar{y}_{\mathrm{F}}, \bar{z}_{\mathrm{F}}\)</span>)—that reconciles tristimulus colorimetry directly with human cone excitations.</li>
+</ol>
+<div id="fig-cie-standards-panel" class="figure quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cie-standards-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">CIE 1931 XYZ (2°)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">CIE 1964 XYZ (10°)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">CIE 2012 XYZ (2°)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false">CIE 2006 Cones (2°)</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-5" role="tab" aria-controls="tabset-2-5" aria-selected="false">CIE 2006 Cones (10°)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div id="fig-XYZ-1931" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
+<figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-XYZ-1931-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/05-wavelength-encoding/matching/XYZ-functions.png" class="img-fluid figure-img" style="width:70.0%">
+<img src="images/human/05-wavelength-encoding/matching/cmf-CIE1931-2deg-XYZ.png" class="img-fluid figure-img" style="width:72.0%" data-ref-parent="fig-cie-standards-panel">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-XYZ-1931-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;28.9: CIE XYZ 1931
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-XYZ-1931-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) CIE 1931 2-degree standard observer tristimulus functions <span class="math inline">\(\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)\)</span>.
 </figcaption>
 </figure>
 </div>
-<p>A second standard was defined in 1964 for larger (10-degree) fields; the Stiles &amp; Burch data in <a href="#fig-rgb-cmfs" class="quarto-xref">Figure&nbsp;<span>28.8</span></a> are from that field size.</p>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div id="fig-XYZ-1964" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
+<figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-XYZ-1964-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/05-wavelength-encoding/matching/XYZ-functions.png" class="img-fluid figure-img" style="width:70.0%">
+<img src="images/human/05-wavelength-encoding/matching/cmf-CIE1964-10deg-XYZ.png" class="img-fluid figure-img" style="width:72.0%" data-ref-parent="fig-cie-standards-panel">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-XYZ-1964-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;28.10: CIE XYZ 1964
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-XYZ-1964-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) CIE 1964 10-degree standard observer tristimulus functions <span class="math inline">\(\bar{x}_{10}(\lambda), \bar{y}_{10}(\lambda), \bar{z}_{10}(\lambda)\)</span>.
 </figcaption>
 </figure>
 </div>
-<p>More historical information about these two sets of XYZ functions.</p>
-<p>Also something about the Judd correction.</p>
-<p>The Stockman cone fundamentals.</p>
-<p>All of these could go in a tabset panel</p>
-<!-- TODO: add figure of the CIE 1931 and 1964 XYZ functions, and the chromaticity diagram. Verify the history of the transformation and the 1964 data sources before review. -->
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div id="fig-XYZ-2012" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-XYZ-2012-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/cmf-CIE2012-2deg-XYZ.png" class="img-fluid figure-img" style="width:72.0%" data-ref-parent="fig-cie-standards-panel">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-XYZ-2012-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) CIE 2012 (TR 170-2:2015) 2-degree physiologically based tristimulus functions <span class="math inline">\(\bar{x}_{\mathrm{F}}(\lambda), \bar{y}_{\mathrm{F}}(\lambda), \bar{z}_{\mathrm{F}}(\lambda)\)</span>, defined as a linear transformation of the CIE 2006 2-degree cone fundamentals.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div id="fig-cones-2006-2deg" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-cones-2006-2deg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/cones-CIE2006-2deg-energy.png" class="img-fluid figure-img" style="width:72.0%" data-ref-parent="fig-cie-standards-panel">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cones-2006-2deg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) CIE 2006 (Stockman &amp; Sharpe, 2000) 2-degree LMS cone fundamentals (energy basis, normalized to unit peak). Notice the slight inflection near 460 nm due to macular pigment absorption.
+</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-5-tab">
+<div id="fig-cones-2006-10deg" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-cones-2006-10deg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/cones-CIE2006-10deg-energy.png" class="img-fluid figure-img" style="width:72.0%" data-ref-parent="fig-cie-standards-panel">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cones-2006-10deg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(e) CIE 2006 (Stockman &amp; Sharpe, 2000) 10-degree LMS cone fundamentals (energy basis, normalized to unit peak).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cie-standards-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.7: CIE standard color-matching functions and physiologically based cone fundamentals (energy basis). Source: <code>fise_cieStandards.m</code>.
+</figcaption>
+</figure>
+</div>
+<p>It was a great pleasure to discover that Maxwell’s measurements are extremely close to the modern standards!</p>
+<div id="fig-maxwell-cmf-modern" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-maxwell-cmf-modern-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/maxwell-cmf-modern.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-maxwell-cmf-modern-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.8: The color matching data reported by <span class="citation" data-cites="maxwell1860-IVTheoryCompound">Maxwell (<a href="references.html#ref-maxwell1860-IVTheoryCompound" role="doc-biblioref">1860</a>)</span> compared with modern standards. The dashed curves are the current CIE cone fundamentals linearly transformed to match the CIE 1931 functions. The points are were measured by Maxwell in two observers (J, squares; K, circles), but linearly transformed to match the CIE 1931 functions. Source: <span class="citation" data-cites="wandell2024-cone-fundamentals">Wandell et al. (<a href="references.html#ref-wandell2024-cone-fundamentals" role="doc-biblioref">2024</a>)</span>.
+</figcaption>
+</figure>
+</div>
+</section>
 </section>
 <section id="sec-display-color-matching" class="level2" data-number="28.6">
-<h2 data-number="28.6" class="anchored" data-anchor-id="sec-display-color-matching"><span class="header-section-number">28.6</span> Setting display primary intensities</h2>
-<p>One of the most direct and important applications of the color-matching functions is calculating the intensities of a display’s three primaries needed to match a target spectral power distribution <span class="math inline">\(\mathbf{t}\)</span>.</p>
-<p>The principle can be understood from these simple matrix tableaus.</p>
+<h2 data-number="28.6" class="anchored" data-anchor-id="sec-display-color-matching"><span class="header-section-number">28.6</span> Display primary intensities</h2>
+<p>The facts of color-matching are why we can make visual displays that create color images that appear to be the same as a natural scene without reproducing the original spectral data. We present the viewers with metamers to the original data. This was Maxwell’s original insight. Measure a light, calculate how it would be matched by three primaries, and then build an image that has the right amounts of each of the three primaries.</p>
+<p>All of our visual displays work on this principle. The mathematics of the idea is straightforward, and in this section I will introduce the key ideas using a classic - and now largely abandoned - display technology, the cathode ray tube (CRT).</p>
+<p>Explain the CRT here. Emphasize that each pixel is like a little color-matching experiment.</p>
+<div id="fig-crt-display" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-crt-display-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/crt-display.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-crt-display-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.9: The components of a CRT.
+</figcaption>
+</figure>
+</div>
+<p>Think of the pixel as comprising three primary lights.</p>
+<div id="fig-crt-pixel" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-crt-pixel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/crt-pixel.png" class="img-fluid figure-img" style="width:60.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-crt-pixel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.10: CRT subpixels from two types of displays
+</figcaption>
+</figure>
+</div>
+<p>The possible spectra from each pixel in the display is always the weighted sum of the three display primaries. The linearity of the superposition of incoherent light sources is what we show in this image.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/human/05-wavelength-encoding/matching/57_historical-derivation-of-xyz-functions.png" class="img-fluid figure-img"></p>
-<figcaption>Color matching on a display when the desired XYZ values at a pixel are known</figcaption>
+<p><img src="images/human/05-wavelength-encoding/matching/007-display-primary-spd-superposition.png" class="img-fluid figure-img"></p>
+<figcaption>Display SPD.</figcaption>
+</figure>
+</div>
+<p>We can express that, as we have above, using this matrix tableau.</p>
+<div id="fig-crt-matrix" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-crt-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/crt-primary-matrix.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-crt-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.11: Matrix tableau
+</figcaption>
+</figure>
+</div>
+<p>Without explaining how, we imagine that the signal captured by the camera is used to estimate the XYZ value at each pixel. That is the information sent to the display.</p>
+<div id="fig-xyz-primaries" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-xyz-primaries-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/009-xyz-to-display-primary-intensities.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xyz-primaries-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.12: Color matching on a display when the desired XYZ values at a pixel are known
+</figcaption>
+</figure>
+</div>
+<div id="fig-xyz-primary-equation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-xyz-primary-equation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/010-xyz-to-display-primary-equation.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xyz-primary-equation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.13: Color matching on a display when the desired XYZ values at a pixel are known
+</figcaption>
+</figure>
+</div>
+<div id="fig-xyz-primaries-inverse" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-xyz-primaries-inverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/05-wavelength-encoding/matching/011-display-color-matching-inverse-matrix.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xyz-primaries-inverse-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;28.14: Color matching on a display when the desired XYZ values at a pixel are known
+</figcaption>
 </figure>
 </div>
 <p>Suppose a display has three primaries whose spectral power distributions form the columns of an <span class="math inline">\(N \times 3\)</span> matrix <span class="math inline">\(\mathbf{P} = [\mathbf{p}_1, \mathbf{p}_2, \mathbf{p}_3]\)</span>.</p>
@@ -989,6 +1133,9 @@ Figure&nbsp;28.10: CIE XYZ 1964
 <div id="ref-brewsterIVNewAnalysis1834" class="csl-entry" role="listitem">
 Brewster D (1834) <span>IV</span>. <span>On</span> a <span>New Analysis</span> of <span>Solar Light</span>, indicating three <span>Primary Colours</span>, forming <span>Coincident Spectra</span> of equal length. Earth Environ Sci Trans R Soc Edinb 12:123–136
 </div>
+<div id="ref-cieFundamentalChromaticityDiagram2007" class="csl-entry" role="listitem">
+CIE (2007) Fundamental chromaticity diagram with physiological axes – <span>Parts</span> 1 and 2. <span>Technical Report</span> 170-1. Central Bureau of the Commission Internationale de l’ <span>É</span>clairage, Vienna
+</div>
 <div id="ref-grassmann-1854" class="csl-entry" role="listitem">
 Grassmann (1854) <span>XXXVII</span>. <span>On</span> the theory of compound colours. The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science 7:254–264
 </div>
@@ -997,6 +1144,9 @@ Grassmann H (1995) A new branch of mathematics: The <span>A</span>usdehnungslehr
 </div>
 <div id="ref-helmholtzLXXXITheoryCompound1852" class="csl-entry" role="listitem">
 Helmholtz H (1852) <span>LXXXI</span>. <span>On</span> the theory of compound colours. The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science 4:519–534
+</div>
+<div id="ref-judd1951b-artificialdaylight" class="csl-entry" role="listitem">
+Judd DB (1951) Report of <span>US</span> secretariat committee on colorimetry and artificial daylight. CIE Proceedings, 1951
 </div>
 <div id="ref-maxwell1860-IVTheoryCompound" class="csl-entry" role="listitem">
 Maxwell JC (1860) <span>IV</span>. <span>On</span> the theory of compound colours, and the relations of the colours of the spectrum. 150:57–84
@@ -1013,8 +1163,23 @@ Maxwell JC (1857b) Experiments on colour, as perceived by the eye, with remarks 
 <div id="ref-mollon2003-Origins-Color" class="csl-entry" role="listitem">
 Mollon JD (2003) The <span>Origins</span> of <span>Modern Color Science</span>. In: Shevell SK (ed) The <span>Science</span> of <span>Color</span>. Elsevier, pp 1–39
 </div>
+<div id="ref-stiles1955-he" class="csl-entry" role="listitem">
+Stiles WS, Burch JM (1955) Interim report to the commission internationale de l’<span>Eclairage</span>, zurich, 1955, on the national physical laboratory’s investigation of colour-matching (1955). Optica Acta: International Journal of Optics 2:168–181
+</div>
+<div id="ref-stiles-colourmatching1959" class="csl-entry" role="listitem">
+Stiles WS, Burch JM (1959) <span>NPL</span> colour-matching investigation: <span>Final</span> report (1958). Optica Acta 6:1–26
+</div>
+<div id="ref-stockmanConeFundamentalsCIE2019" class="csl-entry" role="listitem">
+Stockman A (2019) Cone fundamentals and <span>CIE</span> standards. Current Opinion in Behavioral Sciences 30:87–93
+</div>
+<div id="ref-stockmanSpectralSensitivitiesMiddle2000" class="csl-entry" role="listitem">
+Stockman A, Sharpe LT (2000) Spectral sensitivities of the middle- and long-wavelength sensitive cones derived from measurements in observers of known genotype. Vision Research 40:1711–1737
+</div>
 <div id="ref-wandell2024-cone-fundamentals" class="csl-entry" role="listitem">
 Wandell BA, Goossens T, Brainard DH (2024) Deriving the cone fundamentals: A subspace intersection method. 291:20240347
+</div>
+<div id="ref-wyszeckicolorscienceconcepts1982" class="csl-entry" role="listitem">
+Wyszecki G, Stiles WS (1982) Color <span>Science</span>: <span>Concepts</span> and <span>Methods</span>, <span>Quantitative Data</span> and <span>Formulae</span>, 2nd edn. John Wiley &amp; Sons, New York
 </div>
 <div id="ref-young1802-bakerian-light" class="csl-entry" role="listitem">
 Young T (1802) <span>II</span>. <span>The Bakerian Lecture</span>. <span>On</span> the theory of light and colours. Philosophical Transactions of the Royal Society of London 92:12–48
