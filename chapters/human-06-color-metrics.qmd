@@ -25,7 +25,10 @@ When we describe the appearance of a light, it is natural to separate its overal
 **Chromaticity coordinates (xy)** are the oldest and most widely used approach. If we normalize each tristimulus coordinate by the sum $X + Y + Z$, scaling the intensity of a light by a positive factor cancels out in the ratio. Because the three normalized coordinates sum to one, only two of them—conventionally $(x, y)$—are independent:
 
 $$
-x = \frac{X}{X + Y + Z}, \qquad y = \frac{Y}{X + Y + Z}, \qquad z = \frac{Z}{X + Y + Z} = 1 - x - y .
+\begin{aligned}
+x &= \frac{X}{X + Y + Z}, \qquad y = \frac{Y}{X + Y + Z}, \\[6pt]
+z &= \frac{Z}{X + Y + Z} = 1 - x - y .
+\end{aligned}
 $$ {#eq-chromaticity}
 
 We can visualize the geometry of this mapping in two steps (@fig-chromaticity-projection). First, for any tristimulus vector $(X, Y, Z)$, the normalized vector $(x, y, z)$ lies at the intersection of the ray from the origin through $(X, Y, Z)$ and the unit plane $x + y + z = 1$ (the shaded gray triangle in @fig-cie-chromaticity). Second, tracing the rays for monochromatic lights across the visible spectrum sweeps out a horseshoe-shaped curve on that unit plane called the **spectrum locus** (@fig-chromaticity-geometry). Projecting the unit plane orthographically onto the $(x, y)$ axes produces the standard two-dimensional **CIE $(x, y)$ chromaticity diagram** (@fig-chromaticity-appearance).
@@ -33,7 +36,7 @@ We can visualize the geometry of this mapping in two steps (@fig-chromaticity-pr
 ::: {#fig-chromaticity-projection layout-ncol=2}
 ![A ray from the origin through $(X, Y, Z)$ intersects the unit plane $x + y + z = 1$ at $(x, y, z)$.](images/human/06-color-metrics/chromaticity/cie-xy-chromaticity-geometry.png){#fig-cie-chromaticity}
 
-![Monochromatic lights trace out the spectrum locus on the unit plane $x + y + z = 1$.](images/human/06-color-metrics/chromaticity/chromaticity-3d.png){#fig-chromaticity-geometry}
+![Monochromatic lights trace out the spectrum locus on the unit plane $x + y + z = 1$.](images/human/06-color-metrics/chromaticity/cie-xy-chromaticity-3d.png){#fig-chromaticity-geometry}
 
 Geometric construction of the CIE chromaticity coordinates on the plane $x + y + z = 1$ before orthographic projection onto the $(x, y)$ plane.
 :::
@@ -83,15 +86,13 @@ As the relative intensities of the two lights vary, $\mathbf{c}_3$ sweeps out th
 
 Several classic colorimetric concepts and engineering tools are described on the chromaticity diagram:
 
-**Blackbody (Planckian) locus** As the temperature of a blackbody radiator increases from $2000\text{ K}$ to $9000\text{ K}$, its spectral power distribution shifts toward shorter wavelengths, tracing a smooth arc from orange-red through neutral white to bluish-white near the center of the chromaticity diagram (@fig-chromaticity-blackbody).
+**Blackbody (Planckian) locus** As the temperature of a blackbody radiator increases from $2000\text{ K}$ to $9000\text{ K}$, its spectral power distribution shifts toward shorter wavelengths, tracing a smooth arc from orange-red through neutral white to bluish-white near the center of the chromaticity diagram (@fig-chromaticity-appearance).
 
-The approximate color appearance across the CIE 1931 $(x, y)$ chromaticity diagram is illustrated schematically in @fig-chromaticity-appearance. White and neutral grays fall near the center of the diagram—where the blackbody locus traces the chromaticities of thermal radiators across color temperatures (@fig-chromaticity-blackbody)—while saturated spectral hues lie along the outer boundary.
+The approximate color appearance across the CIE 1931 $(x, y)$ chromaticity diagram is illustrated schematically in @fig-chromaticity-appearance. White and neutral grays fall near the center of the diagram—where the blackbody locus traces the chromaticities of thermal radiators across color temperatures—while saturated spectral hues lie along the outer boundary.
 
-![Schematic illustration of color appearance across the CIE 1931 $(x, y)$ chromaticity diagram.](images/human/06-color-metrics/chromaticity/chromaticityDiagram.png){#fig-chromaticity-appearance width="50%"}
+![Schematic illustration of color appearance across the CIE 1931 $(x, y)$ chromaticity diagram.](images/human/06-color-metrics/chromaticity/CIExy1931-blackbody.png){#fig-chromaticity-appearance width="50%"}
 
 **Complementary wavelengths** are defined as a pair of monochromatic lights whose additive mixture can match a chosen reference white (such as CIE D65). (@fig-chromaticity-complementary). **Dominant wavelength** is defined by a ray from the reference white point through a test light's chromaticity out to the spectrum locus (@fig-chromaticity-dominant). The fractional distance along the segment from white to the boundary quantifies the excitation **purity**. 
-
-![Spectral power distributions of blackbody radiators from $3000\text{ K}$ to $9000\text{ K}$ (left) and their corresponding Planckian locus on the CIE $(x, y)$ chromaticity diagram (right).](images/human/06-color-metrics/chromaticity/044-blackbody-locus.png){#fig-chromaticity-blackbody width="75%"}
 
 ::: {#fig-chromaticity-complementary-dominant layout-ncol=2}
 ![Pairs of monochromatic wavelengths whose additive mixtures pass through the D65 white point are complementary.](images/human/06-color-metrics/chromaticity/045-complementary-colors.png){#fig-chromaticity-complementary}
@@ -124,12 +125,26 @@ Any chromaticity inside the triangle can be reproduced by the display; any chrom
 2. **Displays have primary gamuts; sensors do not:** While a three-primary display is physically restricted to the convex triangle of its emitters (@fig-chromaticity-multiple-gamuts), a camera sensor does not emit primaries—its ability to distinguish spectra depends on whether its spectral sensitivities are a linear transformation of the human color-matching functions and on sensor noise.
 
 ### uv-chromaticity coordinates
+The normalization of xy-chromaticity coordinates is simple and based on the sum of the $(X,Y,Z)$ values, or equivalently finding the intersection with the plane $1 = X + Y + Z$. But there are other ways one could perform a normalization, and these might have some value.
 
-Why not use other projection planes?
+An influential alternative is the u'v'-chromaticity coordinate.  The formula for these chromaticity coordinates is
 
-Put in the formula for Yuv.
+$$
+u' = \frac{4X}{X + 15Y + 3Z}, \qquad v' = \frac{9Y}{X + 15Y + 3Z}
+$$ {#eq-uv-chromaticity}
+(In the earlier CIE 1960 UCS definition, $u = u'$ and $v = \frac{2}{3}v' = \frac{6Y}{X + 15Y + 3Z}$.)
 
-Segue to perceptual uniformity.
+The mapping also takes any scaled version of the vector $k*(X,Y,Z)$ into the same $u',v'$ value.  The plane for the intersection is
+
+::: {#fig-uv-projection layout-ncol=2}
+![A ray from the origin through $(X, Y, Z)$ intersects the plane $X + 15Y + 3Z = 1$ at $(x, y, z)$.](images/human/06-color-metrics/chromaticity/uv-chromaticity-plane.png){#fig-uv-plane}
+
+![Color appearance in the u'v' plane $X + 15Y + 3Z = 1$. By Adoniscik - Own work, Public Domain, https://commons.wikimedia.org/w/index.php?curid=3770098](images/human/06-color-metrics/chromaticity/CIE_1976_UCS-wikipedia-blackbody.png){#fig-uv-blackbody-geometry}
+
+Geometric construction of the CIE chromaticity coordinates on the plane $1 = X + 15Y + 3Z$ before orthographic projection onto the $(u', v')$ plane.
+:::
+
+Transition to perceptual uniformity.
 
 ## Perceptual uniformity and CIELAB {#sec-cielab}
 
