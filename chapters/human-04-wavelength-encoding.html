@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-10-28">
+<meta name="dcterms.date" content="2026-11-07">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>27&nbsp; Wavelength encoding – Foundations of Image Systems Engineering</title>
@@ -624,8 +624,10 @@ window.Quarto = {
   <li><a href="#negative-values-in-the-cmf" id="toc-negative-values-in-the-cmf" class="nav-link" data-scroll-target="#negative-values-in-the-cmf"><span class="header-section-number">27.4.4</span> Negative values in the CMF</a></li>
   <li><a href="#uniqueness-of-the-cmfs" id="toc-uniqueness-of-the-cmfs" class="nav-link" data-scroll-target="#uniqueness-of-the-cmfs"><span class="header-section-number">27.4.5</span> Uniqueness of the CMFs</a></li>
   </ul></li>
-  <li><a href="#cie-standards" id="toc-cie-standards" class="nav-link" data-scroll-target="#cie-standards"><span class="header-section-number">27.5</span> CIE Standards</a></li>
-  <li><a href="#color-differences" id="toc-color-differences" class="nav-link" data-scroll-target="#color-differences"><span class="header-section-number">27.6</span> Color differences</a></li>
+  <li><a href="#applying-the-cmfs" id="toc-applying-the-cmfs" class="nav-link" data-scroll-target="#applying-the-cmfs"><span class="header-section-number">27.5</span> Applying the CMFs</a></li>
+  <li><a href="#cie-standards" id="toc-cie-standards" class="nav-link" data-scroll-target="#cie-standards"><span class="header-section-number">27.6</span> CIE Standards</a></li>
+  <li><a href="#display-and-color-matching" id="toc-display-and-color-matching" class="nav-link" data-scroll-target="#display-and-color-matching"><span class="header-section-number">27.7</span> Display and color matching</a></li>
+  <li><a href="#transition-comments-here-into-the-metrics-chapter." id="toc-transition-comments-here-into-the-metrics-chapter." class="nav-link" data-scroll-target="#transition-comments-here-into-the-metrics-chapter."><span class="header-section-number">27.8</span> Transition comments here into the metrics chapter.</a></li>
   </ul>
 </nav>
     </div>
@@ -645,7 +647,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 28, 2026</p>
+      <p class="date">November 7, 2026</p>
     </div>
   </div>
   
@@ -671,7 +673,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: October 28, 2026
+Last updated: November 7, 2026
 !-->
 </div>
 </div>
@@ -685,10 +687,12 @@ Last updated: October 28, 2026
 <section id="sec-human-wavelength-encoding-overview" class="level2" data-number="27.1">
 <h2 data-number="27.1" class="anchored" data-anchor-id="sec-human-wavelength-encoding-overview"><span class="header-section-number">27.1</span> Wavelength encoding overview</h2>
 <p>When Thomas Young delivered his Bakerian Lectures (1801–1803), he introduced two propositions that challenged British orthodoxy: first, that light travels as a wave; and second, that human color vision is trichromatic because the retina possesses three distinct types of wavelength sensors. The first was a resurrection of Huygens’ idea that the establishment had rejected. The second was a novel insight about color perception that flowed naturally from the first. The British orthodoxy he challenged was largely Newton’s legacy (<a href="lightfields-04-properties-spectral.html#nte-newton" class="quarto-xref">Note&nbsp;<span>5.1</span></a>).</p>
-<p>Both ideas were met with fierce resistance. Henry Brougham’s scathing broadsides in the <em>Edinburgh Review</em> battered Young’s reputation and contributed to his withdrawal from public optical debate for more than a decade (the quotation and the story are in <a href="optics-02-wave.html#nte-young-trials" class="quarto-xref">Note&nbsp;<span>8.1</span></a>, in <a href="optics-02-wave.html#sec-evidence-wave-theory" class="quarto-xref"><span>Section 8.4</span></a>).</p>
-<p>Young’s wave theory was vindicated a decade later. Fresnel, working independently in France, supplied the mathematics of diffraction and interference, and Arago’s observation of the bright spot at the center of a circular shadow firmly re-established the wave theory of light (<a href="optics-02-wave.html#sec-optics-poisson-spot" class="quarto-xref"><span>Section 8.4.2</span></a>).</p>
-<p>The color idea took longer to settle. Maxwell’s experiments, described below, showed that the three-dimensionality of color is a property of the eye, not of light.</p>
-<p>My enthusiasm for Maxwell as a color scientist is based on the fact that (a) he settled, once and for all, the question of the biological basis of trichromacy, and (b) he did so in a way that established a clear conceptual structure and experimental methodology that we still use today <span class="citation" data-cites="maxwell1857-XVIIIExperimentsColourPerceived maxwell1860-IVTheoryCompound">(<a href="references.html#ref-maxwell1857-XVIIIExperimentsColourPerceived" role="doc-biblioref">Maxwell 1857a</a>; <a href="references.html#ref-maxwell1860-IVTheoryCompound" role="doc-biblioref">Maxwell 1860</a>)</span>. Maxwell then collaborated with Thomas Sutton to produce the first color photographs <a href="../index.html#fig-maxwell-sutton" class="quarto-xref">Figure&nbsp;<span>1.4</span></a>, demonstrating that his understanding was true and useful <span class="citation" data-cites="Sutton1861-color maxwell1861-three-primary">(<a href="references.html#ref-maxwell1861-three-primary" role="doc-biblioref">Maxwell 1861</a>; <a href="references.html#ref-Sutton1861-color" role="doc-biblioref">Sutton 1861</a>)</span><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, though the significance of that color demonstration is controversial <span class="citation" data-cites="Klein2023-lt">(<a href="references.html#ref-Klein2023-lt" role="doc-biblioref">Klein and Elter 2023</a>)</span>.</p>
+<p>Both ideas were met with fierce resistance. Henry Brougham’s scathing broadsides in the <em>Edinburgh Review</em> battered Young’s reputation and contributed to his withdrawal from public optical debate for more than a decade (<a href="optics-02-wave.html#nte-young-trials" class="quarto-xref">Note&nbsp;<span>8.1</span></a>) until Fresnel, working independently in France, supplied the mathematics of diffraction and interference (<a href="optics-02-wave.html#sec-evidence-wave-theory" class="quarto-xref"><span>Section 8.4</span></a>; <a href="optics-02-wave.html#sec-optics-poisson-spot" class="quarto-xref"><span>Section 8.4.2</span></a>).</p>
+<p>The color idea took longer to settle. It was Maxwell’s experiments, described below, that showed that the three-dimensionality of color is a property of the eye, not of light. Moreover, he did so in a way that established a clear conceptual structure and experimental methodology that we still use today <span class="citation" data-cites="maxwell1857-XVIIIExperimentsColourPerceived maxwell1860-IVTheoryCompound">(<a href="references.html#ref-maxwell1857-XVIIIExperimentsColourPerceived" role="doc-biblioref">Maxwell 1857a</a>; <a href="references.html#ref-maxwell1860-IVTheoryCompound" role="doc-biblioref">Maxwell 1860</a>)</span>.</p>
+<!-- Maxwell then collaborated with Thomas Sutton to produce the first color photographs [@fig-maxwell-sutton], demonstrating that his understanding was true and useful [@Sutton1861-color; @maxwell1861-three-primary][^feynman-maxwell], though the significance of that color demonstration is controversial [@Klein2023-lt].
+
+[^feynman-maxwell]: I think of Feynman's comment, "What I cannot create, I do not understand".
+-->
 <p>Maxwell did the color work just prior to taking on the challenges of unifying the equations for electricity and magnetism and discovering that light is also electromagnetic radiation. I am so pleased that color science can call Maxwell one of our own.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="History of color science">
 <div class="callout-header d-flex align-content-center">
@@ -773,7 +777,7 @@ Figure&nbsp;27.3: Linearity of the color-matching experiment: additivity and hom
 <section id="matrix-formulation-of-color-matching" class="level2" data-number="27.4">
 <h2 data-number="27.4" class="anchored" data-anchor-id="matrix-formulation-of-color-matching"><span class="header-section-number">27.4</span> Matrix formulation of color matching</h2>
 <p>The color matching experiment satisfies superposition. A psychological experiment that satisfies superposition is extremely rare; in fact, I am unaware of only one other impactful perceptual experiment that satisfies superposition (flicker photometry). When linearity is satisfied, we can characterize the system thoroughly.</p>
-<p>In this case, we express the relationship between any test light and the primary intensities needed to match it using multidimensional linear algebra<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Suppose we represent a test light as a column vector, <span class="math inline">\(\mathbf{t}\)</span>, whose entries <span class="math inline">\(t[\lambda]\)</span> specify the light’s spectral power at sampled wavelengths <span class="math inline">\(\lambda\)</span>. Because the system is linear, the primary intensities <span class="math inline">\((R, G, B)\)</span> required for a match can be calculated by multiplying <span class="math inline">\(\mathbf{t}\)</span> by a <span class="math inline">\(3 \times N\)</span> matrix, <span class="math inline">\(\mathbf{C}\)</span>:</p>
+<p>In this case, we express the relationship between any test light and the primary intensities needed to match it using multidimensional linear algebra<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Suppose we represent a test light as a column vector, <span class="math inline">\(\mathbf{t}\)</span>, whose entries <span class="math inline">\(t[\lambda]\)</span> specify the light’s spectral power at sampled wavelengths <span class="math inline">\(\lambda\)</span>. Because the system is linear, the primary intensities <span class="math inline">\((R, G, B)\)</span> required for a match can be calculated by multiplying <span class="math inline">\(\mathbf{t}\)</span> by a <span class="math inline">\(3 \times N\)</span> matrix, <span class="math inline">\(\mathbf{C}\)</span>:</p>
 <p><span id="eq-color-match-matrix"><span class="math display">\[
 \begin{pmatrix} R \\ G \\ B \end{pmatrix} = \mathbf{C} \mathbf{t}
 \tag{27.1}\]</span></span></p>
@@ -793,7 +797,7 @@ Figure&nbsp;27.4: Linearity of the color-matching experiment expressed in matrix
 \tag{27.2}\]</span></span></p>
 <p>We call this pair of test lights <em>metamers</em>. It is useful to note that the difference between two metamers satisfies</p>
 <p><span id="eq-color-null-space"><span class="math display">\[
-\mathbf{0}  = \mathbf{C} {\mathbf{t}_2 - mathbf{t}_1}
+\mathbf{0}  = \mathbf{C} {\mathbf{t}_2 - \mathbf{t}_1}
 \tag{27.3}\]</span></span></p>
 <p>In modern terms we say the difference between any pair of metamers is in the <em>null space</em> of the color matching functions. The null space is one of many linear algebra concepts described first by Grassmann (<a href="resources/history-color.html#sec-grassmann-color" class="quarto-xref"><span>Section 50.6</span></a>).</p>
 <section id="dimensionality-of-the-cmfs" class="level3" data-number="27.4.1">
@@ -854,17 +858,11 @@ Figure&nbsp;27.6: Stiles &amp; Burch (1959) 10-degree RGB color-matching functio
 \mathbf{C}_A = \mathbf{M}_{B,A} \, \mathbf{C}_B .
 \tag{27.4}\]</span></span></p>
 <p>Any two sets of CMFs are related by a <span class="math inline">\(3 \times 3\)</span> linear transformation.</p>
-<p>The converse also holds. Multiply both sides of <span class="quarto-unresolved-ref">?eq-color-match</span> by any invertible <span class="math inline">\(3 \times 3\)</span> matrix, <span class="math inline">\(\mathbf{A}\)</span>. The predicted matches are unchanged:</p>
+<p>The converse also holds. Multiply both sides of <a href="#eq-color-match-metamers" class="quarto-xref">Equation&nbsp;<span>27.2</span></a> by any invertible <span class="math inline">\(3 \times 3\)</span> matrix, <span class="math inline">\(\mathbf{A}\)</span>. The predicted matches are unchanged:</p>
 <p><span id="eq-uniqueness-1"><span class="math display">\[
 \mathbf{A} \mathbf{C} \mathbf{t}_1 = \mathbf{A} \mathbf{C} \mathbf{t}_2 \quad \Longleftrightarrow \quad \mathbf{C} \mathbf{t}_1 = \mathbf{C} \mathbf{t}_2 .
 \tag{27.5}\]</span></span></p>
 <p>Thus the CMFs are unique only up to an invertible linear transformation. We do not need to use the measured CMFs directly. We can use any linear transformation of them that is more convenient.</p>
-</section>
-</section>
-<section id="cie-standards" class="level2" data-number="27.5">
-<h2 data-number="27.5" class="anchored" data-anchor-id="cie-standards"><span class="header-section-number">27.5</span> CIE Standards</h2>
-<p>This freedom is what the standards bodies exploit. The Commission Internationale de l’Éclairage (CIE) defined a standard observer in 1931, based on color matches measured for small (2-degree) fields. The CIE derived the CIE 1931 <span class="math inline">\(\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)\)</span> functions by applying a linear transformation to measured RGB CMFs. The transformation was chosen so that the functions are non-negative, and so that <span class="math inline">\(\bar{y}(\lambda)\)</span> equals the photopic luminosity function. A second standard was defined in 1964 for larger (10-degree) fields; the Stiles &amp; Burch data in <a href="#fig-rgb-cmfs" class="quarto-xref">Figure&nbsp;<span>27.6</span></a> are from that field size.</p>
-<!-- TODO: add figure of the CIE 1931 and 1964 XYZ functions, and the chromaticity diagram. Verify the history of the transformation and the 1964 data sources before review. -->
 <div class="callout callout-style-default callout-note callout-titled" title="Color matching, biology, and psychology">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -876,27 +874,33 @@ Color matching, biology, and psychology
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<section id="color-matching-and-biology" class="level3" data-number="27.5.1">
-<h3 data-number="27.5.1" class="anchored" data-anchor-id="color-matching-and-biology"><span class="header-section-number">27.5.1</span> Color matching and biology</h3>
-<p>The scientific story that led to the characterization of the biological substrate for color-matching is also impressive.</p>
-</section>
-<section id="maxwell-the-psychologist" class="level3" data-number="27.5.2">
-<h3 data-number="27.5.2" class="anchored" data-anchor-id="maxwell-the-psychologist"><span class="header-section-number">27.5.2</span> Maxwell the Psychologist</h3>
-<p>Maxwell recognized that it is possible to create an exact quantitative science based on perceptual observations, and that this science is an exploration of our conscious experience:</p>
+<section id="color-matching-and-biology" class="level3 callout-body-container callout-body" data-number="27.4.6">
+<h3 data-number="27.4.6" class="anchored" data-anchor-id="color-matching-and-biology"><span class="header-section-number">27.4.6</span> Color matching and biology</h3>
+<p>The experimental search for the biological substrate for color-matching is also very inspiring. I cover part of this story in <a href="https://wandell.github.io/FOV-1995/chapter-4-wavelength-encoding.html#the-biological-basis-of-photopic-color-matching" target="_blank">Foundations of Vision</a>. I often remark in class that the unification of experiments from Newton’s analysis of light, to Young and Maxwell’s color-matching, to the quantification of the biology (cone photoreceptors) may well be the most thorough complete and thorough understanding neuroscientists have of a perceptual phenomenon.</p>
+<p>Something that is quite meaningful to me - Maxwell recognized that it is possible to create an exact quantitative science based on perceptual observations. He recognized that this science is an exploration of our conscious experience:</p>
 <blockquote class="blockquote">
 <p>If the sensation which we call colour has any laws, it must be in our own nature which determines the form of these laws; and I need not tell you that the only evidence we can obtain respecting ourselves is derived from consciousness.</p>
 <p>The science of colour must therefore be regarded as essentially a mental science. It differs from the greater part of what is called mental science in the large use which it makes of the physical sciences, and in particular of optics and anatomy. But it gives evidence that it is a mental science by the numerous illustrations which it furnishes of various operations of the mind <span class="citation" data-cites="maxwell1872-colorvision">(<a href="references.html#ref-maxwell1872-colorvision" role="doc-biblioref">Maxwell 1872</a>)</span>.</p>
 </blockquote>
-<p>Something about the simplicity of matching compared to appearance. We have one worked out, not the other. More on this in Foundations of Vision.</p>
+<p>A quantitative mental science still seems like a good project to me. Not easy to do, and perhaps not a good path to financial gain. Nonetheless, if we mean to understand ourselves it seems like a wonderful scientific topic.</p>
 </section>
 </div>
 </div>
-</div>
 </section>
-<section id="color-differences" class="level2" data-number="27.6">
-<h2 data-number="27.6" class="anchored" data-anchor-id="color-differences"><span class="header-section-number">27.6</span> Color differences</h2>
-<p>Transition comments here into the metrics chapter.</p>
+</section>
+<section id="applying-the-cmfs" class="level2" data-number="27.5">
+<h2 data-number="27.5" class="anchored" data-anchor-id="applying-the-cmfs"><span class="header-section-number">27.5</span> Applying the CMFs</h2>
+</section>
+<section id="cie-standards" class="level2" data-number="27.6">
+<h2 data-number="27.6" class="anchored" data-anchor-id="cie-standards"><span class="header-section-number">27.6</span> CIE Standards</h2>
+<p>This freedom is what the standards bodies exploit. The Commission Internationale de l’Éclairage (CIE) defined a standard observer in 1931, based on color matches measured for small (2-degree) fields. The CIE derived the CIE 1931 <span class="math inline">\(\bar{x}(\lambda), \bar{y}(\lambda), \bar{z}(\lambda)\)</span> functions by applying a linear transformation to measured RGB CMFs. The transformation was chosen so that the functions are non-negative, and so that <span class="math inline">\(\bar{y}(\lambda)\)</span> equals the photopic luminosity function. A second standard was defined in 1964 for larger (10-degree) fields; the Stiles &amp; Burch data in <a href="#fig-rgb-cmfs" class="quarto-xref">Figure&nbsp;<span>27.6</span></a> are from that field size.</p>
+<!-- TODO: add figure of the CIE 1931 and 1964 XYZ functions, and the chromaticity diagram. Verify the history of the transformation and the 1964 data sources before review. -->
+</section>
+<section id="display-and-color-matching" class="level2" data-number="27.7">
+<h2 data-number="27.7" class="anchored" data-anchor-id="display-and-color-matching"><span class="header-section-number">27.7</span> Display and color matching</h2>
+</section>
+<section id="transition-comments-here-into-the-metrics-chapter." class="level2" data-number="27.8">
+<h2 data-number="27.8" class="anchored" data-anchor-id="transition-comments-here-into-the-metrics-chapter."><span class="header-section-number">27.8</span> Transition comments here into the metrics chapter.</h2>
 
 
 
@@ -913,9 +917,6 @@ Grassmann H (1995) A new branch of mathematics: The <span>A</span>usdehnungslehr
 <div id="ref-helmholtzLXXXITheoryCompound1852" class="csl-entry" role="listitem">
 Helmholtz H (1852) <span>LXXXI</span>. <span>On</span> the theory of compound colours. The London, Edinburgh, and Dublin Philosophical Magazine and Journal of Science 4:519–534
 </div>
-<div id="ref-Klein2023-lt" class="csl-entry" role="listitem">
-Klein S, Elter P (2023) <a href="http://dx.doi.org/10.3390/heritage6020054">The tartan ribbon or further experiments of maxwell’s disappointment/sutton’s accident</a>. Heritage 6:968–978
-</div>
 <div id="ref-maxwell1860-IVTheoryCompound" class="csl-entry" role="listitem">
 Maxwell JC (1860) <span>IV</span>. <span>On</span> the theory of compound colours, and the relations of the colours of the spectrum. 150:57–84
 </div>
@@ -925,17 +926,11 @@ Maxwell JC (1872) On color vision. 75–83
 <div id="ref-maxwell1857-XVIIIExperimentsColourPerceived" class="csl-entry" role="listitem">
 Maxwell JC (1857a) <span>XVIII</span>.—<span>Experiments</span> on <span>Colour</span>, as perceived by the <span>Eye</span>, with <span>Remarks</span> on <span>Colour-Blindness</span>. Earth Environ Sci Trans R Soc Edinb 21:275–298
 </div>
-<div id="ref-maxwell1861-three-primary" class="csl-entry" role="listitem">
-Maxwell JC (1861) On the theory of three primary colours. Proceedings of the Royal Institution of Great Britain 3:370–374
-</div>
 <div id="ref-maxwell1855-experiments" class="csl-entry" role="listitem">
 Maxwell JC (1857b) Experiments on colour, as perceived by the eye, with remarks on colour-blindness. Transactions of the Royal Society of Edinburgh 21:275–298. <a href="https://doi.org/10.1017/S0080456800032117">https://doi.org/10.1017/S0080456800032117</a>
 </div>
 <div id="ref-mollon2003-Origins-Color" class="csl-entry" role="listitem">
 Mollon JD (2003) The <span>Origins</span> of <span>Modern Color Science</span>. In: Shevell SK (ed) The <span>Science</span> of <span>Color</span>. Elsevier, pp 1–39
-</div>
-<div id="ref-Sutton1861-color" class="csl-entry" role="listitem">
-Sutton T (1861) Description of the experiments exhibited at the <span>Royal Institution</span>. Photographic Notes 6:169–170
 </div>
 <div id="ref-wandell2024-cone-fundamentals" class="csl-entry" role="listitem">
 Wandell BA, Goossens T, Brainard DH (2024) Deriving the cone fundamentals: A subspace intersection method. 291:20240347
@@ -948,8 +943,7 @@ Young T (1802) <span>II</span>. <span>The Bakerian Lecture</span>. <span>On</spa
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>I think of Feynman’s comment, “What I cannot create, I do not understand”.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Linear algebra was first invented by Grassman (<span class="citation" data-cites="grassmann1995-newbranch">Grassmann (<a href="references.html#ref-grassmann1995-newbranch" role="doc-biblioref">1995</a>)</span>) and applied to color science almost right away <span class="citation" data-cites="grassmann-1854">(<a href="references.html#ref-grassmann-1854" role="doc-biblioref">Grassmann 1854</a>)</span>!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Linear algebra was first invented by Grassman (<span class="citation" data-cites="grassmann1995-newbranch">Grassmann (<a href="references.html#ref-grassmann1995-newbranch" role="doc-biblioref">1995</a>)</span>) and applied to color science almost right away <span class="citation" data-cites="grassmann-1854">(<a href="references.html#ref-grassmann-1854" role="doc-biblioref">Grassmann 1854</a>)</span>!<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
