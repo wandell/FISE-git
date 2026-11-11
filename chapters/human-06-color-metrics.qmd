@@ -20,9 +20,9 @@ This chapter introduces the tools used by engineers to visualize color gamuts an
 
 ## Chromaticity coordinates {#sec-chromaticity-coordinates}
 
-When we describe the appearance of a light, it is natural to separate its overall brightness from its hue and saturation. How can we convert the three-dimensional CIE tristimulus values, $(X, Y, Z)$, into a two-dimensional representation that isolates relative spectral composition from intensity?
+When we describe the appearance of a light, it is natural to separate its overall brightness from its hue and saturation. When the CIE set up its standards in 1931, they wanted a method to be able to communicate about color appearance based on the color-matching valukes.  They proposed a method, **Chromaticity coordinates (xy)**, for converting the three-dimensional CIE tristimulus values, $(X, Y, Z)$, into a two-dimensional representation that separates hue and saturation from intensity.
 
-**Chromaticity coordinates (xy)** are the oldest and most widely used approach. If we normalize each tristimulus coordinate by the sum $X + Y + Z$, scaling the intensity of a light by a positive factor cancels out in the ratio. Because the three normalized coordinates sum to one, only two of them—conventionally $(x, y)$—are independent:
+The xy coordinates are derived from the $(X,Y,Z)$ coordinates by scaling values by the sum of the coordinates.
 
 $$
 \begin{aligned}
@@ -31,7 +31,11 @@ z &= \frac{Z}{X + Y + Z} = 1 - x - y .
 \end{aligned}
 $$ {#eq-chromaticity}
 
-We can visualize the geometry of this mapping in two steps (@fig-chromaticity-projection). First, for any tristimulus vector $(X, Y, Z)$, the normalized vector $(x, y, z)$ lies at the intersection of the ray from the origin through $(X, Y, Z)$ and the unit plane $x + y + z = 1$ (the shaded gray triangle in @fig-cie-chromaticity). Second, tracing the rays for monochromatic lights across the visible spectrum sweeps out a horseshoe-shaped curve on that unit plane called the **spectrum locus** (@fig-chromaticity-geometry). Projecting the unit plane orthographically onto the $(x, y)$ axes produces the standard two-dimensional **CIE $(x, y)$ chromaticity diagram** (@fig-chromaticity-appearance).
+This normalization means that two lights related by $(X_1,Y_1,Z_1) = k \times (X_2, Y_2, Z_2)$ will have the same xy values.  The light intensity is normalized away.
+
+We can visualize the geometry of this mapping in two steps (@fig-chromaticity-projection). First, for any tristimulus vector $(X, Y, Z)$, the normalized vector $(x, y, z)$ lies at the intersection of the ray from the origin through $(X, Y, Z)$ and the unit plane $x + y + z = 1$ (the shaded gray triangle in @fig-cie-chromaticity). 
+
+Second, plotting the xy coordinates of the monochromatic lights sweeps out a horseshoe-shaped curve on that unit plane called the **spectrum locus** (@fig-chromaticity-geometry). 
 
 ::: {#fig-chromaticity-projection layout-ncol=2}
 ![A ray from the origin through $(X, Y, Z)$ intersects the unit plane $x + y + z = 1$ at $(x, y, z)$.](images/human/06-color-metrics/chromaticity/cie-xy-chromaticity-geometry.png){#fig-cie-chromaticity}
@@ -84,7 +88,7 @@ As the relative intensities of the two lights vary, $\mathbf{c}_3$ sweeps out th
 
 ### Commonly used features of the chromaticity diagram
 
-Several classic colorimetric concepts and engineering tools are described on the chromaticity diagram:
+We plot these values by projecting the plane orthographically onto the $(x, y)$ axes. This produces the standard two-dimensional **CIE $(x, y)$ chromaticity diagram** (@fig-chromaticity-appearance). Several classic colorimetric concepts and engineering tools are described on the chromaticity diagram.
 
 **Blackbody (Planckian) locus** As the temperature of a blackbody radiator increases from $2000\text{ K}$ to $9000\text{ K}$, its spectral power distribution shifts toward shorter wavelengths, tracing a smooth arc from orange-red through neutral white to bluish-white near the center of the chromaticity diagram (@fig-chromaticity-appearance).
 
@@ -126,9 +130,11 @@ Any chromaticity inside the triangle can be reproduced by the display; any chrom
 
 ## Representing perceptual differences {#sec-perceptual-differences}
 
-The $(x, y)$ chromaticity coordinates are simple to compute: we normalize by the coordinate sum $X + Y + Z$, which geometrically corresponds to intersecting each ray from the origin with the plane $X + Y + Z = 1$. However, the $(x, y)$ diagram has an important practical shortcoming: equal distances on the chart do not correspond to equal perceptual differences. A large upper region of the $(x, y)$ diagram appears green with relatively little change in perceived hue across long distances, whereas in the blue and purple regions a small step produces a large change in color appearance (@fig-chromaticity-appearance).
+Almost right away, people observed that the $(x, y)$ diagram has an important practical shortcoming: equal distances on the chart do not correspond to equal perceptual differences. A large upper region of the $(x, y)$ diagram appears green with relatively little change in perceived hue across long distances, whereas in the blue and purple regions a small step produces a large change in color appearance (@fig-chromaticity-appearance).
 
-For engineering applications, it is often useful to have a representation such that equal numerical distances correspond to roughly equal perceptual differences. Several colorimetric standards have been developed toward this goal.
+**Macadam ellipses here** to show how unequal.
+
+In response to this shortcoming, alternative chromaticity coordinates have been proposed that make chromaticity differences are a bit more perceptually equal.
 
 ### $(u', v')$ chromaticity coordinates {#sec-uv-chromaticity}
 
@@ -156,11 +162,21 @@ The $(u', v')$ improves the uniformity of two-dimensional chromaticity spacing, 
 
 ## CIELAB {#sec-cielab}
 
+We really want a three-dimensional equaliztion, not just in the chromaticity plane.
+
+Adams-Nickerson data.
+
+CIELUV/CIELAB
+
+Wyszecki wanted to preserve the projection mapping.
+
 <!-- TODO: Explain why Euclidean distance in CIE XYZ or (x,y) is not perceptually uniform (MacAdam ellipses).
 Introduce opponent-color organization, adaptation to the white point (X_n, Y_n, Z_n), the cube-root compressive nonlinearity, L*, a*, b* coordinates, and Delta E.
 Reference Bob Hunt and Mark Fairchild contributions. -->
 
 ## Spatial-CIELAB (S-CIELAB) {#sec-scielab}
+
+Color appearance also depends on spatial pattern.  Just think back to chromatic aberration - how could it not?
 
 <!-- TODO: Explain why CIELAB alone is insufficient for patterned images (depends on viewing distance and spatial frequency).
 Show the S-CIELAB architecture (Zhang & Wandell, 1997):
