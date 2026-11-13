@@ -1,18 +1,18 @@
 ---
 name: interactive-figures
-description: Create, modify, embed, format, or diagnose client-side interactive figures and WebAssembly (qMRust / Rust) or Observable JS (OJS) simulations in Quarto book chapters.
+description: Create, modify, embed, format, or diagnose client-side interactive figures using Observable JS (OJS) or self-contained HTML/Canvas 3D iframe visualizations in Quarto book chapters.
 ---
 
-# Interactive Figures with Quarto, Observable JS, and WebAssembly
+# Interactive Figures with Quarto
 
 ## Summary
 
-This project embeds interactive, client-side scientific visualizations and simulations directly into book chapters. Readers can manipulate parameters (e.g., via sliders and numeric inputs) and observe real-time model updates.
+This project embeds interactive, client-side scientific visualizations and simulations directly into book chapters. All computation runs entirely in the reader's web browser without a server-side computational kernel, using **two complementary patterns**:
 
-All computation runs entirely in the reader's web browser without requiring a server-side computational kernel by leveraging two complementary patterns:
+1. **Pattern A — Observable JS (OJS) & Observable Plot (Default for 2D):** Use for analytical equations, standard 2D scientific curves, and reactive parameter sweeps with sliders/inputs. Shares page typography and responsive width natively with no `_quarto.yml` resource entries needed.
+2. **Pattern B — Self-Contained HTML / Canvas 3D (`<iframe>`):** Use for interactive 3D geometry, orbitable coordinate spaces, and custom canvas visualizations that work offline without external JS libraries or WebGL, and can also be reused standalone in lecture slides.
 
-1. **Observable JS (OJS) & Observable Plot**: For direct analytical equations, standard scientific curves, and reactive parameter sweeps.
-2. **WebAssembly (Wasm) & Rust / Plotly.js**: For heavy simulations, fitting algorithms, or pre-compiled numerical libraries.
+*(Avoid introducing heavy compiled toolchains such as WebAssembly/Rust or external charting bundles unless a specific numerical simulation genuinely hits a plain-JavaScript performance bottleneck.)*
 
 ---
 
@@ -72,41 +72,48 @@ Plot.plot({
 
 ---
 
-## Pattern B: WebAssembly (Wasm), Rust, and Plotly (For Heavy Computation)
+## Pattern B: Self-Contained HTML / Canvas 3D Figures (`<iframe>`)
 
-FISE does not yet contain a Wasm figure: `chapters/interactive/`, the
-`qmrust_wasm*` and `ir-shared.js` files, and the `project.resources` entry
-below do not exist in this repository. Treat this section as the pattern to
-follow when adding the first one, and create those assets and the
-`_quarto.yml` entry as part of that work.
+Use this pattern for interactive 3D geometric constructions (e.g., chromaticity normalization planes and spectrum loci in `chapters/human-06-color-metrics.qmd`) where readers drag to orbit, zoom, toggle overlays, and hover for coordinate readouts.
 
-### Core Components
-1. **WebAssembly (Wasm)**: Heavy equations, numerical integration, and fitting routines compiled from Rust to `.wasm`.
-2. **JavaScript ("Glue" Layer)**:
-   - Initializes the Wasm module via `wasm_bindgen`.
-   - Sets up UI listeners (sliders, buttons).
-   - Passes parameter arrays to Wasm functions and routes outputs to Plotly.
-3. **Plotly.js**: Charting library (`chapters/interactive/plotly-cartesian.min.js`) for fast 2D line and heatmap renderings.
-4. **Static Assets & Quarto Resources**: The Wasm and JS assets live in `chapters/interactive/`. Because JavaScript loads `.wasm` files dynamically at runtime, they must be registered in `_quarto.yml` under `resources`:
+### Build & Asset Layout
+1. **Self-Contained HTML**: Generate a single offline `.html` file (typically via a Python build script combining scientific data tables with an HTML/CSS/Canvas template). Avoid external CDNs, network calls, or WebGL dependencies so the figure works reliably in any browser and offline.
+2. **Co-located Runtime Assets**: Place the `.html` file alongside its static fallbacks in `chapters/images/<subject>/<nn-chapter>/<topic>/`:
+   - `<slug>.html` (interactive HTML)
+   - `<slug>-static.png` (high-resolution static fallback for PDF/non-HTML formats)
+   - `<slug>-static.svg` (optional editable vector source)
+3. **Register in `_quarto.yml`**: Quarto does not automatically copy `.html` files referenced inside raw `<iframe>` tags. Register each interactive HTML file under `project.resources` in `_quarto.yml` (static PNGs are discovered automatically):
    ```yaml
    project:
      type: book
+     output-dir: _book
      resources:
-       - chapters/interactive/
+       - chapters/images/human/06-color-metrics/chromaticity/xy-plane-3d.html
+       - chapters/images/human/06-color-metrics/chromaticity/uv-plane-3d.html
    ```
 
-### Asset Paths and Scoping Rules
-- When referencing stylesheets, scripts, or `.wasm` binaries inside an include file or script, use paths relative to the rendered book root (`interactive/...`):
-  ```html
-  <link rel="stylesheet" href="interactive/figures.css">
-  <script src="interactive/plotly-cartesian.min.js"></script>
-  <script src="interactive/qmrust_wasm.js"></script>
-  ```
-  ```javascript
-  wasm_bindgen({ module_or_path: "interactive/qmrust_wasm_bg.wasm" })
-  ```
-- **Global Scope Protection**: `qmrust_wasm.js` declares `let wasm_bindgen` at top level. Loading this file a second time on the same page triggers a JavaScript `SyntaxError`. Only load shared libraries in the first figure on a page, or share state through common helper modules like `chapters/interactive/ir-shared.js`.
-- Wrap conventional `<script>` figure code in immediately invoked function expressions (IIFEs): `(function () { "use strict"; ... })();`.
+### Chapter Embedding Pattern
+Use one outer `::: {#fig-...}` container with format-conditional blocks and a single shared caption at the bottom. Use a relative path from the chapter `.qmd` to the `images/...` asset:
+
+```markdown
+::: {#fig-example-3d-interactive}
+
+::: {.content-visible when-format="html"}
+<iframe src="images/<subject>/<nn-chapter>/<topic>/<slug>.html" title="Accessible title of the interactive 3D figure" width="100%" height="690" style="border:0;display:block;" loading="lazy"></iframe>
+:::
+
+::: {.content-visible unless-format="html"}
+![](images/<subject>/<nn-chapter>/<topic>/<slug>-static.png){fig-alt="Accessible description of the static fallback." width="90%"}
+:::
+
+Concise caption explaining the geometry and controls (e.g., drag to rotate, zoom, or toggle overlays).
+:::
+```
+
+### Interaction & Geometric Standards
+- **Equal scales / orthonormal camera**: When illustrating 3D geometric spaces (such as CIE $XYZ$), use an orthographic camera with an orthonormal basis and equal world-unit scales on all axes so angles and foreshortening are geometrically faithful.
+- **Controls & accessibility**: Support pointer drag (orbit), pinch or `+`/`-` (zoom), keyboard navigation when the canvas is focused (arrow keys to rotate, `Home` to reset), a **Reset view** button, `title` on the `<iframe>`, and `fig-alt` on the static fallback.
+- **Verification**: Render the chapter (`quarto render chapters/<chapter>.qmd --to html`), confirm the `.html` asset is copied to `_book/chapters/images/...`, and test the rendered page in `quarto preview` (drag, zoom, toggles, reset, responsive widths).
 
 ---
 
@@ -138,12 +145,3 @@ Caption describing the interactive simulation.
 - Every `viewof` identifier and top-level calculation variable must be unique across all figures on the same page.
 - Prefix control and variable names with a short topic identifier (e.g., `lens_focal_len`, `sensor_noise_gain`).
 - Always include `//| echo: false` in OJS chunks to suppress source code display.
-
----
-
-## Source Material and Licensing (qMRLab / qMRust)
-
-When adapting quantitative MRI or signal modules from the qMRLab mOOC (Massive Open Online Course):
-- Contributed by Mathieu Boudreau (`https://qmrlab.org/mooc/`, `https://github.com/qMRLab/mooc`).
-- **License**: Creative Commons Attribution 4.0 International (CC BY 4.0).
-- **Attribution**: Include attribution in figure captions and record third-party notices in `THIRD-PARTY-NOTICES.md` (create it at the repository root; it does not exist yet).
