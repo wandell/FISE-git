@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-11-12">
+<meta name="dcterms.date" content="2026-11-13">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>29&nbsp; Color representations and metrics – Foundations of Image Systems Engineering</title>
@@ -22,7 +22,26 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -600,12 +619,15 @@ window.Quarto = {
   <li><a href="#sec-human-color-metrics-overview" id="toc-sec-human-color-metrics-overview" class="nav-link active" data-scroll-target="#sec-human-color-metrics-overview"><span class="header-section-number">29.1</span> Color representations and metrics overview</a></li>
   <li><a href="#sec-chromaticity-coordinates" id="toc-sec-chromaticity-coordinates" class="nav-link" data-scroll-target="#sec-chromaticity-coordinates"><span class="header-section-number">29.2</span> Chromaticity coordinates</a>
   <ul class="collapse">
-  <li><a href="#commonly-used-features-of-the-chromaticity-diagram" id="toc-commonly-used-features-of-the-chromaticity-diagram" class="nav-link" data-scroll-target="#commonly-used-features-of-the-chromaticity-diagram"><span class="header-section-number">29.2.1</span> Commonly used features of the chromaticity diagram</a></li>
-  <li><a href="#sec-chromaticity-gamuts" id="toc-sec-chromaticity-gamuts" class="nav-link" data-scroll-target="#sec-chromaticity-gamuts"><span class="header-section-number">29.2.2</span> Display chromaticity gamuts</a></li>
-  <li><a href="#uv-chromaticity-coordinates" id="toc-uv-chromaticity-coordinates" class="nav-link" data-scroll-target="#uv-chromaticity-coordinates"><span class="header-section-number">29.2.3</span> uv-chromaticity coordinates</a></li>
+  <li><a href="#sec-chromaticity-terms" id="toc-sec-chromaticity-terms" class="nav-link" data-scroll-target="#sec-chromaticity-terms"><span class="header-section-number">29.2.1</span> Common terms associated with the chromaticity diagram</a></li>
+  <li><a href="#sec-chromaticity-gamuts" id="toc-sec-chromaticity-gamuts" class="nav-link" data-scroll-target="#sec-chromaticity-gamuts"><span class="header-section-number">29.2.2</span> Display gamuts</a></li>
   </ul></li>
-  <li><a href="#sec-cielab" id="toc-sec-cielab" class="nav-link" data-scroll-target="#sec-cielab"><span class="header-section-number">29.3</span> Perceptual uniformity and CIELAB</a></li>
-  <li><a href="#sec-scielab" id="toc-sec-scielab" class="nav-link" data-scroll-target="#sec-scielab"><span class="header-section-number">29.4</span> Spatial-CIELAB (S-CIELAB)</a></li>
+  <li><a href="#sec-perceptual-differences" id="toc-sec-perceptual-differences" class="nav-link" data-scroll-target="#sec-perceptual-differences"><span class="header-section-number">29.3</span> Representing perceptual differences</a>
+  <ul class="collapse">
+  <li><a href="#sec-uv-chromaticity" id="toc-sec-uv-chromaticity" class="nav-link" data-scroll-target="#sec-uv-chromaticity"><span class="header-section-number">29.3.1</span> <span class="math inline">\((u', v')\)</span> chromaticity coordinates</a></li>
+  </ul></li>
+  <li><a href="#sec-cielab" id="toc-sec-cielab" class="nav-link" data-scroll-target="#sec-cielab"><span class="header-section-number">29.4</span> CIELAB</a></li>
+  <li><a href="#sec-scielab" id="toc-sec-scielab" class="nav-link" data-scroll-target="#sec-scielab"><span class="header-section-number">29.5</span> Spatial-CIELAB (S-CIELAB)</a></li>
   </ul>
 </nav>
     </div>
@@ -625,7 +647,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 12, 2026</p>
+      <p class="date">November 13, 2026</p>
     </div>
   </div>
   
@@ -651,7 +673,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: November 12, 2026
+Last updated: November 13, 2026
 !-->
 </div>
 </div>
@@ -669,51 +691,39 @@ Last updated: November 12, 2026
 </section>
 <section id="sec-chromaticity-coordinates" class="level2" data-number="29.2">
 <h2 data-number="29.2" class="anchored" data-anchor-id="sec-chromaticity-coordinates"><span class="header-section-number">29.2</span> Chromaticity coordinates</h2>
-<p>When we describe the appearance of a light, it is natural to separate its overall brightness from its hue and saturation. How can we convert the three-dimensional CIE tristimulus values, <span class="math inline">\((X, Y, Z)\)</span>, into a two-dimensional representation that isolates relative spectral composition from intensity?</p>
-<p><strong>Chromaticity coordinates (xy)</strong> are the oldest and most widely used approach. If we normalize each tristimulus coordinate by the sum <span class="math inline">\(X + Y + Z\)</span>, scaling the intensity of a light by a positive factor cancels out in the ratio. Because the three normalized coordinates sum to one, only two of them—conventionally <span class="math inline">\((x, y)\)</span>—are independent:</p>
+<p>When we describe the appearance of a light, it is natural to separate its overall brightness from its hue and saturation. When the CIE set up its standards in 1931, they wanted a method to communicate about color appearance based on the color-matching values. They proposed <strong>chromaticity coordinates (xy)</strong> for converting the three-dimensional CIE tristimulus values, <span class="math inline">\((X, Y, Z)\)</span>, into a two-dimensional representation that separates hue and saturation from intensity.</p>
+<p>The xy coordinates are derived from the <span class="math inline">\((X,Y,Z)\)</span> coordinates by scaling values by the sum of the coordinates.</p>
 <p><span id="eq-chromaticity"><span class="math display">\[
 \begin{aligned}
 x &amp;= \frac{X}{X + Y + Z}, \qquad y = \frac{Y}{X + Y + Z}, \\[6pt]
 z &amp;= \frac{Z}{X + Y + Z} = 1 - x - y .
 \end{aligned}
 \tag{29.1}\]</span></span></p>
-<p>We can visualize the geometry of this mapping in two steps (<a href="#fig-chromaticity-projection" class="quarto-xref">Figure&nbsp;<span>29.1</span></a>). First, for any tristimulus vector <span class="math inline">\((X, Y, Z)\)</span>, the normalized vector <span class="math inline">\((x, y, z)\)</span> lies at the intersection of the ray from the origin through <span class="math inline">\((X, Y, Z)\)</span> and the unit plane <span class="math inline">\(x + y + z = 1\)</span> (the shaded gray triangle in <a href="#fig-cie-chromaticity" class="quarto-xref">Figure&nbsp;<span>29.1 (a)</span></a>). Second, tracing the rays for monochromatic lights across the visible spectrum sweeps out a horseshoe-shaped curve on that unit plane called the <strong>spectrum locus</strong> (<a href="#fig-chromaticity-geometry" class="quarto-xref">Figure&nbsp;<span>29.1 (b)</span></a>). Projecting the unit plane orthographically onto the <span class="math inline">\((x, y)\)</span> axes produces the standard two-dimensional <strong>CIE <span class="math inline">\((x, y)\)</span> chromaticity diagram</strong> (<a href="#fig-chromaticity-appearance" class="quarto-xref">Figure&nbsp;<span>29.2</span></a>).</p>
-<div id="fig-chromaticity-projection" class="quarto-layout-panel">
+<p>This normalization means that two lights related by <span class="math inline">\((X_1,Y_1,Z_1) = k \times (X_2, Y_2, Z_2)\)</span> will have the same xy values. The light intensity is normalized away.</p>
+<p>We can visualize this mapping interactively using the three-dimensional rendering of the normalization plane and the spectrum locus in <a href="#fig-xy-plane-interactive" class="quarto-xref">Figure&nbsp;<span>29.1</span></a>.</p>
+<div id="fig-xy-plane-interactive" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-chromaticity-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-chromaticity-projection" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-cie-chromaticity" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-cie-chromaticity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/06-color-metrics/chromaticity/cie-xy-chromaticity-geometry.png" class="img-fluid figure-img" data-ref-parent="fig-chromaticity-projection">
+<div aria-describedby="fig-xy-plane-interactive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<iframe src="images/human/06-color-metrics/chromaticity/xy-plane-3d.html" title="Interactive xy chromaticity plane and spectrum locus" width="100%" height="500" style="border:0;display:block;" loading="lazy" onload="try{var m=this.contentDocument.querySelector('main');if(m)this.style.height=Math.ceil(m.getBoundingClientRect().height)+'px'}catch(e){}">
+</iframe>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-cie-chromaticity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) A ray from the origin through <span class="math inline">\((X, Y, Z)\)</span> intersects the unit plane <span class="math inline">\(x + y + z = 1\)</span> at <span class="math inline">\((x, y, z)\)</span>.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-xy-plane-interactive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.1: The xy chromaticity plane and spectrum locus in XYZ space, shown with equal axis scales. In the HTML version, drag to rotate and use the controls to zoom or show a radial projection from the origin.
 </figcaption>
 </figure>
 </div>
+<p>The spectrum locus shown on the plane is fundamental because it forms the outer boundary of the chromaticity coordinates for all physical lights. This property follows directly from a geometric rule of chromaticity diagrams: the chromaticity of an additive mixture of two lights always lies on the straight line segment connecting their individual chromaticities (see <a href="#nte-chromaticity-mixture" class="quarto-xref">Note&nbsp;<span>29.1</span></a>). Because every physical light is a non-negative mixture of spectral lights, the chromaticity of any real light must lie inside the convex hull of the spectrum locus, bounded below by the straight “line of purples” connecting the short- and long-wavelength ends of the spectrum.</p>
+<p>The approximate color appearance across the CIE 1931 <span class="math inline">\((x, y)\)</span> chromaticity diagram is illustrated schematically in <a href="#fig-chromaticity-appearance" class="quarto-xref">Figure&nbsp;<span>29.2</span></a>. White and neutral grays fall near the center of the diagram. The saturated spectral lights lie along the outer boundary.</p>
+<div id="fig-chromaticity-appearance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-chromaticity-appearance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/chromaticity/CIExy1931-blackbody.png" class="img-fluid figure-img" style="width:50.0%">
 </div>
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-chromaticity-projection" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-chromaticity-geometry" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-chromaticity-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/06-color-metrics/chromaticity/cie-xy-chromaticity-3d.png" class="img-fluid figure-img" data-ref-parent="fig-chromaticity-projection">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-chromaticity-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Monochromatic lights trace out the spectrum locus on the unit plane <span class="math inline">\(x + y + z = 1\)</span>.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromaticity-appearance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.2: Schematic illustration of color appearance across the CIE 1931 <span class="math inline">\((x, y)\)</span> chromaticity diagram.
 </figcaption>
 </figure>
 </div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromaticity-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;29.1: Geometric construction of the CIE chromaticity coordinates on the plane <span class="math inline">\(x + y + z = 1\)</span> before orthographic projection onto the <span class="math inline">\((x, y)\)</span> plane.
-</figcaption>
-</figure>
-</div>
-<p>The spectrum locus is fundamental because it forms the outer boundary of the chromaticity coordinates for all physical lights. This property follows directly from a geometric rule of chromaticity diagrams: the chromaticity of an additive mixture of two lights always lies on the straight line segment connecting their individual chromaticities (see <a href="#nte-chromaticity-mixture" class="quarto-xref">Note&nbsp;<span>29.1</span></a>). Because every physical light is a non-negative mixture of spectral lights, the chromaticity of any real light must lie inside the convex hull of the spectrum locus, bounded below by the straight “line of purples” connecting the short- and long-wavelength ends of the spectrum.</p>
 <div id="nte-chromaticity-mixture" class="callout callout-style-default callout-note callout-titled" title="Chromaticity of the mixture of two lights">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -754,22 +764,11 @@ y_3 &amp;= \frac{Y_1 + Y_2}{S_1 + S_2} = \frac{S_1 y_1 + S_2 y_2}{S_1 + S_2} = \
 </div>
 </div>
 </div>
-<section id="commonly-used-features-of-the-chromaticity-diagram" class="level3" data-number="29.2.1">
-<h3 data-number="29.2.1" class="anchored" data-anchor-id="commonly-used-features-of-the-chromaticity-diagram"><span class="header-section-number">29.2.1</span> Commonly used features of the chromaticity diagram</h3>
-<p>Several classic colorimetric concepts and engineering tools are described on the chromaticity diagram:</p>
+<section id="sec-chromaticity-terms" class="level3" data-number="29.2.1">
+<h3 data-number="29.2.1" class="anchored" data-anchor-id="sec-chromaticity-terms"><span class="header-section-number">29.2.1</span> Common terms associated with the chromaticity diagram</h3>
+<p>We plot these values by projecting the plane orthographically onto the <span class="math inline">\((x, y)\)</span> axes. This produces the standard two-dimensional <strong>CIE <span class="math inline">\((x, y)\)</span> chromaticity diagram</strong> (<a href="#fig-chromaticity-appearance" class="quarto-xref">Figure&nbsp;<span>29.2</span></a>). Several classic colorimetric concepts and engineering tools are described on the chromaticity diagram.</p>
 <p><strong>Blackbody (Planckian) locus</strong> As the temperature of a blackbody radiator increases from <span class="math inline">\(2000\text{ K}\)</span> to <span class="math inline">\(9000\text{ K}\)</span>, its spectral power distribution shifts toward shorter wavelengths, tracing a smooth arc from orange-red through neutral white to bluish-white near the center of the chromaticity diagram (<a href="#fig-chromaticity-appearance" class="quarto-xref">Figure&nbsp;<span>29.2</span></a>).</p>
-<p>The approximate color appearance across the CIE 1931 <span class="math inline">\((x, y)\)</span> chromaticity diagram is illustrated schematically in <a href="#fig-chromaticity-appearance" class="quarto-xref">Figure&nbsp;<span>29.2</span></a>. White and neutral grays fall near the center of the diagram—where the blackbody locus traces the chromaticities of thermal radiators across color temperatures—while saturated spectral hues lie along the outer boundary.</p>
-<div id="fig-chromaticity-appearance" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-chromaticity-appearance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/06-color-metrics/chromaticity/CIExy1931-blackbody.png" class="img-fluid figure-img" style="width:50.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chromaticity-appearance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;29.2: Schematic illustration of color appearance across the CIE 1931 <span class="math inline">\((x, y)\)</span> chromaticity diagram.
-</figcaption>
-</figure>
-</div>
-<p><strong>Complementary wavelengths</strong> are defined as a pair of monochromatic lights whose additive mixture can match a chosen reference white (such as CIE D65). (<a href="#fig-chromaticity-complementary" class="quarto-xref">Figure&nbsp;<span>29.3 (a)</span></a>). <strong>Dominant wavelength</strong> is defined by a ray from the reference white point through a test light’s chromaticity out to the spectrum locus (<a href="#fig-chromaticity-dominant" class="quarto-xref">Figure&nbsp;<span>29.3 (b)</span></a>). The fractional distance along the segment from white to the boundary quantifies the excitation <strong>purity</strong>.</p>
+<p><strong>Complementary wavelengths</strong> are defined as a pair of monochromatic lights whose additive mixture can match a chosen reference white (such as CIE D65; <a href="#fig-chromaticity-complementary" class="quarto-xref">Figure&nbsp;<span>29.3 (a)</span></a>). <strong>Dominant wavelength</strong> is defined by a ray from the reference white point through a test light’s chromaticity out to the spectrum locus (<a href="#fig-chromaticity-dominant" class="quarto-xref">Figure&nbsp;<span>29.3 (b)</span></a>). The fractional distance along the segment from white to the boundary quantifies the excitation <strong>purity</strong>.</p>
 <div id="fig-chromaticity-complementary-dominant" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-chromaticity-complementary-dominant-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -807,8 +806,8 @@ Figure&nbsp;29.3: Complementary wavelengths and dominant wavelength construction
 </div>
 </section>
 <section id="sec-chromaticity-gamuts" class="level3" data-number="29.2.2">
-<h3 data-number="29.2.2" class="anchored" data-anchor-id="sec-chromaticity-gamuts"><span class="header-section-number">29.2.2</span> Display chromaticity gamuts</h3>
-<p>Extending the two-light mixture rule (<a href="#nte-chromaticity-mixture" class="quarto-xref">Note&nbsp;<span>29.1</span></a>) to three primary lights explains how engineers visualize a display’s color range. A display with three primaries (<span class="math inline">\(R\)</span>, <span class="math inline">\(G\)</span>, and <span class="math inline">\(B\)</span>) can produce any additive mixture of its primaries with non-negative weights (<a href="human-05-wavelength-encoding.html#sec-display-color-matching" class="quarto-xref"><span>Section 28.6</span></a>). In the <span class="math inline">\((x, y)\)</span> diagram, the set of all convex combinations of three points is the <strong>triangle</strong> whose vertices are the chromaticities of the three primaries (<a href="#fig-chromaticity-gamut" class="quarto-xref">Figure&nbsp;<span>29.4 (a)</span></a>).</p>
+<h3 data-number="29.2.2" class="anchored" data-anchor-id="sec-chromaticity-gamuts"><span class="header-section-number">29.2.2</span> Display gamuts</h3>
+<p>One of the most common and practical uses of chromaticity coordinates is to visualize the range of colors a display can produce (<a href="human-05-wavelength-encoding.html#sec-display-color-matching" class="quarto-xref"><span>Section 28.6</span></a>). The two-dimensional chromaticity gamut follows directly from the two-light mixture rule (<a href="#nte-chromaticity-mixture" class="quarto-xref">Note&nbsp;<span>29.1</span></a>): any non-negative additive combination of three primary lights (<span class="math inline">\(R\)</span>, <span class="math inline">\(G\)</span>, and <span class="math inline">\(B\)</span>) lies inside the <strong>triangle</strong> whose vertices are the chromaticities of the three primaries (<a href="#fig-chromaticity-gamut" class="quarto-xref">Figure&nbsp;<span>29.4 (a)</span></a>).</p>
 <div id="fig-chromaticity-gamuts-panel" class="figure quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-chromaticity-gamuts-panel-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -831,10 +830,10 @@ Figure&nbsp;29.3: Complementary wavelengths and dominant wavelength construction
 <div id="fig-chromaticity-multiple-gamuts" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <div aria-describedby="fig-chromaticity-multiple-gamuts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/06-color-metrics/chromaticity/048-human-vision-and-hdtv-gamut.png" class="img-fluid figure-img" style="width:75.0%" data-ref-parent="fig-chromaticity-gamuts-panel">
+<img src="images/human/06-color-metrics/chromaticity/cie-xy-gamuts-industry.png" class="img-fluid figure-img" style="width:75.0%" data-ref-parent="fig-chromaticity-gamuts-panel">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-chromaticity-multiple-gamuts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Comparison of a standard HDTV (sRGB / Rec. 709) chromaticity triangle against the full CIE 1931 chromaticity diagram of human vision.
+(b) Comparison of several RGB and CMYK color gamuts on the CIE 1931 <span class="math inline">\((x, y)\)</span> chromaticity diagram against the full human visual gamut (source: BenRG and cmglee, <a href="https://commons.wikimedia.org/w/index.php?curid=32158329">Wikimedia Commons</a>, CC BY-SA 3.0).
 </figcaption>
 </figure>
 </div>
@@ -847,66 +846,75 @@ Figure&nbsp;29.4: Visualizing display color reproduction limits as triangles in 
 </figcaption>
 </figure>
 </div>
-<p>Any chromaticity inside the triangle can be reproduced by the display; any chromaticity outside the triangle would require a negative weight on at least one primary (<a href="human-05-wavelength-encoding.html#eq-display-primary-weights" class="quarto-xref">Equation&nbsp;<span>28.7</span></a>) and is out of gamut. Notice, however, two important caveats when interpreting these triangles:</p>
+<p>Any chromaticity inside the triangle defined by the three primaries can be reproduced by the display; any chromaticity outside the triangle would require a negative weight on at least one primary (<a href="human-05-wavelength-encoding.html#eq-display-primary-weights" class="quarto-xref">Equation&nbsp;<span>28.7</span></a>) and is out of gamut. Keep two caveats in mind when interpreting these chromaticity triangles:</p>
 <ol type="1">
-<li><strong>Chromaticity omits luminance:</strong> The <span class="math inline">\((x, y)\)</span> triangle is a 2D projection of a 3D color solid; it does not show how the range of achievable chromaticities shrinks near the display’s peak luminance or black level.</li>
-<li><strong>Displays have primary gamuts; sensors do not:</strong> While a three-primary display is physically restricted to the convex triangle of its emitters (<a href="#fig-chromaticity-multiple-gamuts" class="quarto-xref">Figure&nbsp;<span>29.4 (b)</span></a>), a camera sensor does not emit primaries—its ability to distinguish spectra depends on whether its spectral sensitivities are a linear transformation of the human color-matching functions and on sensor noise.</li>
+<li><strong>Chromaticity omits luminance.</strong> The <span class="math inline">\((x, y)\)</span> triangle is a two-dimensional projection of the three-dimensional color solid swept out over the valid range of primary intensities. The projection does not show how the range of achievable chromaticities shrinks near the display’s peak luminance (where primaries saturate) or near its black level (where ambient flare and dark light dominate).</li>
+<li><strong>Displays have primary gamuts; sensors do not.</strong> While a three-primary display is physically restricted to the convex triangle of its emitters (<a href="#fig-chromaticity-multiple-gamuts" class="quarto-xref">Figure&nbsp;<span>29.4 (b)</span></a>), a camera sensor does not emit primaries—it is designed to respond to light across the visible spectrum. People sometimes use the phrase “sensor gamut,” which has never seemed like a good idea to me. The meaningful engineering question for a sensor is how accurately its responses can be transformed into the human visual encoding—a topic we return to later.</li>
 </ol>
 </section>
-<section id="uv-chromaticity-coordinates" class="level3" data-number="29.2.3">
-<h3 data-number="29.2.3" class="anchored" data-anchor-id="uv-chromaticity-coordinates"><span class="header-section-number">29.2.3</span> uv-chromaticity coordinates</h3>
-<p>The normalization of xy-chromaticity coordinates is simple and based on the sum of the <span class="math inline">\((X,Y,Z)\)</span> values, or equivalently finding the intersection with the plane <span class="math inline">\(1 = X + Y + Z\)</span>. But there are other ways one could perform a normalization, and these might have some value.</p>
-<p>An influential alternative is the u’v’-chromaticity coordinate. The formula for these chromaticity coordinates is</p>
-<p><span id="eq-uv-chromaticity"><span class="math display">\[
-u' = \frac{4X}{X + 15Y + 3Z}, \qquad v' = \frac{9Y}{X + 15Y + 3Z}
-\tag{29.2}\]</span></span> (In the earlier CIE 1960 UCS definition, <span class="math inline">\(u = u'\)</span> and <span class="math inline">\(v = \frac{2}{3}v' = \frac{6Y}{X + 15Y + 3Z}\)</span>.)</p>
-<p>The mapping also takes any scaled version of the vector <span class="math inline">\(k*(X,Y,Z)\)</span> into the same <span class="math inline">\(u',v'\)</span> value. The plane for the intersection is</p>
-<div id="fig-uv-projection" class="quarto-layout-panel">
+</section>
+<section id="sec-perceptual-differences" class="level2" data-number="29.3">
+<h2 data-number="29.3" class="anchored" data-anchor-id="sec-perceptual-differences"><span class="header-section-number">29.3</span> Representing perceptual differences</h2>
+<p>Almost right away, engineers noted that the <span class="math inline">\((x, y)\)</span> diagram has an important practical shortcoming: equal distances on the chart do not correspond to equal perceptual differences. A large upper region of the <span class="math inline">\((x, y)\)</span> diagram appears green with relatively little change in perceived hue across long distances, whereas in the blue and purple regions a small step produces a large change in color appearance (<a href="#fig-chromaticity-appearance" class="quarto-xref">Figure&nbsp;<span>29.2</span></a>).</p>
+<p>This was demonstrated in a very compelling set of measurements from Kodak Laboratories as part of a large color research program led by David MacAdam <span class="citation" data-cites="macadam1942-ellipses">(<a href="references.html#ref-macadam1942-ellipses" role="doc-biblioref">MacAdam 1942</a>)</span>. His experimental measurements included an analysis of how discriminable colors were from one another. He made his measurements in the constant-Y plane (equiluminance). The participants made multiple matches to a target, and MacAdam used the standard deviation of the settings in different directions within the plane to define an ellipse. This ellipse measures the equal-discriminability of the lights in the plane. The shape and size of these ellipses, now called the <em>MacAdam ellipses</em>, differ greatly between different positions in the plane.</p>
+<div id="fig-cie-xy-macadam" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-uv-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-uv-projection" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-uv-plane" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-uv-plane-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/06-color-metrics/chromaticity/uv-chromaticity-plane.png" class="img-fluid figure-img" data-ref-parent="fig-uv-projection">
+<div aria-describedby="fig-cie-xy-macadam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/chromaticity/CIExy1931_MacAdam.png" class="img-fluid figure-img" style="width:60.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-uv-plane-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) A ray from the origin through <span class="math inline">\((X, Y, Z)\)</span> intersects the plane <span class="math inline">\(X + 15Y + 3Z = 1\)</span> at <span class="math inline">\((x, y, z)\)</span>.
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cie-xy-macadam-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.5: MacAdam ellipses plotted for one subject, “PGN”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The ellipses were measured on a constant Y plane, but they are commonly plotted on the CIE 1931 <span class="math inline">\((x, y)\)</span> chromaticity diagram at ten times their actual size (source: <a href="https://commons.wikimedia.org/w/index.php?curid=173591">Wikimedia Commons</a>, CC BY-SA 3.0).
 </figcaption>
 </figure>
 </div>
+<section id="sec-uv-chromaticity" class="level3" data-number="29.3.1">
+<h3 data-number="29.3.1" class="anchored" data-anchor-id="sec-uv-chromaticity"><span class="header-section-number">29.3.1</span> <span class="math inline">\((u', v')\)</span> chromaticity coordinates</h3>
+<p>The size and orientation of the MacAdam ellipses vary greatly with chromaticity, being especially large in the green region of the chromaticity diagram (<a href="#fig-cie-xy-macadam" class="quarto-xref">Figure&nbsp;<span>29.5</span></a>). In response to this shortcoming, alternative chromaticity coordinates were proposed with the goal of making a representation whose differences are more perceptually equal.</p>
+<p>The <strong>CIE 1976 <span class="math inline">\((u', v')\)</span> Uniform Chromaticity Scale (UCS)</strong> diagram<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> is an influential alternative to <span class="math inline">\((x, y)\)</span>. <a href="#eq-uv-chromaticity" class="quarto-xref">Equation&nbsp;<span>29.2</span></a> is also a projective mapping, but in this case we measure how each ray intersects the plane <span class="math inline">\(X + 15Y + 3Z = 1\)</span>. Also, notice that the projection onto the <span class="math inline">\((u', v')\)</span> plane is followed by axis scale factors of <span class="math inline">\(4\)</span> and <span class="math inline">\(9\)</span> (<a href="#fig-uv-plane-interactive" class="quarto-xref">Figure&nbsp;<span>29.6</span></a>). Differences in these coordinates are more closely matched to perceptual differences. The formula for <span class="math inline">\(u'\)</span> and <span class="math inline">\(v'\)</span> is</p>
+<p><span id="eq-uv-chromaticity"><span class="math display">\[
+u' = \frac{4X}{X + 15Y + 3Z}, \qquad v' = \frac{9Y}{X + 15Y + 3Z} .
+\tag{29.2}\]</span></span></p>
+<p>You can rotate and inspect the <span class="math inline">\((u', v')\)</span> normalization plane <span class="math inline">\(X + 15Y + 3Z = 1\)</span> and its spectrum locus in three dimensions in <a href="#fig-uv-plane-interactive" class="quarto-xref">Figure&nbsp;<span>29.6</span></a>.</p>
+<div id="fig-uv-plane-interactive" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-uv-plane-interactive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<iframe src="images/human/06-color-metrics/chromaticity/uv-plane-3d.html" title="Interactive u prime v prime normalization plane and spectrum locus" width="100%" height="500" style="border:0;display:block;" loading="lazy" onload="try{var m=this.contentDocument.querySelector('main');if(m)this.style.height=Math.ceil(m.getBoundingClientRect().height)+'px'}catch(e){}">
+</iframe>
 </div>
-<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-uv-projection" style="flex-basis: 50.0%;justify-content: flex-start;">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uv-plane-interactive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.6: The u′, v′ normalization plane and spectrum locus in XYZ space, shown with equal axis scales. In the HTML version, drag to rotate and use the controls to zoom or show a radial projection from the origin.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-uv-blackbody-geometry" class="quarto-xref">Figure&nbsp;<span>29.7</span></a> provides a sense of the color appearance at different locations in the <span class="math inline">\((u',v')\)</span> plane, along with the position of the blackbody locus.</p>
 <div id="fig-uv-blackbody-geometry" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
+<figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-uv-blackbody-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/06-color-metrics/chromaticity/CIE_1976_UCS-wikipedia-blackbody.png" class="img-fluid figure-img" data-ref-parent="fig-uv-projection">
+<img src="images/human/06-color-metrics/chromaticity/CIE_1976_UCS-wikipedia-blackbody.png" class="img-fluid figure-img" style="width:70.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-uv-blackbody-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Color appearance in the u’v’ plane <span class="math inline">\(X + 15Y + 3Z = 1\)</span>. By Adoniscik - Own work, Public Domain, https://commons.wikimedia.org/w/index.php?curid=3770098
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uv-blackbody-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.7: Schematic color appearance and Planckian locus in the CIE 1976 <span class="math inline">\((u', v')\)</span> UCS diagram (source: <a href="https://commons.wikimedia.org/w/index.php?curid=3770098">Wikimedia Commons</a>, public domain).
 </figcaption>
 </figure>
 </div>
-</div>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uv-projection-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;29.5: Geometric construction of the CIE chromaticity coordinates on the plane <span class="math inline">\(1 = X + 15Y + 3Z\)</span> before orthographic projection onto the <span class="math inline">\((u', v')\)</span> plane.
-</figcaption>
-</figure>
-</div>
-<p>Transition to perceptual uniformity.</p>
+<p>Because this mapping is still a central projection onto a plane, additive mixtures of lights continue to lie on straight line segments, and display gamuts remain triangles.</p>
+<p>Both chromaticity representations discard luminance, which is an important feature of the light. When describing a light, it is common to inform users about luminance by including the <span class="math inline">\(Y\)</span> value. Thus, you will often see people describing a light with three values, <span class="math inline">\(Yxy\)</span> or <span class="math inline">\(Yu'v'\)</span>. It is straightforward to convert those three values to recover the <span class="math inline">\((X,Y,Z)\)</span> values.</p>
 </section>
 </section>
-<section id="sec-cielab" class="level2" data-number="29.3">
-<h2 data-number="29.3" class="anchored" data-anchor-id="sec-cielab"><span class="header-section-number">29.3</span> Perceptual uniformity and CIELAB</h2>
+<section id="sec-cielab" class="level2" data-number="29.4">
+<h2 data-number="29.4" class="anchored" data-anchor-id="sec-cielab"><span class="header-section-number">29.4</span> CIELAB</h2>
+<p>The <span class="math inline">\((u', v')\)</span> improves the uniformity of two-dimensional chromaticity spacing, but it is far from perfect. To quantify the full perceptual difference between two colors that may differ in both luminance and chromaticity, we need a three-dimensional space that incorporates adaptation to the scene white point and the nonlinear brightness sensitivity of human vision.</p>
+<p>We really want a three-dimensional equaliztion, not just in the chromaticity plane.</p>
+<p>Adams-Nickerson data.</p>
+<p>CIELUV/CIELAB</p>
+<p>Wyszecki wanted to preserve the projection mapping.</p>
 <!-- TODO: Explain why Euclidean distance in CIE XYZ or (x,y) is not perceptually uniform (MacAdam ellipses).
 Introduce opponent-color organization, adaptation to the white point (X_n, Y_n, Z_n), the cube-root compressive nonlinearity, L*, a*, b* coordinates, and Delta E.
 Reference Bob Hunt and Mark Fairchild contributions. -->
 </section>
-<section id="sec-scielab" class="level2" data-number="29.4">
-<h2 data-number="29.4" class="anchored" data-anchor-id="sec-scielab"><span class="header-section-number">29.4</span> Spatial-CIELAB (S-CIELAB)</h2>
+<section id="sec-scielab" class="level2" data-number="29.5">
+<h2 data-number="29.5" class="anchored" data-anchor-id="sec-scielab"><span class="header-section-number">29.5</span> Spatial-CIELAB (S-CIELAB)</h2>
+<p>Color appearance also depends on spatial pattern. Just think back to chromatic aberration - how could it not?</p>
 <!-- TODO: Explain why CIELAB alone is insufficient for patterned images (depends on viewing distance and spatial frequency).
 Show the S-CIELAB architecture (Zhang & Wandell, 1997):
 1. Transform image into opponent-color channels (luminance, red-green, blue-yellow).
@@ -916,6 +924,18 @@ Bridge forward to Part V (Displays), where CIELAB and S-CIELAB are used to evalu
 
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-macadam1942-ellipses" class="csl-entry" role="listitem">
+MacAdam DL (1942) Visual sensitivities to color differences in daylight. Journal of the Optical Society of America 32:247–274
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>From the acknowledgements in <span class="citation" data-cites="macadam1942-ellipses">MacAdam (<a href="references.html#ref-macadam1942-ellipses" role="doc-biblioref">1942</a>)</span>: “It is a pleasure to acknowledge again the essential contributions of Mr.&nbsp;Perley G. Nutting, Jr., whose critical interest in the ideas involved in this research was much greater and more helpful than is implied by the fact that he was the principal observer.”<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The 1976 UCS is an improvement upon an earlier CIE 1960 UCS definition, <span class="math inline">\(u = u'\)</span> and <span class="math inline">\(v = \frac{2}{3}v' = \frac{6Y}{X + 15Y + 3Z}\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->

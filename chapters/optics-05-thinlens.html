@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-09-29">
+<meta name="dcterms.date" content="2026-11-13">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>11&nbsp; Thin lenses – Foundations of Image Systems Engineering</title>
@@ -636,7 +636,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">September 29, 2026</p>
+      <p class="date">November 13, 2026</p>
     </div>
   </div>
   
@@ -662,7 +662,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: September 29, 2026
+Last updated: November 13, 2026
 !-->
 </div>
 </div>
@@ -825,15 +825,15 @@ Distinguishes intrinsic focal length (<span class="math inline">\(f\)</span>), c
 <p><span id="eq-imagedistance"><span class="math display">\[
 d_i = \frac{1}{\frac{1}{f} - \frac{1}{d_o}} = \frac{f~d_o}{d_o - f}
 \tag{11.2}\]</span></span></p>
-<p>You can see from <a href="#eq-imagedistance" class="quarto-xref">Equation&nbsp;<span>11.3</span></a> that as <span class="math inline">\(d_o\)</span> becomes much larger than <span class="math inline">\(f\)</span>, <span class="math inline">\(d_i\)</span> becomes approximately <span class="math inline">\(f\)</span>. Specifically, if we express <span class="math inline">\(d_o\)</span> in terms of the focal length of the lens, <span class="math inline">\(k f\)</span>, we have</p>
-<p><span id="eq-imagedistance"><span class="math display">\[
+<p>You can see from <a href="#eq-imagedistance" class="quarto-xref">Equation&nbsp;<span>11.2</span></a> that as <span class="math inline">\(d_o\)</span> becomes much larger than <span class="math inline">\(f\)</span>, <span class="math inline">\(d_i\)</span> becomes approximately <span class="math inline">\(f\)</span>. Specifically, if we express <span class="math inline">\(d_o\)</span> in terms of the focal length of the lens, <span class="math inline">\(k f\)</span>, we have</p>
+<p><span id="eq-imagedistance-k"><span class="math display">\[
 d_i = \frac{f k f}{(k-1) f} = f \frac{k}{k-1}
 \tag{11.3}\]</span></span></p>
 <p>This script plots the image distance as a function of object distance expressed as a multiple of focal length.</p>
 </section>
 <section id="sec-optics-lensmaker" class="level2" data-number="11.10">
 <h2 data-number="11.10" class="anchored" data-anchor-id="sec-optics-lensmaker"><span class="header-section-number">11.10</span> Lensmaker equation</h2>
-<p>The lens formula (<a href="#eq-imagedistance" class="quarto-xref">Equation&nbsp;<span>11.3</span></a>) relates the image distance, object distance, and focal length. The <strong>lens maker equation</strong> explains how to calculate the focal length of a thin lens. The formula applies to a thin lens with two spherical sides embedded in a homogeneous environment. To apply the formula, we must know the radius of curvature of the two sides of the lens as well as the index of refraction of the lens material and its surrounding medium.</p>
+<p>The lens formula (<a href="#eq-imagedistance" class="quarto-xref">Equation&nbsp;<span>11.2</span></a>) relates the image distance, object distance, and focal length. The <strong>lens maker equation</strong> explains how to calculate the focal length of a thin lens. The formula applies to a thin lens with two spherical sides embedded in a homogeneous environment. To apply the formula, we must know the radius of curvature of the two sides of the lens as well as the index of refraction of the lens material and its surrounding medium.</p>
 <p>Here is the formula:</p>
 <p><span id="eq-lensmaker"><span class="math display">\[
 \frac{1}{f} = (\frac{n_2}{n_1} - 1) ( \frac{1}{R_1} - \frac{1}{R_2})
@@ -916,7 +916,7 @@ Figure&nbsp;11.11: Optical zoom. (a) A small image that just fits onto the senso
 </section>
 <section id="sec-optics-dof" class="level2" data-number="11.15">
 <h2 data-number="11.15" class="anchored" data-anchor-id="sec-optics-dof"><span class="header-section-number">11.15</span> Depth of field</h2>
-<p><a href="#eq-imagedistance" class="quarto-xref">Equation&nbsp;<span>11.3</span></a> tells us how to set the distance between the optics and image plane, <span class="math inline">\(d_i\)</span>, to bring an object at distance <span class="math inline">\(d_o\)</span> into focus. We might also be interested to answer the related question: Given that an object at <span class="math inline">\(d_o\)</span> is in focus, what will the blur be for objects nearer or further? The range of distances over which the objects remain in good focus is called the <strong>depth of field</strong>.</p>
+<p><a href="#eq-imagedistance" class="quarto-xref">Equation&nbsp;<span>11.2</span></a> tells us how to set the distance between the optics and image plane, <span class="math inline">\(d_i\)</span>, to bring an object at distance <span class="math inline">\(d_o\)</span> into focus. We might also be interested to answer the related question: Given that an object at <span class="math inline">\(d_o\)</span> is in focus, what will the blur be for objects nearer or further? The range of distances over which the objects remain in good focus is called the <strong>depth of field</strong>.</p>
 <p>The size of the depth of field can be controlled by adjusting the size of the lens aperture. As it becomes smaller, the lens becomes closer to a pinhole, the depth of field increases. The depth of field can become quite narrow for a large aperture. Controlling the depth of field can create visually interesting images (<a href="#fig-optics-bokeh" class="quarto-xref">Figure&nbsp;<span>11.12</span></a>). Photographers and cinematographers often use settings to bring the main object of interest into good focus and blurring the rest. The depth of field is a quantitative description of the lens setting. Photographers use the term <strong>bokeh</strong> to describe the aesthetic impact one can achieve by adjusting the depth of field. This quality depends on the optics as well as the scene contents.</p>
 <div id="fig-optics-bokeh" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
