@@ -1,0 +1,242 @@
+::: {style="width: 100%; margin: 0 auto; overflow: visible; font-size: 0.95rem;"}
+
+```{ojs}
+//| echo: false
+viewof luv_lab_Lstar = Inputs.range([30, 85], {
+  value: 65,
+  step: 5,
+  label: "Lightness L*"
+})
+
+viewof luv_lab_preset = Inputs.select(
+  [
+    { name: "Neutral (D65 white)", a: 0, b: 0 },
+    { name: "Red-orange", a: 45, b: 35 },
+    { name: "Yellow-green", a: -20, b: 50 },
+    { name: "Green", a: -45, b: 25 },
+    { name: "Cyan", a: -30, b: -20 },
+    { name: "Blue", a: 15, b: -50 },
+    { name: "Magenta", a: 45, b: -30 }
+  ],
+  {
+    label: "Test light",
+    format: d => d.name,
+    value: { name: "Red-orange", a: 45, b: 35 }
+  }
+)
+```
+
+```{ojs}
+//| echo: false
+luv_lab_calc = {
+  const Xn = 95.047, Yn = 100.0, Zn = 108.883;
+  const denom_n = Xn + 15 * Yn + 3 * Zn;
+  const un = (4 * Xn) / denom_n;
+  const vn = (9 * Yn) / denom_n;
+  const delta = 6 / 29;
+
+  function finv(t) {
+    return t > delta ? t * t * t : 3 * delta * delta * (t - 4 / 29);
+  }
+
+  function lab2xyz(L, a, b) {
+    const fy = (L + 16) / 116;
+    const fx = a / 500 + fy;
+    const fz = fy - b / 200;
+    return [
+      Math.max(0, Xn * finv(fx)),
+      Math.max(0, Yn * finv(fy)),
+      Math.max(0, Zn * finv(fz))
+    ];
+  }
+
+  function xyz2uv(X, Y, Z) {
+    const d = X + 15 * Y + 3 * Z;
+    if (d <= 0) return [0, 0];
+    return [(4 * X) / d, (9 * Y) / d];
+  }
+
+  function lab2luv(L, a, b) {
+    const [X, Y, Z] = lab2xyz(L, a, b);
+    const [up, vp] = xyz2uv(X, Y, Z);
+    return [13 * L * (up - un), 13 * L * (vp - vn)];
+  }
+
+  // Approximate display color for a (L, a, b) point (for visual cue only)
+  function lab2css(L, a, b) {
+    const [X, Y, Z] = lab2xyz(L, a, b);
+    const x = X / 100, y = Y / 100, z = Z / 100;
+    let r =  3.2406 * x - 1.5372 * y - 0.4986 * z;
+    let g = -0.9689 * x + 1.8758 * y + 0.0415 * z;
+    let bl = 0.0557 * x - 0.2040 * y + 1.0570 * z;
+    const compand = c => {
+      const clamped = Math.max(0, Math.min(1, c));
+      return clamped <= 0.0031308 ? 12.92 * clamped : 1.055 * Math.pow(clamped, 1 / 2.4) - 0.055;
+    };
+    return `rgb(${Math.round(compand(r)*255)}, ${Math.round(compand(g)*255)}, ${Math.round(compand(bl)*255)})`;
+  }
+
+  const L = luv_lab_Lstar;
+  const radius = 15;
+  const a0 = luv_lab_preset.a;
+  const b0 = luv_lab_preset.b;
+  const [u0, v0] = lab2luv(L, a0, b0);
+
+  const circlePts = [];
+  const refUvPts = [];
+  let minDEuv = Infinity;
+  let maxDEuv = 0;
+
+  const N = 72;
+  for (let i = 0; i <= N; i++) {
+    const theta = (2 * Math.PI * i) / N;
+    const a = a0 + radius * Math.cos(theta);
+    const b = b0 + radius * Math.sin(theta);
+    const [u, v] = lab2luv(L, a, b);
+    const dEuv = Math.hypot(u - u0, v - v0);
+    if (i < N) {
+      if (dEuv < minDEuv) minDEuv = dEuv;
+      if (dEuv > maxDEuv) maxDEuv = dEuv;
+    }
+    circlePts.push({ i, a, b, u, v, dEuv, color: lab2css(L, a, b) });
+    refUvPts.push({
+      i,
+      u: u0 + radius * Math.cos(theta),
+      v: v0 + radius * Math.sin(theta)
+    });
+  }
+
+  // Constant-a* and constant-b* grid lines to show nonlinear warp
+  const gridLines = [];
+  const vals = [-60, -30, 0, 30, 60];
+  for (const av of vals) {
+    for (let bv = -60; bv <= 60; bv += 5) {
+      const [u, v] = lab2luv(L, av, bv);
+      gridLines.push({ series: `a=${av}`, a: av, b: bv, u, v });
+    }
+  }
+  for (const bv of vals) {
+    for (let av = -60; av <= 60; av += 5) {
+      const [u, v] = lab2luv(L, av, bv);
+      gridLines.push({ series: `b=${bv}`, a: av, b: bv, u, v });
+    }
+  }
+
+  return {
+    L,
+    radius,
+    a0,
+    b0,
+    u0,
+    v0,
+    centerColor: lab2css(L, a0, b0),
+    circlePts,
+    refUvPts,
+    gridLines,
+    minDEuv,
+    maxDEuv
+  };
+}
+```
+
+```{ojs}
+//| echo: false
+html`<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; align-items: start;">
+  <div>
+    ${Plot.plot({
+      title: `CIELAB (a*, b*) at L* = ${luv_lab_calc.L}`,
+      width: 360,
+      height: 360,
+      aspectRatio: 1,
+      marginLeft: 48,
+      marginBottom: 42,
+      x: { label: "a* (red–green)", domain: [-90, 90] },
+      y: { label: "b* (yellow–blue)", domain: [-90, 90] },
+      marks: [
+        Plot.gridX({ strokeOpacity: 0.15 }),
+        Plot.gridY({ strokeOpacity: 0.15 }),
+        Plot.ruleX([0], { stroke: "#999", strokeDasharray: "3,3" }),
+        Plot.ruleY([0], { stroke: "#999", strokeDasharray: "3,3" }),
+        Plot.line(luv_lab_calc.gridLines, {
+          x: "a",
+          y: "b",
+          z: "series",
+          stroke: "#cfd8dc",
+          strokeWidth: 1
+        }),
+        Plot.line(luv_lab_calc.circlePts, {
+          x: "a",
+          y: "b",
+          stroke: "#1f2937",
+          strokeWidth: 2.2
+        }),
+        Plot.dot([{ a: luv_lab_calc.a0, b: luv_lab_calc.b0, c: luv_lab_calc.centerColor }], {
+          x: "a",
+          y: "b",
+          r: 6,
+          fill: "c",
+          stroke: "#111",
+          strokeWidth: 1.5
+        })
+      ]
+    })}
+  </div>
+  <div>
+    ${Plot.plot({
+      title: `CIELUV (u*, v*) at L* = ${luv_lab_calc.L}`,
+      width: 360,
+      height: 360,
+      aspectRatio: 1,
+      marginLeft: 48,
+      marginBottom: 42,
+      x: { label: "u*", domain: [-110, 110] },
+      y: { label: "v*", domain: [-110, 110] },
+      marks: [
+        Plot.gridX({ strokeOpacity: 0.15 }),
+        Plot.gridY({ strokeOpacity: 0.15 }),
+        Plot.ruleX([0], { stroke: "#999", strokeDasharray: "3,3" }),
+        Plot.ruleY([0], { stroke: "#999", strokeDasharray: "3,3" }),
+        Plot.line(luv_lab_calc.gridLines, {
+          x: "u",
+          y: "v",
+          z: "series",
+          stroke: "#cfd8dc",
+          strokeWidth: 1
+        }),
+        Plot.line(luv_lab_calc.refUvPts, {
+          x: "u",
+          y: "v",
+          stroke: "#64748b",
+          strokeDasharray: "4,4",
+          strokeWidth: 1.5
+        }),
+        Plot.line(luv_lab_calc.circlePts, {
+          x: "u",
+          y: "v",
+          stroke: "#b91c1c",
+          strokeWidth: 2.2
+        }),
+        Plot.dot([{ u: luv_lab_calc.u0, v: luv_lab_calc.v0, c: luv_lab_calc.centerColor }], {
+          x: "u",
+          y: "v",
+          r: 6,
+          fill: "c",
+          stroke: "#111",
+          strokeWidth: 1.5
+        })
+      ]
+    })}
+  </div>
+</div>
+<p style="margin-top: 8px; font-size: 0.9rem; color: #374151;">
+  <strong>Selected test light (${luv_lab_preset.name}):</strong>
+  (a*, b*) = (${luv_lab_calc.a0.toFixed(0)}, ${luv_lab_calc.b0.toFixed(0)})
+  &rarr; (u*, v*) = (${luv_lab_calc.u0.toFixed(1)}, ${luv_lab_calc.v0.toFixed(1)}).
+  Around the constant &Delta;E*<sub>ab</sub> = 15 circle (solid), &Delta;E*<sub>uv</sub> ranges from
+  <strong>${luv_lab_calc.minDEuv.toFixed(1)}</strong> to <strong>${luv_lab_calc.maxDEuv.toFixed(1)}</strong>
+  (dashed circle shows &Delta;E*<sub>uv</sub> = 15).
+</p>`
+```
+
+:::
+
