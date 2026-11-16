@@ -170,45 +170,142 @@ The u′, v′ normalization plane and spectrum locus in XYZ space, shown with e
 
 @fig-uv-blackbody-geometry provides a sense of the color appearance at different locations in the $(u',v')$ plane, along with the position of the blackbody locus.
 
-![Schematic color appearance and Planckian locus in the CIE 1976 $(u', v')$ UCS diagram (source: [Wikimedia Commons](https://commons.wikimedia.org/w/index.php?curid=3770098), public domain).](images/human/06-color-metrics/chromaticity/CIE_1976_UCS-wikipedia-blackbody.png){#fig-uv-blackbody-geometry width="70%"}
+![Schematic color appearance and Planckian locus in the CIE 1976 $(u', v')$ UCS diagram (source: [Wikimedia Commons](https://commons.wikimedia.org/w/index.php?curid=3770098), public domain).](images/human/06-color-metrics/chromaticity/CIE_1976_UCS-wikipedia-blackbody.png){#fig-uv-blackbody-geometry width="50%"}
 
 Because this mapping is still a central projection onto a plane, additive mixtures of lights continue to lie on straight line segments, and display gamuts remain triangles.
 
 Both chromaticity representations discard luminance, which is an important feature of the light. When describing a light, it is common to inform users about luminance by including the $Y$ value. Thus, you will often see people describing a light with three values, $Yxy$ or $Yu'v'$. It is straightforward to convert those three values to recover the $(X,Y,Z)$ values.
 
 ## CIELAB {#sec-cielab}
+There are two shortcomings we would like to address concerning the chromaticity representations.
 
-The $(u', v')$ improves the uniformity of two-dimensional chromaticity spacing, but it remains a two-dimensional measure of a three-dimensional signal. To quantify the full perceptual difference between two lights - which will generally differ in both luminance and chromaticity - we need to expand the metric to include all three dimensions.
+First, the $(u', v')$ improves the uniformity of two-dimensional chromaticity spacing, but it remains a two-dimensional measure of a three-dimensional signal. To quantify the full perceptual difference between two lights - which will generally differ in both luminance and chromaticity - we need to expand the metric to include all three dimensions.
 
-There is a second issue that we need to consider as well. The human visual adjusts its properties substantially as it changes between contexts, say from inside a room to outside in the sun.  We call these adjustments light- and dark-adaptation. These are quite substantially changes in visual sensitivity, and the adaptation has a big impact on how well we can discriminate between different lights.
+Second, the human visual adjusts its properties substantially as it changes between contexts, say from inside a room to outside in the sun. These adjustments - often called light- and dark-adaptation - substantially change visual sensitivity and thus have a big impact on how well we can discriminate between different lights.
 
-In 1976 the CIE completed work on the first color metrics that accounted for all three dimensions and also made an effort to account for the ambient viewing conditions. Two different metrics were approved as standards, one called CIELUV and another called CIELAB.
+In 1976 the CIE completed work on the color metrics that address these two issues. The metrics account for all three dimensions, and they include parameters about the ambient viewing conditions which determine the likely state of adaptation. 
 
-The CIELUV metric was an extension of the $(u',v')$ system, and it was favored by key individuals (Gunther Wyszecki) who wanted the new system to have a prthat accounted for the ambient conditions was 
+The CIE committee members could not come to an agreement on a single metric, and they approved two standard discrimination metrics: CIELUV and CIELAB. The CIELUV metric is an extension of the $(u',v')$ system, and it was favored by key individuals (Günther Wyszecki) who wanted the new system to preserve a projective chromaticity diagram while accounting for the ambient white point $(X_n, Y_n, Z_n)$:
+
+$$
+\begin{aligned}
+L^* &= \begin{cases}
+116 \left(\frac{Y}{Y_n}\right)^{1/3} - 16, & \frac{Y}{Y_n} > \left(\frac{6}{29}\right)^3 \approx 0.008856, \\[6pt]
+\left(\frac{29}{3}\right)^3 \frac{Y}{Y_n} \approx 903.3\,\frac{Y}{Y_n}, & \frac{Y}{Y_n} \le \left(\frac{6}{29}\right)^3,
+\end{cases} \\[8pt]
+u^* &= 13\, L^* (u' - u'_n), \\[4pt]
+v^* &= 13\, L^* (v' - v'_n),
+\end{aligned}
+$$ {#eq-cieluv}
+
+where $(u'_n, v'_n)$ are the $(u', v')$ chromaticity coordinates of the reference white point from @eq-uv-chromaticity, and the perceptual color difference between two lights is the Euclidean distance $\Delta E^*_{uv} = \sqrt{(\Delta L^*)^2 + (\Delta u^*)^2 + (\Delta v^*)^2}$.
+
+The ambient white point values are the $u'_n,v'_n$ chromaticity coordinates and $Y_n$ value of a white reflective surface under the ambient illumination conditions. These values provide information about the viewer's likely state of adaptation, and the CIELUV values $(L^*,u^*,v^*)$ are all specified in terms of the white point values.
+
+Another group—including **R. W. G. (Bob) Hunt** and researchers in the surface-color and textile industries—favored the **CIELAB** formula, which simplified the earlier **Adams–Nickerson** opponent-color space developed by Elliot Q. Adams and Dorothy Nickerson. Rather than preserving a projective chromaticity diagram, CIELAB normalizes each tristimulus value $(X, Y, Z)$ directly by the ambient white point $(X_n, Y_n, Z_n)$ and applies a compressive nonlinearity before taking opponent differences:
+
+$$
+\begin{aligned}
+L^* &= 116\, f\!\left(\frac{Y}{Y_n}\right) - 16, \\[6pt]
+a^* &= 500 \left[ f\!\left(\frac{X}{X_n}\right) - f\!\left(\frac{Y}{Y_n}\right) \right], \\[6pt]
+b^* &= 200 \left[ f\!\left(\frac{Y}{Y_n}\right) - f\!\left(\frac{Z}{Z_n}\right) \right],
+\end{aligned}
+$$ {#eq-cielab}
+
+where the piecewise compressive function $f(t)$ is
+
+$$
+f(t) = \begin{cases}
+t^{1/3}, & t > \left(\frac{6}{29}\right)^3 \approx 0.008856, \\[6pt]
+\frac{1}{3}\left(\frac{29}{6}\right)^2 t + \frac{4}{29} \approx 7.787\,t + \frac{16}{116}, & t \le \left(\frac{6}{29}\right)^3 .
+\end{cases}
+$$ {#eq-cielab-f}
+
+Notice that $L^*$ in @eq-cielab is identical to $L^*$ in @eq-cieluv.
+
+### Color appearance
+
+![Color appearance in CIELAB coordinates.](images/human/06-color-metrics/cielab/071-cielab-color-solid.png){#fig-pattern-color}
+
+Comment on red-green and blue-yellow axes.  Reference opponency in FOV, perhaps.  Maybe we get some opponency in this book, too.  Could happen in the wavelength encoding chapter.
+
+Let's get Munsell in here, too.  Something about Hurvich and Jameson.
+
+![Munsell images](images/human/06-color-metrics/appearance/074-munsell-book-of-colors.png){#fig-munsell-appearanc-overview}
+
+![Munsell images](images/human/06-color-metrics/appearance/075-munsell-color-solid-model.png){#fig-munsell-appearanc-overview}
+
+![Munsell images](images/human/06-color-metrics/appearance/076-munsell-value-radial-slices.png){#fig-munsell-appearanc-overview}
 
 
+::: {.callout-note title="Munsell notation and renotation" collapse="true"}
 
+Explain the notation and the OSA renotation.
 
-We really want a three-dimensional equaliztion, not just in the chromaticity plane.
+:::
 
-Adams-Nickerson data.
+### Color difference metric: $\Delta E$
 
-CIELUV/CIELAB
+A key point for both of these representations is to make the perceptual difference between two lights match the Euclidean distance between their representation.  We use the symbol $\Delta E$ to denote the Euclidean difference, and we add a subscript to undicate whether we are measuring in CIELUV or CIELAB space, such as 
+$$
+\Delta E^*_{ab} = \sqrt{(\Delta L^*)^2 + (\Delta a^*)^2 + (\Delta b^*)^2}
+$${#eq-delta-E-ab}
 
-Wyszecki wanted to preserve the projection mapping and the idea of chromaticity coordinates.
+The two representations are not the same, but they are not wildly different either.  We can judge the similarity by plotting the equal-difference contours (a circle) in one space (CIELAB) in the other space (CIELUV). We can also transform a grid from CIELAB space into CIELUV space. The interactive plots in @fig-cieluv-vs-cielab provide a sense of how these two representations differ.
 
-<!-- TODO: Explain why Euclidean distance in CIE XYZ or (x,y) is not perceptually uniform (MacAdam ellipses).
-Introduce opponent-color organization, adaptation to the white point (X_n, Y_n, Z_n), the cube-root compressive nonlinearity, L*, a*, b* coordinates, and Delta E.
-Reference Bob Hunt and Mark Fairchild contributions. -->
+::: {#fig-cieluv-vs-cielab}
+
+::: {.content-visible when-format="html"}
+{{< include includes/figures/cieluv-vs-cielab.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+![](images/human/06-color-metrics/cieluv-vs-cielab-static.png){fig-alt="Side-by-side comparison of CIELAB (a*, b*) and CIELUV (u*, v*) at L* = 65, showing a constant Delta E*ab = 15 circle around a red-orange test light mapped into a warped contour in (u*, v*) alongside a dashed Delta E*uv = 15 reference circle." width="90%"}
+:::
+
+Comparison of CIELAB $(a^*, b^*)$ and CIELUV $(u^*, v^*)$ at constant lightness $L^*$ under a D65 white point. A regular grid and a circle of constant $\Delta E^*_{ab} = 15$ (solid) in $(a^*, b^*)$ warp nonlinearly in $(u^*, v^*)$, where the dashed circle marks $\Delta E^*_{uv} = 15$. Use the controls in the HTML version to vary $L^*$ and the test light.
+:::
+
+Over time, the CIELAB representation has been more widely used than CIELUV, and it has been extended and amended in various ways. CIELUV remains useful primarily in display and lighting engineering because it preserves the projective $(u', v')$ chromaticity diagram, while CIELAB and CIEDE2000 dominate perceptual color-difference evaluation. 
+
+::: {.callout-note title="The rise of CIELAB" collapse="true"}
+
+Two lines of evidence show how CIELAB became the dominant CIE color-difference standard over CIELUV:
+
+**Scholarly usage:** A search of the [OpenAlex](https://openalex.org/) scholarly literature database (November 2026) illustrates the gap in adoption across imaging, printing, textiles, and vision science:
+
+| Term | Matching Works |
+|---|---:|
+| `"CIELAB"` | 46,499 |
+| `"CIELUV"` | 1,893 |
+| `"CIEDE2000"` | 5,513 |
+| `"CIE94"` | 605 |
+
+`"CIELAB"` appears roughly **25×** more often than `"CIELUV"`, and `"CIEDE2000"` alone appears nearly **3×** more often than `"CIELUV"`.
+
+:::
+
+These later CIE standards leave the $(L^*, a^*, b^*)$ coordinate representation itself intact and change only **how color differences ($\Delta E$) are computed**. 
+
+One modification to CIELAB, made in **CIE94**  Added chroma- and hue-dependent weighting functions to correct CIELAB's overestimation of perceptual differences at high chroma ($\Delta E^*_{94}$, CIE 116-1995). Rather than measuring simple Euclidean distance in $(L^*, a^*, b^*)$, they convert differences into cylindrical lightness, chroma, and hue coordinates $(L^*, C^*_{ab}, h_{ab})$ and apply a weighted, position-dependent quadratic distance (so $\Delta E$ is no longer a global Euclidean metric in a transformed 3D space):
+
+The next modificiation, made in **CIEDE2000** Added lightness, chroma, and hue weighting functions ($S_L, S_C, S_H$), a chroma–hue interaction rotation term ($R_T$) in the blue region, and a rescaling of $a^*$ near neutral grays  ($\Delta E_{00}$, CIE 142-2001; ISO/CIE 11664-6).
 
 ## Spatial-CIELAB (S-CIELAB) {#sec-scielab}
 
 Color appearance also depends on spatial pattern.  Just think back to chromatic aberration - how could it not?
 
-<!-- TODO: Explain why CIELAB alone is insufficient for patterned images (depends on viewing distance and spatial frequency).
+Explain why CIELAB alone is insufficient for patterned images (depends on viewing distance and spatial frequency).
+
 Show the S-CIELAB architecture (Zhang & Wandell, 1997):
+
 1. Transform image into opponent-color channels (luminance, red-green, blue-yellow).
 2. Filter each channel by its corresponding spatial Contrast Sensitivity Function (CSF) scaled for viewing distance (cycles per degree).
 3. Transform the filtered representation back to CIE XYZ and compute point-by-point CIELAB Delta E.
 Bridge forward to Part V (Displays), where CIELAB and S-CIELAB are used to evaluate display bit-depth and subpixel rendering (@sec-display-principles). -->
 
+![Spatial CIELAB architecture](images/human/06-color-metrics/s-cielab/113-three-channel-spatial-color-model.png){#fig-scielab-model}
+
+More
+
+![Spatial CIELAB architecture](images/human/06-color-metrics/s-cielab/115-spatial-cielab-processing-pipeline.png){#fig-scielab-processing}
