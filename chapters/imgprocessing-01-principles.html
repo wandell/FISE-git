@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-12-12">
+<meta name="dcterms.date" content="2026-11-16">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>33&nbsp; Image processing principles – Foundations of Image Systems Engineering</title>
@@ -625,7 +625,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">December 12, 2025</p>
+      <p class="date">November 16, 2026</p>
     </div>
   </div>
   
@@ -651,22 +651,48 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: December 12, 2025
+Last updated: November 16, 2026
 !-->
 </div>
 </div>
 </div>
 <section id="sec-imgprocessing-principles-overview" class="level2" data-number="33.1">
 <h2 data-number="33.1" class="anchored" data-anchor-id="sec-imgprocessing-principles-overview"><span class="header-section-number">33.1</span> Image processing principles overview</h2>
-<p>The general field of digital image processing is enormous. It was large when I was a graduate student, and with time it has grown even more massive. It seems that whenever a new computational concept emerges, it finds application in imaging and expands the field. The most recent expansion is the use of deep neural network tools to create and edit images and videos. These are fascinating and</p>
-<p>In</p>
-<p>To this point, we have considered the environmental light field <a href="lightfields-01-intro.html#sec-light-overview" class="quarto-xref"><span>Section 2.1</span></a>, how it is measured by the optics <a href="optics-01-geometric.html" class="quarto-xref"><span>Chapter 7</span></a>, and how it is then converted into electrons at each pixel <a href="sensors-02-pixels.html#sec-pixels-overview" class="quarto-xref"><span>Section 18.1</span></a>. We have also considered how the visual system would capture the same light field.</p>
-<p>The first part of this chapter on image processing describes the steps that converts the data measured by the sensor into a signal that can be viewed by a person.</p>
-<p>It seems as if we should have display go first so we can do it. Or we might just assume that people know displays are typically RGB and hope for the best?</p>
-<p>Also, the human section on color might include some minimal display description that we could use here as the basic display model, with more advanced displays to come later, in the chapter <a href="displays-01-principles.html#sec-display-principles-overview" class="quarto-xref"><span>Section 30.1</span></a>.</p>
+<p>This chapter bridges the raw, mosaicked sensor measurements introduced in the sensor chapters and the trichromatic display representations introduced in <a href="displays-01-principles.html#sec-display-principles-overview" class="quarto-xref"><span>Section 30.1</span></a>.</p>
+<div id="fig-ip-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ip-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/imageprocessing/01-image-processing/004-reference-consumer-photography-pipeline.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ip-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;33.1: Image processing stages
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="lens-shading" class="level2" data-number="33.2">
 <h2 data-number="33.2" class="anchored" data-anchor-id="lens-shading"><span class="header-section-number">33.2</span> Lens shading</h2>
+<p>Make a panel tabset of these.</p>
+<div id="fig-lens-shading" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lens-shading-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/imageprocessing/01-image-processing/013-relative-illumination-aperture-geometry.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lens-shading-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;33.2: Lens shading geometry.
+</figcaption>
+</figure>
+</div>
+<div id="fig-lens-shading" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-lens-shading-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/imageprocessing/01-image-processing/014-relative-illumination-sensor-distance.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lens-shading-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;33.3: Lens shading geometry.
+</figcaption>
+</figure>
+</div>
 </section>
 <section id="acquisition-policies" class="level2" data-number="33.3">
 <h2 data-number="33.3" class="anchored" data-anchor-id="acquisition-policies"><span class="header-section-number">33.3</span> Acquisition policies</h2>

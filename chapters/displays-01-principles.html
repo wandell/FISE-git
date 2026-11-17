@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-11-09">
+<meta name="dcterms.date" content="2026-11-16">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>30&nbsp; Display principles – Foundations of Image Systems Engineering</title>
@@ -598,14 +598,15 @@ window.Quarto = {
    
   <ul>
   <li><a href="#sec-display-principles-overview" id="toc-sec-display-principles-overview" class="nav-link active" data-scroll-target="#sec-display-principles-overview"><span class="header-section-number">30.1</span> Display principles overview</a></li>
-  <li><a href="#from-light-fields-to-planar-displays" id="toc-from-light-fields-to-planar-displays" class="nav-link" data-scroll-target="#from-light-fields-to-planar-displays"><span class="header-section-number">30.2</span> From light fields to planar displays</a></li>
-  <li><a href="#sec-standard-display-model" id="toc-sec-standard-display-model" class="nav-link" data-scroll-target="#sec-standard-display-model"><span class="header-section-number">30.3</span> The standard display model</a>
+  <li><a href="#displays---a-review-chapter" id="toc-displays---a-review-chapter" class="nav-link" data-scroll-target="#displays---a-review-chapter"><span class="header-section-number">30.2</span> Displays - A Review chapter</a></li>
+  <li><a href="#from-light-fields-to-planar-displays" id="toc-from-light-fields-to-planar-displays" class="nav-link" data-scroll-target="#from-light-fields-to-planar-displays"><span class="header-section-number">30.3</span> From light fields to planar displays</a></li>
+  <li><a href="#sec-standard-display-model" id="toc-sec-standard-display-model" class="nav-link" data-scroll-target="#sec-standard-display-model"><span class="header-section-number">30.4</span> The standard display model</a>
   <ul class="collapse">
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">30.3.1</span> Overview</a></li>
-  <li><a href="#sec-display-gamma" id="toc-sec-display-gamma" class="nav-link" data-scroll-target="#sec-display-gamma"><span class="header-section-number">30.3.2</span> Spectral radiance and gamma curves</a></li>
-  <li><a href="#sec-display-subpixel-psf" id="toc-sec-display-subpixel-psf" class="nav-link" data-scroll-target="#sec-display-subpixel-psf"><span class="header-section-number">30.3.3</span> The subpixel point spread functions</a></li>
-  <li><a href="#linearity" id="toc-linearity" class="nav-link" data-scroll-target="#linearity"><span class="header-section-number">30.3.4</span> Linearity</a></li>
-  <li><a href="#model-summary" id="toc-model-summary" class="nav-link" data-scroll-target="#model-summary"><span class="header-section-number">30.3.5</span> Model summary</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">30.4.1</span> Overview</a></li>
+  <li><a href="#sec-display-gamma" id="toc-sec-display-gamma" class="nav-link" data-scroll-target="#sec-display-gamma"><span class="header-section-number">30.4.2</span> Spectral radiance and gamma curves</a></li>
+  <li><a href="#sec-display-subpixel-psf" id="toc-sec-display-subpixel-psf" class="nav-link" data-scroll-target="#sec-display-subpixel-psf"><span class="header-section-number">30.4.3</span> The subpixel point spread functions</a></li>
+  <li><a href="#linearity" id="toc-linearity" class="nav-link" data-scroll-target="#linearity"><span class="header-section-number">30.4.4</span> Linearity</a></li>
+  <li><a href="#model-summary" id="toc-model-summary" class="nav-link" data-scroll-target="#model-summary"><span class="header-section-number">30.4.5</span> Model summary</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -626,7 +627,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 9, 2026</p>
+      <p class="date">November 16, 2026</p>
     </div>
   </div>
   
@@ -652,39 +653,27 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: November 9, 2026
+Last updated: November 16, 2026
 !-->
 </div>
 </div>
 </div>
-<!--
-Read some Bernard Kress for near eye displays.
-
-## Display devices
-Refer to light field concepts as in the chapter
-
-## LCD OLED CRT
- I have OLED review papers in Paperpile on technology.  Tsujimura for example.  See chapter.
-
-## AR/VR
-
-## Lightfield displays
-I wonder if the Wetzstein work with LCDs should go in here?
-
-## Artal chapter text below
-
-(Needs updating because I kept writing after this.  The standard display model should go in here for calibration, for sure.)
--->
 <section id="sec-display-principles-overview" class="level2" data-number="30.1">
 <h2 data-number="30.1" class="anchored" data-anchor-id="sec-display-principles-overview"><span class="header-section-number">30.1</span> Display principles overview</h2>
+<p>Consumer photography is a very important application of image sensors. In that application, sensor data are transformed into data that can drive a visual display. To understand these image processing steps, it is useful to understand both the sensor and display technology. Just as there are multiple types of sensors, there are multiple types of displays, each with its own strengths and weaknesses. The image processing methods must account for the input (sensors) and output data (display). In consumer photography applications, the display and algorithm designs must also account for certain properties of the human visual system (<a href="../chapters/part-human.html">Part IV: Human Vision</a>).</p>
+<p>Certain principles are implemented in nearly all visual displays, and we cover those in this chapter. The following charpters in <a href="../chapters/part-displays.html">Part V: Displays</a> introduce different display types and their features.</p>
+<p>The critical algorithms for consumer photography are covered in <a href="imgprocessing-01-principles.html" class="quarto-xref"><span>Chapter 33</span></a>. It is increasingly the case that images are used for purposes other than consumer photography. Images play an important role in medical imaging, robotics, and autonomous vehicles, where they are both analyzed and created using computer algorithms. An increasingly large number of image sensors acquire environmental information that is never seen by human eyes. <a href="../chapters/part-processing.html">Part VI: Image processing</a> introduces image processing algorithms and metrics relevant to these applications as well<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+</section>
+<section id="displays---a-review-chapter" class="level2" data-number="30.2">
+<h2 data-number="30.2" class="anchored" data-anchor-id="displays---a-review-chapter"><span class="header-section-number">30.2</span> Displays - A Review chapter</h2>
 <p><strong>The text below is adapted from this review chapter. At this time, please also consult that article:</strong></p>
 <p><strong><a href="../chapters/resources/Artal-2024/Artal-2024.html" target="_blank">Characterization of Visual Stimuli using the Standard Display Model, 2024</a></strong></p>
 <p>Joyce E. Farrell, Haomiao Jiang, and Brian A. Wandell</p>
 <p>Psychology and Department of Electrical Engineering, Stanford University, Stanford, CA 94305</p>
 <p><strong>Key Words:</strong> Display technology, calibration, modeling, simulation, visual stimuli, psychophysics, pixel pointspread function, spectral power distribution</p>
 </section>
-<section id="from-light-fields-to-planar-displays" class="level2" data-number="30.2">
-<h2 data-number="30.2" class="anchored" data-anchor-id="from-light-fields-to-planar-displays"><span class="header-section-number">30.2</span> From light fields to planar displays</h2>
+<section id="from-light-fields-to-planar-displays" class="level2" data-number="30.3">
+<h2 data-number="30.3" class="anchored" data-anchor-id="from-light-fields-to-planar-displays"><span class="header-section-number">30.3</span> From light fields to planar displays</h2>
 <p>An ideal display system for science and commerce would deliver the complete spectral, spatial, directional, and temporal distribution of light rays, as if these rays arose from a real three-dimensional scene. The full radiometric description of light rays in the three-dimensional scene is called the “light field” (Gershun, 1936; <a href="lightfields-01-intro.html#sec-lightfields-types" class="quarto-xref"><span>Section 2.4</span></a>). For vision science, the simplified and related representation is the irradiance the scene produces at the cornea—this is the only part of the scene radiance that the retina encodes. The complete radiometric description of the rays at the cornea, sometimes referred to as the plenoptic function (Adelson and Bergen, 1991), specifies the rate of incident photons from every direction at each point in the pupil plane. To achieve an accurate dynamic reproduction of a scene, the plenoptic function must change as the head and eyes move.</p>
 <p>Commonly used scientific displays do not approach this ideal. Instead, most displays emit light rays from a planar surface in a wide range of directions, and the spectral radiance is invariant as the subject changes head and eye position. The displays themselves are limited in various ways; for example, the pixels produce a limited range of spectral power distributions, typically being formed as the weighted sum of three spectral primaries. Despite these limitations, modern displays create a very compelling perceptual experience that captures many important elements of the original scene. The ability to program these displays with computers and digital frame buffers has greatly enlarged the range of stimuli used in visual psychophysics compared to the optical benches and tachistoscopes used by previous generations.</p>
 <p>The vast majority of modern displays comprise a two-dimensional matrix of picture elements (pixels) at a density of 100–400 pixels per inch (4–16 pixels per mm). Each pixel typically contains three different light sources (subpixels, <a href="#fig-display-pixel" class="quarto-xref">Figure&nbsp;<span>30.1</span></a>). The pixels are intended to be identical across the display surface (spatial homogeneity).</p>
@@ -710,10 +699,10 @@ Figure&nbsp;30.2: (a) Spectral power distribution of blue, green, and red color 
 </figure>
 </div>
 </section>
-<section id="sec-standard-display-model" class="level2" data-number="30.3">
-<h2 data-number="30.3" class="anchored" data-anchor-id="sec-standard-display-model"><span class="header-section-number">30.3</span> The standard display model</h2>
-<section id="overview" class="level3" data-number="30.3.1">
-<h3 data-number="30.3.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">30.3.1</span> Overview</h3>
+<section id="sec-standard-display-model" class="level2" data-number="30.4">
+<h2 data-number="30.4" class="anchored" data-anchor-id="sec-standard-display-model"><span class="header-section-number">30.4</span> The standard display model</h2>
+<section id="overview" class="level3" data-number="30.4.1">
+<h3 data-number="30.4.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">30.4.1</span> Overview</h3>
 <p>Display technologies are differentiated by two main factors: the mechanism used to generate light and the spatial configuration of pixels and subpixels (<a href="displays-02-technologies.html" class="quarto-xref"><span>Chapter 31</span></a>). When designing commercial displays, manufacturers prioritize various performance metrics such as energy efficiency, brightness, spatial resolution, contrast ratio (darkness), color gamut, and refresh/update rates. The relative importance of these parameters varies depending on the intended application.</p>
 <p>Despite the diverse array of display architectures, it is possible to identify a few fundamental principles that describe the relationship between electronic control signals and the spectral radiance generated by a display. These widely adopted principles form the basis of a standard display model (Brainard et al., 2002; Post, 1992). This model is phenomenological in nature, meaning it describes observable relationships without necessarily explaining the underlying physical processes. Importantly, this standard display model is applicable not only to current popular displays but also to anticipated future developments in display technology.</p>
 <p>The standard display model’s parameters can be determined through a limited number of calibration measurements (<a href="displays-03-characterization.html" class="quarto-xref"><span>Chapter 32</span></a>). The model, combined with the calibration data, enables precise control over the display’s radiance output. A model is necessary because there are far too many images to calibrate individually (Brainard, 1989). To illustrate, an 8-bit display can produce <span class="math inline">\(2^{24}\)</span> distinct RGB combinations for a single static image. Furthermore, a <span class="math inline">\(1024 \times 1024\)</span> pixel display (<span class="math inline">\(2^{20}\)</span> pixels) has the potential to render an astronomical <span class="math inline">\(2^{480}\)</span> different images. The standard display model efficiently addresses this complexity by defining a compact set of calibration measurements, which can then be used to predict the spectral radiance for a wide array of images.</p>
@@ -723,8 +712,8 @@ Figure&nbsp;30.2: (a) Spectral power distribution of blue, green, and red color 
 <p>Finally, most displays refresh the image (frame) at a rate between 30 and 240 times per second. Within each frame, the subpixel intensity can rise and fall, and the frame repetitions and pixel dynamics influence the visibility of motion and flicker. The standard display model assumes that each subpixel has a simple time-invariant impulse response function that is independent of image content. This assumption is frequently violated because of the extensive engineering to control the dynamics of displays (see <a href="displays-02-technologies.html" class="quarto-xref"><span>Chapter 31</span></a> on LCDs, CRTs, and OLEDs). Characterizing the display dynamics is particularly important for experiments involving rapidly changing high contrast targets (e.g.&nbsp;random dots).</p>
 <p>The standard display model clarifies the measurements needed to calibrate a display. The first two are to measure (a) the normalized spectral radiance distributions for each of the display primaries, and (b) the gamma-curve that specifies the absolute level of the spectral radiance given a particular frame buffer value. It is less common for scientists to measure the subpixel PSFs. These can be measured using a macro-lens and the linear output of a calibrated digital camera (Farrell et al., 2008), but in most cases the function is treated as a single point (impulse). Characterizing the PSF can be meaningful for measurements of fine spatial resolution (e.g., quality of fonts, vernier resolution) where there are significant effects of human optics on retinal image formation.</p>
 </section>
-<section id="sec-display-gamma" class="level3" data-number="30.3.2">
-<h3 data-number="30.3.2" class="anchored" data-anchor-id="sec-display-gamma"><span class="header-section-number">30.3.2</span> Spectral radiance and gamma curves</h3>
+<section id="sec-display-gamma" class="level3" data-number="30.4.2">
+<h3 data-number="30.4.2" class="anchored" data-anchor-id="sec-display-gamma"><span class="header-section-number">30.4.2</span> Spectral radiance and gamma curves</h3>
 <p>It is common to use a spectral radiometer to measure the spectral radiance emitted by each of the three types of primaries. The standard display model assumes that for each primary the spectral power distribution takes the form <span class="math inline">\(I(F) P(\lambda)\)</span>, where <span class="math inline">\(P(\lambda)\)</span> is the spectral power distribution of the display when the frame buffer is set to its maximum value and <span class="math inline">\(0 &lt; I(F) &lt; 1\)</span> is the relative intensity for a frame buffer value of <span class="math inline">\(F\)</span>.</p>
 <p>To estimate <span class="math inline">\(I(F)\)</span> and <span class="math inline">\(P(\lambda)\)</span>, we measure the spectral radiance for a series of different frame buffer levels. An important detail is this: In most displays there is some stray light present even when <span class="math inline">\(F=0\)</span>. This light is usually treated as a fixed offset, <span class="math inline">\(B(\lambda)\)</span> and subtracted from the calibration data (Brainard et al, 2002). Hence, the measured spectral radiance curves have the form</p>
 <p><span class="math display">\[
@@ -745,8 +734,8 @@ I &amp;= \alpha ~ F^\gamma + B_0
 <p>The analytical gamma function is an approximation to the true <span class="math inline">\(I(F)\)</span>. In modern computers, this approximation can be avoided by building a lookup table that stores the nonlinear relationship between the digital control values and the display output, <span class="math inline">\(I(F)\)</span>.</p>
 <p>This nonlinearity will continue across technologies because programmers prefer that equal spacing of the digital frame buffer values correspond to equal perceptual spacing (Poynton, 1993; Poynton and Funt, 2014). To maintain this relationship, the display intensity must be nonlinearly related to the frame buffer value (Stevens 1957; Wandell, 1995).</p>
 </section>
-<section id="sec-display-subpixel-psf" class="level3" data-number="30.3.3">
-<h3 data-number="30.3.3" class="anchored" data-anchor-id="sec-display-subpixel-psf"><span class="header-section-number">30.3.3</span> The subpixel point spread functions</h3>
+<section id="sec-display-subpixel-psf" class="level3" data-number="30.4.3">
+<h3 data-number="30.4.3" class="anchored" data-anchor-id="sec-display-subpixel-psf"><span class="header-section-number">30.4.3</span> The subpixel point spread functions</h3>
 <p>The spatial distribution of light from each subpixel is described by a point spread function, <span class="math inline">\(P(x,y,\lambda)\)</span>. The spatial spread of the light from each subpixel can be measured using a high resolution digital camera with a close-up lens (<a href="#fig-display-pixel" class="quarto-xref">Figure&nbsp;<span>30.1</span></a>; Farrell et al, 2008). Furthermore, the spectral and spatial parts of the point spread function are separable:</p>
 <p><span id="eq-subpixel-psf"><span class="math display">\[
 P(x,y,\lambda)=s(x,y)w(\lambda)
@@ -754,13 +743,13 @@ P(x,y,\lambda)=s(x,y)w(\lambda)
 <p>The subpixel point spread is assumed to have the same form across display positions, that is the subpixel point spread function at pixel <span class="math inline">\((u,v)\)</span> is <span class="math inline">\(s(x-u,y-v)w(\lambda)\)</span>. And finally, the shape scales with intensity <span class="math inline">\(I s(x-u,y-v)w(\lambda)\)</span>.</p>
 <p>The standard display model assumes that point spread functions from adjacent pixels sum. This linearity is an ideal—no display is precisely linear. But display designs generally aim to satisfy these principles and implementations are close enough so that these principles are a good basis for display characterization and simulation.</p>
 </section>
-<section id="linearity" class="level3" data-number="30.3.4">
-<h3 data-number="30.3.4" class="anchored" data-anchor-id="linearity"><span class="header-section-number">30.3.4</span> Linearity</h3>
+<section id="linearity" class="level3" data-number="30.4.4">
+<h3 data-number="30.4.4" class="anchored" data-anchor-id="linearity"><span class="header-section-number">30.4.4</span> Linearity</h3>
 <p>Apart from the static, nonlinear gamma curve, the standard display model is a shift-invariant linear system. That is, given the intensity of each subpixel we compute the expected display spectral radiance as the weighted sum of the subpixel point spread functions. If the subpixel intensities for one image are <span class="math inline">\(I_1\)</span> with corresponding spectral radiance <span class="math inline">\(R_1(x,y,\lambda)\)</span>, and a second image is <span class="math inline">\(I_2\)</span> with corresponding spectral radiance <span class="math inline">\(R_2(x,y,\lambda)\)</span>, then the radiance when the image is <span class="math inline">\(I_1 + I_2\)</span> will be <span class="math inline">\(R_1(x,y,\lambda) + R_2(x,y,\lambda)\)</span>.</p>
 <p>The calibration process should test the additivity assumption. Simple tests include checking that the light emitted from the <span class="math inline">\(i^{\text{th}}\)</span> subpixel does not depend on the intensity of other subpixels (Lyons and Farrell, 1989; Pelli, 1997; Farrell et al, 2008).</p>
 </section>
-<section id="model-summary" class="level3" data-number="30.3.5">
-<h3 data-number="30.3.5" class="anchored" data-anchor-id="model-summary"><span class="header-section-number">30.3.5</span> Model summary</h3>
+<section id="model-summary" class="level3" data-number="30.4.5">
+<h3 data-number="30.4.5" class="anchored" data-anchor-id="model-summary"><span class="header-section-number">30.4.5</span> Model summary</h3>
 <p>The standard display model for a steady-state image can be expressed as a simple formula that maps the frame buffer values, <span class="math inline">\(F\)</span>, to the display spatial-spectral radiance <span class="math inline">\(R(x,y,\lambda)\)</span>.</p>
 <p>Suppose the gamma function, point spread function, and spectral power distribution of the <span class="math inline">\(j^{\text{th}}\)</span> subpixel type are <span class="math inline">\(I_j(v)\)</span>, <span class="math inline">\(s_j(x,y)\)</span>, and <span class="math inline">\(w_j(\lambda)\)</span>. Suppose the frame buffer values for the <span class="math inline">\(j^{\text{th}}\)</span> subpixel type is <span class="math inline">\(F_j(u,v)\)</span>. Then the display spectral radiance across space is predicted to be</p>
 <p><span id="eq-convolution"><span class="math display">\[
@@ -771,6 +760,12 @@ R(x,y,\lambda)= \sum_{u,v} \sum_{j=1}^{3} I_j(F_j(u,v)) s_j(x-u,y-v) w_j(\lambda
 
 
 </section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Computer scientists generally think RGB images magically appear and reflect reality. Sigh. IMHO there could be a lot more thought put into the question of image processing for machine vision applications—for example, standard RGB pipelines bake in human-centric demosaicking, white balance, and tone curves that are often unnecessary or suboptimal for machine vision.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->

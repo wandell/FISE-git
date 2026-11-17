@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-11-13">
+<meta name="dcterms.date" content="2026-11-16">
 <meta name="description" content="An integrated overview of image systems, from physical scene formation through sensors, optics, and human vision.">
 
 <title>29&nbsp; Color representations and metrics – Foundations of Image Systems Engineering</title>
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -89,6 +123,8 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script type="module" src="../site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="../site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -626,7 +662,11 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#sec-uv-chromaticity" id="toc-sec-uv-chromaticity" class="nav-link" data-scroll-target="#sec-uv-chromaticity"><span class="header-section-number">29.3.1</span> <span class="math inline">\((u', v')\)</span> chromaticity coordinates</a></li>
   </ul></li>
-  <li><a href="#sec-cielab" id="toc-sec-cielab" class="nav-link" data-scroll-target="#sec-cielab"><span class="header-section-number">29.4</span> CIELAB</a></li>
+  <li><a href="#sec-cielab" id="toc-sec-cielab" class="nav-link" data-scroll-target="#sec-cielab"><span class="header-section-number">29.4</span> CIELAB</a>
+  <ul class="collapse">
+  <li><a href="#color-appearance" id="toc-color-appearance" class="nav-link" data-scroll-target="#color-appearance"><span class="header-section-number">29.4.1</span> Color appearance</a></li>
+  <li><a href="#color-difference-metric-delta-e" id="toc-color-difference-metric-delta-e" class="nav-link" data-scroll-target="#color-difference-metric-delta-e"><span class="header-section-number">29.4.2</span> Color difference metric: <span class="math inline">\(\Delta E\)</span></a></li>
+  </ul></li>
   <li><a href="#sec-scielab" id="toc-sec-scielab" class="nav-link" data-scroll-target="#sec-scielab"><span class="header-section-number">29.5</span> Spatial-CIELAB (S-CIELAB)</a></li>
   </ul>
 </nav>
@@ -647,7 +687,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 13, 2026</p>
+      <p class="date">November 16, 2026</p>
     </div>
   </div>
   
@@ -673,7 +713,7 @@ Work in Progress
 <div class="callout-body-container callout-body">
 <p>Suggestions of all kinds for this book draft are welcome — whether it’s fixing small errors, raising bigger questions, or offering new perspectives. Please share comments through <a href="https://github.com/wandell/FISE-git/issues" target="_blank">GitHub Issues</a>. To make feedback easier to address, please point to the section you have in mind — by section number or a short snippet of text.</p>
 <!--
-Last updated: November 13, 2026
+Last updated: November 16, 2026
 !-->
 </div>
 </div>
@@ -890,7 +930,7 @@ Figure&nbsp;29.6: The u′, v′ normalization plane and spectrum locus in XYZ s
 <div id="fig-uv-blackbody-geometry" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-uv-blackbody-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/human/06-color-metrics/chromaticity/CIE_1976_UCS-wikipedia-blackbody.png" class="img-fluid figure-img" style="width:70.0%">
+<img src="images/human/06-color-metrics/chromaticity/CIE_1976_UCS-wikipedia-blackbody.png" class="img-fluid figure-img" style="width:50.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-uv-blackbody-geometry-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;29.7: Schematic color appearance and Planckian locus in the CIE 1976 <span class="math inline">\((u', v')\)</span> UCS diagram (source: <a href="https://commons.wikimedia.org/w/index.php?curid=3770098">Wikimedia Commons</a>, public domain).
@@ -903,24 +943,454 @@ Figure&nbsp;29.7: Schematic color appearance and Planckian locus in the CIE 1976
 </section>
 <section id="sec-cielab" class="level2" data-number="29.4">
 <h2 data-number="29.4" class="anchored" data-anchor-id="sec-cielab"><span class="header-section-number">29.4</span> CIELAB</h2>
-<p>The <span class="math inline">\((u', v')\)</span> improves the uniformity of two-dimensional chromaticity spacing, but it is far from perfect. To quantify the full perceptual difference between two colors that may differ in both luminance and chromaticity, we need a three-dimensional space that incorporates adaptation to the scene white point and the nonlinear brightness sensitivity of human vision.</p>
-<p>We really want a three-dimensional equaliztion, not just in the chromaticity plane.</p>
-<p>Adams-Nickerson data.</p>
-<p>CIELUV/CIELAB</p>
-<p>Wyszecki wanted to preserve the projection mapping.</p>
-<!-- TODO: Explain why Euclidean distance in CIE XYZ or (x,y) is not perceptually uniform (MacAdam ellipses).
-Introduce opponent-color organization, adaptation to the white point (X_n, Y_n, Z_n), the cube-root compressive nonlinearity, L*, a*, b* coordinates, and Delta E.
-Reference Bob Hunt and Mark Fairchild contributions. -->
+<p>There are two shortcomings we would like to address concerning the chromaticity representations.</p>
+<p>First, the <span class="math inline">\((u', v')\)</span> improves the uniformity of two-dimensional chromaticity spacing, but it remains a two-dimensional measure of a three-dimensional signal. To quantify the full perceptual difference between two lights - which will generally differ in both luminance and chromaticity - we need to expand the metric to include all three dimensions.</p>
+<p>Second, the human visual adjusts its properties substantially as it changes between contexts, say from inside a room to outside in the sun. These adjustments - often called light- and dark-adaptation - substantially change visual sensitivity and thus have a big impact on how well we can discriminate between different lights.</p>
+<p>In 1976 the CIE completed work on the color metrics that address these two issues. The metrics account for all three dimensions, and they include parameters about the ambient viewing conditions which determine the likely state of adaptation.</p>
+<p>The CIE committee members could not come to an agreement on a single metric, and they approved two standard discrimination metrics: CIELUV and CIELAB. The CIELUV metric is an extension of the <span class="math inline">\((u',v')\)</span> system, and it was favored by key individuals (Günther Wyszecki) who wanted the new system to preserve a projective chromaticity diagram while accounting for the ambient white point <span class="math inline">\((X_n, Y_n, Z_n)\)</span>:</p>
+<p><span id="eq-cieluv"><span class="math display">\[
+\begin{aligned}
+L^* &amp;= \begin{cases}
+116 \left(\frac{Y}{Y_n}\right)^{1/3} - 16, &amp; \frac{Y}{Y_n} &gt; \left(\frac{6}{29}\right)^3 \approx 0.008856, \\[6pt]
+\left(\frac{29}{3}\right)^3 \frac{Y}{Y_n} \approx 903.3\,\frac{Y}{Y_n}, &amp; \frac{Y}{Y_n} \le \left(\frac{6}{29}\right)^3,
+\end{cases} \\[8pt]
+u^* &amp;= 13\, L^* (u' - u'_n), \\[4pt]
+v^* &amp;= 13\, L^* (v' - v'_n),
+\end{aligned}
+\tag{29.3}\]</span></span></p>
+<p>where <span class="math inline">\((u'_n, v'_n)\)</span> are the <span class="math inline">\((u', v')\)</span> chromaticity coordinates of the reference white point from <a href="#eq-uv-chromaticity" class="quarto-xref">Equation&nbsp;<span>29.2</span></a>, and the perceptual color difference between two lights is the Euclidean distance <span class="math inline">\(\Delta E^*_{uv} = \sqrt{(\Delta L^*)^2 + (\Delta u^*)^2 + (\Delta v^*)^2}\)</span>.</p>
+<p>The ambient white point values are the <span class="math inline">\(u'_n,v'_n\)</span> chromaticity coordinates and <span class="math inline">\(Y_n\)</span> value of a white reflective surface under the ambient illumination conditions. These values provide information about the viewer’s likely state of adaptation, and the CIELUV values <span class="math inline">\((L^*,u^*,v^*)\)</span> are all specified in terms of the white point values.</p>
+<p>Another group—including <strong>R. W. G. (Bob) Hunt</strong> and researchers in the surface-color and textile industries—favored the <strong>CIELAB</strong> formula, which simplified the earlier <strong>Adams–Nickerson</strong> opponent-color space developed by Elliot Q. Adams and Dorothy Nickerson. Rather than preserving a projective chromaticity diagram, CIELAB normalizes each tristimulus value <span class="math inline">\((X, Y, Z)\)</span> directly by the ambient white point <span class="math inline">\((X_n, Y_n, Z_n)\)</span> and applies a compressive nonlinearity before taking opponent differences:</p>
+<p><span id="eq-cielab"><span class="math display">\[
+\begin{aligned}
+L^* &amp;= 116\, f\!\left(\frac{Y}{Y_n}\right) - 16, \\[6pt]
+a^* &amp;= 500 \left[ f\!\left(\frac{X}{X_n}\right) - f\!\left(\frac{Y}{Y_n}\right) \right], \\[6pt]
+b^* &amp;= 200 \left[ f\!\left(\frac{Y}{Y_n}\right) - f\!\left(\frac{Z}{Z_n}\right) \right],
+\end{aligned}
+\tag{29.4}\]</span></span></p>
+<p>where the piecewise compressive function <span class="math inline">\(f(t)\)</span> is</p>
+<p><span id="eq-cielab-f"><span class="math display">\[
+f(t) = \begin{cases}
+t^{1/3}, &amp; t &gt; \left(\frac{6}{29}\right)^3 \approx 0.008856, \\[6pt]
+\frac{1}{3}\left(\frac{29}{6}\right)^2 t + \frac{4}{29} \approx 7.787\,t + \frac{16}{116}, &amp; t \le \left(\frac{6}{29}\right)^3 .
+\end{cases}
+\tag{29.5}\]</span></span></p>
+<p>Notice that <span class="math inline">\(L^*\)</span> in <a href="#eq-cielab" class="quarto-xref">Equation&nbsp;<span>29.4</span></a> is identical to <span class="math inline">\(L^*\)</span> in <a href="#eq-cieluv" class="quarto-xref">Equation&nbsp;<span>29.3</span></a>.</p>
+<section id="color-appearance" class="level3" data-number="29.4.1">
+<h3 data-number="29.4.1" class="anchored" data-anchor-id="color-appearance"><span class="header-section-number">29.4.1</span> Color appearance</h3>
+<div id="fig-pattern-color" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pattern-color-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/cielab/071-cielab-color-solid.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pattern-color-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.8: Color appearance in CIELAB coordinates.
+</figcaption>
+</figure>
+</div>
+<p>Comment on red-green and blue-yellow axes. Reference opponency in FOV, perhaps. Maybe we get some opponency in this book, too. Could happen in the wavelength encoding chapter.</p>
+<p>Let’s get Munsell in here, too. Something about Hurvich and Jameson.</p>
+<div id="fig-munsell-appearanc-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-munsell-appearanc-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/appearance/074-munsell-book-of-colors.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-munsell-appearanc-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.9: Munsell images
+</figcaption>
+</figure>
+</div>
+<div id="fig-munsell-appearanc-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-munsell-appearanc-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/appearance/075-munsell-color-solid-model.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-munsell-appearanc-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.10: Munsell images
+</figcaption>
+</figure>
+</div>
+<div id="fig-munsell-appearanc-overview" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-munsell-appearanc-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/appearance/076-munsell-value-radial-slices.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-munsell-appearanc-overview-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.11: Munsell images
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Munsell notation and renotation">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Munsell notation and renotation
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Explain the notation and the OSA renotation.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="color-difference-metric-delta-e" class="level3" data-number="29.4.2">
+<h3 data-number="29.4.2" class="anchored" data-anchor-id="color-difference-metric-delta-e"><span class="header-section-number">29.4.2</span> Color difference metric: <span class="math inline">\(\Delta E\)</span></h3>
+<p>A key point for both of these representations is to make the perceptual difference between two lights match the Euclidean distance between their representation. We use the symbol <span class="math inline">\(\Delta E\)</span> to denote the Euclidean difference, and we add a subscript to undicate whether we are measuring in CIELUV or CIELAB space, such as <span id="eq-delta-E-ab"><span class="math display">\[
+\Delta E^*_{ab} = \sqrt{(\Delta L^*)^2 + (\Delta a^*)^2 + (\Delta b^*)^2}
+\tag{29.6}\]</span></span></p>
+<p>The two representations are not the same, but they are not wildly different either. We can judge the similarity by plotting the equal-difference contours (a circle) in one space (CIELAB) in the other space (CIELUV). We can also transform a grid from CIELAB space into CIELUV space. The interactive plots in <a href="#fig-cieluv-vs-cielab" class="quarto-xref">Figure&nbsp;<span>29.12</span></a> provide a sense of how these two representations differ.</p>
+<div id="fig-cieluv-vs-cielab" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cieluv-vs-cielab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div style="width: 100%; margin: 0 auto; overflow: visible; font-size: 0.95rem;">
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb1" data-startfrom="1" data-source-offset="-0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>viewof luv_lab_Lstar <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">range</span>([<span class="dv">30</span><span class="op">,</span> <span class="dv">85</span>]<span class="op">,</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">value</span><span class="op">:</span> <span class="dv">65</span><span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">step</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">label</span><span class="op">:</span> <span class="st">"Lightness L*"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>viewof luv_lab_preset <span class="op">=</span> Inputs<span class="op">.</span><span class="fu">select</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  [</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">"Neutral (D65 white)"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="dv">0</span><span class="op">,</span> <span class="dt">b</span><span class="op">:</span> <span class="dv">0</span> }<span class="op">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">"Red-orange"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="dv">45</span><span class="op">,</span> <span class="dt">b</span><span class="op">:</span> <span class="dv">35</span> }<span class="op">,</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">"Yellow-green"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="op">-</span><span class="dv">20</span><span class="op">,</span> <span class="dt">b</span><span class="op">:</span> <span class="dv">50</span> }<span class="op">,</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">"Green"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="op">-</span><span class="dv">45</span><span class="op">,</span> <span class="dt">b</span><span class="op">:</span> <span class="dv">25</span> }<span class="op">,</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">"Cyan"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="op">-</span><span class="dv">30</span><span class="op">,</span> <span class="dt">b</span><span class="op">:</span> <span class="op">-</span><span class="dv">20</span> }<span class="op">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">"Blue"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="dv">15</span><span class="op">,</span> <span class="dt">b</span><span class="op">:</span> <span class="op">-</span><span class="dv">50</span> }<span class="op">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">name</span><span class="op">:</span> <span class="st">"Magenta"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="dv">45</span><span class="op">,</span> <span class="dt">b</span><span class="op">:</span> <span class="op">-</span><span class="dv">30</span> }</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  ]<span class="op">,</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">label</span><span class="op">:</span> <span class="st">"Test light"</span><span class="op">,</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">format</span><span class="op">:</span> d <span class="kw">=&gt;</span> d<span class="op">.</span><span class="at">name</span><span class="op">,</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="dt">value</span><span class="op">:</span> { <span class="dt">name</span><span class="op">:</span> <span class="st">"Red-orange"</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> <span class="dv">45</span><span class="op">,</span> <span class="dt">b</span><span class="op">:</span> <span class="dv">35</span> }</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-1" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<div id="ojs-cell-1-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb2" data-startfrom="0" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line -1;"><span id="cb2-0"><a href="#cb2-0" aria-hidden="true" tabindex="-1"></a>luv_lab_calc <span class="op">=</span> {</span>
+<span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> Xn <span class="op">=</span> <span class="fl">95.047</span><span class="op">,</span> Yn <span class="op">=</span> <span class="fl">100.0</span><span class="op">,</span> Zn <span class="op">=</span> <span class="fl">108.883</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> denom_n <span class="op">=</span> Xn <span class="op">+</span> <span class="dv">15</span> <span class="op">*</span> Yn <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> Zn<span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> un <span class="op">=</span> (<span class="dv">4</span> <span class="op">*</span> Xn) <span class="op">/</span> denom_n<span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> vn <span class="op">=</span> (<span class="dv">9</span> <span class="op">*</span> Yn) <span class="op">/</span> denom_n<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> delta <span class="op">=</span> <span class="dv">6</span> <span class="op">/</span> <span class="dv">29</span><span class="op">;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">finv</span>(t) {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t <span class="op">&gt;</span> delta <span class="op">?</span> t <span class="op">*</span> t <span class="op">*</span> t <span class="op">:</span> <span class="dv">3</span> <span class="op">*</span> delta <span class="op">*</span> delta <span class="op">*</span> (t <span class="op">-</span> <span class="dv">4</span> <span class="op">/</span> <span class="dv">29</span>)<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">lab2xyz</span>(L<span class="op">,</span> a<span class="op">,</span> b) {</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> fy <span class="op">=</span> (L <span class="op">+</span> <span class="dv">16</span>) <span class="op">/</span> <span class="dv">116</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> fx <span class="op">=</span> a <span class="op">/</span> <span class="dv">500</span> <span class="op">+</span> fy<span class="op">;</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> fz <span class="op">=</span> fy <span class="op">-</span> b <span class="op">/</span> <span class="dv">200</span><span class="op">;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> Xn <span class="op">*</span> <span class="fu">finv</span>(fx))<span class="op">,</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> Yn <span class="op">*</span> <span class="fu">finv</span>(fy))<span class="op">,</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>      <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> Zn <span class="op">*</span> <span class="fu">finv</span>(fz))</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    ]<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">xyz2uv</span>(X<span class="op">,</span> Y<span class="op">,</span> Z) {</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> d <span class="op">=</span> X <span class="op">+</span> <span class="dv">15</span> <span class="op">*</span> Y <span class="op">+</span> <span class="dv">3</span> <span class="op">*</span> Z<span class="op">;</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (d <span class="op">&lt;=</span> <span class="dv">0</span>) <span class="cf">return</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">0</span>]<span class="op">;</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [(<span class="dv">4</span> <span class="op">*</span> X) <span class="op">/</span> d<span class="op">,</span> (<span class="dv">9</span> <span class="op">*</span> Y) <span class="op">/</span> d]<span class="op">;</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">lab2luv</span>(L<span class="op">,</span> a<span class="op">,</span> b) {</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [X<span class="op">,</span> Y<span class="op">,</span> Z] <span class="op">=</span> <span class="fu">lab2xyz</span>(L<span class="op">,</span> a<span class="op">,</span> b)<span class="op">;</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [up<span class="op">,</span> vp] <span class="op">=</span> <span class="fu">xyz2uv</span>(X<span class="op">,</span> Y<span class="op">,</span> Z)<span class="op">;</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="dv">13</span> <span class="op">*</span> L <span class="op">*</span> (up <span class="op">-</span> un)<span class="op">,</span> <span class="dv">13</span> <span class="op">*</span> L <span class="op">*</span> (vp <span class="op">-</span> vn)]<span class="op">;</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Approximate display color for a (L, a, b) point (for visual cue only)</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="kw">function</span> <span class="fu">lab2css</span>(L<span class="op">,</span> a<span class="op">,</span> b) {</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [X<span class="op">,</span> Y<span class="op">,</span> Z] <span class="op">=</span> <span class="fu">lab2xyz</span>(L<span class="op">,</span> a<span class="op">,</span> b)<span class="op">;</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> x <span class="op">=</span> X <span class="op">/</span> <span class="dv">100</span><span class="op">,</span> y <span class="op">=</span> Y <span class="op">/</span> <span class="dv">100</span><span class="op">,</span> z <span class="op">=</span> Z <span class="op">/</span> <span class="dv">100</span><span class="op">;</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> r <span class="op">=</span>  <span class="fl">3.2406</span> <span class="op">*</span> x <span class="op">-</span> <span class="fl">1.5372</span> <span class="op">*</span> y <span class="op">-</span> <span class="fl">0.4986</span> <span class="op">*</span> z<span class="op">;</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> g <span class="op">=</span> <span class="op">-</span><span class="fl">0.9689</span> <span class="op">*</span> x <span class="op">+</span> <span class="fl">1.8758</span> <span class="op">*</span> y <span class="op">+</span> <span class="fl">0.0415</span> <span class="op">*</span> z<span class="op">;</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="kw">let</span> bl <span class="op">=</span> <span class="fl">0.0557</span> <span class="op">*</span> x <span class="op">-</span> <span class="fl">0.2040</span> <span class="op">*</span> y <span class="op">+</span> <span class="fl">1.0570</span> <span class="op">*</span> z<span class="op">;</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> compand <span class="op">=</span> c <span class="kw">=&gt;</span> {</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> clamped <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="dv">1</span><span class="op">,</span> c))<span class="op">;</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>      <span class="cf">return</span> clamped <span class="op">&lt;=</span> <span class="fl">0.0031308</span> <span class="op">?</span> <span class="fl">12.92</span> <span class="op">*</span> clamped <span class="op">:</span> <span class="fl">1.055</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">pow</span>(clamped<span class="op">,</span> <span class="dv">1</span> <span class="op">/</span> <span class="fl">2.4</span>) <span class="op">-</span> <span class="fl">0.055</span><span class="op">;</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    }<span class="op">;</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="vs">`rgb(</span><span class="sc">${</span><span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(<span class="fu">compand</span>(r)<span class="op">*</span><span class="dv">255</span>)<span class="sc">}</span><span class="vs">, </span><span class="sc">${</span><span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(<span class="fu">compand</span>(g)<span class="op">*</span><span class="dv">255</span>)<span class="sc">}</span><span class="vs">, </span><span class="sc">${</span><span class="bu">Math</span><span class="op">.</span><span class="fu">round</span>(<span class="fu">compand</span>(bl)<span class="op">*</span><span class="dv">255</span>)<span class="sc">}</span><span class="vs">)`</span><span class="op">;</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> L <span class="op">=</span> luv_lab_Lstar<span class="op">;</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> radius <span class="op">=</span> <span class="dv">15</span><span class="op">;</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> a0 <span class="op">=</span> luv_lab_preset<span class="op">.</span><span class="at">a</span><span class="op">;</span></span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> b0 <span class="op">=</span> luv_lab_preset<span class="op">.</span><span class="at">b</span><span class="op">;</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> [u0<span class="op">,</span> v0] <span class="op">=</span> <span class="fu">lab2luv</span>(L<span class="op">,</span> a0<span class="op">,</span> b0)<span class="op">;</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> circlePts <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> refUvPts <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> minDEuv <span class="op">=</span> <span class="kw">Infinity</span><span class="op">;</span></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>  <span class="kw">let</span> maxDEuv <span class="op">=</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> N <span class="op">=</span> <span class="dv">72</span><span class="op">;</span></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;=</span> N<span class="op">;</span> i<span class="op">++</span>) {</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> theta <span class="op">=</span> (<span class="dv">2</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span> <span class="op">*</span> i) <span class="op">/</span> N<span class="op">;</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> a <span class="op">=</span> a0 <span class="op">+</span> radius <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(theta)<span class="op">;</span></span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> b <span class="op">=</span> b0 <span class="op">+</span> radius <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(theta)<span class="op">;</span></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> [u<span class="op">,</span> v] <span class="op">=</span> <span class="fu">lab2luv</span>(L<span class="op">,</span> a<span class="op">,</span> b)<span class="op">;</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> dEuv <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">hypot</span>(u <span class="op">-</span> u0<span class="op">,</span> v <span class="op">-</span> v0)<span class="op">;</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (i <span class="op">&lt;</span> N) {</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (dEuv <span class="op">&lt;</span> minDEuv) minDEuv <span class="op">=</span> dEuv<span class="op">;</span></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (dEuv <span class="op">&gt;</span> maxDEuv) maxDEuv <span class="op">=</span> dEuv<span class="op">;</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    circlePts<span class="op">.</span><span class="fu">push</span>({ i<span class="op">,</span> a<span class="op">,</span> b<span class="op">,</span> u<span class="op">,</span> v<span class="op">,</span> dEuv<span class="op">,</span> <span class="dt">color</span><span class="op">:</span> <span class="fu">lab2css</span>(L<span class="op">,</span> a<span class="op">,</span> b) })<span class="op">;</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    refUvPts<span class="op">.</span><span class="fu">push</span>({</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>      i<span class="op">,</span></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>      <span class="dt">u</span><span class="op">:</span> u0 <span class="op">+</span> radius <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(theta)<span class="op">,</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>      <span class="dt">v</span><span class="op">:</span> v0 <span class="op">+</span> radius <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(theta)</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    })<span class="op">;</span></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Constant-a* and constant-b* grid lines to show nonlinear warp</span></span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> gridLines <span class="op">=</span> []<span class="op">;</span></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> vals <span class="op">=</span> [<span class="op">-</span><span class="dv">60</span><span class="op">,</span> <span class="op">-</span><span class="dv">30</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">30</span><span class="op">,</span> <span class="dv">60</span>]<span class="op">;</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> av <span class="kw">of</span> vals) {</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> bv <span class="op">=</span> <span class="op">-</span><span class="dv">60</span><span class="op">;</span> bv <span class="op">&lt;=</span> <span class="dv">60</span><span class="op">;</span> bv <span class="op">+=</span> <span class="dv">5</span>) {</span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> [u<span class="op">,</span> v] <span class="op">=</span> <span class="fu">lab2luv</span>(L<span class="op">,</span> av<span class="op">,</span> bv)<span class="op">;</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>      gridLines<span class="op">.</span><span class="fu">push</span>({ <span class="dt">series</span><span class="op">:</span> <span class="vs">`a=</span><span class="sc">${</span>av<span class="sc">}</span><span class="vs">`</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> av<span class="op">,</span> <span class="dt">b</span><span class="op">:</span> bv<span class="op">,</span> u<span class="op">,</span> v })<span class="op">;</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> bv <span class="kw">of</span> vals) {</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">let</span> av <span class="op">=</span> <span class="op">-</span><span class="dv">60</span><span class="op">;</span> av <span class="op">&lt;=</span> <span class="dv">60</span><span class="op">;</span> av <span class="op">+=</span> <span class="dv">5</span>) {</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>      <span class="kw">const</span> [u<span class="op">,</span> v] <span class="op">=</span> <span class="fu">lab2luv</span>(L<span class="op">,</span> av<span class="op">,</span> bv)<span class="op">;</span></span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>      gridLines<span class="op">.</span><span class="fu">push</span>({ <span class="dt">series</span><span class="op">:</span> <span class="vs">`b=</span><span class="sc">${</span>bv<span class="sc">}</span><span class="vs">`</span><span class="op">,</span> <span class="dt">a</span><span class="op">:</span> av<span class="op">,</span> <span class="dt">b</span><span class="op">:</span> bv<span class="op">,</span> u<span class="op">,</span> v })<span class="op">;</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>    L<span class="op">,</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    radius<span class="op">,</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>    a0<span class="op">,</span></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    b0<span class="op">,</span></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    u0<span class="op">,</span></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    v0<span class="op">,</span></span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>    <span class="dt">centerColor</span><span class="op">:</span> <span class="fu">lab2css</span>(L<span class="op">,</span> a0<span class="op">,</span> b0)<span class="op">,</span></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>    circlePts<span class="op">,</span></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>    refUvPts<span class="op">,</span></span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>    gridLines<span class="op">,</span></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>    minDEuv<span class="op">,</span></span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>    maxDEuv</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-2" data-nodetype="declaration">
+
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code hidden" id="cb3" data-startfrom="0" data-source-offset="0"><pre class="sourceCode js code-with-copy"><code class="sourceCode javascript" style="counter-reset: source-line -1;"><span id="cb3-0"><a href="#cb3-0" aria-hidden="true" tabindex="-1"></a><span class="fu">html</span><span class="vs">`&lt;div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; align-items: start;"&gt;</span></span>
+<span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>      <span class="dt">title</span><span class="op">:</span> <span class="vs">`CIELAB (a*, b*) at L* = </span><span class="sc">${</span>luv_lab_calc<span class="op">.</span><span class="at">L</span><span class="sc">}</span><span class="vs">`</span><span class="op">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>      <span class="dt">width</span><span class="op">:</span> <span class="dv">360</span><span class="op">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>      <span class="dt">height</span><span class="op">:</span> <span class="dv">360</span><span class="op">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>      <span class="dt">aspectRatio</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"a* (red–green)"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">90</span><span class="op">,</span> <span class="dv">90</span>] }<span class="op">,</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"b* (yellow–blue)"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">90</span><span class="op">,</span> <span class="dv">90</span>] }<span class="op">,</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>      <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">gridX</span>({ <span class="dt">strokeOpacity</span><span class="op">:</span> <span class="fl">0.15</span> })<span class="op">,</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">gridY</span>({ <span class="dt">strokeOpacity</span><span class="op">:</span> <span class="fl">0.15</span> })<span class="op">,</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="dv">0</span>]<span class="op">,</span> { <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#999"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3,3"</span> })<span class="op">,</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>]<span class="op">,</span> { <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#999"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3,3"</span> })<span class="op">,</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">line</span>(luv_lab_calc<span class="op">.</span><span class="at">gridLines</span><span class="op">,</span> {</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>          <span class="dt">x</span><span class="op">:</span> <span class="st">"a"</span><span class="op">,</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>          <span class="dt">y</span><span class="op">:</span> <span class="st">"b"</span><span class="op">,</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>          <span class="dt">z</span><span class="op">:</span> <span class="st">"series"</span><span class="op">,</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>          <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#cfd8dc"</span><span class="op">,</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>          <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">1</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        })<span class="op">,</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">line</span>(luv_lab_calc<span class="op">.</span><span class="at">circlePts</span><span class="op">,</span> {</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>          <span class="dt">x</span><span class="op">:</span> <span class="st">"a"</span><span class="op">,</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>          <span class="dt">y</span><span class="op">:</span> <span class="st">"b"</span><span class="op">,</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>          <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#1f2937"</span><span class="op">,</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>          <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.2</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>        })<span class="op">,</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">dot</span>([{ <span class="dt">a</span><span class="op">:</span> luv_lab_calc<span class="op">.</span><span class="at">a0</span><span class="op">,</span> <span class="dt">b</span><span class="op">:</span> luv_lab_calc<span class="op">.</span><span class="at">b0</span><span class="op">,</span> <span class="dt">c</span><span class="op">:</span> luv_lab_calc<span class="op">.</span><span class="at">centerColor</span> }]<span class="op">,</span> {</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>          <span class="dt">x</span><span class="op">:</span> <span class="st">"a"</span><span class="op">,</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>          <span class="dt">y</span><span class="op">:</span> <span class="st">"b"</span><span class="op">,</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>          <span class="dt">r</span><span class="op">:</span> <span class="dv">6</span><span class="op">,</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>          <span class="dt">fill</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>          <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#111"</span><span class="op">,</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>          <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.5</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    })<span class="sc">}</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;div&gt;</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="vs">    </span><span class="sc">${</span>Plot<span class="op">.</span><span class="fu">plot</span>({</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>      <span class="dt">title</span><span class="op">:</span> <span class="vs">`CIELUV (u*, v*) at L* = </span><span class="sc">${</span>luv_lab_calc<span class="op">.</span><span class="at">L</span><span class="sc">}</span><span class="vs">`</span><span class="op">,</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>      <span class="dt">width</span><span class="op">:</span> <span class="dv">360</span><span class="op">,</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>      <span class="dt">height</span><span class="op">:</span> <span class="dv">360</span><span class="op">,</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>      <span class="dt">aspectRatio</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>      <span class="dt">marginLeft</span><span class="op">:</span> <span class="dv">48</span><span class="op">,</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>      <span class="dt">marginBottom</span><span class="op">:</span> <span class="dv">42</span><span class="op">,</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>      <span class="dt">x</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"u*"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">110</span><span class="op">,</span> <span class="dv">110</span>] }<span class="op">,</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>      <span class="dt">y</span><span class="op">:</span> { <span class="dt">label</span><span class="op">:</span> <span class="st">"v*"</span><span class="op">,</span> <span class="dt">domain</span><span class="op">:</span> [<span class="op">-</span><span class="dv">110</span><span class="op">,</span> <span class="dv">110</span>] }<span class="op">,</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>      <span class="dt">marks</span><span class="op">:</span> [</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">gridX</span>({ <span class="dt">strokeOpacity</span><span class="op">:</span> <span class="fl">0.15</span> })<span class="op">,</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">gridY</span>({ <span class="dt">strokeOpacity</span><span class="op">:</span> <span class="fl">0.15</span> })<span class="op">,</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">ruleX</span>([<span class="dv">0</span>]<span class="op">,</span> { <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#999"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3,3"</span> })<span class="op">,</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">ruleY</span>([<span class="dv">0</span>]<span class="op">,</span> { <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#999"</span><span class="op">,</span> <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"3,3"</span> })<span class="op">,</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">line</span>(luv_lab_calc<span class="op">.</span><span class="at">gridLines</span><span class="op">,</span> {</span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>          <span class="dt">x</span><span class="op">:</span> <span class="st">"u"</span><span class="op">,</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>          <span class="dt">y</span><span class="op">:</span> <span class="st">"v"</span><span class="op">,</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>          <span class="dt">z</span><span class="op">:</span> <span class="st">"series"</span><span class="op">,</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>          <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#cfd8dc"</span><span class="op">,</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>          <span class="dt">strokeWidth</span><span class="op">:</span> <span class="dv">1</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>        })<span class="op">,</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">line</span>(luv_lab_calc<span class="op">.</span><span class="at">refUvPts</span><span class="op">,</span> {</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>          <span class="dt">x</span><span class="op">:</span> <span class="st">"u"</span><span class="op">,</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>          <span class="dt">y</span><span class="op">:</span> <span class="st">"v"</span><span class="op">,</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>          <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#64748b"</span><span class="op">,</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>          <span class="dt">strokeDasharray</span><span class="op">:</span> <span class="st">"4,4"</span><span class="op">,</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>          <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.5</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a>        })<span class="op">,</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">line</span>(luv_lab_calc<span class="op">.</span><span class="at">circlePts</span><span class="op">,</span> {</span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a>          <span class="dt">x</span><span class="op">:</span> <span class="st">"u"</span><span class="op">,</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a>          <span class="dt">y</span><span class="op">:</span> <span class="st">"v"</span><span class="op">,</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a>          <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#b91c1c"</span><span class="op">,</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>          <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">2.2</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>        })<span class="op">,</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>        Plot<span class="op">.</span><span class="fu">dot</span>([{ <span class="dt">u</span><span class="op">:</span> luv_lab_calc<span class="op">.</span><span class="at">u0</span><span class="op">,</span> <span class="dt">v</span><span class="op">:</span> luv_lab_calc<span class="op">.</span><span class="at">v0</span><span class="op">,</span> <span class="dt">c</span><span class="op">:</span> luv_lab_calc<span class="op">.</span><span class="at">centerColor</span> }]<span class="op">,</span> {</span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a>          <span class="dt">x</span><span class="op">:</span> <span class="st">"u"</span><span class="op">,</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a>          <span class="dt">y</span><span class="op">:</span> <span class="st">"v"</span><span class="op">,</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a>          <span class="dt">r</span><span class="op">:</span> <span class="dv">6</span><span class="op">,</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a>          <span class="dt">fill</span><span class="op">:</span> <span class="st">"c"</span><span class="op">,</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a>          <span class="dt">stroke</span><span class="op">:</span> <span class="st">"#111"</span><span class="op">,</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>          <span class="dt">strokeWidth</span><span class="op">:</span> <span class="fl">1.5</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a>    })<span class="sc">}</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;/div&gt;</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/div&gt;</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;p style="margin-top: 8px; font-size: 0.9rem; color: #374151;"&gt;</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;strong&gt;Selected test light (</span><span class="sc">${</span>luv_lab_preset<span class="op">.</span><span class="at">name</span><span class="sc">}</span><span class="vs">):&lt;/strong&gt;</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="vs">  (a*, b*) = (</span><span class="sc">${</span>luv_lab_calc<span class="op">.</span><span class="at">a0</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">0</span>)<span class="sc">}</span><span class="vs">, </span><span class="sc">${</span>luv_lab_calc<span class="op">.</span><span class="at">b0</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">0</span>)<span class="sc">}</span><span class="vs">)</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a><span class="vs">  &amp;rarr; (u*, v*) = (</span><span class="sc">${</span>luv_lab_calc<span class="op">.</span><span class="at">u0</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">, </span><span class="sc">${</span>luv_lab_calc<span class="op">.</span><span class="at">v0</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">).</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="vs">  Around the constant &amp;Delta;E*&lt;sub&gt;ab&lt;/sub&gt; = 15 circle (solid), &amp;Delta;E*&lt;sub&gt;uv&lt;/sub&gt; ranges from</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a><span class="vs">  &lt;strong&gt;</span><span class="sc">${</span>luv_lab_calc<span class="op">.</span><span class="at">minDEuv</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/strong&gt; to &lt;strong&gt;</span><span class="sc">${</span>luv_lab_calc<span class="op">.</span><span class="at">maxDEuv</span><span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="vs">&lt;/strong&gt;</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a><span class="vs">  (dashed circle shows &amp;Delta;E*&lt;sub&gt;uv&lt;/sub&gt; = 15).</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a><span class="vs">&lt;/p&gt;`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div id="ojs-cell-3" data-nodetype="expression">
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cieluv-vs-cielab-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.12: Comparison of CIELAB <span class="math inline">\((a^*, b^*)\)</span> and CIELUV <span class="math inline">\((u^*, v^*)\)</span> at constant lightness <span class="math inline">\(L^*\)</span> under a D65 white point. A regular grid and a circle of constant <span class="math inline">\(\Delta E^*_{ab} = 15\)</span> (solid) in <span class="math inline">\((a^*, b^*)\)</span> warp nonlinearly in <span class="math inline">\((u^*, v^*)\)</span>, where the dashed circle marks <span class="math inline">\(\Delta E^*_{uv} = 15\)</span>. Use the controls in the HTML version to vary <span class="math inline">\(L^*\)</span> and the test light.
+</figcaption>
+</figure>
+</div>
+<p>Over time, the CIELAB representation has been more widely used than CIELUV, and it has been extended and amended in various ways. CIELUV remains useful primarily in display and lighting engineering because it preserves the projective <span class="math inline">\((u', v')\)</span> chromaticity diagram, while CIELAB and CIEDE2000 dominate perceptual color-difference evaluation.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="The rise of CIELAB">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The rise of CIELAB
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Two lines of evidence show how CIELAB became the dominant CIE color-difference standard over CIELUV:</p>
+<p><strong>Scholarly usage:</strong> A search of the <a href="https://openalex.org/">OpenAlex</a> scholarly literature database (November 2026) illustrates the gap in adoption across imaging, printing, textiles, and vision science:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Term</th>
+<th style="text-align: right;">Matching Works</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>"CIELAB"</code></td>
+<td style="text-align: right;">46,499</td>
+</tr>
+<tr class="even">
+<td><code>"CIELUV"</code></td>
+<td style="text-align: right;">1,893</td>
+</tr>
+<tr class="odd">
+<td><code>"CIEDE2000"</code></td>
+<td style="text-align: right;">5,513</td>
+</tr>
+<tr class="even">
+<td><code>"CIE94"</code></td>
+<td style="text-align: right;">605</td>
+</tr>
+</tbody>
+</table>
+<p><code>"CIELAB"</code> appears roughly <strong>25×</strong> more often than <code>"CIELUV"</code>, and <code>"CIEDE2000"</code> alone appears nearly <strong>3×</strong> more often than <code>"CIELUV"</code>.</p>
+</div>
+</div>
+</div>
+<p>These later CIE standards leave the <span class="math inline">\((L^*, a^*, b^*)\)</span> coordinate representation itself intact and change only <strong>how color differences (<span class="math inline">\(\Delta E\)</span>) are computed</strong>.</p>
+<p>One modification to CIELAB, made in <strong>CIE94</strong> Added chroma- and hue-dependent weighting functions to correct CIELAB’s overestimation of perceptual differences at high chroma (<span class="math inline">\(\Delta E^*_{94}\)</span>, CIE 116-1995). Rather than measuring simple Euclidean distance in <span class="math inline">\((L^*, a^*, b^*)\)</span>, they convert differences into cylindrical lightness, chroma, and hue coordinates <span class="math inline">\((L^*, C^*_{ab}, h_{ab})\)</span> and apply a weighted, position-dependent quadratic distance (so <span class="math inline">\(\Delta E\)</span> is no longer a global Euclidean metric in a transformed 3D space):</p>
+<p>The next modificiation, made in <strong>CIEDE2000</strong> Added lightness, chroma, and hue weighting functions (<span class="math inline">\(S_L, S_C, S_H\)</span>), a chroma–hue interaction rotation term (<span class="math inline">\(R_T\)</span>) in the blue region, and a rescaling of <span class="math inline">\(a^*\)</span> near neutral grays (<span class="math inline">\(\Delta E_{00}\)</span>, CIE 142-2001; ISO/CIE 11664-6).</p>
+</section>
 </section>
 <section id="sec-scielab" class="level2" data-number="29.5">
 <h2 data-number="29.5" class="anchored" data-anchor-id="sec-scielab"><span class="header-section-number">29.5</span> Spatial-CIELAB (S-CIELAB)</h2>
 <p>Color appearance also depends on spatial pattern. Just think back to chromatic aberration - how could it not?</p>
-<!-- TODO: Explain why CIELAB alone is insufficient for patterned images (depends on viewing distance and spatial frequency).
-Show the S-CIELAB architecture (Zhang & Wandell, 1997):
-1. Transform image into opponent-color channels (luminance, red-green, blue-yellow).
-2. Filter each channel by its corresponding spatial Contrast Sensitivity Function (CSF) scaled for viewing distance (cycles per degree).
-3. Transform the filtered representation back to CIE XYZ and compute point-by-point CIELAB Delta E.
-Bridge forward to Part V (Displays), where CIELAB and S-CIELAB are used to evaluate display bit-depth and subpixel rendering (@sec-display-principles). -->
+<p>Explain why CIELAB alone is insufficient for patterned images (depends on viewing distance and spatial frequency).</p>
+<p>Show the S-CIELAB architecture (Zhang &amp; Wandell, 1997):</p>
+<ol type="1">
+<li>Transform image into opponent-color channels (luminance, red-green, blue-yellow).</li>
+<li>Filter each channel by its corresponding spatial Contrast Sensitivity Function (CSF) scaled for viewing distance (cycles per degree).</li>
+<li>Transform the filtered representation back to CIE XYZ and compute point-by-point CIELAB Delta E. Bridge forward to Part V (Displays), where CIELAB and S-CIELAB are used to evaluate display bit-depth and subpixel rendering (<a href="displays-01-principles.html" class="quarto-xref"><span>Chapter 30</span></a>). –&gt;</li>
+</ol>
+<div id="fig-scielab-model" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-scielab-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/s-cielab/113-three-channel-spatial-color-model.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scielab-model-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.13: Spatial CIELAB architecture
+</figcaption>
+</figure>
+</div>
+<p>More</p>
+<div id="fig-scielab-processing" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-scielab-processing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/human/06-color-metrics/s-cielab/115-spatial-cielab-processing-pipeline.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-scielab-processing-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;29.14: Spatial CIELAB architecture
+</figcaption>
+</figure>
+</div>
 
 
 
@@ -939,6 +1409,17 @@ MacAdam DL (1942) Visual sensitivities to color differences in daylight. Journal
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3sibWV0aG9kTmFtZSI6ImludGVycHJldCIsImNlbGxOYW1lIjoib2pzLWNlbGwtMSIsImlubGluZSI6ZmFsc2UsInNvdXJjZSI6InZpZXdvZiBsdXZfbGFiX0xzdGFyID0gSW5wdXRzLnJhbmdlKFszMCwgODVdLCB7XG4gIHZhbHVlOiA2NSxcbiAgc3RlcDogNSxcbiAgbGFiZWw6IFwiTGlnaHRuZXNzIEwqXCJcbn0pXG5cbnZpZXdvZiBsdXZfbGFiX3ByZXNldCA9IElucHV0cy5zZWxlY3QoXG4gIFtcbiAgICB7IG5hbWU6IFwiTmV1dHJhbCAoRDY1IHdoaXRlKVwiLCBhOiAwLCBiOiAwIH0sXG4gICAgeyBuYW1lOiBcIlJlZC1vcmFuZ2VcIiwgYTogNDUsIGI6IDM1IH0sXG4gICAgeyBuYW1lOiBcIlllbGxvdy1ncmVlblwiLCBhOiAtMjAsIGI6IDUwIH0sXG4gICAgeyBuYW1lOiBcIkdyZWVuXCIsIGE6IC00NSwgYjogMjUgfSxcbiAgICB7IG5hbWU6IFwiQ3lhblwiLCBhOiAtMzAsIGI6IC0yMCB9LFxuICAgIHsgbmFtZTogXCJCbHVlXCIsIGE6IDE1LCBiOiAtNTAgfSxcbiAgICB7IG5hbWU6IFwiTWFnZW50YVwiLCBhOiA0NSwgYjogLTMwIH1cbiAgXSxcbiAge1xuICAgIGxhYmVsOiBcIlRlc3QgbGlnaHRcIixcbiAgICBmb3JtYXQ6IGQgPT4gZC5uYW1lLFxuICAgIHZhbHVlOiB7IG5hbWU6IFwiUmVkLW9yYW5nZVwiLCBhOiA0NSwgYjogMzUgfVxuICB9XG4pXG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTIiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJsdXZfbGFiX2NhbGMgPSB7XG4gIGNvbnN0IFhuID0gOTUuMDQ3LCBZbiA9IDEwMC4wLCBabiA9IDEwOC44ODM7XG4gIGNvbnN0IGRlbm9tX24gPSBYbiArIDE1ICogWW4gKyAzICogWm47XG4gIGNvbnN0IHVuID0gKDQgKiBYbikgLyBkZW5vbV9uO1xuICBjb25zdCB2biA9ICg5ICogWW4pIC8gZGVub21fbjtcbiAgY29uc3QgZGVsdGEgPSA2IC8gMjk7XG5cbiAgZnVuY3Rpb24gZmludih0KSB7XG4gICAgcmV0dXJuIHQgPiBkZWx0YSA/IHQgKiB0ICogdCA6IDMgKiBkZWx0YSAqIGRlbHRhICogKHQgLSA0IC8gMjkpO1xuICB9XG5cbiAgZnVuY3Rpb24gbGFiMnh5eihMLCBhLCBiKSB7XG4gICAgY29uc3QgZnkgPSAoTCArIDE2KSAvIDExNjtcbiAgICBjb25zdCBmeCA9IGEgLyA1MDAgKyBmeTtcbiAgICBjb25zdCBmeiA9IGZ5IC0gYiAvIDIwMDtcbiAgICByZXR1cm4gW1xuICAgICAgTWF0aC5tYXgoMCwgWG4gKiBmaW52KGZ4KSksXG4gICAgICBNYXRoLm1heCgwLCBZbiAqIGZpbnYoZnkpKSxcbiAgICAgIE1hdGgubWF4KDAsIFpuICogZmludihmeikpXG4gICAgXTtcbiAgfVxuXG4gIGZ1bmN0aW9uIHh5ejJ1dihYLCBZLCBaKSB7XG4gICAgY29uc3QgZCA9IFggKyAxNSAqIFkgKyAzICogWjtcbiAgICBpZiAoZCA8PSAwKSByZXR1cm4gWzAsIDBdO1xuICAgIHJldHVybiBbKDQgKiBYKSAvIGQsICg5ICogWSkgLyBkXTtcbiAgfVxuXG4gIGZ1bmN0aW9uIGxhYjJsdXYoTCwgYSwgYikge1xuICAgIGNvbnN0IFtYLCBZLCBaXSA9IGxhYjJ4eXooTCwgYSwgYik7XG4gICAgY29uc3QgW3VwLCB2cF0gPSB4eXoydXYoWCwgWSwgWik7XG4gICAgcmV0dXJuIFsxMyAqIEwgKiAodXAgLSB1biksIDEzICogTCAqICh2cCAtIHZuKV07XG4gIH1cblxuICAvLyBBcHByb3hpbWF0ZSBkaXNwbGF5IGNvbG9yIGZvciBhIChMLCBhLCBiKSBwb2ludCAoZm9yIHZpc3VhbCBjdWUgb25seSlcbiAgZnVuY3Rpb24gbGFiMmNzcyhMLCBhLCBiKSB7XG4gICAgY29uc3QgW1gsIFksIFpdID0gbGFiMnh5eihMLCBhLCBiKTtcbiAgICBjb25zdCB4ID0gWCAvIDEwMCwgeSA9IFkgLyAxMDAsIHogPSBaIC8gMTAwO1xuICAgIGxldCByID0gIDMuMjQwNiAqIHggLSAxLjUzNzIgKiB5IC0gMC40OTg2ICogejtcbiAgICBsZXQgZyA9IC0wLjk2ODkgKiB4ICsgMS44NzU4ICogeSArIDAuMDQxNSAqIHo7XG4gICAgbGV0IGJsID0gMC4wNTU3ICogeCAtIDAuMjA0MCAqIHkgKyAxLjA1NzAgKiB6O1xuICAgIGNvbnN0IGNvbXBhbmQgPSBjID0+IHtcbiAgICAgIGNvbnN0IGNsYW1wZWQgPSBNYXRoLm1heCgwLCBNYXRoLm1pbigxLCBjKSk7XG4gICAgICByZXR1cm4gY2xhbXBlZCA8PSAwLjAwMzEzMDggPyAxMi45MiAqIGNsYW1wZWQgOiAxLjA1NSAqIE1hdGgucG93KGNsYW1wZWQsIDEgLyAyLjQpIC0gMC4wNTU7XG4gICAgfTtcbiAgICByZXR1cm4gYHJnYigke01hdGgucm91bmQoY29tcGFuZChyKSoyNTUpfSwgJHtNYXRoLnJvdW5kKGNvbXBhbmQoZykqMjU1KX0sICR7TWF0aC5yb3VuZChjb21wYW5kKGJsKSoyNTUpfSlgO1xuICB9XG5cbiAgY29uc3QgTCA9IGx1dl9sYWJfTHN0YXI7XG4gIGNvbnN0IHJhZGl1cyA9IDE1O1xuICBjb25zdCBhMCA9IGx1dl9sYWJfcHJlc2V0LmE7XG4gIGNvbnN0IGIwID0gbHV2X2xhYl9wcmVzZXQuYjtcbiAgY29uc3QgW3UwLCB2MF0gPSBsYWIybHV2KEwsIGEwLCBiMCk7XG5cbiAgY29uc3QgY2lyY2xlUHRzID0gW107XG4gIGNvbnN0IHJlZlV2UHRzID0gW107XG4gIGxldCBtaW5ERXV2ID0gSW5maW5pdHk7XG4gIGxldCBtYXhERXV2ID0gMDtcblxuICBjb25zdCBOID0gNzI7XG4gIGZvciAobGV0IGkgPSAwOyBpIDw9IE47IGkrKykge1xuICAgIGNvbnN0IHRoZXRhID0gKDIgKiBNYXRoLlBJICogaSkgLyBOO1xuICAgIGNvbnN0IGEgPSBhMCArIHJhZGl1cyAqIE1hdGguY29zKHRoZXRhKTtcbiAgICBjb25zdCBiID0gYjAgKyByYWRpdXMgKiBNYXRoLnNpbih0aGV0YSk7XG4gICAgY29uc3QgW3UsIHZdID0gbGFiMmx1dihMLCBhLCBiKTtcbiAgICBjb25zdCBkRXV2ID0gTWF0aC5oeXBvdCh1IC0gdTAsIHYgLSB2MCk7XG4gICAgaWYgKGkgPCBOKSB7XG4gICAgICBpZiAoZEV1diA8IG1pbkRFdXYpIG1pbkRFdXYgPSBkRXV2O1xuICAgICAgaWYgKGRFdXYgPiBtYXhERXV2KSBtYXhERXV2ID0gZEV1djtcbiAgICB9XG4gICAgY2lyY2xlUHRzLnB1c2goeyBpLCBhLCBiLCB1LCB2LCBkRXV2LCBjb2xvcjogbGFiMmNzcyhMLCBhLCBiKSB9KTtcbiAgICByZWZVdlB0cy5wdXNoKHtcbiAgICAgIGksXG4gICAgICB1OiB1MCArIHJhZGl1cyAqIE1hdGguY29zKHRoZXRhKSxcbiAgICAgIHY6IHYwICsgcmFkaXVzICogTWF0aC5zaW4odGhldGEpXG4gICAgfSk7XG4gIH1cblxuICAvLyBDb25zdGFudC1hKiBhbmQgY29uc3RhbnQtYiogZ3JpZCBsaW5lcyB0byBzaG93IG5vbmxpbmVhciB3YXJwXG4gIGNvbnN0IGdyaWRMaW5lcyA9IFtdO1xuICBjb25zdCB2YWxzID0gWy02MCwgLTMwLCAwLCAzMCwgNjBdO1xuICBmb3IgKGNvbnN0IGF2IG9mIHZhbHMpIHtcbiAgICBmb3IgKGxldCBidiA9IC02MDsgYnYgPD0gNjA7IGJ2ICs9IDUpIHtcbiAgICAgIGNvbnN0IFt1LCB2XSA9IGxhYjJsdXYoTCwgYXYsIGJ2KTtcbiAgICAgIGdyaWRMaW5lcy5wdXNoKHsgc2VyaWVzOiBgYT0ke2F2fWAsIGE6IGF2LCBiOiBidiwgdSwgdiB9KTtcbiAgICB9XG4gIH1cbiAgZm9yIChjb25zdCBidiBvZiB2YWxzKSB7XG4gICAgZm9yIChsZXQgYXYgPSAtNjA7IGF2IDw9IDYwOyBhdiArPSA1KSB7XG4gICAgICBjb25zdCBbdSwgdl0gPSBsYWIybHV2KEwsIGF2LCBidik7XG4gICAgICBncmlkTGluZXMucHVzaCh7IHNlcmllczogYGI9JHtidn1gLCBhOiBhdiwgYjogYnYsIHUsIHYgfSk7XG4gICAgfVxuICB9XG5cbiAgcmV0dXJuIHtcbiAgICBMLFxuICAgIHJhZGl1cyxcbiAgICBhMCxcbiAgICBiMCxcbiAgICB1MCxcbiAgICB2MCxcbiAgICBjZW50ZXJDb2xvcjogbGFiMmNzcyhMLCBhMCwgYjApLFxuICAgIGNpcmNsZVB0cyxcbiAgICByZWZVdlB0cyxcbiAgICBncmlkTGluZXMsXG4gICAgbWluREV1dixcbiAgICBtYXhERXV2XG4gIH07XG59XG4ifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJjZWxsTmFtZSI6Im9qcy1jZWxsLTMiLCJpbmxpbmUiOmZhbHNlLCJzb3VyY2UiOiJodG1sYDxkaXYgc3R5bGU9XCJkaXNwbGF5OiBncmlkOyBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHJlcGVhdChhdXRvLWZpdCwgbWlubWF4KDI5MHB4LCAxZnIpKTsgZ2FwOiAxNnB4OyBhbGlnbi1pdGVtczogc3RhcnQ7XCI+XG4gIDxkaXY+XG4gICAgJHtQbG90LnBsb3Qoe1xuICAgICAgdGl0bGU6IGBDSUVMQUIgKGEqLCBiKikgYXQgTCogPSAke2x1dl9sYWJfY2FsYy5MfWAsXG4gICAgICB3aWR0aDogMzYwLFxuICAgICAgaGVpZ2h0OiAzNjAsXG4gICAgICBhc3BlY3RSYXRpbzogMSxcbiAgICAgIG1hcmdpbkxlZnQ6IDQ4LFxuICAgICAgbWFyZ2luQm90dG9tOiA0MixcbiAgICAgIHg6IHsgbGFiZWw6IFwiYSogKHJlZOKAk2dyZWVuKVwiLCBkb21haW46IFstOTAsIDkwXSB9LFxuICAgICAgeTogeyBsYWJlbDogXCJiKiAoeWVsbG934oCTYmx1ZSlcIiwgZG9tYWluOiBbLTkwLCA5MF0gfSxcbiAgICAgIG1hcmtzOiBbXG4gICAgICAgIFBsb3QuZ3JpZFgoeyBzdHJva2VPcGFjaXR5OiAwLjE1IH0pLFxuICAgICAgICBQbG90LmdyaWRZKHsgc3Ryb2tlT3BhY2l0eTogMC4xNSB9KSxcbiAgICAgICAgUGxvdC5ydWxlWChbMF0sIHsgc3Ryb2tlOiBcIiM5OTlcIiwgc3Ryb2tlRGFzaGFycmF5OiBcIjMsM1wiIH0pLFxuICAgICAgICBQbG90LnJ1bGVZKFswXSwgeyBzdHJva2U6IFwiIzk5OVwiLCBzdHJva2VEYXNoYXJyYXk6IFwiMywzXCIgfSksXG4gICAgICAgIFBsb3QubGluZShsdXZfbGFiX2NhbGMuZ3JpZExpbmVzLCB7XG4gICAgICAgICAgeDogXCJhXCIsXG4gICAgICAgICAgeTogXCJiXCIsXG4gICAgICAgICAgejogXCJzZXJpZXNcIixcbiAgICAgICAgICBzdHJva2U6IFwiI2NmZDhkY1wiLFxuICAgICAgICAgIHN0cm9rZVdpZHRoOiAxXG4gICAgICAgIH0pLFxuICAgICAgICBQbG90LmxpbmUobHV2X2xhYl9jYWxjLmNpcmNsZVB0cywge1xuICAgICAgICAgIHg6IFwiYVwiLFxuICAgICAgICAgIHk6IFwiYlwiLFxuICAgICAgICAgIHN0cm9rZTogXCIjMWYyOTM3XCIsXG4gICAgICAgICAgc3Ryb2tlV2lkdGg6IDIuMlxuICAgICAgICB9KSxcbiAgICAgICAgUGxvdC5kb3QoW3sgYTogbHV2X2xhYl9jYWxjLmEwLCBiOiBsdXZfbGFiX2NhbGMuYjAsIGM6IGx1dl9sYWJfY2FsYy5jZW50ZXJDb2xvciB9XSwge1xuICAgICAgICAgIHg6IFwiYVwiLFxuICAgICAgICAgIHk6IFwiYlwiLFxuICAgICAgICAgIHI6IDYsXG4gICAgICAgICAgZmlsbDogXCJjXCIsXG4gICAgICAgICAgc3Ryb2tlOiBcIiMxMTFcIixcbiAgICAgICAgICBzdHJva2VXaWR0aDogMS41XG4gICAgICAgIH0pXG4gICAgICBdXG4gICAgfSl9XG4gIDwvZGl2PlxuICA8ZGl2PlxuICAgICR7UGxvdC5wbG90KHtcbiAgICAgIHRpdGxlOiBgQ0lFTFVWICh1KiwgdiopIGF0IEwqID0gJHtsdXZfbGFiX2NhbGMuTH1gLFxuICAgICAgd2lkdGg6IDM2MCxcbiAgICAgIGhlaWdodDogMzYwLFxuICAgICAgYXNwZWN0UmF0aW86IDEsXG4gICAgICBtYXJnaW5MZWZ0OiA0OCxcbiAgICAgIG1hcmdpbkJvdHRvbTogNDIsXG4gICAgICB4OiB7IGxhYmVsOiBcInUqXCIsIGRvbWFpbjogWy0xMTAsIDExMF0gfSxcbiAgICAgIHk6IHsgbGFiZWw6IFwidipcIiwgZG9tYWluOiBbLTExMCwgMTEwXSB9LFxuICAgICAgbWFya3M6IFtcbiAgICAgICAgUGxvdC5ncmlkWCh7IHN0cm9rZU9wYWNpdHk6IDAuMTUgfSksXG4gICAgICAgIFBsb3QuZ3JpZFkoeyBzdHJva2VPcGFjaXR5OiAwLjE1IH0pLFxuICAgICAgICBQbG90LnJ1bGVYKFswXSwgeyBzdHJva2U6IFwiIzk5OVwiLCBzdHJva2VEYXNoYXJyYXk6IFwiMywzXCIgfSksXG4gICAgICAgIFBsb3QucnVsZVkoWzBdLCB7IHN0cm9rZTogXCIjOTk5XCIsIHN0cm9rZURhc2hhcnJheTogXCIzLDNcIiB9KSxcbiAgICAgICAgUGxvdC5saW5lKGx1dl9sYWJfY2FsYy5ncmlkTGluZXMsIHtcbiAgICAgICAgICB4OiBcInVcIixcbiAgICAgICAgICB5OiBcInZcIixcbiAgICAgICAgICB6OiBcInNlcmllc1wiLFxuICAgICAgICAgIHN0cm9rZTogXCIjY2ZkOGRjXCIsXG4gICAgICAgICAgc3Ryb2tlV2lkdGg6IDFcbiAgICAgICAgfSksXG4gICAgICAgIFBsb3QubGluZShsdXZfbGFiX2NhbGMucmVmVXZQdHMsIHtcbiAgICAgICAgICB4OiBcInVcIixcbiAgICAgICAgICB5OiBcInZcIixcbiAgICAgICAgICBzdHJva2U6IFwiIzY0NzQ4YlwiLFxuICAgICAgICAgIHN0cm9rZURhc2hhcnJheTogXCI0LDRcIixcbiAgICAgICAgICBzdHJva2VXaWR0aDogMS41XG4gICAgICAgIH0pLFxuICAgICAgICBQbG90LmxpbmUobHV2X2xhYl9jYWxjLmNpcmNsZVB0cywge1xuICAgICAgICAgIHg6IFwidVwiLFxuICAgICAgICAgIHk6IFwidlwiLFxuICAgICAgICAgIHN0cm9rZTogXCIjYjkxYzFjXCIsXG4gICAgICAgICAgc3Ryb2tlV2lkdGg6IDIuMlxuICAgICAgICB9KSxcbiAgICAgICAgUGxvdC5kb3QoW3sgdTogbHV2X2xhYl9jYWxjLnUwLCB2OiBsdXZfbGFiX2NhbGMudjAsIGM6IGx1dl9sYWJfY2FsYy5jZW50ZXJDb2xvciB9XSwge1xuICAgICAgICAgIHg6IFwidVwiLFxuICAgICAgICAgIHk6IFwidlwiLFxuICAgICAgICAgIHI6IDYsXG4gICAgICAgICAgZmlsbDogXCJjXCIsXG4gICAgICAgICAgc3Ryb2tlOiBcIiMxMTFcIixcbiAgICAgICAgICBzdHJva2VXaWR0aDogMS41XG4gICAgICAgIH0pXG4gICAgICBdXG4gICAgfSl9XG4gIDwvZGl2PlxuPC9kaXY+XG48cCBzdHlsZT1cIm1hcmdpbi10b3A6IDhweDsgZm9udC1zaXplOiAwLjlyZW07IGNvbG9yOiAjMzc0MTUxO1wiPlxuICA8c3Ryb25nPlNlbGVjdGVkIHRlc3QgbGlnaHQgKCR7bHV2X2xhYl9wcmVzZXQubmFtZX0pOjwvc3Ryb25nPlxuICAoYSosIGIqKSA9ICgke2x1dl9sYWJfY2FsYy5hMC50b0ZpeGVkKDApfSwgJHtsdXZfbGFiX2NhbGMuYjAudG9GaXhlZCgwKX0pXG4gICZyYXJyOyAodSosIHYqKSA9ICgke2x1dl9sYWJfY2FsYy51MC50b0ZpeGVkKDEpfSwgJHtsdXZfbGFiX2NhbGMudjAudG9GaXhlZCgxKX0pLlxuICBBcm91bmQgdGhlIGNvbnN0YW50ICZEZWx0YTtFKjxzdWI+YWI8L3N1Yj4gPSAxNSBjaXJjbGUgKHNvbGlkKSwgJkRlbHRhO0UqPHN1Yj51djwvc3ViPiByYW5nZXMgZnJvbVxuICA8c3Ryb25nPiR7bHV2X2xhYl9jYWxjLm1pbkRFdXYudG9GaXhlZCgxKX08L3N0cm9uZz4gdG8gPHN0cm9uZz4ke2x1dl9sYWJfY2FsYy5tYXhERXV2LnRvRml4ZWQoMSl9PC9zdHJvbmc+XG4gIChkYXNoZWQgY2lyY2xlIHNob3dzICZEZWx0YTtFKjxzdWI+dXY8L3N1Yj4gPSAxNSkuXG48L3A+YFxuIn0seyJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJzaGlueUlucHV0KCdsdXZfbGFiX0xzdGFyJykifSx7Im1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InNoaW55SW5wdXQoJ2x1dl9sYWJfcHJlc2V0JykifV19
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../../chapters";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "..";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
