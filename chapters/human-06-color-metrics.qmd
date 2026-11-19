@@ -224,23 +224,41 @@ $$ {#eq-cielab-f}
 Notice that $L^*$ in @eq-cielab is identical to $L^*$ in @eq-cieluv.
 
 ### Color appearance
+The three dimensions of the CIELAB representation correspond to three intuitive variables.  The $L^*$ variable describes the lightness, running from black ($0$) to a white surface ($100$).  The $a^*$ dimension runs between very red (positive) to neutral to very green (negative).  The $b^*$ dimension runs from very yellow (positive) to neutral to very blue (negative).
 
 ![Color appearance in CIELAB coordinates.](images/human/06-color-metrics/cielab/071-cielab-color-solid.png){#fig-pattern-color}
 
-Comment on red-green and blue-yellow axes.  Reference opponency in FOV, perhaps.  Maybe we get some opponency in this book, too.  Could happen in the wavelength encoding chapter.
+This organization of surface colors builds directly on the system introduced in 1905 by the American painter and art teacher **Albert H. Munsell** (*A Color Notation*). Seeking a "rational way to describe color" for students and artisans—analogous to musical notation—Munsell combined visual scaling judgments with photometric measurements to arrange painted samples into perceptually uniform steps. He published these in his *Atlas of the Munsell Color System* (1915), which evolved into the *Munsell Book of Color* (1929) and remains widely used in design, manufacturing, and color science.
 
-Let's get Munsell in here, too.  Something about Hurvich and Jameson.
+::: {#fig-munsell-appearance}
+:::: {.panel-tabset}
 
-![Munsell images](images/human/06-color-metrics/appearance/074-munsell-book-of-colors.png){#fig-munsell-appearanc-overview}
+#### Book of Color
+![Physical editions of the *Munsell Book of Color* and *Atlas* containing standardized painted chips.](images/human/06-color-metrics/appearance/074-munsell-book-of-colors.png){#fig-munsell-appearance-book width="80%"}
 
-![Munsell images](images/human/06-color-metrics/appearance/075-munsell-color-solid-model.png){#fig-munsell-appearanc-overview}
+#### Color Tree
+![The 3D Munsell Color Tree organizing painted samples around a central lightness axis.](images/human/06-color-metrics/appearance/075-munsell-color-solid-model.png){#fig-munsell-appearance-model width="80%"}
 
-![Munsell images](images/human/06-color-metrics/appearance/076-munsell-value-radial-slices.png){#fig-munsell-appearanc-overview}
+#### Hue, value, and chroma
+![Cylindrical organization of Munsell coordinates: vertical value (lightness), radial chroma (saturation), and circumferential hue.](images/human/06-color-metrics/appearance/076-munsell-value-radial-slices.png){#fig-munsell-appearance-slices width="80%"}
+
+::::
+The Munsell color order system organizes surface colors perceptually by **hue** (color family, such as red or yellow-red), **value** (lightness, from $0$ for ideal black to $10$ for ideal white), and **chroma** (departure from neutral gray, analogous to saturation). Chips are labeled in `Hue Value/Chroma` notation—for example, `2.5YR 5/10` denotes a yellow-red hue, mid-level lightness ($5$), and a chroma of $10$. Unlike value, chroma is open-ended and varies by hue and lightness (the asymmetric shape of the Color Tree reflects the different maximum chromas attainable with real pigments). While Munsell steps are designed to be perceptually uniform, the notation describes appearance rather than a linear light-mixing space, so you cannot add two Munsell coordinates to predict an additive mixture the way you can with CIE $(X, Y, Z)$.
+:::
 
 
 ::: {.callout-note title="Munsell notation and renotation" collapse="true"}
 
-Explain the notation and the OSA renotation.
+::: {style="float: left; width: 30%; margin: 0 1.25rem 0.5rem 0;"}
+![Albert H. Munsell](images/human/06-color-metrics/appearance/albert-munsell.png){#fig-albert-munsell width="100%"}
+:::
+
+As the Munsell system gained wide adoption in industry, art, and science, the **Optical Society of America** (now Optica) formed a Subcommittee on the Spacing of the Munsell Colors—led by Sidney M. Newhall, Dorothy Nickerson, and Deane B. Judd—to evaluate and refine its perceptual uniformity. Between 1937 and 1943, the committee combined spectrophotometric measurements of the 1929 *Munsell Book of Color* chips under **CIE Illuminant C** with millions of visual judgments to smooth and adjust the spacing of hue, value, and chroma in CIE $(x, y, Y)$ space.
+
+The resulting **Munsell Renotation System** (1943) published idealized CIE $(x, y, Y)$ coordinates for every Munsell notation, turning a physical collection of painted chips into a quantitative colorimetric standard tied directly to CIE $\mathbf{XYZ}$. The Munsell Color Company then reformulated its chips to match the renotation targets, and later spectrophotometric surveys [@nickerson1957-munsellreflectance; @parkkinen1989-munsellspectra] made the full spectral reflectance curves of Munsell chips a standard dataset in color and imaging science.
+
+::: {style="clear: both;"}
+:::
 
 :::
 
