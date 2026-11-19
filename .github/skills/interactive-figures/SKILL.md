@@ -1,22 +1,55 @@
 ---
 name: interactive-figures
-description: Create, modify, embed, format, or diagnose client-side interactive figures using Observable JS (OJS) or self-contained HTML/Canvas 3D iframe visualizations in Quarto book chapters.
+description: Create, modify, embed, format, or diagnose client-side interactive figures using self-contained HTML/SVG/JS includes, Observable JS (OJS), or Canvas 3D iframe visualizations in Quarto book chapters.
 ---
 
 # Interactive Figures with Quarto
 
-## Summary
+## Summary & General Requirement
 
-This project embeds interactive, client-side scientific visualizations and simulations directly into book chapters. All computation runs entirely in the reader's web browser without a server-side computational kernel, using **two complementary patterns**:
+This project embeds interactive, client-side scientific visualizations and simulations directly into book chapters. All computation runs entirely in the reader's web browser without a server-side computational kernel.
 
-1. **Pattern A — Observable JS (OJS) & Observable Plot (Default for 2D):** Use for analytical equations, standard 2D scientific curves, and reactive parameter sweeps with sliders/inputs. Shares page typography and responsive width natively with no `_quarto.yml` resource entries needed.
+> **General Requirement — Keep Chapter `.qmd` Files Clean via Includes:**
+> Do **not** inline long interactive HTML, CSS, JavaScript, or OJS visualization code directly inside a chapter `.qmd` file. Place the interactive code in a standalone file under **`chapters/includes/figures/<slug>.qmd`** (keep this directory flat—do not create subdirectories under `chapters/includes/figures/`) and embed it in the chapter with `{{< include includes/figures/<slug>.qmd >}}` inside a `::: {.content-visible when-format="html"}` block.
+
+We use **three complementary patterns**:
+
+1. **Pattern A — Self-Contained HTML/SVG/JS Include (` ```{=html} `, Default for 2D & Pan/Zoom):** Place a self-contained `{=html}` block (controls + SVG/Canvas/image + vanilla JS) in `chapters/includes/figures/<slug>.qmd` and include it with `{{< include includes/figures/<slug>.qmd >}}`. Works offline with zero external dependencies, requires no `_quarto.yml` resource entries, and triggers no Quarto OJS warnings.
 2. **Pattern B — Self-Contained HTML / Canvas 3D (`<iframe>`):** Use for interactive 3D geometry, orbitable coordinate spaces, and custom canvas visualizations that work offline without external JS libraries or WebGL, and can also be reused standalone in lecture slides.
+3. **Pattern C — Observable JS (OJS) & Observable Plot:** Optional for quick reactive 2D plots. **Caveat:** Quarto currently emits `WARN: OJS block count mismatch. Line number reporting is likely to be wrong` when `{ojs}` cells are loaded via `{{< include >}}`. Prefer **Pattern A (`{=html}`)** so the code can live cleanly in `chapters/includes/figures/<slug>.qmd` without warnings.
 
 *(Avoid introducing heavy compiled toolchains such as WebAssembly/Rust or external charting bundles unless a specific numerical simulation genuinely hits a plain-JavaScript performance bottleneck.)*
 
 ---
 
-## Pattern A: Observable JS (OJS) & Observable Plot (Default for Analytical Models)
+## Pattern A: Self-Contained HTML/SVG/JS Include (`chapters/includes/figures/<slug>.qmd`)
+
+Use this pattern for interactive 2D plots, parameter sweeps, and pan-and-zoom image viewers (e.g., `chapters/includes/figures/cielab-sweep-panzoom.qmd`, `chapters/includes/figures/cieluv-vs-cielab.qmd`).
+
+### Guidelines
+- Wrap all markup and script inside a single ```` ```{=html} ```` fence in `chapters/includes/figures/<slug>.qmd`.
+- Scope DOM queries to a unique root element ID (e.g., `id="widget-<slug>"`) inside an IIFE `(() => { ... })();` so multiple interactive figures on the same page never collide.
+- Keep all styling inline or scoped to `#widget-<slug>` so it does not leak to surrounding book prose.
+- In the parent chapter `.qmd`, embed the include inside a single `::: {#fig-<label>}` container alongside a static fallback for non-HTML formats:
+
+```markdown
+::: {#fig-example-interactive}
+
+::: {.content-visible when-format="html"}
+{{< include includes/figures/example-widget.qmd >}}
+:::
+
+::: {.content-visible unless-format="html"}
+![](images/<subject>/<nn-chapter>/<slug>-static.png){fig-alt="Accessible description." width="85%"}
+:::
+
+Shared figure caption explaining what the visualization shows and how to use the HTML controls.
+:::
+```
+
+---
+
+## Pattern C: Observable JS (OJS) & Observable Plot (Optional)
 
 ### Core Components
 - **Observable JS (`ojs`)**: Reactive JavaScript runtime built into Quarto.
