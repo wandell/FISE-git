@@ -264,12 +264,12 @@ The resulting **Munsell Renotation System** (1943) published idealized CIE $(x, 
 
 ### Color difference metric: $\Delta E$
 
-A key point for both of these representations is to make the perceptual difference between two lights match the Euclidean distance between their representation.  We use the symbol $\Delta E$ to denote the Euclidean difference, and we add a subscript to undicate whether we are measuring in CIELUV or CIELAB space, such as 
+A key objective for the CIELAB and CIELUV representations is to define a perceptual difference between two lights, based on the Euclidean distance. They use the symbol $\Delta E$ to denote the Euclidean difference; a subscript indicates which system is used. For example,
 $$
 \Delta E^*_{ab} = \sqrt{(\Delta L^*)^2 + (\Delta a^*)^2 + (\Delta b^*)^2}
 $${#eq-delta-E-ab}
 
-The two representations are not the same, but they are not wildly different either.  We can judge the similarity by plotting the equal-difference contours (a circle) in one space (CIELAB) in the other space (CIELUV). We can also transform a grid from CIELAB space into CIELUV space. The interactive plots in @fig-cieluv-vs-cielab provide a sense of how these two representations differ.
+The two representations are similar, but not the same. We can judge the similarity by plotting an equal-difference contour (a circle) in one space (CIELAB) in the other space (CIELUV). We can also transform a rectangular grid in CIELAB space into its representation in CIELUV space. The interactive plots in @fig-cieluv-vs-cielab provide a sense of how these two representations differ.
 
 ::: {#fig-cieluv-vs-cielab}
 
@@ -524,7 +524,7 @@ html`<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(2
 Comparison of CIELAB $(a^*, b^*)$ and CIELUV $(u^*, v^*)$ at constant lightness $L^*$ under a D65 white point. A regular grid and a circle of constant $\Delta E^*_{ab} = 15$ (solid) in $(a^*, b^*)$ warp nonlinearly in $(u^*, v^*)$, where the dashed circle marks $\Delta E^*_{uv} = 15$. Use the controls in the HTML version to vary $L^*$ and the test light.
 :::
 
-Over time, the CIELAB representation has been more widely used than CIELUV, and it has been extended and amended in various ways. CIELUV remains useful primarily in display and lighting engineering because it preserves the projective $(u', v')$ chromaticity diagram, while CIELAB and CIEDE2000 dominate perceptual color-difference evaluation. 
+The CIELAB representation is more widely used than CIELUV, and it has been extended and amended in various ways. CIELUV is primarily used by display and lighting engineering because it preserves the projective $(u', v')$ chromaticity diagram. CIELAB and CIEDE2000 dominate perceptual color-difference evaluation in many fields.
 
 ::: {.callout-note title="The rise of CIELAB" collapse="true"}
 
@@ -550,8 +550,130 @@ One modification to CIELAB, made in **CIE94**  Added chroma- and hue-dependent w
 The next modificiation, made in **CIEDE2000** Added lightness, chroma, and hue weighting functions ($S_L, S_C, S_H$), a chroma–hue interaction rotation term ($R_T$) in the blue region, and a rescaling of $a^*$ near neutral grays  ($\Delta E_{00}$, CIE 142-2001; ISO/CIE 11664-6).
 
 ## Spatial-CIELAB (S-CIELAB) {#sec-scielab}
+The CIELAB metric was established based on measurements with relatively large ( > 2 deg of visual angle), uniform patches. This is an important application, and it was the dominant commercial application in the 1970s. With the rise of color displays - and yes, kids, there were many centuries in which we did not have color displays - there was an increasing need to make comparisons between natural images that contain textures and many spatial contrast variations.  The CIE metrics were not designed to compare natural images, or really patterned images at all.
 
-Color appearance also depends on spatial pattern.  Just think back to chromatic aberration - how could it not?
+::: {#fig-color-sweep-zhang}
+
+::: {.content-visible when-format="html"}
+```{=html}
+<div id="panzoom-cielab-sweep" style="max-width: 820px; margin: 0 auto; border: 1px solid #d1d5db; border-radius: 6px; overflow: hidden; background: #111827; user-select: none;">
+  <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 6px 10px; background: #f3f4f6; border-bottom: 1px solid #d1d5db; font-size: 0.85rem; color: #1f2937;">
+    <span style="font-weight: 600;">Zoom:</span>
+    <button type="button" data-action="out" aria-label="Zoom out" style="padding: 2px 8px; border: 1px solid #cbd5e1; border-radius: 4px; background: #fff; cursor: pointer;">&minus;</button>
+    <input type="range" data-action="slider" min="1" max="5" step="0.1" value="1" aria-label="Zoom level" style="width: 130px; cursor: pointer;">
+    <button type="button" data-action="in" aria-label="Zoom in" style="padding: 2px 8px; border: 1px solid #cbd5e1; border-radius: 4px; background: #fff; cursor: pointer;">+</button>
+    <button type="button" data-action="reset" style="padding: 2px 8px; border: 1px solid #cbd5e1; border-radius: 4px; background: #fff; cursor: pointer;">Reset</button>
+    <span data-role="readout" style="min-width: 44px; font-variant-numeric: tabular-nums;">100%</span>
+    <span style="margin-left: auto; color: #6b7280; font-size: 0.8rem;">Drag to pan &middot; Double-click to zoom</span>
+  </div>
+  <div data-role="viewport" style="position: relative; width: 100%; aspect-ratio: 1446 / 1036; overflow: hidden; cursor: grab; touch-action: none;">
+    <img src="images/human/06-color-metrics/appearance/cielab-sweep.png"
+         alt="Spatial-chromatic sweep frequency stimuli showing reduced L* modulation on the left, original in the middle, and reduced b* modulation on the right."
+         draggable="false"
+         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; transform-origin: 0 0; will-change: transform; pointer-events: none;">
+  </div>
+</div>
+<script>
+(() => {
+  const root = document.getElementById("panzoom-cielab-sweep");
+  if (!root) return;
+  const viewport = root.querySelector('[data-role="viewport"]');
+  const img = viewport.querySelector("img");
+  const slider = root.querySelector('[data-action="slider"]');
+  const readout = root.querySelector('[data-role="readout"]');
+  const btnIn = root.querySelector('[data-action="in"]');
+  const btnOut = root.querySelector('[data-action="out"]');
+  const btnReset = root.querySelector('[data-action="reset"]');
+
+  let scale = 1, tx = 0, ty = 0;
+  let dragging = false, startX = 0, startY = 0, origTx = 0, origTy = 0;
+
+  function clamp() {
+    const w = viewport.clientWidth;
+    const h = viewport.clientHeight;
+    const minTx = w * (1 - scale);
+    const minTy = h * (1 - scale);
+    tx = Math.min(0, Math.max(minTx, tx));
+    ty = Math.min(0, Math.max(minTy, ty));
+  }
+
+  function render() {
+    clamp();
+    img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+    slider.value = scale.toFixed(1);
+    readout.textContent = `${Math.round(scale * 100)}%`;
+    viewport.style.cursor = scale > 1 ? (dragging ? "grabbing" : "grab") : "zoom-in";
+  }
+
+  function zoomTo(newScale, cx, cy) {
+    newScale = Math.min(5, Math.max(1, newScale));
+    const rect = viewport.getBoundingClientRect();
+    const px = cx !== undefined ? cx - rect.left : rect.width / 2;
+    const py = cy !== undefined ? cy - rect.top : rect.height / 2;
+    const ratio = newScale / scale;
+    tx = px - ratio * (px - tx);
+    ty = py - ratio * (py - ty);
+    scale = newScale;
+    render();
+  }
+
+  btnIn.addEventListener("click", () => zoomTo(scale + 0.5));
+  btnOut.addEventListener("click", () => zoomTo(scale - 0.5));
+  btnReset.addEventListener("click", () => { scale = 1; tx = 0; ty = 0; render(); });
+  slider.addEventListener("input", () => zoomTo(parseFloat(slider.value)));
+
+  viewport.addEventListener("dblclick", (e) => {
+    if (scale > 1.05) {
+      scale = 1; tx = 0; ty = 0; render();
+    } else {
+      zoomTo(2.5, e.clientX, e.clientY);
+    }
+  });
+
+  viewport.addEventListener("pointerdown", (e) => {
+    if (scale <= 1) return;
+    dragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    origTx = tx;
+    origTy = ty;
+    viewport.setPointerCapture(e.pointerId);
+    render();
+  });
+
+  viewport.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
+    tx = origTx + (e.clientX - startX);
+    ty = origTy + (e.clientY - startY);
+    render();
+  });
+
+  const endDrag = () => { if (dragging) { dragging = false; render(); } };
+  viewport.addEventListener("pointerup", endDrag);
+  viewport.addEventListener("pointercancel", endDrag);
+  viewport.addEventListener("wheel", (e) => {
+    if (!e.ctrlKey && !e.metaKey) return;
+    e.preventDefault();
+    const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+    zoomTo(scale * factor, e.clientX, e.clientY);
+  }, { passive: false });
+
+  render();
+})();
+</script>
+```
+:::
+
+::: {.content-visible unless-format="html"}
+![](images/human/06-color-metrics/appearance/cielab-sweep.png){width="70%"}
+:::
+
+Discrimination depends jointly on pattern and color. The sweep frequency in the middle is the original. The one on the left has a reduced modulation in the $L^*$ direction, and the one on the right a reduced modulation in the $b^*$ direction. Note two things. First, even at the lowest frequencies the appearance of the edge on the right is blurred, compared to the edge appearance on the left. Second, notice that we can still perceive the edge at higher frequencies on the left, but the edge is imperceptible at the mid to higher frequencies on the right. Stimuli generated using ISETCam: `s_colorCielabSweep.m`. Use the zoom controls or double-click in the HTML version to inspect the high-frequency edges.
+:::
+
+Psychophysical investigations have provided a clear principle about how one might extend CIELAB to account for differences between spatially complex images. Some of these principles arise naturally from our understanding of human optics and retinal sampling.  We have seen that chromatic aberration in the optics blurs the short wavelength components of the retinal irradiance, and the S-cone sampling mosaic has reduced spatial density that approximately matches this blur.  Thus, any color metric that accounts for color should ignore high frequency differences in the short wavelength signal; even when present, such differences will not be encoded by the eye.  Similarly, there is better spatial resolution and sensitivity to luminance variations in the green spectral region than the red spectral region.
+
+@zhang1996-oz
 
 Explain why CIELAB alone is insufficient for patterned images (depends on viewing distance and spatial frequency).
 
