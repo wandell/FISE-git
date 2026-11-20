@@ -20,7 +20,7 @@ Tutorial scripts are published to HTML using `iePublish` (from `isetcam`) and li
 ```
 https://htmlpreview.github.io/?https://github.com/ISET/isetfise/blob/main/fise/<topic-folder>/<script>.html
 ```
-An index of published code links is maintained in `chapters/resources/code-html-links.qmd`.
+An index of published code links is maintained in `chapters/resources/general/code-html-links.qmd`.
 
 Treat source code and its generated figures as a pair. Do not edit a generated image to change a scientific result when the appropriate change belongs in the script or live script.
 

@@ -28,26 +28,33 @@ A single `#` title with an explicit `#sec-resource-*` anchor label:
 # Title of the Resource {#sec-resource-slug}
 ```
 
+## Directory Organization
+
+Organize resource `.qmd` files under `chapters/resources/<topic>/` by topic:
+- `displays/` (e.g., `displays-glossary.qmd`)
+- `general/` (e.g., `chat-index.qmd`, `code-html-links.qmd`)
+- `history/` (e.g., `history-Poisson.qmd`, `history-color.qmd`, `history-linear-algebra.qmd`)
+- `human/` (e.g., `human-glossary.qmd`, `human-tetrachromacy.qmd`, `PCC.qmd`)
+- `lightfield/` (e.g., `lightfield-measurements.qmd`, `lightfields-wavebands.qmd`, `fractals.qmd`)
+- `math/` (e.g., `math-phasors.qmd`)
+- `optics/` (e.g., `optics-glossary.qmd`, `optics-diffraction.qmd`, `optics-ideal-lens.qmd`, `optics-abcd.qmd`)
+- `sensors/` (e.g., `sensors-glossary.qmd`)
+
 ### 3. Work-in-Progress Callout Include
-Immediately beneath the title, include the WIP callout using the appropriate relative path:
-- For files directly in `chapters/resources/`:
-  ```markdown
-  {{< include "../includes/WIP-callout.qmd" >}}
-  ```
-- For nested resources (e.g., `chapters/resources/Artal-2024/Artal-2024.qmd`):
-  ```markdown
-  {{< include "../../includes/WIP-callout.qmd" >}}
-  ```
+Immediately beneath the title, include the WIP callout using the appropriate relative path for files inside `chapters/resources/<topic>/`:
+```markdown
+{{< include "../../includes/WIP-callout.qmd" >}}
+```
 
 ### 4. Navigation Bar
-Provide clear return paths for readers arriving from search, the sidebar, or a chapter link:
+Provide clear return paths for readers arriving from search, the sidebar, or a chapter link (from `chapters/resources/<topic>/`):
 - **If linked from a specific parent chapter:**
   ```markdown
-  [Return to <Chapter Title>](../<chapter-filename>.qmd) | [Return to book home](../../index.qmd)
+  [Return to <Chapter Title>](../../<chapter-filename>.qmd) | [Return to book home](../../../index.qmd)
   ```
 - **If not linked from a specific chapter (general reference):**
   ```markdown
-  [Return to book home](../../index.qmd)
+  [Return to book home](../../../index.qmd)
   ```
 
 Place the navigation bar near the top (right after the WIP callout or header) and repeat it as a footer at the bottom of the document so readers do not have to scroll all the way back up.

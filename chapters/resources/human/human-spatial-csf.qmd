@@ -1,0 +1,233 @@
+---
+date: last-modified
+---
+
+# Contrast sensitivity datasets, models, and MATLAB workflows {#sec-resource-human-spatial-csf}
+{{< include "../../includes/WIP-callout.qmd" >}}
+
+[Return to Spatial Pattern Sensitivity and Metrics](../../human-04-spatial-metrics.qmd) | [Return to book home](../../../index.qmd)
+
+This resource compiles foundational empirical contrast sensitivity function (CSF) datasets, summarizes the major unifying models built on those measurements (SSO, Pyramid of Visibility, and stelaCSF), and outlines MATLAB workflows for loading CSF datasets and exploring parametric CSF models. It supplements the core treatment of spatial and temporal sensitivity in [Spatial pattern sensitivity and metrics](../../human-04-spatial-metrics.qmd).
+
+## Foundational contrast sensitivity measurements {#sec-resource-csf-datasets}
+
+The following empirical studies form the quantitative backbone of modern CSF models, with emphasis on datasets that are available in downloadable numerical form for MATLAB analysis.
+
+### Classical spatial CSF measurements
+
+- **Campbell & Robson (1968) — Spatial CSF:** Campbell, F. W., & Robson, J. G. (1968). *Application of Fourier analysis to the visibility of gratings.* *Journal of Physiology*, 197, 551–566. Classic foveal achromatic CSF. Digitized versions are included in secondary compilations such as [pjanes/CSFdata](https://github.com/pjanes/CSFdata) and the `stelaCSF` data bundle below.
+- **Van Nes & Bouman (1967) — Spatial CSF:** Van Nes, F. L., & Bouman, M. A. (1967). *Spatial modulation transfer in the human eye.* *JOSA*, 57(3), 401–406. Widely available in digitized form in public CSF repositories and the `stelaCSF` bundle.
+
+### Spatio-temporal measurements
+
+- **Kelly (1975, 1979, 1984) — Spatio-temporal CSF (foveal):** Kelly's stabilized-retinal-image measurements remain the foundation of spatio-temporal CSF modeling. Digitized Kelly curves are included in the [stelaCSF data repository](https://github.com/mantiuk/stelaCSF/tree/main/data).
+
+### Wide-luminance range measurements
+
+- **Kim, Mantiuk & Lee (2013) — Achromatic and chromatic CSF across luminance:** *Measurements of achromatic and chromatic contrast sensitivity functions for an extended range of adaptation luminance.* SPIE Human Vision & Electronic Imaging XVIII. Openly downloadable at [mantiuk/stelaCSF/data/luminance](https://github.com/mantiuk/stelaCSF/tree/main/data/luminance).
+
+### Peripheral and chromatic CSF
+
+- **Wuerger et al. (2020) — Spatio-chromatic CSF (mesopic and temporal):** Open-access article on [PubMed Central (PMC7405764)](https://pmc.ncbi.nlm.nih.gov/articles/PMC7405764/), with CSV data tables included in the supplemental materials.
+
+### Integrated dataset compiled for stelaCSF
+
+The combined dataset (11 experiments) used to fit **stelaCSF** is open-source at [mantiuk/stelaCSF/tree/main/data](https://github.com/mantiuk/stelaCSF/tree/main/data). It aggregates Van Nes & Bouman, Campbell & Robson, Kelly spatio-temporal data, Robson & Snyder, Kulikowski, Kim & Mantiuk chromatic data, and several peripheral datasets. For MATLAB coursework and comparative plotting, this curated bundle is the most convenient single starting point.
+
+## Models that summarize and unify CSF measurements {#sec-resource-csf-models}
+
+### Spatial Standard Observer (SSO)
+
+- **Watson & Ahumada (2005):** *A spatial standard observer for visual technology*, SPIE; see also **Watson (2007)**, *The SSO for display metrology*.
+- Defines a standard foveal spatial CSF for display and image assessment based on Gabor channels, with outputs expressed in just-noticeable-difference (JND) units.
+
+### The Pyramid of Visibility (PoV)
+
+- **Watson (2016):** *The Pyramid of Visibility*, *Journal of Vision*, 16(10):14; extended to peripheral vision in **Watson (2018)**, *The Field of Contrast Sensitivity*.
+- Shows that $\log(\text{sensitivity})$ is approximately linear in spatial frequency, temporal frequency, and $\log(\text{luminance})$ over a wide suprathreshold/high-frequency regime, forming a compact geometric "pyramid" surface useful for teaching, visualization, and engineering estimates.
+
+### Unified spatio-temporal-eccentricity-luminance model: stelaCSF
+
+- **Mantiuk, Kim, Azimi et al. (2022):** *stelaCSF: A unified model of contrast sensitivity as a function of spatio-temporal frequency, eccentricity, luminance and area.*
+- Integrates 11 historical datasets in a joint fitting framework to predict contrast sensitivity across wide ranges of spatial frequency, temporal frequency, adapting luminance (scotopic to photopic), retinal eccentricity, and stimulus area, with open-source implementation and data.
+
+### Chromatic and HDR extensions
+
+- **Azimi, Kim & Mantiuk (2021)** extend CSF formulations to HDR color spaces; **Kim, Mantiuk & Lee (2013)** provide paired achromatic and chromatic CSFs across wide adaptation luminances.
+
+### Comparison of models
+
+| Model | Dimensionality | Strengths | Typical use |
+| :--- | :--- | :--- | :--- |
+| **SSO** | Spatial only | Standard-observer baseline, simple | Instructional baseline, display metrology |
+| **Pyramid of Visibility** | Space × Time × Luminance | Compact, piecewise-linear log-sensitivity | Teaching, visualization, rapid engineering estimates |
+| **stelaCSF** | Space × Time × Luminance × Eccentricity × Area | Comprehensive, jointly fitted to 11 datasets | Research, HDR displays, peripheral modeling |
+
+## Downloading CSF data and loading it into MATLAB {#sec-resource-csf-matlab-data}
+
+### Download the stelaCSF dataset
+
+1. Visit [github.com/mantiuk/stelaCSF/tree/main/data](https://github.com/mantiuk/stelaCSF/tree/main/data).
+2. Download the repository ZIP (or clone via `git clone`) and locate the `.csv` files under `data/` (for example `van_nes_1967.csv`, `campbell_robson_1968.csv`, `kelly_1979.csv`, and `kim_mantiuk_2013.csv`).
+
+### Load a spatial CSF CSV into MATLAB
+
+```matlab
+data = readtable('campbell_robson_1968.csv');
+
+freq = data.spatial_frequency;   % cycles/degree
+cs   = data.contrast_sensitivity;
+
+figure;
+semilogx(freq, cs, 'o-');
+xlabel('Spatial Frequency (cpd)');
+ylabel('Contrast Sensitivity');
+title('Campbell & Robson (1968)');
+grid on;
+```
+
+### Load spatio-temporal Kelly data
+
+```matlab
+kelly = readtable('kelly_1979.csv');
+
+sf = kelly.spatial_frequency;    % cpd
+tf = kelly.temporal_frequency;   % Hz
+cs = kelly.contrast_sensitivity;
+
+% Plot a static slice (tf == 0 Hz)
+idx = kelly.temporal_frequency == 0;
+
+figure;
+semilogx(sf(idx), cs(idx), 'o-');
+xlabel('Spatial Frequency (cpd)');
+ylabel('Contrast Sensitivity');
+title('Kelly Spatio-Temporal CSF (Static Slice)');
+grid on;
+```
+
+### Load chromatic CSF data
+
+```matlab
+kml = readtable('kim_mantiuk_2013.csv');
+
+sf   = kml.spatial_frequency;
+cs_L = kml.L_channel_sensitivity;   % L-cone isolating
+cs_M = kml.M_channel_sensitivity;
+
+figure;
+loglog(sf, cs_L, 'r-o'); hold on;
+loglog(sf, cs_M, 'g-o');
+legend('L-cone', 'M-cone');
+xlabel('Spatial Frequency (cpd)');
+ylabel('Contrast Sensitivity');
+title('Chromatic CSFs (Kim, Mantiuk & Lee, 2013)');
+grid on;
+```
+
+### Storing datasets as MAT-files for coursework
+
+For faster repeated loading in class exercises, convert cleaned CSV tables into `.mat` files:
+
+```matlab
+data = readtable('campbell_robson_1968.csv');
+save('CR1968.mat', 'data');
+```
+
+## Conceptual MATLAB implementation of a separable CSF model {#sec-resource-csf-matlab-model}
+
+A useful pedagogical abstraction of multi-dimensional CSF models such as stelaCSF factors contrast sensitivity $S$ into smooth parametric terms depending on spatial frequency $f_s$ (cpd), temporal frequency $f_t$ (Hz), eccentricity $E$ (deg), adapting luminance $L$ ($\text{cd/m}^2$), and stimulus area $A$ ($\text{deg}^2$):
+
+$$
+S(f_s, f_t, E, L, A) = S_{\text{spatial}}(f_s, E) \cdot S_{\text{temporal}}(f_t, L) \cdot S_{\text{area}}(A).
+$$
+
+::: {.callout-note title="Teaching sketch vs. full stelaCSF"}
+The MATLAB function below is a simplified teaching sketch illustrating how spatial, temporal, luminance, and area terms combine. It is **not** the exact published stelaCSF equation (for example, the real stelaCSF separates sustained and transient mechanisms so sensitivity remains nonzero at $f_t = 0\text{ Hz}$). For quantitative predictions, use the official reference implementation at [github.com/mantiuk/stelaCSF](https://github.com/mantiuk/stelaCSF).
+:::
+
+### File: `stelaCSF_sketch.m`
+
+```matlab
+function CS = stelaCSF_sketch(sf, tf, ecc, lum, area)
+% stelaCSF_sketch  Teaching sketch of a multi-dimensional CSF model
+%
+%   CS = stelaCSF_sketch(sf, tf, ecc, lum, area)
+%
+% Inputs:
+%   sf   - spatial frequency (cycles/deg)
+%   tf   - temporal frequency (Hz)
+%   ecc  - eccentricity (deg)
+%   lum  - adapting luminance (cd/m^2)
+%   area - stimulus area (deg^2)
+%
+% Output:
+%   CS   - illustrative contrast sensitivity (not exact stelaCSF)
+
+% --- Illustrative parameters ---
+p.sf_peak0  = 3.0;     % peak spatial frequency at fovea (cpd)
+p.ecc_scale = 0.106;   % eccentricity scaling
+p.lum_exp   = 0.4;     % luminance exponent
+p.tf_peak   = 8.0;     % peak temporal frequency (Hz)
+p.area_exp  = 0.3;     % area exponent
+
+% --- Spatial term ---
+sf_peak = p.sf_peak0 ./ (1 + p.ecc_scale * ecc);
+S_sf = (sf ./ sf_peak) .* exp(1 - sf ./ sf_peak);
+S_sf = max(S_sf, 0);
+
+% --- Temporal term (keeps nonzero sensitivity at tf = 0 Hz) ---
+S_tf = 0.5 + 0.5 * (tf ./ p.tf_peak) .* exp(1 - tf ./ p.tf_peak);
+S_tf = max(S_tf, 0);
+
+% --- Luminance and area terms ---
+S_lum  = lum.^p.lum_exp;
+S_area = area.^p.area_exp;
+
+% --- Combined sensitivity ---
+CS = S_sf .* S_tf .* S_lum .* S_area;
+
+end
+```
+
+### Example: spatial slice and spatio-temporal surface
+
+```matlab
+% 1. Spatial CSF slice at fixed luminance and temporal frequency
+sf   = logspace(-1, 2, 100);   % 0.1 to 100 cpd
+tf   = 0;                      % static (Hz)
+ecc  = 0;                      % fovea (deg)
+lum  = 100;                    % cd/m^2
+area = 1;                      % deg^2
+
+CS = stelaCSF_sketch(sf, tf, ecc, lum, area);
+
+figure;
+loglog(sf, CS, 'k-', 'LineWidth', 2);
+xlabel('Spatial Frequency (cpd)');
+ylabel('Contrast Sensitivity');
+title('Spatial CSF Slice (Teaching Sketch)');
+grid on;
+
+% 2. Spatio-temporal sensitivity surface
+sf_grid = logspace(-1, 2, 50);
+tf_grid = logspace(-1, 2, 50);
+[SF, TF] = meshgrid(sf_grid, tf_grid);
+
+CS_surf = stelaCSF_sketch(SF, TF, 0, 100, 1);
+
+figure;
+surf(SF, TF, CS_surf, 'EdgeColor', 'none');
+set(gca, 'XScale', 'log', 'YScale', 'log');
+xlabel('Spatial Frequency (cpd)');
+ylabel('Temporal Frequency (Hz)');
+zlabel('Sensitivity');
+title('Spatio-Temporal Sensitivity Surface (Teaching Sketch)');
+colorbar;
+```
+
+::: {.callout-tip title="Research & Code Opportunity with ISETCam / ISETBio"}
+Compare the empirical datasets in the `stelaCSF` bundle against ideal-observer and computational-observer CSF predictions in `isetbio`. Building a clean MATLAB script that overlays Campbell–Robson (1968), Kelly (1979), and the official `stelaCSF` model against `isetbio` foveal and peripheral simulations makes an excellent student project.
+:::
+
+[Return to Spatial Pattern Sensitivity and Metrics](../../human-04-spatial-metrics.qmd) | [Return to book home](../../../index.qmd)
