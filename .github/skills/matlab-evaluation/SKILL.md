@@ -101,4 +101,4 @@ iePublish('~/Documents/MATLAB/isetfise/fise/02Optics/fise_diffraction.m')"
 "$MATLAB" -batch "addpath(genpath('~/Documents/MATLAB/isetcam')); iePublish('fise_script.m')"
 ```
 
-4. `iePublish` writes the HTML next to the source `.m` file in `isetfise/fise/`. Confirm the output landed where expected and that figures embedded correctly before updating links in `chapters/resources/code-html-links.qmd` or book chapters.
+4. `iePublish` writes the HTML next to the source `.m` file in `isetfise/fise/`. Confirm the output landed where expected and that figures embedded correctly before updating links in `chapters/resources/general/code-html-links.qmd` or book chapters.

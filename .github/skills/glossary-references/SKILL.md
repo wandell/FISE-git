@@ -21,7 +21,7 @@ Every glossary sidebar reference uses Quarto's native `{.column-margin}` contain
 ::: {.column-margin}
 **<Term Name> ($<Symbol>$ hold if applicable)**  
 <One to two concise sentences defining the concept, its physical meaning, and standard units or sign convention>.  
-[<Domain> Glossary &rarr;](resources/<domain>-glossary.qmd#<section-anchor>)
+[<Domain> Glossary &rarr;](resources/<domain>/<domain>-glossary.qmd#<section-anchor>)
 :::
 ```
 
@@ -34,7 +34,7 @@ A lens is considered a **thin lens** when its axial thickness is negligible comp
 ::: {.column-margin}
 **Radius of curvature ($R$)**  
 Linear distance from the surface vertex to the center of the sphere of curvature.  
-[Optics Glossary &rarr;](resources/optics-glossary.qmd#sec-glossary-surfaces)
+[Optics Glossary &rarr;](resources/optics/optics-glossary.qmd#sec-glossary-surfaces)
 :::
 ```
 
@@ -71,10 +71,10 @@ When linking, use relative paths from `chapters/`:
 
 | Domain | Resource File Path (relative to `chapters/`) | Primary Topics Covered |
 |:-------|:---------------------------------------------|:-----------------------|
-| **Optics** | `resources/optics-glossary.qmd` | Surface geometry ($R, C$), focal length ($f$), conjugate image distance ($d_i$), sensor distance ($d_s$), circle of confusion |
-| **Sensors** | `resources/sensors-glossary.qmd` | Pixel pitch, fill factor, quantum efficiency (QE), full well capacity (FWC), read noise, dynamic range (DR), conversion gain |
-| **Human Vision** | `resources/human-glossary.qmd` | Visual angle, cycles per degree (cpd), luminance vs. illuminance, photopic/scotopic, DVA, cone mosaics |
-| **Displays** | `resources/displays-glossary.qmd` | Luminance (nits/$\text{cd/m}^2$), color gamut, subpixel layout, display gamma ($\gamma$), refresh rate, viewing angle |
+| **Optics** | `resources/optics/optics-glossary.qmd` | Surface geometry ($R, C$), focal length ($f$), conjugate image distance ($d_i$), sensor distance ($d_s$), circle of confusion |
+| **Sensors** | `resources/sensors/sensors-glossary.qmd` | Pixel pitch, fill factor, quantum efficiency (QE), full well capacity (FWC), read noise, dynamic range (DR), conversion gain |
+| **Human Vision** | `resources/human/human-glossary.qmd` | Visual angle, cycles per degree (cpd), luminance vs. illuminance, photopic/scotopic, DVA, cone mosaics |
+| **Displays** | `resources/displays/displays-glossary.qmd` | Luminance (nits/$\text{cd/m}^2$), color gamut, subpixel layout, display gamma ($\gamma$), refresh rate, viewing angle |
 
 ---
 

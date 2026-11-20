@@ -1,0 +1,74 @@
+Behavioral measurements of the human spatio-chromatic contrast sensitivity function (CSF) fall into two main eras: foundational psychophysical studies that established the low-pass nature of opponent color channels, and recent high-dynamic-range (HDR) datasets that parameterize chromatic sensitivity across luminance, stimulus area, and eccentricity for direct use in modern image and video quality metrics.
+
+## Classic Behavioral Measurements
+
+* **Red–Green and Blue–Yellow Chromatic CSFs (Mullen, 1985):** The most widely cited behavioral benchmark for chromatic spatial vision. Using monochromatic interference-free gratings corrected for longitudinal chromatic aberration, Mullen (1985) demonstrated that both red–green and blue–yellow isoluminant CSFs are strictly **low-pass** (rolling off steeply above roughly $0.5\text{–}1\text{ cpd}$), in sharp contrast to the band-pass luminance CSF. Above $0.5\text{ cpd}$, sensitivity to luminance gratings exceeds that of chromatic gratings (Mullen, 1985).
+* **Spatiotemporal Chromatic Surfaces (Kelly, 1983):** Using stabilized retinal images to eliminate eye-movement artifacts, Kelly (1983) mapped full spatiotemporal contrast threshold surfaces for both isoluminant red–green and achromatic gratings. This work established that chromatic channels are low-pass in both space and time, providing an early unified description of chromatic vs. achromatic sensitivity across temporal frequencies (Kelly, 1983).
+* **Spatial-Frequency and Orientation Discrimination (Webster et al., 1990):** Extending chromatic measurements beyond simple detection thresholds, Webster et al. (1990) measured orientation and spatial-frequency discrimination for equiluminant chromatic gratings (along both red–green and tritanopic axes) compared to luminance gratings. Their results showed that once stimuli are scaled to multiples of detection threshold, chromatic mechanisms exhibit genuine spatial-frequency and orientation selectivity, indicating that chromatic spatial vision is mediated by spatial-frequency-tuned channels rather than a single non-selective low-pass filter (Webster et al., 1990).
+* **Bypassing Ocular Optics (Sekiguchi et al., 1993):** Because longitudinal and transverse chromatic aberration severely degrade high-frequency colored patterns on the retina, Sekiguchi et al. (1993) used laser interferometry to project isoluminant and isochromatic interference fringes directly onto the retina. Even with optical blur eliminated, behavioral contrast sensitivity for isoluminant red–green fringes still rolled off at much lower spatial frequencies than luminance sensitivity, confirming that the lower spatial resolution of color vision is fundamentally constrained by post-receptoral neural processing (Sekiguchi et al., 1993).
+* **Pattern–Color Separability (Poirson & Wandell, 1993):** Rather than measuring detection thresholds alone, Poirson & Wandell (1993) used asymmetric color-matching experiments on colored square-wave patterns across spatial frequencies. They demonstrated that color appearance as a function of spatial frequency can be modeled by a **pattern–color separable** linear transformation into three opponent channels (one achromatic and two chromatic), each with its own spatial filter—a formulation that directly shaped spatial color-difference metrics (Poirson & Wandell, 1993).
+
+## Recent Behavioral Datasets and Unified Models
+
+Older datasets were typically measured at a single, moderate photopic luminance (often $10\text{–}50\text{ cd/m}^2$) with fixed stimulus sizes, limiting their accuracy for modern HDR displays, wide-field VR/AR, and varying viewing distances. Recent work has systematically addressed these gaps:
+
+* **Frequency-Dependent Chromatic Discrimination Ellipses (Lucassen et al., 2018):** Measuring 75%-correct visibility thresholds for isoluminant sine-wave gratings across spatial frequencies, orientations, and adapting white points ($2600\text{ K}$ to $5700\text{ K}$), Lucassen et al. (2018) showed that chromatic threshold ellipses in $u'v'$ space change substantially in both size and orientation as spatial frequency varies. They demonstrated that post-receptoral opponent contrast models account for these shifts far better than static uniform color spaces based on MacAdam ellipses (Lucassen et al., 2018).
+* **Mesopic-to-HDR Spatio-Chromatic CSFs (Wuerger et al., 2020):** This landmark behavioral study measured contrast sensitivity for achromatic, red–green ($L-M$), and yellow–violet ($S-(L+M)$) Gabor patches across a vast luminance range spanning mesopic to bright photopic/HDR levels ($0.02$ to $7000\text{ cd/m}^2$). The dataset revealed how chromatic sensitivity scales with background luminance and showed that chromatic channels saturate at lower luminance levels than the achromatic channel (Wuerger et al., 2020).
+* **Practical HDR Chromatic CSF Models (Mantiuk et al., 2020):** Combining multiple behavioral datasets up to $10{,}000\text{ cd/m}^2$, Mantiuk et al. (2020) fitted practical cone-contrast and post-receptoral CSF models parameterized by spatial frequency, background luminance, and stimulus area. They explicitly modeled the low-pass truncated log-parabola shape of the two chromatic channels alongside the band-pass achromatic channel for engineering applications (Mantiuk et al., 2020).
+* **Unified Multi-Dimensional Modeling — `castleCSF` (Ashraf et al., 2024):** Representing the current state of the art, `castleCSF` is a unified analytical model of human contrast sensitivity as a function of **c**olor direction, **a**rea, **s**patio-**t**emporal frequency, **l**uminance, and **e**ccentricity (Ashraf et al., 2024). Fitted to an extensive compilation of classic and modern psychophysical datasets—including Mullen (1985) and Wuerger et al. (2020)—it provides a single continuous behavioral model for both luminance and opponent chromatic mechanisms across viewing conditions (Ashraf et al., 2024).
+
+## Incorporation into Image Quality Metrics
+
+Behavioral chromatic CSFs are the front-end foundation for perceptually calibrated image and video quality metrics:
+
+| Metric / Framework | Underlying Behavioral CSF Data | How Chromatic CSF Is Incorporated |
+| --- | --- | --- |
+| **S-CIELAB & Spatial Color Difference** | Poirson & Wandell (1993); Mullen (1985) | Transforms images into opponent channels and applies 2D spatial filters (low-pass chromatic, broader achromatic) before computing pixel-wise CIELAB or CIEDE2000 differences (Johnson & Fairchild, 2003; Poirson & Wandell, 1993). |
+| **Image Color Difference Spaces** | Poirson & Wandell (1993); Mullen (1985) | Refines S-CIELAB filtering by explicitly modeling chromatic CSFs in the Fourier domain and pairing spatial filtering with improved uniform color spaces for photographic image difference prediction (Johnson & Fairchild, 2003; Johnson et al., 2010). |
+| **ColorVideoVDP** | Ashraf et al. (2024) (`castleCSF`); Wuerger et al. (2020) | Embeds `castleCSF` directly into a full-reference visual difference predictor for images, video, and displays, predicting perceptual distortion visibility across SDR/HDR luminance, spatial/temporal frequencies, and both chromatic and achromatic channels (Mantiuk et al., 2024). |
+| **Riemannian Spatial Color Difference** | Mullen (1985); Poirson & Wandell (1993) | Incorporates behavioral chromatic CSF measurements into a Riemannian metric tensor framework to predict perceptual color differences for spatially varying sinusoidal color patterns (Candry et al., 2024). |
+
+For image-systems work today, **Poirson & Wandell (1993)** and **Johnson & Fairchild (2003)** remain the cleanest entry points for understanding how behavioral chromatic CSFs were first operationalized into spatial color-difference pipelines (like S-CIELAB), while **Wuerger et al. (2020)**, **Ashraf et al. (2024)**, and **Mantiuk et al. (2024)** represent the modern standard when luminance adaptation, stimulus size, temporal modulation, or HDR display characteristics matter.
+
+---
+
+**References**
+
+Ashraf, M., Mantiuk, R. K., Chapiro, A., & Wuerger, S. (2024). castleCSF — A contrast sensitivity function of color, area, spatiotemporal frequency, luminance and eccentricity. *Journal of Vision*, *24*, 5. [https://doi.org/10.1167/jov.24.4.5](https://doi.org/10.1167/jov.24.4.5)
+Cited by: 43
+
+Candry, P., De Visschere, P., & Neyts, K. (2024). Riemannian color difference metric for spatial sinusoidal color variations. *Optics Express*, *32*, 16945. [https://doi.org/10.1364/oe.520947](https://doi.org/10.1364/oe.520947)
+Cited by: 2
+
+Johnson, G. M., & Fairchild, M. D. (2003). A top down description of S‐CIELAB and CIEDE2000. *Color Research & Application*, *28*, 425–435. [https://doi.org/10.1002/col.10195](https://doi.org/10.1002/col.10195)
+Cited by: 334
+
+Johnson, G. M., Song, X., Montag, E. D., & Fairchild, M. D. (2010). Derivation of a color space for image color difference measurement. *Color Research & Application*, *35*, 387–400. [https://doi.org/10.1002/col.20561](https://doi.org/10.1002/col.20561)
+Cited by: 64
+
+Kelly, D. H. (1983). Spatiotemporal variation of chromatic and achromatic contrast thresholds. *Journal of the Optical Society of America*, *73*, 742. [https://doi.org/10.1364/josa.73.000742](https://doi.org/10.1364/josa.73.000742)
+Cited by: 384
+
+Lucassen, M., Lambooij, M., Sekulovski, D., & Vogels, I. (2018). Spatio-chromatic sensitivity explained by post-receptoral contrast. *Journal of Vision*, *18*, 13. [https://doi.org/10.1167/18.5.13](https://doi.org/10.1167/18.5.13)
+Cited by: 15
+
+Mantiuk, R. K., Hanji, P., Ashraf, M., Asano, Y., & Chapiro, A. (2024). ColorVideoVDP: A visual difference predictor for image, video and display distortions. *SIGGRAPH 2024 Technical Papers, Article 129*. [https://doi.org/10.1145/3658144](https://doi.org/10.1145/3658144)
+Cited by: 94
+
+Mantiuk, R. K., Kim, M., Ashraf, M., et al. (2020). Practical color contrast sensitivity functions for luminance levels up to 10000 cd/m². *Color and Imaging Conference*, *28*, 1–6. [https://doi.org/10.2352/issn.2169-2629.2020.28.1](https://doi.org/10.2352/issn.2169-2629.2020.28.1)
+Cited by: 27
+
+Mullen, K. T. (1985). The contrast sensitivity of human colour vision to red‐green and blue‐yellow chromatic gratings. *The Journal of Physiology*, *359*, 381–400. [https://doi.org/10.1113/jphysiol.1985.sp015591](https://doi.org/10.1113/jphysiol.1985.sp015591)
+Cited by: 1352
+
+Poirson, A. B., & Wandell, B. A. (1993). Appearance of colored patterns: pattern–color separability. *Journal of the Optical Society of America A*, *10*, 2458. [https://doi.org/10.1364/josaa.10.002458](https://doi.org/10.1364/josaa.10.002458)
+Cited by: 269
+
+Sekiguchi, N., Williams, D. R., & Brainard, D. H. (1993). Efficiency in detection of isoluminant and isochromatic interference fringes. *Journal of the Optical Society of America A*, *10*, 2118. [https://doi.org/10.1364/josaa.10.002118](https://doi.org/10.1364/josaa.10.002118)
+Cited by: 151
+
+Webster, M. A., Switkes, E., & De Valois, K. K. (1990). Orientation and spatial-frequency discrimination for luminance and chromatic gratings. *Journal of the Optical Society of America A*, *7*, 1034. [https://doi.org/10.1364/josaa.7.001034](https://doi.org/10.1364/josaa.7.001034)
+Cited by: 232
+
+Wuerger, S., Ashraf, M., Kim, M., et al. (2020). Spatio-chromatic contrast sensitivity under mesopic and photopic light levels. *Journal of Vision*, *20*, 23. [https://doi.org/10.1167/jov.20.4.23](https://doi.org/10.1167/jov.20.4.23)
+Cited by: 80
